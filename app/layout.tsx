@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { getServerSession } from 'next-auth';
 import SessionProvider from './components/SessionProvider';
-import NavMenu from './components/NavMenu';
+import Header from './components/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,8 +25,9 @@ export default async function RootLayout({
     <html lang='en'>
       <body className={`${inter.className} `}>
         <SessionProvider session={session}>
-          <main className='mx-auto max-w-5xl text-2xl flex gap-2'>
-            <NavMenu />
+          <main className='mx-auto max-w-[1400px] text-xl gap-2 border-2 border-yellow-300'>
+            <Header />
+
             {children}
           </main>
         </SessionProvider>

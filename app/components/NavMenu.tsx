@@ -8,33 +8,13 @@ const ACTIVE_ROUTE = 'py-1 px-2 text-gray-300 bg-gray-700';
 const INACTIVE_ROUTE =
   'py-1 px-2 text-gray-500 hover:text-gray-300 hover:bg-gray-700';
 
-const AuthButton = () => {
-  const { data: session } = useSession();
-
-  if (session) {
-    return (
-      <>
-        {session?.user?.name} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    );
-  }
-  return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sing in</button>
-    </>
-  );
-};
-
 export default function NavMenu() {
   const pathname = usePathname();
 
   return (
     <>
-      <AuthButton />
       <hr className='my-4' />
-      <ul>
+      <ul className='flex text-sm'>
         <Link href='/'>
           <li className={pathname === '/' ? ACTIVE_ROUTE : INACTIVE_ROUTE}>
             Home
@@ -79,6 +59,28 @@ export default function NavMenu() {
           </li>
         </Link>
       </ul>
+      <AuthButton />
     </>
   );
 }
+
+const AuthButton = () => {
+  const { data: session } = useSession();
+
+  if (session) {
+    return (
+      <div className='flex gap-8 text-xs text-left'>
+        <h3 className='w-[6ch]'>
+          {session?.user?.name} <br />
+        </h3>
+        <button onClick={() => signOut()}>Sign out</button>
+      </div>
+    );
+  }
+  return (
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sing in</button>
+    </>
+  );
+};
