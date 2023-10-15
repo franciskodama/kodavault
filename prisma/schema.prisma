@@ -134,3 +134,13 @@ model applicant_tracking_system {
   notes            String?
   photo            String?
 }
+
+model Asset {
+  id         String  @id(map: "assets_pkey")
+  asset      String?
+  qtd        String?
+  wallet     String?
+  created_at String?
+  type       String?
+  uid        String
+}
