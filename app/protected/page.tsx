@@ -8,11 +8,5 @@ export default async function ProtectedRoute() {
     redirect('/api/auth/signin');
   }
 
-  return (
-    <>
-      This is a protected route.
-      <br />
-      You will only see this if you are auth
-    </>
-  );
+  return <>This is a protected route.</>;
 }

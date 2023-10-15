@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  cid       String   @id
+  name      String   @unique
+  label     String   @unique
+  icon      String?
+  status    Boolean? @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @db.Timestamptz(6)
+  Event     Event[]
+}
+
+model Day {
+  did         String    @id(map: "Day_pkey1") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  date        DateTime  @db.Date
+  city        String?
+  state       String?
+  country     String?
+  weather     String?
+  moon        String?
+  temperature Int?      @default(0)
+  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime? @default(now()) @db.Timestamptz(6)
+  uid         String
+  User        User      @relation(fields: [uid], references: [uid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model DayEvent {
+  id        String   @id(map: "DayEvents_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dayId     String
+  eventId   Int
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @db.Timestamptz(6)
+  value     String?
+  uid       String
+  User      User     @relation(fields: [uid], references: [uid], onDelete: NoAction, onUpdate: NoAction, map: "DayEvents_uid_fkey")
+}
+
+model Day_Old {
+  id               Int       @id(map: "Day_pkey") @default(autoincrement())
+  uid              String
+  sleep            String?
+  meditation       Boolean?  @default(false)
+  gym              Boolean?  @default(false)
+  food             Boolean?  @default(false)
+  todayGoals       Boolean?  @default(false)
+  date             DateTime? @default(now()) @db.Date
+  city             String?
+  state            String?
+  country          String?
+  temperature      String?
+  weather          String?
+  moon             String?
+  moodFace         String?
+  createdAt        DateTime  @default(now()) @db.Timestamptz(6)
+  gratitudeOne     String?
+  gratitudeTwo     String?
+  gratitudeThree   String?
+  improvementOne   String?
+  improvementTwo   String?
+  improvementThree Boolean?  @default(false)
+  updatedAt        DateTime? @default(now()) @db.Timestamptz(6)
+  moodPhrase       String?
+  water            String?
+  thoughts         String?
+}
+
+model Event {
+  eid       String    @id(map: "Events_pkey") @default("eid-")
+  icon      String?
+  status    Boolean   @default(false)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime? @default(now()) @db.Timestamptz(6)
+  name      String    @unique
+  label     String
+  cid       String?
+  Category  Category? @relation(fields: [cid], references: [cid], onDelete: NoAction, onUpdate: NoAction, map: "Event_category_fkey")
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  firstName    String?
+  lastName     String?
+  city         String?
+  state        String?
+  country      String?
+  email        String?
+  uid          String?       @unique
+  createdAt    DateTime      @default(now()) @db.Timestamptz(6)
+  updatedAt    DateTime?     @default(now()) @db.Timestamptz(6)
+  Day          Day[]
+  DayEvent     DayEvent[]
+  UserSettings UserSettings?
+}
+
+model UserSettings {
+  uid         String    @unique
+  periodStart DateTime? @db.Date
+  period      String?
+  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime  @default(now()) @db.Timestamptz(6)
+  view        Boolean   @default(true)
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  User        User      @relation(fields: [uid], references: [uid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Wealth {
+  id         Int      @id(map: "Asset_pkey") @default(autoincrement())
+  asset      String
+  qtd        Decimal? @default(0) @db.Decimal(15, 4)
+  wallet     String?
+  Created_At DateTime @default(now()) @map("Created At") @db.Date
+  type       String?
+}
+
+model applicant_tracking_system {
+  id               BigInt  @id
+  applicant_name   String?
+  email            String?
+  linkedin_url     String?
+  phone_number     String?
+  resume           String?
+  job_position     String?
+  application_date String?
+  status           String?
+  notes            String?
+  photo            String?
+}
+
+model Asset {
+  id         String  @id(map: "assets_pkey")
+  asset      String?
+  qtd        String?
+  wallet     String?
+  created_at String?
+  type       String?
+  uid        String
+}
