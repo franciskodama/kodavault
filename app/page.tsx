@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth';
-import { getStockBr } from './lib/stock-br.server';
+import { getStockBr } from './lib/stock.server';
 
 export default async function Home() {
   const session = await getServerSession();
