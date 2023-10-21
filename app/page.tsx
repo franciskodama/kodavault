@@ -1,9 +1,12 @@
 import { getServerSession } from 'next-auth';
 import { getStockBr } from './lib/stock.server';
+import { getCryptos } from './lib/crypto.server';
 
 export default async function Home() {
   const session = await getServerSession();
   const stockBr = await getStockBr('BVMF:IVVB11');
+  const crypto = await getCryptos();
+  console.log('---  🚀 ---> | crypto:', crypto);
   console.log('---  🚀 ---> | stockBr:', stockBr);
 
   return (
