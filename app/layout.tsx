@@ -5,8 +5,8 @@ import { getServerSession } from 'next-auth';
 import SessionProvider from './components/SessionProvider';
 import Header from './components/Header';
 
-const gabarito = Gabarito({ subsets: ['latin'] });
-const cairoPlay = Cairo_Play({ subsets: ['latin'] });
+export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
+export const cairoPlay = Cairo_Play({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,7 +22,7 @@ export default async function RootLayout({
 
   return (
     <html lang='en'>
-      <body className={`${gabarito.className} ${cairoPlay.className}`}>
+      <body className={cairoPlay.className}>
         <SessionProvider session={session}>
           <main className='mx-auto max-w-[1400px] text-xl gap-2 border-2 border-yellow-300'>
             <Header />
