@@ -19,11 +19,9 @@ export default async function Home() {
         {session?.user?.name ? (
           <div
             className='text-2xl'
-            style={
-              {
-                // fontFamily: 'gabarito',
-              }
-            }
+            style={{
+              fontFamily: 'gabarito',
+            }}
           >
             {session?.user?.name}
           </div>
