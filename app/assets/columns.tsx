@@ -1,16 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-
-export type Asset = {
-  id: string;
-  asset: string;
-  qtd: string;
-  wallet: string;
-  created_at: string;
-  type: string;
-  uid: string;
-};
+import { Asset } from '../protected/page';
 
 export const columns: ColumnDef<Asset>[] = [
   {

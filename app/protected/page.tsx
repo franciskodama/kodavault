@@ -7,11 +7,11 @@ import { getStockBr } from '../lib/stock.server';
 
 export type Asset = {
   id: string;
-  asset: string;
-  qtd: string;
-  wallet: string;
-  created_at: string;
-  type: string;
+  asset: string | null;
+  qtd: string | null;
+  wallet: string | null;
+  created_at: string | null;
+  type: string | null;
   uid: string;
 };
 
@@ -25,20 +25,22 @@ export default async function ProtectedRoute() {
   const stockBr = await getStockBr('BVMF:IVVB11');
   const crypto = await getCryptos();
 
-  let assets: Asset[] | [] | null | undefined | any = [];
+  let assets: Asset[] = [];
+
   if (session?.user?.email) {
     try {
-      assets = await getAssets(session.user.email);
+      const assetData = await getAssets(session.user.email);
+      if (Array.isArray(assetData)) {
+        assets = assetData as Asset[];
+      } else {
+        console.error(assetData);
+      }
     } catch (error) {
       console.error(error);
     }
   }
 
-  return (
-    <>
-      {/* <div>IVVB11:{stockBr && stockBr.futures_chain[0].price}</div> */}
-
-      {assets && <MainTable assets={assets} />}
-    </>
-  );
+  return <>{assets.length > 0 && <MainTable assets={assets} />}</>;
 }
+
+//  <div>IVVB11:{stockBr && stockBr.futures_chain[0].price}</div>
