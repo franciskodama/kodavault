@@ -40,7 +40,10 @@ export default async function ProtectedRoute() {
     }
   }
 
-  return <>{assets.length > 0 && <MainTable assets={assets} />}</>;
+  return (
+    <>
+      {/* <div>IVVB11:{stockBr && stockBr.futures_chain[0].price}</div> */}
+      {assets.length > 0 && <MainTable assets={assets} />}
+    </>
+  );
 }
-
-//  <div>IVVB11:{stockBr && stockBr.futures_chain[0].price}</div>

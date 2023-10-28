@@ -3,29 +3,45 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Asset } from '../protected/page';
 
+const headerClass = 'font-bold text-red-500';
+
 export const columns: ColumnDef<Asset>[] = [
   {
     accessorKey: 'wallet',
-    header: 'Wallet',
+    header: () => <div className={headerClass}>Wallet</div>,
   },
   {
     accessorKey: 'asset',
-    header: 'Asset',
+    header: () => <div className={headerClass}>Asset</div>,
   },
   {
     accessorKey: 'qtd',
-    header: 'Qtd',
+    header: () => <div className={headerClass}>Qtd</div>,
   },
   {
     accessorKey: 'price',
-    header: 'Price',
+    header: () => <div className={headerClass}>Price</div>,
+    // cell: ({ row }) => {
+    //   const price = parseFloat(row.getValue('price'));
+    //   const formatted = new Intl.NumberFormat('en-US', {
+    //     style: 'currency',
+    //     currency: 'USD',
+    //   }).format(price);
+    // },
   },
   {
     accessorKey: 'total',
-    header: 'Total',
+    header: () => <div className={headerClass}>Total</div>,
+    // cell: ({ row }) => {
+    //   const total = parseFloat(row.getValue('total'));
+    //   const formatted = new Intl.NumberFormat('en-US', {
+    //     style: 'currency',
+    //     currency: 'USD',
+    //   }).format(total);
+    // },
   },
   {
     accessorKey: 'type',
-    header: 'Type',
+    header: () => <div className={headerClass}>Type</div>,
   },
 ];
