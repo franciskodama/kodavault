@@ -22,8 +22,8 @@ export default async function ProtectedRoute() {
     redirect('/api/auth/signin');
   }
 
-  const stockBr = await getStockBr('BVMF:IVVB11');
-  const crypto = await getCryptos();
+  // const stockBr = await getStockBr('BVMF:IVVB11');
+  // console.log('---  🚀 ---> | crypto:', crypto.data.BTC.quote.USD.price);
 
   let assets: Asset[] = [];
 
@@ -40,6 +40,21 @@ export default async function ProtectedRoute() {
     }
   }
 
+  const includePriceToAssets = (assets: Asset[]) => {
+    assets.map((item: Asset) => {
+      if (item.type === 'Crypto') {
+        const crypto = getCryptos(item.asset);
+        console.log('---  🚀 ---> | crypto:', crypto);
+      }
+    });
+  };
+
+  console.log('---  🚀 ---> | assets:', assets);
+  if (assets) {
+    const test = includePriceToAssets(assets);
+    console.log('---  🚀 ---> | test:', test);
+  }
+
   return (
     <>
       {/* <div>IVVB11:{stockBr && stockBr.futures_chain[0].price}</div> */}
@@ -47,3 +62,13 @@ export default async function ProtectedRoute() {
     </>
   );
 }
+
+// {
+//   id: '973096',
+//   asset: 'USDT',
+//   qtd: '5800.0000',
+//   wallet: 'Wealthsimple',
+//   created_at: '2023-09-02',
+//   type: 'Cash',
+//   uid: 'fk@fkodama.com'
+// }
