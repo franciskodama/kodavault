@@ -36,7 +36,6 @@ export default async function ProtectedRoute() {
 
   return (
     <>
-      <div>This is a protected route.</div>
       {/* <div>IVVB11:{stockBr && stockBr.futures_chain[0].price}</div> */}
 
       {assets && <MainTable assets={assets} />}
