@@ -1,24 +1,32 @@
 import { getServerSession } from 'next-auth';
 import { getStockBr } from './lib/stock.server';
 import { getCryptos } from './lib/crypto.server';
-import { gabarito } from './layout';
 import { getAssets } from './lib/assets.server';
+import MainTable from './assets/page';
+
+export type Asset = {
+  id: string;
+  asset: string;
+  qtd: string;
+  wallet: string;
+  created_at: string;
+  type: string;
+  uid: string;
+};
 
 export default async function Home() {
   const session = await getServerSession();
   const stockBr = await getStockBr('BVMF:IVVB11');
   const crypto = await getCryptos();
 
-  let assets;
+  let assets: any = [];
   if (session?.user?.email) {
-    assets = await getAssets(session?.user?.email);
+    try {
+      assets = await getAssets(session.user.email);
+    } catch (error) {
+      console.error(error);
+    }
   }
-
-  console.log('---  🚀 ---> | session:');
-  console.log('---  🚀 ---> | assets:', assets);
-
-  console.log('---  🚀 ---> | stockBr:', stockBr);
-  // console.log('---  🚀 ---> | crypto:', crypto);
 
   return (
     <main className='flex h-screen flex-col items-center justify-between p-14'>
@@ -33,6 +41,7 @@ export default async function Home() {
             }}
           >
             {session?.user?.name}
+            {assets && <MainTable assets={assets} />}
           </div>
         ) : (
           <div>Not logged in</div>

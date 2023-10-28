@@ -2,8 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Gabarito, Cairo_Play } from 'next/font/google';
 import { getServerSession } from 'next-auth';
-import SessionProvider from './components/SessionProvider';
-import Header from './components/Header';
+import SessionProvider from '../components/SessionProvider';
+import Header from '../components/Header';
 
 export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
 export const cairoPlay = Cairo_Play({ subsets: ['latin'], display: 'swap' });
