@@ -1,30 +1,12 @@
 import { getServerSession } from 'next-auth';
-import { getStockBr } from './lib/stock.server';
-import { getCryptos } from './lib/crypto.server';
-import { gabarito } from './layout';
-import { getAssets } from './lib/assets.server';
 
 export default async function Home() {
   const session = await getServerSession();
-  const stockBr = await getStockBr('BVMF:IVVB11');
-  const crypto = await getCryptos();
-
-  let assets;
-  if (session?.user?.email) {
-    assets = await getAssets(session?.user?.email);
-  }
-
-  console.log('---  🚀 ---> | session:');
-  console.log('---  🚀 ---> | assets:', assets);
-
-  console.log('---  🚀 ---> | stockBr:', stockBr);
-  // console.log('---  🚀 ---> | crypto:', crypto);
 
   return (
     <main className='flex h-screen flex-col items-center justify-between p-14'>
       <div className='z-10 max-w-5xl w-full h-full items-center justify-between font-mono text-sm border-2'>
-        <div className='mb-32'>{`layout --> page.tsx`}</div>
-        {/* <div>IVVB11:{stockBr && stockBr.futures_chain[0].price}</div> */}
+        <div className='mb-32'>{`HOME --> page.tsx`}</div>
         {session?.user?.name ? (
           <div
             className='text-2xl'
