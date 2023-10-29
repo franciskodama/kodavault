@@ -11,6 +11,10 @@ export const columns: ColumnDef<Asset>[] = [
     header: () => <div className={headerClass}>Wallet</div>,
   },
   {
+    accessorKey: 'account',
+    header: () => <div className={headerClass}>Account</div>,
+  },
+  {
     accessorKey: 'asset',
     header: () => <div className={headerClass}>Asset</div>,
   },
@@ -43,5 +47,13 @@ export const columns: ColumnDef<Asset>[] = [
   {
     accessorKey: 'type',
     header: () => <div className={headerClass}>Type</div>,
+  },
+  {
+    accessorKey: 'subtype',
+    header: () => <div className={headerClass}>Subtype</div>,
+  },
+  {
+    accessorKey: 'currency',
+    header: () => <div className={headerClass}>Currency</div>,
   },
 ];
