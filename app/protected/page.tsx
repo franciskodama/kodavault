@@ -5,7 +5,7 @@ import { getAssets } from '../lib/assets.server';
 import { getCryptos } from '../lib/crypto.server';
 import { getStockBr } from '../lib/stock.server';
 
-export type Asset = {
+export type AssetWithoutPrice = {
   id: string;
   walllet: string;
   account: string;
@@ -19,6 +19,13 @@ export type Asset = {
   uid: string;
 };
 
+export type Asset =
+  | undefined
+  | (AssetWithoutPrice & {
+      price?: number;
+      total?: number;
+    });
+
 export default async function ProtectedRoute() {
   const session = await getServerSession();
 
@@ -26,16 +33,13 @@ export default async function ProtectedRoute() {
     redirect('/api/auth/signin');
   }
 
-  // const stockBr = await getStockBr('BVMF:IVVB11');
-  // console.log('---  🚀 ---> | crypto:', crypto.data.BTC.quote.USD.price);
-
-  let assets: Asset[] = [];
+  let assets: AssetWithoutPrice[] = [];
 
   if (session?.user?.email) {
     try {
       const assetData = await getAssets(session.user.email);
       if (Array.isArray(assetData)) {
-        assets = assetData as Asset[];
+        assets = assetData as AssetWithoutPrice[];
       } else {
         console.error(assetData);
       }
@@ -44,35 +48,35 @@ export default async function ProtectedRoute() {
     }
   }
 
-  const includePriceToAssets = (assets: Asset[]) => {
-    assets.map(async (item: Asset) => {
-      if (item.type === 'Crypto') {
-        const crypto = await getCryptos(item.asset);
-        // console.log('---  🚀 ---> | crypto:', crypto);
-      }
-    });
+  const includePriceToAsset = async (item: AssetWithoutPrice) => {
+    if (item.type === 'Crypto') {
+      const thisCryptoPrice = await getCryptos(item.asset);
+      return {
+        ...item,
+        price: thisCryptoPrice.data[0].priceUsd,
+        total: thisCryptoPrice.data[0].priceUsd * +item.qtd,
+      };
+    }
   };
 
-  console.log('---  🚀 ---> | assets:', assets);
+  let assetsWithPricesArray: Asset[] = [];
   if (assets) {
-    const test = includePriceToAssets(assets);
-    // console.log('---  🚀 ---> | test:', test);
+    assets.map(async (asset: AssetWithoutPrice) => {
+      const assetWithPrice: Asset = await includePriceToAsset(asset);
+      assetsWithPricesArray.push(assetWithPrice);
+    });
   }
 
   return (
     <>
       {/* <div>IVVB11:{stockBr && stockBr.futures_chain[0].price}</div> */}
-      {assets.length > 0 && <MainTable assets={assets} />}
+      {assetsWithPricesArray.length > 1 ? (
+        <MainTable assets={assetsWithPricesArray} />
+      ) : (
+        <div className='my-32'>Not loaded yet</div>
+      )}
     </>
   );
 }
 
-// {
-//   id: '973096',
-//   asset: 'USDT',
-//   qtd: '5800.0000',
-//   wallet: 'Wealthsimple',
-//   created_at: '2023-09-02',
-//   type: 'Cash',
-//   uid: 'fk@fkodama.com'
-// }
+// const stockBr = await getStockBr('BVMF:IVVB11');
