@@ -7,11 +7,15 @@ import { getStockBr } from '../lib/stock.server';
 
 export type Asset = {
   id: string;
-  asset: string | null;
-  qtd: string | null;
-  wallet: string | null;
-  created_at: string | null;
-  type: string | null;
+  walllet: string;
+  account: string;
+  asset: string;
+  qtd: string;
+  wallet: string;
+  created_at: string;
+  type: string;
+  subtype: string;
+  currency: string;
   uid: string;
 };
 
@@ -41,10 +45,10 @@ export default async function ProtectedRoute() {
   }
 
   const includePriceToAssets = (assets: Asset[]) => {
-    assets.map((item: Asset) => {
+    assets.map(async (item: Asset) => {
       if (item.type === 'Crypto') {
-        const crypto = getCryptos(item.asset);
-        console.log('---  🚀 ---> | crypto:', crypto);
+        const crypto = await getCryptos(item.asset);
+        // console.log('---  🚀 ---> | crypto:', crypto);
       }
     });
   };
@@ -52,7 +56,7 @@ export default async function ProtectedRoute() {
   console.log('---  🚀 ---> | assets:', assets);
   if (assets) {
     const test = includePriceToAssets(assets);
-    console.log('---  🚀 ---> | test:', test);
+    // console.log('---  🚀 ---> | test:', test);
   }
 
   return (
