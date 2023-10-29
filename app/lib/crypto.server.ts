@@ -2,10 +2,13 @@ export const getCryptos = async (symbol: string | null) => {
   try {
     const response = await fetch(
       // 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest',
-      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${symbol}`,
+      // `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${symbol}`,
+      `https://api.coincap.io/v2/assets?search=${symbol}`,
       {
+        method: 'GET',
         headers: {
-          'X-CMC_PRO_API_KEY': process.env.NEXT_PUBLIC_COINMARKETCAP_KEY || '',
+          'Accept-Encoding': 'deflate',
+          Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
         },
       }
     ).then((res) => res.json());
