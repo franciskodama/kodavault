@@ -57,20 +57,28 @@ export default async function ProtectedRoute() {
         total: thisCryptoPrice.data[0].priceUsd * +item.qtd,
       };
     }
+    if (item.type !== 'Crypto') {
+      const thisStockPrice = await getCryptos(item.asset);
+      return {
+        ...item,
+        price: 0,
+        total: 0,
+      };
+    }
   };
 
   let assetsWithPricesArray: Asset[] = [];
   if (assets) {
-    assets.map(async (asset: AssetWithoutPrice) => {
+    const asyncTasks = assets.map(async (asset: AssetWithoutPrice) => {
       const assetWithPrice: Asset = await includePriceToAsset(asset);
-      assetsWithPricesArray.push(assetWithPrice);
+      return assetWithPrice;
     });
+    assetsWithPricesArray = await Promise.all(asyncTasks);
   }
 
   return (
     <>
-      {/* <div>IVVB11:{stockBr && stockBr.futures_chain[0].price}</div> */}
-      {assetsWithPricesArray.length > 1 ? (
+      {assetsWithPricesArray.length > 0 ? (
         <MainTable assets={assetsWithPricesArray} />
       ) : (
         <div className='my-32'>Not loaded yet</div>
@@ -79,4 +87,6 @@ export default async function ProtectedRoute() {
   );
 }
 
+// assetsWithPricesArray.push(assetWithPrice);
+// {/* <div>IVVB11:{stockBr && stockBr.futures_chain[0].price}</div> */}
 // const stockBr = await getStockBr('BVMF:IVVB11');
