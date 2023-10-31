@@ -14,3 +14,5 @@ export const getCurrency = async () => {
     return { error };
   }
 };
+
+// https://currencylayer.com/dashboard

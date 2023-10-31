@@ -29,6 +29,8 @@ export type Asset =
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
+  const currencyRates = await getCurrency();
+  console.log('---  🚀 ---> | currencyRates:', currencyRates);
 
   if (!session || !session.user) {
     redirect('/api/auth/signin');
@@ -62,19 +64,35 @@ export default async function ProtectedRoute() {
     if (item.type === 'Stock') {
       return {
         ...item,
-        price: 0,
-        total: 0,
+        price: 1,
+        total: 1,
       };
     }
 
     if (item.type === 'Cash') {
-      const thisCashPrice = await getCurrency(item.asset);
-      console.log('---  🚀 ---> | thisCashPrice:', thisCashPrice);
-      return {
-        ...item,
-        price: 0,
-        total: 0,
-      };
+      if (item.currency === 'CAD') {
+        return {
+          ...item,
+          price: 1 / currencyRates.quotes.USDCAD,
+          total: +item.qtd / +currencyRates.quotes.USDCAD,
+        };
+      }
+
+      if (item.currency === 'BRL') {
+        return {
+          ...item,
+          price: 1 / currencyRates.quotes.USDBRL,
+          total: +item.qtd / +currencyRates.quotes.USDBRL,
+        };
+      }
+
+      if (item.currency === 'USD') {
+        return {
+          ...item,
+          price: 1,
+          total: +item.qtd,
+        };
+      }
     }
   };
 
