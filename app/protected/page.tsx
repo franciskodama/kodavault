@@ -4,6 +4,7 @@ import MainTable from '../assets/page';
 import { getAssets } from '../lib/assets.server';
 import { getCryptos } from '../lib/crypto.server';
 import { getStockBr } from '../lib/stock.server';
+import { getCurrency } from '../lib/currency.server';
 
 export type AssetWithoutPrice = {
   id: string;
@@ -28,6 +29,8 @@ export type Asset =
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
+  const currencyRates = await getCurrency();
+  console.log('---  🚀 ---> | currencyRates:', currencyRates);
 
   if (!session || !session.user) {
     redirect('/api/auth/signin');
@@ -57,15 +60,50 @@ export default async function ProtectedRoute() {
         total: thisCryptoPrice.data[0].priceUsd * +item.qtd,
       };
     }
-    if (item.type !== 'Crypto') {
-      const thisStockPrice = await getCryptos(item.asset);
+
+    if (item.type === 'Stock') {
       return {
         ...item,
-        price: 0,
-        total: 0,
+        price: 1,
+        total: 1,
       };
     }
+
+    if (item.type === 'Cash') {
+      if (item.currency === 'CAD') {
+        return {
+          ...item,
+          price: 1 / currencyRates.quotes.USDCAD,
+          total: +item.qtd / +currencyRates.quotes.USDCAD,
+        };
+      }
+
+      if (item.currency === 'BRL') {
+        return {
+          ...item,
+          price: 1 / currencyRates.quotes.USDBRL,
+          total: +item.qtd / +currencyRates.quotes.USDBRL,
+        };
+      }
+
+      if (item.currency === 'USD') {
+        return {
+          ...item,
+          price: 1,
+          total: +item.qtd,
+        };
+      }
+    }
   };
+
+  // thisCashPrice: {
+  //   success: true,
+  //   terms: 'https://currencylayer.com/terms',
+  //   privacy: 'https://currencylayer.com/privacy',
+  //   timestamp: 1698713463,
+  //   source: 'USD',
+  //   quotes: {
+  //     USDAED: 3.672972,
 
   let assetsWithPricesArray: Asset[] = [];
   if (assets) {
