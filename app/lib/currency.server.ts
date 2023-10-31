@@ -1,12 +1,11 @@
-export const getCryptos = async (symbol: string | null) => {
+export const getCurrency = async () => {
   try {
     const response = await fetch(
-      `https://api.coincap.io/v2/assets?search=${symbol}`,
+      `http://apilayer.net/api/live?access_key=${process.env.NEXT_PUBLIC_APILAYER_KEY}`,
       {
         method: 'GET',
         headers: {
           'Accept-Encoding': 'deflate',
-          Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
         },
       }
     ).then((res) => res.json());

@@ -4,6 +4,7 @@ import MainTable from '../assets/page';
 import { getAssets } from '../lib/assets.server';
 import { getCryptos } from '../lib/crypto.server';
 import { getStockBr } from '../lib/stock.server';
+import { getCurrency } from '../lib/currency.server';
 
 export type AssetWithoutPrice = {
   id: string;
@@ -57,8 +58,18 @@ export default async function ProtectedRoute() {
         total: thisCryptoPrice.data[0].priceUsd * +item.qtd,
       };
     }
-    if (item.type !== 'Crypto') {
-      const thisStockPrice = await getCryptos(item.asset);
+
+    if (item.type === 'Stock') {
+      return {
+        ...item,
+        price: 0,
+        total: 0,
+      };
+    }
+
+    if (item.type === 'Cash') {
+      const thisCashPrice = await getCurrency(item.asset);
+      console.log('---  🚀 ---> | thisCashPrice:', thisCashPrice);
       return {
         ...item,
         price: 0,
@@ -66,6 +77,15 @@ export default async function ProtectedRoute() {
       };
     }
   };
+
+  // thisCashPrice: {
+  //   success: true,
+  //   terms: 'https://currencylayer.com/terms',
+  //   privacy: 'https://currencylayer.com/privacy',
+  //   timestamp: 1698713463,
+  //   source: 'USD',
+  //   quotes: {
+  //     USDAED: 3.672972,
 
   let assetsWithPricesArray: Asset[] = [];
   if (assets) {
