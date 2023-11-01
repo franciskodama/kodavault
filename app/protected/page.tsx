@@ -73,7 +73,7 @@ export default async function ProtectedRoute() {
       if (item.currency === 'CAD') {
         return {
           ...item,
-          price: 1 / currencyRates.quotes.USDCAD,
+          price: 1 / currencyRates.quotes.USDCAD.toLocaleString(),
           total: +item.qtd / +currencyRates.quotes.USDCAD,
         };
       }
@@ -81,7 +81,7 @@ export default async function ProtectedRoute() {
       if (item.currency === 'BRL') {
         return {
           ...item,
-          price: 1 / currencyRates.quotes.USDBRL,
+          price: 1 / currencyRates.quotes.USDBRL.toLocaleString(),
           total: +item.qtd / +currencyRates.quotes.USDBRL,
         };
       }
