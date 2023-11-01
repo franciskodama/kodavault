@@ -5,6 +5,7 @@ import { getAssets } from '../lib/assets.server';
 import { getCryptos } from '../lib/crypto.server';
 import { getStockBr } from '../lib/stock.server';
 import { getCurrency } from '../lib/currency.server';
+import { numberFormatter } from '../lib/utils';
 
 export type AssetWithoutPrice = {
   id: string;
@@ -23,8 +24,8 @@ export type AssetWithoutPrice = {
 export type Asset =
   | undefined
   | (AssetWithoutPrice & {
-      price?: number;
-      total?: number;
+      price?: number | string;
+      total?: number | string;
     });
 
 export default async function ProtectedRoute() {
@@ -56,8 +57,10 @@ export default async function ProtectedRoute() {
       const thisCryptoPrice = await getCryptos(item.asset);
       return {
         ...item,
-        price: thisCryptoPrice.data[0].priceUsd,
-        total: thisCryptoPrice.data[0].priceUsd * +item.qtd,
+        price: numberFormatter.format(thisCryptoPrice.data[0].priceUsd),
+        total: numberFormatter.format(
+          thisCryptoPrice.data[0].priceUsd * +item.qtd
+        ),
       };
     }
 
@@ -73,16 +76,20 @@ export default async function ProtectedRoute() {
       if (item.currency === 'CAD') {
         return {
           ...item,
-          price: 1 / currencyRates.quotes.USDCAD.toLocaleString(),
-          total: +item.qtd / +currencyRates.quotes.USDCAD,
+          price: numberFormatter.format(1 / currencyRates.quotes.USDCAD),
+          total: numberFormatter.format(
+            +item.qtd / +currencyRates.quotes.USDCAD
+          ),
         };
       }
 
       if (item.currency === 'BRL') {
         return {
           ...item,
-          price: 1 / currencyRates.quotes.USDBRL.toLocaleString(),
-          total: +item.qtd / +currencyRates.quotes.USDBRL,
+          price: numberFormatter.format(1 / currencyRates.quotes.USDBRL),
+          total: numberFormatter.format(
+            +item.qtd / +currencyRates.quotes.USDBRL
+          ),
         };
       }
 
@@ -90,7 +97,7 @@ export default async function ProtectedRoute() {
         return {
           ...item,
           price: 1,
-          total: +item.qtd,
+          total: numberFormatter.format(+item.qtd),
         };
       }
     }

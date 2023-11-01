@@ -21,11 +21,13 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession();
 
+  // PURPLE --> bg-[#6E2DB8]
+
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-[#FAFAFB]`}>
         <SessionProvider session={session}>
-          <main className='mx-auto max-w-[1400px] text-xl gap-2 border-2 border-yellow-300'>
+          <main className='mx-auto max-w-[1400px] text-xl gap-2'>
             <Header />
 
             {children}

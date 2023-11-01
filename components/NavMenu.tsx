@@ -26,10 +26,10 @@ export default function NavMenu() {
               pathname === '/protected' ? ACTIVE_ROUTE : INACTIVE_ROUTE
             }
           >
-            Protected Route
+            Dashboard
           </li>
         </Link>
-        <Link href='/serverAction'>
+        {/* <Link href='/serverAction'>
           <li
             className={
               pathname === '/serverAction' ? ACTIVE_ROUTE : INACTIVE_ROUTE
@@ -57,7 +57,7 @@ export default function NavMenu() {
           >
             API From Server
           </li>
-        </Link>
+        </Link> */}
       </ul>
       <AuthButton />
     </>
