@@ -3,7 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Asset } from '../protected/page';
 
-const headerClass = 'font-bold text-red-500';
+const headerClass = 'font-bold text-red-500 text-right';
 
 export const columns: ColumnDef<Asset>[] = [
   {
