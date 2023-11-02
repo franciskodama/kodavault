@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import MainTable from '../assets/page';
 import { getAssets } from '../lib/assets.server';
 import { getCryptos } from '../lib/crypto.server';
-import { getStockBr } from '../lib/stock.server';
+import { getStock, getStockBr, getStockUsd } from '../lib/stock.server';
 import { getCurrency } from '../lib/currency.server';
 import { numberFormatter } from '../lib/utils';
 
@@ -31,7 +31,7 @@ export type Asset =
 export default async function ProtectedRoute() {
   const session = await getServerSession();
   const currencyRates = await getCurrency();
-  console.log('---  🚀 ---> | currencyRates:', currencyRates);
+  // console.log('---  🚀 ---> | currencyRates:', currencyRates);
 
   if (!session || !session.user) {
     redirect('/api/auth/signin');
@@ -65,11 +65,40 @@ export default async function ProtectedRoute() {
     }
 
     if (item.type === 'Stock') {
-      return {
-        ...item,
-        price: 1,
-        total: 1,
-      };
+      if (item.currency === 'BRL') {
+        const thisStockPrice = await getStockBr(`${item.asset}:BVMF`);
+        // console.log('---  🚀 ---> | thisStockPrice BRL:', thisStockPrice);
+        return {
+          ...item,
+          price: 1,
+          total: 1,
+          // price: numberFormatter.format(1 / currencyRates.quotes.USDBRL),
+          // total: numberFormatter.format(
+          //   +item.qtd / +currencyRates.quotes.USDBRL
+          // ),
+        };
+      }
+
+      if (item.currency === 'CAD') {
+        // const thisStockPrice = await getStock(`${item.asset}:TSX`);
+        // console.log('---  🚀 ---> | thisStockPrice CAD:', thisStockPrice);
+
+        return {
+          ...item,
+          price: 1,
+          total: 1,
+        };
+      }
+
+      if (item.currency === 'USD') {
+        // const thisStockPrice = await getStockUsd(`${item.asset}:NASDAQ`);
+        // console.log('---  🚀 ---> | thisStockPrice USD:', thisStockPrice);
+        return {
+          ...item,
+          price: 1,
+          total: 1,
+        };
+      }
     }
 
     if (item.type === 'Cash') {

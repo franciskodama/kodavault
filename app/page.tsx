@@ -1,24 +1,13 @@
+import { Hero } from '@/components/Hero';
 import { getServerSession } from 'next-auth';
 
 export default async function Home() {
   const session = await getServerSession();
 
   return (
-    <main className='flex h-screen flex-col items-center justify-between p-14'>
-      <div className='z-10 max-w-5xl w-full h-full items-center justify-between font-mono text-sm border-2'>
-        <div className='mb-32'>{`HOME --> page.tsx`}</div>
-        {session?.user?.name ? (
-          <div
-            className='text-2xl'
-            style={{
-              fontFamily: 'gabarito',
-            }}
-          >
-            {session?.user?.name}
-          </div>
-        ) : (
-          <div>Not logged in</div>
-        )}
+    <main className='flex w-full h-screen flex-col items-center justify-between p-14'>
+      <div className='flex max-w-5xl w-full h-full items-start mt-32 justify-center'>
+        {session?.user?.name ? <Hero /> : <div>Not logged in</div>}
       </div>
     </main>
   );
