@@ -3,7 +3,7 @@ import NavMenu from './NavMenu';
 
 export default function Header() {
   return (
-    <div className='flex justify-between'>
+    <div className='flex justify-between border-2 border-red-500'>
       <Image
         src='/logo.png'
         alt='Logo Koda Vault'
