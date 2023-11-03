@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const ACTIVE_ROUTE = 'py-1 px-2 text-white bg-gray-700';
+const ACTIVE_ROUTE = 'py-1 px-2 text-white bg-slate-600';
 const INACTIVE_ROUTE =
-  'py-1 px-2 text-gray-500 hover:text-gray-300 hover:bg-gray-700';
+  'py-1 px-2 text-slate-600 hover:text-white hover:bg-slate-400';
 
 export default function NavMenu() {
   const pathname = usePathname();
