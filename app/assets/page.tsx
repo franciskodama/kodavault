@@ -4,7 +4,7 @@ import { DataTable } from './data-table';
 
 export default async function MainTable({ assets }: { assets: Asset[] }) {
   return (
-    <div className='container mx-auto mt-[3em]'>
+    <div className='container mx-auto my-[3em]'>
       <DataTable columns={columns} data={assets} />
     </div>
   );
