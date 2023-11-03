@@ -67,29 +67,50 @@ export default async function ProtectedRoute() {
       if (item.currency === 'BRL') {
         const thisStockPrice = await getStock(`${item.asset}.SA`);
         // This price is still in BRL
-        return {
-          ...item,
-          price: numberFormatter.format(
-            thisStockPrice.body[0]?.regularMarketPrice
-          ),
-          total: numberFormatter.format(
-            thisStockPrice.body[0]?.regularMarketPrice * +item.qtd
-          ),
-        };
+
+        if (thisStockPrice.body) {
+          return {
+            ...item,
+            price: numberFormatter.format(
+              thisStockPrice.body[0]?.regularMarketPrice
+            ),
+            total: numberFormatter.format(
+              thisStockPrice.body[0]?.regularMarketPrice * +item.qtd
+            ),
+          };
+        }
+
+        if (!thisStockPrice.body) {
+          return {
+            ...item,
+            price: 1, // Still need to fix this
+            total: 1, // Still need to fix this
+          };
+        }
       }
 
       if (item.currency === 'CAD') {
         const thisStockPrice = await getStock(`${item.asset}.TO`);
         // This price is still in CAD
-        return {
-          ...item,
-          price: numberFormatter.format(
-            thisStockPrice.body[0]?.regularMarketPrice
-          ),
-          total: numberFormatter.format(
-            thisStockPrice.body[0]?.regularMarketPrice * +item.qtd
-          ),
-        };
+
+        if (thisStockPrice.body) {
+          return {
+            ...item,
+            price: numberFormatter.format(
+              thisStockPrice.body[0]?.regularMarketPrice
+            ),
+            total: numberFormatter.format(
+              thisStockPrice.body[0]?.regularMarketPrice * +item.qtd
+            ),
+          };
+        }
+        if (!thisStockPrice.body) {
+          return {
+            ...item,
+            price: 1, // Still need to fix this
+            total: 1, // Still need to fix this
+          };
+        }
       }
 
       if (item.currency === 'USD') {

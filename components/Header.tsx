@@ -4,7 +4,7 @@ import { AuthButton } from './AuthButton';
 
 export default function Header() {
   return (
-    <div className='flex justify-between'>
+    <div className='flex justify-between my-4 mx-8 p-4'>
       <Image
         src='/logo.png'
         alt='Logo Koda Vault'
