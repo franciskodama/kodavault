@@ -32,3 +32,5 @@ export const getStockUsd = async (symbol: string) => {
     return { error };
   }
 };
+
+//Clean
