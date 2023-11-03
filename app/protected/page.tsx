@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import MainTable from '../assets/page';
 import { getAssets } from '../lib/assets.server';
 import { getCryptos } from '../lib/crypto.server';
-import { getStock, getStockBr, getStockUsd } from '../lib/stock.server';
+import { getStock, getStockUsd } from '../lib/stock.server';
 import { getCurrency } from '../lib/currency.server';
 import { numberFormatter } from '../lib/utils';
 
@@ -31,7 +31,6 @@ export type Asset =
 export default async function ProtectedRoute() {
   const session = await getServerSession();
   const currencyRates = await getCurrency();
-  // console.log('---  🚀 ---> | currencyRates:', currencyRates);
 
   if (!session || !session.user) {
     redirect('/api/auth/signin');
@@ -66,37 +65,63 @@ export default async function ProtectedRoute() {
 
     if (item.type === 'Stock') {
       if (item.currency === 'BRL') {
-        const thisStockPrice = await getStockBr(`${item.asset}:BVMF`);
-        // console.log('---  🚀 ---> | thisStockPrice BRL:', thisStockPrice);
-        return {
-          ...item,
-          price: 1,
-          total: 1,
-          // price: numberFormatter.format(1 / currencyRates.quotes.USDBRL),
-          // total: numberFormatter.format(
-          //   +item.qtd / +currencyRates.quotes.USDBRL
-          // ),
-        };
+        const thisStockPrice = await getStock(`${item.asset}.SA`);
+        // This price is still in BRL
+
+        if (thisStockPrice.body) {
+          return {
+            ...item,
+            price: numberFormatter.format(
+              thisStockPrice.body[0]?.regularMarketPrice
+            ),
+            total: numberFormatter.format(
+              thisStockPrice.body[0]?.regularMarketPrice * +item.qtd
+            ),
+          };
+        }
+
+        if (!thisStockPrice.body) {
+          return {
+            ...item,
+            price: 1, // Still need to fix this
+            total: 1, // Still need to fix this
+          };
+        }
       }
 
       if (item.currency === 'CAD') {
-        // const thisStockPrice = await getStock(`${item.asset}:TSX`);
-        // console.log('---  🚀 ---> | thisStockPrice CAD:', thisStockPrice);
+        const thisStockPrice = await getStock(`${item.asset}.TO`);
+        // This price is still in CAD
 
-        return {
-          ...item,
-          price: 1,
-          total: 1,
-        };
+        if (thisStockPrice.body) {
+          return {
+            ...item,
+            price: numberFormatter.format(
+              thisStockPrice.body[0]?.regularMarketPrice
+            ),
+            total: numberFormatter.format(
+              thisStockPrice.body[0]?.regularMarketPrice * +item.qtd
+            ),
+          };
+        }
+        if (!thisStockPrice.body) {
+          return {
+            ...item,
+            price: 1, // Still need to fix this
+            total: 1, // Still need to fix this
+          };
+        }
       }
 
       if (item.currency === 'USD') {
-        // const thisStockPrice = await getStockUsd(`${item.asset}:NASDAQ`);
-        // console.log('---  🚀 ---> | thisStockPrice USD:', thisStockPrice);
+        const thisStockPrice = await getStockUsd(`${item.asset}:NASDAQ`);
+        // Is previous close the right price?
         return {
           ...item,
-          price: 1,
-          total: 1,
+          price: numberFormatter.format(thisStockPrice?.previous_close),
+          total: numberFormatter.format(
+            thisStockPrice?.previous_close * +item.qtd
+          ),
         };
       }
     }
@@ -105,9 +130,9 @@ export default async function ProtectedRoute() {
       if (item.currency === 'CAD') {
         return {
           ...item,
-          price: numberFormatter.format(1 / currencyRates.quotes.USDCAD),
+          price: numberFormatter.format(1 / currencyRates.quotes?.USDCAD),
           total: numberFormatter.format(
-            +item.qtd / +currencyRates.quotes.USDCAD
+            +item.qtd / +currencyRates.quotes?.USDCAD
           ),
         };
       }
@@ -115,9 +140,9 @@ export default async function ProtectedRoute() {
       if (item.currency === 'BRL') {
         return {
           ...item,
-          price: numberFormatter.format(1 / currencyRates.quotes.USDBRL),
+          price: numberFormatter.format(1 / currencyRates.quotes?.USDBRL),
           total: numberFormatter.format(
-            +item.qtd / +currencyRates.quotes.USDBRL
+            +item.qtd / +currencyRates.quotes?.USDBRL
           ),
         };
       }
