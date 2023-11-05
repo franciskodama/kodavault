@@ -10,7 +10,14 @@ export const AuthButton = () => {
   if (session) {
     return (
       <div className='flex items-center gap-4 text-xs text-left'>
-        <div className='relative'>
+        <div className='flex items-center mr-2'>
+          <h3 className='w-auto mr-2 text-sm text-slate-600 font-semibold leading-4'>
+            {`Hey ${session?.user?.name?.split(' ').pop()}!`}
+          </h3>
+          <span className='text-xl'>👋</span>
+        </div>
+
+        <div className='relative mr-2'>
           <Avatar>
             <AvatarImage src='https://avatars.githubusercontent.com/u/28899580?v=4' />
             <AvatarFallback>FK</AvatarFallback>
@@ -18,12 +25,7 @@ export const AuthButton = () => {
           {/* <div className='absolute left-0 top-0 z-10 border-4 border-slate-600 transform -translate-x-1 -translate-y-1 rounded-full w-12 h-12' /> */}
           <div className='absolute left-0 top-0 z-10 border-2 border-slate-600 transform -translate-x-1 -translate-y-1 rounded-full w-12 h-12' />
         </div>
-        <div className='flex items-center mr-8'>
-          <h3 className='w-auto mr-2 text-sm text-slate-600 font-semibold leading-4'>
-            {`Hey ${session?.user?.name?.split(' ').pop()}!`}
-          </h3>
-          <span className='text-xl'>👋</span>
-        </div>
+
         <button onClick={() => signOut()}>
           <LogOutIcon size={18} strokeWidth={2.4} color='#1e293b' />
           {/* slate 800 --> #1e293b */}
