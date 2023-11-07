@@ -41,3 +41,83 @@ export const AuthButton = () => {
     </>
   );
 };
+
+// const DAY = 24 * 60 * 60 * 1000;
+
+// export function NavbarGreeting() {
+//   const { user, loading } = useAuth();
+//   const [greeting, setGreeting] = useState("");
+
+//   useEffect(() => {
+//     const [value, expiry] = localStorage.getItem("greeting")?.split("|") ?? [];
+//     if (value && Number(expiry) > Date.now()) {
+//       setGreeting(value);
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     if (!loading) {
+//       if (user?.displayName) {
+//         const [value, expiry, uid] =
+//           localStorage.getItem("greeting")?.split("|") ?? [];
+//         if (!value || Number(expiry) < Date.now() || uid !== user.uid) {
+//           const newValue = getGreeting(user?.displayName);
+//           setGreeting(newValue);
+//           const toStore = `${newValue}|${Date.now() + DAY}|${user.uid}`;
+//           localStorage.setItem("greeting", toStore);
+//         }
+//       } else {
+//         localStorage.removeItem("greeting");
+//         setGreeting("");
+//       }
+//     }
+//   }, [user, loading]);
+
+//   return (
+//     <Link href="/account" className="p-1" locale={false}>
+//       <div className="flex items-center justify-center gap-1">
+//         <div className="flex-none">
+//           {user?.photoURL ? (
+//             <div className="relative w-6 h-6 rounded-full overflow-hidden">
+//               <Image
+//                 src={user?.photoURL}
+//                 className="object-cover"
+//                 alt={`Avatar for ${user?.displayName}`}
+//                 sizes="6rem"
+//                 priority
+//                 fill
+//               />
+//             </div>
+//           ) : (
+//             <User className="h-[22px] w-[22px]" strokeWidth="1.9" />
+//           )}
+//         </div>
+//         {greeting && (
+//           <div className="font-medium truncate max-w-[12rem]">{greeting}</div>
+//         )}
+//       </div>
+//     </Link>
+//   );
+// }
+
+// function getGreeting(name: string) {
+//   const chosen = Math.random();
+//   switch (true) {
+//     case chosen > 1 / 2:
+//       return `Hi ${name}`;
+//     case chosen > 1 / 4:
+//       return `Hello ${name}`;
+//     case chosen > 1 / 8:
+//       return `Hey ${name}`;
+//     case chosen > 1 / 16:
+//       return `👋 ${name}`;
+//     case chosen > 1 / 32:
+//       return `Yo! ${name}!`;
+//     case chosen > 1 / 64:
+//       return `Sup ${name}`;
+//     case chosen > 1 / 128:
+//       return `Ahoy ${name}`;
+//     default:
+//       return `Lookin' 🔥 ${name}`;
+//   }
+// }

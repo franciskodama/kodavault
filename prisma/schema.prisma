@@ -146,4 +146,5 @@ model Asset {
   subtype    String
   currency   String
   account    String
+  exchange   String @default("N/A")
 }
