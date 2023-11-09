@@ -29,189 +29,128 @@ export type Asset =
       total?: number | string;
     });
 
-// Function to include Price to Cash Assets ------------------------
 const includePriceToCashAssets = async (
   cashAssetsArray: AssetWithoutPrice[]
 ) => {
   const currencyRates = await getCurrency();
+  const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
+    let price = 1;
+    let total = +item.qtd;
 
-  cashAssetsArray.map(async (item: AssetWithoutPrice) => {
     if (item.currency === 'CAD') {
-      cashAssetsArrayWithPrices.push({
-        ...item,
-        qtd: numberFormatter.format(+item.qtd),
-        price: numberFormatter.format(1 / currencyRates.quotes?.USDCAD),
-        total: numberFormatter.format(
-          +item.qtd / +currencyRates.quotes?.USDCAD
-        ),
-      });
+      price = 1 / currencyRates.quotes?.USDCAD;
+      total = +item.qtd / +currencyRates.quotes?.USDCAD;
+    } else if (item.currency === 'BRL') {
+      price = 1 / currencyRates.quotes?.USDBRL;
+      total = +item.qtd / +currencyRates.quotes?.USDBRL;
     }
-    if (item.currency === 'BRL') {
-      cashAssetsArrayWithPrices.push({
-        ...item,
-        qtd: numberFormatter.format(+item.qtd),
 
-        price: numberFormatter.format(1 / currencyRates.quotes?.USDBRL),
-        total: numberFormatter.format(
-          +item.qtd / +currencyRates.quotes?.USDBRL
-        ),
-      });
-    }
-    if (item.currency === 'USD') {
-      cashAssetsArrayWithPrices.push({
-        ...item,
-        qtd: numberFormatter.format(+item.qtd),
-        price: 1,
-        total: numberFormatter.format(+item.qtd),
-      });
-    }
-  });
-};
-
-let cryptoAssetsArrayWithPrices: Asset[] = [];
-let cashAssetsArrayWithPrices: Asset[] = [];
-let stocksAssetsArrayWithPrices: Asset[] = [];
-let assetsWithPricesArray: Asset[] = [];
-
-// Function to include Price to Crypto Assets ------------------------
-const includePriceToCryptoAssets = async (
-  cryptoAssetsArray: AssetWithoutPrice[]
-) => {
-  cryptoAssetsArray.map(async (item: AssetWithoutPrice) => {
-    const thisCryptoPrice = await getCryptos(item.asset);
-    cryptoAssetsArrayWithPrices.push({
+    return {
       ...item,
       qtd: numberFormatter.format(+item.qtd),
-      price: numberFormatter.format(thisCryptoPrice.data[0].priceUsd),
-      total: numberFormatter.format(
-        thisCryptoPrice.data[0].priceUsd * +item.qtd
-      ),
-    });
+      price: numberFormatter.format(price),
+      total: numberFormatter.format(total),
+    };
   });
+
+  return transformedAssets;
 };
 
-const includePriceToStockAssets = async (stocksGroupedByCurrencyArray: any) => {
-  // stocksGroupedByCurrencyArray.BRL.map(async (item: AssetWithoutPrice) => {
-  //--------------------------------------
-  // if (item.currency === 'BRL') {
-  //   const thisStockPrice = await getStock(`${item.asset}.SA`);
-  //   if (thisStockPrice.body) {
-  //     return {
-  //       ...item,
-  //       price: numberFormatter.format(
-  //         thisStockPrice.body[0]?.regularMarketPrice
-  //       ),
-  //       total: numberFormatter.format(
-  //         thisStockPrice.body[0]?.regularMarketPrice * +item.qtd
-  //       ),
-  //     };
-  //   }
-  //   if (!thisStockPrice.body) {
-  //     return {
-  //       ...item,
-  //       price: 1,
-  //       total: 1,
-  //     };
-  //   }
-  // }
-  // if (item.currency === 'CAD') {
-  //   const thisStockPrice = await getStock(`${item.asset}.TO`);
-  //   if (thisStockPrice.body) {
-  //     return {
-  //       ...item,
-  //       price: numberFormatter.format(
-  //         thisStockPrice.body[0]?.regularMarketPrice
-  //       ),
-  //       total: numberFormatter.format(
-  //         thisStockPrice.body[0]?.regularMarketPrice * +item.qtd
-  //       ),
-  //     };
-  //   }
-  //   if (!thisStockPrice.body) {
-  //     return {
-  //       ...item,
-  //       price: 1,
-  //       total: 1,
-  //     };
-  //   }
-  // }
-  // if (item.currency === 'USD') {
-  //   const thisStockPrice = await getStockUsd(`${item.asset}:NASDAQ`);
-  //   return {
-  //     ...item,
-  //     price: numberFormatter.format(thisStockPrice?.previous_close),
-  //     total: numberFormatter.format(
-  //       thisStockPrice?.previous_close * +item.qtd
-  //     ),
-  //   };
-  // }
-  //--------------------------------------
-  // });
+async function includePriceToCryptoAssets(
+  cryptoAssetsArray: AssetWithoutPrice[]
+): Promise<Asset[]> {
+  const transformedAssets = await Promise.all(
+    cryptoAssetsArray.map(async (item: AssetWithoutPrice) => {
+      const thisCryptoPrice = await getCryptos(item.asset);
+      const price = thisCryptoPrice.data[0].priceUsd;
+      const total = price * +item.qtd;
+
+      return {
+        ...item,
+        qtd: numberFormatter.format(+item.qtd),
+        price: numberFormatter.format(price),
+        total: numberFormatter.format(total),
+      };
+    })
+  );
+
+  return transformedAssets;
+}
+const includePriceToStockAssets = async (
+  stockAssetsArray: AssetWithoutPrice[]
+): Promise<Asset[]> => {
+  let symbolsPlusExchanges: string[] = [];
+  stockAssetsArray.map(async (item: AssetWithoutPrice) => {
+    symbolsPlusExchanges.push(`${item.asset}.${item.exchange}`);
+  });
+
+  const symbolsToMakeACall = symbolsPlusExchanges.toString();
+  const callResult = await getStock(symbolsToMakeACall);
+  console.log('---  🚀 ---> | callResult:', callResult);
+
+  const onlySymbolAndPriceArray = callResult.body.map((item: any) => {
+    return {
+      asset: item.symbol.split('.')[0],
+      price: item.regularMarketPrice,
+    };
+  });
+
+  console.log(
+    '---  🚀 ---> | onlySymbolAndPriceArray:',
+    onlySymbolAndPriceArray
+  );
+
+  const stockAssetsWithPrices: Asset[] = stockAssetsArray.map((item: any) => {
+    const thisStock = onlySymbolAndPriceArray.find(
+      (el: any) => el.asset === item.asset
+    );
+    return {
+      ...item,
+      price: numberFormatter.format(thisStock.price),
+      total: numberFormatter.format(thisStock.price * +item.qtd),
+    };
+  });
+
+  console.log('---  🚀 ---> | stockAssetsWithPrices:', stockAssetsWithPrices);
+
+  return stockAssetsWithPrices;
 };
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
 
-  // Get User -------------------------------------------
   if (!session || !session.user) {
     redirect('/api/auth/signin');
   }
 
-  // Get Assets from Database ---------------------------
-  if (session?.user?.email) {
-    try {
-      const assetData = await getAssets(session.user.email);
-      if (Array.isArray(assetData)) {
-        assets = assetData as AssetWithoutPrice[];
-      } else {
-        console.error(assetData);
-      }
-    } catch (error) {
-      console.error(error);
+  try {
+    let assets: AssetWithoutPrice[] = [];
+    if (session?.user?.email) {
+      assets = await fetchAssets(session.user.email);
     }
+
+    if (assets.length > 0) {
+      const assetsWithPricesArray = await fetchAssetsWithPrices(assets);
+
+      return (
+        <>
+          {assetsWithPricesArray.length > 0 ? (
+            <MainTable assets={assetsWithPricesArray} />
+          ) : (
+            <div className='my-32'>Not loaded yet</div>
+          )}
+        </>
+      );
+    } else {
+      return <div className='my-32'>No assets found</div>;
+    }
+  } catch (error) {
+    console.error(error);
+    return <div className='my-32'>Error loading assets</div>;
   }
-
-  if (assets.length > 0) {
-    // Get Grouped Assets By Type ------------------------
-    const assetsGroupedByType = assets.reduce(
-      (groupedAssets: any, asset: AssetWithoutPrice) => {
-        const type = asset.type;
-        if (!groupedAssets[type]) groupedAssets[type] = [];
-        groupedAssets[type].push(asset);
-        return groupedAssets;
-      },
-      {}
-    );
-
-    const cryptoAssetsWithPrice: Asset[] | void =
-      await includePriceToCryptoAssets(assetsGroupedByType.Crypto);
-
-    const cashAssetsWithPrice: Asset[] | void = await includePriceToCashAssets(
-      assetsGroupedByType.Cash
-    );
-
-    const stockAssetsWithPrice: Asset[] | void =
-      await includePriceToStockAssets(assetsGroupedByType.Stock);
-
-    assetsWithPricesArray = [
-      ...cryptoAssetsArrayWithPrices,
-      ...cashAssetsArrayWithPrices,
-      ...stocksAssetsArrayWithPrices,
-    ];
-  }
-
-  return (
-    <>
-      {assetsWithPricesArray.length > 0 ? (
-        <MainTable assets={assetsWithPricesArray} />
-      ) : (
-        <div className='my-32'>Not loaded yet</div>
-      )}
-    </>
-  );
 }
 
-async function fetchAssets(userEmail) {
+async function fetchAssets(userEmail: string) {
   const assetData = await getAssets(userEmail);
   if (Array.isArray(assetData)) {
     return assetData as AssetWithoutPrice[];
@@ -221,8 +160,9 @@ async function fetchAssets(userEmail) {
   }
 }
 
-async function fetchAssetsWithPrices(assets) {
+async function fetchAssetsWithPrices(assets: AssetWithoutPrice[]) {
   const assetsGroupedByType = groupAssetsByType(assets);
+
   const [cryptoAssetsWithPrice, cashAssetsWithPrice, stockAssetsWithPrice] =
     await Promise.all([
       includePriceToCryptoAssets(assetsGroupedByType.Crypto),
@@ -239,8 +179,8 @@ async function fetchAssetsWithPrices(assets) {
   return assetsWithPricesArray;
 }
 
-function groupAssetsByType(assets) {
-  return assets.reduce((groupedAssets, asset) => {
+function groupAssetsByType(assets: AssetWithoutPrice[]) {
+  return assets.reduce((groupedAssets: any, asset: AssetWithoutPrice) => {
     const type = asset.type;
     if (!groupedAssets[type]) groupedAssets[type] = [];
     groupedAssets[type].push(asset);
