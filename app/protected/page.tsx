@@ -81,11 +81,16 @@ const includePriceToStockAssets = async (
 ): Promise<Asset[]> => {
   let symbolsPlusExchanges: string[] = [];
   stockAssetsArray.map(async (item: AssetWithoutPrice) => {
-    symbolsPlusExchanges.push(`${item.asset}.${item.exchange}`);
+    symbolsPlusExchanges.push(
+      `${item.asset}.${item.exchange === 'NASDAQ' ? '' : item.exchange}`
+    );
+
+    // fix here that MSFT is not found beacause of the exchange
   });
 
   const symbolsToMakeACall = symbolsPlusExchanges.toString();
   const callResult = await getStock(symbolsToMakeACall);
+
   console.log('---  🚀 ---> | callResult:', callResult);
 
   const onlySymbolAndPriceArray = callResult.body.map((item: any) => {
