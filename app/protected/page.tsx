@@ -4,7 +4,11 @@ import { getServerSession } from 'next-auth';
 import MainTable from '../assets/page';
 import { CardTotal } from './card-total';
 import { AssetWithoutPrice } from '../lib/types';
-import { fetchAssets, fetchAssetsWithPrices } from '../lib/assets';
+import {
+  fetchAssets,
+  fetchAssetsWithPrices,
+  groupAssetsByType,
+} from '../lib/assets';
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
@@ -21,6 +25,13 @@ export default async function ProtectedRoute() {
 
     if (assets.length > 0) {
       const assetsWithPricesArray = await fetchAssetsWithPrices(assets);
+      const assetsWithPricesByType = groupAssetsByType(assetsWithPricesArray);
+
+      const changeKeyAssetToCryptoForTitleOnCard =
+        assetsWithPricesByType.Crypto.map((item: any) => ({
+          ...item,
+          crypto: item.asset,
+        }));
 
       return (
         <>
@@ -53,9 +64,16 @@ export default async function ProtectedRoute() {
             <CardTotal
               emoji={'🪙'}
               description={'Only Cryptos'}
-              assets={assetsWithPricesArray}
+              assets={changeKeyAssetToCryptoForTitleOnCard}
               customKey={'crypto'}
             />
+          </div>
+          <div className='flex justify-end items-center text-xs font-base text-slate-600 my-2 gap-2'>
+            <p>Legend:</p>
+            <div className='h-[10px] w-4 bg-green-500' />
+            <div>{`> 50%,`}</div>
+            <div className='h-[10px] w-4 bg-red-500' />
+            <div>{`< 50%`}</div>
           </div>
           {assetsWithPricesArray.length > 0 ? (
             <div className='my-8'>

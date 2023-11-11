@@ -4,7 +4,7 @@ import {
   includePriceToCryptoAssets,
   includePriceToStockAssets,
 } from './prices';
-import { AssetWithoutPrice } from './types';
+import { Asset, AssetWithoutPrice } from './types';
 
 export const fetchAssets = async (userEmail: string) => {
   const assetData = await getAssets(userEmail);
@@ -35,11 +35,11 @@ export const fetchAssetsWithPrices = async (assets: AssetWithoutPrice[]) => {
   return assetsWithPricesArray;
 };
 
-function groupAssetsByType(assets: AssetWithoutPrice[]) {
-  return assets.reduce((groupedAssets: any, asset: AssetWithoutPrice) => {
+export const groupAssetsByType = (assets: Asset[]) => {
+  return assets.reduce((groupedAssets: any, asset: any) => {
     const type = asset.type;
     if (!groupedAssets[type]) groupedAssets[type] = [];
     groupedAssets[type].push(asset);
     return groupedAssets;
   }, {});
-}
+};
