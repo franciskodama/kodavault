@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const ACTIVE_ROUTE = 'py-1 px-2 font-semibold text-white bg-slate-600';
+const ACTIVE_ROUTE =
+  'py-1 px-2 font-semibold text-white bg-slate-600 rounded-[2px]';
 const INACTIVE_ROUTE =
   'py-1 px-2 text-slate-600 font-semibold hover:text-white hover:bg-slate-400';
 
