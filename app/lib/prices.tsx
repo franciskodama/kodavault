@@ -7,7 +7,15 @@ import { numberFormatter } from './utils';
 export const includePriceToCashAssets = async (
   cashAssetsArray: AssetWithoutPrice[]
 ) => {
-  const currencyRates = await getCurrency();
+  // const currencyRates = await getCurrency();
+
+  const currencyRates = {
+    quotes: {
+      USDCAD: 1.38,
+      USDBRL: 4.91,
+    },
+  };
+
   const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
     let price = 1;
     let total = +item.qtd;
@@ -55,16 +63,28 @@ export const includePriceToCryptoAssets = async (
 export const includePriceToStockAssets = async (
   stockAssetsArray: AssetWithoutPrice[]
 ): Promise<Asset[]> => {
-  let symbolsPlusExchanges: string[] = [];
+  let symbolAndExchange: string[] = [];
   stockAssetsArray.map(async (item: AssetWithoutPrice) => {
-    symbolsPlusExchanges.push(`${item.asset}.${item.exchange}`);
+    symbolAndExchange.push(
+      `${item.asset}${item.exchange === null ? '' : `.${item.exchange}`}`
+    );
   });
 
-  const symbolsToMakeACall = symbolsPlusExchanges.toString();
-  console.log('---  🚀 ---> | symbolsToMakeACall:', symbolsToMakeACall);
-  const callResult = await getStock(symbolsToMakeACall);
+  const symbolsToMakeACall = symbolAndExchange.toString();
+  const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');
+  const result = await getStock(symbolsToMakeACall);
+  const missingSymbols = symbolsToCheckResultFromTheCall.filter(
+    (item) => !result.body.find((el: any) => el.symbol === item)
+  );
 
-  const onlySymbolAndPriceArray = callResult.body.map((item: any) => {
+  missingSymbols.map((item: any) =>
+    result.body.push({
+      symbol: item,
+      regularMarketPrice: 0,
+    })
+  );
+
+  const onlySymbolAndPriceArray = result.body.map((item: any) => {
     return {
       asset: item.symbol.split('.')[0],
       price: item.regularMarketPrice,

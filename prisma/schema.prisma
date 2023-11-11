@@ -136,7 +136,7 @@ model applicant_tracking_system {
 }
 
 model Asset {
-  id         String @id(map: "assets_pkey")
+  id         String  @id(map: "assets_pkey")
   asset      String
   qtd        String
   wallet     String
@@ -146,5 +146,5 @@ model Asset {
   subtype    String
   currency   String
   account    String
-  exchange   String @default("N/A")
+  exchange   String? @default("null")
 }
