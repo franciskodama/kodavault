@@ -1,0 +1,86 @@
+import { getCryptos } from './crypto.server';
+import { getCurrency } from './currency.server';
+import { getStock } from './stock.server';
+import { Asset, AssetWithoutPrice } from './types';
+import { numberFormatter } from './utils';
+
+export const includePriceToCashAssets = async (
+  cashAssetsArray: AssetWithoutPrice[]
+) => {
+  const currencyRates = await getCurrency();
+  const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
+    let price = 1;
+    let total = +item.qtd;
+
+    if (item.currency === 'CAD') {
+      price = 1 / currencyRates.quotes?.USDCAD;
+      total = +item.qtd / +currencyRates.quotes?.USDCAD;
+    } else if (item.currency === 'BRL') {
+      price = 1 / currencyRates.quotes?.USDBRL;
+      total = +item.qtd / +currencyRates.quotes?.USDBRL;
+    }
+
+    return {
+      ...item,
+      qtd: numberFormatter.format(+item.qtd),
+      price: price,
+      total: total,
+    };
+  });
+
+  return transformedAssets;
+};
+
+export const includePriceToCryptoAssets = async (
+  cryptoAssetsArray: AssetWithoutPrice[]
+): Promise<Asset[]> => {
+  const transformedAssets = await Promise.all(
+    cryptoAssetsArray.map(async (item: AssetWithoutPrice) => {
+      const thisCryptoPrice = await getCryptos(item.asset);
+      const price = thisCryptoPrice.data[0].priceUsd;
+      const total = price * +item.qtd;
+
+      return {
+        ...item,
+        qtd: numberFormatter.format(+item.qtd),
+        price: +price,
+        total: total,
+      };
+    })
+  );
+
+  return transformedAssets;
+};
+
+export const includePriceToStockAssets = async (
+  stockAssetsArray: AssetWithoutPrice[]
+): Promise<Asset[]> => {
+  let symbolsPlusExchanges: string[] = [];
+  stockAssetsArray.map(async (item: AssetWithoutPrice) => {
+    symbolsPlusExchanges.push(`${item.asset}.${item.exchange}`);
+  });
+
+  const symbolsToMakeACall = symbolsPlusExchanges.toString();
+  const callResult = await getStock(symbolsToMakeACall);
+
+  const onlySymbolAndPriceArray = callResult.body.map((item: any) => {
+    return {
+      asset: item.symbol.split('.')[0],
+      price: item.regularMarketPrice,
+    };
+  });
+
+  const stockAssetsWithPrices: Asset[] = stockAssetsArray.map((item: any) => {
+    const thisStock = onlySymbolAndPriceArray.find(
+      (el: any) => el.asset === item.asset
+    );
+
+    return {
+      ...item,
+      price: thisStock.price,
+      total: thisStock.price * +item.qtd,
+    };
+  });
+
+  return stockAssetsWithPrices;
+};

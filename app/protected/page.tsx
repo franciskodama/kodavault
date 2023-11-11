@@ -1,13 +1,10 @@
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
+
 import MainTable from '../assets/page';
-import { getAssets } from '../lib/assets.server';
-import { getCryptos } from '../lib/crypto.server';
-import { getStock, getStockUsd } from '../lib/stock.server';
-import { getCurrency } from '../lib/currency.server';
-import { numberFormatter } from '../lib/utils';
 import { CardTotal } from './card-total';
-import { Asset, AssetWithoutPrice } from '../lib/types';
+import { AssetWithoutPrice } from '../lib/types';
+import { fetchAssets, fetchAssetsWithPrices } from '../lib/assets';
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
@@ -77,122 +74,3 @@ export default async function ProtectedRoute() {
     return <div className='my-32'>🚨 Error loading assets</div>;
   }
 }
-
-async function fetchAssets(userEmail: string) {
-  const assetData = await getAssets(userEmail);
-  if (Array.isArray(assetData)) {
-    return assetData as AssetWithoutPrice[];
-  } else {
-    console.error(assetData);
-    return [];
-  }
-}
-
-async function fetchAssetsWithPrices(assets: AssetWithoutPrice[]) {
-  const assetsGroupedByType = groupAssetsByType(assets);
-
-  const [cryptoAssetsWithPrice, cashAssetsWithPrice, stockAssetsWithPrice] =
-    await Promise.all([
-      includePriceToCryptoAssets(assetsGroupedByType.Crypto),
-      includePriceToCashAssets(assetsGroupedByType.Cash),
-      includePriceToStockAssets(assetsGroupedByType.Stock),
-    ]);
-
-  const assetsWithPricesArray = [
-    ...(cryptoAssetsWithPrice || []),
-    ...(cashAssetsWithPrice || []),
-    ...(stockAssetsWithPrice || []),
-  ];
-
-  return assetsWithPricesArray;
-}
-
-function groupAssetsByType(assets: AssetWithoutPrice[]) {
-  return assets.reduce((groupedAssets: any, asset: AssetWithoutPrice) => {
-    const type = asset.type;
-    if (!groupedAssets[type]) groupedAssets[type] = [];
-    groupedAssets[type].push(asset);
-    return groupedAssets;
-  }, {});
-}
-
-const includePriceToCashAssets = async (
-  cashAssetsArray: AssetWithoutPrice[]
-) => {
-  const currencyRates = await getCurrency();
-  const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
-    let price = 1;
-    let total = +item.qtd;
-
-    if (item.currency === 'CAD') {
-      price = 1 / currencyRates.quotes?.USDCAD;
-      total = +item.qtd / +currencyRates.quotes?.USDCAD;
-    } else if (item.currency === 'BRL') {
-      price = 1 / currencyRates.quotes?.USDBRL;
-      total = +item.qtd / +currencyRates.quotes?.USDBRL;
-    }
-
-    return {
-      ...item,
-      qtd: numberFormatter.format(+item.qtd),
-      price: price,
-      total: total,
-    };
-  });
-
-  return transformedAssets;
-};
-
-async function includePriceToCryptoAssets(
-  cryptoAssetsArray: AssetWithoutPrice[]
-): Promise<Asset[]> {
-  const transformedAssets = await Promise.all(
-    cryptoAssetsArray.map(async (item: AssetWithoutPrice) => {
-      const thisCryptoPrice = await getCryptos(item.asset);
-      const price = thisCryptoPrice.data[0].priceUsd;
-      const total = price * +item.qtd;
-
-      return {
-        ...item,
-        qtd: numberFormatter.format(+item.qtd),
-        price: +price,
-        total: total,
-      };
-    })
-  );
-
-  return transformedAssets;
-}
-
-const includePriceToStockAssets = async (
-  stockAssetsArray: AssetWithoutPrice[]
-): Promise<Asset[]> => {
-  let symbolsPlusExchanges: string[] = [];
-  stockAssetsArray.map(async (item: AssetWithoutPrice) => {
-    symbolsPlusExchanges.push(`${item.asset}.${item.exchange}`);
-  });
-
-  const symbolsToMakeACall = symbolsPlusExchanges.toString();
-  const callResult = await getStock(symbolsToMakeACall);
-
-  const onlySymbolAndPriceArray = callResult.body.map((item: any) => {
-    return {
-      asset: item.symbol.split('.')[0],
-      price: item.regularMarketPrice,
-    };
-  });
-
-  const stockAssetsWithPrices: Asset[] = stockAssetsArray.map((item: any) => {
-    const thisStock = onlySymbolAndPriceArray.find(
-      (el: any) => el.asset === item.asset
-    );
-
-    return {
-      ...item,
-      price: thisStock.price,
-      total: thisStock.price * +item.qtd,
-    };
-  });
-
-  return stockAssetsWithPrices;
-};
