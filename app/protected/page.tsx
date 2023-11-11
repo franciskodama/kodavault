@@ -6,120 +6,8 @@ import { getCryptos } from '../lib/crypto.server';
 import { getStock, getStockUsd } from '../lib/stock.server';
 import { getCurrency } from '../lib/currency.server';
 import { numberFormatter } from '../lib/utils';
-
-export type AssetWithoutPrice = {
-  id: string;
-  walllet: string;
-  account: string;
-  asset: string;
-  qtd: string;
-  wallet: string;
-  created_at: string;
-  type: string;
-  subtype: string;
-  currency: string;
-  uid: string;
-  exchange: string;
-};
-
-export type Asset =
-  | undefined
-  | (AssetWithoutPrice & {
-      price?: number | string;
-      total?: number | string;
-    });
-
-const includePriceToCashAssets = async (
-  cashAssetsArray: AssetWithoutPrice[]
-) => {
-  const currencyRates = await getCurrency();
-  const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
-    let price = 1;
-    let total = +item.qtd;
-
-    if (item.currency === 'CAD') {
-      price = 1 / currencyRates.quotes?.USDCAD;
-      total = +item.qtd / +currencyRates.quotes?.USDCAD;
-    } else if (item.currency === 'BRL') {
-      price = 1 / currencyRates.quotes?.USDBRL;
-      total = +item.qtd / +currencyRates.quotes?.USDBRL;
-    }
-
-    return {
-      ...item,
-      qtd: numberFormatter.format(+item.qtd),
-      price: numberFormatter.format(price),
-      total: numberFormatter.format(total),
-    };
-  });
-
-  return transformedAssets;
-};
-
-async function includePriceToCryptoAssets(
-  cryptoAssetsArray: AssetWithoutPrice[]
-): Promise<Asset[]> {
-  const transformedAssets = await Promise.all(
-    cryptoAssetsArray.map(async (item: AssetWithoutPrice) => {
-      const thisCryptoPrice = await getCryptos(item.asset);
-      const price = thisCryptoPrice.data[0].priceUsd;
-      const total = price * +item.qtd;
-
-      return {
-        ...item,
-        qtd: numberFormatter.format(+item.qtd),
-        price: numberFormatter.format(price),
-        total: numberFormatter.format(total),
-      };
-    })
-  );
-
-  return transformedAssets;
-}
-const includePriceToStockAssets = async (
-  stockAssetsArray: AssetWithoutPrice[]
-): Promise<Asset[]> => {
-  let symbolsPlusExchanges: string[] = [];
-  stockAssetsArray.map(async (item: AssetWithoutPrice) => {
-    symbolsPlusExchanges.push(
-      `${item.asset}.${item.exchange === 'NASDAQ' ? '' : item.exchange}`
-    );
-
-    // fix here that MSFT is not found beacause of the exchange
-  });
-
-  const symbolsToMakeACall = symbolsPlusExchanges.toString();
-  const callResult = await getStock(symbolsToMakeACall);
-
-  console.log('---  🚀 ---> | callResult:', callResult);
-
-  const onlySymbolAndPriceArray = callResult.body.map((item: any) => {
-    return {
-      asset: item.symbol.split('.')[0],
-      price: item.regularMarketPrice,
-    };
-  });
-
-  console.log(
-    '---  🚀 ---> | onlySymbolAndPriceArray:',
-    onlySymbolAndPriceArray
-  );
-
-  const stockAssetsWithPrices: Asset[] = stockAssetsArray.map((item: any) => {
-    const thisStock = onlySymbolAndPriceArray.find(
-      (el: any) => el.asset === item.asset
-    );
-    return {
-      ...item,
-      price: numberFormatter.format(thisStock.price),
-      total: numberFormatter.format(thisStock.price * +item.qtd),
-    };
-  });
-
-  console.log('---  🚀 ---> | stockAssetsWithPrices:', stockAssetsWithPrices);
-
-  return stockAssetsWithPrices;
-};
+import { CardTotal } from './card-total';
+import { Asset, AssetWithoutPrice } from '../lib/types';
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
@@ -139,6 +27,8 @@ export default async function ProtectedRoute() {
 
       return (
         <>
+          <CardTotal assets={assetsWithPricesArray} customKey={'type'} />
+
           {assetsWithPricesArray.length > 0 ? (
             <MainTable assets={assetsWithPricesArray} />
           ) : (
@@ -192,3 +82,84 @@ function groupAssetsByType(assets: AssetWithoutPrice[]) {
     return groupedAssets;
   }, {});
 }
+
+const includePriceToCashAssets = async (
+  cashAssetsArray: AssetWithoutPrice[]
+) => {
+  const currencyRates = await getCurrency();
+  const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
+    let price = 1;
+    let total = +item.qtd;
+
+    if (item.currency === 'CAD') {
+      price = 1 / currencyRates.quotes?.USDCAD;
+      total = +item.qtd / +currencyRates.quotes?.USDCAD;
+    } else if (item.currency === 'BRL') {
+      price = 1 / currencyRates.quotes?.USDBRL;
+      total = +item.qtd / +currencyRates.quotes?.USDBRL;
+    }
+
+    return {
+      ...item,
+      qtd: numberFormatter.format(+item.qtd),
+      price: price,
+      total: total,
+    };
+  });
+
+  return transformedAssets;
+};
+
+async function includePriceToCryptoAssets(
+  cryptoAssetsArray: AssetWithoutPrice[]
+): Promise<Asset[]> {
+  const transformedAssets = await Promise.all(
+    cryptoAssetsArray.map(async (item: AssetWithoutPrice) => {
+      const thisCryptoPrice = await getCryptos(item.asset);
+      const price = thisCryptoPrice.data[0].priceUsd;
+      const total = price * +item.qtd;
+
+      return {
+        ...item,
+        qtd: numberFormatter.format(+item.qtd),
+        price: +price,
+        total: total,
+      };
+    })
+  );
+
+  return transformedAssets;
+}
+
+const includePriceToStockAssets = async (
+  stockAssetsArray: AssetWithoutPrice[]
+): Promise<Asset[]> => {
+  let symbolsPlusExchanges: string[] = [];
+  stockAssetsArray.map(async (item: AssetWithoutPrice) => {
+    symbolsPlusExchanges.push(`${item.asset}.${item.exchange}`);
+  });
+
+  const symbolsToMakeACall = symbolsPlusExchanges.toString();
+  const callResult = await getStock(symbolsToMakeACall);
+
+  const onlySymbolAndPriceArray = callResult.body.map((item: any) => {
+    return {
+      asset: item.symbol.split('.')[0],
+      price: item.regularMarketPrice,
+    };
+  });
+
+  const stockAssetsWithPrices: Asset[] = stockAssetsArray.map((item: any) => {
+    const thisStock = onlySymbolAndPriceArray.find(
+      (el: any) => el.asset === item.asset
+    );
+
+    return {
+      ...item,
+      price: thisStock.price,
+      total: thisStock.price * +item.qtd,
+    };
+  });
+
+  return stockAssetsWithPrices;
+};
