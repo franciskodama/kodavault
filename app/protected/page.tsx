@@ -27,21 +27,54 @@ export default async function ProtectedRoute() {
 
       return (
         <>
-          <CardTotal assets={assetsWithPricesArray} customKey={'type'} />
-
+          <div className='flex flex-wrap gap-2 justify-between'>
+            <CardTotal
+              emoji={'🧺'}
+              description={'This is a description'}
+              assets={assetsWithPricesArray}
+              customKey={'wallet'}
+            />
+            {/* 🤑 👛 🅱️*/}
+            <CardTotal
+              emoji={'💰'}
+              description={'This is a description'}
+              assets={assetsWithPricesArray}
+              customKey={'type'}
+            />
+            <CardTotal
+              emoji={'🗂️'}
+              description={'This is a description'}
+              assets={assetsWithPricesArray}
+              customKey={'subtype'}
+            />
+            <CardTotal
+              emoji={'💵'}
+              description={'Currency, babe!'}
+              assets={assetsWithPricesArray}
+              customKey={'currency'}
+            />
+            <CardTotal
+              emoji={'🪙'}
+              description={'Only Cryptos'}
+              assets={assetsWithPricesArray}
+              customKey={'crypto'}
+            />
+          </div>
           {assetsWithPricesArray.length > 0 ? (
-            <MainTable assets={assetsWithPricesArray} />
+            <div className='my-8'>
+              <MainTable assets={assetsWithPricesArray} />
+            </div>
           ) : (
-            <div className='my-32'>Not loaded yet</div>
+            <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
           )}
         </>
       );
     } else {
-      return <div className='my-32'>No assets found</div>;
+      return <div className='my-32'>🙅🏻‍♀️ No assets found</div>;
     }
   } catch (error) {
     console.error(error);
-    return <div className='my-32'>Error loading assets</div>;
+    return <div className='my-32'>🚨 Error loading assets</div>;
   }
 }
 
