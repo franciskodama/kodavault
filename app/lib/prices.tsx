@@ -4,17 +4,17 @@ import { getStock } from './stock.server';
 import { Asset, AssetWithoutPrice } from './types';
 import { numberFormatter } from './utils';
 
+const currencyRates = {
+  quotes: {
+    USDCAD: 1.38,
+    USDBRL: 4.91,
+  },
+};
+
 export const includePriceToCashAssets = async (
   cashAssetsArray: AssetWithoutPrice[]
 ) => {
   // const currencyRates = await getCurrency();
-
-  const currencyRates = {
-    quotes: {
-      USDCAD: 1.38,
-      USDBRL: 4.91,
-    },
-  };
 
   const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
     let price = 1;
@@ -85,9 +85,17 @@ export const includePriceToStockAssets = async (
   );
 
   const onlySymbolAndPriceArray = result.body.map((item: any) => {
+    // const currencyRates = await getCurrency();
+
     return {
       asset: item.symbol.split('.')[0],
-      price: item.regularMarketPrice,
+      price:
+        item.regularMarketPrice /
+        (item.currency === 'CAD'
+          ? currencyRates.quotes?.USDCAD
+          : item.currency === 'BRL'
+          ? currencyRates.quotes?.USDBRL
+          : 1),
     };
   });
 
