@@ -61,6 +61,7 @@ export const includePriceToStockAssets = async (
   });
 
   const symbolsToMakeACall = symbolsPlusExchanges.toString();
+  console.log('---  🚀 ---> | symbolsToMakeACall:', symbolsToMakeACall);
   const callResult = await getStock(symbolsToMakeACall);
 
   const onlySymbolAndPriceArray = callResult.body.map((item: any) => {
