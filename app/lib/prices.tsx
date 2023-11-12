@@ -4,7 +4,7 @@ import { getStock } from './stock.server';
 import { Asset, AssetWithoutPrice } from './types';
 import { numberFormatter } from './utils';
 
-const currencyRates = {
+export const currencyRates = {
   quotes: {
     USDCAD: 1.38,
     USDBRL: 4.91,
