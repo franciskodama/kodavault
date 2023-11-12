@@ -2,13 +2,14 @@ import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
 import MainTable from '../assets/page';
-import { CardTotal } from './card-total';
+import { CardTotal } from '../../components/CardTotal';
 import { AssetWithoutPrice } from '../lib/types';
 import {
   fetchAssets,
   fetchAssetsWithPrices,
   groupAssetsByType,
 } from '../lib/assets';
+import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
@@ -35,6 +36,12 @@ export default async function ProtectedRoute() {
 
       return (
         <>
+          <div className='flex flex-wrap gap-2 justify-between my-3'>
+            <CardTotalAllCurrency
+              assets={assetsWithPricesArray}
+              description={'Do we need a description here?'}
+            />
+          </div>
           <div className='flex flex-wrap gap-2 justify-between'>
             <CardTotal
               emoji={'🧺'}
@@ -76,7 +83,7 @@ export default async function ProtectedRoute() {
             <div>{`< 50%`}</div>
           </div>
           {assetsWithPricesArray.length > 0 ? (
-            <div className='my-8'>
+            <div className='my-4'>
               <MainTable assets={assetsWithPricesArray} />
             </div>
           ) : (
