@@ -10,6 +10,7 @@ import {
   groupAssetsByType,
 } from '../lib/assets';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
+import { CardLastTop } from '@/components/CardLastTop';
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
@@ -36,10 +37,15 @@ export default async function ProtectedRoute() {
 
       return (
         <>
-          <div className='flex flex-wrap gap-2 justify-between my-3'>
+          <div className='flex gap-2 my-3'>
             <CardTotalAllCurrency
               assets={assetsWithPricesArray}
               description={'Do we need a description here?'}
+            />
+            <CardLastTop
+              emoji={'🤑'}
+              description={'All time high Estimation'}
+              assets={assetsWithPricesArray}
             />
           </div>
           <div className='flex flex-wrap gap-2 justify-between'>
@@ -49,7 +55,6 @@ export default async function ProtectedRoute() {
               assets={assetsWithPricesArray}
               customKey={'wallet'}
             />
-            {/* 🤑 👛 🅱️*/}
             <CardTotal
               emoji={'💰'}
               description={'This is a description'}
