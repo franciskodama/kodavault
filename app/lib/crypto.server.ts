@@ -15,3 +15,42 @@ export const getCryptos = async (symbol: string | null) => {
     return { error };
   }
 };
+export const getAllTimeHighData = async () => {
+  try {
+    const url = 'https://api.coingecko.com/api/v3/coins/markets';
+
+    interface Params {
+      vs_currency: string;
+      order: string;
+      per_page: number;
+      page: number;
+      sparkline: boolean;
+    }
+
+    const params: Params = {
+      vs_currency: 'usd',
+      order: 'market_cap_desc',
+      per_page: 100,
+      page: 1,
+      sparkline: false,
+    };
+
+    // Convert numeric values to strings before creating URLSearchParams
+    const queryParams = new URLSearchParams(
+      Object.entries(params).map(([key, value]) => [key, value.toString()])
+    );
+
+    const response = await fetch(`${url}?${queryParams}`);
+    const data = await response.json();
+
+    const allTimeHighData = data.map(
+      (crypto: { symbol: string; ath: number }) => ({
+        [crypto.symbol.toUpperCase()]: crypto.ath,
+      })
+    );
+
+    return allTimeHighData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};

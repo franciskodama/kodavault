@@ -12,8 +12,17 @@ import {
   numberFormatter,
 } from '../app/lib/utils';
 import { Asset } from '../app/lib/types';
+import { getAllTimeHighData } from '@/app/lib/crypto.server';
 
-export const CardLastTop = ({
+type AssetWithTop = {
+  symbol: string;
+  currentPrice: number;
+  qty: number;
+  total: number;
+  top: number;
+  estimationOnTop: number;
+};
+export const CardLastTop = async ({
   assets,
   emoji = '',
   description = '',
@@ -27,14 +36,8 @@ export const CardLastTop = ({
   //   const sortedArray = totalArray.sort((a, b) => b.total - a.total);
   //   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
-  type AssetWithTop = {
-    symbol: string;
-    currentPrice: number;
-    qty: number;
-    total: number;
-    top: number;
-    estimationOnTop: number;
-  };
+  const result = await getAllTimeHighData();
+  console.log('---  🚀 ---> | result:', result);
 
   return (
     <Card className=''>
@@ -42,7 +45,7 @@ export const CardLastTop = ({
         <div className='flex flex-col'>
           <CardHeader>
             <CardTitle className='capitalize flex justify-between'>
-              <span>All Time High Estimation</span>
+              <span>ATH Estimation</span>
               <span>{emoji}</span>
             </CardTitle>
             <CardDescription>{description}</CardDescription>
