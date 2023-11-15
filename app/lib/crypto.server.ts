@@ -45,7 +45,8 @@ export const getAllTimeHighData = async () => {
 
     const allTimeHighData = data.map(
       (crypto: { symbol: string; ath: number }) => ({
-        [crypto.symbol.toUpperCase()]: crypto.ath,
+        symbol: crypto.symbol.toUpperCase(),
+        ath: crypto.ath,
       })
     );
 

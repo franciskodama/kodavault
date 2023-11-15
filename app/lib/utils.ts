@@ -45,23 +45,3 @@ export const getTotalByKey = (assets: any[], key: string): ResultProps[] => {
     total: groupedData[item],
   }));
 };
-
-// export const CryptosAllTimeHigh = [
-//   { BTC: 68672 },
-//   { ETH: 4860 },
-//   { BNB: 688.62 },
-//   { XRP: 3.84 },
-//   { SOL: 259.62 },
-//   { ADA: 3.08 },
-//   { DOGE: 0.75 },
-//   { TRX: 0.3 },
-//   { LINK: 52.82 },
-//   { MATIC: 2.91 },
-//   { DOT: 54.84 },
-//   { AVAX: 145.85 },
-//   { LTC: 415.06 },
-//   { ATOM: 44.72 },
-//   { XLM: 0.938 },
-//   { NEAR: 20.49 },
-//   { AAVE: 664.01 },
-// ];
