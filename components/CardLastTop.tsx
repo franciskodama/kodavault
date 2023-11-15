@@ -32,12 +32,13 @@ export const CardLastTop = async ({
 
   description?: string;
 }) => {
+  console.log('---  🚀 ---> | assets:', assets);
   //   const totalArray = getTotalByKey(assets, 'type');
   //   const sortedArray = totalArray.sort((a, b) => b.total - a.total);
   //   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
   const result = await getAllTimeHighData();
-  console.log('---  🚀 ---> | result:', result);
+  // console.log('---  🚀 ---> | result:', result);
 
   return (
     <Card className=''>

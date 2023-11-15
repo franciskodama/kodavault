@@ -45,7 +45,7 @@ export default async function ProtectedRoute() {
             <CardLastTop
               emoji={'🤑'}
               description={'All time high Estimation'}
-              assets={assetsWithPricesArray}
+              assets={assetsWithPricesByType.Crypto}
             />
           </div>
           <div className='flex flex-wrap gap-2 justify-between'>
