@@ -18,7 +18,7 @@ export const includePriceToCashAssets = async (
 
   const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
     let price = 1;
-    let total = +item.qtd;
+    let total = item.qtd;
 
     if (item.currency === 'CAD') {
       price = 1 / currencyRates.quotes?.USDCAD;

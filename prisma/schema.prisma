@@ -138,7 +138,7 @@ model applicant_tracking_system {
 model Asset {
   id         String  @id(map: "assets_pkey")
   asset      String
-  qtd        String
+  qtd        Decimal @default(0) @db.Decimal(15, 2)
   wallet     String
   created_at String
   type       String

@@ -3,7 +3,7 @@ export type AssetWithoutPrice = {
   walllet: string;
   account: string;
   asset: string;
-  qtd: string;
+  qtd: number | string;
   wallet: string;
   created_at: string;
   type: string;
@@ -19,3 +19,20 @@ export type Asset =
       price?: number;
       total?: number;
     });
+
+export type AssetForAth = {
+  id: string;
+  walllet: string;
+  account: string;
+  asset: string;
+  qtd: number;
+  wallet: string;
+  created_at: string;
+  type: string;
+  subtype: string;
+  currency: string;
+  uid: string;
+  exchange: string;
+  price?: number;
+  total?: number;
+};

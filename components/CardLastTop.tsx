@@ -11,10 +11,10 @@ import {
   getTotalByKey,
   numberFormatter,
 } from '../app/lib/utils';
-import { Asset } from '../app/lib/types';
+import { Asset, AssetForAth } from '../app/lib/types';
 import { getAllTimeHighData } from '@/app/lib/crypto.server';
 
-type AssetWithTop = {
+type AssetWithAth = {
   symbol: string;
   currentPrice: number;
   qty: number;
@@ -35,21 +35,26 @@ export const CardLastTop = async ({
   const athCoins = await getAllTimeHighData();
 
   const onlyCryptoAssets = assets.filter((item: any) => item.type === 'Crypto');
-  // console.log('---  🚀 ---> | onlyCryptoAssets:', onlyCryptoAssets);
 
   const totalQtyByAssetInAllWallets = onlyCryptoAssets.reduce(
-    (acc: any, currentAsset: Asset) => {
-      const { asset, qtd } = currentAsset;
-      const quantity = parseFloat(qtd);
+    (acc: any, currentAsset: any) => {
+      if (currentAsset.asset) {
+        const { asset, qtd } = currentAsset;
+        const quantity = +qtd;
 
-      if (!acc.hasOwnProperty(asset)) {
-        acc[asset] += quantity;
-      } else {
-        acc[asset] = quantity;
+        if (!acc.hasOwnProperty(asset)) {
+          acc[asset] += quantity;
+        } else {
+          acc[asset] = quantity;
+        }
       }
       return acc;
     },
-    0
+    {}
+  );
+  console.log(
+    '---  🚀 ---> | totalQtyByAssetInAllWallets:',
+    totalQtyByAssetInAllWallets
   );
 
   // Get array that we agrouped by Crypto asset. eg.: MATIC in all wallets

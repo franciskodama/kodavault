@@ -71,19 +71,3 @@ export const CardTotal = ({
     </Card>
   );
 };
-
-// {
-//     id: '761959',
-//     asset: 'GLXY',
-//     qtd: '200.0000',
-//     wallet: 'Wealthsimple',
-//     created_at: '2023-08-27',
-//     type: 'Stock',
-//     uid: 'fk@fkodama.com',
-//     subtype: 'Stock-CAD',
-//     currency: 'CAD',
-//     account: 'Investment',
-//     exchange: 'TO',
-//     price: '7.63',
-//     total: '1,526.00'
-//   }
