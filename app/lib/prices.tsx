@@ -2,7 +2,6 @@ import { getCryptos } from './crypto.server';
 import { getCurrency } from './currency.server';
 import { getStock } from './stock.server';
 import { Asset, AssetWithoutPrice } from './types';
-import { numberFormatter } from './utils';
 
 export const currencyRates = {
   quotes: {
@@ -30,7 +29,7 @@ export const includePriceToCashAssets = async (
 
     return {
       ...item,
-      qtd: numberFormatter.format(item.qtd),
+      qtd: item.qtd,
       price: price,
       total: total,
     };
@@ -50,7 +49,7 @@ export const includePriceToCryptoAssets = async (
 
       return {
         ...item,
-        qtd: numberFormatter.format(item.qtd),
+        qtd: item.qtd,
         price: +price,
         total: total,
       };
