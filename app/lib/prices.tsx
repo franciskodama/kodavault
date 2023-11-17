@@ -2,7 +2,6 @@ import { getCryptos } from './crypto.server';
 import { getCurrency } from './currency.server';
 import { getStock } from './stock.server';
 import { Asset, AssetWithoutPrice } from './types';
-import { numberFormatter } from './utils';
 
 export const currencyRates = {
   quotes: {
@@ -18,19 +17,19 @@ export const includePriceToCashAssets = async (
 
   const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
     let price = 1;
-    let total = +item.qtd;
+    let total = item.qtd;
 
     if (item.currency === 'CAD') {
       price = 1 / currencyRates.quotes?.USDCAD;
-      total = +item.qtd / +currencyRates.quotes?.USDCAD;
+      total = item.qtd / currencyRates.quotes?.USDCAD;
     } else if (item.currency === 'BRL') {
       price = 1 / currencyRates.quotes?.USDBRL;
-      total = +item.qtd / +currencyRates.quotes?.USDBRL;
+      total = item.qtd / currencyRates.quotes?.USDBRL;
     }
 
     return {
       ...item,
-      qtd: numberFormatter.format(+item.qtd),
+      qtd: item.qtd,
       price: price,
       total: total,
     };
@@ -46,11 +45,11 @@ export const includePriceToCryptoAssets = async (
     cryptoAssetsArray.map(async (item: AssetWithoutPrice) => {
       const thisCryptoPrice = await getCryptos(item.asset);
       const price = thisCryptoPrice.data[0].priceUsd;
-      const total = price * +item.qtd;
+      const total = price * item.qtd;
 
       return {
         ...item,
-        qtd: numberFormatter.format(+item.qtd),
+        qtd: item.qtd,
         price: +price,
         total: total,
       };
@@ -107,7 +106,7 @@ export const includePriceToStockAssets = async (
     return {
       ...item,
       price: thisStock.price,
-      total: thisStock.price * +item.qtd,
+      total: thisStock.price * item.qtd,
     };
   });
 

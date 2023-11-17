@@ -35,50 +35,68 @@ export default async function ProtectedRoute() {
           crypto: item.asset,
         }));
 
+      const changeKeyAssetToStockForTitleOnCard =
+        assetsWithPricesByType.Stock.map((item: any) => ({
+          ...item,
+          stock: item.asset,
+        }));
+
       return (
         <>
-          <div className='flex gap-2 my-3'>
-            <CardTotalAllCurrency
-              assets={assetsWithPricesArray}
-              description={'Do we need a description here?'}
-            />
-            <CardLastTop
-              emoji={'🤑'}
-              description={'All time high Estimation'}
-              assets={assetsWithPricesArray}
-            />
-          </div>
-          <div className='flex flex-wrap gap-2 justify-between'>
-            <CardTotal
-              emoji={'🧺'}
-              description={'This is a description'}
-              assets={assetsWithPricesArray}
-              customKey={'wallet'}
-            />
-            <CardTotal
-              emoji={'💰'}
-              description={'This is a description'}
-              assets={assetsWithPricesArray}
-              customKey={'type'}
-            />
-            <CardTotal
-              emoji={'🗂️'}
-              description={'This is a description'}
-              assets={assetsWithPricesArray}
-              customKey={'subtype'}
-            />
-            <CardTotal
-              emoji={'💵'}
-              description={'Currency, babe!'}
-              assets={assetsWithPricesArray}
-              customKey={'currency'}
-            />
-            <CardTotal
-              emoji={'🪙'}
-              description={'Only Cryptos'}
-              assets={changeKeyAssetToCryptoForTitleOnCard}
-              customKey={'crypto'}
-            />
+          <div className='flex flex-col gap-2'>
+            <div className='flex flex-wrap gap-2'>
+              <CardTotalAllCurrency
+                assets={assetsWithPricesArray}
+                description={'Do we need a description here?'}
+              />
+              <CardTotal
+                emoji={'💵'}
+                description={'Currency, babe!'}
+                assets={assetsWithPricesArray}
+                customKey={'currency'}
+              />
+              <CardTotal
+                emoji={'💰'}
+                description={'This is a description'}
+                assets={assetsWithPricesArray}
+                customKey={'type'}
+              />
+              <CardTotal
+                emoji={'🧺'}
+                description={'This is a description'}
+                assets={assetsWithPricesArray}
+                customKey={'wallet'}
+              />
+              <CardTotal
+                emoji={'🗂️'}
+                description={'This is a description'}
+                assets={assetsWithPricesArray}
+                customKey={'subtype'}
+              />
+            </div>
+
+            <div className='flex flex-wrap gap-4'>
+              <CardTotal
+                emoji={'🪙'}
+                description={'Only Cryptos'}
+                assets={changeKeyAssetToCryptoForTitleOnCard}
+                customKey={'crypto'}
+              />
+              <CardLastTop
+                emoji={'🤑'}
+                description={'All time high Estimation'}
+                assets={assetsWithPricesByType.Crypto}
+              />
+            </div>
+
+            <div className='flex flex-wrap gap-4'>
+              <CardTotal
+                emoji={'🪙'}
+                description={'Only Stocks'}
+                assets={changeKeyAssetToStockForTitleOnCard}
+                customKey={'stock'}
+              />
+            </div>
           </div>
           <div className='flex justify-end items-center text-xs font-base text-slate-600 my-2 gap-2'>
             <p>Legend:</p>

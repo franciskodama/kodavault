@@ -1,9 +1,10 @@
+type Decimal = number;
+
 export type AssetWithoutPrice = {
   id: string;
-  walllet: string;
   account: string;
   asset: string;
-  qtd: string;
+  qtd: Decimal;
   wallet: string;
   created_at: string;
   type: string;
@@ -19,3 +20,19 @@ export type Asset =
       price?: number;
       total?: number;
     });
+
+export type AssetForAth = {
+  id: string;
+  account: string;
+  asset: string;
+  qtd: Decimal;
+  wallet: string;
+  created_at: string;
+  type: string;
+  subtype: string;
+  currency: string;
+  uid: string;
+  exchange: string;
+  price?: number;
+  total?: number;
+};

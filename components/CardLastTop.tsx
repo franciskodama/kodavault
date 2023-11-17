@@ -11,15 +11,15 @@ import {
   getTotalByKey,
   numberFormatter,
 } from '../app/lib/utils';
-import { Asset } from '../app/lib/types';
+import { Asset, AssetForAth } from '../app/lib/types';
 import { getAllTimeHighData } from '@/app/lib/crypto.server';
 
-type AssetWithTop = {
+type AssetWithAth = {
   symbol: string;
   currentPrice: number;
   qty: number;
   total: number;
-  top: number;
+  ath: number;
   estimationOnTop: number;
 };
 export const CardLastTop = async ({
@@ -32,12 +32,48 @@ export const CardLastTop = async ({
 
   description?: string;
 }) => {
-  //   const totalArray = getTotalByKey(assets, 'type');
-  //   const sortedArray = totalArray.sort((a, b) => b.total - a.total);
-  //   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
+  const athCoins = await getAllTimeHighData();
 
-  const result = await getAllTimeHighData();
-  console.log('---  🚀 ---> | result:', result);
+  const onlyCryptoAssets = assets.filter((item: any) => item.type === 'Crypto');
+
+  const totalQtyByAssetInAllWallets = onlyCryptoAssets.reduce(
+    (acc: any, currentAsset: any) => {
+      if (currentAsset.asset) {
+        const { asset, qtd } = currentAsset;
+        const quantity = qtd;
+
+        if (!acc.hasOwnProperty(asset)) {
+          acc[asset] += quantity;
+        } else {
+          acc[asset] = quantity;
+        }
+      }
+      return acc;
+    },
+    {}
+  );
+  console.log(
+    '---  🚀 ---> | totalQtyByAssetInAllWallets:',
+    totalQtyByAssetInAllWallets
+  );
+
+  // Get array that we agrouped by Crypto asset. eg.: MATIC in all wallets
+  // Put this array to run here
+  // Include columns: Symbol, price, total, and estimation --> growth percentage
+  // line-height (style)
+
+  let assetsWithAth = [];
+  if (athCoins) {
+    assetsWithAth = assets.map((item: any) => {
+      const asset =
+        athCoins && athCoins.find((el: any) => el.symbol === item.asset);
+      return {
+        ...item,
+        ath: asset ? asset.ath : 0,
+        estimationOnTop: asset ? asset.ath * item.qtd : 0,
+      };
+    });
+  } else return;
 
   return (
     <Card className=''>
@@ -51,25 +87,29 @@ export const CardLastTop = async ({
             <CardDescription>{description}</CardDescription>
           </CardHeader>
           <CardContent>
-            {/* {sortedArray.map((item) => (
-              <div key={item.value} className='flex justify-between'>
-                <h3>{item.value}</h3>
+            {assetsWithAth.map((item) => (
+              <div key={item.id} className='flex justify-between'>
+                <h3>{item.asset}</h3>
                 <div className='flex'>
                   <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
                     item.total
                   )}`}</p>
+                  <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
+                    item.estimationOnTop
+                  )}`}</p>
                   <p
                     className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
-                      (item.total / total) * 100 > 50
-                        ? 'bg-red-500'
-                        : 'bg-green-500'
+                      item.total * 100 > 50 ? 'bg-red-500' : 'bg-green-500'
                     }`}
-                  >{`${numberFormatter.format(
+                  >
+                    {/* {`${numberFormatter.format(
                     (item.total / total) * 100
-                  )}%`}</p>
+                  )}%`}
+                   */}
+                  </p>
                 </div>
               </div>
-            ))} */}
+            ))}
           </CardContent>
         </div>
         {/* <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'> */}
