@@ -3,7 +3,7 @@ export type AssetWithoutPrice = {
   walllet: string;
   account: string;
   asset: string;
-  qtd: number | string;
+  qtd: number;
   wallet: string;
   created_at: string;
   type: string;

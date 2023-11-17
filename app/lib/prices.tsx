@@ -22,15 +22,15 @@ export const includePriceToCashAssets = async (
 
     if (item.currency === 'CAD') {
       price = 1 / currencyRates.quotes?.USDCAD;
-      total = +item.qtd / +currencyRates.quotes?.USDCAD;
+      total = item.qtd / currencyRates.quotes?.USDCAD;
     } else if (item.currency === 'BRL') {
       price = 1 / currencyRates.quotes?.USDBRL;
-      total = +item.qtd / +currencyRates.quotes?.USDBRL;
+      total = item.qtd / currencyRates.quotes?.USDBRL;
     }
 
     return {
       ...item,
-      qtd: numberFormatter.format(+item.qtd),
+      qtd: numberFormatter.format(item.qtd),
       price: price,
       total: total,
     };
@@ -46,11 +46,11 @@ export const includePriceToCryptoAssets = async (
     cryptoAssetsArray.map(async (item: AssetWithoutPrice) => {
       const thisCryptoPrice = await getCryptos(item.asset);
       const price = thisCryptoPrice.data[0].priceUsd;
-      const total = price * +item.qtd;
+      const total = price * item.qtd;
 
       return {
         ...item,
-        qtd: numberFormatter.format(+item.qtd),
+        qtd: numberFormatter.format(item.qtd),
         price: +price,
         total: total,
       };
@@ -107,7 +107,7 @@ export const includePriceToStockAssets = async (
     return {
       ...item,
       price: thisStock.price,
-      total: thisStock.price * +item.qtd,
+      total: thisStock.price * item.qtd,
     };
   });
 

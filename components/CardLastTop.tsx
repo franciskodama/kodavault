@@ -40,7 +40,7 @@ export const CardLastTop = async ({
     (acc: any, currentAsset: any) => {
       if (currentAsset.asset) {
         const { asset, qtd } = currentAsset;
-        const quantity = +qtd;
+        const quantity = qtd;
 
         if (!acc.hasOwnProperty(asset)) {
           acc[asset] += quantity;
