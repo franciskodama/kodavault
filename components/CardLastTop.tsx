@@ -15,8 +15,8 @@ import { Asset, AssetForAth } from '../app/lib/types';
 import { getAllTimeHighData } from '@/app/lib/crypto.server';
 
 type AssetWithAth = {
-  symbol: string;
-  currentPrice: number;
+  asset: string;
+  price: number;
   qty: number;
   total: number;
   ath: number;
@@ -34,33 +34,48 @@ export const CardLastTop = async ({
 }) => {
   const athCoins = await getAllTimeHighData();
 
-  const onlyCryptoAssets = assets.filter((item: any) => item.type === 'Crypto');
-
-  const totalQtyByAssetInAllWallets = onlyCryptoAssets.reduce(
-    (acc: any, currentAsset: any) => {
-      if (currentAsset.asset) {
-        const { asset, qtd } = currentAsset;
-        const quantity = qtd;
-
-        if (!acc.hasOwnProperty(asset)) {
-          acc[asset] += quantity;
-        } else {
-          acc[asset] = quantity;
-        }
-      }
-      return acc;
-    },
-    {}
-  );
-  console.log(
-    '---  🚀 ---> | totalQtyByAssetInAllWallets:',
-    totalQtyByAssetInAllWallets
-  );
-
   // Get array that we agrouped by Crypto asset. eg.: MATIC in all wallets
   // Put this array to run here
   // Include columns: Symbol, price, total, and estimation --> growth percentage
   // line-height (style)
+
+  const onlyCryptoAssets = assets.filter((item: any) => item.type === 'Crypto');
+
+  function groupAssetsByAsset(arr: Asset[]) {
+    return arr.reduce((acc: AssetWithAth[], asset: any) => {
+      const existingAsset = acc.find((a) => a.asset === asset.asset);
+
+      if (existingAsset) {
+        // If asset already exists in the result array, update quantities and total
+        existingAsset.qty += asset.qtd;
+        existingAsset.total += asset.total;
+      } else {
+        // If asset does not exist in the result array, add a new entry
+        acc.push({
+          asset: asset.asset,
+          price: asset.price,
+          qty: asset.qtd,
+          total: asset.total,
+          ath: 0,
+          estimationOnTop: 0,
+        });
+      }
+
+      return acc;
+    }, []);
+  }
+
+  const newAssetsArr = groupAssetsByAsset(onlyCryptoAssets);
+  console.log('---  🚀 ---> | newAssetsArr:', newAssetsArr);
+
+  // const groupAssetsByType = (assets: Asset[]) => {
+  //   return assets.reduce((groupedAssets: any, asset: any) => {
+  //     const type = asset.type;
+  //     if (!groupedAssets[type]) groupedAssets[type] = [];
+  //     groupedAssets[type].push(asset);
+  //     return groupedAssets;
+  //   }, {});
+  // };
 
   let assetsWithAth = [];
   if (athCoins) {

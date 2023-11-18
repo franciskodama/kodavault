@@ -29,6 +29,7 @@ export default async function ProtectedRoute() {
       const assetsWithPricesArray = await fetchAssetsWithPrices(assets);
       const assetsWithPricesByType = groupAssetsByType(assetsWithPricesArray);
 
+      // TODO: Refactor this 3 function to 1 function
       const changeKeyAssetToCryptoForTitleOnCard =
         assetsWithPricesByType.Crypto.map((item: any) => ({
           ...item,
@@ -46,6 +47,8 @@ export default async function ProtectedRoute() {
           ...item,
           cash: item.asset,
         }));
+
+      // https://css-generators.com/ribbon-shapes/
 
       // I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
