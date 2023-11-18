@@ -41,13 +41,24 @@ export default async function ProtectedRoute() {
           stock: item.asset,
         }));
 
+      const changeKeyAssetToCashForTitleOnCard =
+        assetsWithPricesByType.Cash.map((item: any) => ({
+          ...item,
+          cash: item.asset,
+        }));
+
+      // I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
+
       return (
         <>
           <div className='flex flex-col gap-2'>
             <div className='flex flex-wrap gap-2'>
               <CardTotalAllCurrency
                 assets={assetsWithPricesArray}
-                description={'Do we need a description here?'}
+                description={
+                  // 'View the overall portfolio value in USD, CAD, and BRL at a glance.'
+                  'Total in USD, CAD, BRL.'
+                }
               />
               <CardTotal
                 emoji={'💵'}
@@ -83,7 +94,7 @@ export default async function ProtectedRoute() {
                 customKey={'crypto'}
               />
               <CardLastTop
-                emoji={'🤑'}
+                emoji={'📈'}
                 description={'All time high Estimation'}
                 assets={assetsWithPricesByType.Crypto}
               />
@@ -91,10 +102,16 @@ export default async function ProtectedRoute() {
 
             <div className='flex flex-wrap gap-4'>
               <CardTotal
-                emoji={'🪙'}
+                emoji={'🔖'}
                 description={'Only Stocks'}
                 assets={changeKeyAssetToStockForTitleOnCard}
                 customKey={'stock'}
+              />
+              <CardTotal
+                emoji={'🤑'}
+                description={'Only Cash'}
+                assets={changeKeyAssetToCashForTitleOnCard}
+                customKey={'cash'}
               />
             </div>
           </div>
