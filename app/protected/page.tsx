@@ -49,6 +49,9 @@ export default async function ProtectedRoute() {
 
       // I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
+      // https://ui.shadcn.com/docs/components/hover-card
+      // to hover Total by Subtype and then see the next tier of details
+
       return (
         <>
           <div className='flex flex-col gap-2'>
