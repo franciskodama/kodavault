@@ -1,10 +1,8 @@
-type Decimal = number;
-
 export type AssetWithoutPrice = {
   id: string;
   account: string;
   asset: string;
-  qtd: Decimal;
+  qtd: number;
   wallet: string;
   created_at: string;
   type: string;
@@ -19,13 +17,14 @@ export type Asset =
   | (AssetWithoutPrice & {
       price?: number;
       total?: number;
+      ath?: number;
     });
 
 export type AssetForAth = {
   id: string;
   account: string;
   asset: string;
-  qtd: Decimal;
+  qtd: number;
   wallet: string;
   created_at: string;
   type: string;
@@ -35,4 +34,13 @@ export type AssetForAth = {
   exchange: string;
   price?: number;
   total?: number;
+};
+
+export type AssetReducedWithAth = {
+  asset: string;
+  price: number;
+  qty: number;
+  currentTotal: number;
+  ath: number;
+  athTotalEstimation: number;
 };

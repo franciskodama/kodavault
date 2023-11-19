@@ -33,11 +33,11 @@ export const CardTotal = ({
       <div className='flex flex-col justify-between h-full'>
         <div className='flex flex-col'>
           <CardHeader>
-            <CardTitle className='capitalize flex justify-between'>
+            <CardTitle className='capitalize flex items-center justify-between'>
               <span>{`Total By ${customKey}`}</span>
-              <span>{emoji}</span>
+              <span className='text-3xl'>{emoji}</span>
             </CardTitle>
-            <CardDescription>{description}</CardDescription>
+            <CardDescription className='text-xs'>{description}</CardDescription>
           </CardHeader>
           <CardContent>
             {sortedArray.map((item) => (

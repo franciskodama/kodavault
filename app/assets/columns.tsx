@@ -1,7 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { Asset } from '../protected/page';
+import { Asset } from '../lib/types';
 
 const headerClass = 'font-semibold text-slate-800 text-right';
 
