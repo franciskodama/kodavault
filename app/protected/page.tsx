@@ -10,7 +10,7 @@ import {
   groupAssetsByType,
 } from '../lib/assets';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
-import { CardLastTop } from '@/components/CardLastTop';
+import { CardAthPage } from '../../components/CardAth/page';
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
@@ -99,11 +99,11 @@ export default async function ProtectedRoute() {
                 assets={changeKeyAssetToCryptoForTitleOnCard}
                 customKey={'crypto'}
               />
-              <CardLastTop
-                emoji={'📈'}
-                description={
-                  'All time high Estimation: Asset, Qty, Price, Total, ATH, ATH Estimation'
-                }
+              <CardAth
+                // emoji={'📈'}
+                // description={
+                //   'All time high Estimation: Asset, Qty, Price, Total, ATH, ATH Estimation'
+                // }
                 assets={assetsWithPricesByType.Crypto}
               />
             </div>
