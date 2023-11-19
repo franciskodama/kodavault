@@ -17,6 +17,7 @@ export type Asset =
   | (AssetWithoutPrice & {
       price?: number;
       total?: number;
+      ath?: number;
     });
 
 export type AssetForAth = {
@@ -33,4 +34,13 @@ export type AssetForAth = {
   exchange: string;
   price?: number;
   total?: number;
+};
+
+export type AssetReducedWithAth = {
+  asset: string;
+  price: number;
+  qty: number;
+  currentTotal: number;
+  ath: number;
+  athTotalEstimation: number;
 };

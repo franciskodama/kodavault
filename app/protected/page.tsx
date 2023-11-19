@@ -101,7 +101,9 @@ export default async function ProtectedRoute() {
               />
               <CardLastTop
                 emoji={'📈'}
-                description={'All time high Estimation'}
+                description={
+                  'All time high Estimation: Asset, Qty, Price, Total, ATH, ATH Estimation'
+                }
                 assets={assetsWithPricesByType.Crypto}
               />
             </div>
