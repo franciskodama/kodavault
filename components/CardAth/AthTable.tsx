@@ -1,16 +1,17 @@
 import { DataTable } from '@/app/assets/data-table';
 import { AssetReducedWithAth } from '@/app/lib/types';
-import { columnsAthTable } from './AthColumns';
+import { columnsAth } from './AthColumns';
 
 export default async function AthTable({
-  assets,
+  athAssets,
 }: {
-  assets: AssetReducedWithAth[];
+  athAssets: AssetReducedWithAth[];
 }) {
-  console.log('---  🚀 ---> | assets:', assets);
   return (
     <div className='mx-auto'>
-      {assets && <DataTable columns={columnsAthTable} data={assets} />}
+      {athAssets.length > 0 && (
+        <DataTable columns={columnsAth} data={athAssets} />
+      )}
     </div>
   );
 }

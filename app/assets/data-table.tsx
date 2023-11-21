@@ -15,10 +15,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { AssetReducedWithAth } from '../lib/types';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  data: TData[] | any;
 }
 
 export function DataTable<TData, TValue>({

@@ -10,7 +10,7 @@ import {
   groupAssetsByType,
 } from '../lib/assets';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
-import { CardLastTop } from '@/components/CardLastTop';
+import { CardAth } from '../../components/CardAth';
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
@@ -29,7 +29,9 @@ export default async function ProtectedRoute() {
       const assetsWithPricesArray = await fetchAssetsWithPrices(assets);
       const assetsWithPricesByType = groupAssetsByType(assetsWithPricesArray);
 
+      //----------------------------------------------------------------------------------------------
       // TODO: Refactor this 3 function to 1 function
+      //----------------------------------------------------------------------------------------------
       const changeKeyAssetToCryptoForTitleOnCard =
         assetsWithPricesByType.Crypto.map((item: any) => ({
           ...item,
@@ -58,13 +60,11 @@ export default async function ProtectedRoute() {
       return (
         <>
           <div className='flex flex-col gap-2'>
+            {/* ---------------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-2'>
               <CardTotalAllCurrency
                 assets={assetsWithPricesArray}
-                description={
-                  // 'View the overall portfolio value in USD, CAD, and BRL at a glance.'
-                  'Total in USD, CAD, BRL.'
-                }
+                description={'Total in USD, CAD, BRL.'}
               />
               <CardTotal
                 emoji={'💵'}
@@ -91,7 +91,7 @@ export default async function ProtectedRoute() {
                 customKey={'subtype'}
               />
             </div>
-
+            {/* ---------------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-4'>
               <CardTotal
                 emoji={'🪙'}
@@ -99,15 +99,13 @@ export default async function ProtectedRoute() {
                 assets={changeKeyAssetToCryptoForTitleOnCard}
                 customKey={'crypto'}
               />
-              <CardLastTop
+              <CardAth
                 emoji={'📈'}
-                description={
-                  'All time high Estimation: Asset, Qty, Price, Total, ATH, ATH Estimation'
-                }
+                description={'All-Time High Estimation'}
                 assets={assetsWithPricesByType.Crypto}
               />
             </div>
-
+            {/* ---------------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-4'>
               <CardTotal
                 emoji={'🔖'}
@@ -122,6 +120,7 @@ export default async function ProtectedRoute() {
                 customKey={'cash'}
               />
             </div>
+            {/* ---------------------------------------------------------------------------------------------- */}
           </div>
           <div className='flex justify-end items-center text-xs font-base text-slate-600 my-2 gap-2'>
             <p>Legend:</p>
