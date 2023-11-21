@@ -61,16 +61,18 @@ export const CardAth = async ({
         athTotalEstimation: numberFormatter.format(item.ath * item.qtd),
         xPotential: item.ath / item.price,
         percentagePotential: numberFormatter.format(
-          (item.ath / item.price - 1) * 100
+          (item.ath - item.price / item.price) * 100
         ),
         // include: % potential growth ---> CHECK IF IT'S CORRECT
         // sort by potential growth ---> Type error
         // alert: recommendation if the amount is too much for a little potential growth
         // market cap
-        // not here, but create the card for seeing the networth value in BTC
       };
     });
     console.log('---  🚀 ---> | athAssets:', athAssets);
+
+    // not here, but create the card for seeing the networth value in BTC
+    // not here, but total By Crypto: show the percentage we want when we reach Bull Market
 
     sortedAthAssets = athAssets.sort(
       (a: AssetReducedWithAth, b: AssetReducedWithAth) => {
