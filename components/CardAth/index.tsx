@@ -1,20 +1,9 @@
-import {
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import {
-  numberFormatterNoDecimals,
-  getTotalByKey,
-  numberFormatter,
-} from '../../app/lib/utils';
 import { Asset, AssetReducedWithAth } from '../../app/lib/types';
 import { getAllTimeHighData } from '@/app/lib/crypto.server';
-import MainTable from '@/app/assets/page';
-import AthTable from './AthTable';
 import { CardTable } from './CardTable';
+import { hardcodedAthCoins } from '@/app/lib/data';
+import { format } from 'path';
+import { numberFormatter } from '@/app/lib/utils';
 
 export const CardAth = async ({
   assets,
@@ -34,10 +23,13 @@ export const CardAth = async ({
       (item: any) => item.type === 'Crypto'
     );
 
-    const athCoins = await getAllTimeHighData();
+    // ------------------------------------------------------------------------
+    // const athCoins = await getAllTimeHighData();
+    // console.log('---  🚀 ---> | athCoins  :', athCoins);
+    // ------------------------------------------------------------------------
 
     cryptoAssetsWithAth = onlyCryptoAssets.map((item: any) => {
-      const existingAsset = athCoins.find(
+      const existingAsset = hardcodedAthCoins.find(
         (el: any) => el.symbol === item.asset
       );
       return {
@@ -61,11 +53,15 @@ export const CardAth = async ({
     athAssets = sumQtyOfSameAssets.map((item: any) => {
       return {
         asset: item.asset,
-        price: item.price,
-        qtd: item.qtd,
-        currentTotal: item.qtd * item.price,
+        price: numberFormatter.format(item.price),
+        qtd: numberFormatter.format(item.qtd),
+        currentTotal: numberFormatter.format(item.qtd * item.price),
         ath: item.ath,
-        athTotalEstimation: item.ath * item.qtd,
+        athTotalEstimation: numberFormatter.format(item.ath * item.qtd),
+        // include: % potential growth
+        // sort by potential growth
+        // alert: recommendation if the amount is too much for a little potential growth
+        // market cap
       };
     });
   } catch (error) {
@@ -75,11 +71,13 @@ export const CardAth = async ({
   return (
     <>
       {athAssets.length > 0 && (
-        <CardTable
-          athAssets={athAssets}
-          emoji={emoji}
-          description={description}
-        />
+        <div className='w-[55em]'>
+          <CardTable
+            athAssets={athAssets}
+            emoji={emoji}
+            description={description}
+          />
+        </div>
       )}
     </>
   );

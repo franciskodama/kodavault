@@ -7,7 +7,6 @@ export default async function AthTable({
 }: {
   athAssets: AssetReducedWithAth[];
 }) {
-  console.log('---  🚀 ---> | athAssets ATH TABLE:', athAssets);
   return (
     <div className='mx-auto'>
       {athAssets.length > 0 && (

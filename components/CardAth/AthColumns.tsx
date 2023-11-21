@@ -11,7 +11,7 @@ export const columnsAth: ColumnDef<Asset>[] = [
     header: () => <div className={headerClass}>Asset</div>,
   },
   {
-    accessorKey: 'qty',
+    accessorKey: 'qtd',
     header: () => <div className={headerClass}>Qty</div>,
   },
   {

@@ -38,9 +38,9 @@ export type AssetForAth = {
 
 export type AssetReducedWithAth = {
   asset: string;
-  price: number;
-  qtd: number;
-  currentTotal: number;
-  ath: number;
-  athTotalEstimation: number;
+  price: number | string;
+  qtd: number | string;
+  currentTotal: number | string;
+  ath: number | string;
+  athTotalEstimation: number | string;
 };
