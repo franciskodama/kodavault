@@ -67,6 +67,7 @@ export const CardAth = async ({
         // sort by potential growth ---> Type error
         // alert: recommendation if the amount is too much for a little potential growth
         // market cap
+        // not here, but create the card for seeing the networth value in BTC
       };
     });
     console.log('---  🚀 ---> | athAssets:', athAssets);
