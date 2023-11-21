@@ -6,19 +6,18 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  numberFormatterNoDecimals,
-  getTotalByKey,
-  numberFormatter,
-} from '../../app/lib/utils';
 import { AssetReducedWithAth } from '../../app/lib/types';
-import { getAllTimeHighData } from '@/app/lib/crypto.server';
-import MainTable from '@/app/assets/page';
 import AthTable from './AthTable';
 
-export const Card = ({ athAssets }: { athAssets: AssetReducedWithAth[] }) => {
-  console.log('---  🚀 ---> | athAssets:', athAssets);
-
+export const CardTable = ({
+  athAssets,
+  emoji,
+  description,
+}: {
+  athAssets: AssetReducedWithAth[];
+  emoji?: string;
+  description?: string;
+}) => {
   return (
     <div>
       <Card className=''>
@@ -27,18 +26,20 @@ export const Card = ({ athAssets }: { athAssets: AssetReducedWithAth[] }) => {
             <CardHeader>
               <CardTitle className='capitalize flex justify-between'>
                 <span>ATH Estimation</span>
-                {/* <span>{emoji}</span> */}
+                <span>{emoji}</span>
               </CardTitle>
-              {/* <CardDescription>{description}</CardDescription> */}
+              <CardDescription>{description}</CardDescription>
             </CardHeader>
             <CardContent>
-              {/* {athAssets.length > 0 ? (
+              {athAssets[0].asset}
+
+              {athAssets.length > 0 ? (
                 <div className='my-4'>
-                  <AthTable assets={athAssets} />
+                  <AthTable athAssets={athAssets} />
                 </div>
               ) : (
                 <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
-              )} */}
+              )}
             </CardContent>
           </div>
           {/* <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'> */}

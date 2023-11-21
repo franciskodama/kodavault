@@ -1,5 +1,4 @@
 import {
-  Card,
   CardContent,
   CardDescription,
   CardFooter,
@@ -15,19 +14,20 @@ import { Asset, AssetReducedWithAth } from '../../app/lib/types';
 import { getAllTimeHighData } from '@/app/lib/crypto.server';
 import MainTable from '@/app/assets/page';
 import AthTable from './AthTable';
-import { Card } from './Card';
+import { CardTable } from './CardTable';
 
-export const CardAthPage = async ({
+export const CardAth = async ({
   assets,
-}: // emoji = '',
-// description = '',
-{
+  emoji,
+  description,
+}: {
   assets: Asset[];
-  // emoji?: string;
-  // description?: string;
+  emoji?: string;
+  description?: string;
 }) => {
-  let athAssets: AssetReducedWithAth[] = [];
   let cryptoAssetsWithAth: Asset[] = [];
+  let sumQtyOfSameAssets: Asset[] = [];
+  let athAssets: AssetReducedWithAth[] = [];
 
   try {
     const onlyCryptoAssets = assets.filter(
@@ -37,38 +37,50 @@ export const CardAthPage = async ({
     const athCoins = await getAllTimeHighData();
 
     cryptoAssetsWithAth = onlyCryptoAssets.map((item: any) => {
-      const asset = athCoins.find((el: any) => el.symbol === item.asset);
+      const existingAsset = athCoins.find(
+        (el: any) => el.symbol === item.asset
+      );
       return {
         ...item,
-        ath: asset?.ath ? asset.ath : 0,
+        ath: existingAsset?.ath ? existingAsset.ath : 0,
       };
     });
 
-    athAssets = cryptoAssetsWithAth.reduce((acc: any, item: any) => {
+    sumQtyOfSameAssets = cryptoAssetsWithAth.reduce((acc: any, item: any) => {
       const existingAsset = acc.find((el: any) => el.asset === item.asset);
+
       if (existingAsset) {
-        existingAsset.qty += item.qtd;
+        existingAsset.qtd += item.qtd;
         existingAsset.currentTotal += item.total;
       } else {
-        acc.push({
-          asset: item.asset,
-          price: item.price,
-          qty: item.qtd,
-          currentTotal: item.total,
-          ath: item.ath,
-          athTotalEstimation: 0,
-        });
+        acc.push(item);
       }
       return acc;
     }, []);
-    console.log('---  🚀 ---> | athAssets:', athAssets);
+
+    athAssets = sumQtyOfSameAssets.map((item: any) => {
+      return {
+        asset: item.asset,
+        price: item.price,
+        qtd: item.qtd,
+        currentTotal: item.qtd * item.price,
+        ath: item.ath,
+        athTotalEstimation: item.ath * item.qtd,
+      };
+    });
   } catch (error) {
     console.log('Error: ', error);
   }
 
   return (
     <>
-      <Card athAssets={athAssets} />
+      {athAssets.length > 0 && (
+        <CardTable
+          athAssets={athAssets}
+          emoji={emoji}
+          description={description}
+        />
+      )}
     </>
   );
 };
