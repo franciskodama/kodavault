@@ -43,4 +43,6 @@ export type AssetReducedWithAth = {
   currentTotal: number | string;
   ath: number | string;
   athTotalEstimation: number | string;
+  xPotential: number | string;
+  percentagePotential: number | string;
 };

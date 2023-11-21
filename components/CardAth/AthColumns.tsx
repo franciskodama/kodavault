@@ -35,4 +35,12 @@ export const columnsAth: ColumnDef<Asset>[] = [
       </div>
     ),
   },
+  {
+    accessorKey: 'percentagePotential',
+    header: () => <div className={headerClass}>%</div>,
+  },
+  {
+    accessorKey: 'xPotential',
+    header: () => <div className={headerClass}>X</div>,
+  },
 ];

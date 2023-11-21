@@ -17,6 +17,7 @@ export const CardAth = async ({
   let cryptoAssetsWithAth: Asset[] = [];
   let sumQtyOfSameAssets: Asset[] = [];
   let athAssets: AssetReducedWithAth[] = [];
+  let sortedAthAssets: AssetReducedWithAth[] = [];
 
   try {
     const onlyCryptoAssets = assets.filter(
@@ -58,22 +59,33 @@ export const CardAth = async ({
         currentTotal: numberFormatter.format(item.qtd * item.price),
         ath: item.ath,
         athTotalEstimation: numberFormatter.format(item.ath * item.qtd),
-        // include: % potential growth
-        // sort by potential growth
+        xPotential: item.ath / item.price,
+        percentagePotential: numberFormatter.format(
+          (item.ath / item.price - 1) * 100
+        ),
+        // include: % potential growth ---> CHECK IF IT'S CORRECT
+        // sort by potential growth ---> Type error
         // alert: recommendation if the amount is too much for a little potential growth
         // market cap
       };
     });
+    console.log('---  🚀 ---> | athAssets:', athAssets);
+
+    sortedAthAssets = athAssets.sort(
+      (a: AssetReducedWithAth, b: AssetReducedWithAth) => {
+        return numberFormatter.format(b.xPotential - a.xPotential);
+      }
+    );
   } catch (error) {
     console.log('Error: ', error);
   }
 
   return (
     <>
-      {athAssets.length > 0 && (
+      {sortedAthAssets.length > 0 && (
         <div className='w-[55em]'>
           <CardTable
-            athAssets={athAssets}
+            athAssets={sortedAthAssets}
             emoji={emoji}
             description={description}
           />
