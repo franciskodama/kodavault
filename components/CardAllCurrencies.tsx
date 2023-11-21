@@ -1,6 +1,6 @@
 import { currencyRates } from '@/app/lib/prices';
 import { Asset } from '@/app/lib/types';
-import { numberFormatterNoDecimals } from '@/app/lib/utils';
+import { numberFormatter, numberFormatterNoDecimals } from '@/app/lib/utils';
 import {
   Card,
   CardContent,
@@ -42,6 +42,11 @@ export const CardTotalAllCurrency = ({
       value: total * currencyRates.quotes.USDBRL,
       emoji: '🇧🇷',
     },
+    {
+      currency: 'BTC',
+      value: total / 36400,
+      emoji: '🥇',
+    },
   ];
 
   return (
@@ -75,7 +80,6 @@ export const CardTotalAllCurrency = ({
             </div>
           </CardContent>
         </div>
-        {/* <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'></CardFooter> */}
       </div>
     </Card>
   );
