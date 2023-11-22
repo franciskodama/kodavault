@@ -2,7 +2,6 @@ import { Asset, AssetReducedWithAth } from '../../app/lib/types';
 import { getAllTimeHighData } from '@/app/lib/crypto.server';
 import { CardTable } from './CardTable';
 import { hardcodedAthCoins } from '@/app/lib/data';
-import { format } from 'path';
 import { numberFormatter } from '@/app/lib/utils';
 
 export const CardAth = async ({
@@ -69,7 +68,6 @@ export const CardAth = async ({
         // market cap
       };
     });
-    console.log('---  🚀 ---> | athAssets:', athAssets);
 
     // not here, but create the card for seeing the networth value in BTC
     // not here, but total By Crypto: show the percentage we want when we reach Bull Market
@@ -79,6 +77,8 @@ export const CardAth = async ({
         return numberFormatter.format(b.xPotential - a.xPotential);
       }
     );
+    console.log('---  🚀 ---> | athAssets:', athAssets);
+    //-------------------------
   } catch (error) {
     console.log('Error: ', error);
   }
