@@ -1,5 +1,13 @@
 import { Asset } from './types';
 
+export const currencyFormatter = (number: number) =>
+  new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(number);
+
 export const numberFormatter = new Intl.NumberFormat('en-US', {
   style: 'decimal',
   minimumFractionDigits: 2,

@@ -1,14 +1,19 @@
 import { currencyRates } from '@/app/lib/prices';
 import { Asset } from '@/app/lib/types';
-import { numberFormatterNoDecimals } from '@/app/lib/utils';
+import { numberFormatter, numberFormatterNoDecimals } from '@/app/lib/utils';
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+
+type totalArrayProps = {
+  currency: string;
+  value: number;
+  emoji: string;
+};
 
 export const CardTotalAllCurrency = ({
   assets,
@@ -18,31 +23,45 @@ export const CardTotalAllCurrency = ({
   description?: string;
 }) => {
   const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
+  const btc = assets.find((item: any) => item.asset === 'BTC');
+
+  // ------------------------------------------------------------------------------
+  // TODO: Create a 2 fields to type USDCAD and USDBRL
+  // TODO: Connect to API to get the currency values for USDCAD and USDBRL (when it's )
+  // ------------------------------------------------------------------------------
 
   const currencyRates = {
     quotes: {
-      USDCAD: 1.38,
-      USDBRL: 4.91,
+      USDCAD: 1.37,
+      USDBRL: 4.9,
     },
   };
 
-  const totalArray = [
-    {
-      currency: 'USD',
-      value: total,
-      emoji: '🇺🇸',
-    },
-    {
-      currency: 'CAD',
-      value: total * currencyRates.quotes.USDCAD,
-      emoji: '🇨🇦',
-    },
-    {
-      currency: 'BRL',
-      value: total * currencyRates.quotes.USDBRL,
-      emoji: '🇧🇷',
-    },
-  ];
+  let totalArray: totalArrayProps[] = [];
+  if (btc?.price) {
+    totalArray = [
+      {
+        currency: 'USD',
+        value: total,
+        emoji: '🇺🇸',
+      },
+      {
+        currency: 'CAD',
+        value: total * currencyRates.quotes.USDCAD,
+        emoji: '🇨🇦',
+      },
+      {
+        currency: 'BRL',
+        value: total * currencyRates.quotes.USDBRL,
+        emoji: '🇧🇷',
+      },
+      {
+        currency: 'BTC',
+        value: total / btc.price,
+        emoji: '🥇',
+      },
+    ];
+  }
 
   return (
     <Card className='w-[22.5em]  bg-slate-600'>
@@ -58,16 +77,18 @@ export const CardTotalAllCurrency = ({
           </CardHeader>
           <CardContent>
             <div className='flex flex-col gap-2 '>
-              {totalArray.map((item) => (
+              {totalArray.map((item: totalArrayProps) => (
                 <div
                   key={item.value}
                   className='flex items-center justify-between px-4 bg-slate-500 rounded-[2px] text-white'
                 >
                   <h3 className=' text-lg font-extralight'>{item.currency}</h3>
                   <div className='flex items-center'>
-                    <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
-                      item.value
-                    )}`}</p>
+                    <p className='w-[8ch] text-right mr-4'>{`${
+                      item.currency === 'BTC'
+                        ? numberFormatter.format(item.value)
+                        : numberFormatterNoDecimals.format(item.value)
+                    }`}</p>
                     <span className='text-5xl'>{item.emoji}</span>
                   </div>
                 </div>
@@ -75,7 +96,6 @@ export const CardTotalAllCurrency = ({
             </div>
           </CardContent>
         </div>
-        {/* <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'></CardFooter> */}
       </div>
     </Card>
   );
