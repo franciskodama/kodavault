@@ -27,6 +27,7 @@ export const CardTotalAllCurrency = ({
 
   // ------------------------------------------------------------------------------
   // TODO: Create a 2 fields to type USDCAD and USDBRL
+  // TODO: Connect to API to get the currency values for USDCAD and USDBRL (when it's )
   // ------------------------------------------------------------------------------
 
   const currencyRates = {

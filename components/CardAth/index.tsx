@@ -2,7 +2,11 @@ import { Asset, AssetReducedWithAth } from '../../app/lib/types';
 import { getAllTimeHighData } from '@/app/lib/crypto.server';
 import { CardTable } from './CardTable';
 import { hardcodedAthCoins } from '@/app/lib/data';
-import { currencyFormatter, numberFormatter } from '@/app/lib/utils';
+import {
+  currencyFormatter,
+  numberFormatter,
+  numberFormatterNoDecimals,
+} from '@/app/lib/utils';
 
 export const CardAth = async ({
   assets,
@@ -60,19 +64,17 @@ export const CardAth = async ({
         athTotalNumber: item.ath * item.qtd,
         athTotalCurrency: currencyFormatter(item.ath * item.qtd),
         xPotential: numberFormatter.format(item.ath / item.price),
-        percentagePotential: numberFormatter.format(
-          (item.ath / item.price - 1) * 100
+        percentagePotential: numberFormatterNoDecimals.format(
+          ((item.ath - item.price) / item.price) * 100
         ),
       };
     });
 
     // TODO: change all qtd to qty
-    // TODO: include: % potential growth ---> CHECK IF IT'S CORRECT
     // TODO: alert: recommendation if the amount is too much for a little potential growth
     // TODO: market cap
 
-    // TODO: not here, but create the card for seeing the networth value in BTC
-    // TODO: not here, but total By Crypto: show the percentage we want when we reach Bull Market
+    // TODO: Total By Crypto: show the percentage we want when we reach Bull Market
 
     sortedAthAssets = athAssets.sort(
       //---------------------------------------------------------------------------

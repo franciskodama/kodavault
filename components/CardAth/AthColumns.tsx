@@ -30,7 +30,7 @@ export const columnsAth: ColumnDef<Asset>[] = [
     accessorKey: 'athTotalCurrency',
     header: () => (
       <div className={headerClass}>
-        Total
+        ATH Total
         <span className='text-xs font-medium'>{` (est.)`}</span>
       </div>
     ),
