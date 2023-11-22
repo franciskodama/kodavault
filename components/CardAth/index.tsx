@@ -59,7 +59,7 @@ export const CardAth = async ({
         ath: currencyFormatter(item.ath),
         athTotalNumber: item.ath * item.qtd,
         athTotalCurrency: currencyFormatter(item.ath * item.qtd),
-        xPotential: currencyFormatter(item.ath / item.price),
+        xPotential: numberFormatter.format(item.ath / item.price),
         percentagePotential: numberFormatter.format(
           (item.ath / item.price - 1) * 100
         ),
