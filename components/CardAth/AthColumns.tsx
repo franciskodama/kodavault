@@ -27,11 +27,11 @@ export const columnsAth: ColumnDef<Asset>[] = [
     header: () => <div className={headerClass}>ATH</div>,
   },
   {
-    accessorKey: 'athTotalEstimation',
+    accessorKey: 'athTotalCurrency',
     header: () => (
       <div className={headerClass}>
         Total
-        <span className='text-xs font-light'>{` (est.)`}</span>
+        <span className='text-xs font-medium'>{` (est.)`}</span>
       </div>
     ),
   },

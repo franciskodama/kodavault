@@ -2,7 +2,7 @@ import { Asset, AssetReducedWithAth } from '../../app/lib/types';
 import { getAllTimeHighData } from '@/app/lib/crypto.server';
 import { CardTable } from './CardTable';
 import { hardcodedAthCoins } from '@/app/lib/data';
-import { numberFormatter } from '@/app/lib/utils';
+import { currencyFormatter, numberFormatter } from '@/app/lib/utils';
 
 export const CardAth = async ({
   assets,
@@ -53,32 +53,34 @@ export const CardAth = async ({
     athAssets = sumQtyOfSameAssets.map((item: any) => {
       return {
         asset: item.asset,
-        price: numberFormatter.format(item.price),
+        price: currencyFormatter(item.price),
         qtd: numberFormatter.format(item.qtd),
-        currentTotal: numberFormatter.format(item.qtd * item.price),
-        ath: item.ath,
-        athTotalEstimation: numberFormatter.format(item.ath * item.qtd),
-        xPotential: item.ath / item.price,
+        currentTotal: currencyFormatter(item.qtd * item.price),
+        ath: currencyFormatter(item.ath),
+        athTotalNumber: item.ath * item.qtd,
+        athTotalCurrency: currencyFormatter(item.ath * item.qtd),
+        xPotential: currencyFormatter(item.ath / item.price),
         percentagePotential: numberFormatter.format(
-          (item.ath - item.price / item.price) * 100
+          (item.ath / item.price - 1) * 100
         ),
-        // include: % potential growth ---> CHECK IF IT'S CORRECT
-        // sort by potential growth ---> Type error
-        // alert: recommendation if the amount is too much for a little potential growth
-        // market cap
       };
     });
 
-    // not here, but create the card for seeing the networth value in BTC
-    // not here, but total By Crypto: show the percentage we want when we reach Bull Market
+    // TODO: change all qtd to qty
+    // TODO: include: % potential growth ---> CHECK IF IT'S CORRECT
+    // TODO: alert: recommendation if the amount is too much for a little potential growth
+    // TODO: market cap
+
+    // TODO: not here, but create the card for seeing the networth value in BTC
+    // TODO: not here, but total By Crypto: show the percentage we want when we reach Bull Market
 
     sortedAthAssets = athAssets.sort(
+      //---------------------------------------------------------------------------
       (a: AssetReducedWithAth, b: AssetReducedWithAth) => {
-        return numberFormatter.format(b.xPotential - a.xPotential);
+        return Number(b.xPotential) - Number(a.xPotential);
       }
     );
-    console.log('---  🚀 ---> | athAssets:', athAssets);
-    //-------------------------
+    //---------------------------------------------------------------------------
   } catch (error) {
     console.log('Error: ', error);
   }

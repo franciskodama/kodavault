@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card';
 import { AssetReducedWithAth } from '../../app/lib/types';
 import AthTable from './AthTable';
-import { numberFormatterNoDecimals } from '@/app/lib/utils';
+import { currencyFormatter, numberFormatterNoDecimals } from '@/app/lib/utils';
 
 export const CardTable = ({
   athAssets,
@@ -19,6 +19,14 @@ export const CardTable = ({
   emoji?: string;
   description?: string;
 }) => {
+  const athTotal = athAssets.reduce(
+    (sum: number, item: AssetReducedWithAth) => {
+      const currentAthTotalNumber = Number(item.athTotalNumber);
+      return sum + currentAthTotalNumber;
+    },
+    0
+  );
+
   return (
     <div>
       <Card className=''>
@@ -43,13 +51,7 @@ export const CardTable = ({
           </div>
           <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
             <h3>Total</h3>
-            {numberFormatterNoDecimals.format(
-              athAssets.reduce(
-                (sum: number, item) =>
-                  Number(sum) + Number(item.athTotalEstimation),
-                0
-              )
-            )}
+            {currencyFormatter(athTotal)}
           </CardFooter>
         </div>
       </Card>
