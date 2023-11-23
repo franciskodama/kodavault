@@ -60,6 +60,13 @@ export default async function ProtectedRoute() {
       return (
         <>
           <div className='flex flex-col gap-2'>
+            <div className='flex justify-end items-center text-xs font-base text-slate-600 gap-2 mr-8'>
+              <p>Legend:</p>
+              <div className='h-[10px] w-4 bg-green-500' />
+              <div>{`> 50%,`}</div>
+              <div className='h-[10px] w-4 bg-red-500' />
+              <div>{`< 50%`}</div>
+            </div>
             {/* ---------------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-2'>
               <CardTotalAllCurrency
@@ -122,13 +129,7 @@ export default async function ProtectedRoute() {
             </div>
             {/* ---------------------------------------------------------------------------------------------- */}
           </div>
-          <div className='flex justify-end items-center text-xs font-base text-slate-600 my-2 gap-2'>
-            <p>Legend:</p>
-            <div className='h-[10px] w-4 bg-green-500' />
-            <div>{`> 50%,`}</div>
-            <div className='h-[10px] w-4 bg-red-500' />
-            <div>{`< 50%`}</div>
-          </div>
+
           {assetsWithPricesArray.length > 0 ? (
             <div className='my-4'>
               <MainTable assets={assetsWithPricesArray} />
