@@ -11,6 +11,7 @@ import {
 } from '../lib/assets';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import { CardAth } from '../../components/CardAth';
+import { CardTotalByCrypto } from '@/components/CardTotalByCrypto';
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
@@ -55,7 +56,6 @@ export default async function ProtectedRoute() {
       // https://ui.shadcn.com/docs/components/hover-card
       // https://css-generators.com/ribbon-shapes/
       // TODO: to hover Total by Subtype and then see the next tier of details
-      // TODO: Move the Legend to the top. It's on the bottom hidden
 
       return (
         <>
@@ -100,7 +100,13 @@ export default async function ProtectedRoute() {
             </div>
             {/* ---------------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-4'>
-              <CardTotal
+              {/* <CardTotal
+                emoji={'🪙'}
+                description={'Only Cryptos'}
+                assets={changeKeyAssetToCryptoForTitleOnCard}
+                customKey={'crypto'}
+              /> */}
+              <CardTotalByCrypto
                 emoji={'🪙'}
                 description={'Only Cryptos'}
                 assets={changeKeyAssetToCryptoForTitleOnCard}
