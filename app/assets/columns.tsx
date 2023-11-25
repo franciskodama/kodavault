@@ -15,7 +15,7 @@ export const columns: ColumnDef<Asset>[] = [
     header: ({ column }) => {
       return (
         <Button
-          className='px-0'
+          className='px-0 text-slate-900 font-semibold'
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
