@@ -1,14 +1,29 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+
 import { Asset } from '../lib/types';
+import { Button } from '@/components/ui/button';
 
 const headerClass = 'font-semibold text-slate-800 text-right';
 
 export const columns: ColumnDef<Asset>[] = [
   {
     accessorKey: 'wallet',
-    header: () => <div className={headerClass}>Wallet</div>,
+    // header: () => <div className={headerClass}>Wallet</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className='px-0'
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Wallet
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'account',
