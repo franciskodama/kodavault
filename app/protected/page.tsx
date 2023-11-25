@@ -56,6 +56,15 @@ export default async function ProtectedRoute() {
       // https://ui.shadcn.com/docs/components/hover-card
       // https://css-generators.com/ribbon-shapes/
       // TODO: to hover Total by Subtype and then see the next tier of details
+      // TODO: Generate Report + Send it by Email + Download it
+      // TODO: At the end of the Month close a Report
+      // TODO: Input, Edit, Delete, new Asset
+      // TODO: Search Asset
+      // TODO: Filter By Key Column
+
+      //----------------------------------------------------------------------------------------------
+      // TODO: Home beofre Dashboard - ref.: Kajabi
+      //----------------------------------------------------------------------------------------------
 
       return (
         <>
@@ -100,18 +109,18 @@ export default async function ProtectedRoute() {
             </div>
             {/* ---------------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-4'>
-              {/* <CardTotal
-                emoji={'🪙'}
-                description={'Only Cryptos'}
-                assets={changeKeyAssetToCryptoForTitleOnCard}
-                customKey={'crypto'}
-              /> */}
-              <CardTotalByCrypto
+              <CardTotal
                 emoji={'🪙'}
                 description={'Only Cryptos'}
                 assets={changeKeyAssetToCryptoForTitleOnCard}
                 customKey={'crypto'}
               />
+              {/* <CardTotalByCrypto
+                emoji={'🪙'}
+                description={'Only Cryptos'}
+                assets={changeKeyAssetToCryptoForTitleOnCard}
+                customKey={'crypto'}
+              /> */}
               <CardAth
                 emoji={'📈'}
                 description={'All-Time High Estimation'}
