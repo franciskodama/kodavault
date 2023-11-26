@@ -53,7 +53,6 @@ export default async function ProtectedRoute() {
 
       // Prompt AI: I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
-      // https://ui.shadcn.com/docs/components/hover-card
       // https://css-generators.com/ribbon-shapes/
       // TODO: to hover Total by Subtype and then see the next tier of details
       // TODO: Generate Report + Send it by Email + Download it
@@ -68,7 +67,7 @@ export default async function ProtectedRoute() {
 
       return (
         <>
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 border-2'>
             <div className='flex justify-end items-center text-xs font-base text-slate-600 gap-2 mr-8'>
               <p>Legend:</p>
               <div className='h-[10px] w-4 bg-green-500' />
@@ -76,7 +75,7 @@ export default async function ProtectedRoute() {
               <div className='h-[10px] w-4 bg-red-500' />
               <div>{`< 50%`}</div>
             </div>
-            {/* ---------------------------------------------------------------------------------------------- */}
+            {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-2'>
               <CardTotalAllCurrency
                 assets={assetsWithPricesArray}
@@ -84,34 +83,34 @@ export default async function ProtectedRoute() {
               />
               <CardTotal
                 emoji={'💵'}
-                description={'Global Assets Total'}
+                description={`Assets' Origin Breakdown`}
                 assets={assetsWithPricesArray}
                 customKey={'currency'}
               />
               <CardTotal
                 emoji={'💰'}
-                description={'This is a description'}
+                description={'Total value grouped by type'}
                 assets={assetsWithPricesArray}
                 customKey={'type'}
               />
               <CardTotal
                 emoji={'🧺'}
-                description={'This is a description'}
+                description={'Total value grouped by wallet'}
                 assets={assetsWithPricesArray}
                 customKey={'wallet'}
               />
               <CardTotal
                 emoji={'🗂️'}
-                description={'This is a description'}
+                description={'Total value grouped by subtype'}
                 assets={assetsWithPricesArray}
                 customKey={'subtype'}
               />
             </div>
-            {/* ---------------------------------------------------------------------------------------------- */}
+            {/* -------- 2nd Row -------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-4'>
               <CardTotal
                 emoji={'🪙'}
-                description={'Only Cryptos'}
+                description={'Total value grouped by crypto'}
                 assets={changeKeyAssetToCryptoForTitleOnCard}
                 customKey={'crypto'}
               />
@@ -127,22 +126,21 @@ export default async function ProtectedRoute() {
                 assets={assetsWithPricesByType.Crypto}
               />
             </div>
-            {/* ---------------------------------------------------------------------------------------------- */}
+            {/* -------- 3rd Row-------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-4'>
               <CardTotal
                 emoji={'🔖'}
-                description={'Only Stocks'}
+                description={'Total value grouped by stocks'}
                 assets={changeKeyAssetToStockForTitleOnCard}
                 customKey={'stock'}
               />
               <CardTotal
                 emoji={'🤑'}
-                description={'Only Cash'}
+                description={'Total value grouped by currency'}
                 assets={changeKeyAssetToCashForTitleOnCard}
                 customKey={'cash'}
               />
             </div>
-            {/* ---------------------------------------------------------------------------------------------- */}
           </div>
 
           {assetsWithPricesArray.length > 0 ? (
