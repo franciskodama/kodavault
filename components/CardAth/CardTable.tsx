@@ -34,7 +34,7 @@ export const CardTable = ({
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex justify-between'>
-                <span>ATH Estimation</span>
+                <span>Crypto ATH Estimation</span>
                 <span>{emoji}</span>
               </CardTitle>
               <CardDescription>{description}</CardDescription>

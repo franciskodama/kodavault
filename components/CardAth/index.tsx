@@ -73,7 +73,6 @@ export const CardAth = async ({
     // TODO: change all qtd to qty
     // TODO: alert: recommendation if the amount is too much for a little potential growth
     // TODO: market cap
-
     // TODO: Total By Crypto: show the percentage we want when we reach Bull Market
 
     sortedAthAssets = athAssets.sort(
