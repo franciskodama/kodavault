@@ -54,8 +54,8 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
-    accessorKey: 'qtd',
-    header: () => <div className={tableHeaderClass}>Qtd</div>,
+    accessorKey: 'qty',
+    header: () => <div className={tableHeaderClass}>Qty</div>,
   },
   {
     accessorKey: 'price',

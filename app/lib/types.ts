@@ -2,7 +2,7 @@ export type AssetWithoutPrice = {
   id: string;
   account: string;
   asset: string;
-  qtd: number;
+  qty: number;
   wallet: string;
   created_at: string;
   type: string;
@@ -24,7 +24,7 @@ export type AssetForAth = {
   id: string;
   account: string;
   asset: string;
-  qtd: number;
+  qty: number;
   wallet: string;
   created_at: string;
   type: string;
@@ -39,7 +39,7 @@ export type AssetForAth = {
 export type AssetReducedWithAth = {
   asset: string;
   price: number | string;
-  qtd: number | string;
+  qty: number | string;
   currentTotal: number | string;
   ath: number | string;
   athTotalNumber: number;
