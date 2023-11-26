@@ -17,19 +17,19 @@ export const includePriceToCashAssets = async (
 
   const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
     let price = 1;
-    let total = item.qtd;
+    let total = item.qty;
 
     if (item.currency === 'CAD') {
       price = 1 / currencyRates.quotes?.USDCAD;
-      total = item.qtd / currencyRates.quotes?.USDCAD;
+      total = item.qty / currencyRates.quotes?.USDCAD;
     } else if (item.currency === 'BRL') {
       price = 1 / currencyRates.quotes?.USDBRL;
-      total = item.qtd / currencyRates.quotes?.USDBRL;
+      total = item.qty / currencyRates.quotes?.USDBRL;
     }
 
     return {
       ...item,
-      qtd: item.qtd,
+      qty: item.qty,
       price: Number(Number(price).toFixed(2)),
       total: Number(Number(total).toFixed(2)),
     };
@@ -45,11 +45,11 @@ export const includePriceToCryptoAssets = async (
     cryptoAssetsArray.map(async (item: AssetWithoutPrice) => {
       const thisCryptoPrice = await getCryptos(item.asset);
       const price = thisCryptoPrice.data[0].priceUsd;
-      const total = price * item.qtd;
+      const total = price * item.qty;
 
       return {
         ...item,
-        qtd: item.qtd,
+        qty: item.qty,
         price:
           price.split('.')[0] > 99
             ? Number(Number(price).toFixed(2))
@@ -112,7 +112,7 @@ export const includePriceToStockAssets = async (
     return {
       ...item,
       price: Number(thisStock.price).toFixed(2),
-      total: Number(Number(thisStock.price * item.qtd).toFixed(2)),
+      total: Number(Number(thisStock.price * item.qty).toFixed(2)),
     };
   });
 

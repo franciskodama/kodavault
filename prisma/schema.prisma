@@ -138,7 +138,7 @@ model applicant_tracking_system {
 model Asset {
   id         String  @id(map: "assets_pkey")
   asset      String
-  qtd        Float   @default(0)
+  qty        Float   @default(0)
   wallet     String
   created_at String
   type       String

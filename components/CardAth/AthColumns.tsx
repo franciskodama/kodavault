@@ -23,7 +23,7 @@ export const columnsAth: ColumnDef<Asset>[] = [
     },
   },
   {
-    accessorKey: 'qtd',
+    accessorKey: 'qty',
     header: () => <div className={tableHeaderClass}>Qty</div>,
   },
   {
