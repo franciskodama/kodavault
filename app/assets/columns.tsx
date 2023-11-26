@@ -5,17 +5,15 @@ import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
 import { Asset } from '../lib/types';
 import { Button } from '@/components/ui/button';
-
-const headerClass = 'font-semibold text-slate-800 text-right';
+import { tableHeaderClass } from '../lib/classes';
 
 export const columns: ColumnDef<Asset>[] = [
   {
     accessorKey: 'wallet',
-    // header: () => <div className={headerClass}>Wallet</div>,
     header: ({ column }) => {
       return (
         <Button
-          className='px-0 text-slate-900 font-semibold'
+          className={tableHeaderClass}
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
@@ -27,19 +25,41 @@ export const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: 'account',
-    header: () => <div className={headerClass}>Account</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Account
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'asset',
-    header: () => <div className={headerClass}>Asset</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Asset
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'qtd',
-    header: () => <div className={headerClass}>Qtd</div>,
+    header: () => <div className={tableHeaderClass}>Qtd</div>,
   },
   {
     accessorKey: 'price',
-    header: () => <div className={headerClass}>Price</div>,
+    header: () => <div className={tableHeaderClass}>Price</div>,
     // cell: ({ row }) => {
     //   const price = parseFloat(row.getValue('price'));
     //   const formatted = new Intl.NumberFormat('en-US', {
@@ -50,7 +70,18 @@ export const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: 'total',
-    header: () => <div className={headerClass}>Total</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Total
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
     // cell: ({ row }) => {
     //   const total = parseFloat(row.getValue('total'));
     //   const formatted = new Intl.NumberFormat('en-US', {
@@ -61,14 +92,47 @@ export const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: 'type',
-    header: () => <div className={headerClass}>Type</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Type
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'subtype',
-    header: () => <div className={headerClass}>Subtype</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Subtype
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'currency',
-    header: () => <div className={headerClass}>Currency</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Currency
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
 ];
