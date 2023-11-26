@@ -80,11 +80,11 @@ export default async function ProtectedRoute() {
             <div className='flex flex-wrap gap-2'>
               <CardTotalAllCurrency
                 assets={assetsWithPricesArray}
-                description={'Total in USD, CAD, BRL.'}
+                description={'Total Vault in USD, CAD, BRL.'}
               />
               <CardTotal
                 emoji={'💵'}
-                description={'Currency, babe!'}
+                description={'Global Assets Total'}
                 assets={assetsWithPricesArray}
                 customKey={'currency'}
               />

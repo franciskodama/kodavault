@@ -30,8 +30,8 @@ export const includePriceToCashAssets = async (
     return {
       ...item,
       qtd: item.qtd,
-      price: price,
-      total: total,
+      price: Number(Number(price).toFixed(2)),
+      total: Number(Number(total).toFixed(2)),
     };
   });
 
@@ -50,8 +50,14 @@ export const includePriceToCryptoAssets = async (
       return {
         ...item,
         qtd: item.qtd,
-        price: +price,
-        total: total,
+        price:
+          price.split('.')[0] > 99
+            ? Number(Number(price).toFixed(2))
+            : Number(Number(price).toFixed(4)),
+        total:
+          Number(total.toString().split('.')[0]) > 99
+            ? Number(Number(total).toFixed(2))
+            : Number(Number(total).toFixed(4)),
       };
     })
   );
@@ -105,8 +111,8 @@ export const includePriceToStockAssets = async (
 
     return {
       ...item,
-      price: thisStock.price,
-      total: thisStock.price * item.qtd,
+      price: Number(thisStock.price).toFixed(2),
+      total: Number(Number(thisStock.price * item.qtd).toFixed(2)),
     };
   });
 

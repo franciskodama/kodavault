@@ -2,45 +2,106 @@
 
 import { Asset } from '@/app/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
-
-const headerClass = 'font-semibold text-slate-800 text-right';
+import { Button } from '../ui/button';
+import { ArrowUpDown } from 'lucide-react';
+import { tableHeaderClass } from '@/app/lib/classes';
 
 export const columnsAth: ColumnDef<Asset>[] = [
   {
     accessorKey: 'asset',
-    header: () => <div className={headerClass}>Asset</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Asset
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'qtd',
-    header: () => <div className={headerClass}>Qty</div>,
+    header: () => <div className={tableHeaderClass}>Qty</div>,
   },
   {
     accessorKey: 'price',
-    header: () => <div className={headerClass}>Price</div>,
+    header: () => <div className={tableHeaderClass}>Price</div>,
   },
   {
     accessorKey: 'currentTotal',
-    header: () => <div className={headerClass}>Total</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Total
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'ath',
-    header: () => <div className={headerClass}>ATH</div>,
+    header: () => <div className={tableHeaderClass}>ATH</div>,
   },
   {
     accessorKey: 'athTotalCurrency',
-    header: () => (
-      <div className={headerClass}>
-        ATH Total
-        <span className='text-xs font-medium'>{` (est.)`}</span>
-      </div>
-    ),
+    // header: () => (
+    //   <div className={tableHeaderClass}>
+    //     ATH Total
+    //     <span className='text-xs font-medium'>{` (est.)`}</span>
+    //   </div>
+    // ),
+
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          <div className={tableHeaderClass}>
+            ATH Total
+            <span className='text-xs font-medium'>{` (est.)`}</span>
+          </div>
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'percentagePotential',
-    header: () => <div className={headerClass}>%</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Boost (%)
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'xPotential',
-    header: () => <div className={headerClass}>X</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Boost (x)
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
   },
 ];
