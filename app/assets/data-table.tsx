@@ -18,7 +18,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-// } from '../../components/ui/table';
 import { AssetReducedWithAth } from '../lib/types';
 
 interface DataTableProps<TData, TValue> {
