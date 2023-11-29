@@ -1,13 +1,13 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
+// import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '../components/SessionProvider';
 import Header from '../components/Header';
 
 // export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
 // export const cairoPlay = Cairo_Play({ subsets: ['latin'], display: 'swap' });
-export const inter = Inter({ subsets: ['latin'], display: 'swap' });
+// export const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,10 +22,12 @@ export default async function RootLayout({
   const session = await getServerSession();
 
   // PURPLE --> bg-[#6E2DB8]
+  // See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 
   return (
     <html lang='en'>
-      <body className={`${inter.className} bg-[#FAFAFB]`}>
+      {/* <body className={`${inter.className} bg-[#FAFAFB]`}> */}
+      <body className='bg-[#FAFAFB]'>
         <SessionProvider session={session}>
           <main className='mx-auto max-w-[1400px] text-xl gap-2'>
             <Header />

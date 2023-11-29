@@ -10,7 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
+} from './ui/sheet';
 import { AddAssetForm } from './AddAssetForm';
 
 const ACTIVE_ROUTE =
