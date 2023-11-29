@@ -1,4 +1,4 @@
-import { Hero } from '@/components/Hero';
+import { Hero } from './../components/Hero';
 import { getServerSession } from 'next-auth';
 
 export default async function Home() {
