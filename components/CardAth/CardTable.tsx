@@ -5,10 +5,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '../../components/ui/card';
 import { AssetReducedWithAth } from '../../app/lib/types';
 import AthTable from './AthTable';
-import { currencyFormatter, numberFormatterNoDecimals } from '@/app/lib/utils';
+import {
+  currencyFormatter,
+  numberFormatterNoDecimals,
+} from '../../app/lib/utils';
 
 export const CardTable = ({
   athAssets,

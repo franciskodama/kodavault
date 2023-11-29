@@ -9,7 +9,7 @@ import {
   fetchAssetsWithPrices,
   groupAssetsByType,
 } from '../lib/assets';
-import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
+import { CardTotalAllCurrency } from '../../components/CardAllCurrencies';
 import { CardAth } from '../../components/CardAth';
 import { CardTotalByCrypto } from '@/components/CardTotalByCrypto';
 

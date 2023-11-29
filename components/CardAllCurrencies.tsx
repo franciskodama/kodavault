@@ -1,13 +1,13 @@
 import { currencyRates } from '@/app/lib/prices';
 import { Asset } from '@/app/lib/types';
-import { numberFormatter, numberFormatterNoDecimals } from '@/app/lib/utils';
+import { numberFormatter, numberFormatterNoDecimals } from '../app/lib/utils';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '../components/ui/card';
 
 type totalArrayProps = {
   currency: string;

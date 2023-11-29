@@ -1,4 +1,4 @@
-import { DataTable } from '@/app/assets/data-table';
+import { DataTable } from './../../app/assets/data-table';
 import { AssetReducedWithAth } from '@/app/lib/types';
 import { columnsAth } from './AthColumns';
 

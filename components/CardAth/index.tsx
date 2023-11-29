@@ -6,7 +6,7 @@ import {
   currencyFormatter,
   numberFormatter,
   numberFormatterNoDecimals,
-} from '@/app/lib/utils';
+} from '../../app/lib/utils';
 
 export const CardAth = async ({
   assets,
