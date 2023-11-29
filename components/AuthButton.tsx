@@ -1,7 +1,7 @@
 'use client';
 
 import { signIn, signOut, useSession } from 'next-auth/react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
 import { LogOutIcon } from 'lucide-react';
 
 export const AuthButton = () => {
