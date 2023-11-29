@@ -9,24 +9,28 @@ const initialState = {
 };
 
 const SubmitButton = ({ message }: any) => {
-  const { peding } = useFormStatus();
+  // const { peding } = useFormStatus();
 
   return (
-    <Button type='submit' aria-disabled={peding}>
-      Add Asset
-    </Button>
+    <>
+      Hi!
+      {/* <Button type='submit' aria-disabled={peding}>
+        Add Asset
+      </Button> */}
+    </>
   );
 };
 
 export const AddAssetForm = () => {
-  const [state, formAction] = useFormState(addAsset, initialState);
+  // const [state, formAction] = useFormState(addAsset, initialState);
   return (
     <>
-      <form action={formAction}>
+      Hi!
+      {/* <form action={formAction}>
         <label htmlFor='asset'>Enter Asset</label>
         <input type='text' name='asset' id='asset' required />
         <SubmitButton />
-      </form>
+      </form> */}
     </>
   );
 };

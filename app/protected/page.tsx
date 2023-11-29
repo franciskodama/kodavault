@@ -59,6 +59,7 @@ export default async function ProtectedRoute() {
       // TODO: At the end of the Month close a Report
       // TODO: Input, Edit, Delete, new Asset
       // TODO: Search Asset
+      // TODO: On mouse over on Crypto, show the foundamentals explanation of this coin
       // TODO: Filter By Key Column
 
       //----------------------------------------------------------------------------------------------
