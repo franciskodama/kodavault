@@ -10,6 +10,16 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from '../components/ui/table';
+
+import { AssetReducedWithAth } from '../lib/types';
 import {
   Table,
   TableBody,
@@ -18,8 +28,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-
-import { AssetReducedWithAth } from '../lib/types';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

@@ -22,6 +22,7 @@ export default async function RootLayout({
   const session = await getServerSession();
 
   // PURPLE --> bg-[#6E2DB8]
+  // See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 
   return (
     <html lang='en'>
