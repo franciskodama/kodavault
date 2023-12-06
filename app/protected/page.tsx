@@ -62,6 +62,11 @@ export default async function ProtectedRoute() {
       // TODO: On mouse over on Crypto, show the foundamentals explanation of this coin
       // TODO: Filter By Key Column
 
+      // TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
+      // TODO: If there is cash on TFSA or HFSA, show it on the card or send a alert
+      // TODO: think about other alerts
+      // TODO: Place to save videos about coins for future reference
+
       //----------------------------------------------------------------------------------------------
       // TODO: Home beofre Dashboard - ref.: Kajabi
       //----------------------------------------------------------------------------------------------
