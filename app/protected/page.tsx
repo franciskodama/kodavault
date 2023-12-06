@@ -12,6 +12,9 @@ import {
 import { CardTotalAllCurrency } from '../../components/CardAllCurrencies';
 import { CardAth } from '../../components/CardAth';
 import { CardTotalByCrypto } from '@/components/CardTotalByCrypto';
+import { useDebugValue } from 'react';
+import { currencyRates } from '../lib/prices';
+import { currencyFormatter } from '../lib/utils';
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
@@ -73,14 +76,26 @@ export default async function ProtectedRoute() {
 
       return (
         <>
-          <div className='flex flex-col gap-2 border-2'>
-            <div className='flex justify-end items-center text-xs font-base text-slate-600 gap-2 mr-8'>
-              <p>Legend:</p>
-              <div className='h-[10px] w-4 bg-green-500' />
-              <div>{`> 50%,`}</div>
-              <div className='h-[10px] w-4 bg-red-500' />
-              <div>{`< 50%`}</div>
+          <div className='flex flex-col gap-2'>
+            <div className='flex justify-end items-center text-xs font-base text-slate-600'>
+              <div className='flex items-center mr-8'>
+                <div>{`🇨🇦 CAD: ${currencyFormatter(
+                  currencyRates.quotes.USDCAD
+                )}`}</div>
+                <div className='ml-4'>{`🇧🇷 BRL: ${currencyFormatter(
+                  currencyRates.quotes.USDBRL
+                )}`}</div>
+              </div>
+
+              <div className='flex justify-end items-center gap-2 mr-8'>
+                <p>Legend:</p>
+                <div className='h-[10px] w-4 bg-green-500' />
+                <div>{`> 50%,`}</div>
+                <div className='h-[10px] w-4 bg-red-500' />
+                <div>{`< 50%`}</div>
+              </div>
             </div>
+
             {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-2'>
               <CardTotalAllCurrency
