@@ -69,6 +69,12 @@ export default async function ProtectedRoute() {
       // TODO: If there is cash on TFSA or HFSA, show it on the card or send a alert
       // TODO: think about other alerts
       // TODO: Place to save videos about coins for future reference
+      // TODO: Card with link of Data Analysis to check on the daily basis (Obdisian)
+
+      // TODO: After you click on CAD flag you go to https://economia.uol.com.br/cotacoes/cambio/dolar-canadense-canada/
+      // TODO: The same for the BRL flag
+
+      // TODO: Check this API: https://www.cryptometer.io/login.php
 
       //----------------------------------------------------------------------------------------------
       // TODO: Home beofre Dashboard - ref.: Kajabi
