@@ -15,6 +15,7 @@ import { CardTotalByCrypto } from '@/components/CardTotalByCrypto';
 import { useDebugValue } from 'react';
 import { currencyRates } from '../lib/prices';
 import { currencyFormatter } from '../lib/utils';
+import Link from 'next/link';
 
 export default async function ProtectedRoute() {
   const session = await getServerSession();
@@ -70,11 +71,14 @@ export default async function ProtectedRoute() {
       // TODO: think about other alerts
       // TODO: Place to save videos about coins for future reference
       // TODO: Card with link of Data Analysis to check on the daily basis (Obdisian)
+      // TODO: Card with link for the image of the cycle of the market (already in the public folder)
 
       // TODO: After you click on CAD flag you go to https://economia.uol.com.br/cotacoes/cambio/dolar-canadense-canada/
       // TODO: The same for the BRL flag
 
       // TODO: Check this API: https://www.cryptometer.io/login.php
+
+      //TODO: fix 0 quantity error
 
       //----------------------------------------------------------------------------------------------
       // TODO: Home beofre Dashboard - ref.: Kajabi
@@ -88,9 +92,13 @@ export default async function ProtectedRoute() {
                 <div>{`🇨🇦 CAD: ${currencyFormatter(
                   currencyRates.quotes.USDCAD
                 )}`}</div>
-                <div className='ml-4'>{`🇧🇷 BRL: ${currencyFormatter(
-                  currencyRates.quotes.USDBRL
-                )}`}</div>
+                <div className='ml-4'>
+                  <Link href='https://economia.uol.com.br/cotacoes/cambio/dolar-canadense-canada/'>
+                    <span>🇧🇷</span>
+                  </Link>
+
+                  {` BRL: ${currencyFormatter(currencyRates.quotes.USDBRL)}`}
+                </div>
               </div>
 
               <div className='flex justify-end items-center gap-2 mr-8'>
