@@ -73,9 +73,6 @@ export default async function ProtectedRoute() {
       // TODO: Card with link of Data Analysis to check on the daily basis (Obdisian)
       // TODO: Card with link for the image of the cycle of the market (already in the public folder)
 
-      // TODO: After you click on CAD flag you go to https://economia.uol.com.br/cotacoes/cambio/dolar-canadense-canada/
-      // TODO: The same for the BRL flag
-
       // TODO: Check this API: https://www.cryptometer.io/login.php
 
       //TODO: fix 0 quantity error
@@ -89,13 +86,23 @@ export default async function ProtectedRoute() {
           <div className='flex flex-col gap-2'>
             <div className='flex justify-end items-center text-xs font-base text-slate-600'>
               <div className='flex items-center mr-8'>
-                <div>{`🇨🇦 CAD: ${currencyFormatter(
-                  currencyRates.quotes.USDCAD
-                )}`}</div>
+                <div>
+                  <a
+                    target='_blank'
+                    href='https://ca.finance.yahoo.com/quote/USDCAD=X/'
+                  >
+                    <span>🇨🇦</span>
+                  </a>
+
+                  {` CAD: ${currencyFormatter(currencyRates.quotes.USDCAD)}`}
+                </div>
                 <div className='ml-4'>
-                  <Link href='https://economia.uol.com.br/cotacoes/cambio/dolar-canadense-canada/'>
+                  <a
+                    target='_blank'
+                    href='https://ca.finance.yahoo.com/quote/USDBRL=X/'
+                  >
                     <span>🇧🇷</span>
-                  </Link>
+                  </a>
 
                   {` BRL: ${currencyFormatter(currencyRates.quotes.USDBRL)}`}
                 </div>
