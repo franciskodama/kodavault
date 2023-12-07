@@ -75,7 +75,8 @@ export default async function ProtectedRoute() {
 
       // TODO: Check this API: https://www.cryptometer.io/login.php
 
-      //TODO: fix 0 quantity error
+      // TODO: fix 0 quantity error
+      // TODO: Card "Next Purchases"
 
       //----------------------------------------------------------------------------------------------
       // TODO: Home beofre Dashboard - ref.: Kajabi
