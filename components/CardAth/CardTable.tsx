@@ -36,15 +36,17 @@ export const CardTable = ({
         <div className='flex flex-col justify-between'>
           <div className='flex flex-col'>
             <CardHeader>
-              <CardTitle className='capitalize flex justify-between'>
+              <CardTitle className='capitalize flex items-center justify-between'>
                 <span>Crypto ATH Estimation</span>
-                <span>{emoji}</span>
+                <span className='text-3xl'>{emoji}</span>
               </CardTitle>
-              <CardDescription>{description}</CardDescription>
+              <CardDescription className='text-xs'>
+                {description}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {athAssets.length > 0 ? (
-                <div className='my-4'>
+                <div>
                   <AthTable athAssets={athAssets} />
                 </div>
               ) : (
