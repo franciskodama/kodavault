@@ -70,18 +70,11 @@ export const CardAth = async ({
       };
     });
 
-    // TODO: change all qty to qty
-    // TODO: alert: recommendation if the amount is too much for a little potential growth
-    // TODO: market cap
-    // TODO: Total By Crypto: show the percentage we want when we reach Bull Market
-
     sortedAthAssets = athAssets.sort(
-      //---------------------------------------------------------------------------
       (a: AssetReducedWithAth, b: AssetReducedWithAth) => {
         return Number(b.xPotential) - Number(a.xPotential);
       }
     );
-    //---------------------------------------------------------------------------
   } catch (error) {
     console.log('Error: ', error);
   }
