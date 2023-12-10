@@ -21,6 +21,7 @@
 // TODO: Place to save videos about coins for future reference
 // TODO: Card with link of Data Analysis to check on the daily basis (Obdisian)
 // TODO: Card with link for the image of the cycle of the market (already in the public folder)
+// TODO: Font Bug
 
 // ----------------------------------------------------------------------------------------------
 // ATH CARD
@@ -29,10 +30,10 @@
 // TODO: market cap
 // TODO: It's not showing APE price
 // TODO: Total By Crypto: show the percentage we want when we reach Bull Market
-// ----------------------------------------------------------------------------------------------
 
-// ----------------------------------------------------------------------------------------------
-// DONE:
+// =============================================================================================
+// =================================   DONE    ================================================
+// =============================================================================================
 // TODO: Home beofre Dashboard - ref.: Kajabi
 // TODO: Card "Next Purchases"
-// ----------------------------------------------------------------------------------------------
+// =============================================================================================
