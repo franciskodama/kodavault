@@ -2,9 +2,9 @@
 
 // PRIORITIES:
 // TODO: Fix Sign in Bug
-// TODO: No more Password for Pull Request
 // TODO: Input, Edit, Delete, new Asset
 // TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
+// TODO: favicon
 
 // FUTURE:
 // https://css-generators.com/ribbon-shapes/
@@ -31,9 +31,9 @@
 // TODO: It's not showing APE price
 // TODO: Total By Crypto: show the percentage we want when we reach Bull Market
 
-// =============================================================================================
-// =================================   DONE    ================================================
-// =============================================================================================
+// DONE ========================================================================================
 // TODO: Home beofre Dashboard - ref.: Kajabi
 // TODO: Card "Next Purchases"
+// TODO: No more Password for Pull Request
+
 // =============================================================================================
