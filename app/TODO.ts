@@ -37,5 +37,3 @@
 // TODO: Home beofre Dashboard - ref.: Kajabi
 // TODO: Card "Next Purchases"
 // =============================================================================================
-
-// TEST TEST   asdasdasdasd
