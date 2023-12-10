@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
 
 import MainTable from '../assets/page';
 import { CardTotal } from '../../components/CardTotal';
@@ -19,17 +18,15 @@ import Link from 'next/link';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 
 export default async function ProtectedRoute() {
-  const session = await getServerSession();
-
-  if (!session || !session.user) {
-    redirect('/api/auth/signin');
-  }
+  // if (!session || !session.user) {
+  //   redirect('/api/auth/signin');
+  // }
 
   try {
     let assets: AssetWithoutPrice[] = [];
-    if (session?.user?.email) {
-      assets = await fetchAssets(session.user.email);
-    }
+    // if (session?.user?.email) {
+    //   assets = await fetchAssets(session.user.email);
+    // }
 
     if (assets.length > 0) {
       const assetsWithPricesArray = await fetchAssetsWithPrices(assets);
