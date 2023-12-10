@@ -26,6 +26,7 @@ export const hardcodedAthCoins = [
   { symbol: 'AGIX', ath: 0.63 },
   { symbol: 'HBAR', ath: 0.57 },
   { symbol: 'SOL', ath: 260.06 },
+  { symbol: 'APE', ath: 39.4 },
   { symbol: 'ENJ', ath: 4.85 },
   { symbol: 'SAND', ath: 8.44 },
   { symbol: 'ETH', ath: 4878.26 },
