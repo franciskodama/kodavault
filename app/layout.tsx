@@ -29,7 +29,6 @@ export default async function RootLayout({
         <body className='bg-[#FAFAFB]'>
           <main className='mx-auto max-w-[1400px] text-xl gap-2'>
             <Header />
-
             {children}
           </main>
         </body>

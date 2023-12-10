@@ -17,7 +17,7 @@ import { currencyFormatter } from '../lib/utils';
 import Link from 'next/link';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 
-export default async function ProtectedRoute() {
+export default async function DashboardPage() {
   // if (!session || !session.user) {
   //   redirect('/api/auth/signin');
   // }

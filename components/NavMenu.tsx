@@ -34,16 +34,16 @@ export default function NavMenu() {
             Home
           </li>
         </Link>
-        <Link href='protected'>
+        <Link href='dashboard'>
           <li
             className={
-              pathname === '/protected' ? ACTIVE_ROUTE : INACTIVE_ROUTE
+              pathname === '/dashboard' ? ACTIVE_ROUTE : INACTIVE_ROUTE
             }
           >
             Dashboard
           </li>
         </Link>
-        {pathname === '/protected' && (
+        {pathname === '/dashboard' && (
           <Sheet>
             <SheetTrigger className='ml-4 font-medium'>+ Asset</SheetTrigger>
             <SheetContent>
