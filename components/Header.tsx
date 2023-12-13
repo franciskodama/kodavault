@@ -1,6 +1,7 @@
 import Image from 'next/image';
+import { UserButton } from '@clerk/nextjs';
+
 import NavMenu from './NavMenu';
-import { AuthButton } from './AuthButton';
 
 export default function Header() {
   return (
@@ -14,7 +15,7 @@ export default function Header() {
       />
       <div className='flex items-center gap-20'>
         <NavMenu />
-        <AuthButton />
+        <UserButton afterSignOutUrl='/' />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
+
+import { auth, currentUser } from '@clerk/nextjs';
 
 import MainTable from '../assets/page';
 import { CardTotal } from '../../components/CardTotal';
@@ -18,17 +19,15 @@ import { currencyFormatter } from '../lib/utils';
 import Link from 'next/link';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 
-export default async function ProtectedRoute() {
-  const session = await getServerSession();
-
-  if (!session || !session.user) {
-    redirect('/api/auth/signin');
-  }
+export default async function DashboardPage() {
+  const { userId } = auth();
+  const user = await currentUser();
 
   try {
     let assets: AssetWithoutPrice[] = [];
-    if (session?.user?.email) {
-      assets = await fetchAssets(session.user.email);
+
+    if (user) {
+      assets = await fetchAssets(user.emailAddresses[0].emailAddress);
     }
 
     if (assets.length > 0) {
