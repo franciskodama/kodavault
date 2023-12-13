@@ -1,5 +1,7 @@
 import { redirect } from 'next/navigation';
 
+import { auth, currentUser } from '@clerk/nextjs';
+
 import MainTable from '../assets/page';
 import { CardTotal } from '../../components/CardTotal';
 import { AssetWithoutPrice } from '../lib/types';
@@ -18,15 +20,15 @@ import Link from 'next/link';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 
 export default async function DashboardPage() {
-  // if (!session || !session.user) {
-  //   redirect('/api/auth/signin');
-  // }
+  const { userId } = auth();
+  const user = await currentUser();
 
   try {
     let assets: AssetWithoutPrice[] = [];
-    // if (session?.user?.email) {
-    //   assets = await fetchAssets(session.user.email);
-    // }
+
+    if (user) {
+      assets = await fetchAssets(user.emailAddresses[0].emailAddress);
+    }
 
     if (assets.length > 0) {
       const assetsWithPricesArray = await fetchAssetsWithPrices(assets);
