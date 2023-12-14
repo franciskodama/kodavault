@@ -5,6 +5,7 @@
 // TODO: Input, Edit, Delete, new Asset
 // TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
 // TODO: favicon
+// TODO: Wealthsimple is only 10000 USD? Why?
 
 // FUTURE:
 // https://css-generators.com/ribbon-shapes/

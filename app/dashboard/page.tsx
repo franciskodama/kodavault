@@ -18,6 +18,7 @@ import { currencyRates } from '../lib/prices';
 import { currencyFormatter } from '../lib/utils';
 import Link from 'next/link';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
+import { NoAssets } from '@/components/NoAssets';
 
 export default async function DashboardPage() {
   const { userId } = auth();
@@ -171,7 +172,7 @@ export default async function DashboardPage() {
         </>
       );
     } else {
-      return <div className='my-32'>🙅🏻‍♀️ No assets found</div>;
+      return <NoAssets />;
     }
   } catch (error) {
     console.error(error);
