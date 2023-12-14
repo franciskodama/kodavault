@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export function NoAssets() {
+export default function NoAssets() {
   return (
     <div className='flex w-full items-center justify-center'>
       <div className='my-32'>🙅🏻‍♀️ No assets found</div>

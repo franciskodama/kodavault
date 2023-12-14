@@ -1,11 +1,10 @@
 // Prompt AI: I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
 // PRIORITIES:
-// TODO: Fix Sign in Bug
 // TODO: Input, Edit, Delete, new Asset
 // TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
-// TODO: favicon
 // TODO: Wealthsimple is only 10000 USD? Why?
+// TODO: Test No Assets Page, then test it including one Asset in the database
 
 // FUTURE:
 // https://css-generators.com/ribbon-shapes/
@@ -36,5 +35,7 @@
 // TODO: Home beofre Dashboard - ref.: Kajabi
 // TODO: Card "Next Purchases"
 // TODO: No more Password for Pull Request
+// TODO: favicon
+// TODO: Fix Sign in Bug
 
 // =============================================================================================

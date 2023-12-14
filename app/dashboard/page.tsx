@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation';
-
 import { auth, currentUser } from '@clerk/nextjs';
 
 import MainTable from '../assets/page';
@@ -18,7 +16,7 @@ import { currencyRates } from '../lib/prices';
 import { currencyFormatter } from '../lib/utils';
 import Link from 'next/link';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
-import { NoAssets } from '@/components/NoAssets';
+import NoAssets from '@/components/NoAssets';
 
 export default async function DashboardPage() {
   const { userId } = auth();
