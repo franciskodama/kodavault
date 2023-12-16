@@ -3,7 +3,7 @@ import { columns } from './columns';
 import { DataTable } from './data-table';
 
 export default async function AssetsPage() {
-// { assets }: { assets: Asset[] }
+  // { assets }: { assets: Asset[] }
   // const sortedAssetsByAlphabeticOrder = assets.sort((a: any, b: any) => {
   //   if (a.wallet < b.wallet) {
   //     return -1;
@@ -16,7 +16,7 @@ export default async function AssetsPage() {
 
   return (
     <div className='mx-auto'>
-      TEST
+      ASSETS
       {/* <DataTable columns={columns} data={sortedAssetsByAlphabeticOrder} /> */}
     </div>
   );

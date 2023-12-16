@@ -1,12 +1,14 @@
-import './globals.css';
+import './../components/ui/globals.css';
 import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
 
 import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
 import Header from '../components/Header';
 
+// See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 // export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
 // export const cairoPlay = Cairo_Play({ subsets: ['latin'], display: 'swap' });
+
 export const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
@@ -19,8 +21,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
-
   return (
     <ClerkProvider>
       <html lang='en'>
