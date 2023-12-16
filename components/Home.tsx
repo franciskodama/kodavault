@@ -1,8 +1,9 @@
-import { Link } from 'lucide-react';
+import SignInPage from '@/app/sign-in/page';
+import Link from 'next/link';
 
-export const Home = () => {
+export default function Home() {
   return (
-    <div className='flex w-full items-center justify-center'>
+    <div className='flex w-full items-center justify-center h-32'>
       {/* <Image
         src='/hero-kodavault.png'
         width={800}
@@ -10,9 +11,15 @@ export const Home = () => {
         alt='Logo Koda Vault'
         className='rounded-md object-cover'
       /> */}
-      <Link href='/dashboard'>
-        <h1>Dashboard</h1>
-      </Link>
+      <div className='border-2 w-1/2'>
+        <Link href='/dashboard'>
+          <h1>Dashboard</h1>
+        </Link>
+      </div>
+
+      <div className='border-2 w-1/2'>
+        <SignInPage />
+      </div>
     </div>
   );
-};
+}

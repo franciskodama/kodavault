@@ -2,12 +2,12 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
 
-// import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
+import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
 import Header from '../components/Header';
 
 // export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
 // export const cairoPlay = Cairo_Play({ subsets: ['latin'], display: 'swap' });
-// export const inter = Inter({ subsets: ['latin'], display: 'swap' });
+export const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Koda Vault',
@@ -25,8 +25,8 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang='en'>
-        {/* <body className={`${inter.className} bg-[#FAFAFB]`}> */}
-        <body className='bg-[#FAFAFB]'>
+        <body className={`${inter.className} bg-[#FAFAFB]`}>
+          {/* <body className='bg-[#FAFAFB]'> */}
           <main className='mx-auto max-w-[1400px] text-xl gap-2'>
             <Header />
             {children}

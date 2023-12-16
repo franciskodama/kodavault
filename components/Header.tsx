@@ -26,9 +26,9 @@ export default function Header() {
         {pathname.includes('dashboard') && (
           <>
             <NavMenu />
-            <UserButton afterSignOutUrl='/' />
           </>
         )}
+        <UserButton afterSignOutUrl='/' />
       </div>
     </div>
   );

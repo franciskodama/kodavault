@@ -1,12 +1,12 @@
-import { Asset, AssetReducedWithAth } from '../../app/lib/types';
-import { getAllTimeHighData } from '@/app/lib/crypto.server';
+import { Asset, AssetReducedWithAth } from '../../lib/types';
+import { getAllTimeHighData } from '@/lib/crypto.server';
 import { CardTable } from './CardTable';
-import { hardcodedAthCoins } from '../../app/lib/data';
+import { hardcodedAthCoins } from '../../lib/data';
 import {
   currencyFormatter,
   numberFormatter,
   numberFormatterNoDecimals,
-} from '../../app/lib/utils';
+} from '../../lib/utils';
 
 export const CardAth = async ({
   assets,

@@ -1,4 +1,4 @@
-import { Asset } from '../../lib/types';
+import { Asset } from '../../../lib/types';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 

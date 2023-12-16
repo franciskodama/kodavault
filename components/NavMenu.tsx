@@ -25,15 +25,6 @@ export default function NavMenu() {
     <>
       <hr className='my-4' />
       <ul className='flex items-center text-sm'>
-        {/* <Link href='/'>
-          <li
-            className={`${
-              pathname === '/' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            } mr-2`}
-          >
-            Home
-          </li>
-        </Link> */}
         <Link href='/dashboard'>
           <li
             className={
@@ -44,51 +35,39 @@ export default function NavMenu() {
           </li>
         </Link>
 
-        {pathname === '/dashboard' && (
-          <>
-            <Link href='/dashboard/assets'>
-              <li
-                className={
-                  pathname.includes('assets') ? ACTIVE_ROUTE : INACTIVE_ROUTE
-                }
-              >
-                Assets
-              </li>
-            </Link>
-            <Link href='/dashboard/cryptos'>
-              <li
-                className={
-                  pathname.includes('cryptos') ? ACTIVE_ROUTE : INACTIVE_ROUTE
-                }
-              >
-                Cryptos
-              </li>
-            </Link>
-            <Link href='stocks'>
-              <li
-                className={
-                  pathname.includes('/dashboard/stocks')
-                    ? ACTIVE_ROUTE
-                    : INACTIVE_ROUTE
-                }
-              >
-                Stocks
-              </li>
-            </Link>
-            <Sheet>
-              <SheetTrigger className='ml-4 font-medium'>+ Asset</SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>Add a new Asset</SheetTitle>
-                  <SheetDescription>
-                    Add a New Asset and expand your investment portfolio.
-                  </SheetDescription>
-                </SheetHeader>
-                <AddAssetForm />
-              </SheetContent>
-            </Sheet>
-          </>
-        )}
+        <Link href='/dashboard/assets'>
+          <li
+            className={pathname === '/assets' ? ACTIVE_ROUTE : INACTIVE_ROUTE}
+          >
+            Assets
+          </li>
+        </Link>
+        <Link href='/dashboard/cryptos'>
+          <li
+            className={pathname === '/cryptos' ? ACTIVE_ROUTE : INACTIVE_ROUTE}
+          >
+            Cryptos
+          </li>
+        </Link>
+        <Link href='stocks'>
+          <li
+            className={pathname === '/stocks' ? ACTIVE_ROUTE : INACTIVE_ROUTE}
+          >
+            Stocks
+          </li>
+        </Link>
+        <Sheet>
+          <SheetTrigger className='ml-4 font-medium'>+ Asset</SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Add a new Asset</SheetTitle>
+              <SheetDescription>
+                Add a New Asset and expand your investment portfolio.
+              </SheetDescription>
+            </SheetHeader>
+            <AddAssetForm />
+          </SheetContent>
+        </Sheet>
       </ul>
     </>
   );
