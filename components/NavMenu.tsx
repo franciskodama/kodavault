@@ -34,7 +34,7 @@ export default function NavMenu() {
             Home
           </li>
         </Link>
-        <Link href='dashboard'>
+        <Link href='/dashboard'>
           <li
             className={
               pathname === '/dashboard' ? ACTIVE_ROUTE : INACTIVE_ROUTE
@@ -43,50 +43,52 @@ export default function NavMenu() {
             Dashboard
           </li>
         </Link>
+
         {pathname === '/dashboard' && (
-          <Sheet>
-            <SheetTrigger className='ml-4 font-medium'>+ Asset</SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>Add a new Asset</SheetTitle>
-                <SheetDescription>
-                  Add a New Asset and expand your investment portfolio.
-                </SheetDescription>
-              </SheetHeader>
-              <AddAssetForm />
-            </SheetContent>
-          </Sheet>
+          <>
+            <Link href='/dashboard/assets'>
+              <li
+                className={
+                  pathname.includes('assets') ? ACTIVE_ROUTE : INACTIVE_ROUTE
+                }
+              >
+                Assets
+              </li>
+            </Link>
+            <Link href='/dashboard/cryptos'>
+              <li
+                className={
+                  pathname.includes('cryptos') ? ACTIVE_ROUTE : INACTIVE_ROUTE
+                }
+              >
+                Cryptos
+              </li>
+            </Link>
+            <Link href='stocks'>
+              <li
+                className={
+                  pathname.includes('/dashboard/stocks')
+                    ? ACTIVE_ROUTE
+                    : INACTIVE_ROUTE
+                }
+              >
+                Stocks
+              </li>
+            </Link>
+            <Sheet>
+              <SheetTrigger className='ml-4 font-medium'>+ Asset</SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Add a new Asset</SheetTitle>
+                  <SheetDescription>
+                    Add a New Asset and expand your investment portfolio.
+                  </SheetDescription>
+                </SheetHeader>
+                <AddAssetForm />
+              </SheetContent>
+            </Sheet>
+          </>
         )}
-
-        {/* <Link href='/serverAction'>
-          <li
-            className={
-              pathname === '/serverAction' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
-          >
-            Server Action
-          </li>
-        </Link>
-
-        <Link href='/apiFromClient'>
-          <li
-            className={
-              pathname === '/apiFromClient' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
-          >
-            API From Client
-          </li>
-        </Link>
-
-        <Link href='/apiFromServer'>
-          <li
-            className={
-              pathname === '/apiFromServer' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
-          >
-            API From Server
-          </li>
-        </Link> */}
       </ul>
     </>
   );

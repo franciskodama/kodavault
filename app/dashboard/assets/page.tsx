@@ -1,8 +1,8 @@
-import { Asset } from '../lib/types';
+import { Asset } from '../../lib/types';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 
-export default async function MainTable({ assets }: { assets: Asset[] }) {
+export default async function AssetsPage({ assets }: { assets: Asset[] }) {
   const sortedAssetsByAlphabeticOrder = assets.sort((a: any, b: any) => {
     if (a.wallet < b.wallet) {
       return -1;

@@ -1,6 +1,6 @@
 import { auth, currentUser } from '@clerk/nextjs';
 
-import MainTable from '../assets/page';
+import MainTable from './assets/page';
 import { CardTotal } from '../../components/CardTotal';
 import { AssetWithoutPrice } from '../lib/types';
 import {
@@ -160,13 +160,13 @@ export default async function DashboardPage() {
             </div>
           </div>
 
-          {assetsWithPricesArray.length > 0 ? (
+          {/* {assetsWithPricesArray.length > 0 ? (
             <div className='my-4'>
-              <MainTable assets={assetsWithPricesArray} />
+              <AssetsPage assets={assetsWithPricesArray} />
             </div>
           ) : (
             <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
-          )}
+          )} */}
         </>
       );
     } else {
