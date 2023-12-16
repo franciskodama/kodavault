@@ -1,19 +1,19 @@
 import { auth, currentUser } from '@clerk/nextjs';
 
-import MainTable from '../assets/page';
+import MainTable from './assets/page';
 import { CardTotal } from '../../components/CardTotal';
-import { AssetWithoutPrice } from '../lib/types';
+import { AssetWithoutPrice } from '../../lib/types';
 import {
   fetchAssets,
   fetchAssetsWithPrices,
   groupAssetsByType,
-} from '../lib/assets';
+} from '../../lib/assets';
 import { CardTotalAllCurrency } from '../../components/CardAllCurrencies';
 import { CardAth } from '../../components/CardAth';
 import { CardTotalByCrypto } from '@/components/CardTotalByCrypto';
 import { useDebugValue } from 'react';
-import { currencyRates } from '../lib/prices';
-import { currencyFormatter } from '../lib/utils';
+import { currencyRates } from '../../lib/prices';
+import { currencyFormatter } from '../../lib/utils';
 import Link from 'next/link';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import NoAssets from '@/components/NoAssets';
@@ -160,13 +160,13 @@ export default async function DashboardPage() {
             </div>
           </div>
 
-          {assetsWithPricesArray.length > 0 ? (
+          {/* {assetsWithPricesArray.length > 0 ? (
             <div className='my-4'>
-              <MainTable assets={assetsWithPricesArray} />
+              <AssetsPage assets={assetsWithPricesArray} />
             </div>
           ) : (
             <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
-          )}
+          )} */}
         </>
       );
     } else {

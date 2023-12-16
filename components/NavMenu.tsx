@@ -14,9 +14,9 @@ import {
 import { AddAssetForm } from './AddAssetForm';
 
 const ACTIVE_ROUTE =
-  'py-1 px-2 font-semibold text-white bg-slate-600 rounded-[2px]';
+  'mx-1 py-1 px-2 font-semibold text-white bg-slate-600 rounded-[2px]';
 const INACTIVE_ROUTE =
-  'py-1 px-2 text-slate-600 font-semibold hover:text-white hover:bg-slate-400';
+  'mx-1 py-1 px-2 text-slate-600 font-semibold hover:text-white hover:bg-slate-400';
 
 export default function NavMenu() {
   const pathname = usePathname();
@@ -25,16 +25,7 @@ export default function NavMenu() {
     <>
       <hr className='my-4' />
       <ul className='flex items-center text-sm'>
-        <Link href='/'>
-          <li
-            className={`${
-              pathname === '/' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            } mr-4`}
-          >
-            Home
-          </li>
-        </Link>
-        <Link href='dashboard'>
+        <Link href='/dashboard'>
           <li
             className={
               pathname === '/dashboard' ? ACTIVE_ROUTE : INACTIVE_ROUTE
@@ -43,50 +34,40 @@ export default function NavMenu() {
             Dashboard
           </li>
         </Link>
-        {pathname === '/dashboard' && (
-          <Sheet>
-            <SheetTrigger className='ml-4 font-medium'>+ Asset</SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>Add a new Asset</SheetTitle>
-                <SheetDescription>
-                  Add a New Asset and expand your investment portfolio.
-                </SheetDescription>
-              </SheetHeader>
-              <AddAssetForm />
-            </SheetContent>
-          </Sheet>
-        )}
 
-        {/* <Link href='/serverAction'>
+        <Link href='/dashboard/assets'>
           <li
-            className={
-              pathname === '/serverAction' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
+            className={pathname === '/assets' ? ACTIVE_ROUTE : INACTIVE_ROUTE}
           >
-            Server Action
+            Assets
           </li>
         </Link>
-
-        <Link href='/apiFromClient'>
+        <Link href='/dashboard/cryptos'>
           <li
-            className={
-              pathname === '/apiFromClient' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
+            className={pathname === '/cryptos' ? ACTIVE_ROUTE : INACTIVE_ROUTE}
           >
-            API From Client
+            Cryptos
           </li>
         </Link>
-
-        <Link href='/apiFromServer'>
+        <Link href='stocks'>
           <li
-            className={
-              pathname === '/apiFromServer' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
+            className={pathname === '/stocks' ? ACTIVE_ROUTE : INACTIVE_ROUTE}
           >
-            API From Server
+            Stocks
           </li>
-        </Link> */}
+        </Link>
+        <Sheet>
+          <SheetTrigger className='ml-4 font-medium'>+ Asset</SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Add a new Asset</SheetTitle>
+              <SheetDescription>
+                Add a New Asset and expand your investment portfolio.
+              </SheetDescription>
+            </SheetHeader>
+            <AddAssetForm />
+          </SheetContent>
+        </Sheet>
       </ul>
     </>
   );

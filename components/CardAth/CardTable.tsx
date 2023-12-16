@@ -6,12 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from '../../components/ui/card';
-import { AssetReducedWithAth } from '../../app/lib/types';
+import { AssetReducedWithAth } from '../../lib/types';
 import AthTable from './AthTable';
-import {
-  currencyFormatter,
-  numberFormatterNoDecimals,
-} from '../../app/lib/utils';
+import { currencyFormatter, numberFormatterNoDecimals } from '../../lib/utils';
 
 export const CardTable = ({
   athAssets,

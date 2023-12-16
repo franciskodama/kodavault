@@ -1,6 +1,6 @@
-import { currencyRates } from '@/app/lib/prices';
-import { Asset } from '@/app/lib/types';
-import { numberFormatter, numberFormatterNoDecimals } from '../app/lib/utils';
+import { currencyRates } from '@/lib/prices';
+import { Asset } from '@/lib/types';
+import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
 import {
   Card,
   CardContent,

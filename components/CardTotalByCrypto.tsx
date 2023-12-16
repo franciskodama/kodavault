@@ -10,8 +10,8 @@ import {
   numberFormatterNoDecimals,
   getTotalByKey,
   numberFormatter,
-} from '../app/lib/utils';
-import { Asset } from '../app/lib/types';
+} from '../lib/utils';
+import { Asset } from '../lib/types';
 
 export const CardTotalByCrypto = ({
   assets,

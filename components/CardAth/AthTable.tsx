@@ -1,5 +1,5 @@
-import { DataTable } from './../../app/assets/data-table';
-import { AssetReducedWithAth } from '@/app/lib/types';
+import { DataTable } from '../../app/dashboard/assets/data-table';
+import { AssetReducedWithAth } from '@/lib/types';
 import { columnsAth } from './AthColumns';
 
 export default async function AthTable({

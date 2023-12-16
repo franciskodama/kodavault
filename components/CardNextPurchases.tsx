@@ -10,7 +10,7 @@ import {
   numberFormatterNoDecimals,
   getTotalByKey,
   numberFormatter,
-} from '../app/lib/utils';
+} from '../lib/utils';
 
 export const CardNextPurchases = () => {
   const total = nextPurchases.reduce(

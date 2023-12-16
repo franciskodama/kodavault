@@ -3,9 +3,9 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
-import { Asset } from '../lib/types';
-import { Button } from '../../components/ui/button';
-import { tableHeaderClass } from '../lib/classes';
+import { Asset } from '../../../lib/types';
+import { Button } from '../../../components/ui/button';
+import { tableHeaderClass } from '../../../lib/classes';
 
 export const columns: ColumnDef<Asset>[] = [
   {

@@ -1,10 +1,10 @@
 'use client';
 
-import { Asset } from '@/app/lib/types';
+import { Asset } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '../ui/button';
 import { ArrowUpDown } from 'lucide-react';
-import { tableHeaderClass } from './../../app/lib/classes';
+import { tableHeaderClass } from '../../lib/classes';
 
 export const columnsAth: ColumnDef<Asset>[] = [
   {
