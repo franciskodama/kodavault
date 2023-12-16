@@ -19,14 +19,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // PURPLE --> bg-[#6E2DB8]
   // See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 
   return (
     <ClerkProvider>
       <html lang='en'>
         <body className={`${inter.className} bg-[#FAFAFB]`}>
-          {/* <body className='bg-[#FAFAFB]'> */}
           <main className='mx-auto max-w-[1400px] text-xl gap-2'>
             <Header />
             {children}
