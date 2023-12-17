@@ -17,6 +17,10 @@ import { currencyFormatter } from '../../lib/utils';
 import Link from 'next/link';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import NoAssets from '@/components/NoAssets';
+import Card from './card/card';
+import Transactions from './transactions/transactions';
+import Chart from './chart/chart';
+import Notifications from './notifications/notifications';
 
 export default async function DashboardPage() {
   const { userId } = auth();
@@ -57,6 +61,7 @@ export default async function DashboardPage() {
       return (
         <>
           <div className='flex flex-col gap-2'>
+            {/* -------- Legend --------------------------------------------------------------------------------------- */}
             <div className='flex justify-end items-center text-xs font-base text-slate-600'>
               <div className='flex items-center mr-8'>
                 <div>
@@ -80,7 +85,6 @@ export default async function DashboardPage() {
                   {` BRL: ${currencyFormatter(currencyRates.quotes.USDBRL)}`}
                 </div>
               </div>
-
               <div className='flex justify-end items-center gap-2 mr-8'>
                 <p>Legend:</p>
                 <div className='h-[10px] w-4 bg-green-500' />
@@ -90,24 +94,46 @@ export default async function DashboardPage() {
               </div>
             </div>
 
+            {/* -------- Cards --------------------------------------------------------------------------------------- */}
+            {/* Wrapper */}
+            <div className='flex'>
+              {/* Main */}
+              <div className='flex flex-col flex-3 gap-4'>
+                <div className='flex flex-wrap gap-4'>
+                  <CardTotal
+                    emoji={'💵'}
+                    description={`Assets' Origin Breakdown`}
+                    assets={assetsWithPricesArray}
+                    customKey={'currency'}
+                  />
+                  <CardTotal
+                    emoji={'💰'}
+                    description={'Total value grouped by type'}
+                    assets={assetsWithPricesArray}
+                    customKey={'type'}
+                  />
+                  <CardTotal
+                    emoji={'🤑'}
+                    description={'Total value grouped by currency'}
+                    assets={changeKeyAssetToCashForTitleOnCard}
+                    customKey={'cash'}
+                  />
+                </div>
+                <Transactions />
+                <Chart />
+              </div>
+              <div className='flex-1'>
+                <Notifications />
+              </div>
+            </div>
+
             {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-2'>
               <CardTotalAllCurrency
                 assets={assetsWithPricesArray}
                 description={'Total Vault in USD, CAD, BRL.'}
               />
-              <CardTotal
-                emoji={'💵'}
-                description={`Assets' Origin Breakdown`}
-                assets={assetsWithPricesArray}
-                customKey={'currency'}
-              />
-              <CardTotal
-                emoji={'💰'}
-                description={'Total value grouped by type'}
-                assets={assetsWithPricesArray}
-                customKey={'type'}
-              />
+
               <CardTotal
                 emoji={'🧺'}
                 description={'Total value grouped by wallet'}
@@ -150,12 +176,7 @@ export default async function DashboardPage() {
                 assets={changeKeyAssetToStockForTitleOnCard}
                 customKey={'stock'}
               />
-              <CardTotal
-                emoji={'🤑'}
-                description={'Total value grouped by currency'}
-                assets={changeKeyAssetToCashForTitleOnCard}
-                customKey={'cash'}
-              />
+
               <CardNextPurchases />
             </div>
           </div>
