@@ -64,7 +64,7 @@ export const CardTotalAllCurrency = ({
   }
 
   return (
-    <Card className='w-[22.5em]  bg-slate-600'>
+    <Card className='bg-slate-600 mb-2'>
       <div className='flex flex-col justify-between'>
         <div className='flex flex-col'>
           <CardHeader>

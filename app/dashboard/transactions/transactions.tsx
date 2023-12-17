@@ -84,12 +84,12 @@ export default function Transactions() {
             ))} */}
           </CardContent>
         </div>
-        <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
+        {/* <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
           <h3>Total</h3>
-          {/* {numberFormatterNoDecimals.format(
+          {numberFormatterNoDecimals.format(
             totalArray.reduce((sum: number, item) => sum + item.total, 0)
-          )} */}
-        </CardFooter>
+          )}
+        </CardFooter> */}
       </div>
     </Card>
   );

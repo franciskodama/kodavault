@@ -4,6 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 
 import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
 import Header from '../components/Header';
+import Footer from './dashboard/footer/footer';
 
 // See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 // export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
@@ -28,6 +29,7 @@ export default async function RootLayout({
           <main className='mx-auto max-w-[1400px] text-xl gap-2'>
             <Header />
             {children}
+            <Footer />
           </main>
         </body>
       </html>

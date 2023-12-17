@@ -94,12 +94,11 @@ export default async function DashboardPage() {
               </div>
             </div>
 
-            {/* -------- Cards --------------------------------------------------------------------------------------- */}
-            {/* Wrapper */}
-            <div className='flex'>
-              {/* Main */}
-              <div className='flex flex-col flex-3 gap-4'>
-                <div className='flex flex-wrap gap-4'>
+            {/* -------- 1st Row Cards --------------------------------------------------------------------------------------- */}
+
+            <div className='flex gap-2'>
+              <div className='flex flex-col basis-4/5 gap-2'>
+                <div className='flex flex-wrap gap-2'>
                   <CardTotal
                     emoji={'💵'}
                     description={`Assets' Origin Breakdown`}
@@ -118,22 +117,28 @@ export default async function DashboardPage() {
                     assets={changeKeyAssetToCashForTitleOnCard}
                     customKey={'cash'}
                   />
+                  <CardTotal
+                    emoji={'🤑'}
+                    description={'Total value grouped by currency'}
+                    assets={changeKeyAssetToCashForTitleOnCard}
+                    customKey={'cash'}
+                  />
                 </div>
                 <Transactions />
                 <Chart />
               </div>
-              <div className='flex-1'>
+              {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
+              <div className='flex flex-col basis-1/5'>
+                <CardTotalAllCurrency
+                  assets={assetsWithPricesArray}
+                  description={'Total Vault in USD, CAD, BRL.'}
+                />
                 <Notifications />
               </div>
             </div>
 
             {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-2'>
-              <CardTotalAllCurrency
-                assets={assetsWithPricesArray}
-                description={'Total Vault in USD, CAD, BRL.'}
-              />
-
               <CardTotal
                 emoji={'🧺'}
                 description={'Total value grouped by wallet'}
@@ -148,7 +153,7 @@ export default async function DashboardPage() {
               />
             </div>
             {/* -------- 2nd Row -------------------------------------------------------------------------------------- */}
-            <div className='flex flex-wrap gap-4'>
+            <div className='flex flex-wrap gap-2'>
               <CardTotal
                 emoji={'🪙'}
                 description={'Total value grouped by crypto'}
@@ -169,7 +174,7 @@ export default async function DashboardPage() {
               />
             </div>
             {/* -------- 3rd Row-------------------------------------------------------------------------------------- */}
-            <div className='flex flex-wrap gap-4'>
+            <div className='flex flex-wrap gap'>
               <CardTotal
                 emoji={'🔖'}
                 description={'Total value grouped by stocks'}
