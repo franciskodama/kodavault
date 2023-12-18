@@ -1,8 +1,7 @@
-import { getAssets } from '@/lib/assets.server';
 import { Asset, AssetWithoutPrice } from '../../../lib/types';
 import { columns } from './columns';
 import { DataTable } from './data-table';
-import { auth, currentUser } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs';
 import {
   fetchAssets,
   fetchAssetsWithPrices,
@@ -19,6 +18,7 @@ export default async function AssetsPage() {
 
   if (assets.length > 0) {
     const assetsWithPricesArray = await fetchAssetsWithPrices(assets);
+    console.log('---  🚀 ---> | assetsWithPricesArray:', assetsWithPricesArray);
     const assetsWithPricesByType = groupAssetsByType(assetsWithPricesArray);
 
     //----------------------------------------------------------------------------------------------

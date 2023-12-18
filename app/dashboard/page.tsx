@@ -37,23 +37,22 @@ export default async function DashboardPage() {
       //----------------------------------------------------------------------------------------------
       // TODO: Refactor this 3 function to 1 function
       //----------------------------------------------------------------------------------------------
-      const changeKeyAssetToCryptoForTitleOnCard =
-        assetsWithPricesByType.Crypto.map((item: any) => ({
+
+      const changeKeyForTitle = (array: any, newkey: string) =>
+        array.map((item: any) => ({
           ...item,
-          crypto: item.asset,
+          [newkey]: item.asset,
         }));
 
-      const changeKeyAssetToStockForTitleOnCard =
-        assetsWithPricesByType.Stock.map((item: any) => ({
-          ...item,
-          stock: item.asset,
-        }));
-
-      const changeKeyAssetToCashForTitleOnCard =
-        assetsWithPricesByType.Cash.map((item: any) => ({
-          ...item,
-          cash: item.asset,
-        }));
+      const cryptoAssets = changeKeyForTitle(
+        assetsWithPricesByType.Crypto,
+        'crypto'
+      );
+      const stocksAssets = changeKeyForTitle(
+        assetsWithPricesByType.Stock,
+        'stock'
+      );
+      const cashAssets = changeKeyForTitle(assetsWithPricesByType.Cash, 'cash');
 
       return (
         <>
@@ -111,13 +110,13 @@ export default async function DashboardPage() {
                   <CardTotal
                     emoji={'🤑'}
                     description={'Total value grouped by currency'}
-                    assets={changeKeyAssetToCashForTitleOnCard}
+                    assets={cashAssets}
                     customKey={'cash'}
                   />
                   <CardTotal
                     emoji={'🤑'}
                     description={'Total value grouped by currency'}
-                    assets={changeKeyAssetToCashForTitleOnCard}
+                    assets={cashAssets}
                     customKey={'cash'}
                   />
                 </div>
@@ -154,7 +153,10 @@ export default async function DashboardPage() {
               <CardTotal
                 emoji={'🪙'}
                 description={'Total value grouped by crypto'}
-                assets={changeKeyAssetToCryptoForTitleOnCard}
+                assets={changeKeyForTitle(
+                  assetsWithPricesByType.Crypto,
+                  'crypto'
+                )}
                 customKey={'crypto'}
               />
               {/* <CardTotalByCrypto
@@ -163,7 +165,6 @@ export default async function DashboardPage() {
                 assets={changeKeyAssetToCryptoForTitleOnCard}
                 customKey={'crypto'}
               /> */}
-              {/* 📈 */}
               <CardAth
                 emoji={'🔮'}
                 description={'All-Time High Estimation'}
@@ -175,7 +176,7 @@ export default async function DashboardPage() {
               <CardTotal
                 emoji={'🔖'}
                 description={'Total value grouped by stocks'}
-                assets={changeKeyAssetToStockForTitleOnCard}
+                assets={stocksAssets}
                 customKey={'stock'}
               />
 
