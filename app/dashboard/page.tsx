@@ -10,17 +10,14 @@ import {
 } from '../../lib/assets';
 import { CardTotalAllCurrency } from '../../components/CardAllCurrencies';
 import { CardAth } from '../../components/CardAth';
-import { CardTotalByCrypto } from '@/components/CardTotalByCrypto';
-import { useDebugValue } from 'react';
 import { currencyRates } from '../../lib/prices';
 import { currencyFormatter } from '../../lib/utils';
-import Link from 'next/link';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import NoAssets from '@/components/NoAssets';
-import Card from './card/card';
 import Transactions from './transactions/transactions';
 import Chart from './chart/chart';
 import Notifications from './notifications/notifications';
+import { CardTotalByCrypto } from '@/components/CardTotalByCrypto';
 
 export default async function DashboardPage() {
   const { userId } = auth();
@@ -137,7 +134,7 @@ export default async function DashboardPage() {
               </div>
             </div>
 
-            {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
+            {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-2'>
               <CardTotal
                 emoji={'🧺'}
@@ -152,7 +149,7 @@ export default async function DashboardPage() {
                 customKey={'subtype'}
               />
             </div>
-            {/* -------- 2nd Row -------------------------------------------------------------------------------------- */}
+            {/* -------- 2nd Row - After Chart -------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-2'>
               <CardTotal
                 emoji={'🪙'}
@@ -173,7 +170,7 @@ export default async function DashboardPage() {
                 assets={assetsWithPricesByType.Crypto}
               />
             </div>
-            {/* -------- 3rd Row-------------------------------------------------------------------------------------- */}
+            {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap'>
               <CardTotal
                 emoji={'🔖'}
