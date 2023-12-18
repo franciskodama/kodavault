@@ -10,13 +10,14 @@ import {
 } from '../../lib/assets';
 import { CardTotalAllCurrency } from '../../components/CardAllCurrencies';
 import { CardAth } from '../../components/CardAth';
-import { CardTotalByCrypto } from '@/components/CardTotalByCrypto';
-import { useDebugValue } from 'react';
 import { currencyRates } from '../../lib/prices';
 import { currencyFormatter } from '../../lib/utils';
-import Link from 'next/link';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import NoAssets from '@/components/NoAssets';
+import Transactions from './transactions/transactions';
+import Chart from './chart/chart';
+import Notifications from './notifications/notifications';
+import { CardTotalByCrypto } from '@/components/CardTotalByCrypto';
 
 export default async function DashboardPage() {
   const { userId } = auth();
@@ -36,27 +37,27 @@ export default async function DashboardPage() {
       //----------------------------------------------------------------------------------------------
       // TODO: Refactor this 3 function to 1 function
       //----------------------------------------------------------------------------------------------
-      const changeKeyAssetToCryptoForTitleOnCard =
-        assetsWithPricesByType.Crypto.map((item: any) => ({
+
+      const changeKeyForTitle = (array: any, newkey: string) =>
+        array.map((item: any) => ({
           ...item,
-          crypto: item.asset,
+          [newkey]: item.asset,
         }));
 
-      const changeKeyAssetToStockForTitleOnCard =
-        assetsWithPricesByType.Stock.map((item: any) => ({
-          ...item,
-          stock: item.asset,
-        }));
-
-      const changeKeyAssetToCashForTitleOnCard =
-        assetsWithPricesByType.Cash.map((item: any) => ({
-          ...item,
-          cash: item.asset,
-        }));
+      const cryptoAssets = changeKeyForTitle(
+        assetsWithPricesByType.Crypto,
+        'crypto'
+      );
+      const stocksAssets = changeKeyForTitle(
+        assetsWithPricesByType.Stock,
+        'stock'
+      );
+      const cashAssets = changeKeyForTitle(assetsWithPricesByType.Cash, 'cash');
 
       return (
         <>
           <div className='flex flex-col gap-2'>
+            {/* -------- Legend --------------------------------------------------------------------------------------- */}
             <div className='flex justify-end items-center text-xs font-base text-slate-600'>
               <div className='flex items-center mr-8'>
                 <div>
@@ -80,7 +81,6 @@ export default async function DashboardPage() {
                   {` BRL: ${currencyFormatter(currencyRates.quotes.USDBRL)}`}
                 </div>
               </div>
-
               <div className='flex justify-end items-center gap-2 mr-8'>
                 <p>Legend:</p>
                 <div className='h-[10px] w-4 bg-green-500' />
@@ -90,24 +90,51 @@ export default async function DashboardPage() {
               </div>
             </div>
 
-            {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
+            {/* -------- 1st Row Cards --------------------------------------------------------------------------------------- */}
+
+            <div className='flex gap-2'>
+              <div className='flex flex-col basis-4/5 gap-2'>
+                <div className='flex flex-wrap gap-2'>
+                  <CardTotal
+                    emoji={'💵'}
+                    description={`Assets' Origin Breakdown`}
+                    assets={assetsWithPricesArray}
+                    customKey={'currency'}
+                  />
+                  <CardTotal
+                    emoji={'💰'}
+                    description={'Total value grouped by type'}
+                    assets={assetsWithPricesArray}
+                    customKey={'type'}
+                  />
+                  <CardTotal
+                    emoji={'🤑'}
+                    description={'Total value grouped by currency'}
+                    assets={cashAssets}
+                    customKey={'cash'}
+                  />
+                  <CardTotal
+                    emoji={'🤑'}
+                    description={'Total value grouped by currency'}
+                    assets={cashAssets}
+                    customKey={'cash'}
+                  />
+                </div>
+                <Transactions />
+                <Chart />
+              </div>
+              {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
+              <div className='flex flex-col basis-1/5'>
+                <CardTotalAllCurrency
+                  assets={assetsWithPricesArray}
+                  description={'Total Vault in USD, CAD, BRL.'}
+                />
+                <Notifications />
+              </div>
+            </div>
+
+            {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
             <div className='flex flex-wrap gap-2'>
-              <CardTotalAllCurrency
-                assets={assetsWithPricesArray}
-                description={'Total Vault in USD, CAD, BRL.'}
-              />
-              <CardTotal
-                emoji={'💵'}
-                description={`Assets' Origin Breakdown`}
-                assets={assetsWithPricesArray}
-                customKey={'currency'}
-              />
-              <CardTotal
-                emoji={'💰'}
-                description={'Total value grouped by type'}
-                assets={assetsWithPricesArray}
-                customKey={'type'}
-              />
               <CardTotal
                 emoji={'🧺'}
                 description={'Total value grouped by wallet'}
@@ -121,12 +148,15 @@ export default async function DashboardPage() {
                 customKey={'subtype'}
               />
             </div>
-            {/* -------- 2nd Row -------------------------------------------------------------------------------------- */}
-            <div className='flex flex-wrap gap-4'>
+            {/* -------- 2nd Row - After Chart -------------------------------------------------------------------------------------- */}
+            <div className='flex flex-wrap gap-2'>
               <CardTotal
                 emoji={'🪙'}
                 description={'Total value grouped by crypto'}
-                assets={changeKeyAssetToCryptoForTitleOnCard}
+                assets={changeKeyForTitle(
+                  assetsWithPricesByType.Crypto,
+                  'crypto'
+                )}
                 customKey={'crypto'}
               />
               {/* <CardTotalByCrypto
@@ -135,27 +165,21 @@ export default async function DashboardPage() {
                 assets={changeKeyAssetToCryptoForTitleOnCard}
                 customKey={'crypto'}
               /> */}
-              {/* 📈 */}
               <CardAth
                 emoji={'🔮'}
                 description={'All-Time High Estimation'}
                 assets={assetsWithPricesByType.Crypto}
               />
             </div>
-            {/* -------- 3rd Row-------------------------------------------------------------------------------------- */}
-            <div className='flex flex-wrap gap-4'>
+            {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
+            <div className='flex flex-wrap gap'>
               <CardTotal
                 emoji={'🔖'}
                 description={'Total value grouped by stocks'}
-                assets={changeKeyAssetToStockForTitleOnCard}
+                assets={stocksAssets}
                 customKey={'stock'}
               />
-              <CardTotal
-                emoji={'🤑'}
-                description={'Total value grouped by currency'}
-                assets={changeKeyAssetToCashForTitleOnCard}
-                customKey={'cash'}
-              />
+
               <CardNextPurchases />
             </div>
           </div>

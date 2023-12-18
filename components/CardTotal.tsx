@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card';
+
 import {
   numberFormatterNoDecimals,
   getTotalByKey,
@@ -29,7 +30,7 @@ export const CardTotal = ({
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
   return (
-    <Card className='w-[22.5em]'>
+    <Card className='flex-1'>
       <div className='flex flex-col justify-between h-full'>
         <div className='flex flex-col'>
           <CardHeader>
