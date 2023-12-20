@@ -11,7 +11,7 @@ import {
 import { CardTotalAllCurrency } from '../../components/CardAllCurrencies';
 import { CardAth } from '../../components/CardAth';
 import { currencyRates } from '../../lib/prices';
-import { currencyFormatter } from '../../lib/utils';
+import { changeKeyForTitle, currencyFormatter } from '../../lib/utils';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import NoAssets from '@/components/NoAssets';
 import Transactions from './transactions/transactions';
@@ -33,16 +33,6 @@ export default async function DashboardPage() {
     if (assets.length > 0) {
       const assetsWithPricesArray = await fetchAssetsWithPrices(assets);
       const assetsWithPricesByType = groupAssetsByType(assetsWithPricesArray);
-
-      //----------------------------------------------------------------------------------------------
-      // TODO: Refactor this 3 function to 1 function
-      //----------------------------------------------------------------------------------------------
-
-      const changeKeyForTitle = (array: any, newkey: string) =>
-        array.map((item: any) => ({
-          ...item,
-          [newkey]: item.asset,
-        }));
 
       const cryptoAssets = changeKeyForTitle(
         assetsWithPricesByType.Crypto,

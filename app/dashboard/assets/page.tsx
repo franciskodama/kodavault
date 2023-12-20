@@ -7,55 +7,25 @@ import {
   fetchAssetsWithPrices,
   groupAssetsByType,
 } from '@/lib/assets';
+import { changeKeyForTitle } from '@/lib/utils';
 
 export default async function AssetsPage() {
   const user = await currentUser();
 
   let assets: AssetWithoutPrice[] = [];
+  let assetsWithPricesArray: Asset[] = [];
+
   if (user) {
     assets = await fetchAssets(user.emailAddresses[0].emailAddress);
   }
 
   if (assets.length > 0) {
-    const assetsWithPricesArray = await fetchAssetsWithPrices(assets);
-    console.log('---  🚀 ---> | assetsWithPricesArray:', assetsWithPricesArray);
-    const assetsWithPricesByType = groupAssetsByType(assetsWithPricesArray);
-
-    //----------------------------------------------------------------------------------------------
-    // TODO: Refactor this 3 function to 1 function
-    //----------------------------------------------------------------------------------------------
-    const changeKeyAssetToCryptoForTitleOnCard =
-      assetsWithPricesByType.Crypto.map((item: any) => ({
-        ...item,
-        crypto: item.asset,
-      }));
-
-    const changeKeyAssetToStockForTitleOnCard =
-      assetsWithPricesByType.Stock.map((item: any) => ({
-        ...item,
-        stock: item.asset,
-      }));
-
-    const changeKeyAssetToCashForTitleOnCard = assetsWithPricesByType.Cash.map(
-      (item: any) => ({
-        ...item,
-        cash: item.asset,
-      })
-    );
+    assetsWithPricesArray = await fetchAssetsWithPrices(assets);
   }
-  const sortedAssetsByAlphabeticOrder = assets.sort((a: any, b: any) => {
-    if (a.wallet < b.wallet) {
-      return -1;
-    }
-    if (a.wallet > b.wallet) {
-      return 1;
-    }
-    return 0;
-  });
 
   return (
     <div className='mx-auto'>
-      <DataTable columns={columns} data={sortedAssetsByAlphabeticOrder} />
+      <DataTable columns={columns} data={assetsWithPricesArray} />
     </div>
   );
 }

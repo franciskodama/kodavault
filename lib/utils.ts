@@ -35,6 +35,14 @@ export const isNotEmptyArray = (value: []) => {
 
 // ---------------------------------------------------------------------------
 
+export const changeKeyForTitle = (array: any, newkey: string) =>
+  array.map((item: any) => ({
+    ...item,
+    [newkey]: item.asset,
+  }));
+
+// ---------------------------------------------------------------------------
+
 type ResultProps = {
   value: string;
   total: number;
