@@ -20,17 +20,16 @@ type totalArrayProps = {
 };
 
 export const CardTotalAllCurrency = ({
-  _assets,
+  assets,
   description = '',
 }: {
-  _assets: Asset[];
+  assets: Asset[];
   description?: string;
 }) => {
-  const total = _assets.reduce((sum: number, item: any) => sum + item.total, 0);
-  const btc = _assets.find((item: any) => item.asset === 'BTC');
-  const { setAssets } = useContext(AssetsContext);
-
-  setAssets(_assets);
+  const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
+  const btc = assets.find((item: any) => item.asset === 'BTC');
+  // const { setAssets } = useContext(AssetsContext);
+  // setAssets(_assets);
 
   // ------------------------------------------------------------------------------
   // TODO: Create a 2 fields to type USDCAD and USDBRL
@@ -39,8 +38,8 @@ export const CardTotalAllCurrency = ({
 
   const currencyRates = {
     quotes: {
-      USDCAD: 1.37,
-      USDBRL: 4.9,
+      USDCAD: 1.33,
+      USDBRL: 4.86,
     },
   };
 
