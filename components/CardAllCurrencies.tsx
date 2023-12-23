@@ -1,3 +1,5 @@
+'use client';
+
 import { currencyRates } from '@/lib/prices';
 import { Asset } from '@/lib/types';
 import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
@@ -8,6 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card';
+import { useContext } from 'react';
+import { AssetsContext } from '@/context/AssetsContext';
 
 type totalArrayProps = {
   currency: string;
@@ -16,14 +20,17 @@ type totalArrayProps = {
 };
 
 export const CardTotalAllCurrency = ({
-  assets,
+  _assets,
   description = '',
 }: {
-  assets: Asset[];
+  _assets: Asset[];
   description?: string;
 }) => {
-  const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
-  const btc = assets.find((item: any) => item.asset === 'BTC');
+  const total = _assets.reduce((sum: number, item: any) => sum + item.total, 0);
+  const btc = _assets.find((item: any) => item.asset === 'BTC');
+  const { setAssets } = useContext(AssetsContext);
+
+  setAssets(_assets);
 
   // ------------------------------------------------------------------------------
   // TODO: Create a 2 fields to type USDCAD and USDBRL
