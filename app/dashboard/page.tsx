@@ -2,7 +2,7 @@ import { auth, currentUser } from '@clerk/nextjs';
 
 import MainTable from './assets/page';
 import { CardTotal } from '../../components/CardTotal';
-import { AssetWithoutPrice } from '../../lib/types';
+import { UnpricedAsset } from '../../lib/types';
 import {
   fetchAssets,
   fetchAssetsWithPrices,
@@ -24,25 +24,19 @@ export default async function DashboardPage() {
   const user = await currentUser();
 
   try {
-    let assets: AssetWithoutPrice[] = [];
+    let unpricedAssets: UnpricedAsset[] = [];
 
     if (user) {
-      assets = await fetchAssets(user.emailAddresses[0].emailAddress);
+      unpricedAssets = await fetchAssets(user.emailAddresses[0].emailAddress);
     }
 
-    if (assets.length > 0) {
-      const assetsWithPricesArray = await fetchAssetsWithPrices(assets);
-      const assetsWithPricesByType = groupAssetsByType(assetsWithPricesArray);
+    if (unpricedAssets.length > 0) {
+      const assets = await fetchAssetsWithPrices(unpricedAssets);
+      const assetsByType = groupAssetsByType(assets);
 
-      const cryptoAssets = changeKeyForTitle(
-        assetsWithPricesByType.Crypto,
-        'crypto'
-      );
-      const stocksAssets = changeKeyForTitle(
-        assetsWithPricesByType.Stock,
-        'stock'
-      );
-      const cashAssets = changeKeyForTitle(assetsWithPricesByType.Cash, 'cash');
+      const cryptoAssets = changeKeyForTitle(assetsByType.Crypto, 'crypto');
+      const stocksAssets = changeKeyForTitle(assetsByType.Stock, 'stock');
+      const cashAssets = changeKeyForTitle(assetsByType.Cash, 'cash');
 
       return (
         <>
@@ -88,13 +82,13 @@ export default async function DashboardPage() {
                   <CardTotal
                     emoji={'💵'}
                     description={`Assets' Origin Breakdown`}
-                    assets={assetsWithPricesArray}
+                    assets={assets}
                     customKey={'currency'}
                   />
                   <CardTotal
                     emoji={'💰'}
                     description={'Total value grouped by type'}
-                    assets={assetsWithPricesArray}
+                    assets={assets}
                     customKey={'type'}
                   />
                   <CardTotal
@@ -116,7 +110,7 @@ export default async function DashboardPage() {
               {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
               <div className='flex flex-col basis-1/5'>
                 <CardTotalAllCurrency
-                  assets={assetsWithPricesArray}
+                  assets={assets}
                   description={'Total Vault in USD, CAD, BRL.'}
                 />
                 <Notifications />
@@ -128,13 +122,13 @@ export default async function DashboardPage() {
               <CardTotal
                 emoji={'🧺'}
                 description={'Total value grouped by wallet'}
-                assets={assetsWithPricesArray}
+                assets={assets}
                 customKey={'wallet'}
               />
               <CardTotal
                 emoji={'🗂️'}
                 description={'Total value grouped by subtype'}
-                assets={assetsWithPricesArray}
+                assets={assets}
                 customKey={'subtype'}
               />
             </div>
@@ -143,10 +137,7 @@ export default async function DashboardPage() {
               <CardTotal
                 emoji={'🪙'}
                 description={'Total value grouped by crypto'}
-                assets={changeKeyForTitle(
-                  assetsWithPricesByType.Crypto,
-                  'crypto'
-                )}
+                assets={changeKeyForTitle(assetsByType.Crypto, 'crypto')}
                 customKey={'crypto'}
               />
               {/* <CardTotalByCrypto
@@ -158,7 +149,7 @@ export default async function DashboardPage() {
               <CardAth
                 emoji={'🔮'}
                 description={'All-Time High Estimation'}
-                assets={assetsWithPricesByType.Crypto}
+                assets={assetsByType.Crypto}
               />
             </div>
             {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}

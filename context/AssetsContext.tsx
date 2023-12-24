@@ -1,7 +1,7 @@
 'use client';
 
 import { getAssets } from '@/lib/assets.server';
-import { Asset, AssetWithoutPrice } from '@/lib/types';
+import { Asset, UnpricedAsset } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
 import { createContext, useState } from 'react';
 
@@ -23,7 +23,7 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
 
   console.log('---  🚀 ---> | user:', user);
-  // let assetsNoPrice: AssetWithoutPrice[] = [];
+  // let assetsNoPrice: UnpricedAsset[] = [];
 
   if (user) {
     console.log('---  🚀 ---> | user:', user.emailAddresses[0].emailAddress);

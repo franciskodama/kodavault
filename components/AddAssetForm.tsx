@@ -1,4 +1,5 @@
 // import { useFormState, useFormStatus } from 'react-dom';
+import { addAsset } from '@/lib/actions';
 import { Button } from './ui/button';
 
 // VERCEL: https://www.youtube.com/watch?v=dDpZfOQBMaU
@@ -9,28 +10,28 @@ import { Button } from './ui/button';
 //   message: null,
 // };
 
-export const AddAssetForm = async () => {
+export function AddAssetForm() {
   // const [state, formAction] = useFormState(addAsset, initialState);
 
-  const addAsset = async (formData: FormData) => {
-    // 'use server';
+  // const addAsset = async (formData: FormData) => {
+  //   // 'use server';
 
-    // const assetUid = GET FROM CLERK
-    const assetName = formData.get('asset');
-    const assetQty = formData.get('qty');
-    const assetWallet = formData.get('wallet');
-    const assetType = formData.get('type');
-    const assetSubtype = formData.get('subtype');
-    const assetCurrency = formData.get('currency');
-    const assetExchange = formData.get('exchange');
-    const assetAccount = formData.get('account');
+  //   // const assetUid = GET FROM CLERK
+  //   const assetName = formData.get('asset');
+  //   const assetQty = formData.get('qty');
+  //   const assetWallet = formData.get('wallet');
+  //   const assetType = formData.get('type');
+  //   const assetSubtype = formData.get('subtype');
+  //   const assetCurrency = formData.get('currency');
+  //   const assetExchange = formData.get('exchange');
+  //   const assetAccount = formData.get('account');
 
-    // const newAsset = await prisma.asset.create({
-    //   data: {
-    //     name: assetName,
-    // }
-    // })
-  };
+  //   // const newAsset = await prisma.asset.create({
+  //   //   data: {
+  //   //     name: assetName,
+  //   // }
+  //   // })
+  // };
 
   return (
     <>
@@ -116,4 +117,4 @@ export const AddAssetForm = async () => {
       </form>
     </>
   );
-};
+}

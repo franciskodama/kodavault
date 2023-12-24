@@ -1,6 +1,6 @@
 'use client';
 
-import { Asset, AssetWithoutPrice } from '../../../lib/types';
+import { Asset, UnpricedAsset } from '../../../lib/types';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { currentUser } from '@clerk/nextjs';
@@ -18,7 +18,7 @@ export default function AssetsPage() {
 
   const { assets } = useContext(AssetsContext);
 
-  // let assets: AssetWithoutPrice[] = [];
+  // let assets: UnpricedAsset[] = [];
   // let assetsWithPricesArray: Asset[] = [];
 
   // if (user) {

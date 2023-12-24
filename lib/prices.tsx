@@ -1,7 +1,7 @@
 import { getCryptos } from './crypto.server';
 import { getCurrency } from './currency.server';
 import { getStock } from './stock.server';
-import { Asset, AssetWithoutPrice } from './types';
+import { Asset, UnpricedAsset } from './types';
 
 export const currencyRates = {
   quotes: {
@@ -11,11 +11,11 @@ export const currencyRates = {
 };
 
 export const includePriceToCashAssets = async (
-  cashAssetsArray: AssetWithoutPrice[]
+  cashAssetsArray: UnpricedAsset[]
 ) => {
   // const currencyRates = await getCurrency();
 
-  const transformedAssets = cashAssetsArray.map((item: AssetWithoutPrice) => {
+  const transformedAssets = cashAssetsArray.map((item: UnpricedAsset) => {
     let price = 1;
     let total = item.qty;
 
@@ -39,10 +39,10 @@ export const includePriceToCashAssets = async (
 };
 
 export const includePriceToCryptoAssets = async (
-  cryptoAssetsArray: AssetWithoutPrice[]
+  cryptoAssetsArray: UnpricedAsset[]
 ): Promise<Asset[]> => {
   const transformedAssets = await Promise.all(
-    cryptoAssetsArray.map(async (item: AssetWithoutPrice) => {
+    cryptoAssetsArray.map(async (item: UnpricedAsset) => {
       const thisCryptoPrice = await getCryptos(item.asset);
       const price = thisCryptoPrice.data[0].priceUsd;
       const total = price * item.qty;
@@ -66,10 +66,10 @@ export const includePriceToCryptoAssets = async (
 };
 
 export const includePriceToStockAssets = async (
-  stockAssetsArray: AssetWithoutPrice[]
+  stockAssetsArray: UnpricedAsset[]
 ): Promise<Asset[]> => {
   let symbolAndExchange: string[] = [];
-  stockAssetsArray.map(async (item: AssetWithoutPrice) => {
+  stockAssetsArray.map(async (item: UnpricedAsset) => {
     symbolAndExchange.push(
       `${item.asset}${item.exchange === null ? '' : `.${item.exchange}`}`
     );
