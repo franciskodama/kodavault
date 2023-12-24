@@ -52,6 +52,7 @@ export function AddAssetForm() {
             <input
               type='number'
               name='qty'
+              required
               defaultValue={0}
               className='border-slate-50 rounded-xs'
             />
@@ -62,6 +63,7 @@ export function AddAssetForm() {
             <input
               type='text'
               name='wallet'
+              required
               className='border-slate-50 rounded-xs'
             />
           </div>
@@ -71,6 +73,7 @@ export function AddAssetForm() {
             <input
               type='text'
               name='type'
+              required
               className='border-slate-50 rounded-xs'
             />
           </div>
@@ -89,6 +92,7 @@ export function AddAssetForm() {
             <input
               type='text'
               name='currency'
+              required
               className='border-slate-50 rounded-xs'
             />
           </div>
@@ -98,6 +102,7 @@ export function AddAssetForm() {
             <input
               type='text'
               name='account'
+              required
               className='border-slate-50 rounded-xs'
             />
           </div>
@@ -111,7 +116,6 @@ export function AddAssetForm() {
               className='border-slate-50 rounded-xs'
             />
           </div>
-
           <Button type='submit'>Add Asset</Button>
         </div>
       </form>
