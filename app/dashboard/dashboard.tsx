@@ -141,7 +141,7 @@ export default function Dashboard({ assets }: { assets: Asset[] }) {
         <CardAth
           emoji={'🔮'}
           description={'All-Time High Estimation'}
-          assets={groupAssetsByType.Crypto}
+          assets={assetsByType.Crypto}
         />
       </div>
       {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
@@ -152,7 +152,6 @@ export default function Dashboard({ assets }: { assets: Asset[] }) {
           assets={stocksAssets}
           customKey={'stock'}
         />
-
         <CardNextPurchases />
       </div>
     </div>
