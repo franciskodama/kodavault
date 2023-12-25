@@ -35,7 +35,7 @@ export default function NavMenu() {
           </li>
         </Link>
 
-        <Link href='/dashboard/assets'>
+        <Link href='/assets'>
           <li
             className={pathname === '/assets' ? ACTIVE_ROUTE : INACTIVE_ROUTE}
           >

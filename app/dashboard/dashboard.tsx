@@ -1,6 +1,5 @@
 'use client';
 
-import AssetContext from '@/components/AssetContext';
 import { CardTotal } from '@/components/CardTotal';
 import { changeKeyForTitle, currencyFormatter } from '@/lib/utils';
 import Transactions from './transactions/transactions';
@@ -16,11 +15,10 @@ import { useContext } from 'react';
 import { AssetsContext } from '@/context/AssetsContext';
 
 export default function Dashboard({ assets }: { assets: Asset[] }) {
-  //   const { setAssets } = useContext(AssetsContext);
-  //   setAssets(assets);
+  const { setAssets } = useContext(AssetsContext);
+  setAssets(assets);
 
   const assetsByType = groupAssetsByType(assets);
-
   const cryptoAssets = changeKeyForTitle(assetsByType.Crypto, 'crypto');
   const stocksAssets = changeKeyForTitle(assetsByType.Stock, 'stock');
   const cashAssets = changeKeyForTitle(assetsByType.Cash, 'cash');
@@ -58,12 +56,6 @@ export default function Dashboard({ assets }: { assets: Asset[] }) {
           <div className='h-[10px] w-4 bg-red-500' />
           <div>{`< 50%`}</div>
         </div>
-      </div>
-
-      {/* -------- CONTEXT TEST --------------------------------------------------------------------------------------- */}
-
-      <div>
-        <AssetContext assets={assets} />
       </div>
 
       {/* -------- 1st Row Cards --------------------------------------------------------------------------------------- */}

@@ -1,9 +1,8 @@
 'use client';
 
-import { getAssets } from '@/lib/assets.server';
 import { Asset, UnpricedAsset } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
 type AssetsContextProps = {
   assets: Asset[];
@@ -22,21 +21,6 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const [assets, setAssets] = useState(assetsHardcoded);
   const { user } = useUser();
   // let assetsNoPrice: UnpricedAsset[] = [];
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     if (user) {
-  //       const response = await getAssets(user.emailAddresses[0].emailAddress);
-  //       console.log('---  🚀 ---> | result:', response);
-  //     }
-  //   }
-  //   fetchData();
-  // }, [user]);
-
-  //   assetsNoPrice = fetchAssets(user.emailAddresses[0].emailAddress);
-  //   if (assetsNoPrice.length > 0) {
-  //     assetsWithPricesArray = await fetchAssetsWithPrices(assets);
-  //   }
 
   return (
     <AssetsContext.Provider value={{ assets, setAssets }}>
