@@ -1,37 +1,23 @@
-// import { useFormState, useFormStatus } from 'react-dom';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
 import { addAsset } from '@/lib/actions';
 import { Button } from './ui/button';
 
-// VERCEL: https://www.youtube.com/watch?v=dDpZfOQBMaU
-// indian https://www.youtube.com/watch?v=R_Pj593TH_Q
-// Brett: https://www.youtube.com/watch?v=5MRLO-7O2So
-
-// const initialState = {
-//   message: null,
-// };
+type Inputs = {
+  example: string;
+  exampleRequired: string;
+};
 
 export function AddAssetForm() {
-  // const [state, formAction] = useFormState(addAsset, initialState);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
-  // const addAsset = async (formData: FormData) => {
-  //   // 'use server';
-
-  //   // const assetUid = GET FROM CLERK
-  //   const assetName = formData.get('asset');
-  //   const assetQty = formData.get('qty');
-  //   const assetWallet = formData.get('wallet');
-  //   const assetType = formData.get('type');
-  //   const assetSubtype = formData.get('subtype');
-  //   const assetCurrency = formData.get('currency');
-  //   const assetExchange = formData.get('exchange');
-  //   const assetAccount = formData.get('account');
-
-  //   // const newAsset = await prisma.asset.create({
-  //   //   data: {
-  //   //     name: assetName,
-  //   // }
-  //   // })
-  // };
+  console.log(watch('example'));
 
   return (
     <>
@@ -122,3 +108,30 @@ export function AddAssetForm() {
     </>
   );
 }
+
+// https://ui.shadcn.com/docs/components/form
+// VERCEL: https://www.youtube.com/watch?v=dDpZfOQBMaU
+// indian https://www.youtube.com/watch?v=R_Pj593TH_Q
+// Brett: https://www.youtube.com/watch?v=5MRLO-7O2So
+
+// const [state, formAction] = useFormState(addAsset, initialState);
+
+// const addAsset = async (formData: FormData) => {
+//   // 'use server';
+
+//   // const assetUid = GET FROM CLERK
+//   const assetName = formData.get('asset');
+//   const assetQty = formData.get('qty');
+//   const assetWallet = formData.get('wallet');
+//   const assetType = formData.get('type');
+//   const assetSubtype = formData.get('subtype');
+//   const assetCurrency = formData.get('currency');
+//   const assetExchange = formData.get('exchange');
+//   const assetAccount = formData.get('account');
+
+//   // const newAsset = await prisma.asset.create({
+//   //   data: {
+//   //     name: assetName,
+//   // }
+//   // })
+// };

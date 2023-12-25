@@ -3,7 +3,7 @@
 import { getAssets } from '@/lib/assets.server';
 import { Asset, UnpricedAsset } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 type AssetsContextProps = {
   assets: Asset[];
@@ -18,20 +18,22 @@ const initialState: AssetsContextProps = {
 export const AssetsContext = createContext(initialState);
 
 export function AssetsProvider({ children }: { children: React.ReactNode }) {
-  const [assets, setAssets] = useState(initialState.assets);
-  // const [assets, setAssets] = useState(assetsHardcoded);
+  // const [assets, setAssets] = useState(initialState.assets);
+  const [assets, setAssets] = useState(assetsHardcoded);
   const { user } = useUser();
-
-  console.log('---  🚀 ---> | user:', user);
   // let assetsNoPrice: UnpricedAsset[] = [];
 
-  if (user) {
-    console.log('---  🚀 ---> | user:', user.emailAddresses[0].emailAddress);
-    // const result = getAssets(user.emailAddresses[0].emailAddress);
-    // console.log('---  🚀 ---> | result:', result);
-    //   assetsNoPrice = fetchAssets(user.emailAddresses[0].emailAddress);
-  }
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     if (user) {
+  //       const response = await getAssets(user.emailAddresses[0].emailAddress);
+  //       console.log('---  🚀 ---> | result:', response);
+  //     }
+  //   }
+  //   fetchData();
+  // }, [user]);
 
+  //   assetsNoPrice = fetchAssets(user.emailAddresses[0].emailAddress);
   //   if (assetsNoPrice.length > 0) {
   //     assetsWithPricesArray = await fetchAssetsWithPrices(assets);
   //   }

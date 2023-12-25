@@ -12,6 +12,7 @@ export default function Home() {
         className='rounded-md object-cover'
       /> */}
       <div className='border-2 w-1/2'>
+        You are not logged in
         <Link href='/dashboard'>
           <h1>Dashboard</h1>
         </Link>
