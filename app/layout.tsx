@@ -30,9 +30,7 @@ export default function RootLayout({
           className={`${inter.className} bg-[#FAFAFB] text-xs text-slate-600`}
         >
           <div className='max-w-[1400px] mx-auto'>
-            <Header />
             <AssetsProvider>{children}</AssetsProvider>
-            <Footer />
           </div>
         </body>
       </html>

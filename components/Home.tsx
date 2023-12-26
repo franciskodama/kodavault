@@ -13,7 +13,7 @@ export default function Home() {
       /> */}
       <div className='border-2 w-1/2'>
         You are not logged in
-        <Link href='/dashboard'>
+        <Link href='/in/dashboard'>
           <h1>Dashboard</h1>
         </Link>
       </div>
