@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: 'Assets Analysis for Right Decisions',
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -26,13 +26,15 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang='en'>
-        <AssetsProvider>
-          <body
-            className={`${inter.className} bg-[#FAFAFB] text-xs text-slate-600`}
-          >
-            {children}
-          </body>
-        </AssetsProvider>
+        <body
+          className={`${inter.className} bg-[#FAFAFB] text-xs text-slate-600`}
+        >
+          <div className='max-w-[1400px] mx-auto'>
+            <Header />
+            <AssetsProvider>{children}</AssetsProvider>
+            <Footer />
+          </div>
+        </body>
       </html>
     </ClerkProvider>
   );

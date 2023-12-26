@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs';
 
-import { UnpricedAsset } from '../../lib/types';
-import { fetchAssets, fetchAssetsWithPrices } from '../../lib/assets';
+import { UnpricedAsset } from '../../../lib/types';
+import { fetchAssets, fetchAssetsWithPrices } from '../../../lib/assets';
 import NoAssets from '@/components/NoAssets';
 import Dashboard from './dashboard';
 

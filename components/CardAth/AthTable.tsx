@@ -1,6 +1,6 @@
 import { AssetReducedWithAth } from '@/lib/types';
 import { columnsAth } from './AthColumns';
-import { DataTable } from '@/app/assets/data-table';
+import { DataTable } from '@/app/in/assets/data-table';
 
 export default async function AthTable({
   athAssets,
