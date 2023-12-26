@@ -1,11 +1,11 @@
-import './../components/ui/globals.css';
 import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
-
+import './../components/ui/globals.css';
 import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
+
 import Header from '../components/Header';
+import Footer from '@/components/Footer';
 import { AssetsProvider } from '@/context/AssetsContext';
-import Footer from '@/components/footer';
 
 // See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 // export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
@@ -26,15 +26,13 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang='en'>
-        <body className={`${inter.className} bg-[#FAFAFB]`}>
-          <main className='mx-auto max-w-[1400px] text-xl gap-2'>
-            <AssetsProvider>
-              <Header />
-              {children}
-              <Footer />
-            </AssetsProvider>
-          </main>
-        </body>
+        <AssetsProvider>
+          <body
+            className={`${inter.className} bg-[#FAFAFB] text-xs text-slate-600`}
+          >
+            {children}
+          </body>
+        </AssetsProvider>
       </html>
     </ClerkProvider>
   );

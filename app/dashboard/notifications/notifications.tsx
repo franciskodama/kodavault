@@ -1,3 +1,6 @@
+import { RocketIcon, SirenIcon } from 'lucide-react';
+import Image from 'next/image';
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,8 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { RocketIcon, SirenIcon } from 'lucide-react';
-import Image from 'next/image';
 
 export default function Notifications() {
   return (

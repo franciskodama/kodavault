@@ -1,4 +1,4 @@
-export default async function StocksPage() {
+export default function StocksPage() {
   return (
     <>
       <div>Stocks</div>

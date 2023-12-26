@@ -18,11 +18,7 @@ export default async function DashboardPage() {
     if (unpricedAssets.length > 0) {
       const assets = await fetchAssetsWithPrices(unpricedAssets);
 
-      return (
-        <>
-          <Dashboard assets={assets} />
-        </>
-      );
+      return <Dashboard assets={assets} />;
     } else {
       return <NoAssets />;
     }
