@@ -2,9 +2,11 @@ import Image from 'next/image';
 
 export default function Error404() {
   return (
-    <div>
-      <h1>Not Found. Sifu!</h1>
-      <p>Sorry, the page you were looking for could not be found.</p>
+    <div className='flex flex-col w-full items-center justify-center'>
+      <div className='mt-12 text-2xl'>Not Found. Sifu!</div>
+      <div className='my-2 text-sm'>
+        Sorry, the page you were looking for could not be found.
+      </div>
       <Image
         src='/goat.gif'
         width={400}
