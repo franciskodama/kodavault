@@ -63,7 +63,9 @@ export default function NavMenu() {
           </li>
         </Link>
         <Sheet>
-          <SheetTrigger className='ml-4 font-medium'>+ Asset</SheetTrigger>
+          <SheetTrigger className='ml-4 font-semibold border-2 border-slate-600 rounded-[2px] mx-2 py-[2px] px-2 hover:text-white hover:bg-slate-400 hover:border-slate-400'>
+            + Asset
+          </SheetTrigger>
           <SheetContent>
             <SheetHeader>
               <SheetTitle>Add a new Asset</SheetTitle>

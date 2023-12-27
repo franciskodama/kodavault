@@ -5,8 +5,8 @@ import { Asset, UnpricedAsset } from './types';
 
 export const currencyRates = {
   quotes: {
-    USDCAD: 1.36,
-    USDBRL: 4.97,
+    USDCAD: 1.32,
+    USDBRL: 4.84,
   },
 };
 
