@@ -1,14 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import { addAsset } from '@/lib/actions';
 import { Button } from './ui/button';
 import { Inputs } from '@/lib/types';
+import { SheetClose } from './ui/sheet';
 
 export function AddAssetForm() {
   const [data, setData] = useState<Inputs>();
+  const { user } = useUser();
+  const uid = user?.emailAddresses?.[0]?.emailAddress;
 
   const {
     register,
@@ -26,6 +31,7 @@ export function AddAssetForm() {
       currency: '',
       exchange: '',
       account: '',
+      uid: uid,
     },
   });
 
@@ -36,10 +42,11 @@ export function AddAssetForm() {
   const classNameError = 'text-red-500 font-bold my-2';
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
-    await addAsset(data);
-    // if (result) {
-    //   console.log('Result: ', result);
-    // }
+    if (!uid) {
+      return console.log('User not logged in');
+    }
+
+    await addAsset({ ...data, uid: uid });
 
     reset();
     setData(data);
@@ -166,39 +173,13 @@ export function AddAssetForm() {
               <p className={classNameError}>{errors.exchange.message}</p>
             )}
           </div>
-
-          <Button className='my-4' type='submit'>
-            Add Asset
-          </Button>
+          <SheetClose asChild>
+            <Button className='my-4' type='submit'>
+              Add Asset
+            </Button>
+          </SheetClose>
         </div>
       </form>
     </>
   );
 }
-
-// https://ui.shadcn.com/docs/components/form
-// VERCEL: https://www.youtube.com/watch?v=dDpZfOQBMaU
-// indian https://www.youtube.com/watch?v=R_Pj593TH_Q
-// Brett: https://www.youtube.com/watch?v=5MRLO-7O2So
-
-// const [state, formAction] = useFormState(addAsset, initialState);
-
-// const addAsset = async (formData: FormData) => {
-//   // 'use server';
-
-//   // const assetUid = GET FROM CLERK
-//   const assetName = formData.get('asset');
-//   const assetQty = formData.get('qty');
-//   const assetWallet = formData.get('wallet');
-//   const assetType = formData.get('type');
-//   const assetSubtype = formData.get('subtype');
-//   const assetCurrency = formData.get('currency');
-//   const assetExchange = formData.get('exchange');
-//   const assetAccount = formData.get('account');
-
-//   // const newAsset = await prisma.asset.create({
-//   //   data: {
-//   //     name: assetName,
-//   // }
-//   // })
-// };
