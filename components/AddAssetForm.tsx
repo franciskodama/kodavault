@@ -5,17 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { addAsset } from '@/lib/actions';
 import { Button } from './ui/button';
-
-export type Inputs = {
-  asset: string;
-  qty: number;
-  wallet: string;
-  type: string;
-  subtype: string;
-  currency: string;
-  exchange: string;
-  account: string;
-};
+import { Inputs } from '@/lib/types';
 
 export function AddAssetForm() {
   const [data, setData] = useState<Inputs>();

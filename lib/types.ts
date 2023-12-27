@@ -4,7 +4,7 @@ export type UnpricedAsset = {
   asset: string;
   qty: number;
   wallet: string;
-  created_at: string;
+  created_at: Date;
   type: string;
   subtype: string;
   currency: string;
@@ -26,7 +26,7 @@ export type AssetForAth = {
   asset: string;
   qty: number;
   wallet: string;
-  created_at: string;
+  created_at: Date;
   type: string;
   subtype: string;
   currency: string;
@@ -46,4 +46,15 @@ export type AssetReducedWithAth = {
   athTotalCurrency: string;
   xPotential: number | string;
   percentagePotential: number | string;
+};
+
+export type Inputs = {
+  asset: string;
+  qty: number;
+  wallet: string;
+  type: string;
+  subtype: string;
+  currency: string;
+  exchange: string;
+  account: string;
 };

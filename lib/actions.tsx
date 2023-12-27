@@ -1,7 +1,8 @@
 'use server';
 
-import { Inputs } from '@/components/AddAssetForm';
+import { uuid } from 'uuidv4';
 import prisma from './prisma';
+import { Inputs } from './types';
 
 export async function addAsset(formData: Inputs) {
   const { asset, qty, wallet, type, subtype, currency, exchange, account } =
@@ -10,6 +11,8 @@ export async function addAsset(formData: Inputs) {
   try {
     await prisma.asset.create({
       data: {
+        id: uuid(),
+        created_at: new Date(),
         asset,
         qty,
         wallet,

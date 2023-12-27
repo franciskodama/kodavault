@@ -136,15 +136,15 @@ model applicant_tracking_system {
 }
 
 model Asset {
-  id         String  @id(map: "assets_pkey")
   asset      String
-  qty        Float   @default(0)
+  qty        Float    @default(0)
   wallet     String
-  created_at String
   type       String
   uid        String
   subtype    String
   currency   String
   account    String
-  exchange   String? @default("null")
+  exchange   String?  @default("null")
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  id         String   @id(map: "Asset_pkey1") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 }
