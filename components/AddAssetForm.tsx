@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { addAsset } from '@/lib/actions';
 import { Button } from './ui/button';
 
-type Inputs = {
+export type Inputs = {
   asset: string;
   qty: number;
   wallet: string;
@@ -24,6 +24,7 @@ export function AddAssetForm() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
@@ -44,7 +45,13 @@ export function AddAssetForm() {
     'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
   const classNameError = 'text-red-500 font-bold my-2';
 
-  const processForm: SubmitHandler<Inputs> = (data) => {
+  const processForm: SubmitHandler<Inputs> = async (data) => {
+    await addAsset(data);
+    // if (result) {
+    //   console.log('Result: ', result);
+    // }
+
+    reset();
     setData(data);
   };
 
