@@ -6,13 +6,14 @@ import Transactions from './transactions/transactions';
 import Chart from './chart/chart';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
-import { CardAth } from '@/components/CardAth';
+import CardAth from '@/components/CardAth';
 import { groupAssetsByType } from '@/lib/assets';
 import { currencyRates } from '@/lib/prices';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { Asset } from '@/lib/types';
 import { useContext } from 'react';
 import { AssetsContext } from '@/context/AssetsContext';
+import { getAllTimeHighData } from '@/lib/crypto.server';
 
 export default function Dashboard({ assets }: { assets: Asset[] }) {
   const { setAssets } = useContext(AssetsContext);
@@ -22,6 +23,11 @@ export default function Dashboard({ assets }: { assets: Asset[] }) {
   const cryptoAssets = changeKeyForTitle(assetsByType.Crypto, 'crypto');
   const stocksAssets = changeKeyForTitle(assetsByType.Stock, 'stock');
   const cashAssets = changeKeyForTitle(assetsByType.Cash, 'cash');
+
+  // ------------------------------------------------------------------------
+  // const athCoins = await getAllTimeHighData();
+  // console.log('---  🚀 ---> | athCoins  :', athCoins);
+  // ------------------------------------------------------------------------
 
   return (
     <>
@@ -132,10 +138,10 @@ export default function Dashboard({ assets }: { assets: Asset[] }) {
                 customKey={'crypto'}
               /> */}
           {/* <CardAth
-          emoji={'🔮'}
-          description={'All-Time High Estimation'}
-          assets={assetsByType.Crypto}
-        /> */}
+            emoji={'🔮'}
+            description={'All-Time High Estimation'}
+            assets={assetsByType.Crypto}
+          /> */}
         </div>
         {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
         <div className='flex flex-wrap gap'>
