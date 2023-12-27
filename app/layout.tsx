@@ -11,7 +11,7 @@ import { AssetsProvider } from '@/context/AssetsContext';
 // export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
 // export const cairoPlay = Cairo_Play({ subsets: ['latin'], display: 'swap' });
 
-export const inter = Inter({ subsets: ['latin'], display: 'swap' });
+// export const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Koda Vault',
@@ -27,7 +27,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang='en'>
         <body
-          className={`${inter.className} bg-[#FAFAFB] text-xs text-slate-600`}
+          // className={`${inter.className} bg-[#FAFAFB] text-xs text-slate-600`}
+          className={`bg-[#FAFAFB] text-xs text-slate-600`}
         >
           <div className='max-w-[1400px] mx-auto'>
             <AssetsProvider>{children}</AssetsProvider>
