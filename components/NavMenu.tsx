@@ -25,39 +25,47 @@ export default function NavMenu() {
     <>
       <hr className='my-4' />
       <ul className='flex items-center text-sm'>
-        <Link href='/dashboard'>
+        <Link href='/in/dashboard'>
           <li
             className={
-              pathname === '/dashboard' ? ACTIVE_ROUTE : INACTIVE_ROUTE
+              pathname === '/in/dashboard' ? ACTIVE_ROUTE : INACTIVE_ROUTE
             }
           >
             Dashboard
           </li>
         </Link>
 
-        <Link href='/dashboard/assets'>
+        <Link href='/in/assets'>
           <li
-            className={pathname === '/assets' ? ACTIVE_ROUTE : INACTIVE_ROUTE}
+            className={
+              pathname === '/in/assets' ? ACTIVE_ROUTE : INACTIVE_ROUTE
+            }
           >
             Assets
           </li>
         </Link>
-        <Link href='/dashboard/cryptos'>
+        <Link href='/in/cryptos'>
           <li
-            className={pathname === '/cryptos' ? ACTIVE_ROUTE : INACTIVE_ROUTE}
+            className={
+              pathname === '/in/cryptos' ? ACTIVE_ROUTE : INACTIVE_ROUTE
+            }
           >
             Cryptos
           </li>
         </Link>
-        <Link href='stocks'>
+        <Link href='/in/stocks'>
           <li
-            className={pathname === '/stocks' ? ACTIVE_ROUTE : INACTIVE_ROUTE}
+            className={
+              pathname === '/in/stocks' ? ACTIVE_ROUTE : INACTIVE_ROUTE
+            }
           >
             Stocks
           </li>
         </Link>
         <Sheet>
-          <SheetTrigger className='ml-4 font-medium'>+ Asset</SheetTrigger>
+          <SheetTrigger className='ml-4 font-semibold border-2 border-slate-600 rounded-[2px] mx-2 py-[2px] px-2 hover:text-white hover:bg-slate-400 hover:border-slate-400'>
+            + Asset
+          </SheetTrigger>
           <SheetContent>
             <SheetHeader>
               <SheetTitle>Add a new Asset</SheetTitle>

@@ -1,119 +1,207 @@
-// import { useFormState, useFormStatus } from 'react-dom';
+'use client';
+
+import { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+import { addAsset } from '@/lib/actions';
 import { Button } from './ui/button';
 
-// VERCEL: https://www.youtube.com/watch?v=dDpZfOQBMaU
-// indian https://www.youtube.com/watch?v=R_Pj593TH_Q
-// Brett: https://www.youtube.com/watch?v=5MRLO-7O2So
+type Inputs = {
+  asset: string;
+  qty: number;
+  wallet: string;
+  type: string;
+  subtype: string;
+  currency: string;
+  exchange: string;
+  account: string;
+};
 
-// const initialState = {
-//   message: null,
-// };
+export function AddAssetForm() {
+  const [data, setData] = useState<Inputs>();
 
-export const AddAssetForm = async () => {
-  // const [state, formAction] = useFormState(addAsset, initialState);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>({
+    defaultValues: {
+      asset: '',
+      qty: 0,
+      wallet: '',
+      type: '',
+      subtype: '',
+      currency: '',
+      exchange: '',
+      account: '',
+    },
+  });
 
-  const addAsset = async (formData: FormData) => {
-    // 'use server';
+  const classNameDiv = 'flexn flex-col items-center my-4';
+  const classNameLabel = 'font-bold';
+  const classNameInput =
+    'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
+  const classNameError = 'text-red-500 font-bold my-2';
 
-    // const assetUid = GET FROM CLERK
-    const assetName = formData.get('asset');
-    const assetQty = formData.get('qty');
-    const assetWallet = formData.get('wallet');
-    const assetType = formData.get('type');
-    const assetSubtype = formData.get('subtype');
-    const assetCurrency = formData.get('currency');
-    const assetExchange = formData.get('exchange');
-    const assetAccount = formData.get('account');
-
-    // const newAsset = await prisma.asset.create({
-    //   data: {
-    //     name: assetName,
-    // }
-    // })
+  const processForm: SubmitHandler<Inputs> = (data) => {
+    setData(data);
   };
 
   return (
     <>
-      <form action={addAsset}>
-        <div className='flex flex-col'>
-          <div className='flex'>
-            <label htmlFor='asset'>Asset</label>
+      <form onSubmit={handleSubmit(processForm)}>
+        <div className='flex flex-col mt-6'>
+          <div className={classNameDiv}>
+            <label className={classNameLabel} htmlFor='asset'>
+              Asset
+            </label>
             <input
-              type='text'
-              name='asset'
-              required
-              className='border-slate-50 rounded-xs'
+              className={classNameInput}
+              placeholder='Asset Symbol'
+              {...register('asset', { required: "Asset can't be empty" })}
             />
+            {errors.asset?.message && (
+              <p className={classNameError}>{errors.asset.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor='qty'>Quantity</label>
+          <div className={classNameDiv}>
+            <label className={classNameLabel} htmlFor='qty'>
+              Quantity
+            </label>
             <input
-              type='number'
-              name='qty'
-              defaultValue={0}
-              className='border-slate-50 rounded-xs'
+              className={classNameInput}
+              placeholder='Quantity'
+              {...register('qty', { required: "Quantity can't be empty" })}
             />
+            {errors.qty?.message && (
+              <p className={classNameError}>{errors.qty.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor='wallet'>Wallet</label>
+          <div className={classNameDiv}>
+            <label className={classNameLabel} htmlFor='wallet'>
+              Wallet
+            </label>
             <input
-              type='text'
-              name='wallet'
-              className='border-slate-50 rounded-xs'
+              className={classNameInput}
+              placeholder='Wallet'
+              {...register('wallet', { required: "Wallet can't be empty" })}
             />
+            {errors.wallet?.message && (
+              <p className={classNameError}>{errors.wallet.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor='type'>Type</label>
+          <div className={classNameDiv}>
+            <label className={classNameLabel} htmlFor='type'>
+              Type
+            </label>
             <input
-              type='text'
-              name='type'
-              className='border-slate-50 rounded-xs'
+              className={classNameInput}
+              placeholder='Type (Stock, Altcoin, Crypto)'
+              {...register('type', { required: "Type can't be empty" })}
             />
+            {errors.type?.message && (
+              <p className={classNameError}>{errors.type.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor='subtype'>Subtype</label>
+          <div className={classNameDiv}>
+            <label className={classNameLabel} htmlFor='subtype'>
+              Subtype
+            </label>
             <input
-              type='text'
-              name='subtype'
-              className='border-slate-50 rounded-xs'
+              className={classNameInput}
+              placeholder='Stock-CAD, Stock-USD, Stock-BRL, Altcoin, BTC, ETH'
+              {...register('subtype', { required: "Subtype can't be empty" })}
             />
+            {errors.subtype?.message && (
+              <p className={classNameError}>{errors.subtype.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor='currency'>Currency</label>
+          <div className={classNameDiv}>
+            <label className={classNameLabel} htmlFor='currency'>
+              Currency
+            </label>
             <input
-              type='text'
-              name='currency'
-              className='border-slate-50 rounded-xs'
+              className={classNameInput}
+              placeholder='USD, CAD, BRL'
+              {...register('currency', {
+                required: "Currency can't be empty",
+                minLength: {
+                  value: 3,
+                  message: 'Currency must be at least 3 characters',
+                },
+              })}
             />
+            {errors.currency?.message && (
+              <p className={classNameError}>{errors.currency.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor='account'>Account</label>
+          <div className={classNameDiv}>
+            <label className={classNameLabel} htmlFor='account'>
+              Account
+            </label>
             <input
-              type='text'
-              name='account'
-              className='border-slate-50 rounded-xs'
+              className={classNameInput}
+              placeholder='Investment, cc-TFSA, cc-FHSA'
+              {...register('account', { required: "Account can't be empty" })}
             />
+            {errors.account?.message && (
+              <p className={classNameError}>{errors.account.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor='exchange'>Exchange</label>
+          <div className={classNameDiv}>
+            <label className={classNameLabel} htmlFor='exchange'>
+              Exchange
+            </label>
             <input
-              type='text'
-              name='exchange'
-              defaultValue='null'
-              className='border-slate-50 rounded-xs'
+              className={classNameInput}
+              placeholder='TO, V, SA, NASDAQ'
+              {...register('exchange', { required: false })}
             />
+            {errors.exchange?.message && (
+              <p className={classNameError}>{errors.exchange.message}</p>
+            )}
           </div>
 
-          <Button type='submit'>Add Asset</Button>
+          <Button className='my-4' type='submit'>
+            Add Asset
+          </Button>
         </div>
       </form>
     </>
   );
-};
+}
+
+// https://ui.shadcn.com/docs/components/form
+// VERCEL: https://www.youtube.com/watch?v=dDpZfOQBMaU
+// indian https://www.youtube.com/watch?v=R_Pj593TH_Q
+// Brett: https://www.youtube.com/watch?v=5MRLO-7O2So
+
+// const [state, formAction] = useFormState(addAsset, initialState);
+
+// const addAsset = async (formData: FormData) => {
+//   // 'use server';
+
+//   // const assetUid = GET FROM CLERK
+//   const assetName = formData.get('asset');
+//   const assetQty = formData.get('qty');
+//   const assetWallet = formData.get('wallet');
+//   const assetType = formData.get('type');
+//   const assetSubtype = formData.get('subtype');
+//   const assetCurrency = formData.get('currency');
+//   const assetExchange = formData.get('exchange');
+//   const assetAccount = formData.get('account');
+
+//   // const newAsset = await prisma.asset.create({
+//   //   data: {
+//   //     name: assetName,
+//   // }
+//   // })
+// };

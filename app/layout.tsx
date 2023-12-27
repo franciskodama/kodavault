@@ -1,23 +1,24 @@
-import './../components/ui/globals.css';
 import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
-
+import './../components/ui/globals.css';
 import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
+
 import Header from '../components/Header';
-import Footer from './dashboard/footer/footer';
+import Footer from '@/components/Footer';
+import { AssetsProvider } from '@/context/AssetsContext';
 
 // See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 // export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
 // export const cairoPlay = Cairo_Play({ subsets: ['latin'], display: 'swap' });
 
-export const inter = Inter({ subsets: ['latin'], display: 'swap' });
+// export const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Koda Vault',
   description: 'Assets Analysis for Right Decisions',
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -25,12 +26,13 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang='en'>
-        <body className={`${inter.className} bg-[#FAFAFB]`}>
-          <main className='mx-auto max-w-[1400px] text-xl gap-2'>
-            <Header />
-            {children}
-            <Footer />
-          </main>
+        <body
+          // className={`${inter.className} bg-[#FAFAFB] text-xs text-slate-600`}
+          className={`bg-[#FAFAFB] text-xs text-slate-600`}
+        >
+          <div className='max-w-[1400px] mx-auto'>
+            <AssetsProvider>{children}</AssetsProvider>
+          </div>
         </body>
       </html>
     </ClerkProvider>

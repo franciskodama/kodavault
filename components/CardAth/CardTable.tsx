@@ -29,7 +29,7 @@ export const CardTable = ({
 
   return (
     <div>
-      <Card className=''>
+      <Card>
         <div className='flex flex-col justify-between'>
           <div className='flex flex-col'>
             <CardHeader>

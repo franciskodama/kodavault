@@ -23,7 +23,7 @@ export default function Header() {
         />
       </Link>
       <div className='flex items-center gap-20'>
-        {pathname.includes('dashboard') && (
+        {pathname.includes('/in/') && (
           <>
             <NavMenu />
           </>

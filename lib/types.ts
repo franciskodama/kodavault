@@ -1,4 +1,4 @@
-export type AssetWithoutPrice = {
+export type UnpricedAsset = {
   id: string;
   account: string;
   asset: string;
@@ -14,7 +14,7 @@ export type AssetWithoutPrice = {
 
 export type Asset =
   | undefined
-  | (AssetWithoutPrice & {
+  | (UnpricedAsset & {
       price?: number;
       total?: number;
       ath?: number;
