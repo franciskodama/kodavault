@@ -3,8 +3,6 @@ import { ClerkProvider } from '@clerk/nextjs';
 import './../components/ui/globals.css';
 import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
 
-import Header from '../components/Header';
-import Footer from '@/components/Footer';
 import { AssetsProvider } from '@/context/AssetsContext';
 
 // See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts

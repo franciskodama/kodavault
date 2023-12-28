@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { addAsset } from '@/lib/actions';
@@ -10,8 +10,13 @@ import { Button } from './ui/button';
 import { Inputs } from '@/lib/types';
 import { SheetClose } from './ui/sheet';
 
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useToast } from './ui/use-toast';
+
 export function AddAssetForm() {
   const [data, setData] = useState<Inputs>();
+  const { toast } = useToast();
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
@@ -20,6 +25,8 @@ export function AddAssetForm() {
     handleSubmit,
     watch,
     reset,
+    control,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
@@ -40,13 +47,27 @@ export function AddAssetForm() {
   const classNameInput =
     'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
   const classNameError = 'text-red-500 font-bold my-2';
+  const classNameRadioButton = 'text-red-500 font-bold my-2';
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
     if (!uid) {
       return console.log('User not logged in');
     }
 
-    await addAsset({ ...data, uid: uid });
+    const result = await addAsset({ ...data, uid: uid });
+
+    if (result) {
+      toast({
+        title: 'Asset added! 🎉',
+        description: 'Your new asset is already available.',
+      });
+    } else {
+      toast({
+        title: '🚨 Uh oh! Something went wrong!',
+        description: 'Your asset was NOT added.',
+        variant: 'destructive',
+      });
+    }
 
     reset();
     setData(data);
@@ -84,20 +105,58 @@ export function AddAssetForm() {
             )}
           </div>
 
+          {/* ====================== */}
           <div className={classNameDiv}>
             <label className={classNameLabel} htmlFor='wallet'>
               Wallet
             </label>
-            <input
+
+            {walletOptions.map((wallet) => (
+              <div key={wallet}>
+                <input
+                  type='radio'
+                  id={wallet}
+                  value={wallet}
+                  className={classNameRadioButton}
+                  {...register('wallet', { required: "Wallet can't be empty" })}
+                />
+                <label htmlFor={wallet}>{wallet}</label>
+                {errors.wallet?.message && (
+                  <p className={classNameError}>{errors.wallet.message}</p>
+                )}
+              </div>
+            ))}
+
+            {/* <input
               className={classNameInput}
               placeholder='Wallet'
               {...register('wallet', { required: "Wallet can't be empty" })}
             />
             {errors.wallet?.message && (
               <p className={classNameError}>{errors.wallet.message}</p>
-            )}
+            )} */}
+
+            {/* <RadioGroup defaultValue={walletOptions[0]}>
+              {walletOptions.map((wallet) => (
+                <div key={wallet} className='flex items-center space-x-2'>
+                  <RadioGroupItem
+                  
+                    value={wallet}
+                    id={wallet}
+                    {...register('wallet', {
+                      required: "Wallet can't be empty",
+                    })}
+                  />
+                  <Label htmlFor={wallet}>{wallet}</Label>
+                  {errors.wallet?.message && (
+                    <p className={classNameError}>{errors.wallet.message}</p>
+                  )}
+                </div>
+              ))}
+            </RadioGroup> */}
           </div>
 
+          {/* ====================== */}
           <div className={classNameDiv}>
             <label className={classNameLabel} htmlFor='type'>
               Type
@@ -173,13 +232,24 @@ export function AddAssetForm() {
               <p className={classNameError}>{errors.exchange.message}</p>
             )}
           </div>
-          <SheetClose asChild>
-            <Button className='my-4' type='submit'>
-              Add Asset
-            </Button>
-          </SheetClose>
+          {/* <SheetClose asChild> */}
+          <Button className='my-4' type='submit'>
+            Add Asset
+          </Button>
+          {/* </SheetClose> */}
         </div>
       </form>
     </>
   );
 }
+
+const walletOptions = [
+  'Binance',
+  'Bybit',
+  'Crypto.com',
+  'Wealthsimple',
+  'Ledger',
+  'Trezor',
+  'Nubank',
+  'Tangerine',
+];

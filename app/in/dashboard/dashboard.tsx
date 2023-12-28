@@ -1,23 +1,28 @@
 'use client';
 
+import { useContext } from 'react';
+
+import { AssetsContext } from '@/context/AssetsContext';
+import { getAllTimeHighData } from '@/lib/crypto.server';
 import { CardTotal } from '@/components/CardTotal';
-import { changeKeyForTitle, currencyFormatter } from '@/lib/utils';
 import Transactions from './transactions/transactions';
 import Chart from './chart/chart';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
 import CardAth from '@/components/CardAth';
+import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { groupAssetsByType } from '@/lib/assets';
 import { currencyRates } from '@/lib/prices';
-import { CardNextPurchases } from '@/components/CardNextPurchases';
+import { changeKeyForTitle, currencyFormatter } from '@/lib/utils';
 import { Asset } from '@/lib/types';
-import { useContext } from 'react';
-import { AssetsContext } from '@/context/AssetsContext';
-import { getAllTimeHighData } from '@/lib/crypto.server';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function Dashboard({ assets }: { assets: Asset[] }) {
   const { setAssets } = useContext(AssetsContext);
   setAssets(assets);
+
+  const { toast } = useToast();
 
   const assetsByType = groupAssetsByType(assets);
   const cryptoAssets = changeKeyForTitle(assetsByType.Crypto, 'crypto');

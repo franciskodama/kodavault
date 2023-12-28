@@ -3,7 +3,6 @@
 import { uuid } from 'uuidv4';
 import prisma from './prisma';
 import { Inputs } from './types';
-import { toast } from 'sonner';
 
 export async function addAsset(formData: Inputs) {
   const {
@@ -34,9 +33,10 @@ export async function addAsset(formData: Inputs) {
         exchange,
       },
     });
-    toast('New Asset has been created.');
+    return true;
   } catch (error) {
     console.log(error);
-    throw new Error('Failed to create asset');
+    return false;
+    // throw new Error('Failed to create asset');
   }
 }
