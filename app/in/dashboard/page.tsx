@@ -7,12 +7,13 @@ import Dashboard from './dashboard';
 
 export default async function DashboardPage() {
   const user = await currentUser();
+  const uid = user?.emailAddresses?.[0]?.emailAddress;
 
   try {
     let unpricedAssets: UnpricedAsset[] = [];
 
-    if (user) {
-      unpricedAssets = await fetchAssets(user.emailAddresses[0].emailAddress);
+    if (uid) {
+      unpricedAssets = await fetchAssets(uid);
     }
 
     if (unpricedAssets.length > 0) {
