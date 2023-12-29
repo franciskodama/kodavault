@@ -12,11 +12,7 @@ import {
   SheetTrigger,
 } from './ui/sheet';
 import { AddAssetForm } from './AddAssetForm';
-
-const ACTIVE_ROUTE =
-  'mx-1 py-1 px-2 font-semibold text-white bg-slate-600 rounded-[2px]';
-const INACTIVE_ROUTE =
-  'mx-1 py-1 px-2 text-slate-600 font-semibold hover:text-white hover:bg-slate-400';
+import { Button } from './ui/button';
 
 export default function NavMenu() {
   const pathname = usePathname();
@@ -24,47 +20,48 @@ export default function NavMenu() {
   return (
     <>
       <hr className='my-4' />
-      <ul className='flex items-center text-sm'>
+      <ul className='flex items-center text-sm gap-4'>
         <Link href='/in/dashboard'>
-          <li
-            className={
-              pathname === '/in/dashboard' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
+          <Button
+            variant={pathname === '/in/dashboard' ? 'default' : 'ghost'}
+            size='md'
           >
-            Dashboard
-          </li>
+            <li>Dashboard</li>
+          </Button>
         </Link>
 
         <Link href='/in/assets'>
-          <li
-            className={
-              pathname === '/in/assets' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
+          <Button
+            variant={pathname === '/in/assets' ? 'default' : 'ghost'}
+            size='md'
           >
-            Assets
-          </li>
+            <li>Assets</li>
+          </Button>
         </Link>
+
         <Link href='/in/cryptos'>
-          <li
-            className={
-              pathname === '/in/cryptos' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
+          <Button
+            variant={pathname === '/in/cryptos' ? 'default' : 'ghost'}
+            size='md'
           >
-            Cryptos
-          </li>
+            <li>Cryptos</li>
+          </Button>
         </Link>
+
         <Link href='/in/stocks'>
-          <li
-            className={
-              pathname === '/in/stocks' ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
+          <Button
+            variant={pathname === '/in/stocks' ? 'default' : 'ghost'}
+            size='md'
           >
-            Stocks
-          </li>
+            <li>Stocks</li>
+          </Button>
         </Link>
+
         <Sheet>
-          <SheetTrigger className='ml-4 font-semibold border-2 border-slate-600 rounded-[2px] mx-2 py-[2px] px-2 hover:text-white hover:bg-slate-400 hover:border-slate-400'>
-            + Asset
+          <SheetTrigger>
+            <Button size='md' variant='outline'>
+              + Asset
+            </Button>
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>

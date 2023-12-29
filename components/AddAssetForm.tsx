@@ -263,7 +263,7 @@ export function AddAssetForm() {
 
           <SheetClose asChild>
             <Button className='my-4' type='submit' variant={'outline'}>
-              Close Drawer
+              Close
             </Button>
           </SheetClose>
         </div>
@@ -284,12 +284,12 @@ const walletOptions = [
 ];
 
 const subtypeOptions = [
-  'Stock-CAD',
-  'Stock-USD',
-  'Stock-BRL',
   'Altcoin',
   'BTC',
   'ETH',
+  'Stock-CAD',
+  'Stock-USD',
+  'Stock-BRL',
 ];
 
 const typeOptions = ['Stock', 'Altcoin', 'Crypto'];
