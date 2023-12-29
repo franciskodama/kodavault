@@ -99,7 +99,7 @@ export default function CardAth({
 
   return (
     <>
-      {sortedAthAssets.length > 0 && (
+      {/* {sortedAthAssets.length > 0 && (
         <div className='w-[55em]'>
           <CardTable
             athAssets={sortedAthAssets}
@@ -107,7 +107,8 @@ export default function CardAth({
             description={description}
           />
         </div>
-      )}
+      )} */}
+      <div className='w-[90em] bg-accent border-2'></div>
     </>
   );
 }

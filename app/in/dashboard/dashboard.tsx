@@ -142,11 +142,11 @@ export default function Dashboard({ assets }: { assets: Asset[] }) {
                 assets={changeKeyAssetToCryptoForTitleOnCard}
                 customKey={'crypto'}
               /> */}
-          {/* <CardAth
+          <CardAth
             emoji={'🔮'}
             description={'All-Time High Estimation'}
             assets={assetsByType.Crypto}
-          /> */}
+          />
         </div>
         {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
         <div className='flex flex-wrap gap'>
