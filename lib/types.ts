@@ -49,6 +49,7 @@ export type AssetReducedWithAth = {
 };
 
 export type Inputs = {
+  id?: string;
   uid: string;
   asset: string;
   qty: number;

@@ -37,6 +37,60 @@ export async function addAsset(formData: Inputs) {
   } catch (error) {
     console.log(error);
     return false;
-    // throw new Error('Failed to create asset');
+    // throw new Error('🚨 Failed to create asset');
+  }
+}
+
+export async function updateAsset(formData: Inputs) {
+  const {
+    id,
+    asset,
+    qty,
+    wallet,
+    type,
+    subtype,
+    currency,
+    exchange,
+    account,
+    uid,
+  } = formData;
+
+  try {
+    await prisma.asset.update({
+      where: {
+        id,
+      },
+      data: {
+        id,
+        created_at: new Date(),
+        asset,
+        qty: Number(qty),
+        wallet,
+        type,
+        uid,
+        subtype,
+        currency,
+        account,
+        exchange,
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+    // throw new Error('🚨 Failed to create asset');
+  }
+}
+
+export async function deleteAsset(id: string) {
+  try {
+    await prisma.asset.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error('🚨 Failed to delete asset');
   }
 }

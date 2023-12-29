@@ -1,11 +1,33 @@
 'use client';
 
+import { useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+
+import { ArrowUpDown, MoreHorizontalIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { tableHeaderClass } from '@/lib/classes';
 import { Asset } from '@/lib/types';
+import { deleteAsset } from '@/lib/actions';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -60,13 +82,6 @@ export const columns: ColumnDef<Asset>[] = [
   {
     accessorKey: 'price',
     header: () => <div className={tableHeaderClass}>Price</div>,
-    // cell: ({ row }) => {
-    //   const price = parseFloat(row.getValue('price'));
-    //   const formatted = new Intl.NumberFormat('en-US', {
-    //     style: 'currency',
-    //     currency: 'USD',
-    //   }).format(price);
-    // },
   },
   {
     accessorKey: 'total',
@@ -82,13 +97,6 @@ export const columns: ColumnDef<Asset>[] = [
         </Button>
       );
     },
-    // cell: ({ row }) => {
-    //   const total = parseFloat(row.getValue('total'));
-    //   const formatted = new Intl.NumberFormat('en-US', {
-    //     style: 'currency',
-    //     currency: 'USD',
-    //   }).format(total);
-    // },
   },
   {
     accessorKey: 'type',
@@ -132,6 +140,68 @@ export const columns: ColumnDef<Asset>[] = [
           Currency
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
+      );
+    },
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => {
+      const asset = row.original;
+
+      const handleDelete = async (id: string) => {
+        await deleteAsset(id);
+      };
+
+      return (
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant='ghost' className='h-8 w-8 p-0'>
+                <span className='sr-only'>Open menu</span>
+                <MoreHorizontalIcon className='h-4 w-4' />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='end'>
+              <DropdownMenuItem
+                className='flex items-center justify-center'
+                onClick={() => asset && console.log(asset.id)}
+              >
+                Update
+                <span className='ml-2 text-xl'>✏️</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className='flex items-center justify-center'
+                onClick={() => asset && handleDelete(asset.id)}
+              >
+                Delete
+                <span className='ml-2 text-xl'>🫥</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {/* {showAlertDialog && (
+            <AlertDialog>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    <span className='ml-2 text-xl'>🫣</span>
+                    This action cannot be undone. This will permanently delete
+                    this Asset from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel onClick={handleCancelClick}>
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction onClick={handleContinueClick}>
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )} */}
+        </>
       );
     },
   },
