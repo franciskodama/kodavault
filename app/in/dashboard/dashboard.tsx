@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { AssetsContext } from '@/context/AssetsContext';
 import { getAllTimeHighData } from '@/lib/crypto.server';
@@ -16,13 +16,13 @@ import { currencyRates } from '@/lib/prices';
 import { changeKeyForTitle, currencyFormatter } from '@/lib/utils';
 import { Asset } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 
 export default function Dashboard({ assets }: { assets: Asset[] }) {
   const { setAssets } = useContext(AssetsContext);
-  setAssets(assets);
 
-  const { toast } = useToast();
+  useEffect(() => {
+    setAssets(assets);
+  }, [assets, setAssets]);
 
   const assetsByType = groupAssetsByType(assets);
   const cryptoAssets = changeKeyForTitle(assetsByType.Crypto, 'crypto');
