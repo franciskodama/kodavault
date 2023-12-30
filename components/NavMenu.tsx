@@ -57,6 +57,15 @@ export default function NavMenu() {
           </Button>
         </Link>
 
+        <Link href='/in/retirement'>
+          <Button
+            variant={pathname === '/in/retirement' ? 'default' : 'ghost'}
+            size='md'
+          >
+            <li>Goal</li>
+          </Button>
+        </Link>
+
         <Sheet>
           <SheetTrigger>
             <Button size='md' variant='outline'>
