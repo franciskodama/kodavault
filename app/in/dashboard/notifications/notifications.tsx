@@ -33,13 +33,13 @@ export default function Notifications() {
                   elementum, diam id scelerisque volutpat, magna augue iaculis
                   felis, a vulputate justo diam non libero.
                 </p>
-                <Image
+                {/* <Image
                   src='/goat.gif'
                   width={100}
                   height={100}
                   alt='Logo Koda Vault'
                   className='absolute bottom-0 right-10 rounded-md object-cover opacity-20'
-                />
+                /> */}
               </CardContent>
             </div>
             <CardFooter className='flex justify-between text-sm text-slate-500 font-medium m-1 p-2'>
@@ -70,11 +70,11 @@ export default function Notifications() {
                   felis, a vulputate justo diam non libero.
                 </p>
                 {/* <Image
-                  src='/goat.gif'
-                  width={300}
-                  height={300}
+                  src='/mari.png'
+                  width={200}
+                  height={200}
                   alt='Mari in the middle of a buch of money'
-                  className='absolute bottom-0 right-10 rounded-md object-cover opacity-20'
+                  className='absolute bottom-0 right-10 rounded-md object-cover opacity-[50%]'
                 /> */}
               </CardContent>
             </div>

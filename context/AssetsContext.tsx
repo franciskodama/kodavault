@@ -19,8 +19,6 @@ export const AssetsContext = createContext(initialState);
 export function AssetsProvider({ children }: { children: React.ReactNode }) {
   // const [assets, setAssets] = useState(initialState.assets);
   const [assets, setAssets] = useState(assetsHardcoded);
-  const { user } = useUser();
-  // let assetsNoPrice: UnpricedAsset[] = [];
 
   return (
     <AssetsContext.Provider value={{ assets, setAssets }}>

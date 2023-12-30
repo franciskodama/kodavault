@@ -1,14 +1,22 @@
-import { auth } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs';
 
 import Home from './../components/Home';
-import InPage from './in/page';
+import { redirect } from 'next/navigation';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export default async function HomePage() {
-  const { userId } = auth();
+  const user = await currentUser();
+
+  if (user) {
+    redirect('/in/dashboard');
+  }
 
   return (
-    <main>
-      <div>{!userId ? <Home /> : <InPage />}</div>
+    <main className='flex flex-col'>
+      <Header />
+      <div>{!user && <Home />}</div>
+      <Footer />
     </main>
   );
 }
