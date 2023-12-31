@@ -118,7 +118,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
             </label>
             <RadioGroup
               className='flex flex-wrap mt-1'
-              defaultValue={walletOptions[0]}
+              defaultValue={asset?.wallet}
             >
               {walletOptions.map((wallet) => (
                 <div key={wallet} className={classDivRadioGroup}>
@@ -159,7 +159,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
             </label>
             <RadioGroup
               className='flex flex-wrap mt-1'
-              defaultValue={subtypeOptions[0]}
+              defaultValue={asset?.subtype}
             >
               {subtypeOptions.map((subtype) => (
                 <div key={subtype} className={classDivRadioGroup}>
@@ -186,7 +186,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
             </label>
             <RadioGroup
               className='flex flex-wrap mt-1'
-              defaultValue={currencyOptions[0]}
+              defaultValue={asset?.currency}
             >
               {currencyOptions.map((currency) => (
                 <div key={currency} className={classDivRadioGroup}>
@@ -213,7 +213,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
             </label>
             <RadioGroup
               className='flex flex-wrap mt-1'
-              defaultValue={accountOptions[0]}
+              defaultValue={asset?.account}
             >
               {accountOptions.map((account) => (
                 <div key={account} className={classDivRadioGroup}>
@@ -240,7 +240,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
             </label>
             <RadioGroup
               className='flex flex-wrap mt-1'
-              defaultValue={exchangeOptions[0]}
+              defaultValue={asset?.exchange}
             >
               {exchangeOptions.map((exchange) => (
                 <div key={exchange} className={classDivRadioGroup}>
@@ -262,7 +262,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
           </div>
 
           <Button className='mt-8' type='submit'>
-            Add Asset
+            Update Asset
           </Button>
 
           <SheetClose asChild>
