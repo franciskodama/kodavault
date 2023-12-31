@@ -6,14 +6,18 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { updateAsset } from '@/lib/actions';
 import { Button } from './ui/button';
-import { Inputs } from '@/lib/types';
+import { Asset, Inputs } from '@/lib/types';
 import { SheetClose } from './ui/sheet';
 
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from './ui/use-toast';
 
-export function UpdateAssetForm({ id }: { id: string }) {
+export function UpdateAssetForm({ asset }: { asset: Asset }) {
+  // ----------------------------------------------
+  console.log('---  🚀 ---> | asset:', asset);
+  // ----------------------------------------------
+
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
   const { user } = useUser();
@@ -29,19 +33,20 @@ export function UpdateAssetForm({ id }: { id: string }) {
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
-      asset: '',
-      qty: 0,
-      wallet: walletOptions[0],
-      type: '',
-      subtype: subtypeOptions[0],
-      currency: currencyOptions[0],
-      exchange: exchangeOptions[0],
-      account: accountOptions[0],
+      id: asset?.id,
+      asset: asset?.asset,
+      qty: asset?.qty,
+      wallet: asset?.wallet,
+      type: asset?.type,
+      subtype: asset?.subtype,
+      currency: asset?.currency,
+      exchange: asset?.exchange,
+      account: asset?.account,
       uid: uid,
     },
   });
 
-  const classDiv = 'flexn flex-col items-center my-4';
+  const classDiv = 'my-4';
   const classLabel = 'font-bold';
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
   const classError = 'text-red-500 font-bold my-2';
@@ -60,13 +65,13 @@ export function UpdateAssetForm({ id }: { id: string }) {
 
     if (result) {
       toast({
-        title: 'Asset added! 🎉',
-        description: 'Your new asset is already available.',
+        title: 'Asset Updated! 🎉',
+        description: 'Your Asset is already updated.',
       });
     } else {
       toast({
         title: '🚨 Uh oh! Something went wrong!',
-        description: 'Your asset was NOT added.',
+        description: 'Your Asset was NOT Updated.',
         variant: 'destructive',
       });
     }

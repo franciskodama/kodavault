@@ -42,6 +42,8 @@ import { tableHeaderClass } from '@/lib/classes';
 import { Asset } from '@/lib/types';
 import { deleteAsset, updateAsset } from '@/lib/actions';
 import { UpdateAssetForm } from '@/components/UpdateAssetForm';
+import Image from 'next/image';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 // const openDrawer = () => {
 //   const [ open, setOpen ] = useState(false)
@@ -172,9 +174,9 @@ export const columns: ColumnDef<Asset>[] = [
       const handleDeleteAsset = async (id: string) => {
         await deleteAsset(id);
 
-        // ---------------------------------------
+        // ------------------------------------------------------------------------------
         // TODO: RELOAD IS GOOD BUT THE PAGE IS REFRESHING WITH BUG ON THE CONTEXT
-        // ---------------------------------------
+        // ------------------------------------------------------------------------------
         // window.location.reload();
       };
 
@@ -184,23 +186,32 @@ export const columns: ColumnDef<Asset>[] = [
             <div className='flex items-center text-xl'>
               <AlertDialog>
                 <AlertDialogTrigger className='ml-4 hover:text-base w-12'>
-                  {/* <Trash2Icon
-                    size={18}
-                    strokeWidth={1.4}
-                    // className='hover:border hover:border-dashed hover:border-slate-500 hover:rounded-full hover:text-slate-500'
-                    className='flex justify-center mx-auto ml-4 hover:w-8 w-12'
-                  /> */}
                   💀
-                  {/* 🗑️ */}
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>
+                    <AlertDialogTitle className='text-2xl'>
                       Are you absolutely sure?
+                      <span className='ml-2'>😳</span>
                     </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      this Asset from our servers.
+                    <AlertDialogDescription className='flex flex-col'>
+                      <span className='font-bold text-lg'>
+                        This action cannot be undone.
+                      </span>
+                      <div className='w-[450px] my-4'>
+                        <AspectRatio ratio={16 / 12} className='bg-muted'>
+                          <Image
+                            src='/are-you-sure.gif'
+                            alt='Britney in doubt'
+                            fill
+                            className='rounded-[2px] object-cover'
+                          />
+                        </AspectRatio>
+                      </div>
+                      <span className='mb-4'>
+                        This will permanently delete this Asset from our
+                        servers.
+                      </span>
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -217,11 +228,6 @@ export const columns: ColumnDef<Asset>[] = [
               <Sheet>
                 <SheetTrigger className='ml-4 hover:text-base w-12'>
                   ✏️
-                  {/* <PencilIcon
-                    size={18}
-                    strokeWidth={1.4}
-                    className='hover:border hover:border-dashed hover:border-slate-500 hover:rounded-full hover:text-slate-500'
-                  /> */}
                 </SheetTrigger>
                 <SheetContent>
                   <SheetHeader>
@@ -230,7 +236,7 @@ export const columns: ColumnDef<Asset>[] = [
                       Update an Existing Asset
                     </SheetDescription>
                   </SheetHeader>
-                  <UpdateAssetForm id={asset.id} />
+                  <UpdateAssetForm asset={asset} />
                 </SheetContent>
               </Sheet>
             </div>
@@ -240,3 +246,17 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
 ];
+
+// <Trash2Icon
+// size={18}
+// strokeWidth={1.4}
+// // className='hover:border hover:border-dashed hover:border-slate-500 hover:rounded-full hover:text-slate-500'
+// className='flex justify-center mx-auto ml-4 hover:w-8 w-12'
+// />
+// 🗑️
+
+// <PencilIcon
+// size={18}
+// strokeWidth={1.4}
+// className='hover:border hover:border-dashed hover:border-slate-500 hover:rounded-full hover:text-slate-500'
+// />

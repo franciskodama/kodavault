@@ -42,7 +42,7 @@ export function AddAssetForm() {
     },
   });
 
-  const classDiv = 'flexn flex-col items-center my-4';
+  const classDiv = 'my-4';
   const classLabel = 'font-bold';
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
   const classError = 'text-red-500 font-bold my-2';
