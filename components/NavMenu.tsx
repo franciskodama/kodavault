@@ -68,7 +68,7 @@ export default function NavMenu() {
 
         <Sheet>
           <SheetTrigger>
-            <Button size='md' variant='outline'>
+            <Button size='md' variant='outline' className='ml-12'>
               + Asset
             </Button>
           </SheetTrigger>

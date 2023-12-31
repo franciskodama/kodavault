@@ -21,13 +21,34 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 
-import { ArrowUpDown, MoreHorizontalIcon } from 'lucide-react';
+import {
+  ArrowUpDown,
+  MoreHorizontalIcon,
+  PencilIcon,
+  Trash2Icon,
+} from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { tableHeaderClass } from '@/lib/classes';
 import { Asset } from '@/lib/types';
-import { deleteAsset } from '@/lib/actions';
+import { deleteAsset, updateAsset } from '@/lib/actions';
+import { UpdateAssetForm } from '@/components/UpdateAssetForm';
+
+// const openDrawer = () => {
+//   const [ open, setOpen ] = useState(false)
+
+//   return
+
+// }
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -148,13 +169,18 @@ export const columns: ColumnDef<Asset>[] = [
     cell: ({ row }) => {
       const asset = row.original;
 
-      const handleDelete = async (id: string) => {
+      const handleDeleteAsset = async (id: string) => {
         await deleteAsset(id);
+
+        // ---------------------------------------
+        // TODO: CONFIRMAR SE ESTÁ FAZENDO RELOAD
+        // ---------------------------------------
+        window.location.reload();
       };
 
       return (
         <>
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='ghost' className='h-8 w-8 p-0'>
                 <span className='sr-only'>Open menu</span>
@@ -164,28 +190,29 @@ export const columns: ColumnDef<Asset>[] = [
             <DropdownMenuContent align='end'>
               <DropdownMenuItem
                 className='flex items-center justify-center'
-                onClick={() => asset && console.log(asset.id)}
+                onClick={() => asset && handleUpdateAsset(asset.id)}
               >
                 Update
-                <span className='ml-2 text-xl'>✏️</span>
+                <span className='ml-2 text-xl'></span>
               </DropdownMenuItem>
+
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 className='flex items-center justify-center'
-                onClick={() => asset && handleDelete(asset.id)}
+                onClick={() => asset && handleDeleteAsset(asset.id)}
               >
                 Delete
-                <span className='ml-2 text-xl'>🫥</span>
+                <span className='ml-2 text-xl'>💀</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
           {/* {showAlertDialog && (
             <AlertDialog>
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    <span className='ml-2 text-xl'>🫣</span>
+                    <span className='ml-2 text-xl'>💩🫣</span>
                     This action cannot be undone. This will permanently delete
                     this Asset from our servers.
                   </AlertDialogDescription>
@@ -201,6 +228,44 @@ export const columns: ColumnDef<Asset>[] = [
               </AlertDialogContent>
             </AlertDialog>
           )} */}
+
+          {asset && (
+            <div className='flex items-center text-xl'>
+              <Sheet>
+                <SheetTrigger className='ml-4 hover:text-base w-12'>
+                  {/* <Trash2Icon size={18} strokeWidth={1.4} className='hover:border hover:border-dashed hover:border-slate-500 hover:rounded-full hover:text-slate-500'/> */}
+                  💀
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Delete a new Asset</SheetTitle>
+                    <SheetDescription>Delete an Asset</SheetDescription>
+                  </SheetHeader>
+                  {/* <UpdateAssetForm id={asset.id} /> */}
+                </SheetContent>
+              </Sheet>
+
+              <Sheet>
+                <SheetTrigger className='ml-4 hover:text-base w-12'>
+                  ✏️
+                  {/* <PencilIcon
+                    size={18}
+                    strokeWidth={1.4}
+                    className='hover:border hover:border-dashed hover:border-slate-500 hover:rounded-full hover:text-slate-500'
+                  /> */}
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Update a new Asset</SheetTitle>
+                    <SheetDescription>
+                      Update an Existing Asset
+                    </SheetDescription>
+                  </SheetHeader>
+                  <UpdateAssetForm id={asset.id} />
+                </SheetContent>
+              </Sheet>
+            </div>
+          )}
         </>
       );
     },
