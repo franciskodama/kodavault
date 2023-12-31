@@ -74,6 +74,11 @@ export function AddAssetForm() {
 
     reset();
     setData(data);
+
+    // ---------------------------------------
+    // TODO: RELOAD IS GOOD BUT THE PAGE IS REFRESHING WITH BUG ON THE CONTEXT
+    // ---------------------------------------
+    // window.location.reload();
   };
 
   return (

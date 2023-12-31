@@ -173,77 +173,46 @@ export const columns: ColumnDef<Asset>[] = [
         await deleteAsset(id);
 
         // ---------------------------------------
-        // TODO: CONFIRMAR SE ESTÁ FAZENDO RELOAD
+        // TODO: RELOAD IS GOOD BUT THE PAGE IS REFRESHING WITH BUG ON THE CONTEXT
         // ---------------------------------------
-        window.location.reload();
+        // window.location.reload();
       };
 
       return (
         <>
-          {/* <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant='ghost' className='h-8 w-8 p-0'>
-                <span className='sr-only'>Open menu</span>
-                <MoreHorizontalIcon className='h-4 w-4' />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='end'>
-              <DropdownMenuItem
-                className='flex items-center justify-center'
-                onClick={() => asset && handleUpdateAsset(asset.id)}
-              >
-                Update
-                <span className='ml-2 text-xl'></span>
-              </DropdownMenuItem>
-
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className='flex items-center justify-center'
-                onClick={() => asset && handleDeleteAsset(asset.id)}
-              >
-                Delete
-                <span className='ml-2 text-xl'>💀</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu> */}
-          {/* {showAlertDialog && (
-            <AlertDialog>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    <span className='ml-2 text-xl'>💩🫣</span>
-                    This action cannot be undone. This will permanently delete
-                    this Asset from our servers.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel onClick={handleCancelClick}>
-                    Cancel
-                  </AlertDialogCancel>
-                  <AlertDialogAction onClick={handleContinueClick}>
-                    Continue
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          )} */}
-
           {asset && (
             <div className='flex items-center text-xl'>
-              <Sheet>
-                <SheetTrigger className='ml-4 hover:text-base w-12'>
-                  {/* <Trash2Icon size={18} strokeWidth={1.4} className='hover:border hover:border-dashed hover:border-slate-500 hover:rounded-full hover:text-slate-500'/> */}
+              <AlertDialog>
+                <AlertDialogTrigger className='ml-4 hover:text-base w-12'>
+                  {/* <Trash2Icon
+                    size={18}
+                    strokeWidth={1.4}
+                    // className='hover:border hover:border-dashed hover:border-slate-500 hover:rounded-full hover:text-slate-500'
+                    className='flex justify-center mx-auto ml-4 hover:w-8 w-12'
+                  /> */}
                   💀
-                </SheetTrigger>
-                <SheetContent>
-                  <SheetHeader>
-                    <SheetTitle>Delete a new Asset</SheetTitle>
-                    <SheetDescription>Delete an Asset</SheetDescription>
-                  </SheetHeader>
-                  {/* <UpdateAssetForm id={asset.id} /> */}
-                </SheetContent>
-              </Sheet>
+                  {/* 🗑️ */}
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      this Asset from our servers.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => asset && handleDeleteAsset(asset.id)}
+                    >
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
 
               <Sheet>
                 <SheetTrigger className='ml-4 hover:text-base w-12'>
