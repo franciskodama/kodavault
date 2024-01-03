@@ -3,18 +3,21 @@
 import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { toast } from 'sonner';
 
-import { addAsset } from '@/lib/actions';
+import { updateAsset } from '@/lib/actions';
 import { Button } from './ui/button';
-import { Inputs } from '@/lib/types';
+import { Asset, Inputs } from '@/lib/types';
 import { SheetClose } from './ui/sheet';
 
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from './ui/use-toast';
 
-export function AddAssetForm() {
+export function UpdateAssetForm({ asset }: { asset: Asset }) {
+  // ----------------------------------------------
+  console.log('---  🚀 ---> | asset:', asset);
+  // ----------------------------------------------
+
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
   const { user } = useUser();
@@ -30,14 +33,15 @@ export function AddAssetForm() {
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
-      asset: '',
-      qty: 0,
-      wallet: walletOptions[0],
-      type: '',
-      subtype: subtypeOptions[0],
-      currency: currencyOptions[0],
-      exchange: exchangeOptions[0],
-      account: accountOptions[0],
+      id: asset?.id,
+      asset: asset?.asset,
+      qty: asset?.qty,
+      wallet: asset?.wallet,
+      type: asset?.type,
+      subtype: asset?.subtype,
+      currency: asset?.currency,
+      exchange: asset?.exchange,
+      account: asset?.account,
       uid: uid,
     },
   });
@@ -57,28 +61,23 @@ export function AddAssetForm() {
       return console.log('User not logged in');
     }
 
-    const result = await addAsset({ ...data, uid: uid });
+    const result = await updateAsset({ ...data, uid: uid });
 
     if (result) {
       toast({
-        title: 'Asset added! 🎉',
-        description: 'Your new asset is already available.',
+        title: 'Asset Updated! 🎉',
+        description: 'Your Asset is already updated.',
       });
     } else {
       toast({
         title: '🚨 Uh oh! Something went wrong!',
-        description: 'Your asset was NOT added.',
+        description: 'Your Asset was NOT Updated.',
         variant: 'destructive',
       });
     }
 
     reset();
     setData(data);
-
-    // ---------------------------------------
-    // TODO: RELOAD IS GOOD BUT THE PAGE IS REFRESHING WITH BUG ON THE CONTEXT
-    // ---------------------------------------
-    // window.location.reload();
   };
 
   return (
@@ -119,7 +118,7 @@ export function AddAssetForm() {
             </label>
             <RadioGroup
               className='flex flex-wrap mt-1'
-              defaultValue={walletOptions[0]}
+              defaultValue={asset?.wallet}
             >
               {walletOptions.map((wallet) => (
                 <div key={wallet} className={classDivRadioGroup}>
@@ -160,7 +159,7 @@ export function AddAssetForm() {
             </label>
             <RadioGroup
               className='flex flex-wrap mt-1'
-              defaultValue={subtypeOptions[0]}
+              defaultValue={asset?.subtype}
             >
               {subtypeOptions.map((subtype) => (
                 <div key={subtype} className={classDivRadioGroup}>
@@ -187,7 +186,7 @@ export function AddAssetForm() {
             </label>
             <RadioGroup
               className='flex flex-wrap mt-1'
-              defaultValue={currencyOptions[0]}
+              defaultValue={asset?.currency}
             >
               {currencyOptions.map((currency) => (
                 <div key={currency} className={classDivRadioGroup}>
@@ -214,7 +213,7 @@ export function AddAssetForm() {
             </label>
             <RadioGroup
               className='flex flex-wrap mt-1'
-              defaultValue={accountOptions[0]}
+              defaultValue={asset?.account}
             >
               {accountOptions.map((account) => (
                 <div key={account} className={classDivRadioGroup}>
@@ -241,7 +240,7 @@ export function AddAssetForm() {
             </label>
             <RadioGroup
               className='flex flex-wrap mt-1'
-              defaultValue={exchangeOptions[0]}
+              defaultValue={asset?.exchange}
             >
               {exchangeOptions.map((exchange) => (
                 <div key={exchange} className={classDivRadioGroup}>
@@ -263,7 +262,7 @@ export function AddAssetForm() {
           </div>
 
           <Button className='mt-8' type='submit'>
-            Add Asset
+            Update Asset
           </Button>
 
           <SheetClose asChild>
