@@ -44,6 +44,7 @@ import { deleteAsset, updateAsset } from '@/lib/actions';
 import { UpdateAssetForm } from '@/components/UpdateAssetForm';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { toast } from '@/components/ui/use-toast';
 
 // const openDrawer = () => {
 //   const [ open, setOpen ] = useState(false)
@@ -195,7 +196,7 @@ export const columns: ColumnDef<Asset>[] = [
                       <span className='ml-2'>😳</span>
                     </AlertDialogTitle>
                     <AlertDialogDescription className='flex flex-col'>
-                      <span className='font-bold text-lg'>
+                      <span className='font-bold text-slate-600 text-lg'>
                         This action cannot be undone.
                       </span>
                       <div className='w-[450px] my-4'>
@@ -215,9 +216,27 @@ export const columns: ColumnDef<Asset>[] = [
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel
+                      onClick={() => {
+                        toast({
+                          title: 'Operation Cancelled! ❌',
+                          description: `Phew! 😮‍💨 Crisis averted. You successfully cancelled the operation.`,
+                          // variant: 'destructive',
+                        });
+                      }}
+                    >
+                      Cancel
+                    </AlertDialogCancel>
                     <AlertDialogAction
-                      onClick={() => asset && handleDeleteAsset(asset.id)}
+                      onClick={() => {
+                        if (asset) {
+                          handleDeleteAsset(asset.id);
+                          toast({
+                            title: 'Asset gone! 💀',
+                            description: `The Asset ${asset.asset} has been successfully deleted from ${asset.wallet}.`,
+                          });
+                        }
+                      }}
                     >
                       Continue
                     </AlertDialogAction>
