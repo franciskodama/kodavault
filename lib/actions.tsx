@@ -37,7 +37,6 @@ export async function addAsset(formData: Inputs) {
   } catch (error) {
     console.log(error);
     return false;
-    // throw new Error('🚨 Failed to create asset');
   }
 }
 

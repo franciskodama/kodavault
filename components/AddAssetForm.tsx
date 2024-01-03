@@ -66,7 +66,7 @@ export function AddAssetForm() {
       });
     } else {
       toast({
-        title: '🚨 Uh oh! Something went wrong!',
+        title: '👻 Boho! Error occurred!',
         description: 'Your asset was NOT added.',
         variant: 'destructive',
       });
