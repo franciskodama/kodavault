@@ -1,6 +1,6 @@
 'use client';
 
-import { currencyRates } from '@/lib/prices';
+// import { currencyRates } from '@/lib/prices';
 import { Asset } from '@/lib/types';
 import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
 import {
@@ -17,6 +17,13 @@ type totalArrayProps = {
   currency: string;
   value: number;
   emoji: string;
+};
+
+const currencyRates = {
+  quotes: {
+    USDCAD: 1.33,
+    USDBRL: 4.91,
+  },
 };
 
 export const CardTotalAllCurrency = ({

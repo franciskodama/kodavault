@@ -1,5 +1,3 @@
-'use client';
-
 import { Asset, AssetReducedWithAth } from '../../lib/types';
 import { CardTable } from './CardTable';
 import { hardcodedAthCoins } from '../../lib/data';
@@ -99,16 +97,16 @@ export default function CardAth({
 
   return (
     <>
-      {/* {sortedAthAssets.length > 0 && (
-        <div className='w-[55em]'>
+      {sortedAthAssets.length > 0 && (
+        <div className='w-[90em]'>
           <CardTable
             athAssets={sortedAthAssets}
             emoji={emoji}
             description={description}
           />
         </div>
-      )} */}
-      <div className='w-[90em] bg-accent border-2'></div>
+      )}
+      {/* <div className='w-[90em] bg-accent border-2'></div> */}
     </>
   );
 }
