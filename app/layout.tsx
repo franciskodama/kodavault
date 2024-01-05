@@ -6,8 +6,6 @@ import { neobrutalism } from '@clerk/themes';
 import './../components/ui/globals.css';
 import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
 
-import { AssetsProvider } from '@/context/AssetsContext';
-
 // See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 // export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
 // export const cairoPlay = Cairo_Play({ subsets: ['latin'], display: 'swap' });
@@ -52,9 +50,7 @@ export default function RootLayout({
           // className={`${inter.className} bg-[#FAFAFB] text-xs text-slate-600`}
           className={`bg-[#FAFAFB] text-xs text-slate-600`}
         >
-          <div className='max-w-[1400px] mx-auto'>
-            <AssetsProvider>{children}</AssetsProvider>
-          </div>
+          <div className='max-w-[1400px] mx-auto'>{children}</div>
         </body>
       </html>
     </ClerkProvider>
