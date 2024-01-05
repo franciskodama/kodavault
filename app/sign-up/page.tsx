@@ -1,5 +1,4 @@
-export default //  async
-function SignUpPage() {
+export default function SignUpPage() {
   return (
     <>
       <div>Sign Up</div>

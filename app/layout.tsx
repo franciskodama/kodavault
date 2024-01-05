@@ -53,9 +53,7 @@ export default function RootLayout({
           className={`bg-[#FAFAFB] text-xs text-slate-600`}
         >
           <div className='max-w-[1400px] mx-auto'>
-            {/* <AssetsProvider> */}
-            {children}
-            {/* </AssetsProvider> */}
+            <AssetsProvider>{children}</AssetsProvider>
           </div>
         </body>
       </html>
