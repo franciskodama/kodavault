@@ -12,10 +12,17 @@ import Notifications from './notifications/notifications';
 import CardAth from '@/components/CardAth';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { groupAssetsByType } from '@/lib/assets';
-import { currencyRates } from '@/lib/prices';
+// import { currencyRates } from '@/lib/prices';
 import { changeKeyForTitle, currencyFormatter } from '@/lib/utils';
 import { Asset } from '@/lib/types';
 import { Button } from '@/components/ui/button';
+
+const currencyRates = {
+  quotes: {
+    USDCAD: 1.33,
+    USDBRL: 4.91,
+  },
+};
 
 export default function Dashboard({ assets }: { assets: Asset[] }) {
   const { setAssets } = useContext(AssetsContext);
@@ -143,12 +150,12 @@ export default function Dashboard({ assets }: { assets: Asset[] }) {
                 customKey={'crypto'}
               /> */}
 
-          <div className='w-[90em]'>Hi</div>
-          {/* <CardAth
+          {/* <div className='w-[90em]'>Hi</div> */}
+          <CardAth
             emoji={'🔮'}
             description={'All-Time High Estimation'}
             assets={assetsByType.Crypto}
-          /> */}
+          />
         </div>
         {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
         <div className='flex flex-wrap gap'>

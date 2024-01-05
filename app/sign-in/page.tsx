@@ -1,6 +1,6 @@
 import { SignIn } from '@clerk/nextjs';
 
-export default async function SignInPage() {
+export default function SignInPage() {
   return (
     <>
       <div className='relative'>

@@ -172,8 +172,10 @@ export const columns: ColumnDef<Asset>[] = [
     cell: ({ row }) => {
       const asset = row.original;
 
-      const handleDeleteAsset = async (id: string) => {
-        await deleteAsset(id);
+      const handleDeleteAsset = (id: string) => {
+        // Back with async await?
+
+        deleteAsset(id);
 
         // ------------------------------------------------------------------------------
         // TODO: RELOAD IS GOOD BUT THE PAGE IS REFRESHING WITH BUG ON THE CONTEXT

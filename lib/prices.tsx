@@ -1,12 +1,15 @@
+'use server';
+
 import { getCryptos } from './crypto.server';
 import { getCurrency } from './currency.server';
 import { getStock } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
 
-export const currencyRates = {
+// export
+const currencyRates = {
   quotes: {
-    USDCAD: 1.32,
-    USDBRL: 4.84,
+    USDCAD: 1.33,
+    USDBRL: 4.91,
   },
 };
 

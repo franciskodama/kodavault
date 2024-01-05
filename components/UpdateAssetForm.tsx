@@ -12,6 +12,7 @@ import { SheetClose } from './ui/sheet';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from './ui/use-toast';
+import { revalidatePath } from 'next/cache';
 
 export function UpdateAssetForm({ asset }: { asset: Asset }) {
   // ----------------------------------------------
@@ -75,6 +76,8 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
         variant: 'destructive',
       });
     }
+
+    revalidatePath('/api/asset');
 
     reset();
     setData(data);
