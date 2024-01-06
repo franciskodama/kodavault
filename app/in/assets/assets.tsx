@@ -1,20 +1,22 @@
 'use client';
 
+import { Loading } from '@/components/Loading';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { useAssetsContext } from '@/context/AssetsContext';
 
 export default function Assets() {
-  const { assets } = useAssetsContext();
-  console.log('---  🚀 ---> | assets:', assets);
-
-  // const { user } = useUser();
-  // const uid = user?.emailAddresses?.[0]?.emailAddress;
-  // console.log('---  🚀 ---> | user:', user?.emailAddresses[0].emailAddress);
+  const { assets, isLoading } = useAssetsContext();
 
   return (
     <div className='mx-auto'>
-      <DataTable columns={columns} data={assets} />
+      {isLoading ? (
+        <div className='flex justify-center items-center h-[70em]'>
+          <Loading />
+        </div>
+      ) : (
+        <DataTable columns={columns} data={assets} />
+      )}
     </div>
   );
 }

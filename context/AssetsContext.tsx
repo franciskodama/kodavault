@@ -1,9 +1,12 @@
 'use client';
 
-import { Asset } from '@/lib/types';
-import { createContext, useContext, useState } from 'react';
+import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
+import { Asset, UnpricedAsset } from '@/lib/types';
+import { useAuth, useUser } from '@clerk/nextjs';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 type AssetsContext = {
+  isLoading: boolean;
   assets: Asset[];
   setAssets: React.Dispatch<React.SetStateAction<Asset[]>>;
 };
@@ -12,9 +15,38 @@ export const AssetsContext = createContext<AssetsContext | null>(null);
 
 export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const [assets, setAssets] = useState<Asset[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { user } = useUser();
+  const uid = user?.emailAddresses?.[0]?.emailAddress;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      let unpricedAssets: UnpricedAsset[] = [];
+      let pricedAssets: Asset[] = [];
+
+      try {
+        if (uid) {
+          unpricedAssets = await fetchAssets(uid);
+
+          if (unpricedAssets.length > 0) {
+            pricedAssets = await fetchAssetsWithPrices(unpricedAssets);
+          }
+        }
+        setAssets(pricedAssets);
+      } catch (error) {
+        console.error('Error loading assets:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [uid]);
 
   return (
-    <AssetsContext.Provider value={{ assets, setAssets }}>
+    <AssetsContext.Provider value={{ isLoading, assets, setAssets }}>
       <div>{children}</div>
     </AssetsContext.Provider>
   );
@@ -28,6 +60,7 @@ export function useAssetsContext() {
   }
   return context;
 }
+// const {isLoaded, userId} = useAuth()
 
 // const initialState: AssetsContext = {
 //   assets: [],
