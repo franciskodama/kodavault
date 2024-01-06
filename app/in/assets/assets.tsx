@@ -1,13 +1,12 @@
 'use client';
 
-import { useContext } from 'react';
-
 import { columns } from './columns';
 import { DataTable } from './data-table';
-import { AssetsContext } from '@/context/AssetsContext';
+import { useAssetsContext } from '@/context/AssetsContext';
 
 export default function Assets() {
-  const { assets } = useContext(AssetsContext);
+  const { assets } = useAssetsContext();
+  console.log('---  🚀 ---> | assets:', assets);
 
   // const { user } = useUser();
   // const uid = user?.emailAddresses?.[0]?.emailAddress;
