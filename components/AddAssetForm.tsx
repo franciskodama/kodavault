@@ -72,11 +72,9 @@ export function AddAssetForm() {
         variant: 'destructive',
       });
     }
-    revalidatePath('/api/asset');
 
     reset();
     setData(data);
-
     // ---------------------------------------
     // TODO: RELOAD IS GOOD BUT THE PAGE IS REFRESHING WITH BUG ON THE CONTEXT
     // ---------------------------------------

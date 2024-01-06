@@ -3,6 +3,7 @@
 import { uuid } from 'uuidv4';
 import prisma from './prisma';
 import { Inputs } from './types';
+import { revalidatePath } from 'next/cache';
 
 export async function addAsset(formData: Inputs) {
   const {
@@ -77,7 +78,6 @@ export async function updateAsset(formData: Inputs) {
   } catch (error) {
     console.log(error);
     return false;
-    // throw new Error('🚨 Failed to create asset');
   }
 }
 
@@ -88,6 +88,8 @@ export async function deleteAsset(id: string) {
         id,
       },
     });
+
+    revalidatePath('/in/assets');
   } catch (error) {
     console.log(error);
     throw new Error('🚨 Failed to delete asset');

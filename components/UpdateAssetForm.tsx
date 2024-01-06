@@ -77,8 +77,6 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       });
     }
 
-    revalidatePath('/api/asset');
-
     reset();
     setData(data);
   };
