@@ -11,6 +11,7 @@ export default function Home() {
           width={1000}
           height={800}
           alt='Logo Koda Vault'
+          priority={true}
           className='rounded-md object-cover'
         />
       </div>

@@ -102,7 +102,7 @@ export default function Dashboard({
               />
             </div>
             <Transactions />
-            <Chart />
+            {/* <Chart /> */}
           </div>
           {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
           <div className='flex flex-col basis-1/5'>

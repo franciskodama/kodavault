@@ -28,7 +28,6 @@ export default function RootLayout({
       afterSignUpUrl='/'
       appearance={{
         elements: {
-          // rootBox: '',
           logoBox: 'hidden',
           socialButtonsBlockButton: 'rounded-sm border border-primary',
           card: 'bg-[#FAFAFB] border-0 drop-shadow-none shadow-none',
@@ -48,7 +47,7 @@ export default function RootLayout({
       <html lang='en'>
         <body
           // className={`${inter.className} bg-[#FAFAFB] text-xs text-slate-600`}
-          className={`bg-[#FAFAFB] text-xs text-slate-600`}
+          className='bg-[#FAFAFB] text-xs text-slate-600'
         >
           <div className='max-w-[1400px] mx-auto'>{children}</div>
         </body>

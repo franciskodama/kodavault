@@ -19,7 +19,7 @@ export default function Header() {
           alt='Logo Koda Vault'
           width={100}
           height={100}
-          className='rounded-md object-cover'
+          className='h-auto w-auto'
         />
       </Link>
       <div className='flex items-center gap-20'>
