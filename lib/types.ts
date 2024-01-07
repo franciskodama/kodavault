@@ -20,6 +20,10 @@ export type Asset =
       ath?: number;
     });
 
+export type AssetsByType = {
+  [key: string]: Asset[];
+};
+
 export type AssetForAth = {
   id: string;
   account: string;

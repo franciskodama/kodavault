@@ -1,9 +1,5 @@
 'use client';
 
-import { useContext, useEffect } from 'react';
-
-import { AssetsContext } from '@/context/AssetsContext';
-import { getAllTimeHighData } from '@/lib/crypto.server';
 import { CardTotal } from '@/components/CardTotal';
 import Transactions from './transactions/transactions';
 import Chart from './chart/chart';
@@ -11,11 +7,9 @@ import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
 import CardAth from '@/components/CardAth';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
-import { groupAssetsByType } from '@/lib/assets';
-// import { currencyRates } from '@/lib/prices';
 import { changeKeyForTitle, currencyFormatter } from '@/lib/utils';
-import { Asset } from '@/lib/types';
-import { Button } from '@/components/ui/button';
+import { Asset, AssetsByType } from '@/lib/types';
+// import { currencyRates } from '@/lib/prices';
 
 const currencyRates = {
   quotes: {
@@ -24,21 +18,21 @@ const currencyRates = {
   },
 };
 
-export default function Dashboard({ assets }: { assets: Asset[] }) {
-  const { setAssets } = useContext(AssetsContext);
+export default function Dashboard({
+  assets,
+  assetsByType,
+}: {
+  assets: Asset[];
+  assetsByType: AssetsByType;
+}) {
+  console.log('---  🚀 ---> | assetsByType:', assetsByType);
 
-  useEffect(() => {
-    setAssets(assets);
-  }, [assets, setAssets]);
-
-  const assetsByType = groupAssetsByType(assets);
   const cryptoAssets = changeKeyForTitle(assetsByType.Crypto, 'crypto');
   const stocksAssets = changeKeyForTitle(assetsByType.Stock, 'stock');
   const cashAssets = changeKeyForTitle(assetsByType.Cash, 'cash');
 
   // ------------------------------------------------------------------------
   // const athCoins = await getAllTimeHighData();
-  // console.log('---  🚀 ---> | athCoins  :', athCoins);
   // ------------------------------------------------------------------------
 
   return (
@@ -140,7 +134,7 @@ export default function Dashboard({ assets }: { assets: Asset[] }) {
           <CardTotal
             emoji={'🪙'}
             description={'Total value grouped by crypto'}
-            assets={changeKeyForTitle(assetsByType.Crypto, 'crypto')}
+            assets={cryptoAssets}
             customKey={'crypto'}
           />
           {/* <CardTotalByCrypto
@@ -158,15 +152,18 @@ export default function Dashboard({ assets }: { assets: Asset[] }) {
           />
         </div>
         {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
-        <div className='flex flex-wrap gap'>
-          <CardTotal
-            emoji={'🔖'}
-            description={'Total value grouped by stocks'}
-            assets={stocksAssets}
-            customKey={'stock'}
-          />
-          <CardNextPurchases />
-        </div>
+
+        {stocksAssets.length > 0 && (
+          <div className='flex flex-wrap gap'>
+            <CardTotal
+              emoji={'🔖'}
+              description={'Total value grouped by stocks'}
+              assets={stocksAssets}
+              customKey={'stock'}
+            />
+            <CardNextPurchases />
+          </div>
+        )}
       </div>
     </>
   );

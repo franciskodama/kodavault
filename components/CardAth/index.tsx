@@ -6,6 +6,7 @@ import {
   numberFormatter,
   numberFormatterNoDecimals,
 } from '../../lib/utils';
+import { Loading } from '../Loading';
 
 export default function CardAth({
   assets,
@@ -20,6 +21,10 @@ export default function CardAth({
   let sumQtyOfSameAssets: Asset[] = [];
   let athAssets: AssetReducedWithAth[] = [];
   let sortedAthAssets: AssetReducedWithAth[] = [];
+
+  if (!assets) {
+    return <Loading />;
+  }
 
   // const onlyCryptoAssets = assets.filter((item: any) => item.type === 'Crypto');
 

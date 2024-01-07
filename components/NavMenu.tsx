@@ -22,66 +22,64 @@ export default function NavMenu() {
       <hr className='my-4' />
       <ul className='flex items-center text-sm gap-4'>
         <Link href='/in/dashboard'>
-          <Button
-            variant={pathname === '/in/dashboard' ? 'default' : 'ghost'}
-            size='md'
-          >
-            <li>Dashboard</li>
-          </Button>
+          <li>
+            <Button
+              variant={pathname === '/in/dashboard' ? 'default' : 'ghost'}
+              // size='md'
+            >
+              Dashboard
+            </Button>
+          </li>
         </Link>
 
         <Link href='/in/assets'>
-          <Button
-            variant={pathname === '/in/assets' ? 'default' : 'ghost'}
-            size='md'
-          >
-            <li>Assets</li>
-          </Button>
+          <li>
+            <Button variant={pathname === '/in/assets' ? 'default' : 'ghost'}>
+              Assets
+            </Button>
+          </li>
         </Link>
 
         <Link href='/in/cryptos'>
-          <Button
-            variant={pathname === '/in/cryptos' ? 'default' : 'ghost'}
-            size='md'
-          >
-            <li>Cryptos</li>
-          </Button>
+          <li>
+            <Button variant={pathname === '/in/cryptos' ? 'default' : 'ghost'}>
+              Cryptos
+            </Button>
+          </li>
         </Link>
 
         <Link href='/in/stocks'>
-          <Button
-            variant={pathname === '/in/stocks' ? 'default' : 'ghost'}
-            size='md'
-          >
-            <li>Stocks</li>
-          </Button>
+          <li>
+            <Button variant={pathname === '/in/stocks' ? 'default' : 'ghost'}>
+              Stocks
+            </Button>
+          </li>
         </Link>
 
         <Link href='/in/retirement'>
-          <Button
-            variant={pathname === '/in/retirement' ? 'default' : 'ghost'}
-            size='md'
-          >
-            <li>Goal</li>
-          </Button>
+          <li>
+            <Button
+              variant={pathname === '/in/retirement' ? 'default' : 'ghost'}
+            >
+              Goal
+            </Button>
+          </li>
         </Link>
 
-        <Sheet>
-          <SheetTrigger>
-            <Button size='md' variant='outline' className='ml-12'>
-              + Asset
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Add a new Asset</SheetTitle>
-              <SheetDescription>
-                Add a New Asset and expand your investment portfolio.
-              </SheetDescription>
-            </SheetHeader>
-            <AddAssetForm />
-          </SheetContent>
-        </Sheet>
+        <li>
+          <Sheet>
+            <SheetTrigger className='ml-12 border-2'>+ Asset</SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>Add a new Asset</SheetTitle>
+                <SheetDescription>
+                  Add a New Asset and expand your investment portfolio.
+                </SheetDescription>
+              </SheetHeader>
+              <AddAssetForm />
+            </SheetContent>
+          </Sheet>
+        </li>
       </ul>
     </>
   );
