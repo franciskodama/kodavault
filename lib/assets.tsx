@@ -1,3 +1,5 @@
+'use server';
+
 import { getAssets } from './assets.server';
 import {
   includePriceToCashAssets,

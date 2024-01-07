@@ -1,10 +1,13 @@
 import { currentUser } from '@clerk/nextjs';
 
-import { Asset, UnpricedAsset } from '../../../lib/types';
-import { fetchAssets, fetchAssetsWithPrices } from '../../../lib/assets';
-import NoAssets from '@/components/NoAssets';
+import { Asset, AssetsByType, UnpricedAsset } from '../../../lib/types';
+import {
+  fetchAssets,
+  fetchAssetsWithPrices,
+  groupAssetsByType,
+} from '../../../lib/assets';
 import Dashboard from './dashboard';
-import { Loading } from '@/components/Loading';
+import NoAssets from '@/components/NoAssets';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -18,6 +21,7 @@ export default async function DashboardPage() {
 
   let unpricedAssets: UnpricedAsset[] = [];
   let assets: Asset[] = [];
+  let assetsByType: AssetsByType = {};
 
   try {
     if (uid) {
@@ -26,38 +30,20 @@ export default async function DashboardPage() {
 
     if (unpricedAssets.length > 0) {
       assets = await fetchAssetsWithPrices(unpricedAssets);
+      assetsByType = groupAssetsByType(assets);
     }
   } catch (error) {
     console.error(error);
-    throw new Error("Assets couldn't be loaded");
+    throw new Error("Assets couldn't be fetched! 👻");
   }
 
   return (
     <>
-      {!assets ? (
-        <Loading className='h-5 w-5 mr-1' />
+      {assets && assetsByType ? (
+        <Dashboard assets={assets} assetsByType={assetsByType} />
       ) : (
-        <Dashboard assets={assets} />
+        <NoAssets />
       )}
     </>
   );
 }
-
-// try {
-//   let unpricedAssets: UnpricedAsset[] = [];
-
-//   if (uid) {
-//     unpricedAssets = await fetchAssets(uid);
-//   }
-
-//   if (unpricedAssets.length > 0) {
-//     const assets = await fetchAssetsWithPrices(unpricedAssets);
-
-//     return <Dashboard assets={assets} />;
-//   } else {
-//     return <NoAssets />;
-//   }
-// } catch (error) {
-//   console.error(error);
-//   return <div className='my-32'>🚨 Error loading assets</div>;
-// }
