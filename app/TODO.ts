@@ -7,12 +7,14 @@
 // TODO: Dinamically generate the fields depend on the type of asset
 // TODO: Wealthsimple is only 10000 USD? Why?
 
+// SMALL PRIORITIES:
+// TODO: Avatar Dropdown Style (no border is weird)
+// TODO: Button Styles
+
 // PRIORITIES 2:
 // TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
 // TODO: Test No Assets Page, then test it including one Asset in the database
 // TODO: Resources Page (?):Card with link for the image of the cycle of the market (already in the public folder)
-// TODO: Button Styles
-// TODO:
 
 // FUTURE:
 // TODO: https://css-generators.com/ribbon-shapes/
