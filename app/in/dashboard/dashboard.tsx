@@ -9,13 +9,12 @@ import CardAth from '@/components/CardAth';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { changeKeyForTitle, currencyFormatter } from '@/lib/utils';
 import { Asset, AssetsByType } from '@/lib/types';
-import { CardTotalByCrypto } from '@/components/CardTotalByCrypto';
 // import { currencyRates } from '@/lib/prices';
 
 const currencyRates = {
   quotes: {
-    USDCAD: 1.33,
-    USDBRL: 4.91,
+    USDCAD: 1.34,
+    USDBRL: 4.87,
   },
 };
 
@@ -48,7 +47,6 @@ export default function Dashboard({
                 >
                   <span>🇨🇦</span>
                 </a>
-
                 {` CAD: ${currencyFormatter(currencyRates.quotes.USDCAD)}`}
               </div>
               <div className='ml-4'>
@@ -58,7 +56,6 @@ export default function Dashboard({
                 >
                   <span>🇧🇷</span>
                 </a>
-
                 {` BRL: ${currencyFormatter(currencyRates.quotes.USDBRL)}`}
               </div>
             </div>
@@ -102,7 +99,7 @@ export default function Dashboard({
                 />
               </div>
               <Transactions />
-              {/* <Chart /> */}
+              <Chart />
             </div>
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
             <div className='flex flex-col basis-1/5'>
@@ -134,7 +131,7 @@ export default function Dashboard({
             <CardTotal
               emoji={'🪙'}
               description={'Total value grouped by crypto'}
-              assets={changeKeyForTitle(assetsByType.Crypto, 'crypto')}
+              assets={cryptoAssets}
               customKey={'crypto'}
             />
             {/* <CardTotalByCrypto

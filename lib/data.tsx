@@ -28,6 +28,7 @@ export const hardcodedAthCoins = [
   { symbol: 'SOL', ath: 260.06 },
   { symbol: 'APE', ath: 39.4 },
   { symbol: 'ENJ', ath: 4.85 },
+  { symbol: 'OCEAN', ath: 1.94 },
   { symbol: 'SAND', ath: 8.44 },
   { symbol: 'ETH', ath: 4878.26 },
   { symbol: 'USDT', ath: 1.32 },
