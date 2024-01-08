@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { toast } from 'sonner';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { addAsset } from '@/lib/actions';
 import { Button } from './ui/button';
@@ -13,7 +12,6 @@ import { SheetClose } from './ui/sheet';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from './ui/use-toast';
-import { revalidatePath } from 'next/cache';
 
 export function AddAssetForm() {
   const [data, setData] = useState<Inputs>();
@@ -75,10 +73,8 @@ export function AddAssetForm() {
 
     reset();
     setData(data);
-    // ---------------------------------------
-    // TODO: RELOAD IS GOOD BUT THE PAGE IS REFRESHING WITH BUG ON THE CONTEXT
-    // ---------------------------------------
-    // window.location.reload();
+
+    window.location.reload();
   };
 
   return (

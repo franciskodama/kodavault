@@ -15,10 +15,6 @@ import { useToast } from './ui/use-toast';
 import { revalidatePath } from 'next/cache';
 
 export function UpdateAssetForm({ asset }: { asset: Asset }) {
-  // ----------------------------------------------
-  console.log('---  🚀 ---> | asset:', asset);
-  // ----------------------------------------------
-
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
   const { user } = useUser();
@@ -27,10 +23,10 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
@@ -79,6 +75,8 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
 
     reset();
     setData(data);
+
+    window.location.reload();
   };
 
   return (

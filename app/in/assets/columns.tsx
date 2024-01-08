@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import {
   DropdownMenu,
@@ -30,28 +29,16 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 
-import {
-  ArrowUpDown,
-  MoreHorizontalIcon,
-  PencilIcon,
-  Trash2Icon,
-} from 'lucide-react';
+import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { tableHeaderClass } from '@/lib/classes';
 import { Asset } from '@/lib/types';
-import { deleteAsset, updateAsset } from '@/lib/actions';
+import { deleteAsset } from '@/lib/actions';
 import { UpdateAssetForm } from '@/components/UpdateAssetForm';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
-
-// const openDrawer = () => {
-//   const [ open, setOpen ] = useState(false)
-
-//   return
-
-// }
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -172,15 +159,10 @@ export const columns: ColumnDef<Asset>[] = [
     cell: ({ row }) => {
       const asset = row.original;
 
-      const handleDeleteAsset = (id: string) => {
-        // Back with async await?
+      const handleDeleteAsset = async (id: string) => {
+        await deleteAsset(id);
 
-        deleteAsset(id);
-
-        // ------------------------------------------------------------------------------
-        // TODO: RELOAD IS GOOD BUT THE PAGE IS REFRESHING WITH BUG ON THE CONTEXT
-        // ------------------------------------------------------------------------------
-        // window.location.reload();
+        window.location.reload();
       };
 
       return (
@@ -223,7 +205,7 @@ export const columns: ColumnDef<Asset>[] = [
                         toast({
                           title: 'Operation Cancelled! ❌',
                           description: `Phew! 😮‍💨 Crisis averted. You successfully cancelled the operation.`,
-                          // variant: 'destructive',
+                          variant: 'destructive',
                         });
                       }}
                     >
@@ -267,17 +249,3 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
 ];
-
-// <Trash2Icon
-// size={18}
-// strokeWidth={1.4}
-// // className='hover:border hover:border-dashed hover:border-slate-500 hover:rounded-full hover:text-slate-500'
-// className='flex justify-center mx-auto ml-4 hover:w-8 w-12'
-// />
-// 🗑️
-
-// <PencilIcon
-// size={18}
-// strokeWidth={1.4}
-// className='hover:border hover:border-dashed hover:border-slate-500 hover:rounded-full hover:text-slate-500'
-// />
