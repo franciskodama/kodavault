@@ -58,6 +58,7 @@ type ResultProps = {
 export const getTotalByKey = (assets: any[], key: string): ResultProps[] => {
   const groupedData: { [key: string]: number } = {};
 
+  // TODO: Delete the result variable declaraion? Do we need it if we return the acc?
   const result: ResultProps[] = assets.reduce((acc, item) => {
     const keyValue = item[key];
 
