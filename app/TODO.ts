@@ -1,7 +1,7 @@
 // Prompt AI: I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
 // PRIORITIES 1:
-// TODO: Input, Edit, Delete, new Asset
+// TODO: Input, Edit, Delete, new Asset: fix bugs
 // TODO: Create the Crypto column of how much in percentage we want of each Asset and show how much is missing or over the limit
 // TODO: Have validation on the Forms
 // TODO: Dinamically generate the fields depend on the type of asset

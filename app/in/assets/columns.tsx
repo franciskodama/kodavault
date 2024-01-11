@@ -39,6 +39,7 @@ import { UpdateAssetForm } from '@/components/UpdateAssetForm';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
+import { revalidatePath } from 'next/cache';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -161,8 +162,8 @@ export const columns: ColumnDef<Asset>[] = [
 
       const handleDeleteAsset = async (id: string) => {
         await deleteAsset(id);
-
-        window.location.reload();
+        revalidatePath('/in/assets');
+        // window.location.reload();
       };
 
       return (
