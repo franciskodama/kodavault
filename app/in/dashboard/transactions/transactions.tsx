@@ -15,7 +15,7 @@ export default function Transactions() {
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
               <span>{`Latest Transactions`}</span>
-              <span className='text-3xl'>💸🏦</span>
+              <span className='text-3xl'>💸</span>
             </CardTitle>
             <CardDescription className='text-xs'>
               What have you been doing

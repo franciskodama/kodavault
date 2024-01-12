@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { z } from 'zod';
 
 import { addAsset } from '@/lib/actions';
 import { Button } from './ui/button';
@@ -12,7 +13,22 @@ import { SheetClose } from './ui/sheet';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from './ui/use-toast';
-import { revalidatePath } from 'next/cache';
+import { FormControl, FormField, FormItem, FormLabel } from './ui/form';
+
+const AssetSchema = z.object({
+  account: z.string(),
+  asset: z.string().min(1).max(10),
+  qty: z.number().min(1).max(10),
+  wallet: z.string().min(1).max(15),
+  type: z.string(),
+  subtype: z.string(),
+  currency: z.string(),
+  uid: z.string().email(),
+  exchange: z.string(),
+  price: z.number().optional(),
+  total: z.number().optional(),
+  ath: z.number().optional(),
+});
 
 export function AddAssetForm() {
   const [data, setData] = useState<Inputs>();
@@ -27,20 +43,22 @@ export function AddAssetForm() {
     reset,
     control,
     setValue,
+    getValues,
     formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: {
-      asset: '',
-      qty: 0,
-      wallet: walletOptions[0],
-      type: '',
-      subtype: subtypeOptions[0],
-      currency: currencyOptions[0],
-      exchange: exchangeOptions[0],
-      account: accountOptions[0],
-      uid: uid,
-    },
-  });
+  } = useForm<Inputs>();
+  // {
+  //   defaultValues: {
+  //     asset: '',
+  //     qty: 0,
+  //     wallet: walletOptions[0],
+  //     type: '',
+  //     subtype: subtypeOptions[1],
+  //     currency: currencyOptions[1],
+  //     exchange: exchangeOptions[0],
+  //     account: accountOptions[0],
+  //     uid: uid,
+  //   },
+  // }
 
   const classDiv = 'my-4';
   const classLabel = 'font-bold';
@@ -150,33 +168,43 @@ export function AddAssetForm() {
               <p className={classError}>{errors.type.message}</p>
             )}
           </div>
+          {/* ======================================================= */}
 
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='subtype'>
-              Subtype
-            </label>
-            <RadioGroup
-              className='flex flex-wrap mt-1'
-              defaultValue={subtypeOptions[0]}
-            >
-              {subtypeOptions.map((subtype) => (
-                <div key={subtype} className={classDivRadioGroup}>
-                  <RadioGroupItem
-                    className={classRadioItem}
-                    value={subtype}
-                    id={subtype}
-                    {...register('subtype')}
-                  />
-                  <Label className={classLabelRadio} htmlFor={subtype}>
-                    {subtype}
-                  </Label>
-                  {errors.subtype?.message && (
-                    <p className={classError}>{errors.subtype.message}</p>
-                  )}
-                </div>
-              ))}
+            <RadioGroup className='flex flex-wrap mt-1' defaultValue='test'>
+              <RadioGroupItem className={classRadioItem} value='AAA' id='r1' />
+              <Label className={classLabelRadio} htmlFor='r1'>
+                AAA
+              </Label>
+              <RadioGroupItem className={classRadioItem} value='BBB' id='r2' />
+              <Label className={classLabelRadio} htmlFor='r2'>
+                BBB
+              </Label>
+              <RadioGroupItem className={classRadioItem} value='CCC' id='r3' />
+              <Label className={classLabelRadio} htmlFor='r3'>
+                CCC
+              </Label>
+              {/* {subtypeOptions.map((subtypeOption) => (
+                        <div key={subtypeOption} className={classDivRadioGroup}>
+                          <RadioGroupItem
+                            className={classRadioItem}
+                            // {...register('subtype')}
+                            // id={subtypeOption}
+                            {...field}
+                          >
+                            <Label
+                              className={classLabelRadio}
+                              htmlFor={subtypeOption}
+                            >
+                              {subtypeOption}
+                            </Label>
+                          </RadioGroupItem>
+                        </div>
+                      ))} */}
             </RadioGroup>
           </div>
+
+          {/* ======================================================= */}
 
           <div className={classDiv}>
             <label className={classLabel} htmlFor='currency'>
@@ -298,3 +326,92 @@ const typeOptions = ['Stock', 'Altcoin', 'Crypto'];
 const currencyOptions = ['USD', 'CAD', 'BRL'];
 const accountOptions = ['Investment', 'cc-TFSA', 'cc-FHSA'];
 const exchangeOptions = ['N/A', 'TO', 'V', 'SA', 'NASDAQ'];
+
+{
+  /* <Controller
+name='subtype'
+control={control}
+render={({ field }) => (
+  <RadioGroup className='flex flex-wrap mt-1'>
+    <RadioGroupItem className={classRadioItem} {...field} />
+    <Label htmlFor={subtype}>{subtype}</Label>
+    {subtypeOptions.map((subtype) => (
+      <div key={subtype} className={classDivRadioGroup}>
+        <RadioGroupItem
+          className={classRadioItem}
+          id={subtype}
+          {...field}
+        />
+        <Label htmlFor={subtype}>{subtype}</Label>
+        {errors.subtype?.message && (
+          <p className={classError}>{errors.subtype.message}</p>
+        )}
+      </div>
+    ))}
+  </RadioGroup>
+)}
+/> */
+}
+
+// {subtypeOptions.map((subtypeOption) => (
+//   <div key={subtypeOption} className={classDivRadioGroup}>
+//     <RadioGroupItem
+//       className={classRadioItem}
+//       value={subtypeOption}
+//       id={subtypeOption}
+//       {...register('subtype')}
+//     />
+//     <Label className={classLabelRadio} htmlFor={subtypeOption}>
+//       {subtypeOption}
+//     </Label>
+//     {errors.subtype?.message && (
+//       <p className={classError}>{errors.subtype.message}</p>
+//     )}
+//   </div>
+// ))}
+
+// <RadioGroupItem
+// className={classRadioItem}
+// value='BTC'
+// id='BTC'
+// {...register('subtype')}
+// />
+// <Label className={classLabelRadio} htmlFor='BTC'>
+// BTC
+// </Label>
+// <RadioGroupItem
+// className={classRadioItem}
+// value='AAA'
+// id='AAA'
+// {...register('subtype')}
+// />
+// <Label className={classLabelRadio} htmlFor='AAA'>
+// AAA
+// </Label>
+
+// <RadioGroupItem
+// className={classRadioItem}
+// value='BBB'
+// id='BBB'
+// {...register('subtype')}
+// />
+// <Label className={classLabelRadio} htmlFor='BBB'>
+// BBB
+// </Label>
+
+{
+  /* <Controller
+              name='subtype'
+              control={control}
+              render={({ field }) => (
+                <RadioGroup className='flex flex-wrap mt-1'>
+                  <Label className={classLabelRadio} htmlFor='AAA'>
+                    <RadioGroupItem id='AAA' {...field} />
+                    AAA
+                  </Label>
+
+                  <RadioGroupItem id='BBB' {...field} />
+                  <Label className={classLabelRadio} htmlFor='BBB'>
+                    BBB
+                  </Label> */
+}
