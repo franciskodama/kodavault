@@ -61,7 +61,7 @@ export function AddAssetForm() {
   // }
 
   const classDiv = 'my-4';
-  const classLabel = 'font-bold';
+  const classTitle = 'font-bold';
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
   const classError = 'text-red-500 font-bold my-2';
   const classDivRadioGroup =
@@ -101,7 +101,7 @@ export function AddAssetForm() {
       <form onSubmit={handleSubmit(processForm)}>
         <div className='flex flex-col mt-6'>
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='asset'>
+            <label className={classTitle} htmlFor='asset'>
               Asset
             </label>
             <input
@@ -115,7 +115,7 @@ export function AddAssetForm() {
           </div>
 
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='qty'>
+            <label className={classTitle} htmlFor='qty'>
               Quantity
             </label>
             <input
@@ -129,7 +129,7 @@ export function AddAssetForm() {
           </div>
 
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='wallet'>
+            <label className={classTitle} htmlFor='wallet'>
               Wallet
             </label>
             <RadioGroup
@@ -156,7 +156,7 @@ export function AddAssetForm() {
           </div>
 
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='type'>
+            <label className={classTitle} htmlFor='type'>
               Type
             </label>
             <input
@@ -170,44 +170,33 @@ export function AddAssetForm() {
           </div>
           {/* ======================================================= */}
 
-          <div className={classDiv}>
-            <RadioGroup className='flex flex-wrap mt-1' defaultValue='test'>
-              <RadioGroupItem className={classRadioItem} value='AAA' id='r1' />
-              <Label className={classLabelRadio} htmlFor='r1'>
-                AAA
-              </Label>
-              <RadioGroupItem className={classRadioItem} value='BBB' id='r2' />
-              <Label className={classLabelRadio} htmlFor='r2'>
-                BBB
-              </Label>
-              <RadioGroupItem className={classRadioItem} value='CCC' id='r3' />
-              <Label className={classLabelRadio} htmlFor='r3'>
-                CCC
-              </Label>
-              {/* {subtypeOptions.map((subtypeOption) => (
-                        <div key={subtypeOption} className={classDivRadioGroup}>
-                          <RadioGroupItem
-                            className={classRadioItem}
-                            // {...register('subtype')}
-                            // id={subtypeOption}
-                            {...field}
-                          >
-                            <Label
-                              className={classLabelRadio}
-                              htmlFor={subtypeOption}
-                            >
-                              {subtypeOption}
-                            </Label>
-                          </RadioGroupItem>
-                        </div>
-                      ))} */}
-            </RadioGroup>
+          <div className='border-2 border-red-500'>
+            <h3 className={classTitle}>Subtype</h3>
+            <ul className='flex w-full gap-2'>
+              {subtypeOptions.map((subtypeOption) => (
+                <li key={subtypeOption}>
+                  <input
+                    className='hidden peer'
+                    type='radio'
+                    value={subtypeOption}
+                    id={subtypeOption}
+                    {...register('subtype')}
+                  />
+                  <label
+                    className='inline-flex items-center justify-between w-[8em] h-[2.5em] text-gray-500 text-center border-2 rounded-[2px] border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-slate-500 peer-checked:text-slate-500 peer-checked:bg-accent hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700'
+                    htmlFor={subtypeOption}
+                  >
+                    <span className='text-xs text-center'>{subtypeOption}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* ======================================================= */}
 
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='currency'>
+            <label className={classTitle} htmlFor='currency'>
               Currency
             </label>
             <RadioGroup
@@ -234,7 +223,7 @@ export function AddAssetForm() {
           </div>
 
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='account'>
+            <label className={classTitle} htmlFor='account'>
               Account
             </label>
             <RadioGroup
@@ -261,7 +250,7 @@ export function AddAssetForm() {
           </div>
 
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='exchange'>
+            <label className={classTitle} htmlFor='exchange'>
               Exchange
             </label>
             <RadioGroup
