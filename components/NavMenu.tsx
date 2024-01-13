@@ -20,12 +20,12 @@ export default function NavMenu() {
   return (
     <>
       <hr className='my-4' />
-      <ul className='flex items-center text-sm gap-4'>
+      <ul className='flex items-center text-sm gap-2'>
         <Link href='/in/dashboard'>
           <li>
             <Button
               variant={pathname === '/in/dashboard' ? 'default' : 'ghost'}
-              // size='md'
+              size='md'
             >
               Dashboard
             </Button>
@@ -34,7 +34,10 @@ export default function NavMenu() {
 
         <Link href='/in/assets'>
           <li>
-            <Button variant={pathname === '/in/assets' ? 'default' : 'ghost'}>
+            <Button
+              variant={pathname === '/in/assets' ? 'default' : 'ghost'}
+              size='md'
+            >
               Assets
             </Button>
           </li>
@@ -42,7 +45,10 @@ export default function NavMenu() {
 
         <Link href='/in/cryptos'>
           <li>
-            <Button variant={pathname === '/in/cryptos' ? 'default' : 'ghost'}>
+            <Button
+              variant={pathname === '/in/cryptos' ? 'default' : 'ghost'}
+              size='md'
+            >
               Cryptos
             </Button>
           </li>
@@ -50,7 +56,10 @@ export default function NavMenu() {
 
         <Link href='/in/stocks'>
           <li>
-            <Button variant={pathname === '/in/stocks' ? 'default' : 'ghost'}>
+            <Button
+              variant={pathname === '/in/stocks' ? 'default' : 'ghost'}
+              size='md'
+            >
               Stocks
             </Button>
           </li>
@@ -60,6 +69,7 @@ export default function NavMenu() {
           <li>
             <Button
               variant={pathname === '/in/retirement' ? 'default' : 'ghost'}
+              size='md'
             >
               Goal
             </Button>
@@ -68,7 +78,9 @@ export default function NavMenu() {
 
         <li>
           <Sheet>
-            <SheetTrigger className='ml-12 border-2'>+ Asset</SheetTrigger>
+            <SheetTrigger className='ml-12 border-2 border-slate-500 h-8 px-4 rounded-[2px] font-medium'>
+              + Asset
+            </SheetTrigger>
             <SheetContent>
               <SheetHeader>
                 <SheetTitle>Add a new Asset</SheetTitle>

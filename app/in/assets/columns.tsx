@@ -39,6 +39,7 @@ import { UpdateAssetForm } from '@/components/UpdateAssetForm';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
+import { revalidatePath } from 'next/cache';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -161,7 +162,6 @@ export const columns: ColumnDef<Asset>[] = [
 
       const handleDeleteAsset = async (id: string) => {
         await deleteAsset(id);
-
         window.location.reload();
       };
 
@@ -170,32 +170,53 @@ export const columns: ColumnDef<Asset>[] = [
           {asset && (
             <div className='flex items-center text-xl'>
               <AlertDialog>
-                <AlertDialogTrigger className='ml-4 hover:text-base w-12'>
+                <AlertDialogTrigger className='ml-4 hover:text-base w-12 border border-slate-500 bg-primary rounded-[2px]'>
                   💀
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle className='text-2xl'>
-                      Are you absolutely sure?
-                      <span className='ml-2'>😳</span>
-                    </AlertDialogTitle>
-                    <AlertDialogDescription className='flex flex-col'>
-                      <span className='font-bold text-slate-600 text-lg'>
-                        This action cannot be undone.
-                      </span>
-                      <div className='w-[450px] my-4'>
-                        <AspectRatio ratio={16 / 12} className='bg-muted'>
+                    <AlertDialogTitle className='text-center text-2xl my-4'>
+                      Are you fucking sure?
+                      <br />
+                      <div className='w-[450px] mt-8 mx-auto'>
+                        <AspectRatio ratio={16 / 16} className='bg-white'>
                           <Image
                             src='/are-you-sure.gif'
                             alt='Britney in doubt'
                             fill
-                            className='rounded-[2px] object-cover'
+                            className='object-cover rounded-full border-[8px] border-primary '
+                            objectPosition='center 25%'
                           />
                         </AspectRatio>
                       </div>
-                      <span className='mb-4'>
-                        This will permanently delete this Asset from our
-                        servers.
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className='flex flex-col'>
+                      <span className='text-base text-center text-slate-600 mb-4'>
+                        Prepare for turbulence! 🌪️
+                        <br />
+                        You are about to delete the Asset below:
+                      </span>
+
+                      <div className='flex py-4 px-16 justify-between bg-primary text-base text-white'>
+                        <div className='flex flex-col'>
+                          <h3 className='text-sm'>Asset:</h3>
+                          <span className='font-bold'>{asset.asset}</span>
+                        </div>
+                        <div className='flex flex-col'>
+                          <h3 className='text-sm'> Wallet:</h3>
+                          <span className='font-bold'>{asset.wallet}</span>
+                        </div>
+                        <div className='flex flex-col'>
+                          <h3 className='text-sm'> Qty:</h3>
+                          <span className='font-bold'>{asset.qty}</span>
+                        </div>
+                      </div>
+
+                      <span className='text-primary text-center my-4 font-bold text-base'>
+                        <span className='font-bold'>
+                          This is the point of no return. <br />
+                        </span>
+                        {`Once done, there's no going back! 💣`}
                       </span>
                     </AlertDialogDescription>
                   </AlertDialogHeader>
@@ -229,7 +250,7 @@ export const columns: ColumnDef<Asset>[] = [
               </AlertDialog>
 
               <Sheet>
-                <SheetTrigger className='ml-4 hover:text-base w-12'>
+                <SheetTrigger className='ml-4 hover:text-base w-12 bg-white border border-slate-500 rounded-[2px]'>
                   ✏️
                 </SheetTrigger>
                 <SheetContent>
