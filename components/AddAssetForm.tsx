@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { z } from 'zod';
 
 import { addAsset } from '@/lib/actions';

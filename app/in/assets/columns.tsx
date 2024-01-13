@@ -2,14 +2,6 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -169,8 +161,22 @@ export const columns: ColumnDef<Asset>[] = [
         <>
           {asset && (
             <div className='flex items-center text-xl'>
+              <Sheet>
+                <SheetTrigger className='ml-4 hover:text-base w-12 bg-white border border-slate-300 rounded-[2px] '>
+                  ✏️
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Update a new Asset</SheetTitle>
+                    <SheetDescription>
+                      Update an Existing Asset
+                    </SheetDescription>
+                  </SheetHeader>
+                  <UpdateAssetForm asset={asset} />
+                </SheetContent>
+              </Sheet>
               <AlertDialog>
-                <AlertDialogTrigger className='ml-4 hover:text-base w-12 border border-slate-500 bg-primary rounded-[2px]'>
+                <AlertDialogTrigger className='ml-4 hover:text-base w-12 border border-slate-300 bg-white rounded-[2px]'>
                   💀
                 </AlertDialogTrigger>
                 <AlertDialogContent>
@@ -248,21 +254,6 @@ export const columns: ColumnDef<Asset>[] = [
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
-
-              <Sheet>
-                <SheetTrigger className='ml-4 hover:text-base w-12 bg-white border border-slate-500 rounded-[2px]'>
-                  ✏️
-                </SheetTrigger>
-                <SheetContent>
-                  <SheetHeader>
-                    <SheetTitle>Update a new Asset</SheetTitle>
-                    <SheetDescription>
-                      Update an Existing Asset
-                    </SheetDescription>
-                  </SheetHeader>
-                  <UpdateAssetForm asset={asset} />
-                </SheetContent>
-              </Sheet>
             </div>
           )}
         </>

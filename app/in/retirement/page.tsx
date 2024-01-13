@@ -8,8 +8,10 @@ export default async function Retirement() {
     <>
       <div className='bg-[#a6cae2] flex flex-col items-center w-full text-center mx-auto mb-12 px-8'>
         {user && (
-          <h1 className='uppercase font-extrabold w-full text-2xl border-2 border-slate-500 py-2 px-4 my-8'>
-            {`${user.firstName}, just choose your Goal!`}
+          <h1 className='uppercase font-extrabold w-full text-[#bd554c] text-2xl bg-white drop-shadow-[7px_7px_rgba(130,173,205,1)] py-2 px-4 my-8'>
+            {/* rgba(130, 173, 205, 1) */}
+            {`${user.firstName}, choose your Goal, work for it, and believe in it!`}{' '}
+            <span className='ml-2'>🚩</span>
           </h1>
         )}
 
