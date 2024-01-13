@@ -58,6 +58,7 @@ export function AddAssetForm() {
       toast({
         title: 'Asset added! 🎉',
         description: 'Your new asset is already available.',
+        variant: 'success',
       });
     } else {
       toast({
@@ -69,8 +70,9 @@ export function AddAssetForm() {
 
     reset();
     setData(data);
-
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   return (

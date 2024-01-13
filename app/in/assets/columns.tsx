@@ -170,7 +170,7 @@ export const columns: ColumnDef<Asset>[] = [
           {asset && (
             <div className='flex items-center text-xl'>
               <AlertDialog>
-                <AlertDialogTrigger className='ml-4 hover:text-base w-12'>
+                <AlertDialogTrigger className='ml-4 hover:text-base w-12 border border-slate-500 bg-primary rounded-[2px]'>
                   💀
                 </AlertDialogTrigger>
                 <AlertDialogContent>
@@ -250,7 +250,7 @@ export const columns: ColumnDef<Asset>[] = [
               </AlertDialog>
 
               <Sheet>
-                <SheetTrigger className='ml-4 hover:text-base w-12'>
+                <SheetTrigger className='ml-4 hover:text-base w-12 bg-white border border-slate-500 rounded-[2px]'>
                   ✏️
                 </SheetTrigger>
                 <SheetContent>

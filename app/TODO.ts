@@ -1,19 +1,19 @@
 // Prompt AI: I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
 // PRIORITIES 1:
-// TODO: Input, Edit, Delete, new Asset: fix bugs
+// TODO: Update Asset - fix bug
 // TODO: Create the Crypto column of how much in percentage we want of each Asset and show how much is missing or over the limit
 // TODO: Have validation on the Forms
 // TODO: Dinamically generate the fields depend on the type of asset
 // TODO: Wealthsimple is only 10000 USD? Why?
 
 // SMALL PRIORITIES:
+// TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
 // TODO: Avatar Dropdown Style (no border is weird)
-// TODO: Button Styles
+// TODO: Dark Mode https://ui.shadcn.com/docs/dark-mode/next
+// TODO: Test No Assets Page, then test it including one Asset in the database
 
 // PRIORITIES 2:
-// TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
-// TODO: Test No Assets Page, then test it including one Asset in the database
 // TODO: Resources Page (?):Card with link for the image of the cycle of the market (already in the public folder)
 
 // FUTURE:
@@ -39,6 +39,9 @@
 // TODO: It's not showing APE price
 
 // DONE ========================================================================================
+// TODO: Button Styles
+// TODO: Add Asset, fix bug Radio Button
+// TODO: Delete Asset, fix error message
 // TODO: change all qtd to qty
 // TODO: Home beofre Dashboard - ref.: Kajabi
 // TODO: Card "Next Purchases"
