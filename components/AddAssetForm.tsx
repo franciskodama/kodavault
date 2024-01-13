@@ -9,11 +9,7 @@ import { addAsset } from '@/lib/actions';
 import { Button } from './ui/button';
 import { Inputs } from '@/lib/types';
 import { SheetClose } from './ui/sheet';
-
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from './ui/use-toast';
-import { FormControl, FormField, FormItem, FormLabel } from './ui/form';
 
 const AssetSchema = z.object({
   account: z.string(),
@@ -39,26 +35,9 @@ export function AddAssetForm() {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
-    control,
-    setValue,
-    getValues,
     formState: { errors },
   } = useForm<Inputs>();
-  // {
-  //   defaultValues: {
-  //     asset: '',
-  //     qty: 0,
-  //     wallet: walletOptions[0],
-  //     type: '',
-  //     subtype: subtypeOptions[1],
-  //     currency: currencyOptions[1],
-  //     exchange: exchangeOptions[0],
-  //     account: accountOptions[0],
-  //     uid: uid,
-  //   },
-  // }
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
   const classDiv = 'my-4';
@@ -91,7 +70,7 @@ export function AddAssetForm() {
     reset();
     setData(data);
 
-    // window.location.reload();
+    window.location.reload();
   };
 
   return (
@@ -280,91 +259,16 @@ const currencyOptions = ['USD', 'CAD', 'BRL'];
 const accountOptions = ['Investment', 'cc-TFSA', 'cc-FHSA'];
 const exchangeOptions = ['N/A', 'TO', 'V', 'SA', 'NASDAQ'];
 
-{
-  /* <Controller
-name='subtype'
-control={control}
-render={({ field }) => (
-  <RadioGroup className='flex flex-wrap mt-1'>
-    <RadioGroupItem className={classRadioItem} {...field} />
-    <Label htmlFor={subtype}>{subtype}</Label>
-    {subtypeOptions.map((subtype) => (
-      <div key={subtype} className={classDivRadioGroup}>
-        <RadioGroupItem
-          className={classRadioItem}
-          id={subtype}
-          {...field}
-        />
-        <Label htmlFor={subtype}>{subtype}</Label>
-        {errors.subtype?.message && (
-          <p className={classError}>{errors.subtype.message}</p>
-        )}
-      </div>
-    ))}
-  </RadioGroup>
-)}
-/> */
-}
-
-// {subtypeOptions.map((subtypeOption) => (
-//   <div key={subtypeOption} className={classDivRadioGroup}>
-//     <RadioGroupItem
-//       className={classRadioItem}
-//       value={subtypeOption}
-//       id={subtypeOption}
-//       {...register('subtype')}
-//     />
-//     <Label className={classLabelRadio} htmlFor={subtypeOption}>
-//       {subtypeOption}
-//     </Label>
-//     {errors.subtype?.message && (
-//       <p className={classError}>{errors.subtype.message}</p>
-//     )}
-//   </div>
-// ))}
-
-// <RadioGroupItem
-// className={classRadioItem}
-// value='BTC'
-// id='BTC'
-// {...register('subtype')}
-// />
-// <Label className={classLabelRadio} htmlFor='BTC'>
-// BTC
-// </Label>
-// <RadioGroupItem
-// className={classRadioItem}
-// value='AAA'
-// id='AAA'
-// {...register('subtype')}
-// />
-// <Label className={classLabelRadio} htmlFor='AAA'>
-// AAA
-// </Label>
-
-// <RadioGroupItem
-// className={classRadioItem}
-// value='BBB'
-// id='BBB'
-// {...register('subtype')}
-// />
-// <Label className={classLabelRadio} htmlFor='BBB'>
-// BBB
-// </Label>
-
-{
-  /* <Controller
-              name='subtype'
-              control={control}
-              render={({ field }) => (
-                <RadioGroup className='flex flex-wrap mt-1'>
-                  <Label className={classLabelRadio} htmlFor='AAA'>
-                    <RadioGroupItem id='AAA' {...field} />
-                    AAA
-                  </Label>
-
-                  <RadioGroupItem id='BBB' {...field} />
-                  <Label className={classLabelRadio} htmlFor='BBB'>
-                    BBB
-                  </Label> */
-}
+// {
+//   defaultValues: {
+//     asset: '',
+//     qty: 0,
+//     wallet: 'Bybit',
+//     type: '',
+//     subtype: subtypeOptions[1],
+//     currency: currencyOptions[1],
+//     exchange: exchangeOptions[0],
+//     account: accountOptions[0],
+//     uid: uid,
+//   },
+// }
