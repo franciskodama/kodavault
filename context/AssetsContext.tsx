@@ -2,7 +2,7 @@
 
 import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
 import { Asset, UnpricedAsset } from '@/lib/types';
-import { useAuth, useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 type AssetsContext = {
@@ -15,10 +15,12 @@ export const AssetsContext = createContext<AssetsContext | null>(null);
 
 export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const [assets, setAssets] = useState<Asset[]>([]);
+  console.log('---  🚀 ---> | assets Context:', assets);
   const [isLoading, setIsLoading] = useState(true);
 
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
+  console.log('---  🚀 ---> | uid:', uid);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +31,7 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
       try {
         if (uid) {
           unpricedAssets = await fetchAssets(uid);
+          console.log('---  🚀 ---> | unpricedAssets:', unpricedAssets);
 
           if (unpricedAssets.length > 0) {
             pricedAssets = await fetchAssetsWithPrices(unpricedAssets);
@@ -42,7 +45,12 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
       }
     };
 
-    fetchData();
+    if (uid) {
+      fetchData();
+    } else {
+      setAssets([]);
+      setIsLoading(false);
+    }
   }, [uid]);
 
   return (
@@ -60,57 +68,3 @@ export function useAssetsContext() {
   }
   return context;
 }
-// const {isLoaded, userId} = useAuth()
-
-// const initialState: AssetsContext = {
-//   assets: [],
-//   setAssets: () => {},
-// };
-
-// const assetsHardcoded: Asset[] = [
-//   {
-//     id: '761959',
-//     asset: 'GLXY',
-//     qty: 400,
-//     wallet: 'Wealthsimple',
-//     created_at: new Date(),
-//     type: 'Stock',
-//     uid: 'fk@fkodama.com',
-//     subtype: 'Stock-CAD',
-//     currency: 'CAD',
-//     account: 'cc-TFSA',
-//     exchange: 'TO',
-//     price: 5.46,
-//     total: 2185.29,
-//   },
-//   {
-//     id: '777777',
-//     asset: 'DOL',
-//     qty: 40,
-//     wallet: 'Wealthsimple',
-//     created_at: new Date(),
-//     type: 'Stock',
-//     uid: 'fk@fkodama.com',
-//     subtype: 'Stock-CAD',
-//     currency: 'CAD',
-//     account: 'cc-TFSA',
-//     exchange: 'TO',
-//     price: 0.0,
-//     total: 0,
-//   },
-//   {
-//     id: '234534',
-//     asset: 'ATZ',
-//     qty: 50,
-//     wallet: 'Wealthsimple',
-//     created_at: new Date(),
-//     type: 'Stock',
-//     uid: 'fk@fkodama.com',
-//     subtype: 'Stock-CAD',
-//     currency: 'CAD',
-//     account: 'cc-TFSA',
-//     exchange: 'TO',
-//     price: 1,
-//     total: 0,
-//   },
-// ];

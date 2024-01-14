@@ -190,7 +190,7 @@ export const columns: ColumnDef<Asset>[] = [
                             src='/are-you-sure.gif'
                             alt='Britney in doubt'
                             fill
-                            className='object-cover rounded-full border-[8px] border-primary '
+                            className='object-cover rounded-full border-[8px] border-primary'
                             objectPosition='center 25%'
                           />
                         </AspectRatio>
