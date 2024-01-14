@@ -31,7 +31,6 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
       try {
         if (uid) {
           unpricedAssets = await fetchAssets(uid);
-          console.log('---  🚀 ---> | unpricedAssets:', unpricedAssets);
 
           if (unpricedAssets.length > 0) {
             pricedAssets = await fetchAssetsWithPrices(unpricedAssets);

@@ -14,7 +14,7 @@ import { Asset, AssetsByType } from '@/lib/types';
 const currencyRates = {
   quotes: {
     USDCAD: 1.34,
-    USDBRL: 4.87,
+    USDBRL: 4.86,
   },
 };
 
@@ -25,9 +25,14 @@ export default function Dashboard({
   assets: Asset[];
   assetsByType: AssetsByType;
 }) {
-  const cryptoAssets = changeKeyForTitle(assetsByType.Crypto, 'crypto');
-  const stocksAssets = changeKeyForTitle(assetsByType.Stock, 'stock');
-  const cashAssets = changeKeyForTitle(assetsByType.Cash, 'cash');
+  const cryptoAssets =
+    (assetsByType.Crypto && changeKeyForTitle(assetsByType.Crypto, 'crypto')) ||
+    [];
+  const stocksAssets =
+    (assetsByType.Stock && changeKeyForTitle(assetsByType.Stock, 'stock')) ||
+    [];
+  const cashAssets =
+    (assetsByType.Cash && changeKeyForTitle(assetsByType.Cash, 'cash')) || [];
 
   // ------------------------------------------------------------------------
   // const athCoins = await getAllTimeHighData();

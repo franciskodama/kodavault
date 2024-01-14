@@ -25,9 +25,12 @@ export const fetchAssetsWithPrices = async (
 
   const [cryptoAssetsWithPrice, cashAssetsWithPrice, stockAssetsWithPrice] =
     await Promise.all([
-      includePriceToCryptoAssets(assetsGroupedByType.Crypto),
-      includePriceToCashAssets(assetsGroupedByType.Cash),
-      includePriceToStockAssets(assetsGroupedByType.Stock),
+      assetsGroupedByType.Crypto &&
+        includePriceToCryptoAssets(assetsGroupedByType.Crypto),
+      assetsGroupedByType.Cash &&
+        includePriceToCashAssets(assetsGroupedByType.Cash),
+      assetsGroupedByType.Stock &&
+        includePriceToStockAssets(assetsGroupedByType.Stock),
     ]);
 
   const assetsWithPricesArray = [
@@ -44,6 +47,7 @@ export const groupAssetsByType = (assets: Asset[]) => {
     const type = asset.type;
     if (!groupedAssets[type]) groupedAssets[type] = [];
     groupedAssets[type].push(asset);
+
     return groupedAssets;
   }, {});
 };
