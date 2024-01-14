@@ -10,34 +10,35 @@ import Dashboard from './dashboard';
 import NoAssets from '@/components/NoAssets';
 
 export default async function DashboardPage() {
-  const user = await currentUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
-
-  let unpricedAssets: UnpricedAsset[] = [];
-  let assets: Asset[] = [];
-  let assetsByType: AssetsByType = {};
-
   try {
+    const user = await currentUser();
+    const uid = user?.emailAddresses?.[0]?.emailAddress;
+    console.log('---  🚀 ---> | uid:', uid);
+
+    let unpricedAssets: UnpricedAsset[] = [];
+    let assets: Asset[] = [];
+    let assetsByType: AssetsByType = {};
+
     if (uid) {
       unpricedAssets = await fetchAssets(uid);
+
+      if (unpricedAssets.length > 0) {
+        assets = await fetchAssetsWithPrices(unpricedAssets);
+        assetsByType = groupAssetsByType(assets);
+      }
     }
 
-    if (unpricedAssets.length > 0) {
-      assets = await fetchAssetsWithPrices(unpricedAssets);
-      assetsByType = groupAssetsByType(assets);
-    }
+    return (
+      <>
+        {assets.length > 0 ? (
+          <Dashboard assets={assets} assetsByType={assetsByType} />
+        ) : (
+          <NoAssets />
+        )}
+      </>
+    );
   } catch (error) {
-    console.error(error);
-    throw new Error("Assets couldn't be fetched! 👻");
+    console.error('Error fetching assets:', error);
+    return <NoAssets />;
   }
-
-  return (
-    <>
-      {assets && assetsByType ? (
-        <Dashboard assets={assets} assetsByType={assetsByType} />
-      ) : (
-        <NoAssets />
-      )}
-    </>
-  );
 }
