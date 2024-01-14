@@ -3,15 +3,15 @@
 // PRIORITIES 1:
 // TODO: Dinamically generate the fields depend on the type of asset: https://www.youtube.com/watch?v=lW_0InDuejU&t=8s
 // TODO: Update Asset - fix bug
+
 // TODO: Create the Crypto column of how much in percentage we want of each Asset and show how much is missing or over the limit
 // TODO: Have validation on the Forms
-// TODO: Wealthsimple is only 10000 USD? Why?
 
 // SMALL PRIORITIES:
+// TODO: Wealthsimple Assets is not getting prices (check if APIs are working or of the values are Hardcoded)
 // TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
 // TODO: Avatar Dropdown Style (no border is weird)
 // TODO: Dark Mode https://ui.shadcn.com/docs/dark-mode/next
-// TODO: Test No Assets Page, then test it including one Asset in the database
 
 // PRIORITIES 2:
 // TODO: Resources Page (?):Card with link for the image of the cycle of the market (already in the public folder)
@@ -39,6 +39,7 @@
 // TODO: It's not showing APE price
 
 // DONE ========================================================================================
+// TODO: Test No Assets Page, then test it including one Asset in the database
 // TODO: Button Styles
 // TODO: Add Asset, fix bug Radio Button
 // TODO: Delete Asset, fix error message

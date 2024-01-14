@@ -126,19 +126,39 @@ export function AddAssetForm() {
               ))}
             </ul>
           </div>
-
+          {/* 
           <div className={classDiv}>
             <label className={classTitle} htmlFor='type'>
               Type
             </label>
             <input
               className={classInput}
-              placeholder='Type (Stock, Altcoin, Crypto)'
+              placeholder='Crypto, Stock, or Cash'
               {...register('type', { required: "Type can't be empty" })}
             />
             {errors.type?.message && (
               <p className={classError}>{errors.type.message}</p>
             )}
+          </div> */}
+
+          <div className={classDiv}>
+            <h3 className={classTitle}>Type</h3>
+            <ul className={classUl}>
+              {typeOptions.map((typeOption) => (
+                <li key={typeOption}>
+                  <input
+                    className='hidden peer'
+                    type='radio'
+                    value={typeOption}
+                    id={typeOption}
+                    {...register('type')}
+                  />
+                  <label className={classLabelRadio} htmlFor={typeOption}>
+                    <span>{typeOption}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className={classDiv}>
@@ -244,6 +264,7 @@ const walletOptions = [
   'Ledger',
   'Trezor',
   'Nubank',
+  'Inter',
   'Tangerine',
 ];
 
@@ -251,26 +272,15 @@ const subtypeOptions = [
   'Altcoin',
   'BTC',
   'ETH',
-  'Stock-CAD',
   'Stock-USD',
+  'Stock-CAD',
   'Stock-BRL',
+  'Cash-USD',
+  'Cash-CAD',
+  'Cash-BRL',
 ];
 
-const typeOptions = ['Stock', 'Altcoin', 'Crypto'];
+const typeOptions = ['Crypto', 'Stock', 'Cash'];
 const currencyOptions = ['USD', 'CAD', 'BRL'];
-const accountOptions = ['Investment', 'cc-TFSA', 'cc-FHSA'];
+const accountOptions = ['cc', 'Investment', 'cc-TFSA', 'cc-FHSA'];
 const exchangeOptions = ['N/A', 'TO', 'V', 'SA', 'NASDAQ'];
-
-// {
-//   defaultValues: {
-//     asset: '',
-//     qty: 0,
-//     wallet: 'Bybit',
-//     type: '',
-//     subtype: subtypeOptions[1],
-//     currency: currencyOptions[1],
-//     exchange: exchangeOptions[0],
-//     account: accountOptions[0],
-//     uid: uid,
-//   },
-// }

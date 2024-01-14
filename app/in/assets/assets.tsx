@@ -4,6 +4,7 @@ import { Loading } from '@/components/Loading';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { useAssetsContext } from '@/context/AssetsContext';
+import NoAssetsSimpler from '@/components/NoAssetsSimpler';
 
 export default function Assets() {
   const { assets, isLoading } = useAssetsContext();

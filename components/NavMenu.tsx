@@ -65,6 +65,17 @@ export default function NavMenu() {
           </li>
         </Link>
 
+        <Link href='/in/resources'>
+          <li>
+            <Button
+              variant={pathname === '/in/resources' ? 'default' : 'ghost'}
+              size='md'
+            >
+              Resources
+            </Button>
+          </li>
+        </Link>
+
         <Link href='/in/retirement'>
           <li>
             <Button
