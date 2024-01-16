@@ -15,12 +15,10 @@ export const AssetsContext = createContext<AssetsContext | null>(null);
 
 export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const [assets, setAssets] = useState<Asset[]>([]);
-  console.log('---  🚀 ---> | assets Context:', assets);
   const [isLoading, setIsLoading] = useState(true);
 
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
-  console.log('---  🚀 ---> | uid:', uid);
 
   useEffect(() => {
     const fetchData = async () => {

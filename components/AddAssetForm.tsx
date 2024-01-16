@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { z } from 'zod';
@@ -11,20 +11,18 @@ import { Inputs } from '@/lib/types';
 import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
 
-const AssetSchema = z.object({
-  account: z.string(),
-  asset: z.string().min(1).max(10),
-  qty: z.number().min(1).max(10),
-  wallet: z.string().min(1).max(15),
-  type: z.string(),
-  subtype: z.string(),
-  currency: z.string(),
-  uid: z.string().email(),
-  exchange: z.string(),
-  price: z.number().optional(),
-  total: z.number().optional(),
-  ath: z.number().optional(),
-});
+type Subtype =
+  | 'BTC'
+  | 'ETH'
+  | 'Altcoin'
+  | 'Stock-USD'
+  | 'Stock-CAD'
+  | 'Stock-BRL'
+  | 'Cash-USD'
+  | 'Cash-CAD'
+  | 'Cash-BRL';
+
+type Currency = 'USD' | 'CAD' | 'BRL';
 
 export function AddAssetForm() {
   const [data, setData] = useState<Inputs>();
@@ -34,10 +32,34 @@ export function AddAssetForm() {
 
   const {
     register,
+    control,
+    watch,
     handleSubmit,
     reset,
+    getValues,
+    setValue,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    defaultValues: {
+      type: '',
+      subtype: '',
+      account: '',
+      asset: '',
+      qty: 0,
+      wallet: '',
+      exchange: '',
+      currency: 'USD' as Currency,
+    },
+  });
+
+  const assetSubtype = watch('subtype');
+  const assetType = getType(assetSubtype);
+  // const subtypeCurrencyOptions: Currency[] =
+  //   currencyOptionsBySubtype[assetSubtype as string] || [];
+
+  useEffect(() => {
+    setValue('type', assetType ? assetType : '');
+  }, [assetType, setValue]);
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
   const classDiv = 'my-4';
@@ -52,7 +74,11 @@ export function AddAssetForm() {
       return console.log('User not logged in');
     }
 
-    const result = await addAsset({ ...data, uid: uid });
+    const result = await addAsset({
+      ...data,
+      uid: uid,
+      type: assetType ? assetType : '',
+    });
 
     if (result) {
       toast({
@@ -77,8 +103,28 @@ export function AddAssetForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(processForm)}>
-        <div className='flex flex-col mt-6'>
+      <form onSubmit={handleSubmit(processForm)} className='py-8'>
+        <div className={classDiv}>
+          <h3 className={classTitle}>Type</h3>
+          <ul className={classUl}>
+            {subtypeOptions.map((subtypeOption) => (
+              <li key={subtypeOption}>
+                <input
+                  className='hidden peer'
+                  type='radio'
+                  value={subtypeOption}
+                  id={subtypeOption}
+                  {...register('subtype')}
+                />
+                <label className={classLabelRadio} htmlFor={subtypeOption}>
+                  <span>{subtypeOption}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className='flex flex-col'>
           <div className={classDiv}>
             <label className={classTitle} htmlFor='asset'>
               Asset
@@ -121,60 +167,6 @@ export function AddAssetForm() {
                   />
                   <label className={classLabelRadio} htmlFor={walletOption}>
                     <span>{walletOption}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-          {/* 
-          <div className={classDiv}>
-            <label className={classTitle} htmlFor='type'>
-              Type
-            </label>
-            <input
-              className={classInput}
-              placeholder='Crypto, Stock, or Cash'
-              {...register('type', { required: "Type can't be empty" })}
-            />
-            {errors.type?.message && (
-              <p className={classError}>{errors.type.message}</p>
-            )}
-          </div> */}
-
-          <div className={classDiv}>
-            <h3 className={classTitle}>Type</h3>
-            <ul className={classUl}>
-              {typeOptions.map((typeOption) => (
-                <li key={typeOption}>
-                  <input
-                    className='hidden peer'
-                    type='radio'
-                    value={typeOption}
-                    id={typeOption}
-                    {...register('type')}
-                  />
-                  <label className={classLabelRadio} htmlFor={typeOption}>
-                    <span>{typeOption}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className={classDiv}>
-            <h3 className={classTitle}>Subtype</h3>
-            <ul className={classUl}>
-              {subtypeOptions.map((subtypeOption) => (
-                <li key={subtypeOption}>
-                  <input
-                    className='hidden peer'
-                    type='radio'
-                    value={subtypeOption}
-                    id={subtypeOption}
-                    {...register('subtype')}
-                  />
-                  <label className={classLabelRadio} htmlFor={subtypeOption}>
-                    <span>{subtypeOption}</span>
                   </label>
                 </li>
               ))}
@@ -269,9 +261,9 @@ const walletOptions = [
 ];
 
 const subtypeOptions = [
-  'Altcoin',
   'BTC',
   'ETH',
+  'Altcoin',
   'Stock-USD',
   'Stock-CAD',
   'Stock-BRL',
@@ -280,7 +272,105 @@ const subtypeOptions = [
   'Cash-BRL',
 ];
 
-const typeOptions = ['Crypto', 'Stock', 'Cash'];
 const currencyOptions = ['USD', 'CAD', 'BRL'];
 const accountOptions = ['cc', 'Investment', 'cc-TFSA', 'cc-FHSA'];
 const exchangeOptions = ['N/A', 'TO', 'V', 'SA', 'NASDAQ'];
+
+const getType = (subtype: string) => {
+  switch (subtype) {
+    case 'BTC':
+      return 'Crypto';
+    case 'ETH':
+      return 'Crypto';
+    case 'Altcoin':
+      return 'Crypto';
+    case 'Stock-USD':
+      return 'Stock';
+    case 'Stock-CAD':
+      return 'Stock';
+    case 'Stock-BRL':
+      return 'Stock';
+    case 'Cash-USD':
+      return 'Cash';
+    case 'Cash-CAD':
+      return 'Cash';
+    case 'Cash-BRL':
+      return 'Cash';
+  }
+};
+
+const currencyOptionsBySubtype: Record<Subtype, Currency[]> = {
+  BTC: ['USD'],
+  ETH: ['USD'],
+  Altcoin: ['USD'],
+  'Stock-USD': ['CAD', 'USD', 'BRL'],
+  'Stock-CAD': ['CAD'],
+  'Stock-BRL': ['BRL'],
+  'Cash-USD': ['USD'],
+  'Cash-CAD': ['CAD'],
+  'Cash-BRL': ['BRL'],
+};
+
+// const AssetSchema = z.object({
+//   account: z.string(),
+//   asset: z.string().min(1).max(10),
+//   qty: z.number().min(1).max(10),
+//   wallet: z.string().min(1).max(15),
+//   type: z.string(),
+//   subtype: z.string(),
+//   currency: z.string(),
+//   uid: z.string().email(),
+//   exchange: z.string(),
+//   price: z.number().optional(),
+//   total: z.number().optional(),
+//   ath: z.number().optional(),
+// });
+
+{
+  /* 
+          <div className={classDiv}>
+            <label className={classTitle} htmlFor='type'>
+              Type
+            </label>
+            <input
+              className={classInput}
+              placeholder='Crypto, Stock, or Cash'
+              {...register('type', { required: "Type can't be empty" })}
+            />
+            {errors.type?.message && (
+              <p className={classError}>{errors.type.message}</p>
+            )}
+          </div> */
+}
+
+{
+  /* {
+          <input
+            className='hidden peer'
+            type='radio'
+            value={getType(watch('subtype'))}
+            {...register('type')}
+          />
+        } */
+}
+{
+  /* <div className={classDiv}>
+            <h3 className={classTitle}>Type</h3>
+            <ul className={classUl}>
+              {typeOptions.map((typeOption) => (
+                <li key={typeOption}>
+                  <input
+                    className='hidden peer'
+                    type='radio'
+                    value={typeOption}
+                    id={typeOption}
+                    {...register('type')}
+                  />
+                  <label className={classLabelRadio} htmlFor={typeOption}>
+                    <span>{typeOption}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div> */
+}
