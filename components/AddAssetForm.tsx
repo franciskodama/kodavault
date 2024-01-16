@@ -40,22 +40,24 @@ export function AddAssetForm() {
     setValue,
     formState: { errors },
   } = useForm<Inputs>({
-    defaultValues: {
-      type: '',
-      subtype: '',
-      account: '',
-      asset: '',
-      qty: 0,
-      wallet: '',
-      exchange: '',
-      currency: 'USD' as Currency,
-    },
+    // defaultValues: {
+    //   type: '',
+    //   subtype: '',
+    //   account: '',
+    //   asset: '',
+    //   qty: 0,
+    //   wallet: '',
+    //   exchange: '',
+    //   currency: 'USD' as Currency,
+    // },
   });
 
   const assetSubtype = watch('subtype');
   const assetType = getType(assetSubtype);
-  // const subtypeCurrencyOptions: Currency[] =
-  //   currencyOptionsBySubtype[assetSubtype as string] || [];
+  const assetWallet = getWallet(assetSubtype);
+  const assetCurrency = getCurrency(assetSubtype);
+  const assetAccount = getAccount(assetSubtype);
+  const assetExchange = getExchange(assetSubtype);
 
   useEffect(() => {
     setValue('type', assetType ? assetType : '');
@@ -156,7 +158,7 @@ export function AddAssetForm() {
           <div className={classDiv}>
             <h3 className={classTitle}>Wallet</h3>
             <ul className={classUl}>
-              {walletOptions.map((walletOption) => (
+              {getWallet(assetSubtype).map((walletOption) => (
                 <li key={walletOption}>
                   <input
                     className='hidden peer'
@@ -176,7 +178,7 @@ export function AddAssetForm() {
           <div className={classDiv}>
             <h3 className={classTitle}>Currency</h3>
             <ul className={classUl}>
-              {currencyOptions.map((currencyOption) => (
+              {assetCurrency.map((currencyOption) => (
                 <li key={currencyOption}>
                   <input
                     className='hidden peer'
@@ -196,7 +198,7 @@ export function AddAssetForm() {
           <div className={classDiv}>
             <h3 className={classTitle}>Account</h3>
             <ul className={classUl}>
-              {accountOptions.map((accountOption) => (
+              {assetAccount.map((accountOption) => (
                 <li key={accountOption}>
                   <input
                     className='hidden peer'
@@ -216,7 +218,7 @@ export function AddAssetForm() {
           <div className={classDiv}>
             <h3 className={classTitle}>Exchange</h3>
             <ul className={classUl}>
-              {exchangeOptions.map((exchangeOption) => (
+              {assetExchange.map((exchangeOption) => (
                 <li key={exchangeOption}>
                   <input
                     className='hidden peer'
@@ -248,18 +250,6 @@ export function AddAssetForm() {
   );
 }
 
-const walletOptions = [
-  'Binance',
-  'Bybit',
-  'Crypto.com',
-  'Wealthsimple',
-  'Ledger',
-  'Trezor',
-  'Nubank',
-  'Inter',
-  'Tangerine',
-];
-
 const subtypeOptions = [
   'BTC',
   'ETH',
@@ -271,10 +261,6 @@ const subtypeOptions = [
   'Cash-CAD',
   'Cash-BRL',
 ];
-
-const currencyOptions = ['USD', 'CAD', 'BRL'];
-const accountOptions = ['cc', 'Investment', 'cc-TFSA', 'cc-FHSA'];
-const exchangeOptions = ['N/A', 'TO', 'V', 'SA', 'NASDAQ'];
 
 const getType = (subtype: string) => {
   switch (subtype) {
@@ -299,16 +285,114 @@ const getType = (subtype: string) => {
   }
 };
 
-const currencyOptionsBySubtype: Record<Subtype, Currency[]> = {
-  BTC: ['USD'],
-  ETH: ['USD'],
-  Altcoin: ['USD'],
-  'Stock-USD': ['CAD', 'USD', 'BRL'],
-  'Stock-CAD': ['CAD'],
-  'Stock-BRL': ['BRL'],
-  'Cash-USD': ['USD'],
-  'Cash-CAD': ['CAD'],
-  'Cash-BRL': ['BRL'],
+const getWallet = (subtype: string) => {
+  switch (subtype) {
+    case 'BTC':
+      return ['Binance', 'Bybit', 'Crypto.com', 'Ledger', 'Trezor'];
+    case 'ETH':
+      return ['Binance', 'Bybit', 'Crypto.com', 'Ledger', 'Trezor'];
+    case 'Altcoin':
+      return ['Binance', 'Bybit', 'Crypto.com', 'Ledger', 'Trezor'];
+    case 'Stock-USD':
+      return ['Wealthsimple', 'Clear'];
+    case 'Stock-CAD':
+      return ['Wealthsimple'];
+    case 'Stock-BRL':
+      return ['Clear'];
+    case 'Cash-USD':
+      return ['Binance', 'Bybit', 'Crypto.com', 'Ledger', 'Trezor'];
+    case 'Cash-CAD':
+      return ['Tangerine', 'Scotiabank'];
+    case 'Cash-BRL':
+      return ['Binance', 'Bybit', 'Nubank', 'Inter'];
+    default:
+      return [
+        'Binance',
+        'Bybit',
+        'Crypto.com',
+        'Wealthsimple',
+        'Ledger',
+        'Trezor',
+        'Nubank',
+        'Inter',
+        'Tangerine',
+      ];
+  }
+};
+
+const getCurrency = (subtype: string) => {
+  switch (subtype) {
+    case 'BTC':
+      return ['USD'];
+    case 'ETH':
+      return ['USD'];
+    case 'Altcoin':
+      return ['USD'];
+    case 'Stock-USD':
+      return ['CAD', 'USD', 'BRL'];
+    case 'Stock-CAD':
+      return ['CAD'];
+    case 'Stock-BRL':
+      return ['BRL'];
+    case 'Cash-USD':
+      return ['USD'];
+    case 'Cash-CAD':
+      return ['CAD'];
+    case 'Cash-BRL':
+      return ['BRL'];
+    default:
+      return ['CAD', 'USD', 'BRL'];
+  }
+};
+
+const getAccount = (subtype: string) => {
+  switch (subtype) {
+    case 'BTC':
+      return ['Invesment'];
+    case 'ETH':
+      return ['Invesment'];
+    case 'Altcoin':
+      return ['Invesment'];
+    case 'Stock-USD':
+      return ['Invesment', 'cc-TFSA', 'cc-FHSA'];
+    case 'Stock-CAD':
+      return ['cc-TFSA', 'cc-FHSA'];
+    case 'Stock-BRL':
+      return ['Invesment'];
+    case 'Cash-USD':
+      return ['Invesment'];
+    case 'Cash-CAD':
+      return ['Invesment', 'cc-TFSA', 'cc-FHSA'];
+    case 'Cash-BRL':
+      return ['Invesment'];
+    default:
+      return ['Invesment', 'cc-TFSA', 'cc-FHSA'];
+  }
+};
+
+const getExchange = (subtype: string) => {
+  switch (subtype) {
+    case 'BTC':
+      return ['N/A'];
+    case 'ETH':
+      return ['N/A'];
+    case 'Altcoin':
+      return ['N/A'];
+    case 'Stock-USD':
+      return ['SA', 'NASDAQ'];
+    case 'Stock-CAD':
+      return ['TO', 'V'];
+    case 'Stock-BRL':
+      return ['SA'];
+    case 'Cash-USD':
+      return ['N/A'];
+    case 'Cash-CAD':
+      return ['N/A'];
+    case 'Cash-BRL':
+      return ['N/A'];
+    default:
+      return ['N/A', 'TO', 'V', 'SA', 'NASDAQ'];
+  }
 };
 
 // const AssetSchema = z.object({
