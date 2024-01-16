@@ -11,19 +11,6 @@ import { Inputs } from '@/lib/types';
 import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
 
-type Subtype =
-  | 'BTC'
-  | 'ETH'
-  | 'Altcoin'
-  | 'Stock-USD'
-  | 'Stock-CAD'
-  | 'Stock-BRL'
-  | 'Cash-USD'
-  | 'Cash-CAD'
-  | 'Cash-BRL';
-
-type Currency = 'USD' | 'CAD' | 'BRL';
-
 export function AddAssetForm() {
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
@@ -62,6 +49,18 @@ export function AddAssetForm() {
   useEffect(() => {
     setValue('type', assetType ? assetType : '');
   }, [assetType, setValue]);
+
+  // useEffect(() => {
+  //   setValue('currency', assetCurrency ? assetCurrency : '');
+  // }, [assetType, setValue]);
+
+  // useEffect(() => {
+  //   setValue('account', assetType ? assetType : '');
+  // }, [assetType, setValue]);
+
+  // useEffect(() => {
+  //   setValue('exchange', assetType ? assetType : '');
+  // }, [assetType, setValue]);
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
   const classDiv = 'my-4';
