@@ -26,23 +26,14 @@ export function AddAssetForm() {
     getValues,
     setValue,
     formState: { errors },
-  } = useForm<Inputs>({
-    // defaultValues: {
-    //   type: '',
-    //   subtype: '',
-    //   account: '',
-    //   asset: '',
-    //   qty: 0,
-    //   wallet: '',
-    //   exchange: '',
-    //   currency: 'USD' as Currency,
-    // },
-  });
+  } = useForm<Inputs>({});
 
   const assetSubtype = watch('subtype');
   const assetType = getType(assetSubtype);
+  const assetSymbol = getSymbol(assetSubtype);
+  const fixedSymbolsArr = ['BTC', 'ETH', 'USDT', 'CAD', 'BRL'];
   const assetWallet = getWallet(assetSubtype);
-  const assetCurrency = getCurrency(assetSubtype);
+  const assetCurrency: string[] = getCurrency(assetSubtype);
   const assetAccount = getAccount(assetSubtype);
   const assetExchange = getExchange(assetSubtype);
 
@@ -50,17 +41,31 @@ export function AddAssetForm() {
     setValue('type', assetType ? assetType : '');
   }, [assetType, setValue]);
 
-  // useEffect(() => {
-  //   setValue('currency', assetCurrency ? assetCurrency : '');
-  // }, [assetType, setValue]);
+  useEffect(() => {
+    if (assetSymbol) {
+      if (['BTC', 'ETH', 'USDT', 'CAD', 'BRL'].includes(assetSymbol)) {
+        setValue('asset', assetSymbol);
+      }
+    }
+  }, [assetSymbol, setValue]);
 
-  // useEffect(() => {
-  //   setValue('account', assetType ? assetType : '');
-  // }, [assetType, setValue]);
+  useEffect(() => {
+    if (assetCurrency.length === 1) {
+      setValue('currency', assetCurrency[0]);
+    }
+  }, [assetCurrency, setValue]);
 
-  // useEffect(() => {
-  //   setValue('exchange', assetType ? assetType : '');
-  // }, [assetType, setValue]);
+  useEffect(() => {
+    if (assetAccount.length === 1) {
+      setValue('account', assetAccount[0]);
+    }
+  }, [assetAccount, setValue]);
+
+  useEffect(() => {
+    if (assetExchange.length === 1) {
+      setValue('exchange', assetExchange[0]);
+    }
+  }, [assetExchange, setValue]);
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
   const classDiv = 'my-4';
@@ -124,21 +129,22 @@ export function AddAssetForm() {
             ))}
           </ul>
         </div>
-
         <div className='flex flex-col'>
-          <div className={classDiv}>
-            <label className={classTitle} htmlFor='asset'>
-              Asset
-            </label>
-            <input
-              className={classInput}
-              placeholder='Asset Symbol'
-              {...register('asset', { required: "Asset can't be empty" })}
-            />
-            {errors.asset?.message && (
-              <p className={classError}>{errors.asset.message}</p>
-            )}
-          </div>
+          {assetSymbol && fixedSymbolsArr.includes(assetSymbol) ? null : (
+            <div className={classDiv}>
+              <label className={classTitle} htmlFor='asset'>
+                Asset
+              </label>
+              <input
+                className={classInput}
+                placeholder='Asset Symbol'
+                {...register('asset', { required: "Asset can't be empty" })}
+              />
+              {errors.asset?.message && (
+                <p className={classError}>{errors.asset.message}</p>
+              )}
+            </div>
+          )}
 
           <div className={classDiv}>
             <label className={classTitle} htmlFor='qty'>
@@ -174,65 +180,70 @@ export function AddAssetForm() {
             </ul>
           </div>
 
-          <div className={classDiv}>
-            <h3 className={classTitle}>Currency</h3>
-            <ul className={classUl}>
-              {assetCurrency.map((currencyOption) => (
-                <li key={currencyOption}>
-                  <input
-                    className='hidden peer'
-                    type='radio'
-                    value={currencyOption}
-                    id={currencyOption}
-                    {...register('currency')}
-                  />
-                  <label className={classLabelRadio} htmlFor={currencyOption}>
-                    <span>{currencyOption}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {assetCurrency.length > 1 && (
+            <div className={classDiv}>
+              <h3 className={classTitle}>Currency</h3>
+              <ul className={classUl}>
+                {assetCurrency.map((currencyOption) => (
+                  <li key={currencyOption}>
+                    <input
+                      className='hidden peer'
+                      type='radio'
+                      value={currencyOption}
+                      id={currencyOption}
+                      {...register('currency')}
+                    />
+                    <label className={classLabelRadio} htmlFor={currencyOption}>
+                      <span>{currencyOption}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-          <div className={classDiv}>
-            <h3 className={classTitle}>Account</h3>
-            <ul className={classUl}>
-              {assetAccount.map((accountOption) => (
-                <li key={accountOption}>
-                  <input
-                    className='hidden peer'
-                    type='radio'
-                    value={accountOption}
-                    id={accountOption}
-                    {...register('account')}
-                  />
-                  <label className={classLabelRadio} htmlFor={accountOption}>
-                    <span>{accountOption}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className={classDiv}>
-            <h3 className={classTitle}>Exchange</h3>
-            <ul className={classUl}>
-              {assetExchange.map((exchangeOption) => (
-                <li key={exchangeOption}>
-                  <input
-                    className='hidden peer'
-                    type='radio'
-                    value={exchangeOption}
-                    id={exchangeOption}
-                    {...register('exchange')}
-                  />
-                  <label className={classLabelRadio} htmlFor={exchangeOption}>
-                    <span>{exchangeOption}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {assetAccount.length > 1 && (
+            <div className={classDiv}>
+              <h3 className={classTitle}>Account</h3>
+              <ul className={classUl}>
+                {assetAccount.map((accountOption) => (
+                  <li key={accountOption}>
+                    <input
+                      className='hidden peer'
+                      type='radio'
+                      value={accountOption}
+                      id={accountOption}
+                      {...register('account')}
+                    />
+                    <label className={classLabelRadio} htmlFor={accountOption}>
+                      <span>{accountOption}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {assetExchange.length > 1 && (
+            <div className={classDiv}>
+              <h3 className={classTitle}>Exchange</h3>
+              <ul className={classUl}>
+                {assetExchange.map((exchangeOption) => (
+                  <li key={exchangeOption}>
+                    <input
+                      className='hidden peer'
+                      type='radio'
+                      value={exchangeOption}
+                      id={exchangeOption}
+                      {...register('exchange')}
+                    />
+                    <label className={classLabelRadio} htmlFor={exchangeOption}>
+                      <span>{exchangeOption}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <Button className='mt-8' type='submit'>
             Add Asset
@@ -284,6 +295,21 @@ const getType = (subtype: string) => {
   }
 };
 
+const getSymbol = (subtype: string) => {
+  switch (subtype) {
+    case 'BTC':
+      return 'BTC';
+    case 'ETH':
+      return 'ETH';
+    case 'Cash-USD':
+      return 'USDT';
+    case 'Cash-CAD':
+      return 'CAD';
+    case 'Cash-BRL':
+      return 'BRL';
+  }
+};
+
 const getWallet = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
@@ -295,9 +321,9 @@ const getWallet = (subtype: string) => {
     case 'Stock-USD':
       return ['Wealthsimple', 'Clear'];
     case 'Stock-CAD':
-      return ['Wealthsimple'];
+      return ['Wealthsimple', 'Tangerine', 'Scotiabank'];
     case 'Stock-BRL':
-      return ['Clear'];
+      return ['Clear', 'XP'];
     case 'Cash-USD':
       return ['Binance', 'Bybit', 'Crypto.com', 'Ledger', 'Trezor'];
     case 'Cash-CAD':
@@ -312,8 +338,6 @@ const getWallet = (subtype: string) => {
         'Wealthsimple',
         'Ledger',
         'Trezor',
-        'Nubank',
-        'Inter',
         'Tangerine',
       ];
   }
@@ -347,25 +371,25 @@ const getCurrency = (subtype: string) => {
 const getAccount = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
-      return ['Invesment'];
+      return ['Investment'];
     case 'ETH':
-      return ['Invesment'];
+      return ['Investment'];
     case 'Altcoin':
-      return ['Invesment'];
+      return ['Investment'];
     case 'Stock-USD':
-      return ['Invesment', 'cc-TFSA', 'cc-FHSA'];
+      return ['Investment', 'TFSA', 'FHSA'];
     case 'Stock-CAD':
-      return ['cc-TFSA', 'cc-FHSA'];
+      return ['TFSA', 'FHSA'];
     case 'Stock-BRL':
-      return ['Invesment'];
+      return ['Investment'];
     case 'Cash-USD':
-      return ['Invesment'];
+      return ['Investment'];
     case 'Cash-CAD':
-      return ['Invesment', 'cc-TFSA', 'cc-FHSA'];
+      return ['cc', 'TFSA', 'FHSA'];
     case 'Cash-BRL':
-      return ['Invesment'];
+      return ['cc'];
     default:
-      return ['Invesment', 'cc-TFSA', 'cc-FHSA'];
+      return ['cc', 'Investment', 'TFSA', 'FHSA'];
   }
 };
 
