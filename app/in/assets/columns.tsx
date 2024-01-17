@@ -203,7 +203,7 @@ export const columns: ColumnDef<Asset>[] = [
                         You are about to delete the Asset below:
                       </span>
 
-                      <div className='flex py-4 px-16 justify-between bg-primary text-base text-white'>
+                      <div className='flex py-4 px-16 justify-between border-[6px] border-primary text-base text-primary'>
                         <div className='flex flex-col'>
                           <h3 className='text-sm'>Asset:</h3>
                           <span className='font-bold'>{asset.asset}</span>
@@ -242,9 +242,11 @@ export const columns: ColumnDef<Asset>[] = [
                       onClick={() => {
                         if (asset) {
                           handleDeleteAsset(asset.id);
+
                           toast({
                             title: 'Asset gone! 💀',
                             description: `The Asset ${asset.asset} has been successfully deleted from ${asset.wallet}.`,
+                            variant: 'dark',
                           });
                         }
                       }}

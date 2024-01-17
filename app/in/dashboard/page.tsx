@@ -20,7 +20,6 @@ export default async function DashboardPage() {
 
     if (uid) {
       unpricedAssets = await fetchAssets(uid);
-      console.log('---  🚀 ---> | unpricedAssets:', unpricedAssets.length);
 
       if (unpricedAssets.length > 0) {
         assets = await fetchAssetsWithPrices(unpricedAssets);
