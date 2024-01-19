@@ -34,6 +34,8 @@ export default function Dashboard({
   const cashAssets =
     (assetsByType.Cash && changeKeyForTitle(assetsByType.Cash, 'cash')) || [];
 
+  console.log('---  🚀 ---> | cryptoAssets:', cryptoAssets);
+
   // ------------------------------------------------------------------------
   // const athCoins = await getAllTimeHighData();
   // ------------------------------------------------------------------------
