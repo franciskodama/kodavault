@@ -1,6 +1,7 @@
 'use client';
 
 import CardAth from '@/components/CardAth';
+import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { CardTotal } from '@/components/CardTotal';
 import { useAssetsContext } from '@/context/AssetsContext';
 
@@ -46,6 +47,9 @@ export default function CryptosPage() {
             assets={cryptoAssets}
           />
         </div>
+      </div>
+      <div>
+        <CardNextPurchases />
       </div>
     </>
   );

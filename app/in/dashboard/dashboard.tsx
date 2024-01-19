@@ -152,18 +152,6 @@ export default function Dashboard({
             />
           </div> */}
           {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
-
-          {stocksAssets.length > 0 && (
-            <div className='flex flex-wrap gap'>
-              <CardTotal
-                emoji={'🔖'}
-                description={'Total value grouped by stocks'}
-                assets={stocksAssets}
-                customKey={'stock'}
-              />
-              <CardNextPurchases />
-            </div>
-          )}
         </div>
       )}
     </>
