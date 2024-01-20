@@ -3,36 +3,29 @@
 import CardAth from '@/components/CardAth';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { CardTotal } from '@/components/CardTotal';
+import { Loading } from '@/components/Loading';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { changeKeyForTitle } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 export default function CryptosPage() {
   const { assets, isLoading } = useAssetsContext();
-  const cryptoAssetsBefore = assets.filter((asset) => asset?.type === 'Crypto');
-  // .sort((a, b) => {
-  //   if (a.name < b.name) {
-  //     return -1;
-  //   }
-  //   if (a.name > b.name) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // });
+  console.log('---  🚀 ---> | assets:', assets);
+  const [cryptoAssets, setCryptoAssets] = useState([]);
+  console.log('---  🚀 ---> | cryptoAssets:', cryptoAssets);
 
-  const cryptoAssets =
-    (cryptoAssetsBefore && changeKeyForTitle(cryptoAssetsBefore, 'crypto')) ||
-    [];
-  // console.log('---  🚀 ---> | cryptoAssets:', cryptoAssets);
+  useEffect(() => {
+    const cryptoAssetsBefore = assets.filter(
+      (asset) => asset?.type === 'Crypto'
+    );
+    console.log('---  🚀 ---> | cryptoAssetsBefore:', cryptoAssetsBefore);
+
+    setCryptoAssets(changeKeyForTitle(cryptoAssetsBefore, 'crypto'));
+  }, [assets]);
 
   return (
     <>
-      {/* <div className='bg-white flex flex-col items-center mt-12 text-4xl w-full h-screen text-center mx-auto'>
-        <h1 className='mt-32 uppercase font-extrabold border-2 border-slate-500 w-[10em] p-4'>
-          Cryptos
-        </h1>
-        <WorkInProgress />
-      </div> */}
-      {cryptoAssets && (
+      {!isLoading && cryptoAssets.length > 1 ? (
         <div>
           <div className='flex flex-wrap gap-2'>
             <CardTotal
@@ -53,6 +46,10 @@ export default function CryptosPage() {
               assets={cryptoAssets}
             />
           </div>
+        </div>
+      ) : (
+        <div className='flex items-center justify-center h-[30em]'>
+          <Loading />
         </div>
       )}
 

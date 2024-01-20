@@ -15,6 +15,7 @@
 
 // PRIORITIES 2:
 // TODO: Resources Page (?):Card with link for the image of the cycle of the market (already in the public folder)
+// TODO: Responsive Tables: https://www.youtube.com/watch?v=qWY25e02BZs&list=WL&index=89&t=79s
 
 // FUTURE:
 // TODO: https://css-generators.com/ribbon-shapes/
