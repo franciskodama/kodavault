@@ -25,11 +25,8 @@ export const CardTotal = ({
   emoji?: string;
   description?: string;
 }) => {
-  // console.log('---  🚀 ---> | assets:', assets);
   const totalArray = getTotalByKey(assets, customKey);
-  // console.log('---  🚀 ---> | totalArray:', totalArray);
   const sortedArray = totalArray.sort((a, b) => b.total - a.total);
-  // console.log('---  🚀 ---> | sortedArray:', sortedArray);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
   return (

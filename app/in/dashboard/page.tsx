@@ -15,22 +15,20 @@ export default async function DashboardPage() {
     const uid = user?.emailAddresses?.[0]?.emailAddress;
 
     let unpricedAssets: UnpricedAsset[] = [];
-    let pricedAssets: Asset[] = [];
-    let assetsByType: AssetsByType = {};
+    let pricedAssets: AssetsByType = {};
 
     if (uid) {
       unpricedAssets = await fetchAssets(uid);
 
       if (unpricedAssets.length > 0) {
         pricedAssets = await fetchAssetsWithPrices(unpricedAssets);
-        assetsByType = groupAssetsByType(pricedAssets);
       }
     }
 
     return (
       <>
-        {pricedAssets.length > 0 ? (
-          <Dashboard assets={pricedAssets} assetsByType={assetsByType} />
+        {pricedAssets ? (
+          <Dashboard assetsByType={pricedAssets} />
         ) : (
           <NoAssets />
         )}

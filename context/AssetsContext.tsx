@@ -14,12 +14,19 @@ type AssetsContext = {
   isLoading: boolean;
   assets: Asset[];
   setAssets: React.Dispatch<React.SetStateAction<Asset[]>>;
+  assetsByType: AssetsByType;
+};
+
+type pricedAssetsObj = {
+  assets: Asset[];
+  assetsByType: AssetsByType;
 };
 
 export const AssetsContext = createContext<AssetsContext | null>(null);
 
 export function AssetsProvider({ children }: { children: React.ReactNode }) {
-  const [assets, setAssets] = useState<AssetsByType>({});
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [assetsByType, setAssetsByType] = useState<AssetsByType>({});
   const [isLoading, setIsLoading] = useState(true);
 
   const { user } = useUser();
@@ -28,19 +35,16 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      let unpricedAssets: UnpricedAsset[] = [];
-      let pricedAssetsByType: AssetsByType = {};
-      let assetsByType: AssetsByType = {};
 
       try {
         if (uid) {
-          unpricedAssets = await fetchAssets(uid);
-
-          if (unpricedAssets.length > 0) {
-            pricedAssetsByType = await fetchAssetsWithPrices(unpricedAssets);
-          }
+          const unpricedAssets = await fetchAssets(uid);
+          const { _assets, _assetsByType } = await fetchAssetsWithPrices(
+            unpricedAssets
+          );
+          setAssets(_assets);
+          setAssetsByType(_assetsByType);
         }
-        setAssets(pricedAssetsByType);
       } catch (error) {
         console.error('Error loading assets:', error);
       } finally {
@@ -52,12 +56,15 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
       fetchData();
     } else {
       setAssets([]);
+      setAssetsByType({});
       setIsLoading(false);
     }
   }, [uid]);
 
   return (
-    <AssetsContext.Provider value={{ isLoading, assets, setAssets }}>
+    <AssetsContext.Provider
+      value={{ isLoading, assets, setAssets, assetsByType }}
+    >
       <div>{children}</div>
     </AssetsContext.Provider>
   );

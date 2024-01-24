@@ -35,23 +35,12 @@ export const isNotEmptyArray = (value: []) => {
 
 // ---------------------------------------------------------------------------
 
-// export const changeKeyForTitle = (array: any, newkey: string) => {
-//   if (array === undefined) {
-//     return [];
-//   } else {
-//     array.map((item: any) => ({
-//       ...item,
-//       [newkey]: item.asset,
-//     }));
-
-//     return array;
-//   }
-// };
 export const changeKeyForTitle = (array: any, newkey: string) =>
   array.map((item: any) => ({
     ...item,
     [newkey]: item.asset,
   }));
+
 // ---------------------------------------------------------------------------
 
 type ResultProps = {

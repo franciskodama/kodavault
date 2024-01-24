@@ -9,19 +9,14 @@ import { changeKeyForTitle } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 
 export default function CryptosPage() {
-  const { assets, isLoading } = useAssetsContext();
-  // console.log('---  🚀 ---> | assets:', assets);
+  const { assetsByType, isLoading } = useAssetsContext();
   const [cryptoAssets, setCryptoAssets] = useState([]);
-  // console.log('---  🚀 ---> | cryptoAssets:', cryptoAssets);
 
   useEffect(() => {
-    const cryptoAssetsFiltered = assets.filter(
-      (asset) => asset?.type === 'Crypto'
-    );
-    // console.log('---  🚀 ---> | cryptoAssetsFiltered:', cryptoAssetsFiltered);
-
-    setCryptoAssets(changeKeyForTitle(cryptoAssetsFiltered, 'crypto'));
-  }, [assets]);
+    if (assetsByType) {
+      setCryptoAssets(changeKeyForTitle(assetsByType.Crypto, 'crypto'));
+    }
+  }, [assetsByType]);
 
   return (
     <>

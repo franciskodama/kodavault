@@ -25,20 +25,14 @@ export default function Dashboard({
   assets: Asset[];
   assetsByType: AssetsByType;
 }) {
-  // console.log('---  🚀 ---> | assets dash:', assets);
-  // console.log('---  🚀 ---> | assetsByType dash:', assetsByType);
-  // console.log('---  🚀 ---> | assets dash:', assets);
   const cryptoAssets =
     (assetsByType.Crypto && changeKeyForTitle(assetsByType.Crypto, 'crypto')) ||
     [];
-  // console.log('---  🚀 ---> | cryptoAssets dashboard:', cryptoAssets);
   const stocksAssets =
     (assetsByType.Stock && changeKeyForTitle(assetsByType.Stock, 'stock')) ||
     [];
   const cashAssets =
     (assetsByType.Cash && changeKeyForTitle(assetsByType.Cash, 'cash')) || [];
-
-  // console.log('---  🚀 ---> | cryptoAssets:', cryptoAssets);
 
   // ------------------------------------------------------------------------
   // const athCoins = await getAllTimeHighData();
