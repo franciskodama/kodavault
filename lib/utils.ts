@@ -35,7 +35,7 @@ export const isNotEmptyArray = (value: []) => {
 
 // ---------------------------------------------------------------------------
 
-export const changeKeyForTitle = (array: any, newkey: string) =>
+export const includeNewKeyForCardTitle = (array: any, newkey: string) =>
   array.map((item: any) => ({
     ...item,
     [newkey]: item.asset,

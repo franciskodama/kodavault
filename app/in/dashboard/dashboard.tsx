@@ -5,9 +5,8 @@ import Transactions from './transactions/transactions';
 import Chart from './chart/chart';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
-import CardAth from '@/components/CardAth';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
-import { changeKeyForTitle, currencyFormatter } from '@/lib/utils';
+import { currencyFormatter } from '@/lib/utils';
 import { Asset, AssetsByType } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 // import { currencyRates } from '@/lib/prices';
@@ -19,23 +18,16 @@ const currencyRates = {
   },
 };
 
-export default function Dashboard({
-  assets,
-  assetsByType,
-}: {
-  assets: Asset[];
-  assetsByType: AssetsByType;
-}) {
-  // const { assets, assetsByType, isLoading  } = useAssetsContext();
-
-  // const cryptoAssets =
-  //   (assetsByType.Crypto && changeKeyForTitle(assetsByType.Crypto, 'crypto')) ||
-  //   [];
-  // const stocksAssets =
-  //   (assetsByType.Stock && changeKeyForTitle(assetsByType.Stock, 'stock')) ||
-  //   [];
-  // const cashAssets =
-  //   (assetsByType.Cash && changeKeyForTitle(assetsByType.Cash, 'cash')) || [];
+export default function Dashboard() {
+  //   {
+  //   assets,
+  //   assetsByType,
+  // }: {
+  //   assets: Asset[];
+  //   assetsByType: AssetsByType;
+  // }
+  const { assets, assetsByType, isLoading } = useAssetsContext();
+  console.log('---  🚀 ---> | assets dash:', assets);
 
   // ------------------------------------------------------------------------
   // const athCoins = await getAllTimeHighData();
