@@ -1,9 +1,14 @@
 'use client';
 
-import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
-import { Asset, UnpricedAsset } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
+
 import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  fetchAssets,
+  fetchAssetsWithPrices,
+  groupAssetsByType,
+} from '@/lib/assets';
+import { Asset, AssetsByType, UnpricedAsset } from '@/lib/types';
 
 type AssetsContext = {
   isLoading: boolean;
@@ -14,7 +19,7 @@ type AssetsContext = {
 export const AssetsContext = createContext<AssetsContext | null>(null);
 
 export function AssetsProvider({ children }: { children: React.ReactNode }) {
-  const [assets, setAssets] = useState<Asset[]>([]);
+  const [assets, setAssets] = useState<AssetsByType>({});
   const [isLoading, setIsLoading] = useState(true);
 
   const { user } = useUser();
@@ -24,17 +29,18 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
     const fetchData = async () => {
       setIsLoading(true);
       let unpricedAssets: UnpricedAsset[] = [];
-      let pricedAssets: Asset[] = [];
+      let pricedAssetsByType: AssetsByType = {};
+      let assetsByType: AssetsByType = {};
 
       try {
         if (uid) {
           unpricedAssets = await fetchAssets(uid);
 
           if (unpricedAssets.length > 0) {
-            pricedAssets = await fetchAssetsWithPrices(unpricedAssets);
+            pricedAssetsByType = await fetchAssetsWithPrices(unpricedAssets);
           }
         }
-        setAssets(pricedAssets);
+        setAssets(pricedAssetsByType);
       } catch (error) {
         console.error('Error loading assets:', error);
       } finally {

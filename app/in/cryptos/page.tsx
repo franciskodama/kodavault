@@ -10,17 +10,17 @@ import { useEffect, useState } from 'react';
 
 export default function CryptosPage() {
   const { assets, isLoading } = useAssetsContext();
-  console.log('---  🚀 ---> | assets:', assets);
+  // console.log('---  🚀 ---> | assets:', assets);
   const [cryptoAssets, setCryptoAssets] = useState([]);
-  console.log('---  🚀 ---> | cryptoAssets:', cryptoAssets);
+  // console.log('---  🚀 ---> | cryptoAssets:', cryptoAssets);
 
   useEffect(() => {
-    const cryptoAssetsBefore = assets.filter(
+    const cryptoAssetsFiltered = assets.filter(
       (asset) => asset?.type === 'Crypto'
     );
-    console.log('---  🚀 ---> | cryptoAssetsBefore:', cryptoAssetsBefore);
+    // console.log('---  🚀 ---> | cryptoAssetsFiltered:', cryptoAssetsFiltered);
 
-    setCryptoAssets(changeKeyForTitle(cryptoAssetsBefore, 'crypto'));
+    setCryptoAssets(changeKeyForTitle(cryptoAssetsFiltered, 'crypto'));
   }, [assets]);
 
   return (

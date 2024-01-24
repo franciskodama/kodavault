@@ -1,13 +1,13 @@
 import { currentUser } from '@clerk/nextjs';
 
-import { Asset, AssetsByType, UnpricedAsset } from '../../../lib/types';
+import Dashboard from './dashboard';
+import NoAssets from '@/components/NoAssets';
 import {
   fetchAssets,
   fetchAssetsWithPrices,
   groupAssetsByType,
-} from '../../../lib/assets';
-import Dashboard from './dashboard';
-import NoAssets from '@/components/NoAssets';
+} from '@/lib/assets';
+import { Asset, AssetsByType, UnpricedAsset } from '@/lib/types';
 
 export default async function DashboardPage() {
   try {
@@ -15,22 +15,22 @@ export default async function DashboardPage() {
     const uid = user?.emailAddresses?.[0]?.emailAddress;
 
     let unpricedAssets: UnpricedAsset[] = [];
-    let assets: Asset[] = [];
+    let pricedAssets: Asset[] = [];
     let assetsByType: AssetsByType = {};
 
     if (uid) {
       unpricedAssets = await fetchAssets(uid);
 
       if (unpricedAssets.length > 0) {
-        assets = await fetchAssetsWithPrices(unpricedAssets);
-        assetsByType = groupAssetsByType(assets);
+        pricedAssets = await fetchAssetsWithPrices(unpricedAssets);
+        assetsByType = groupAssetsByType(pricedAssets);
       }
     }
 
     return (
       <>
-        {assets.length > 0 ? (
-          <Dashboard assets={assets} assetsByType={assetsByType} />
+        {pricedAssets.length > 0 ? (
+          <Dashboard assets={pricedAssets} assetsByType={assetsByType} />
         ) : (
           <NoAssets />
         )}
