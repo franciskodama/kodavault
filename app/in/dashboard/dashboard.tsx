@@ -9,6 +9,7 @@ import CardAth from '@/components/CardAth';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { changeKeyForTitle, currencyFormatter } from '@/lib/utils';
 import { Asset, AssetsByType } from '@/lib/types';
+import { useAssetsContext } from '@/context/AssetsContext';
 // import { currencyRates } from '@/lib/prices';
 
 const currencyRates = {
@@ -25,14 +26,16 @@ export default function Dashboard({
   assets: Asset[];
   assetsByType: AssetsByType;
 }) {
-  const cryptoAssets =
-    (assetsByType.Crypto && changeKeyForTitle(assetsByType.Crypto, 'crypto')) ||
-    [];
-  const stocksAssets =
-    (assetsByType.Stock && changeKeyForTitle(assetsByType.Stock, 'stock')) ||
-    [];
-  const cashAssets =
-    (assetsByType.Cash && changeKeyForTitle(assetsByType.Cash, 'cash')) || [];
+  // const { assets, assetsByType, isLoading  } = useAssetsContext();
+
+  // const cryptoAssets =
+  //   (assetsByType.Crypto && changeKeyForTitle(assetsByType.Crypto, 'crypto')) ||
+  //   [];
+  // const stocksAssets =
+  //   (assetsByType.Stock && changeKeyForTitle(assetsByType.Stock, 'stock')) ||
+  //   [];
+  // const cashAssets =
+  //   (assetsByType.Cash && changeKeyForTitle(assetsByType.Cash, 'cash')) || [];
 
   // ------------------------------------------------------------------------
   // const athCoins = await getAllTimeHighData();
@@ -93,13 +96,13 @@ export default function Dashboard({
                 <CardTotal
                   emoji={'🤑'}
                   description={'Total value grouped by currency'}
-                  assets={cashAssets}
+                  assets={assetsByType.Cash}
                   customKey={'cash'}
                 />
                 <CardTotal
                   emoji={'🤑'}
                   description={'Total value grouped by currency'}
-                  assets={cashAssets}
+                  assets={assetsByType.Cash}
                   customKey={'cash'}
                 />
               </div>

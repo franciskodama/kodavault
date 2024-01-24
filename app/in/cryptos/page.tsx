@@ -5,22 +5,23 @@ import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { CardTotal } from '@/components/CardTotal';
 import { Loading } from '@/components/Loading';
 import { useAssetsContext } from '@/context/AssetsContext';
+import { Asset } from '@/lib/types';
 import { changeKeyForTitle } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 
 export default function CryptosPage() {
   const { assetsByType, isLoading } = useAssetsContext();
-  const [cryptoAssets, setCryptoAssets] = useState([]);
+  const [cryptoAssets, setCryptoAssets] = useState<Asset[]>([]);
 
   useEffect(() => {
     if (assetsByType) {
-      setCryptoAssets(changeKeyForTitle(assetsByType.Crypto, 'crypto'));
+      setCryptoAssets(assetsByType.Crypto);
     }
   }, [assetsByType]);
 
   return (
     <>
-      {!isLoading && cryptoAssets.length > 1 ? (
+      {!isLoading && cryptoAssets ? (
         <div>
           <div className='flex flex-wrap gap-2'>
             <CardTotal
