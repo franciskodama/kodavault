@@ -4,10 +4,10 @@ export const getCryptos = async (symbol: string | null) => {
       `https://api.coincap.io/v2/assets?search=${symbol}`,
       {
         method: 'GET',
-        headers: {
-          'Accept-Encoding': 'deflate',
-          Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
-        },
+        // headers: {
+        //   'Accept-Encoding': 'deflate',
+        //   Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
+        // },
       }
     ).then((res) => res.json());
     return response;
