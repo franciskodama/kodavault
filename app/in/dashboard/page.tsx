@@ -9,34 +9,33 @@ import {
 } from '@/lib/assets';
 import { Asset, AssetsByType, UnpricedAsset } from '@/lib/types';
 
+type resultProps = {
+  assets: Asset[];
+  assetsByType: AssetsByType;
+};
+
 export default async function DashboardPage() {
-  // try {
-  //   const user = await currentUser();
-  //   const uid = user?.emailAddresses?.[0]?.emailAddress;
+  let unpricedAssets: UnpricedAsset[] = [];
 
-  //   let unpricedAssets: UnpricedAsset[] = [];
-  //   let pricedAssets: AssetsByType = {};
+  try {
+    const user = await currentUser();
+    const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-  //   if (uid) {
-  //     unpricedAssets = await fetchAssets(uid);
+    if (uid) {
+      unpricedAssets = await fetchAssets(uid);
 
-  //     if (unpricedAssets.length > 0) {
-  //       pricedAssets = await fetchAssetsWithPrices(unpricedAssets);
-  //     }
-  //   }
+      // if (unpricedAssets.length > 1) {
+      //   const result = await fetchAssetsWithPrices(unpricedAssets);
+      //   console.log('---  🚀 ---> | result:', result);
+      // }
+    }
+  } catch (error) {
+    console.error('Error fetching assets:', error);
+  }
 
   return (
     <>
-      {/* {pricedAssets ? ( */}
-      {/* <Dashboard assetsByType={pricedAssets} /> */}
       <Dashboard />
-      {/* ) : ( */}
-      {/* <NoAssets /> */}
-      {/* )} */}
     </>
   );
-  // } catch (error) {
-  //   console.error('Error fetching assets:', error);
-  //   return <NoAssets />;
-  // }
 }

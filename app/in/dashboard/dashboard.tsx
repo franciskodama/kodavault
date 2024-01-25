@@ -27,7 +27,7 @@ export default function Dashboard() {
   //   assetsByType: AssetsByType;
   // }
   const { assets, assetsByType, isLoading } = useAssetsContext();
-  console.log('---  🚀 ---> | assets dash:', assets);
+  // console.log('---  🚀 ---> | assets dash:', assets);
 
   // ------------------------------------------------------------------------
   // const athCoins = await getAllTimeHighData();
