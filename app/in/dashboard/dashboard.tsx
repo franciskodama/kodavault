@@ -35,7 +35,7 @@ export default function Dashboard() {
 
   return (
     <>
-      {assetsByType && (
+      {assets.length > 0 && assetsByType && (
         <div className='flex flex-col gap-2'>
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
           <div className='flex justify-end items-center'>
