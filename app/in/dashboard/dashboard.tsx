@@ -19,15 +19,7 @@ const currencyRates = {
 };
 
 export default function Dashboard() {
-  //   {
-  //   assets,
-  //   assetsByType,
-  // }: {
-  //   assets: Asset[];
-  //   assetsByType: AssetsByType;
-  // }
   const { assets, assetsByType, isLoading } = useAssetsContext();
-  // console.log('---  🚀 ---> | assets dash:', assets);
 
   // ------------------------------------------------------------------------
   // const athCoins = await getAllTimeHighData();
