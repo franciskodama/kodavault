@@ -119,25 +119,19 @@ export default function Dashboard() {
             />
           </div>
           {/* -------- 2nd Row - After Chart -------------------------------------------------------------------------------------- */}
-          {/* <div className='flex flex-wrap gap-2'>
-            <CardTotal
-              emoji={'🪙'}
-              description={'Total value grouped by crypto'}
-              assets={cryptoAssets}
-              customKey={'crypto'}
-            /> */}
-          {/* <CardTotalByCrypto
+          <div className='flex flex-wrap gap-2'>
+            {/* <CardTotalByCrypto
               emoji={'🪙'}
               description={'Only Cryptos'}
               assets={changeKeyAssetToCryptoForTitleOnCard}
               customKey={'crypto'}
             /> */}
-          {/* <CardAth
+            {/* <CardAth
               emoji={'🔮'}
               description={'All-Time High Estimation'}
               assets={assetsByType.Crypto}
-            />
-          </div> */}
+            /> */}
+          </div>
           {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
         </div>
       )}

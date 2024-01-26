@@ -26,8 +26,8 @@ export default function CryptosPage() {
             <CardTotal
               emoji={'🪙'}
               description={'Total value grouped by crypto'}
-              assets={cryptoAssets}
-              customKey={'Crypto'}
+              assets={assetsByType.Crypto}
+              customKey={'crypto'}
             />
             {/* <CardTotalByCrypto
               emoji={'🪙'}
