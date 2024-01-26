@@ -1,20 +1,32 @@
 'use client';
 
-import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
-import { Asset, UnpricedAsset } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
+
 import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  fetchAssets,
+  fetchAssetsWithPrices,
+  groupAssetsByType,
+} from '@/lib/assets';
+import { Asset, AssetsByType, UnpricedAsset } from '@/lib/types';
 
 type AssetsContext = {
   isLoading: boolean;
   assets: Asset[];
   setAssets: React.Dispatch<React.SetStateAction<Asset[]>>;
+  assetsByType: AssetsByType;
+};
+
+type pricedAssetsObj = {
+  assets: Asset[];
+  assetsByType: AssetsByType;
 };
 
 export const AssetsContext = createContext<AssetsContext | null>(null);
 
 export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const [assets, setAssets] = useState<Asset[]>([]);
+  const [assetsByType, setAssetsByType] = useState<AssetsByType>({});
   const [isLoading, setIsLoading] = useState(true);
 
   const { user } = useUser();
@@ -23,18 +35,16 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      let unpricedAssets: UnpricedAsset[] = [];
-      let pricedAssets: Asset[] = [];
 
       try {
         if (uid) {
-          unpricedAssets = await fetchAssets(uid);
-
-          if (unpricedAssets.length > 0) {
-            pricedAssets = await fetchAssetsWithPrices(unpricedAssets);
-          }
+          const unpricedAssets = await fetchAssets(uid);
+          const { _assets, _assetsByType } = await fetchAssetsWithPrices(
+            unpricedAssets
+          );
+          setAssets(_assets);
+          setAssetsByType(_assetsByType);
         }
-        setAssets(pricedAssets);
       } catch (error) {
         console.error('Error loading assets:', error);
       } finally {
@@ -46,12 +56,15 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
       fetchData();
     } else {
       setAssets([]);
+      setAssetsByType({});
       setIsLoading(false);
     }
   }, [uid]);
 
   return (
-    <AssetsContext.Provider value={{ isLoading, assets, setAssets }}>
+    <AssetsContext.Provider
+      value={{ isLoading, assets, setAssets, assetsByType }}
+    >
       <div>{children}</div>
     </AssetsContext.Provider>
   );

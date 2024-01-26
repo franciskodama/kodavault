@@ -10,6 +10,9 @@ export type UnpricedAsset = {
   currency: string;
   uid: string;
   exchange: string;
+  crypto?: string;
+  stock?: string;
+  cash?: string;
 };
 
 export type Asset =

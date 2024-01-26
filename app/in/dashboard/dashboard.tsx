@@ -5,10 +5,10 @@ import Transactions from './transactions/transactions';
 import Chart from './chart/chart';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
-import CardAth from '@/components/CardAth';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
-import { changeKeyForTitle, currencyFormatter } from '@/lib/utils';
+import { currencyFormatter } from '@/lib/utils';
 import { Asset, AssetsByType } from '@/lib/types';
+import { useAssetsContext } from '@/context/AssetsContext';
 // import { currencyRates } from '@/lib/prices';
 
 const currencyRates = {
@@ -18,21 +18,8 @@ const currencyRates = {
   },
 };
 
-export default function Dashboard({
-  assets,
-  assetsByType,
-}: {
-  assets: Asset[];
-  assetsByType: AssetsByType;
-}) {
-  const cryptoAssets =
-    (assetsByType.Crypto && changeKeyForTitle(assetsByType.Crypto, 'crypto')) ||
-    [];
-  const stocksAssets =
-    (assetsByType.Stock && changeKeyForTitle(assetsByType.Stock, 'stock')) ||
-    [];
-  const cashAssets =
-    (assetsByType.Cash && changeKeyForTitle(assetsByType.Cash, 'cash')) || [];
+export default function Dashboard() {
+  const { assets, assetsByType, isLoading } = useAssetsContext();
 
   // ------------------------------------------------------------------------
   // const athCoins = await getAllTimeHighData();
@@ -40,7 +27,7 @@ export default function Dashboard({
 
   return (
     <>
-      {assetsByType && (
+      {assets.length > 0 && assetsByType && (
         <div className='flex flex-col gap-2'>
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
           <div className='flex justify-end items-center'>
@@ -93,13 +80,13 @@ export default function Dashboard({
                 <CardTotal
                   emoji={'🤑'}
                   description={'Total value grouped by currency'}
-                  assets={cashAssets}
+                  assets={assetsByType.Cash}
                   customKey={'cash'}
                 />
                 <CardTotal
                   emoji={'🤑'}
                   description={'Total value grouped by currency'}
-                  assets={cashAssets}
+                  assets={assetsByType.Cash}
                   customKey={'cash'}
                 />
               </div>
@@ -133,37 +120,19 @@ export default function Dashboard({
           </div>
           {/* -------- 2nd Row - After Chart -------------------------------------------------------------------------------------- */}
           <div className='flex flex-wrap gap-2'>
-            <CardTotal
-              emoji={'🪙'}
-              description={'Total value grouped by crypto'}
-              assets={cryptoAssets}
-              customKey={'crypto'}
-            />
             {/* <CardTotalByCrypto
               emoji={'🪙'}
               description={'Only Cryptos'}
               assets={changeKeyAssetToCryptoForTitleOnCard}
               customKey={'crypto'}
             /> */}
-            <CardAth
+            {/* <CardAth
               emoji={'🔮'}
               description={'All-Time High Estimation'}
               assets={assetsByType.Crypto}
-            />
+            /> */}
           </div>
           {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
-
-          {stocksAssets.length > 0 && (
-            <div className='flex flex-wrap gap'>
-              <CardTotal
-                emoji={'🔖'}
-                description={'Total value grouped by stocks'}
-                assets={stocksAssets}
-                customKey={'stock'}
-              />
-              <CardNextPurchases />
-            </div>
-          )}
         </div>
       )}
     </>

@@ -1,13 +1,55 @@
-import WorkInProgress from '@/components/WorkInProgress';
+'use client';
+
+import CardAth from '@/components/CardAth';
+import { CardNextPurchases } from '@/components/CardNextPurchases';
+import { CardTotal } from '@/components/CardTotal';
+import { Loading } from '@/components/Loading';
+import { useAssetsContext } from '@/context/AssetsContext';
+import { Asset } from '@/lib/types';
+import { useEffect, useState } from 'react';
 
 export default function CryptosPage() {
+  const { assetsByType, isLoading } = useAssetsContext();
+  const [cryptoAssets, setCryptoAssets] = useState<Asset[]>([]);
+
+  useEffect(() => {
+    if (assetsByType) {
+      setCryptoAssets(assetsByType.Crypto);
+    }
+  }, [assetsByType]);
+
   return (
     <>
-      <div className='bg-white flex flex-col items-center mt-12 text-4xl w-full h-screen text-center mx-auto'>
-        <h1 className='mt-32 uppercase font-extrabold border-2 border-slate-500 w-[10em] p-4'>
-          Cryptos
-        </h1>
-        <WorkInProgress />
+      {!isLoading && cryptoAssets ? (
+        <div>
+          <div className='flex flex-wrap gap-2'>
+            <CardTotal
+              emoji={'🪙'}
+              description={'Total value grouped by crypto'}
+              assets={assetsByType.Crypto}
+              customKey={'crypto'}
+            />
+            {/* <CardTotalByCrypto
+              emoji={'🪙'}
+              description={'Only Cryptos'}
+              assets={changeKeyAssetToCryptoForTitleOnCard}
+              customKey={'crypto'}
+            /> */}
+            <CardAth
+              emoji={'🔮'}
+              description={'All-Time High Estimation'}
+              assets={cryptoAssets}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className='flex items-center justify-center h-[30em]'>
+          <Loading />
+        </div>
+      )}
+
+      <div>
+        <CardNextPurchases />
       </div>
     </>
   );

@@ -7,6 +7,7 @@ import {
   includePriceToStockAssets,
 } from './prices';
 import { Asset, UnpricedAsset } from './types';
+import { includeNewKeyForCardTitle } from './utils';
 
 export const fetchAssets = async (userEmail: string) => {
   const assetData = await getAssets(userEmail);
@@ -32,14 +33,36 @@ export const fetchAssetsWithPrices = async (
       assetsGroupedByType.Stock &&
         includePriceToStockAssets(assetsGroupedByType.Stock),
     ]);
+  // console.log('---  🚀 ---> | cryptoAssetsWithPrice:', cryptoAssetsWithPrice);
 
-  const assetsWithPricesArray = [
-    ...(cryptoAssetsWithPrice || []),
-    ...(cashAssetsWithPrice || []),
-    ...(stockAssetsWithPrice || []),
-  ];
+  const cryptoAssets =
+    (cryptoAssetsWithPrice &&
+      includeNewKeyForCardTitle(cryptoAssetsWithPrice, 'crypto')) ||
+    [];
+  // console.log('---  🚀 ---> | cryptoAssets:', cryptoAssets);
+  const stocksAssets =
+    (stockAssetsWithPrice &&
+      includeNewKeyForCardTitle(stockAssetsWithPrice, 'stock')) ||
+    [];
+  const cashAssets =
+    (cashAssetsWithPrice &&
+      includeNewKeyForCardTitle(cashAssetsWithPrice, 'cash')) ||
+    [];
 
-  return assetsWithPricesArray;
+  const assets = [...cryptoAssets, ...stocksAssets, ...cashAssets];
+
+  const assetsByType = {
+    Crypto: cryptoAssets || [],
+    Stock: stocksAssets || [],
+    Cash: cashAssets || [],
+  };
+
+  const result = {
+    _assets: assets,
+    _assetsByType: assetsByType,
+  };
+
+  return result;
 };
 
 export const groupAssetsByType = (assets: Asset[]) => {
