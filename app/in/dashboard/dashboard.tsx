@@ -118,21 +118,6 @@ export default function Dashboard() {
               customKey={'subtype'}
             />
           </div>
-          {/* -------- 2nd Row - After Chart -------------------------------------------------------------------------------------- */}
-          <div className='flex flex-wrap gap-2'>
-            {/* <CardTotalByCrypto
-              emoji={'🪙'}
-              description={'Only Cryptos'}
-              assets={changeKeyAssetToCryptoForTitleOnCard}
-              customKey={'crypto'}
-            /> */}
-            {/* <CardAth
-              emoji={'🔮'}
-              description={'All-Time High Estimation'}
-              assets={assetsByType.Crypto}
-            /> */}
-          </div>
-          {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
         </div>
       )}
     </>
