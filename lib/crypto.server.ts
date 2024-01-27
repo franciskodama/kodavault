@@ -1,4 +1,4 @@
-export const fetchCrypto = async (symbol: string | null) => {
+export const fetchCryptoPrice = async (symbol: string | null) => {
   try {
     const response = await fetch(
       `https://api.coincap.io/v2/assets?search=${symbol}`,

@@ -1,8 +1,8 @@
 'use server';
 
-import { fetchCrypto } from './crypto.server';
+import { fetchCryptoPrice } from './crypto.server';
 import { getCurrency } from './currency.server';
-import { getStock } from './stock.server';
+import { fetchStockPrices } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
 
 const currencyRates = {
@@ -12,41 +12,12 @@ const currencyRates = {
   },
 };
 
-export const includePriceToCashAssets = async (
-  cashAssetsArray: UnpricedAsset[]
-) => {
-  // const currencyRates = await getCurrency();
-
-  const transformedAssets = cashAssetsArray.map((item: UnpricedAsset) => {
-    let price = 1;
-    let total = item.qty;
-
-    if (item.currency === 'CAD') {
-      price = 1 / currencyRates.quotes?.USDCAD;
-      total = item.qty / currencyRates.quotes?.USDCAD;
-    } else if (item.currency === 'BRL') {
-      price = 1 / currencyRates.quotes?.USDBRL;
-      total = item.qty / currencyRates.quotes?.USDBRL;
-    }
-
-    return {
-      ...item,
-      qty: item.qty,
-      price: Number(Number(price).toFixed(2)),
-      total: Number(Number(total).toFixed(2)),
-    };
-  });
-
-  return transformedAssets;
-};
-
 export const includePriceToCryptoAssets = async (
   cryptoAssetsArray: UnpricedAsset[]
 ): Promise<Asset[]> => {
-  // console.log('---  🚀 ---> | cryptoAssetsArray:', cryptoAssetsArray);
   const transformedAssets = await Promise.all(
     cryptoAssetsArray.map(async (item: UnpricedAsset) => {
-      const thisCryptoPrice = await fetchCrypto(item.asset);
+      const thisCryptoPrice = await fetchCryptoPrice(item.asset);
       const price = thisCryptoPrice.data[0].priceUsd;
       const total = price * item.qty;
 
@@ -80,7 +51,24 @@ export const includePriceToStockAssets = async (
 
   const symbolsToMakeACall = symbolAndExchange.toString();
   const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');
-  const result = await getStock(symbolsToMakeACall);
+
+  const result = await fetchStockPrices(symbolsToMakeACall);
+
+  // ----------------------------------------------------------------------------------------------------
+  // This is a temporary solution to get only the price and currency and add it to the hardcoded assets (so we don't have to call the API again and blow our limits)
+  const onlyDataForHardcodedAssets = result.body.map((item: any) => {
+    return {
+      symbol: item.symbol,
+      regularMarketPrice: item.regularMarketPrice,
+      currency: item.currency,
+    };
+  });
+  // console.log(
+  //   '---  🚀 ---> | onlyDataForHardcodedAssets:',
+  //   onlyDataForHardcodedAssets
+  // );
+  // ----------------------------------------------------------------------------------------------------
+
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
     (item) => !result.body.find((el: any) => el.symbol === item)
   );
@@ -120,4 +108,32 @@ export const includePriceToStockAssets = async (
   });
 
   return stockAssetsWithPrices;
+};
+
+export const includePriceToCashAssets = async (
+  cashAssetsArray: UnpricedAsset[]
+) => {
+  // const currencyRates = await getCurrency();
+
+  const transformedAssets = cashAssetsArray.map((item: UnpricedAsset) => {
+    let price = 1;
+    let total = item.qty;
+
+    if (item.currency === 'CAD') {
+      price = 1 / currencyRates.quotes?.USDCAD;
+      total = item.qty / currencyRates.quotes?.USDCAD;
+    } else if (item.currency === 'BRL') {
+      price = 1 / currencyRates.quotes?.USDBRL;
+      total = item.qty / currencyRates.quotes?.USDBRL;
+    }
+
+    return {
+      ...item,
+      qty: item.qty,
+      price: Number(Number(price).toFixed(2)),
+      total: Number(Number(total).toFixed(2)),
+    };
+  });
+
+  return transformedAssets;
 };
