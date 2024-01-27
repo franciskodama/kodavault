@@ -29,12 +29,6 @@ export default function CryptosPage() {
               assets={assetsByType.Crypto}
               customKey={'crypto'}
             />
-            {/* <CardTotalByCrypto
-              emoji={'🪙'}
-              description={'Only Cryptos'}
-              assets={changeKeyAssetToCryptoForTitleOnCard}
-              customKey={'crypto'}
-            /> */}
             <CardAth
               emoji={'🔮'}
               description={'All-Time High Estimation'}

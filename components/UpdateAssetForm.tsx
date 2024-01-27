@@ -9,10 +9,22 @@ import { Button } from './ui/button';
 import { Asset, Inputs } from '@/lib/types';
 import { SheetClose } from './ui/sheet';
 
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from './ui/use-toast';
-import { revalidatePath } from 'next/cache';
+import {
+  classTitle,
+  classDiv,
+  classError,
+  classInput,
+  classLabelRadio,
+  classUl,
+} from '@/lib/classes';
+import {
+  getAccount,
+  getCurrency,
+  getExchange,
+  getWallet,
+  subtypeOptions,
+} from '@/lib/assets-form';
 
 export function UpdateAssetForm({ asset }: { asset: Asset }) {
   const [data, setData] = useState<Inputs>();
@@ -22,36 +34,30 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
 
   const {
     register,
+    watch,
     handleSubmit,
     reset,
-    control,
-    setValue,
-    watch,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
+      uid: uid,
       id: asset?.id,
+      subtype: asset?.subtype,
       asset: asset?.asset,
       qty: asset?.qty,
       wallet: asset?.wallet,
       type: asset?.type,
-      subtype: asset?.subtype,
       currency: asset?.currency,
       exchange: asset?.exchange,
       account: asset?.account,
-      uid: uid,
     },
   });
 
-  const classDiv = 'my-4';
-  const classLabel = 'font-bold';
-  const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-1';
-  const classError = 'text-red-500 font-bold my-2';
-  const classDivRadioGroup =
-    'relative flex items-center justify-center w-[8em] h-[2.5em] rounded-[2px] border-2 border-slate-500';
-  const classRadioItem =
-    'absolute t-0 left-1/2 -translate-x-1/2 w-[8em] h-[2.5em] border-0';
-  const classLabelRadio = 'text-xs z-10';
+  const assetSubtype = watch('subtype');
+  const assetWallet = getWallet(assetSubtype);
+  const assetCurrency: string[] = getCurrency(assetSubtype);
+  const assetAccount = getAccount(assetSubtype);
+  const assetExchange = getExchange(assetSubtype);
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
     if (!uid) {
@@ -76,15 +82,37 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
     reset();
     setData(data);
 
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(processForm)}>
-        <div className='flex flex-col mt-6'>
+      <form onSubmit={handleSubmit(processForm)} className='py-8'>
+        <div className={classDiv}>
+          <h3 className={classTitle}>Type</h3>
+          <ul className={classUl}>
+            {subtypeOptions.map((subtypeOption) => (
+              <li key={subtypeOption}>
+                <input
+                  className='hidden peer'
+                  type='radio'
+                  value={subtypeOption}
+                  id={subtypeOption}
+                  {...register('subtype')}
+                />
+                <label className={classLabelRadio} htmlFor={subtypeOption}>
+                  <span>{subtypeOption}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className='flex flex-col'>
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='asset'>
+            <label className={classTitle} htmlFor='asset'>
               Asset
             </label>
             <input
@@ -98,7 +126,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
           </div>
 
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='qty'>
+            <label className={classTitle} htmlFor='qty'>
               Quantity
             </label>
             <input
@@ -112,153 +140,88 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
           </div>
 
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='wallet'>
-              Wallet
-            </label>
-            <RadioGroup
-              className='flex flex-wrap mt-1'
-              defaultValue={asset?.wallet}
-            >
-              {walletOptions.map((wallet) => (
-                <div key={wallet} className={classDivRadioGroup}>
-                  <RadioGroupItem
-                    className={classRadioItem}
-                    value={wallet}
-                    id={wallet}
+            <h3 className={classTitle}>Wallet</h3>
+            <ul className={classUl}>
+              {assetWallet.map((walletOption) => (
+                <li key={walletOption}>
+                  <input
+                    className='hidden peer'
+                    type='radio'
+                    value={walletOption}
+                    id={walletOption}
                     {...register('wallet')}
                   />
-                  <Label className={classLabelRadio} htmlFor={wallet}>
-                    {wallet}
-                  </Label>
-                  {errors.wallet?.message && (
-                    <p className={classError}>{errors.wallet.message}</p>
-                  )}
-                </div>
+                  <label className={classLabelRadio} htmlFor={walletOption}>
+                    <span>{walletOption}</span>
+                  </label>
+                </li>
               ))}
-            </RadioGroup>
+            </ul>
           </div>
 
           <div className={classDiv}>
-            <label className={classLabel} htmlFor='type'>
-              Type
-            </label>
-            <input
-              className={classInput}
-              placeholder='Type (Stock, Altcoin, Crypto)'
-              {...register('type', { required: "Type can't be empty" })}
-            />
-            {errors.type?.message && (
-              <p className={classError}>{errors.type.message}</p>
-            )}
-          </div>
-
-          <div className={classDiv}>
-            <label className={classLabel} htmlFor='subtype'>
-              Subtype
-            </label>
-            <RadioGroup
-              className='flex flex-wrap mt-1'
-              defaultValue={asset?.subtype}
-            >
-              {subtypeOptions.map((subtype) => (
-                <div key={subtype} className={classDivRadioGroup}>
-                  <RadioGroupItem
-                    className={classRadioItem}
-                    value={subtype}
-                    id={subtype}
-                    {...register('subtype')}
-                  />
-                  <Label className={classLabelRadio} htmlFor={subtype}>
-                    {subtype}
-                  </Label>
-                  {errors.subtype?.message && (
-                    <p className={classError}>{errors.subtype.message}</p>
-                  )}
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
-
-          <div className={classDiv}>
-            <label className={classLabel} htmlFor='currency'>
-              Currency
-            </label>
-            <RadioGroup
-              className='flex flex-wrap mt-1'
-              defaultValue={asset?.currency}
-            >
-              {currencyOptions.map((currency) => (
-                <div key={currency} className={classDivRadioGroup}>
-                  <RadioGroupItem
-                    className={classRadioItem}
-                    value={currency}
-                    id={currency}
+            <h3 className={classTitle}>Currency</h3>
+            <ul className={classUl}>
+              {assetCurrency.map((currencyOption) => (
+                <li key={currencyOption}>
+                  <input
+                    className='hidden peer'
+                    type='radio'
+                    value={currencyOption}
+                    id={currencyOption}
                     {...register('currency')}
                   />
-                  <Label className={classLabelRadio} htmlFor={currency}>
-                    {currency}
-                  </Label>
-                  {errors.currency?.message && (
-                    <p className={classError}>{errors.currency.message}</p>
-                  )}
-                </div>
+                  <label className={classLabelRadio} htmlFor={currencyOption}>
+                    <span>{currencyOption}</span>
+                  </label>
+                </li>
               ))}
-            </RadioGroup>
+            </ul>
           </div>
 
-          <div className={classDiv}>
-            <label className={classLabel} htmlFor='account'>
-              Account
-            </label>
-            <RadioGroup
-              className='flex flex-wrap mt-1'
-              defaultValue={asset?.account}
-            >
-              {accountOptions.map((account) => (
-                <div key={account} className={classDivRadioGroup}>
-                  <RadioGroupItem
-                    className={classRadioItem}
-                    value={account}
-                    id={account}
-                    {...register('account')}
-                  />
-                  <Label className={classLabelRadio} htmlFor={account}>
-                    {account}
-                  </Label>
-                  {errors.account?.message && (
-                    <p className={classError}>{errors.account.message}</p>
-                  )}
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
+          {assetAccount[0] !== 'Investment' && assetAccount[0] !== 'cc' && (
+            <div className={classDiv}>
+              <h3 className={classTitle}>Account</h3>
+              <ul className={classUl}>
+                {assetAccount.map((accountOption) => (
+                  <li key={accountOption}>
+                    <input
+                      className='hidden peer'
+                      type='radio'
+                      value={accountOption}
+                      id={accountOption}
+                      {...register('account')}
+                    />
+                    <label className={classLabelRadio} htmlFor={accountOption}>
+                      <span>{accountOption}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-          <div className={classDiv}>
-            <label className={classLabel} htmlFor='exchange'>
-              Exchange
-            </label>
-            <RadioGroup
-              className='flex flex-wrap mt-1'
-              defaultValue={asset?.exchange}
-            >
-              {exchangeOptions.map((exchange) => (
-                <div key={exchange} className={classDivRadioGroup}>
-                  <RadioGroupItem
-                    className={classRadioItem}
-                    value={exchange}
-                    id={exchange}
-                    {...register('exchange')}
-                  />
-                  <Label className={classLabelRadio} htmlFor={exchange}>
-                    {exchange}
-                  </Label>
-                  {errors.exchange?.message && (
-                    <p className={classError}>{errors.exchange.message}</p>
-                  )}
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
+          {assetExchange[0] !== 'N/A' && (
+            <div className={classDiv}>
+              <h3 className={classTitle}>Exchange</h3>
+              <ul className={classUl}>
+                {assetExchange.map((exchangeOption) => (
+                  <li key={exchangeOption}>
+                    <input
+                      className='hidden peer'
+                      type='radio'
+                      value={exchangeOption}
+                      id={exchangeOption}
+                      {...register('exchange')}
+                    />
+                    <label className={classLabelRadio} htmlFor={exchangeOption}>
+                      <span>{exchangeOption}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <Button className='mt-8' type='submit'>
             Update Asset
@@ -274,28 +237,3 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
     </>
   );
 }
-
-const walletOptions = [
-  'Binance',
-  'Bybit',
-  'Crypto.com',
-  'Wealthsimple',
-  'Ledger',
-  'Trezor',
-  'Nubank',
-  'Tangerine',
-];
-
-const subtypeOptions = [
-  'Altcoin',
-  'BTC',
-  'ETH',
-  'Stock-CAD',
-  'Stock-USD',
-  'Stock-BRL',
-];
-
-const typeOptions = ['Stock', 'Altcoin', 'Crypto'];
-const currencyOptions = ['USD', 'CAD', 'BRL'];
-const accountOptions = ['Investment', 'cc-TFSA', 'cc-FHSA'];
-const exchangeOptions = ['N/A', 'TO', 'V', 'SA', 'NASDAQ'];

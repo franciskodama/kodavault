@@ -32,17 +32,6 @@ export default function NavMenu() {
           </li>
         </Link>
 
-        <Link href='/in/assets'>
-          <li>
-            <Button
-              variant={pathname === '/in/assets' ? 'default' : 'ghost'}
-              size='md'
-            >
-              Assets
-            </Button>
-          </li>
-        </Link>
-
         <Link href='/in/cryptos'>
           <li>
             <Button
@@ -65,13 +54,24 @@ export default function NavMenu() {
           </li>
         </Link>
 
-        <Link href='/in/resources'>
+        <Link href='/in/assets'>
           <li>
             <Button
-              variant={pathname === '/in/resources' ? 'default' : 'ghost'}
+              variant={pathname === '/in/assets' ? 'default' : 'ghost'}
               size='md'
             >
-              Resources
+              Assets
+            </Button>
+          </li>
+        </Link>
+
+        <Link href='/in/knowledge'>
+          <li>
+            <Button
+              variant={pathname === '/in/knowledge' ? 'default' : 'ghost'}
+              size='md'
+            >
+              Knowledge
             </Button>
           </li>
         </Link>

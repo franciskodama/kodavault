@@ -65,6 +65,7 @@ export default function Dashboard() {
           <div className='flex gap-2'>
             <div className='flex flex-col basis-4/5 gap-2'>
               <div className='flex flex-wrap gap-2'>
+                <div className='w-1/4 bg-slate-600 border-2' />
                 <CardTotal
                   emoji={'💵'}
                   description={`Assets' Origin Breakdown`}
@@ -83,16 +84,14 @@ export default function Dashboard() {
                   assets={assetsByType.Cash}
                   customKey={'cash'}
                 />
-                <CardTotal
-                  emoji={'🤑'}
-                  description={'Total value grouped by currency'}
-                  assets={assetsByType.Cash}
-                  customKey={'cash'}
-                />
               </div>
               <Transactions />
-              <Chart />
+              <div className='flex'>
+                <Chart />
+                <div className='w-1/2 bg-slate-600 border-2' />
+              </div>
             </div>
+
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
             <div className='flex flex-col basis-1/5'>
               <CardTotalAllCurrency
@@ -105,6 +104,7 @@ export default function Dashboard() {
 
           {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
           <div className='flex flex-wrap gap-2'>
+            <div className='w-1/3 bg-slate-600 border-2' />
             <CardTotal
               emoji={'🧺'}
               description={'Total value grouped by wallet'}
@@ -118,21 +118,6 @@ export default function Dashboard() {
               customKey={'subtype'}
             />
           </div>
-          {/* -------- 2nd Row - After Chart -------------------------------------------------------------------------------------- */}
-          <div className='flex flex-wrap gap-2'>
-            {/* <CardTotalByCrypto
-              emoji={'🪙'}
-              description={'Only Cryptos'}
-              assets={changeKeyAssetToCryptoForTitleOnCard}
-              customKey={'crypto'}
-            /> */}
-            {/* <CardAth
-              emoji={'🔮'}
-              description={'All-Time High Estimation'}
-              assets={assetsByType.Crypto}
-            /> */}
-          </div>
-          {/* -------- 3rd Row - After Chart-------------------------------------------------------------------------------------- */}
         </div>
       )}
     </>

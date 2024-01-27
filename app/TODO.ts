@@ -2,7 +2,9 @@
 
 // PRIORITIES 1:
 // TODO: I included asset symbol === 111111 and broke the application
-// TODO: Update Asset - fix bug
+// TODO: PETR4 and KLBN11 are not priced
+// TODO: APE is not priced
+// TODO: Many Assets (Stock-CAD) is not priced
 
 // TODO: Create the Crypto column of how much in percentage we want of each Asset and show how much is missing or over the limit
 // TODO: Have validation on the Forms
@@ -40,6 +42,10 @@
 // TODO: It's not showing APE price
 
 // DONE ========================================================================================
+// TODO: Update Asset - with new logic in the form
+// TODO: Fix bug Crypto Prices that was more expensive
+// TODO: Move Cryptos from Dashboard to Cryptos Page
+// TODO: Move Stocks from Dashboard to Stocks Page
 // TODO: Dinamically generate the fields depend on the type of asset: https://www.youtube.com/watch?v=lW_0InDuejU&t=8s
 // TODO: Test No Assets Page, then test it including one Asset in the database
 // TODO: Button Styles
