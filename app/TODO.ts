@@ -40,6 +40,9 @@
 // TODO: It's not showing APE price
 
 // DONE ========================================================================================
+// TODO: Fix bug Crypto Prices that was more expensive
+// TODO: Move Cryptos from Dashboard to Cryptos Page
+// TODO: Move Stocks from Dashboard to Stocks Page
 // TODO: Dinamically generate the fields depend on the type of asset: https://www.youtube.com/watch?v=lW_0InDuejU&t=8s
 // TODO: Test No Assets Page, then test it including one Asset in the database
 // TODO: Button Styles

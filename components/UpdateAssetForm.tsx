@@ -22,25 +22,26 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
 
   const {
     register,
+    control,
+    watch,
     handleSubmit,
     reset,
-    control,
+    getValues,
     setValue,
-    watch,
     formState: { errors },
   } = useForm<Inputs>({
-    defaultValues: {
-      id: asset?.id,
-      asset: asset?.asset,
-      qty: asset?.qty,
-      wallet: asset?.wallet,
-      type: asset?.type,
-      subtype: asset?.subtype,
-      currency: asset?.currency,
-      exchange: asset?.exchange,
-      account: asset?.account,
-      uid: uid,
-    },
+    // defaultValues: {
+    //   id: asset?.id,
+    //   asset: asset?.asset,
+    //   qty: asset?.qty,
+    //   wallet: asset?.wallet,
+    //   type: asset?.type,
+    //   subtype: asset?.subtype,
+    //   currency: asset?.currency,
+    //   exchange: asset?.exchange,
+    //   account: asset?.account,
+    //   uid: uid,
+    // },
   });
 
   const classDiv = 'my-4';

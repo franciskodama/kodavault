@@ -33,13 +33,11 @@ export const fetchAssetsWithPrices = async (
       assetsGroupedByType.Stock &&
         includePriceToStockAssets(assetsGroupedByType.Stock),
     ]);
-  // console.log('---  🚀 ---> | cryptoAssetsWithPrice:', cryptoAssetsWithPrice);
 
   const cryptoAssets =
     (cryptoAssetsWithPrice &&
       includeNewKeyForCardTitle(cryptoAssetsWithPrice, 'crypto')) ||
     [];
-  // console.log('---  🚀 ---> | cryptoAssets:', cryptoAssets);
   const stocksAssets =
     (stockAssetsWithPrice &&
       includeNewKeyForCardTitle(stockAssetsWithPrice, 'stock')) ||
