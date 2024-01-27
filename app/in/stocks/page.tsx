@@ -34,6 +34,7 @@ export default function StocksPage() {
               assets={stocksAssets}
               customKey={'stock'}
             />
+            <div className='w-[90em] border-2' />
           </div>
         )}
       </div>

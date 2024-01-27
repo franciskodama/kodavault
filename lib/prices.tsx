@@ -1,6 +1,6 @@
 'use server';
 
-import { getCryptos } from './crypto.server';
+import { fetchCrypto } from './crypto.server';
 import { getCurrency } from './currency.server';
 import { getStock } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
@@ -43,9 +43,10 @@ export const includePriceToCashAssets = async (
 export const includePriceToCryptoAssets = async (
   cryptoAssetsArray: UnpricedAsset[]
 ): Promise<Asset[]> => {
+  // console.log('---  🚀 ---> | cryptoAssetsArray:', cryptoAssetsArray);
   const transformedAssets = await Promise.all(
     cryptoAssetsArray.map(async (item: UnpricedAsset) => {
-      const thisCryptoPrice = await getCryptos(item.asset);
+      const thisCryptoPrice = await fetchCrypto(item.asset);
       const price = thisCryptoPrice.data[0].priceUsd;
       const total = price * item.qty;
 

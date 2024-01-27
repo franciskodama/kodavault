@@ -102,21 +102,21 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
   },
-  {
-    accessorKey: 'type',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Type
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-  },
+  // {
+  //   accessorKey: 'type',
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         className={tableHeaderClass}
+  //         variant='ghost'
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+  //       >
+  //         Type
+  //         <ArrowUpDown className='ml-2 h-4 w-4' />
+  //       </Button>
+  //     );
+  //   },
+  // },
   {
     accessorKey: 'subtype',
     header: ({ column }) => {
@@ -127,6 +127,21 @@ export const columns: ColumnDef<Asset>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Subtype
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: 'exchange',
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Exchange
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
