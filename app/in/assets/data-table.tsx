@@ -93,8 +93,6 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className='h-24 text-center'>
-                {/* No results. */}
-
                 <div className='flex items-center justify-around'>
                   <div className='w-[450px] mx-auto my-8'>
                     <AspectRatio ratio={16 / 9}>
@@ -107,7 +105,6 @@ export function DataTable<TData, TValue>({
                       />
                     </AspectRatio>
                   </div>
-
                   <div className='flex flex-col w-[450px] mx-auto'>
                     <p className='text-2xl font-semibold'>
                       Spice it up by adding some assets!
@@ -130,8 +127,6 @@ export function DataTable<TData, TValue>({
                     </Sheet>
                   </div>
                 </div>
-
-                {/* --------------------- */}
               </TableCell>
             </TableRow>
           )}
