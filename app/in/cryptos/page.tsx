@@ -1,8 +1,8 @@
 'use client';
 
 import CardAth from '@/components/CardAth';
+import { CardCryptoGoals } from '@/components/CardCryptoGoals';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
-import { CardTotal } from '@/components/CardTotal';
 import { Loading } from '@/components/Loading';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { Asset } from '@/lib/types';
@@ -23,7 +23,7 @@ export default function CryptosPage() {
       {!isLoading && cryptoAssets ? (
         <div>
           <div className='flex flex-wrap gap-2'>
-            <CardTotal
+            <CardCryptoGoals
               emoji={'🪙'}
               description={'Total value grouped by crypto'}
               assets={assetsByType.Crypto}

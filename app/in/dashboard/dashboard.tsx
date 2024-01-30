@@ -9,6 +9,7 @@ import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { currencyFormatter } from '@/lib/utils';
 import { Asset, AssetsByType } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
+import { CardKeyAssets } from '@/components/CardKeyAssets';
 // import { currencyRates } from '@/lib/prices';
 
 const currencyRates = {
@@ -65,7 +66,10 @@ export default function Dashboard() {
           <div className='flex gap-2'>
             <div className='flex flex-col basis-4/5 gap-2'>
               <div className='flex flex-wrap gap-2'>
-                <div className='w-1/4 bg-slate-600 border-2' />
+                {/* <div className='w-1/4 bg-slate-600 border-2' /> */}
+
+                <CardKeyAssets />
+
                 <CardTotal
                   emoji={'💵'}
                   description={`Assets' Origin Breakdown`}
