@@ -30,6 +30,8 @@ export const CardCryptoGoals = ({
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
   // TODO: Include the goal amount that will come from the database
+  // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
+  // TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD) + Observation (Look at Stochastic Analysis 4h, MACD 3D and W)
 
   return (
     <Card className='flex-1'>

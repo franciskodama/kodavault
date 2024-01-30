@@ -68,8 +68,8 @@ export default function Dashboard() {
               <div className='flex flex-wrap gap-2'>
                 {/* <div className='w-1/4 bg-slate-600 border-2' /> */}
 
-                <CardKeyAssets />
-
+                {/* <CardKeyAssets /> */}
+                <CardNextPurchases />
                 <CardTotal
                   emoji={'💵'}
                   description={`Assets' Origin Breakdown`}
