@@ -26,13 +26,16 @@ export const CardCryptoGoals = ({
   description?: string;
 }) => {
   const totalArray = getTotalByKey(assets, customKey);
+  console.log('---  🚀 ---> | totalArray:', totalArray);
   const sortedArray = totalArray.sort((a, b) => b.total - a.total);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
-  console.log('---  🚀 ---> | assets:', assets);
-  // TODO: Include the goal amount that will come from the database
   // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
   // TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD) + Observation (Look at Stochastic Analysis 4h, MACD 3D and W)
+  // TODO: Resistences and Supports?
+
+  // DONE:
+  // TODO: Include the goal key === 0 for each asset
 
   return (
     <Card className='flex-1'>
@@ -62,6 +65,15 @@ export const CardCryptoGoals = ({
                   >{`${numberFormatter.format(
                     (item.total / total) * 100
                   )}%`}</p>
+                  {/* <p
+                    className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                      (item.total / total) * 100 > item.goal
+                        ? 'bg-red-500'
+                        : 'bg-green-500'
+                    }`}
+                  >{`${numberFormatter.format(
+                    (item.total / total) * 100
+                  )}%`}</p> */}
                 </div>
               </div>
             ))}

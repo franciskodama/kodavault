@@ -21,7 +21,6 @@ export type Asset =
       price?: number;
       total?: number;
       ath?: number;
-      goal?: number;
     });
 
 export type AssetsByType = {

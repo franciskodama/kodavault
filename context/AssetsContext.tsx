@@ -3,11 +3,7 @@
 import { useUser } from '@clerk/nextjs';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import {
-  fetchAssets,
-  fetchAssetsWithPrices,
-  groupAssetsByType,
-} from '@/lib/assets';
+import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
 import { Asset, AssetsByType, UnpricedAsset } from '@/lib/types';
 
 type AssetsContext = {
