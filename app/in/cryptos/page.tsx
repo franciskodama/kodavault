@@ -22,10 +22,10 @@ export default function CryptosPage() {
     <>
       {!isLoading && cryptoAssets ? (
         <div>
-          <div className='flex flex-wrap gap-2'>
+          <div className='flex flex-col gap-2'>
             <CardCryptoGoals
               emoji={'🪙'}
-              description={'Total value grouped by crypto'}
+              description={'Total by crypto and the amount to reach it'}
               assets={assetsByType.Crypto}
               customKey={'crypto'}
             />

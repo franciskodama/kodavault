@@ -29,6 +29,7 @@ export const CardCryptoGoals = ({
   const sortedArray = totalArray.sort((a, b) => b.total - a.total);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
+  console.log('---  🚀 ---> | assets:', assets);
   // TODO: Include the goal amount that will come from the database
   // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
   // TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD) + Observation (Look at Stochastic Analysis 4h, MACD 3D and W)
@@ -39,7 +40,7 @@ export const CardCryptoGoals = ({
         <div className='flex flex-col'>
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
-              <span>{`Total By Crypto + Goals`}</span>
+              <span>{`Coins + Goals`}</span>
               <span className='text-3xl'>{emoji}</span>
             </CardTitle>
             <CardDescription className='text-xs'>{description}</CardDescription>
