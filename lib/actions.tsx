@@ -95,3 +95,16 @@ export async function deleteAsset(id: string) {
     throw new Error('🚨 Failed to delete asset');
   }
 }
+
+export const getCryptoGoals = async (uid: string) => {
+  try {
+    const cryptoGoals = await prisma.coinGoal.findMany({
+      where: {
+        uid,
+      },
+    });
+    return cryptoGoals;
+  } catch (error) {
+    return { error };
+  }
+};

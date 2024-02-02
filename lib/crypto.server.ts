@@ -1,3 +1,5 @@
+import prisma from './prisma';
+
 export const fetchCryptoPrice = async (symbol: string | null) => {
   try {
     const response = await fetch(

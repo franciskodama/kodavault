@@ -13,6 +13,24 @@ import {
   numberFormatter,
 } from '../lib/utils';
 import { Asset } from '../lib/types';
+import { useUser } from '@clerk/nextjs';
+import { useEffect, useState } from 'react';
+import { getCryptoGoals } from '@/lib/actions';
+
+type CryptoGoals = {
+  id: number;
+  uid: string;
+  created_at?: Date;
+  coin: string;
+  goal: number;
+};
+
+// const objTest = {
+//   id: 1,
+//   uid: 'fk@fkodama.com',
+//   coin: 'BTC',
+//   goal: 50,
+// };
 
 export const CardCryptoGoals = ({
   assets,
@@ -25,17 +43,33 @@ export const CardCryptoGoals = ({
   emoji?: string;
   description?: string;
 }) => {
+  const [cryptoGoals, setCryptoGoals] = useState<CryptoGoals[]>([]);
+  const { user } = useUser();
+
   const totalArray = getTotalByKey(assets, customKey);
-  console.log('---  🚀 ---> | totalArray:', totalArray);
   const sortedArray = totalArray.sort((a, b) => b.total - a.total);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
-  // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
-  // TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD) + Observation (Look at Stochastic Analysis 4h, MACD 3D and W)
-  // TODO: Resistences and Supports?
-
-  // DONE:
-  // TODO: Include the goal key === 0 for each asset
+  useEffect(() => {
+    const fetchCryptoGoals = async () => {
+      if (user) {
+        try {
+          const fetchedGoals = await getCryptoGoals(
+            user.emailAddresses[0].emailAddress
+          );
+          if ('error' in fetchedGoals) {
+            console.error('Error fetching crypto goals:', fetchedGoals.error);
+            setCryptoGoals([]);
+          } else {
+            setCryptoGoals(fetchedGoals);
+          }
+        } catch (error) {
+          console.error('Error fetching crypto goals:', error);
+        }
+      }
+    };
+    fetchCryptoGoals();
+  }, [user]);
 
   return (
     <Card className='flex-1'>
@@ -89,3 +123,17 @@ export const CardCryptoGoals = ({
     </Card>
   );
 };
+
+// TODO: Add Asset: if there isn't this asset symbol in the CoinGaol table, create it with goal = 0
+// TODO: Card Crypto Goals: get all content of CoinGoal table for the current user
+// TODO: Show the field (form) with the goal pulled from CoinGoal database
+// TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
+// TODO: Create button to save the goal for each asset (current line) + Save in the database
+// TODO: What to do if there is a goal for a new asset the user desire, but they didn't buy it yet? They have see the goal to remember to buy it.
+
+//------------------------------------------
+// TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
+// TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD) + Observation (Look at Stochastic Analysis 4h, MACD 3D and W)
+// TODO: Resistences and Supports?
+
+// DONE:
