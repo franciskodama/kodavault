@@ -25,12 +25,13 @@ type CryptoGoals = {
   goal: number;
 };
 
-// const objTest = {
-//   id: 1,
-//   uid: 'fk@fkodama.com',
-//   coin: 'BTC',
-//   goal: 50,
-// };
+type SortedArray = { value: string; total: number };
+
+type MergedArrayItem = {
+  value: string;
+  total: number;
+  goal: number;
+};
 
 export const CardCryptoGoals = ({
   assets,
@@ -70,6 +71,47 @@ export const CardCryptoGoals = ({
     };
     fetchCryptoGoals();
   }, [user]);
+
+  // console.log('---  🚀 ---> | sortedArray:', sortedArray);
+  // console.log('---  🚀 ---> | cryptoGoals:', cryptoGoals);
+
+  const completeDataTable = ({
+    cryptoGoals,
+    sortedArray,
+  }: {
+    cryptoGoals: CryptoGoals[];
+    sortedArray: SortedArray[];
+  }) => {
+    // Create a map for quick lookup of goals by coin
+    const goalsMap = new Map(cryptoGoals.map((item) => [item.coin, item.goal]));
+
+    // Create a map for quick lookup of totals by value
+    const totalsMap = new Map(
+      sortedArray.map((item) => [item.value, item.total])
+    );
+
+    // Merge the arrays
+    const mergedArray: MergedArrayItem[] = [];
+
+    // Iterate over sortedArray to add items to mergedArray, including goals (or 0 if not found)
+    sortedArray.forEach(({ value, total }) => {
+      const goal = goalsMap.has(value) ? goalsMap.get(value) : 0; // Get goal if exists, else 0
+      mergedArray.push({ value, total, goal });
+    });
+
+    // Check if there are any coins in cryptoGoals not in sortedArray, and add them with total 0
+    cryptoGoals.forEach(({ coin, goal }) => {
+      if (!totalsMap.has(coin)) {
+        // If coin not in totalsMap, add it to mergedArray with total 0
+        mergedArray.push({ value: coin, total: 0, goal });
+      }
+    });
+
+    return mergedArray;
+  };
+
+  const result = completeDataTable({ cryptoGoals, sortedArray });
+  console.log('---  🚀 ---> | result:', result);
 
   return (
     <Card className='flex-1'>
@@ -137,3 +179,4 @@ export const CardCryptoGoals = ({
 // TODO: Resistences and Supports?
 
 // DONE:
+// TODO: Create Server Action for getting Crypto Goals of this user
