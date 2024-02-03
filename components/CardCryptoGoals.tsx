@@ -110,64 +110,71 @@ export const CardCryptoGoals = ({
     return mergedArray;
   };
 
-  const result = completeDataTable({ cryptoGoals, sortedArray });
-  console.log('---  🚀 ---> | result:', result);
+  const dataTable = completeDataTable({ cryptoGoals, sortedArray });
 
   return (
-    <Card className='flex-1'>
-      <div className='flex flex-col justify-between h-full'>
-        <div className='flex flex-col'>
-          <CardHeader>
-            <CardTitle className='capitalize flex items-center justify-between'>
-              <span>{`Coins + Goals`}</span>
-              <span className='text-3xl'>{emoji}</span>
-            </CardTitle>
-            <CardDescription className='text-xs'>{description}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {sortedArray.map((item) => (
-              <div key={item.value} className='flex justify-between'>
-                <h3>{item.value}</h3>
-                <div className='flex'>
-                  <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
-                    item.total
-                  )}`}</p>
-                  <p
-                    className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
-                      (item.total / total) * 100 > 50
-                        ? 'bg-red-500'
-                        : 'bg-green-500'
-                    }`}
-                  >{`${numberFormatter.format(
-                    (item.total / total) * 100
-                  )}%`}</p>
-                  {/* <p
-                    className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
-                      (item.total / total) * 100 > item.goal
-                        ? 'bg-red-500'
-                        : 'bg-green-500'
-                    }`}
-                  >{`${numberFormatter.format(
-                    (item.total / total) * 100
-                  )}%`}</p> */}
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </div>
-        <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
-          <h3>Total</h3>
-          {numberFormatterNoDecimals.format(
-            totalArray.reduce((sum: number, item) => sum + item.total, 0)
-          )}
-        </CardFooter>
-      </div>
-    </Card>
+    <>
+      {dataTable && dataTable.length > 0 && (
+        <Card className='flex-1'>
+          <div className='flex flex-col justify-between h-full'>
+            <div className='flex flex-col'>
+              <CardHeader>
+                <CardTitle className='capitalize flex items-center justify-between'>
+                  <span>{`Coins + Goals`}</span>
+                  <span className='text-3xl'>{emoji}</span>
+                </CardTitle>
+                <CardDescription className='text-xs'>
+                  {description}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {dataTable.map((item) => (
+                  <div key={item.value} className='flex justify-between'>
+                    <h3>{item.value}</h3>
+                    <div className='flex'>
+                      <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
+                        item.total
+                      )}`}</p>
+                      <p
+                        className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                          (item.total / total) * 100 > 50
+                            ? 'bg-red-500'
+                            : 'bg-green-500'
+                        }`}
+                      >{`${numberFormatter.format(
+                        (item.total / total) * 100
+                      )}%`}</p>
+
+                      <p
+                        className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                          item.goal === 0
+                            ? 'bg-blue-500'
+                            : (item.total / total) * 100 > item.goal
+                            ? 'bg-red-500'
+                            : 'bg-green-500'
+                        }`}
+                      >
+                        {`${item.goal} %`}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </div>
+            <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
+              <h3>Total</h3>
+              {numberFormatterNoDecimals.format(
+                totalArray.reduce((sum: number, item) => sum + item.total, 0)
+              )}
+            </CardFooter>
+          </div>
+        </Card>
+      )}
+    </>
   );
 };
 
 // TODO: Add Asset: if there isn't this asset symbol in the CoinGaol table, create it with goal = 0
-// TODO: Card Crypto Goals: get all content of CoinGoal table for the current user
 // TODO: Show the field (form) with the goal pulled from CoinGoal database
 // TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
 // TODO: Create button to save the goal for each asset (current line) + Save in the database
