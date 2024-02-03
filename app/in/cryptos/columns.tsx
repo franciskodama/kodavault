@@ -34,7 +34,7 @@ import { toast } from '@/components/ui/use-toast';
 
 export const columns: ColumnDef<Asset>[] = [
   {
-    accessorKey: '',
+    accessorKey: 'value',
     header: ({ column }) => {
       return (
         <Button
@@ -42,49 +42,11 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Wallet
+          Coin
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
-  },
-  {
-    accessorKey: 'account',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Account
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: 'asset',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Asset
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: 'qty',
-    header: () => <div className={tableHeaderClass}>Qty</div>,
-  },
-  {
-    accessorKey: 'price',
-    header: () => <div className={tableHeaderClass}>Price</div>,
   },
   {
     accessorKey: 'total',
@@ -101,23 +63,8 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: 'type',
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         className={tableHeaderClass}
-  //         variant='ghost'
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-  //       >
-  //         Type
-  //         <ArrowUpDown className='ml-2 h-4 w-4' />
-  //       </Button>
-  //     );
-  //   },
-  // },
   {
-    accessorKey: 'subtype',
+    accessorKey: 'share',
     header: ({ column }) => {
       return (
         <Button
@@ -125,14 +72,14 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Subtype
+          Share
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
   },
   {
-    accessorKey: 'exchange',
+    accessorKey: 'goal',
     header: ({ column }) => {
       return (
         <Button
@@ -140,26 +87,15 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Exchange
+          Goal
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
   },
   {
-    accessorKey: 'currency',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Currency
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
+    accessorKey: 'obs',
+    header: () => <div className={tableHeaderClass}>Obs</div>,
   },
   {
     id: 'actions',
