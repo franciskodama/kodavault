@@ -108,3 +108,22 @@ export const getCryptoGoals = async (uid: string) => {
     return { error };
   }
 };
+
+export async function updateCoinShareGoal(formData: Inputs) {
+  const { uid, value, goal } = formData;
+
+  try {
+    await prisma.coinGoal.update({
+      where: {
+        uid,
+      },
+      data: {
+        goal,
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}

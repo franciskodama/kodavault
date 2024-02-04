@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className='rounded-sm border border-slate-200'>
+    <div className='rounded-sm border border-slate-200 w-2/3 bg-white'>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -84,6 +84,11 @@ export function DataTable<TData, TValue>({
                   <TableCell
                     key={cell.id}
                     className='text-right text-xs text-slate-600 font-light'
+                    // className={`${
+                    //   cell === 'obs'
+                    //     ? 'text-left'
+                    //     : 'text-right'
+                    // } text-xs text-slate-600 font-light`}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

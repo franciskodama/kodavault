@@ -1,17 +1,14 @@
 'use client';
 
 import CardAth from '@/components/CardAth';
-import { CardCryptoGoals } from '@/components/CardCryptoGoals';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { Loading } from '@/components/Loading';
 import { useAssetsContext } from '@/context/AssetsContext';
-import { Asset } from '@/lib/types';
 import { useEffect, useState } from 'react';
 import { DataTable } from './data-table';
 import { columns } from './columns';
 import { useUser } from '@clerk/nextjs';
 import {
-  currencyFormatter,
   getTotalByKey,
   numberFormatter,
   numberFormatterNoDecimals,
@@ -29,7 +26,8 @@ type CryptoGoals = {
 
 type TotalByCoin = { value: string; total: number };
 
-type MergedArrayItem = {
+export type MergedArrayItem = {
+  uid: string;
   value: string;
   total: number | string;
   share: number | string;
@@ -42,6 +40,10 @@ export default function Cryptos() {
   const [cryptoGoals, setCryptoGoals] = useState<CryptoGoals[]>([]);
   const [totalByCoin, setTotalByCoin] = useState<TotalByCoin[]>([]);
   const { user } = useUser();
+  let uid: string | undefined = '';
+  if (user) {
+    uid = user.emailAddresses[0].emailAddress;
+  }
 
   useEffect(() => {
     const fetchCryptoGoals = async () => {
@@ -83,13 +85,18 @@ export default function Cryptos() {
     cryptoGoals,
     totalByCoin,
     tableTotal,
+    uid,
   }: {
     cryptoGoals: CryptoGoals[];
     totalByCoin: TotalByCoin[];
     tableTotal: number;
+    uid: string;
   }) => {
     const goalsMap = new Map(
-      cryptoGoals.map((item) => [item.coin, { goal: item.goal, obs: item.obs }])
+      cryptoGoals.map((item) => [
+        item.coin,
+        { uid: item.uid, goal: item.goal, obs: item.obs },
+      ])
     );
 
     const totalsMap = new Map(
@@ -103,6 +110,7 @@ export default function Cryptos() {
       const goal = goalData ? goalData.goal : 0;
       const obs = goalData ? goalData.obs : null;
       mergedArray.push({
+        uid,
         value,
         total: numberFormatterNoDecimals.format(total),
         share: `${numberFormatter.format((total / tableTotal) * 100)} %`,
@@ -114,6 +122,7 @@ export default function Cryptos() {
     cryptoGoals.forEach(({ coin, goal, obs }) => {
       if (!totalsMap.has(coin)) {
         mergedArray.push({
+          uid,
           value: coin,
           total: 0,
           goal,
@@ -125,7 +134,12 @@ export default function Cryptos() {
     return mergedArray;
   };
 
-  const dataTable = completeDataTable({ cryptoGoals, totalByCoin, tableTotal });
+  const dataTable = completeDataTable({
+    cryptoGoals,
+    totalByCoin,
+    tableTotal,
+    uid,
+  });
 
   return (
     <>
@@ -134,19 +148,17 @@ export default function Cryptos() {
           <Loading />
         </div>
       ) : (
-        <>
+        <div className='flex flex-wrap gap-2'>
           <DataTable columns={columns} data={dataTable} />
-        </>
-      )}
-      {!isLoading && assetsByType.Crypto ? (
-        <div>
+          <CardNextPurchases />
+
           <div className='flex flex-col gap-2'>
-            <CardCryptoGoals
+            {/* <CardCryptoGoals
               emoji={'🪙'}
               description={'Total by crypto and the amount to reach it'}
               assets={assetsByType.Crypto}
               customKey={'crypto'}
-            />
+            /> */}
             <CardAth
               emoji={'🔮'}
               description={'All-Time High Estimation'}
@@ -154,15 +166,7 @@ export default function Cryptos() {
             />
           </div>
         </div>
-      ) : (
-        <div className='flex items-center justify-center h-[30em]'>
-          <Loading />
-        </div>
       )}
-
-      <div>
-        <CardNextPurchases />
-      </div>
     </>
   );
 }
@@ -171,6 +175,8 @@ export default function Cryptos() {
 // TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
 // TODO: Create button to save the goal for each asset (current line) + Save in the database
 // TODO: What to do if there is a goal for a new asset the user desire, but they didn't buy it yet? They have see the goal to remember to buy it.
+
+// TODO: What appears on SELL and BUY because of the goal, need to appear in the next purchases card
 
 //------------------------------------------
 // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")

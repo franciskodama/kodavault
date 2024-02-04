@@ -31,8 +31,10 @@ import { UpdateAssetForm } from '@/components/UpdateAssetForm';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
+import { FormGoalInput } from './form-goal-input';
+import { MergedArrayItem } from './cryptos';
 
-export const columns: ColumnDef<Asset>[] = [
+export const columns: ColumnDef<MergedArrayItem>[] = [
   {
     accessorKey: 'value',
     header: ({ column }) => {
@@ -78,39 +80,43 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
   },
-  {
-    accessorKey: 'goal',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Share Goal
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-  },
+  // {
+  //   accessorKey: 'goal',
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         className={tableHeaderClass}
+  //         variant='ghost'
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+  //       >
+  //         Share Goal
+  //         <ArrowUpDown className='ml-2 h-4 w-4' />
+  //       </Button>
+  //     );
+  //   },
+  // },
   {
     accessorKey: 'obs',
-    header: () => <div className={tableHeaderClass}>Obs</div>,
+    header: () => (
+      <div className={`px-0 font-semibold text-slate-800 text-left`}>Obs</div>
+    ),
   },
   {
+    accessorKey: 'goal',
+    header: () => (
+      <div className={`px-0 font-semibold text-slate-800 text-left`}>
+        Share Goal
+      </div>
+    ),
     id: 'actions',
     cell: ({ row }) => {
-      const asset = row.original;
-
-      const handleDeleteAsset = async (id: string) => {
-        await deleteAsset(id);
-        window.location.reload();
-      };
+      const assetRow = row.original;
 
       return (
         <>
-          {asset && (
-            <div className='flex items-center text-xl'>
+          <FormGoalInput assetRow={assetRow} />
+          {/* {asset && (
+            <div className='flex items-center'>
               <Sheet>
                 <SheetTrigger className='ml-4 hover:text-base w-12 bg-white border border-slate-300 rounded-[2px] '>
                   ✏️
@@ -125,89 +131,8 @@ export const columns: ColumnDef<Asset>[] = [
                   <UpdateAssetForm asset={asset} />
                 </SheetContent>
               </Sheet>
-              <AlertDialog>
-                {/* <AlertDialogTrigger className='ml-4 hover:text-base w-12 border border-slate-300 bg-white rounded-[2px]'>
-                  💀
-                </AlertDialogTrigger> */}
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle className='text-center text-2xl my-4'>
-                      Are you fucking sure?
-                      <br />
-                      <div className='w-[450px] mt-8 mx-auto'>
-                        <AspectRatio ratio={16 / 16} className='bg-white'>
-                          <Image
-                            src='/are-you-sure.gif'
-                            alt='Britney in doubt'
-                            fill
-                            className='object-cover rounded-full border-[8px] border-primary'
-                            objectPosition='center 25%'
-                          />
-                        </AspectRatio>
-                      </div>
-                    </AlertDialogTitle>
-                    <AlertDialogDescription className='flex flex-col'>
-                      <span className='text-base text-center text-slate-600 mb-4'>
-                        Prepare for turbulence! 🌪️
-                        <br />
-                        You are about to delete the Asset below:
-                      </span>
-
-                      <div className='flex py-4 px-16 justify-between border-[6px] border-primary text-base text-primary'>
-                        <div className='flex flex-col'>
-                          <h3 className='text-sm'>Asset:</h3>
-                          <span className='font-bold'>{asset.asset}</span>
-                        </div>
-                        <div className='flex flex-col'>
-                          <h3 className='text-sm'> Wallet:</h3>
-                          <span className='font-bold'>{asset.wallet}</span>
-                        </div>
-                        <div className='flex flex-col'>
-                          <h3 className='text-sm'> Qty:</h3>
-                          <span className='font-bold'>{asset.qty}</span>
-                        </div>
-                      </div>
-
-                      <span className='text-primary text-center my-4 font-bold text-base'>
-                        <span className='font-bold'>
-                          This is the point of no return. <br />
-                        </span>
-                        {`Once done, there's no going back! 💣`}
-                      </span>
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel
-                      onClick={() => {
-                        toast({
-                          title: 'Operation Cancelled! ❌',
-                          description: `Phew! 😮‍💨 Crisis averted. You successfully cancelled the operation.`,
-                          variant: 'destructive',
-                        });
-                      }}
-                    >
-                      Cancel
-                    </AlertDialogCancel>
-                    {/* <AlertDialogAction
-                      onClick={() => {
-                        if (asset) {
-                          handleDeleteAsset(asset.id);
-
-                          toast({
-                            title: 'Asset gone! 💀',
-                            description: `The Asset ${asset.asset} has been successfully deleted from ${asset.wallet}.`,
-                            variant: 'dark',
-                          });
-                        }
-                      }}
-                    >
-                      Continue
-                    </AlertDialogAction> */}
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
             </div>
-          )}
+          )} */}
         </>
       );
     },
