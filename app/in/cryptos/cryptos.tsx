@@ -19,14 +19,16 @@ type CryptoGoals = {
   created_at?: Date;
   coin: string;
   goal: number;
+  obs?: string | null;
 };
 
 type TotalByCoin = { value: string; total: number };
 
 type MergedArrayItem = {
-  value: string;
+  coin: string;
   total: number;
-  goal: number;
+  goal?: number;
+  obs?: string;
 };
 
 export default function Cryptos() {
@@ -74,9 +76,11 @@ export default function Cryptos() {
   const completeDataTable = ({
     cryptoGoals,
     totalByCoin,
+    total,
   }: {
     cryptoGoals: CryptoGoals[];
     totalByCoin: TotalByCoin[];
+    total: number;
   }) => {
     // Create a map for quick lookup of goals by coin
     const goalsMap = new Map(cryptoGoals.map((item) => [item.coin, item.goal]));
@@ -92,21 +96,20 @@ export default function Cryptos() {
     // Iterate over sortedArray to add items to mergedArray, including goals (or 0 if not found)
     totalByCoin.forEach(({ value, total }) => {
       const goal = goalsMap.has(value) ? goalsMap.get(value) : 0; // Get goal if exists, else 0
-      mergedArray.push({ value, total, goal });
+      mergedArray.push({ coin: value, total, goal });
     });
 
     // Check if there are any coins in cryptoGoals not in sortedArray, and add them with total 0
     cryptoGoals.forEach(({ coin, goal }) => {
       if (!totalsMap.has(coin)) {
         // If coin not in totalsMap, add it to mergedArray with total 0
-        mergedArray.push({ value: coin, total: 0, goal });
+        mergedArray.push({ coin, total: 0, goal, obs });
       }
     });
-
     return mergedArray;
   };
 
-  const dataTable = completeDataTable({ cryptoGoals, totalByCoin });
+  const dataTable = completeDataTable({ cryptoGoals, totalByCoin, total });
   console.log('---  🚀 ---> | dataTable:', dataTable);
 
   return (
@@ -149,7 +152,7 @@ export default function Cryptos() {
   );
 }
 
-// TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD)
+// TODO: Include Share data
 // TODO: Include Observation field (Look at Stochastic Analysis 4h, MACD 3D and W)
 
 // TODO: Add Asset: if there isn't this asset symbol in the CoinGaol table, create it with goal = 0
@@ -164,3 +167,4 @@ export default function Cryptos() {
 
 // DONE:
 // TODO: Create Server Action for getting Crypto Goals of this user
+// TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD)

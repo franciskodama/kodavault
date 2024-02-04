@@ -63,21 +63,21 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: 'share',
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         className={tableHeaderClass}
-  //         variant='ghost'
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-  //       >
-  //         Share
-  //         <ArrowUpDown className='ml-2 h-4 w-4' />
-  //       </Button>
-  //     );
-  //   },
-  // },
+  {
+    accessorKey: 'share',
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Share
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+  },
   {
     accessorKey: 'goal',
     header: ({ column }) => {
@@ -87,7 +87,7 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Goal
+          Share Goal
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
@@ -126,9 +126,9 @@ export const columns: ColumnDef<Asset>[] = [
                 </SheetContent>
               </Sheet>
               <AlertDialog>
-                <AlertDialogTrigger className='ml-4 hover:text-base w-12 border border-slate-300 bg-white rounded-[2px]'>
+                {/* <AlertDialogTrigger className='ml-4 hover:text-base w-12 border border-slate-300 bg-white rounded-[2px]'>
                   💀
-                </AlertDialogTrigger>
+                </AlertDialogTrigger> */}
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle className='text-center text-2xl my-4'>
@@ -188,7 +188,7 @@ export const columns: ColumnDef<Asset>[] = [
                     >
                       Cancel
                     </AlertDialogCancel>
-                    <AlertDialogAction
+                    {/* <AlertDialogAction
                       onClick={() => {
                         if (asset) {
                           handleDeleteAsset(asset.id);
@@ -202,7 +202,7 @@ export const columns: ColumnDef<Asset>[] = [
                       }}
                     >
                       Continue
-                    </AlertDialogAction>
+                    </AlertDialogAction> */}
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
