@@ -10,7 +10,12 @@ import { useEffect, useState } from 'react';
 import { DataTable } from './data-table';
 import { columns } from './columns';
 import { useUser } from '@clerk/nextjs';
-import { getTotalByKey } from '@/lib/utils';
+import {
+  currencyFormatter,
+  getTotalByKey,
+  numberFormatter,
+  numberFormatterNoDecimals,
+} from '@/lib/utils';
 import { getCryptoGoals } from '@/lib/actions';
 
 type CryptoGoals = {
@@ -25,8 +30,9 @@ type CryptoGoals = {
 type TotalByCoin = { value: string; total: number };
 
 type MergedArrayItem = {
-  coin: string;
-  total: number;
+  value: string;
+  total: number | string;
+  share: number | string;
   goal?: number;
   obs?: string;
 };
@@ -68,49 +74,58 @@ export default function Cryptos() {
     }
   }, [assetsByType]);
 
-  let total: number = 0;
+  let tableTotal: number = 0;
   if (totalByCoin) {
-    total = totalByCoin.reduce((sum: number, item) => sum + item.total, 0);
+    tableTotal = totalByCoin.reduce((sum: number, item) => sum + item.total, 0);
   }
 
   const completeDataTable = ({
     cryptoGoals,
     totalByCoin,
-    total,
+    tableTotal,
   }: {
     cryptoGoals: CryptoGoals[];
     totalByCoin: TotalByCoin[];
-    total: number;
+    tableTotal: number;
   }) => {
-    // Create a map for quick lookup of goals by coin
-    const goalsMap = new Map(cryptoGoals.map((item) => [item.coin, item.goal]));
+    const goalsMap = new Map(
+      cryptoGoals.map((item) => [item.coin, { goal: item.goal, obs: item.obs }])
+    );
 
-    // Create a map for quick lookup of totals by value
     const totalsMap = new Map(
       totalByCoin.map((item) => [item.value, item.total])
     );
 
-    // Merge the arrays
     const mergedArray: MergedArrayItem[] = [];
 
-    // Iterate over sortedArray to add items to mergedArray, including goals (or 0 if not found)
     totalByCoin.forEach(({ value, total }) => {
-      const goal = goalsMap.has(value) ? goalsMap.get(value) : 0; // Get goal if exists, else 0
-      mergedArray.push({ coin: value, total, goal });
+      const goalData = goalsMap.get(value);
+      const goal = goalData ? goalData.goal : 0;
+      const obs = goalData ? goalData.obs : null;
+      mergedArray.push({
+        value,
+        total: numberFormatterNoDecimals.format(total),
+        share: `${numberFormatter.format((total / tableTotal) * 100)} %`,
+        goal,
+        obs: obs ?? '',
+      });
     });
 
-    // Check if there are any coins in cryptoGoals not in sortedArray, and add them with total 0
-    cryptoGoals.forEach(({ coin, goal }) => {
+    cryptoGoals.forEach(({ coin, goal, obs }) => {
       if (!totalsMap.has(coin)) {
-        // If coin not in totalsMap, add it to mergedArray with total 0
-        mergedArray.push({ coin, total: 0, goal, obs });
+        mergedArray.push({
+          value: coin,
+          total: 0,
+          goal,
+          obs: obs ?? '',
+          share: 0,
+        });
       }
     });
     return mergedArray;
   };
 
-  const dataTable = completeDataTable({ cryptoGoals, totalByCoin, total });
-  console.log('---  🚀 ---> | dataTable:', dataTable);
+  const dataTable = completeDataTable({ cryptoGoals, totalByCoin, tableTotal });
 
   return (
     <>
@@ -123,7 +138,7 @@ export default function Cryptos() {
           <DataTable columns={columns} data={dataTable} />
         </>
       )}
-      {/* {!isLoading && cryptoAssets ? (
+      {!isLoading && assetsByType.Crypto ? (
         <div>
           <div className='flex flex-col gap-2'>
             <CardCryptoGoals
@@ -135,7 +150,7 @@ export default function Cryptos() {
             <CardAth
               emoji={'🔮'}
               description={'All-Time High Estimation'}
-              assets={cryptoAssets}
+              assets={assetsByType.Crypto}
             />
           </div>
         </div>
@@ -143,7 +158,7 @@ export default function Cryptos() {
         <div className='flex items-center justify-center h-[30em]'>
           <Loading />
         </div>
-      )} */}
+      )}
 
       <div>
         <CardNextPurchases />
@@ -152,10 +167,6 @@ export default function Cryptos() {
   );
 }
 
-// TODO: Include Share data
-// TODO: Include Observation field (Look at Stochastic Analysis 4h, MACD 3D and W)
-
-// TODO: Add Asset: if there isn't this asset symbol in the CoinGaol table, create it with goal = 0
 // TODO: Show the field (form) with the goal pulled from CoinGoal database
 // TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
 // TODO: Create button to save the goal for each asset (current line) + Save in the database
@@ -168,3 +179,6 @@ export default function Cryptos() {
 // DONE:
 // TODO: Create Server Action for getting Crypto Goals of this user
 // TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD)
+// TODO: Include Share data
+// TODO: Include Observation field (Look at Stochastic Analysis 4h, MACD 3D and W)
+// TODO: Add Asset: if there isn't this asset symbol in the CoinGaol table, create it with goal = 0
