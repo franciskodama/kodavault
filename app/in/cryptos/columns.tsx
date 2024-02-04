@@ -63,21 +63,21 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
   },
-  {
-    accessorKey: 'share',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Share
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-  },
+  // {
+  //   accessorKey: 'share',
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         className={tableHeaderClass}
+  //         variant='ghost'
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+  //       >
+  //         Share
+  //         <ArrowUpDown className='ml-2 h-4 w-4' />
+  //       </Button>
+  //     );
+  //   },
+  // },
   {
     accessorKey: 'goal',
     header: ({ column }) => {
