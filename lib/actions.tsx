@@ -4,6 +4,7 @@ import { uuid } from 'uuidv4';
 import prisma from './prisma';
 import { Inputs } from './types';
 import { revalidatePath } from 'next/cache';
+import { InputProps } from '@/app/in/cryptos/form-goal-input';
 
 export async function addAsset(formData: Inputs) {
   const {
@@ -109,18 +110,19 @@ export const getCryptoGoals = async (uid: string) => {
   }
 };
 
-export async function updateCoinShareGoal(formData: Inputs) {
-  // const { uid, value, goal } = formData;
+export async function updateCoinShareGoal(formData: InputProps) {
+  const { uid, goal, coin } = formData;
 
   try {
-    // await prisma.coinGoal.update({
-    //   where: {
-    //     uid,
-    //   },
-    //   data: {
-    //     goal,
-    //   },
-    // });
+    await prisma.coinGoal.update({
+      where: {
+        uid,
+        coin,
+      },
+      data: {
+        goal,
+      },
+    });
     return true;
   } catch (error) {
     console.log(error);

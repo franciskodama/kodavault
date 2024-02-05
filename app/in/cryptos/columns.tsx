@@ -99,9 +99,7 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
   {
     accessorKey: 'goal',
     header: () => (
-      <div className={`px-0 font-semibold text-slate-800 text-left`}>
-        Share Goal
-      </div>
+      <div className={`px-0 font-semibold text-slate-800 text-left`}>Goal</div>
     ),
     id: 'actions',
     cell: ({ row }) => {

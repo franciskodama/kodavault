@@ -9,10 +9,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { MergedArrayItem } from './cryptos';
 import { classError } from '@/lib/classes';
 
-type InputProps = {
+export type InputProps = {
   uid: string;
-  total: number;
+  total?: number;
   goal: number | undefined;
+  coin: string;
 };
 
 export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
@@ -30,31 +31,32 @@ export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
     defaultValues: {
       uid: assetRow.uid,
       goal: assetRow.goal,
+      coin: assetRow.coin,
     },
   });
 
   const processForm: SubmitHandler<InputProps> = async (data) => {
+    console.log('---  🚀 ---> | data:', data);
+
     if (!assetRow.uid) {
       return console.log('User not logged in');
     }
 
-    // const result = await updateCoinShareGoal({
-    //   assetRow,
-    // });
+    const result = await updateCoinShareGoal(data);
 
-    // if (result) {
-    //   toast({
-    //     title: 'Goal Updated! 🎉',
-    //     description: 'Your new goal is already set.',
-    //     variant: 'success',
-    //   });
-    // } else {
-    //   toast({
-    //     title: '👻 Boho! Error occurred!',
-    //     description: 'Your goal was NOT updated.',
-    //     variant: 'destructive',
-    //   });
-    // }
+    if (result) {
+      toast({
+        title: 'Goal Updated! 🎉',
+        description: 'Your new goal is already set.',
+        variant: 'success',
+      });
+    } else {
+      toast({
+        title: '👻 Boho! Error occurred!',
+        description: 'Your goal was NOT updated.',
+        variant: 'destructive',
+      });
+    }
 
     reset();
     setData(data);
@@ -63,12 +65,15 @@ export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
     }, 2000);
   };
 
-  //   const share = Number(assetRow.share.toString().replace('%', ''));
-  const share = assetRow.share;
-  //   console.log('---  🚀 ---> | share:', Number(share) + 1);
-  console.log('---  🚀 ---> | share:', Number(share.toString().split('.')[0]));
-  console.log('---  🚀 ---> | goal:', assetRow.goal);
-  console.log('---  🚀 ---> | goal:', assetRow);
+  //--------------------------------------------------------------
+  // TODO: Why the first asset is coming with 0% share?
+
+  //   const share = assetRow.share;
+  //   console.log('---  🚀 ---> | share:', Number(share.toString().split('.')[0]));
+  //   console.log('---  🚀 ---> | share Number():', Number(share));
+  //   console.log('---  🚀 ---> | goal:', assetRow.goal);
+  //   console.log('---  🚀 ---> | goal:', assetRow);
+  //--------------------------------------------------------------
 
   return (
     <div>
@@ -86,7 +91,7 @@ export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
           <p
             className={`flex items-center justify-center uppercase text-white h-6 w-[12ch] px-1 m-1 text-center rounded-[2px] ${
               assetRow.goal === 0
-                ? 'bg-blue-500'
+                ? 'border border-slate-300 bg-slate-300'
                 : Number(assetRow.share.toString().split('.')[0]) >
                   (assetRow.goal || 0)
                 ? 'bg-green-500'
@@ -95,13 +100,19 @@ export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
           >
             {assetRow.goal === 0
               ? 'set a goal'
-              : +assetRow.share > (assetRow.goal || 0)
+              : Number(assetRow.share.toString().split('.')[0]) >
+                (assetRow.goal || 0)
               ? 'buy'
               : 'sell'}
           </p>
         )}
 
-        <Button className='py-0 ml-8' type='submit' variant='outline' size='sm'>
+        <Button
+          className='py-0 px-6 ml-8'
+          type='submit'
+          variant='outline'
+          size='sm'
+        >
           Update
         </Button>
       </form>
