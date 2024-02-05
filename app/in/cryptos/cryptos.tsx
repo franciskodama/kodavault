@@ -28,7 +28,7 @@ type TotalByCoin = { value: string; total: number };
 
 export type MergedArrayItem = {
   uid: string;
-  value: string;
+  coin: string;
   total: number | string;
   share: number | string;
   goal?: number;
@@ -111,7 +111,7 @@ export default function Cryptos() {
       const obs = goalData ? goalData.obs : null;
       mergedArray.push({
         uid,
-        value,
+        coin: value,
         total: numberFormatterNoDecimals.format(total),
         share: `${numberFormatter.format((total / tableTotal) * 100)} %`,
         goal,
@@ -123,7 +123,7 @@ export default function Cryptos() {
       if (!totalsMap.has(coin)) {
         mergedArray.push({
           uid,
-          value: coin,
+          coin,
           total: 0,
           goal,
           obs: obs ?? '',

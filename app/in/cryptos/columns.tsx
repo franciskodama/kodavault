@@ -25,18 +25,13 @@ import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { tableHeaderClass } from '@/lib/classes';
-import { Asset } from '@/lib/types';
-import { deleteAsset } from '@/lib/actions';
-import { UpdateAssetForm } from '@/components/UpdateAssetForm';
-import Image from 'next/image';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
 import { FormGoalInput } from './form-goal-input';
 import { MergedArrayItem } from './cryptos';
 
 export const columns: ColumnDef<MergedArrayItem>[] = [
   {
-    accessorKey: 'value',
+    accessorKey: 'coin',
     header: ({ column }) => {
       return (
         <Button

@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { updateCoinShareGoal } from '@/lib/actions';
-import { useUser } from '@clerk/nextjs';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { MergedArrayItem } from './cryptos';
+import { classError } from '@/lib/classes';
 
 type InputProps = {
   uid: string;
@@ -15,7 +15,7 @@ type InputProps = {
   goal: number | undefined;
 };
 
-export const FormGoalInput = (assetRow: MergedArrayItem) => {
+export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
   const [data, setData] = useState<InputProps>();
   const { toast } = useToast();
 
@@ -26,10 +26,14 @@ export const FormGoalInput = (assetRow: MergedArrayItem) => {
     reset,
     setValue,
     formState: { errors },
-  } = useForm<InputProps>({});
+  } = useForm<InputProps>({
+    defaultValues: {
+      uid: assetRow.uid,
+      goal: assetRow.goal,
+    },
+  });
 
   const processForm: SubmitHandler<InputProps> = async (data) => {
-    console.log('---  🚀 ---> | data:', data);
     if (!assetRow.uid) {
       return console.log('User not logged in');
     }
@@ -59,27 +63,43 @@ export const FormGoalInput = (assetRow: MergedArrayItem) => {
     }, 2000);
   };
 
+  //   const share = Number(assetRow.share.toString().replace('%', ''));
+  const share = assetRow.share;
+  //   console.log('---  🚀 ---> | share:', Number(share) + 1);
+  console.log('---  🚀 ---> | share:', Number(share.toString().split('.')[0]));
+  console.log('---  🚀 ---> | goal:', assetRow.goal);
+  console.log('---  🚀 ---> | goal:', assetRow);
+
   return (
     <div>
       <form onSubmit={handleSubmit(processForm)} className='flex items-center'>
         <Input
-          type='text'
-          value={assetRow.goal}
-          id='shareGoal'
           className='w-[3em] h-6'
-          {...register('goal')}
+          {...register('goal', { required: "Goal can't be empty" })}
         />
+        {errors.goal?.message && (
+          <p className={classError}>{errors.goal.message}</p>
+        )}
         <span className='ml-1 mr-4'>%</span>
-        {/* 
-        {goal && (
+
+        {assetRow && (
           <p
-            className={`flex items-center justify-center uppercase text-white h-6 w-[6ch] px-1 m-1 text-center rounded-[2px] ${
-              total > goal ? 'bg-green-500' : 'bg-red-500'
+            className={`flex items-center justify-center uppercase text-white h-6 w-[12ch] px-1 m-1 text-center rounded-[2px] ${
+              assetRow.goal === 0
+                ? 'bg-blue-500'
+                : Number(assetRow.share.toString().split('.')[0]) >
+                  (assetRow.goal || 0)
+                ? 'bg-green-500'
+                : 'bg-red-500'
             }`}
           >
-            {total > goal ? 'buy' : 'sell'}
+            {assetRow.goal === 0
+              ? 'set a goal'
+              : +assetRow.share > (assetRow.goal || 0)
+              ? 'buy'
+              : 'sell'}
           </p>
-        )} */}
+        )}
 
         <Button className='py-0 ml-8' type='submit' variant='outline' size='sm'>
           Update
