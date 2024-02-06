@@ -38,6 +38,10 @@ export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
   const processForm: SubmitHandler<InputProps> = async (data) => {
     console.log('---  🚀 ---> | data:', data);
 
+    //--------------------------------------------------------------
+    // TODO: IT'S NOT SAVING YET
+    //--------------------------------------------------------------
+
     if (!assetRow.uid) {
       return console.log('User not logged in');
     }

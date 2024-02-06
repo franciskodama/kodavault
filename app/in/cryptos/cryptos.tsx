@@ -32,7 +32,7 @@ export type MergedArrayItem = {
   total: number | string;
   share: number | string;
   goal?: number;
-  obs?: string;
+  obs?: string | null;
 };
 
 export default function Cryptos() {
@@ -95,7 +95,7 @@ export default function Cryptos() {
     const goalsMap = new Map(
       cryptoGoals.map((item) => [
         item.coin,
-        { uid: item.uid, goal: item.goal, obs: item.obs },
+        { uid: item.uid, coin: item.coin, goal: item.goal, obs: item.obs },
       ])
     );
 
@@ -107,15 +107,13 @@ export default function Cryptos() {
 
     totalByCoin.forEach(({ value, total }) => {
       const goalData = goalsMap.get(value);
-      const goal = goalData ? goalData.goal : 0;
-      const obs = goalData ? goalData.obs : null;
       mergedArray.push({
         uid,
         coin: value,
         total: numberFormatterNoDecimals.format(total),
         share: `${numberFormatter.format((total / tableTotal) * 100)} %`,
-        goal,
-        obs: obs ?? '',
+        goal: goalData ? goalData.goal : 0,
+        obs: goalData ? goalData.obs : null,
       });
     });
 
@@ -141,6 +139,7 @@ export default function Cryptos() {
     uid,
   });
 
+  console.log('---  🚀 ---> | dataTable:', dataTable);
   return (
     <>
       {isLoading ? (
