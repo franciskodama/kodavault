@@ -91,27 +91,46 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
   //   },
   // },
   {
-    accessorKey: 'obs',
-    header: () => (
-      <div className={`px-0 font-semibold text-slate-800 text-left`}>Obs</div>
-    ),
-  },
-  {
     accessorKey: 'goal',
     header: () => (
       <div className={`px-0 font-semibold text-slate-800 text-left`}>Goal</div>
     ),
+
     id: 'actions',
     cell: ({ row }) => {
       const assetRow = row.original;
 
+      // TODO: The problem is here: the data for the form is not going for the right coin by this component below
+      // TODO: Solution is to forget the edition inline, and use the action with dropdown to edit the goal (opens a form with a server action)
+      // TODO: example: https://ui.shadcn.com/examples/tasks
+      // TODO: Add Priority
+      // TODO: Add filter
+
       return (
         <>
-          <FormGoalInput assetRow={assetRow} />
-          {/* {asset && (
+          {/* <FormGoalInput assetRow={assetRow} /> */}
+          {assetRow && (
             <div className='flex items-center'>
+              <p className='text-center w-[6ch]'>{`${assetRow.goal} %`}</p>
+              <p
+                className={`flex items-center justify-center uppercase text-white h-6 w-[5ch] px-1 m-1 text-center rounded-[2px] ${
+                  assetRow.goal === 0
+                    ? 'border border-slate-300 bg-slate-800'
+                    : Number(assetRow.share.toString().split('.')[0]) >
+                      (assetRow.goal || 0)
+                    ? 'bg-green-500'
+                    : 'bg-red-500'
+                }`}
+              >
+                {assetRow.goal === 0
+                  ? '?'
+                  : Number(assetRow.share.toString().split('.')[0]) >
+                    (assetRow.goal || 0)
+                  ? 'buy'
+                  : 'sell'}
+              </p>
               <Sheet>
-                <SheetTrigger className='ml-4 hover:text-base w-12 bg-white border border-slate-300 rounded-[2px] '>
+                <SheetTrigger className='ml-4 hover:text-base h-6 w-[5ch] bg-white border border-slate-300 rounded-[2px] '>
                   ✏️
                 </SheetTrigger>
                 <SheetContent>
@@ -121,13 +140,19 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
                       Update an Existing Asset
                     </SheetDescription>
                   </SheetHeader>
-                  <UpdateAssetForm asset={asset} />
+                  {/* <UpdateAssetForm asset={asset} /> */}
                 </SheetContent>
               </Sheet>
             </div>
-          )} */}
+          )}
         </>
       );
     },
+  },
+  {
+    accessorKey: 'obs',
+    header: () => (
+      <div className={`px-0 font-semibold text-slate-800 text-left`}>Obs</div>
+    ),
   },
 ];

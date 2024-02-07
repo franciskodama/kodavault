@@ -84,11 +84,6 @@ export function DataTable<TData, TValue>({
                   <TableCell
                     key={cell.id}
                     className='text-right text-xs text-slate-600 font-light'
-                    // className={`${
-                    //   cell === 'obs'
-                    //     ? 'text-left'
-                    //     : 'text-right'
-                    // } text-xs text-slate-600 font-light`}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

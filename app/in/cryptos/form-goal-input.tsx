@@ -30,14 +30,12 @@ export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
   } = useForm<InputProps>({
     defaultValues: {
       uid: assetRow.uid,
-      goal: assetRow.goal,
+      goal: assetRow.coin === assetRow.goal,
       coin: assetRow.coin,
     },
   });
 
   const processForm: SubmitHandler<InputProps> = async (data) => {
-    console.log('---  🚀 ---> | data:', data);
-
     //--------------------------------------------------------------
     // TODO: IT'S NOT SAVING YET
     //--------------------------------------------------------------
