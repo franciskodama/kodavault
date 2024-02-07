@@ -15,6 +15,7 @@ export type InputProps = {
   total?: number;
   goal: number | undefined;
   coin: string;
+  obs?: string | null;
 };
 
 export const FormAllocationGoal = ({
@@ -22,6 +23,7 @@ export const FormAllocationGoal = ({
 }: {
   assetRow: MergedArrayItem;
 }) => {
+  console.log('---  🚀 ---> | assetRow:', assetRow);
   const [data, setData] = useState<InputProps>();
   const { toast } = useToast();
 
@@ -35,8 +37,9 @@ export const FormAllocationGoal = ({
   } = useForm<InputProps>({
     defaultValues: {
       uid: assetRow.uid,
-      // goal: assetRow.coin === assetRow.goal,
+      goal: assetRow.goal,
       coin: assetRow.coin,
+      obs: assetRow.obs,
     },
   });
 
@@ -84,13 +87,13 @@ export const FormAllocationGoal = ({
             <Label htmlFor='name' className='text-left text-xs'>
               Percentage Allocation Goal (%)
             </Label>
-            <Input id='name' value='Pedro Duarte' className='col-span-3' />
+            <Input className='col-span-3' {...register('goal')} />
           </div>
           <div className='grid grid-cols-4 items-center gap-4'>
             <Label htmlFor='username' className='text-left text-xs'>
               Observations:
             </Label>
-            <Input id='username' value='@peduarte' className='col-span-3' />
+            <Input className='col-span-3' {...register('obs')} />
           </div>
         </div>
 

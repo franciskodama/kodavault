@@ -139,6 +139,7 @@ export default function Cryptos() {
     uid,
   });
 
+  console.log('---  🚀 ---> | dataTable:', dataTable);
   return (
     <>
       {isLoading ? (
