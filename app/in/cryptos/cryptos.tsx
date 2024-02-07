@@ -161,6 +161,7 @@ export default function Cryptos() {
     </>
   );
 }
+// TODO: https://ui.shadcn.com/docs/components/tabs
 
 // TODO: Show the field (form) with the goal pulled from CoinGoal database
 // TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal

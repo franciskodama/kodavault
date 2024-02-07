@@ -87,6 +87,8 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
 
       // TODO: The Array with assets is repeating BTC and ETH, for instance (fix where we build the array).
 
+      // TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
+
       // TODO: example: https://ui.shadcn.com/examples/tasks
       // TODO: Add Priority
       // TODO: Add filter

@@ -40,6 +40,8 @@ export const FormAllocationGoal = ({
     },
   });
 
+  // TODO: For observation: https://ui.shadcn.com/docs/components/textarea
+
   const processForm: SubmitHandler<InputProps> = async (data) => {
     if (!assetRow.uid) {
       return console.log('User not logged in');
