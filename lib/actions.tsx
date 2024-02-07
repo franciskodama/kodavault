@@ -4,7 +4,7 @@ import { uuid } from 'uuidv4';
 import prisma from './prisma';
 import { Inputs } from './types';
 import { revalidatePath } from 'next/cache';
-import { InputProps } from '@/app/in/cryptos/form-goal-input';
+import { InputProps } from '@/app/in/cryptos/form-allocation-goal';
 
 export async function addAsset(formData: Inputs) {
   const {

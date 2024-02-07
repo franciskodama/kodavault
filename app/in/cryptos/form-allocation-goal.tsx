@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { MergedArrayItem } from './cryptos';
 import { classError } from '@/lib/classes';
+import { Label } from '@/components/ui/label';
 
 export type InputProps = {
   uid: string;
@@ -16,7 +17,11 @@ export type InputProps = {
   coin: string;
 };
 
-export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
+export const FormAllocationGoal = ({
+  assetRow,
+}: {
+  assetRow: MergedArrayItem;
+}) => {
   const [data, setData] = useState<InputProps>();
   const { toast } = useToast();
 
@@ -30,16 +35,12 @@ export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
   } = useForm<InputProps>({
     defaultValues: {
       uid: assetRow.uid,
-      goal: assetRow.coin === assetRow.goal,
+      // goal: assetRow.coin === assetRow.goal,
       coin: assetRow.coin,
     },
   });
 
   const processForm: SubmitHandler<InputProps> = async (data) => {
-    //--------------------------------------------------------------
-    // TODO: IT'S NOT SAVING YET
-    //--------------------------------------------------------------
-
     if (!assetRow.uid) {
       return console.log('User not logged in');
     }
@@ -67,20 +68,31 @@ export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
     }, 2000);
   };
 
-  //--------------------------------------------------------------
-  // TODO: Why the first asset is coming with 0% share?
-
-  //   const share = assetRow.share;
-  //   console.log('---  🚀 ---> | share:', Number(share.toString().split('.')[0]));
-  //   console.log('---  🚀 ---> | share Number():', Number(share));
-  //   console.log('---  🚀 ---> | goal:', assetRow.goal);
-  //   console.log('---  🚀 ---> | goal:', assetRow);
-  //--------------------------------------------------------------
-
   return (
     <div>
       <form onSubmit={handleSubmit(processForm)} className='flex items-center'>
-        <Input
+        <div className='grid gap-4 py-4'>
+          <h3 className='bg-slate-800 px-4 py-2 text-white text-sm'>
+            Asset:
+            <span className='font-semibold ml-2 text-base'>
+              {assetRow.coin}
+            </span>
+          </h3>
+          <div className='grid grid-cols-4 items-center gap-4'>
+            <Label htmlFor='name' className='text-left text-xs'>
+              Percentage Allocation Goal (%)
+            </Label>
+            <Input id='name' value='Pedro Duarte' className='col-span-3' />
+          </div>
+          <div className='grid grid-cols-4 items-center gap-4'>
+            <Label htmlFor='username' className='text-left text-xs'>
+              Observations:
+            </Label>
+            <Input id='username' value='@peduarte' className='col-span-3' />
+          </div>
+        </div>
+
+        {/* <Input
           className='w-[3em] h-6'
           {...register('goal', { required: "Goal can't be empty" })}
         />
@@ -116,7 +128,7 @@ export const FormGoalInput = ({ assetRow }: { assetRow: MergedArrayItem }) => {
           size='sm'
         >
           Update
-        </Button>
+        </Button> */}
       </form>
     </div>
   );

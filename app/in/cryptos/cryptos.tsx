@@ -139,7 +139,6 @@ export default function Cryptos() {
     uid,
   });
 
-  console.log('---  🚀 ---> | dataTable:', dataTable);
   return (
     <>
       {isLoading ? (
@@ -150,14 +149,7 @@ export default function Cryptos() {
         <div className='flex flex-wrap gap-2'>
           <DataTable columns={columns} data={dataTable} />
           <CardNextPurchases />
-
           <div className='flex flex-col gap-2'>
-            {/* <CardCryptoGoals
-              emoji={'🪙'}
-              description={'Total by crypto and the amount to reach it'}
-              assets={assetsByType.Crypto}
-              customKey={'crypto'}
-            /> */}
             <CardAth
               emoji={'🔮'}
               description={'All-Time High Estimation'}
@@ -182,8 +174,19 @@ export default function Cryptos() {
 // TODO: Resistences and Supports?
 
 // DONE:
+// TODO: The problem is here: the data for the form is not going for the right coin by this component below
+// TODO: Solution is to forget the edition inline, and use the action with dropdown to edit the goal (opens a form with a server action)
 // TODO: Create Server Action for getting Crypto Goals of this user
 // TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD)
 // TODO: Include Share data
 // TODO: Include Observation field (Look at Stochastic Analysis 4h, MACD 3D and W)
 // TODO: Add Asset: if there isn't this asset symbol in the CoinGaol table, create it with goal = 0
+
+{
+  /* <CardCryptoGoals
+              emoji={'🪙'}
+              description={'Total by crypto and the amount to reach it'}
+              assets={assetsByType.Crypto}
+              customKey={'crypto'}
+            /> */
+}

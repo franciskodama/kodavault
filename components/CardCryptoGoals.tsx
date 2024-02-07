@@ -111,7 +111,6 @@ export const CardCryptoGoals = ({
   };
 
   const dataTable = completeDataTable({ cryptoGoals, sortedArray });
-  console.log('---  🚀 ---> | dataTable:', dataTable);
 
   return (
     <>
