@@ -1,16 +1,17 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { updateCoinShareGoal } from '@/lib/actions';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { MergedArrayItem } from './cryptos';
-import { classError } from '@/lib/classes';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 
 export type InputProps = {
+  id: string;
   uid: string;
   total?: number;
   goal: number | undefined;
@@ -23,27 +24,23 @@ export const FormAllocationGoal = ({
 }: {
   assetRow: MergedArrayItem;
 }) => {
-  console.log('---  🚀 ---> | assetRow:', assetRow);
   const [data, setData] = useState<InputProps>();
   const { toast } = useToast();
 
   const {
     register,
-    watch,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm<InputProps>({
     defaultValues: {
+      id: assetRow.id,
       uid: assetRow.uid,
       goal: assetRow.goal,
       coin: assetRow.coin,
       obs: assetRow.obs,
     },
   });
-
-  // TODO: For observation: https://ui.shadcn.com/docs/components/textarea
 
   const processForm: SubmitHandler<InputProps> = async (data) => {
     if (!assetRow.uid) {
@@ -93,52 +90,14 @@ export const FormAllocationGoal = ({
             <Label htmlFor='username' className='text-left text-xs'>
               Observations:
             </Label>
-            <Input className='col-span-3' {...register('obs')} />
+            <Textarea className='col-span-3' {...register('obs')} />
           </div>
+
+          <Button className='mt-8' type='submit'>
+            Save Changes
+          </Button>
         </div>
-
-        {/* <Input
-          className='w-[3em] h-6'
-          {...register('goal', { required: "Goal can't be empty" })}
-        />
-        {errors.goal?.message && (
-          <p className={classError}>{errors.goal.message}</p>
-        )}
-        <span className='ml-1 mr-4'>%</span>
-
-        {assetRow && (
-          <p
-            className={`flex items-center justify-center uppercase text-white h-6 w-[12ch] px-1 m-1 text-center rounded-[2px] ${
-              assetRow.goal === 0
-                ? 'border border-slate-300 bg-slate-300'
-                : Number(assetRow.share.toString().split('.')[0]) >
-                  (assetRow.goal || 0)
-                ? 'bg-green-500'
-                : 'bg-red-500'
-            }`}
-          >
-            {assetRow.goal === 0
-              ? 'set a goal'
-              : Number(assetRow.share.toString().split('.')[0]) >
-                (assetRow.goal || 0)
-              ? 'buy'
-              : 'sell'}
-          </p>
-        )}
-
-        <Button
-          className='py-0 px-6 ml-8'
-          type='submit'
-          variant='outline'
-          size='sm'
-        >
-          Update
-        </Button> */}
       </form>
     </div>
   );
 };
-
-{
-  /* <input type='text' value={obs} id='obs' /> */
-}

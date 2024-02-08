@@ -134,9 +134,9 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
                   {/* ------------------------------------ */}
                   <FormAllocationGoal assetRow={assetRow} />
                   {/* ------------------------------------ */}
-                  <DialogFooter>
+                  {/* <DialogFooter>
                     <Button type='submit'>Save Changes</Button>
-                  </DialogFooter>
+                  </DialogFooter> */}
                 </DialogContent>
               </Dialog>
             </div>

@@ -14,9 +14,10 @@ import {
   numberFormatterNoDecimals,
 } from '@/lib/utils';
 import { getCryptoGoals } from '@/lib/actions';
+import { uuid } from 'uuidv4';
 
 type CryptoGoals = {
-  id: number;
+  id: string;
   uid: string;
   created_at?: Date;
   coin: string;
@@ -27,6 +28,7 @@ type CryptoGoals = {
 type TotalByCoin = { value: string; total: number };
 
 export type MergedArrayItem = {
+  id: string;
   uid: string;
   coin: string;
   total: number | string;
@@ -95,7 +97,13 @@ export default function Cryptos() {
     const goalsMap = new Map(
       cryptoGoals.map((item) => [
         item.coin,
-        { uid: item.uid, coin: item.coin, goal: item.goal, obs: item.obs },
+        {
+          id: item.id,
+          uid: item.uid,
+          coin: item.coin,
+          goal: item.goal,
+          obs: item.obs,
+        },
       ])
     );
 
@@ -108,6 +116,7 @@ export default function Cryptos() {
     totalByCoin.forEach(({ value, total }) => {
       const goalData = goalsMap.get(value);
       mergedArray.push({
+        id: goalData ? goalData.id : uuid(),
         uid,
         coin: value,
         total: numberFormatterNoDecimals.format(total),
@@ -120,6 +129,7 @@ export default function Cryptos() {
     cryptoGoals.forEach(({ coin, goal, obs }) => {
       if (!totalsMap.has(coin)) {
         mergedArray.push({
+          id: uuid(),
           uid,
           coin,
           total: 0,

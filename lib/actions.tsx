@@ -111,18 +111,40 @@ export const getCryptoGoals = async (uid: string) => {
 };
 
 export async function updateCoinShareGoal(formData: InputProps) {
-  const { uid, goal, coin } = formData;
+  const { id, uid, coin, goal, obs } = formData;
 
   try {
-    await prisma.coinGoal.update({
+    const record = await prisma.coinGoal.findUnique({
       where: {
-        uid,
-        coin,
-      },
-      data: {
-        goal,
+        id,
       },
     });
+
+    if (record) {
+      await prisma.coinGoal.update({
+        where: {
+          id,
+        },
+        data: {
+          uid,
+          coin,
+          goal: Number(goal),
+          obs,
+        },
+      });
+    } else {
+      await prisma.coinGoal.create({
+        data: {
+          id: uuid(),
+          uid,
+          created_at: new Date(),
+          coin,
+          goal: Number(goal),
+          obs,
+        },
+      });
+    }
+
     return true;
   } catch (error) {
     console.log(error);
