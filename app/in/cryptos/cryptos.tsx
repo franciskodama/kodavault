@@ -43,6 +43,8 @@ export default function Cryptos() {
   const [totalByCoin, setTotalByCoin] = useState<TotalByCoin[]>([]);
   const { user } = useUser();
   let uid: string | undefined = '';
+  let sumGoals: number = 0;
+
   if (user) {
     uid = user.emailAddresses[0].emailAddress;
   }
@@ -140,6 +142,11 @@ export default function Cryptos() {
       }
     });
 
+    sumGoals = mergedArray.reduce(
+      (sum: number, item) => sum + Number(item.goal),
+      0
+    );
+
     return mergedArray;
   };
 
@@ -158,7 +165,7 @@ export default function Cryptos() {
         </div>
       ) : (
         <div className='flex flex-wrap gap-2'>
-          <DataTable columns={columns} data={dataTable} />
+          <DataTable columns={columns} data={dataTable} sumGoals={sumGoals} />
           <CardNextPurchases />
           <div className='flex flex-col gap-2'>
             <CardAth

@@ -33,11 +33,13 @@ import { AddAssetForm } from '@/components/AddAssetForm';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
+  sumGoals: number;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  sumGoals,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -60,13 +62,29 @@ export function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                  <TableHead key={header.id} className=''>
+                    {header.id === 'actionGoal' ? (
+                      <div className='flex items-center gap-2 ml-2'>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        <div className='text-center text-xs font-base text-primary'>
+                          (Sum: {sumGoals} %)
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </>
+                    )}
                   </TableHead>
                 );
               })}
