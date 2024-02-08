@@ -5,7 +5,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -65,9 +64,18 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
   },
   {
     accessorKey: 'goal',
-    header: () => (
-      <div className={`px-0 font-semibold text-slate-800 text-left`}>Goal</div>
-    ),
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Goal
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
     id: 'actionGoal',
     cell: ({ row }) => {
       const assetRow = row.original;

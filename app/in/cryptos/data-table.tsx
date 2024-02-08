@@ -62,7 +62,7 @@ export function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className=''>
+                  <TableHead key={header.id}>
                     {header.id === 'actionGoal' ? (
                       <div className='flex items-center gap-2 ml-2'>
                         {header.isPlaceholder
@@ -74,6 +74,7 @@ export function DataTable<TData, TValue>({
                         <div className='text-center text-xs font-base text-primary'>
                           (Sum: {sumGoals} %)
                         </div>
+                        {sumGoals > 100 && <div className='text-2xl'>🚨</div>}
                       </div>
                     ) : (
                       <>

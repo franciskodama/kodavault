@@ -179,7 +179,11 @@ export default function Cryptos() {
     </>
   );
 }
+
+// TODO: Fix ILV and CRO that is saying to buy them
+// TODO: Create button Clear and Minimum Amount (0.01)
 // TODO: https://ui.shadcn.com/docs/components/tabs
+// TODO: Criar TAGS para Crypto Assets? Safe, Gema, Risky, Bet
 
 // TODO: Show the field (form) with the goal pulled from CoinGoal database
 // TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
