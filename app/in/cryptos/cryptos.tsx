@@ -14,7 +14,7 @@ import {
   numberFormatterNoDecimals,
 } from '@/lib/utils';
 import { getCryptoGoals } from '@/lib/actions';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 type CryptoGoals = {
   id: string;
@@ -116,7 +116,7 @@ export default function Cryptos() {
     totalByCoin.forEach(({ value, total }) => {
       const goalData = goalsMap.get(value);
       mergedArray.push({
-        id: goalData ? goalData.id : uuid(),
+        id: goalData ? goalData.id : uuidv4(),
         uid,
         coin: value,
         total: numberFormatterNoDecimals.format(total),
@@ -129,7 +129,7 @@ export default function Cryptos() {
     cryptoGoals.forEach(({ coin, goal, obs }) => {
       if (!totalsMap.has(coin)) {
         mergedArray.push({
-          id: uuid(),
+          id: uuidv4(),
           uid,
           coin,
           total: 0,
@@ -139,6 +139,7 @@ export default function Cryptos() {
         });
       }
     });
+
     return mergedArray;
   };
 
@@ -149,7 +150,6 @@ export default function Cryptos() {
     uid,
   });
 
-  console.log('---  🚀 ---> | dataTable:', dataTable);
   return (
     <>
       {isLoading ? (
