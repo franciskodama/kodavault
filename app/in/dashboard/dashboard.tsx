@@ -27,7 +27,7 @@ export default function Dashboard() {
   // ------------------------------------------------------------------------
 
   let btcPrice;
-  if (assetsByType.Crypto.length > 0) {
+  if (assetsByType.Crypto?.length > 0) {
     btcPrice = Number(
       assetsByType.Crypto.find((item: any) => item.asset === 'BTC')?.price
     );
