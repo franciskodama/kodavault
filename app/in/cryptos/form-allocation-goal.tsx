@@ -28,6 +28,7 @@ export const FormAllocationGoal = ({
   const { toast } = useToast();
 
   const {
+    setValue,
     register,
     handleSubmit,
     reset,
@@ -80,13 +81,24 @@ export const FormAllocationGoal = ({
               {assetRow.coin}
             </span>
           </h3>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='name' className='text-left text-xs'>
-              Percentage Allocation Goal (%)
+
+          <div className='flex items-center '>
+            <Label htmlFor='name' className='text-left text-xs w-1/3'>
+              Percentage Allocation Goal
             </Label>
-            <Input className='col-span-3' {...register('goal')} />
+            <Input className='w-1/4 text-center' {...register('goal')} />
+            <p className='w-1/4 text-lg text-left ml-4'>%</p>
+            <Button
+              variant='outline'
+              className='w-1/4 border-slate-500'
+              // onClick={() => {
+              //   setValue('goal', 0, { shouldTouch: false });
+              // }}
+            >
+              Clear
+            </Button>
           </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
+          <div className='grid grid-cols-3 items-center gap-4'>
             <Label htmlFor='username' className='text-left text-xs'>
               Observations:
             </Label>
