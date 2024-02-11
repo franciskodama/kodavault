@@ -4,6 +4,7 @@ import { uuid } from 'uuidv4';
 import prisma from './prisma';
 import { Inputs } from './types';
 import { revalidatePath } from 'next/cache';
+import { InputProps } from '@/app/in/cryptos/form-allocation-goal';
 
 export async function addAsset(formData: Inputs) {
   const {
@@ -93,5 +94,60 @@ export async function deleteAsset(id: string) {
   } catch (error) {
     console.log(error);
     throw new Error('🚨 Failed to delete asset');
+  }
+}
+
+export const getCryptoGoals = async (uid: string) => {
+  try {
+    const cryptoGoals = await prisma.coinGoal.findMany({
+      where: {
+        uid,
+      },
+    });
+    return cryptoGoals;
+  } catch (error) {
+    return { error };
+  }
+};
+
+export async function updateCoinShareGoal(formData: InputProps) {
+  const { id, uid, coin, goal, obs } = formData;
+
+  try {
+    const record = await prisma.coinGoal.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (record) {
+      await prisma.coinGoal.update({
+        where: {
+          id,
+        },
+        data: {
+          uid,
+          coin,
+          goal: Number(goal),
+          obs,
+        },
+      });
+    } else {
+      await prisma.coinGoal.create({
+        data: {
+          id: uuid(),
+          uid,
+          created_at: new Date(),
+          coin,
+          goal: Number(goal),
+          obs,
+        },
+      });
+    }
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
   }
 }

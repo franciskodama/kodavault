@@ -256,7 +256,7 @@ export function AddAssetForm() {
           </Button>
 
           <SheetClose asChild>
-            <Button className='my-4' type='submit' variant={'outline'}>
+            <Button className='my-4' type='submit' variant='outline'>
               Close
             </Button>
           </SheetClose>

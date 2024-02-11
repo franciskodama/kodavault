@@ -9,6 +9,7 @@ import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { currencyFormatter } from '@/lib/utils';
 import { Asset, AssetsByType } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
+import { CardKeyAssets } from '@/components/CardKeyAssets';
 // import { currencyRates } from '@/lib/prices';
 
 const currencyRates = {
@@ -25,6 +26,13 @@ export default function Dashboard() {
   // const athCoins = await getAllTimeHighData();
   // ------------------------------------------------------------------------
 
+  let btcPrice;
+  if (assetsByType.Crypto?.length > 0) {
+    btcPrice = Number(
+      assetsByType.Crypto.find((item: any) => item.asset === 'BTC')?.price
+    );
+  }
+
   return (
     <>
       {assets.length > 0 && assetsByType && (
@@ -32,6 +40,15 @@ export default function Dashboard() {
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
           <div className='flex justify-end items-center'>
             <div className='flex items-center mr-8'>
+              <div className='mr-4'>
+                <a
+                  target='_blank'
+                  href='https://ca.finance.yahoo.com/quote/BTC-USD?p=BTC-USD'
+                >
+                  <span>🪙</span>
+                </a>
+                {btcPrice && ` BTC/USD: ${currencyFormatter(btcPrice)}`}
+              </div>
               <div>
                 <a
                   target='_blank'
@@ -65,7 +82,10 @@ export default function Dashboard() {
           <div className='flex gap-2'>
             <div className='flex flex-col basis-4/5 gap-2'>
               <div className='flex flex-wrap gap-2'>
-                <div className='w-1/4 bg-slate-600 border-2' />
+                {/* <div className='w-1/4 bg-slate-600 border-2' /> */}
+
+                {/* <CardKeyAssets /> */}
+                <CardNextPurchases />
                 <CardTotal
                   emoji={'💵'}
                   description={`Assets' Origin Breakdown`}
