@@ -142,8 +142,3 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
     },
   },
 ];
-
-// TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
-// TODO: example: https://ui.shadcn.com/examples/tasks
-// TODO: Add Priority
-// TODO: Add filter

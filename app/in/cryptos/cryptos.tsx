@@ -180,6 +180,11 @@ export default function Cryptos() {
   );
 }
 
+// TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
+// TODO: example: https://ui.shadcn.com/examples/tasks
+// TODO: Add Priority
+// TODO: Add filter
+
 // TODO: Fix ILV and CRO that is saying to buy them
 // TODO: Create button Clear and Minimum Amount (0.01)
 // TODO: https://ui.shadcn.com/docs/components/tabs

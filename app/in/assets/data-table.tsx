@@ -1,9 +1,12 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 
 import {
   ColumnDef,
+  ColumnFiltersState,
+  getFilteredRowModel,
   SortingState,
   getSortedRowModel,
   flexRender,
@@ -27,8 +30,9 @@ import {
   SheetTrigger,
 } from '../../../components/ui/sheet';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-import Image from 'next/image';
 import { AddAssetForm } from '@/components/AddAssetForm';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -40,6 +44,7 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
@@ -47,13 +52,27 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   });
 
   return (
     <div className='rounded-sm border border-slate-200'>
+      <div className='flex items-center px-12 py-4'>
+        <Input
+          placeholder='Filter by Asset'
+          value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
+          onChange={(event) =>
+            table.getColumn('asset')?.setFilterValue(event.target.value)
+          }
+          className='max-w-sm w-[14ch]'
+        />
+      </div>
+
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
