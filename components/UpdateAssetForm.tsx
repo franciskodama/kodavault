@@ -70,6 +70,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       toast({
         title: 'Asset Updated! 🎉',
         description: 'Your Asset is already updated.',
+        variant: 'success',
       });
     } else {
       toast({
