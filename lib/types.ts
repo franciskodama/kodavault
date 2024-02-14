@@ -67,3 +67,23 @@ export type Inputs = {
   exchange: string;
   account: string;
 };
+
+export type CryptoGoals = {
+  id: string;
+  uid: string;
+  created_at?: Date;
+  coin: string;
+  goal: number;
+  priority?: 'High' | 'Medium' | 'Low' | null;
+  obs?: string | null;
+};
+
+export type CryptoGoalAllocation = {
+  id: string;
+  uid: string;
+  total?: number;
+  goal: number | undefined;
+  coin: string;
+  priority?: 'High' | 'Medium' | 'Low' | null;
+  obs?: string | null;
+};

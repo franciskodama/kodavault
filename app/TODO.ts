@@ -59,5 +59,13 @@
 // TODO: Fix Sign in Bug
 // TODO: Fix context bug so we can reload Assets page
 // TODO: Fix Hydration bug
+// TODO: Add filter in the Asset Table
+// TODO: The problem is here: the data for the form is not going for the right coin by this component below
+// TODO: Solution is to forget the edition inline, and use the action with dropdown to edit the goal (opens a form with a server action)
+// TODO: Create Server Action for getting Crypto Goals of this user
+// TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD)
+// TODO: Include Share data
+// TODO: Include Observation field (Look at Stochastic Analysis 4h, MACD 3D and W)
+// TODO: Add Asset: if there isn't this asset symbol in the CoinGaol table, create it with goal = 0
 
 // =============================================================================================

@@ -109,6 +109,21 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
     },
   },
   {
+    accessorKey: 'priority',
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Priority
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+  },
+  {
     accessorKey: 'obs',
     header: () => (
       <div className={`px-0 font-semibold text-slate-800 text-left`}>Obs</div>

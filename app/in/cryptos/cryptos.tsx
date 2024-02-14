@@ -15,15 +15,7 @@ import {
 } from '@/lib/utils';
 import { getCryptoGoals } from '@/lib/actions';
 import { v4 as uuidv4 } from 'uuid';
-
-type CryptoGoals = {
-  id: string;
-  uid: string;
-  created_at?: Date;
-  coin: string;
-  goal: number;
-  obs?: string | null;
-};
+import { CryptoGoals } from '@/lib/types';
 
 type TotalByCoin = { value: string; total: number };
 
@@ -34,6 +26,7 @@ export type MergedArrayItem = {
   total: number | string;
   share: number | string;
   goal?: number;
+  priority?: 'High' | 'Medium' | 'Low' | null;
   obs?: string | null;
 };
 
@@ -104,6 +97,7 @@ export default function Cryptos() {
           uid: item.uid,
           coin: item.coin,
           goal: item.goal,
+          priority: item.priority,
           obs: item.obs,
         },
       ])
@@ -124,6 +118,7 @@ export default function Cryptos() {
         total: numberFormatterNoDecimals.format(total),
         share: `${numberFormatter.format((total / tableTotal) * 100)} %`,
         goal: goalData ? goalData.goal : 0,
+        priority: goalData ? goalData.priority : null,
         obs: goalData ? goalData.obs : null,
       });
     });
@@ -183,7 +178,6 @@ export default function Cryptos() {
 // TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
 // TODO: example: https://ui.shadcn.com/examples/tasks
 // TODO: Add Priority
-// TODO: Add filter
 
 // TODO: Fix ILV and CRO that is saying to buy them
 // TODO: Create button Clear and Minimum Amount (0.01)
@@ -202,13 +196,6 @@ export default function Cryptos() {
 // TODO: Resistences and Supports?
 
 // DONE:
-// TODO: The problem is here: the data for the form is not going for the right coin by this component below
-// TODO: Solution is to forget the edition inline, and use the action with dropdown to edit the goal (opens a form with a server action)
-// TODO: Create Server Action for getting Crypto Goals of this user
-// TODO: Symbol + Amount (USD) + Percentage + Goal (%) + Goal (USD)
-// TODO: Include Share data
-// TODO: Include Observation field (Look at Stochastic Analysis 4h, MACD 3D and W)
-// TODO: Add Asset: if there isn't this asset symbol in the CoinGaol table, create it with goal = 0
 
 {
   /* <CardCryptoGoals

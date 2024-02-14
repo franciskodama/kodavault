@@ -2,9 +2,8 @@
 
 import { uuid } from 'uuidv4';
 import prisma from './prisma';
-import { Inputs } from './types';
+import { CryptoGoalAllocation, Inputs } from './types';
 import { revalidatePath } from 'next/cache';
-import { InputProps } from '@/app/in/cryptos/form-allocation-goal';
 
 export async function addAsset(formData: Inputs) {
   const {
@@ -110,8 +109,8 @@ export const getCryptoGoals = async (uid: string) => {
   }
 };
 
-export async function updateCoinShareGoal(formData: InputProps) {
-  const { id, uid, coin, goal, obs } = formData;
+export async function updateCoinShareGoal(formData: CryptoGoalAllocation) {
+  const { id, uid, coin, goal, priority, obs } = formData;
 
   try {
     const record = await prisma.coinGoal.findUnique({
@@ -129,6 +128,7 @@ export async function updateCoinShareGoal(formData: InputProps) {
           uid,
           coin,
           goal: Number(goal),
+          priority,
           obs,
         },
       });
@@ -140,6 +140,7 @@ export async function updateCoinShareGoal(formData: InputProps) {
           created_at: new Date(),
           coin,
           goal: Number(goal),
+          priority,
           obs,
         },
       });

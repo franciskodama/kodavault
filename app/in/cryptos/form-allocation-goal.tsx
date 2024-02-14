@@ -9,22 +9,14 @@ import { MergedArrayItem } from './cryptos';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-
-export type InputProps = {
-  id: string;
-  uid: string;
-  total?: number;
-  goal: number | undefined;
-  coin: string;
-  obs?: string | null;
-};
+import { CryptoGoalAllocation } from '@/lib/types';
 
 export const FormAllocationGoal = ({
   assetRow,
 }: {
   assetRow: MergedArrayItem;
 }) => {
-  const [data, setData] = useState<InputProps>();
+  const [data, setData] = useState<CryptoGoalAllocation>();
   const { toast } = useToast();
 
   const {
@@ -33,7 +25,7 @@ export const FormAllocationGoal = ({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<InputProps>({
+  } = useForm<CryptoGoalAllocation>({
     defaultValues: {
       id: assetRow.id,
       uid: assetRow.uid,
@@ -43,7 +35,7 @@ export const FormAllocationGoal = ({
     },
   });
 
-  const processForm: SubmitHandler<InputProps> = async (data) => {
+  const processForm: SubmitHandler<CryptoGoalAllocation> = async (data) => {
     if (!assetRow.uid) {
       return console.log('User not logged in');
     }
