@@ -122,6 +122,41 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
         </Button>
       );
     },
+    id: 'actionPriority',
+    cell: ({ row }) => {
+      const assetRow = row.original;
+
+      return (
+        <>
+          {assetRow && (
+            <div className='flex items-center'>
+              <p
+                className={`font-bold flex items-center justify-center uppercase text-white h-6 w-[7ch] px-1 m-1 text-center rounded-[2px] 
+                ${
+                  assetRow.priority === null
+                    ? 'border border-slate-300 bg-white'
+                    : assetRow.priority === 'High'
+                    ? 'bg-red-500'
+                    : assetRow.priority === 'Medium'
+                    ? 'bg-yellow-500'
+                    : assetRow.priority === 'Low'
+                    ? 'bg-slate-300'
+                    : ''
+                }`}
+              >
+                <p
+                  className={`${
+                    assetRow.priority === null && 'text-slate-300 font-normal'
+                  }`}
+                >
+                  {assetRow.priority === null ? '-' : assetRow.priority}
+                </p>
+              </p>
+            </div>
+          )}
+        </>
+      );
+    },
   },
   {
     accessorKey: 'obs',
