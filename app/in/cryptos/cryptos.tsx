@@ -1,21 +1,24 @@
 'use client';
 
-import CardAth from '@/components/CardAth';
-import { CardNextPurchases } from '@/components/CardNextPurchases';
-import { Loading } from '@/components/Loading';
-import { useAssetsContext } from '@/context/AssetsContext';
 import { useEffect, useState } from 'react';
+import { useAssetsContext } from '@/context/AssetsContext';
+
+import { v4 as uuidv4 } from 'uuid';
+import { useUser } from '@clerk/nextjs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+import { CryptoGoals } from '@/lib/types';
+import { getCryptoGoals } from '@/lib/actions';
+import CardAth from '@/components/CardAth';
+import { Loading } from '@/components/Loading';
+import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { DataTable } from './data-table';
 import { columns } from './columns';
-import { useUser } from '@clerk/nextjs';
 import {
   getTotalByKey,
   numberFormatter,
   numberFormatterNoDecimals,
 } from '@/lib/utils';
-import { getCryptoGoals } from '@/lib/actions';
-import { v4 as uuidv4 } from 'uuid';
-import { CryptoGoals } from '@/lib/types';
 
 type TotalByCoin = { value: string; total: number };
 
@@ -159,16 +162,30 @@ export default function Cryptos() {
           <Loading />
         </div>
       ) : (
-        <div className='flex flex-wrap gap-2'>
-          <DataTable columns={columns} data={dataTable} sumGoals={sumGoals} />
-          <CardNextPurchases />
-          <div className='flex flex-col gap-2'>
-            <CardAth
-              emoji={'🔮'}
-              description={'All-Time High Estimation'}
-              assets={assetsByType.Crypto}
-            />
-          </div>
+        <div className='flex w-full gap-2'>
+          <Tabs defaultValue='account' className='w-full'>
+            <TabsList>
+              <TabsTrigger value='goals'>Allocation Goals</TabsTrigger>
+              <TabsTrigger value='ath'>ATH Estimation</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value='goals' className='flex gap-2 mt-4'>
+              <DataTable
+                columns={columns}
+                data={dataTable}
+                sumGoals={sumGoals}
+              />
+              <CardNextPurchases />
+            </TabsContent>
+
+            <TabsContent value='ath' className='mt-4'>
+              <CardAth
+                emoji={'🔮'}
+                description={'All-Time High Estimation'}
+                assets={assetsByType.Crypto}
+              />
+            </TabsContent>
+          </Tabs>
         </div>
       )}
     </>
