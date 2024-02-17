@@ -163,7 +163,7 @@ export default function Cryptos() {
         </div>
       ) : (
         <div className='flex w-full gap-2'>
-          <Tabs defaultValue='account' className='w-full'>
+          <Tabs defaultValue='goals' className='w-full'>
             <TabsList>
               <TabsTrigger value='goals'>Allocation Goals</TabsTrigger>
               <TabsTrigger value='ath'>ATH Estimation</TabsTrigger>
@@ -190,35 +190,4 @@ export default function Cryptos() {
       )}
     </>
   );
-}
-
-// TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
-// TODO: example: https://ui.shadcn.com/examples/tasks
-// TODO: Add Priority
-
-// TODO: Fix ILV and CRO that is saying to buy them
-// TODO: Create button Clear and Minimum Amount (0.01)
-// TODO: https://ui.shadcn.com/docs/components/tabs
-// TODO: Criar TAGS para Crypto Assets? Safe, Gema, Risky, Bet
-
-// TODO: Show the field (form) with the goal pulled from CoinGoal database
-// TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
-// TODO: Create button to save the goal for each asset (current line) + Save in the database
-// TODO: What to do if there is a goal for a new asset the user desire, but they didn't buy it yet? They have see the goal to remember to buy it.
-
-// TODO: What appears on SELL and BUY because of the goal, need to appear in the next purchases card
-
-//------------------------------------------
-// TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
-// TODO: Resistences and Supports?
-
-// DONE:
-
-{
-  /* <CardCryptoGoals
-              emoji={'🪙'}
-              description={'Total by crypto and the amount to reach it'}
-              assets={assetsByType.Crypto}
-              customKey={'crypto'}
-            /> */
 }

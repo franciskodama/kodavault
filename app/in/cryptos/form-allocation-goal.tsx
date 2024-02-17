@@ -79,40 +79,36 @@ export const FormAllocationGoal = ({
 
   return (
     <div>
-      <Form {...form}>
-        <form
-          onSubmit={handleSubmit(processForm)}
-          className='flex items-center'
-        >
-          <div className='grid gap-4 py-4'>
-            <h3 className='bg-slate-800 px-4 py-2 text-white text-sm'>
-              Asset:
-              <span className='font-semibold ml-2 text-base'>
-                {assetRow.coin}
-              </span>
-            </h3>
+      <form onSubmit={handleSubmit(processForm)} className='flex items-center'>
+        <div className='grid gap-4 py-4'>
+          <h3 className='bg-slate-800 px-4 py-2 text-white text-sm'>
+            Asset:
+            <span className='font-semibold ml-2 text-base'>
+              {assetRow.coin}
+            </span>
+          </h3>
 
-            <div className='flex items-center '>
-              <Label className='text-left text-xs w-1/3'>
-                Percentage Allocation Goal
-              </Label>
-              <Input className='w-1/4 text-center' {...register('goal')} />
-              <p className='w-1/4 text-lg text-left ml-4'>%</p>
-              <Button
+          <div className='flex items-center '>
+            <Label className='text-left text-xs w-1/3'>
+              Percentage Allocation Goal
+            </Label>
+            <Input className='w-1/4 text-center' {...register('goal')} />
+            <p className='w-1/4 text-lg text-left ml-4'>%</p>
+            {/* <Button
                 variant='outline'
                 className='w-1/4 border-slate-500'
-                // onClick={() => {
-                //   setValue('goal', 0, { shouldTouch: false });
-                // }}
+                onClick={() => {
+                  setValue('goal', 0, { shouldTouch: false });
+                }}
               >
                 Clear
-              </Button>
-            </div>
+              </Button> */}
+          </div>
 
-            {/* https://ui.shadcn.com/docs/components/select */}
+          {/* https://ui.shadcn.com/docs/components/select */}
 
-            <div className='flex items-center gap-4'>
-              <FormField
+          <div className='flex items-center gap-4'>
+            {/* <FormField
                 control={form.control}
                 name='priority'
                 render={({ field }) => (
@@ -137,9 +133,9 @@ export const FormAllocationGoal = ({
                     </Select>
                   </FormItem>
                 )}
-              />
+              /> */}
 
-              {/* <Label className='text-left text-xs w-1/3'>Priority:</Label>
+            {/* <Label className='text-left text-xs w-1/3'>Priority:</Label>
               <Select>
                 <SelectTrigger className='w-full'>
                   <SelectValue placeholder='Set Priority' />
@@ -150,19 +146,18 @@ export const FormAllocationGoal = ({
                   <SelectItem value='Low'>Low</SelectItem>
                 </SelectContent>
               </Select> */}
-            </div>
-
-            <div className='grid grid-cols-3 items-center gap-4'>
-              <Label className='text-left text-xs'>Observations:</Label>
-              <Textarea className='col-span-3' {...register('obs')} />
-            </div>
-
-            <Button className='mt-8' type='submit'>
-              Save Changes
-            </Button>
           </div>
-        </form>
-      </Form>
+
+          <div className='grid grid-cols-3 items-center gap-4'>
+            <Label className='text-left text-xs'>Observations:</Label>
+            <Textarea className='col-span-3' {...register('obs')} />
+          </div>
+
+          <Button className='mt-8' type='submit'>
+            Save Changes
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };

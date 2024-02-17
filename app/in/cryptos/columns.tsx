@@ -91,7 +91,7 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
                     ? 'border border-slate-300 bg-slate-300'
                     : Number(assetRow.share.toString().split('.')[0]) <
                       (assetRow.goal || 0)
-                    ? 'bg-green-500 font-bold'
+                    ? 'bg-white border-2 border-green-500 text-green-500 font-bold'
                     : 'bg-red-500 font-bold'
                 }`}
               >

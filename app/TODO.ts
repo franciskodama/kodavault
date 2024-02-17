@@ -1,23 +1,43 @@
 // Prompt AI: I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
+// TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
+// TODO: example: https://ui.shadcn.com/examples/tasks
+// TODO: Add Priority
+
+// TODO: Fix ILV and CRO that is saying to buy them
+// TODO: Create button Clear and Minimum Amount (0.01)
+// TODO: https://ui.shadcn.com/docs/components/tabs
+// TODO: Criar TAGS para Crypto Assets? Safe, Gema, Risky, Bet
+
+// TODO: Show the field (form) with the goal pulled from CoinGoal database
+// TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
+// TODO: Create button to save the goal for each asset (current line) + Save in the database
+// TODO: What to do if there is a goal for a new asset the user desire, but they didn't buy it yet? They have see the goal to remember to buy it.
+
+// TODO: What appears on SELL and BUY because of the goal, need to appear in the next purchases card
+
+//------------------------------------------
+// TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
+// TODO: Resistences and Supports?
+
 // PRIORITIES 1:
 // TODO: I included asset symbol === 111111 and broke the application
-// TODO: PETR4 and KLBN11 are not priced
+// TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
+// TODO: PRIO3 is not priced
 // TODO: APE is not priced
-// TODO: Many Assets (Stock-CAD) is not priced
-
-// TODO: Create the Crypto column of how much in percentage we want of each Asset and show how much is missing or over the limit
 // TODO: Have validation on the Forms
+// TODO: alert: recommendation if the amount is too much for a little potential growth
 
 // SMALL PRIORITIES:
-// TODO: Wealthsimple Assets is not getting prices (check if APIs are working or of the values are Hardcoded)
-// TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
 // TODO: Avatar Dropdown Style (no border is weird)
 // TODO: Dark Mode https://ui.shadcn.com/docs/dark-mode/next
+// TODO: Font Bug
 
 // PRIORITIES 2:
+// TODO: Knowledge Page: Place to save videos about coins for future reference
 // TODO: Resources Page (?):Card with link for the image of the cycle of the market (already in the public folder)
 // TODO: Responsive Tables: https://www.youtube.com/watch?v=qWY25e02BZs&list=WL&index=89&t=79s
+// TODO: ATH Table market cap
 
 // FUTURE:
 // TODO: https://css-generators.com/ribbon-shapes/
@@ -31,17 +51,14 @@
 // BACKLOG:
 // TODO: If there is cash on TFSA or HFSA, show it on the card or send a alert
 // TODO: think about other alerts
-// TODO: Place to save videos about coins for future reference
 // TODO: Card with link of Data Analysis to check on the daily basis (Obdisian)
-// TODO: Font Bug
 
 // ----------------------------------------------------------------------------------------------
-// ATH CARD
-// TODO: alert: recommendation if the amount is too much for a little potential growth
-// TODO: market cap
-// TODO: It's not showing APE price
 
 // DONE ========================================================================================
+// TODO: Wealthsimple Assets is not getting prices (check if APIs are working or of the values are Hardcoded)
+// TODO: Create the Crypto column of how much in percentage we want of each Asset and show how much is missing or over the limit
+// TODO: Many Assets (Stock-CAD) is not priced
 // TODO: Update Asset - with new logic in the form
 // TODO: Fix bug Crypto Prices that was more expensive
 // TODO: Move Cryptos from Dashboard to Cryptos Page
@@ -67,5 +84,6 @@
 // TODO: Include Share data
 // TODO: Include Observation field (Look at Stochastic Analysis 4h, MACD 3D and W)
 // TODO: Add Asset: if there isn't this asset symbol in the CoinGaol table, create it with goal = 0
+// TODO: Crypto Page: tabs on the top of the page to change the table between ATH and Allocation goals
 
 // =============================================================================================
