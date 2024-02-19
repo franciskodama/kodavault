@@ -86,13 +86,13 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
             <div className='flex items-center'>
               <p className='text-center w-[6ch]'>{`${assetRow.goal} %`}</p>
               <p
-                className={`flex items-center justify-center uppercase text-white font-bold h-6 w-[5ch] px-1 m-1 text-center rounded-[2px] ${
+                className={`flex items-center justify-center uppercase font-bold h-6 w-[5ch] px-1 m-1 text-center rounded-[2px] ${
                   assetRow.goal === 0
-                    ? 'border border-slate-300 bg-slate-300'
+                    ? 'border border-slate-300 bg-slate-300 text-white'
                     : Number(assetRow.share.toString().split('.')[0]) <
                       (assetRow.goal || 0)
                     ? 'bg-white border-2 border-green-500 text-green-500'
-                    : 'bg-red-500'
+                    : 'bg-red-500 text-white'
                 }`}
               >
                 {assetRow.goal === 0
