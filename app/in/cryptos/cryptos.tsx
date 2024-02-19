@@ -1,21 +1,24 @@
 'use client';
 
-import CardAth from '@/components/CardAth';
-import { CardNextPurchases } from '@/components/CardNextPurchases';
-import { Loading } from '@/components/Loading';
-import { useAssetsContext } from '@/context/AssetsContext';
 import { useEffect, useState } from 'react';
+import { useAssetsContext } from '@/context/AssetsContext';
+
+import { v4 as uuidv4 } from 'uuid';
+import { useUser } from '@clerk/nextjs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+import { CryptoGoals } from '@/lib/types';
+import { getCryptoGoals } from '@/lib/actions';
+import CardAth from '@/components/CardAth';
+import { Loading } from '@/components/Loading';
+import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { DataTable } from './data-table';
 import { columns } from './columns';
-import { useUser } from '@clerk/nextjs';
 import {
   getTotalByKey,
   numberFormatter,
   numberFormatterNoDecimals,
 } from '@/lib/utils';
-import { getCryptoGoals } from '@/lib/actions';
-import { v4 as uuidv4 } from 'uuid';
-import { CryptoGoals } from '@/lib/types';
 
 type TotalByCoin = { value: string; total: number };
 
@@ -159,49 +162,32 @@ export default function Cryptos() {
           <Loading />
         </div>
       ) : (
-        <div className='flex flex-wrap gap-2'>
-          <DataTable columns={columns} data={dataTable} sumGoals={sumGoals} />
-          <CardNextPurchases />
-          <div className='flex flex-col gap-2'>
-            <CardAth
-              emoji={'🔮'}
-              description={'All-Time High Estimation'}
-              assets={assetsByType.Crypto}
-            />
-          </div>
+        <div className='flex w-full gap-2'>
+          <Tabs defaultValue='goals' className='w-full'>
+            <TabsList>
+              <TabsTrigger value='goals'>Allocation Goals</TabsTrigger>
+              <TabsTrigger value='ath'>ATH Estimation</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value='goals' className='flex gap-2 mt-4'>
+              <DataTable
+                columns={columns}
+                data={dataTable}
+                sumGoals={sumGoals}
+              />
+              <CardNextPurchases />
+            </TabsContent>
+
+            <TabsContent value='ath' className='mt-4'>
+              <CardAth
+                emoji={'🔮'}
+                description={'All-Time High Estimation'}
+                assets={assetsByType.Crypto}
+              />
+            </TabsContent>
+          </Tabs>
         </div>
       )}
     </>
   );
-}
-
-// TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
-// TODO: example: https://ui.shadcn.com/examples/tasks
-// TODO: Add Priority
-
-// TODO: Fix ILV and CRO that is saying to buy them
-// TODO: Create button Clear and Minimum Amount (0.01)
-// TODO: https://ui.shadcn.com/docs/components/tabs
-// TODO: Criar TAGS para Crypto Assets? Safe, Gema, Risky, Bet
-
-// TODO: Show the field (form) with the goal pulled from CoinGoal database
-// TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
-// TODO: Create button to save the goal for each asset (current line) + Save in the database
-// TODO: What to do if there is a goal for a new asset the user desire, but they didn't buy it yet? They have see the goal to remember to buy it.
-
-// TODO: What appears on SELL and BUY because of the goal, need to appear in the next purchases card
-
-//------------------------------------------
-// TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
-// TODO: Resistences and Supports?
-
-// DONE:
-
-{
-  /* <CardCryptoGoals
-              emoji={'🪙'}
-              description={'Total by crypto and the amount to reach it'}
-              assets={assetsByType.Crypto}
-              customKey={'crypto'}
-            /> */
 }

@@ -86,13 +86,13 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
             <div className='flex items-center'>
               <p className='text-center w-[6ch]'>{`${assetRow.goal} %`}</p>
               <p
-                className={`flex items-center justify-center uppercase text-white h-6 w-[5ch] px-1 m-1 text-center rounded-[2px] ${
+                className={`flex items-center justify-center uppercase text-white font-bold h-6 w-[5ch] px-1 m-1 text-center rounded-[2px] ${
                   assetRow.goal === 0
                     ? 'border border-slate-300 bg-slate-300'
                     : Number(assetRow.share.toString().split('.')[0]) <
                       (assetRow.goal || 0)
-                    ? 'bg-green-500 font-bold'
-                    : 'bg-red-500 font-bold'
+                    ? 'bg-white border-2 border-green-500 text-green-500'
+                    : 'bg-red-500'
                 }`}
               >
                 {assetRow.goal === 0
@@ -120,6 +120,41 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
           Priority
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
+      );
+    },
+    id: 'actionPriority',
+    cell: ({ row }) => {
+      const assetRow = row.original;
+
+      return (
+        <>
+          {assetRow && (
+            <div className='flex items-center'>
+              <p
+                className={`font-bold flex items-center justify-center uppercase text-white h-6 w-[8ch] px-1 m-1 text-center rounded-[2px] 
+                ${
+                  assetRow.priority === null
+                    ? 'border border-slate-300 bg-white'
+                    : assetRow.priority === 'High'
+                    ? 'bg-red-500'
+                    : assetRow.priority === 'Medium'
+                    ? 'bg-yellow-500'
+                    : assetRow.priority === 'Low'
+                    ? 'bg-slate-300'
+                    : ''
+                }`}
+              >
+                <p
+                  className={`${
+                    assetRow.priority === null && 'text-slate-300 font-normal'
+                  }`}
+                >
+                  {assetRow.priority === null ? '-' : assetRow.priority}
+                </p>
+              </p>
+            </div>
+          )}
+        </>
       );
     },
   },

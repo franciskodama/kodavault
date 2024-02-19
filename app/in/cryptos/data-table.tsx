@@ -71,10 +71,13 @@ export function DataTable<TData, TValue>({
                               header.column.columnDef.header,
                               header.getContext()
                             )}
-                        <div className='text-center text-xs font-base text-primary'>
+                        <div
+                          className={`${
+                            sumGoals > 100 && 'bg-red-500 text-white py-1 px-2'
+                          } text-center text-xs font-base text-primary`}
+                        >
                           (Sum: {sumGoals} %)
                         </div>
-                        {sumGoals > 100 && <div className='text-2xl'>🚨</div>}
                       </div>
                     ) : (
                       <>
