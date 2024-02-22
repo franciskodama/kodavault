@@ -19,6 +19,7 @@ import {
   numberFormatterNoDecimals,
 } from '@/lib/utils';
 import AthTable from './AthTable';
+import PriceProjections from './price-projections';
 
 type TotalByCoin = { value: string; total: number };
 
@@ -167,6 +168,9 @@ export default function Cryptos() {
             <TabsList>
               <TabsTrigger value='goals'>Allocation Goals</TabsTrigger>
               <TabsTrigger value='ath'>ATH Estimation</TabsTrigger>
+              <TabsTrigger value='price-projections'>
+                Price Projections
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value='goals' className='flex gap-2 mt-4'>
@@ -182,6 +186,14 @@ export default function Cryptos() {
               <AthTable
                 emoji={'🔮'}
                 description={'All-Time High Estimation'}
+                assets={assetsByType.Crypto}
+              />
+            </TabsContent>
+
+            <TabsContent value='price-projections' className='mt-4'>
+              <PriceProjections
+                emoji={'🔮'}
+                description={'Price Projections'}
                 assets={assetsByType.Crypto}
               />
             </TabsContent>
