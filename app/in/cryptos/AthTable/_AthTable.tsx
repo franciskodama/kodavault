@@ -1,5 +1,5 @@
 import { AssetReducedWithAth } from '@/lib/types';
-import { columnsAth } from './AthColumns';
+import { columnsAth } from './columns-ath';
 import { DataTable } from '@/app/in/assets/data-table';
 
 export default function AthTable({

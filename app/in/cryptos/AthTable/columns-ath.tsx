@@ -2,9 +2,9 @@
 
 import { Asset } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
-import { Button } from '../ui/button';
+import { Button } from '../../../../components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
-import { tableHeaderClass } from '../../lib/classes';
+import { tableHeaderClass } from '../../../../lib/classes';
 
 export const columnsAth: ColumnDef<Asset>[] = [
   {

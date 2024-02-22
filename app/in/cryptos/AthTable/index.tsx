@@ -1,14 +1,14 @@
-import { Asset, AssetReducedWithAth } from '../../lib/types';
-import { CardTable } from './CardTable';
-import { hardcodedAthCoins } from '../../lib/data';
+import { Asset, AssetReducedWithAth } from '../../../../lib/types';
+import { DataTable } from './data-table';
+import { hardcodedAthCoins } from '../../../../lib/data';
 import {
   currencyFormatter,
   numberFormatter,
   numberFormatterNoDecimals,
-} from '../../lib/utils';
-import { Loading } from '../Loading';
+} from '../../../../lib/utils';
+import { Loading } from '../../../../components/Loading';
 
-export default function CardAth({
+export default function AthTable({
   assets,
   emoji,
   description,
@@ -103,8 +103,8 @@ export default function CardAth({
   return (
     <>
       {sortedAthAssets.length > 0 && (
-        <div className='w-[90em]'>
-          <CardTable
+        <div className='w-full'>
+          <DataTable
             athAssets={sortedAthAssets}
             emoji={emoji}
             description={description}

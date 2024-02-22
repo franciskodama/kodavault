@@ -9,16 +9,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { CryptoGoals } from '@/lib/types';
 import { getCryptoGoals } from '@/lib/actions';
-import CardAth from '@/components/CardAth';
 import { Loading } from '@/components/Loading';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
-import { DataTable } from './data-table';
-import { columns } from './columns';
+import { DataTable } from './AllocationGoalsTable/data-table';
+import { columns } from './AllocationGoalsTable/columns';
 import {
   getTotalByKey,
   numberFormatter,
   numberFormatterNoDecimals,
 } from '@/lib/utils';
+import AthTable from './AthTable';
 
 type TotalByCoin = { value: string; total: number };
 
@@ -179,7 +179,7 @@ export default function Cryptos() {
             </TabsContent>
 
             <TabsContent value='ath' className='mt-4'>
-              <CardAth
+              <AthTable
                 emoji={'🔮'}
                 description={'All-Time High Estimation'}
                 assets={assetsByType.Crypto}

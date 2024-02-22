@@ -14,7 +14,7 @@ import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { tableHeaderClass } from '@/lib/classes';
 import { FormAllocationGoal } from './form-allocation-goal';
-import { MergedArrayItem } from './cryptos';
+import { MergedArrayItem } from '../cryptos';
 
 export const columns: ColumnDef<MergedArrayItem>[] = [
   {
@@ -161,7 +161,9 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
   {
     accessorKey: 'obs',
     header: () => (
-      <div className={`px-0 font-semibold text-slate-800 text-left`}>Obs</div>
+      <div className={`px-0 font-semibold text-slate-800 text-left w-[20em]`}>
+        Obs
+      </div>
     ),
     id: 'actionObs',
     cell: ({ row }) => {

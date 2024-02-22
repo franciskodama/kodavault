@@ -5,12 +5,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../../components/ui/card';
-import { AssetReducedWithAth } from '../../lib/types';
-import AthTable from './AthTable';
-import { currencyFormatter, numberFormatterNoDecimals } from '../../lib/utils';
+} from '../../../../components/ui/card';
+import { AssetReducedWithAth } from '../../../../lib/types';
+import AthTable from './_AthTable';
+import {
+  currencyFormatter,
+  numberFormatterNoDecimals,
+} from '../../../../lib/utils';
 
-export const CardTable = ({
+export const DataTable = ({
   athAssets,
   emoji,
   description,

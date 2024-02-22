@@ -17,7 +17,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../../components/ui/table';
+} from '../../../../components/ui/table';
 import {
   Sheet,
   SheetContent,
@@ -25,7 +25,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '../../../components/ui/sheet';
+} from '../../../../components/ui/sheet';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import Image from 'next/image';
 import { AddAssetForm } from '@/components/AddAssetForm';
@@ -55,16 +55,16 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className='rounded-sm border border-slate-200 w-2/3 bg-white'>
+    <div className='rounded-sm border border-slate-200  bg-white'>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className='text-center'>
                     {header.id === 'actionGoal' ? (
-                      <div className='flex items-center gap-2 ml-2'>
+                      <div className='flex items-center gap-2'>
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -73,10 +73,11 @@ export function DataTable<TData, TValue>({
                             )}
                         <div
                           className={`${
-                            sumGoals > 100 && 'bg-red-500 text-white py-1 px-2'
+                            sumGoals > 100 &&
+                            'bg-red-500 text-white py-1 px-1 rounded-[2px]'
                           } text-center text-xs font-base text-primary`}
                         >
-                          (Sum: {sumGoals} %)
+                          ({sumGoals} %)
                         </div>
                       </div>
                     ) : (
