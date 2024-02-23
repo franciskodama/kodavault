@@ -14,12 +14,8 @@ import {
 
 export const DataTable = ({
   athAssets,
-  emoji,
-  description,
 }: {
   athAssets: AssetReducedWithAth[];
-  emoji?: string;
-  description?: string;
 }) => {
   const athTotal = athAssets.reduce(
     (sum: number, item: AssetReducedWithAth) => {
@@ -37,10 +33,10 @@ export const DataTable = ({
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
                 <span>Price Projections</span>
-                <span className='text-3xl'>{emoji}</span>
+                <span className='text-3xl'>🚀</span>
               </CardTitle>
               <CardDescription className='text-xs'>
-                {description}
+                Where you see the Price Projection made by YouTubers and others
               </CardDescription>
             </CardHeader>
             <CardContent>

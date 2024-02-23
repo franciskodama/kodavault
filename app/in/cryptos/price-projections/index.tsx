@@ -8,15 +8,7 @@ import {
 } from '../../../../lib/utils';
 import { Loading } from '../../../../components/Loading';
 
-export default function PriceProjections({
-  assets,
-  emoji,
-  description,
-}: {
-  assets: Asset[];
-  emoji?: string;
-  description?: string;
-}) {
+export default function PriceProjections({ assets }: { assets: Asset[] }) {
   let cryptoAssetsWithAth: Asset[] = [];
   let sumQtyOfSameAssets: Asset[] = [];
   let athAssets: AssetReducedWithAth[] = [];
@@ -75,11 +67,7 @@ export default function PriceProjections({
     <>
       {sortedAthAssets.length > 0 && (
         <div className='w-full'>
-          <DataTable
-            athAssets={sortedAthAssets}
-            emoji={emoji}
-            description={description}
-          />
+          <DataTable athAssets={sortedAthAssets} />
         </div>
       )}
     </>

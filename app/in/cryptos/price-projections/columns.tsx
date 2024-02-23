@@ -46,18 +46,11 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
-    accessorKey: 'ath',
-    header: () => <div className={tableHeaderClass}>ATH</div>,
+    accessorKey: 'price-projection',
+    header: () => <div className={tableHeaderClass}>PP</div>,
   },
   {
-    accessorKey: 'athTotalCurrency',
-    // header: () => (
-    //   <div className={tableHeaderClass}>
-    //     ATH Total
-    //     <span className='text-xs font-medium'>{` (est.)`}</span>
-    //   </div>
-    // ),
-
+    accessorKey: 'total-by-price-projection',
     header: ({ column }) => {
       return (
         <Button
@@ -66,7 +59,7 @@ export const columns: ColumnDef<Asset>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           <div className={tableHeaderClass}>
-            ATH Total
+            Total PP
             <span className='text-xs font-medium'>{` (est.)`}</span>
           </div>
           <ArrowUpDown className='ml-2 h-4 w-4' />

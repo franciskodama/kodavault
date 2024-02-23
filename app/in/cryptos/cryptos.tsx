@@ -191,11 +191,7 @@ export default function Cryptos() {
             </TabsContent>
 
             <TabsContent value='price-projections' className='mt-4'>
-              <PriceProjections
-                emoji={'🔮'}
-                description={'Price Projections'}
-                assets={assetsByType.Crypto}
-              />
+              <PriceProjections assets={assetsByType.Crypto} />
             </TabsContent>
           </Tabs>
         </div>
