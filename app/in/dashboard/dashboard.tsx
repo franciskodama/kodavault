@@ -10,14 +10,15 @@ import { currencyFormatter } from '@/lib/utils';
 import { Asset, AssetsByType } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
+import { currencyRates } from '@/lib/data';
 // import { currencyRates } from '@/lib/prices';
 
-const currencyRates = {
-  quotes: {
-    USDCAD: 1.34,
-    USDBRL: 4.86,
-  },
-};
+// const currencyRates = {
+//   quotes: {
+//     USDCAD: 1.35,
+//     USDBRL: 4.94,
+//   },
+// };
 
 export default function Dashboard() {
   const { assets, assetsByType, isLoading } = useAssetsContext();

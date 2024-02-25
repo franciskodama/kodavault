@@ -1,3 +1,9 @@
+export const currencyRates = {
+  quotes: {
+    USDCAD: 1.35,
+    USDBRL: 4.94,
+  },
+};
 // export const cryptoDiversification = [
 //   { symbol: 'BTC', percentage: 50 },
 //   { symbol: 'MATIC', percentage: 10 },

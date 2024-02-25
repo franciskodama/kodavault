@@ -5,19 +5,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../../components/ui/card';
-import { AssetReducedWithAth } from '../../lib/types';
-import AthTable from './AthTable';
-import { currencyFormatter, numberFormatterNoDecimals } from '../../lib/utils';
+} from '../../../../components/ui/card';
+import { AssetReducedWithAth } from '../../../../lib/types';
+import {
+  currencyFormatter,
+  numberFormatterNoDecimals,
+} from '../../../../lib/utils';
 
-export const CardTable = ({
+export const DataTable = ({
   athAssets,
-  emoji,
-  description,
 }: {
   athAssets: AssetReducedWithAth[];
-  emoji?: string;
-  description?: string;
 }) => {
   const athTotal = athAssets.reduce(
     (sum: number, item: AssetReducedWithAth) => {
@@ -34,18 +32,16 @@ export const CardTable = ({
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
-                <span>Crypto ATH Estimation</span>
-                <span className='text-3xl'>{emoji}</span>
+                <span>Price Projections</span>
+                <span className='text-3xl'>🚀</span>
               </CardTitle>
               <CardDescription className='text-xs'>
-                {description}
+                Where you see the Price Projection made by YouTubers and others
               </CardDescription>
             </CardHeader>
             <CardContent>
               {athAssets.length > 0 ? (
-                <div>
-                  <AthTable athAssets={athAssets} />
-                </div>
+                <div>{/* <EstimationTable athAssets={athAssets} /> */}</div>
               ) : (
                 <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
               )}

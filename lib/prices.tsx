@@ -2,15 +2,16 @@
 
 import { fetchCryptoPrice } from './crypto.server';
 import { getCurrency } from './currency.server';
+import { currencyRates } from './data';
 import { fetchStockPrices } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
 
-const currencyRates = {
-  quotes: {
-    USDCAD: 1.34,
-    USDBRL: 4.95,
-  },
-};
+// const currencyRates = {
+//   quotes: {
+//     USDCAD: 1.35,
+//     USDBRL: 4.94,
+//   },
+// };
 
 export const includePriceToCryptoAssets = async (
   cryptoAssetsArray: UnpricedAsset[]

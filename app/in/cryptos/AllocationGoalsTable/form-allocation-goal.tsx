@@ -5,7 +5,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { updateCoinShareGoal } from '@/lib/actions';
 import { useState } from 'react';
 import { Form, SubmitHandler, useForm } from 'react-hook-form';
-import { MergedArrayItem } from './cryptos';
+import { MergedArrayItem } from '../cryptos';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';

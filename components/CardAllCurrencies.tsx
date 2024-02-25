@@ -12,6 +12,7 @@ import {
 } from '../components/ui/card';
 import { useContext } from 'react';
 import { AssetsContext } from '@/context/AssetsContext';
+import { currencyRates } from '@/lib/data';
 
 type totalArrayProps = {
   currency: string;
@@ -19,12 +20,12 @@ type totalArrayProps = {
   emoji: string;
 };
 
-const currencyRates = {
-  quotes: {
-    USDCAD: 1.33,
-    USDBRL: 4.91,
-  },
-};
+// const currencyRates = {
+//   quotes: {
+//     USDCAD: 1.35,
+//     USDBRL: 4.94,
+//   },
+// };
 
 export const CardTotalAllCurrency = ({
   assets,
@@ -42,13 +43,6 @@ export const CardTotalAllCurrency = ({
   // TODO: Create a 2 fields to type USDCAD and USDBRL
   // TODO: Connect to API to get the currency values for USDCAD and USDBRL (when it's )
   // ------------------------------------------------------------------------------
-
-  const currencyRates = {
-    quotes: {
-      USDCAD: 1.33,
-      USDBRL: 4.86,
-    },
-  };
 
   let totalArray: totalArrayProps[] = [];
   if (btc?.price) {

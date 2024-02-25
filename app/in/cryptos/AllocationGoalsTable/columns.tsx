@@ -14,7 +14,7 @@ import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { tableHeaderClass } from '@/lib/classes';
 import { FormAllocationGoal } from './form-allocation-goal';
-import { MergedArrayItem } from './cryptos';
+import { MergedArrayItem } from '../cryptos';
 
 export const columns: ColumnDef<MergedArrayItem>[] = [
   {
@@ -86,13 +86,13 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
             <div className='flex items-center'>
               <p className='text-center w-[6ch]'>{`${assetRow.goal} %`}</p>
               <p
-                className={`flex items-center justify-center uppercase text-white font-bold h-6 w-[5ch] px-1 m-1 text-center rounded-[2px] ${
+                className={`flex items-center justify-center uppercase font-bold h-6 w-[5ch] px-1 m-1 text-center rounded-[2px] ${
                   assetRow.goal === 0
-                    ? 'border border-slate-300 bg-slate-300'
+                    ? 'border border-slate-300 bg-slate-300 text-white'
                     : Number(assetRow.share.toString().split('.')[0]) <
                       (assetRow.goal || 0)
                     ? 'bg-white border-2 border-green-500 text-green-500'
-                    : 'bg-red-500'
+                    : 'bg-red-500 text-white'
                 }`}
               >
                 {assetRow.goal === 0
@@ -161,7 +161,9 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
   {
     accessorKey: 'obs',
     header: () => (
-      <div className={`px-0 font-semibold text-slate-800 text-left`}>Obs</div>
+      <div className={`px-0 font-semibold text-slate-800 text-left w-[20em]`}>
+        Obs
+      </div>
     ),
     id: 'actionObs',
     cell: ({ row }) => {
