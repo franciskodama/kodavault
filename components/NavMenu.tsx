@@ -65,13 +65,13 @@ export default function NavMenu() {
           </li>
         </Link>
 
-        <Link href='/in/knowledge'>
+        <Link href='/in/shortcut'>
           <li>
             <Button
-              variant={pathname === '/in/knowledge' ? 'default' : 'ghost'}
+              variant={pathname === '/in/shortcut' ? 'default' : 'ghost'}
               size='md'
             >
-              Knowledge
+              Shortcut
             </Button>
           </li>
         </Link>
