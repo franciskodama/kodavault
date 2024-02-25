@@ -6,7 +6,7 @@ import { Button } from '../../../../components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
 import { tableHeaderClass } from '../../../../lib/classes';
 
-export const columnsAth: ColumnDef<Asset>[] = [
+export const columns: ColumnDef<Asset>[] = [
   {
     accessorKey: 'asset',
     header: ({ column }) => {

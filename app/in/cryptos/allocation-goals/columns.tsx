@@ -14,7 +14,7 @@ import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { tableHeaderClass } from '@/lib/classes';
 import { FormAllocationGoal } from './form-allocation-goal';
-import { MergedArrayItem } from '../cryptos';
+import { MergedArrayItem } from '.';
 
 export const columns: ColumnDef<MergedArrayItem>[] = [
   {

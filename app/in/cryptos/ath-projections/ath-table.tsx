@@ -1,6 +1,6 @@
 import { AssetReducedWithAth } from '@/lib/types';
-import { columnsAth } from './columns-ath';
-import { DataTable } from '@/app/in/assets/data-table';
+import { columns } from './columns';
+import { DataTable } from './data-table';
 
 export default function AthTable({
   athAssets,
@@ -9,9 +9,7 @@ export default function AthTable({
 }) {
   return (
     <div className='mx-auto'>
-      {athAssets.length > 0 && (
-        <DataTable columns={columnsAth} data={athAssets} />
-      )}
+      {athAssets.length > 0 && <DataTable columns={columns} data={athAssets} />}
     </div>
   );
 }
