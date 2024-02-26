@@ -127,7 +127,7 @@ model Shortcut {
   uid         String
   url         String
   id          String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  description String
+  description String?
   category    category_enum_f421eb4b? @default(miscellaneous)
 }
 
