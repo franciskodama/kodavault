@@ -121,9 +121,28 @@ model CoinGoal {
   priority   priority_enum_593899f8?
 }
 
+model Shortcut {
+  created_at  DateTime                @default(now()) @db.Timestamptz(6)
+  name        String
+  uid         String
+  url         String
+  id          String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  description String
+  category    category_enum_f421eb4b? @default(miscellaneous)
+}
+
 enum priority_enum_593899f8 {
   High
   Medium
   Low
 }
 
+enum category_enum_f421eb4b {
+  exchange
+  knowledge
+  course
+  analysis
+  indicator
+  miscellaneous
+  platform
+}
