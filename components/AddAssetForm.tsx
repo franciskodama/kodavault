@@ -14,9 +14,10 @@ import {
   classDiv,
   classError,
   classInput,
-  classLabelRadio,
   classUl,
+  classLabelRadio,
 } from '@/lib/classes';
+
 import {
   fixedSymbolsArr,
   getAccount,
