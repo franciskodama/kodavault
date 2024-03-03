@@ -1,7 +1,6 @@
 // Prompt AI: I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
-//TODO: Fix bug Assets Page: resilience if the coin is not found
-
+// TODO: Fix bug Assets Page: resilience if the coin is not found
 // TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
 // TODO: example: https://ui.shadcn.com/examples/tasks
 // TODO: Add Priority
