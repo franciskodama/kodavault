@@ -4,6 +4,7 @@ import { Loading } from '@/components/Loading';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { useAssetsContext } from '@/context/AssetsContext';
+import { thousandAndDecimalFormatter, thousandFormatter } from '@/lib/utils';
 
 export default function Assets() {
   const { assets, isLoading } = useAssetsContext();
@@ -15,7 +16,14 @@ export default function Assets() {
   };
 
   const sortedAssets = [...assets].sort(compareByWallet);
-  console.log('---  🚀 ---> | sortedAssets:', sortedAssets);
+  const formatatedNumbersAssets = sortedAssets.map((asset: any) => {
+    return {
+      ...asset,
+      qty: thousandAndDecimalFormatter(asset.qty),
+      price: thousandAndDecimalFormatter(asset.price),
+      total: thousandFormatter(asset.total),
+    };
+  });
 
   return (
     <div className='mx-auto'>
@@ -24,7 +32,7 @@ export default function Assets() {
           <Loading />
         </div>
       ) : (
-        <DataTable columns={columns} data={sortedAssets} />
+        <DataTable columns={columns} data={formatatedNumbersAssets} />
       )}
     </div>
   );

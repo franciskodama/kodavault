@@ -5,7 +5,6 @@ import { getCurrency } from './currency.server';
 import { currencyRates } from './data';
 import { fetchStockPrices } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
-import { thousandAndDecimalFormatter } from './utils';
 
 // const currencyRates = {
 //   quotes: {
@@ -21,22 +20,19 @@ export const includePriceToCryptoAssets = async (
     cryptoAssetsArray.map(async (item: UnpricedAsset) => {
       const thisCryptoPrice = await fetchCryptoPrice(item.asset);
       const price = thisCryptoPrice.data[0].priceUsd;
-      const total = price * +item.qty;
-
-      // This comments are here just in case, because I chaged the type of the keys below to use this function to format the number with the thousand and decimal formatter
-      // The idea is to delete it in the future, if not needed
+      const total = price * item.qty;
 
       return {
         ...item,
-        qty: thousandAndDecimalFormatter(+item.qty),
-        price: thousandAndDecimalFormatter(+price),
-        // price.split('.')[0] > 99
-        //   ? Number(Number(price).toFixed(2))
-        //   : Number(Number(price).toFixed(4)),
-        total: thousandAndDecimalFormatter(+total),
-        // Number(total.toString().split('.')[0]) > 99
-        //   ? Number(Number(total).toFixed(2))
-        //   : Number(Number(total).toFixed(4)),
+        qty: item.qty,
+        price:
+          price.split('.')[0] > 99
+            ? Number(Number(price).toFixed(2))
+            : Number(Number(price).toFixed(4)),
+        total:
+          Number(total.toString().split('.')[0]) > 99
+            ? Number(Number(total).toFixed(2))
+            : Number(Number(total).toFixed(4)),
       };
     })
   );
@@ -107,10 +103,8 @@ export const includePriceToStockAssets = async (
 
     return {
       ...item,
-      price: thousandAndDecimalFormatter(thisStock.price),
-      total: thousandAndDecimalFormatter(thisStock.price * item.qty),
-      // price: Number(thisStock.price).toFixed(2),
-      // total: Number(Number(thisStock.price * item.qty).toFixed(2)),
+      price: Number(thisStock.price).toFixed(2),
+      total: Number(Number(thisStock.price * item.qty).toFixed(2)),
     };
   });
 
@@ -128,21 +122,17 @@ export const includePriceToCashAssets = async (
 
     if (item.currency === 'CAD') {
       price = 1 / currencyRates.quotes?.USDCAD;
-      total = +item.qty / currencyRates.quotes?.USDCAD;
+      total = item.qty / currencyRates.quotes?.USDCAD;
     } else if (item.currency === 'BRL') {
       price = 1 / currencyRates.quotes?.USDBRL;
-      total = +item.qty / currencyRates.quotes?.USDBRL;
+      total = item.qty / currencyRates.quotes?.USDBRL;
     }
 
     return {
       ...item,
-      qty: thousandAndDecimalFormatter(+item.qty),
-      price: thousandAndDecimalFormatter(+price),
-      total: thousandAndDecimalFormatter(+total),
-
-      // qty: item.qty,
-      // price: Number(Number(price).toFixed(2)),
-      // total: Number(Number(total).toFixed(2)),
+      qty: item.qty,
+      price: Number(Number(price).toFixed(2)),
+      total: Number(Number(total).toFixed(2)),
     };
   });
 
