@@ -2,7 +2,7 @@ export type UnpricedAsset = {
   id: string;
   account: string;
   asset: string;
-  qty: number;
+  qty: number | string;
   wallet: string;
   created_at: Date;
   type: string;
@@ -18,8 +18,8 @@ export type UnpricedAsset = {
 export type Asset =
   | undefined
   | (UnpricedAsset & {
-      price?: number;
-      total?: number;
+      price?: number | string;
+      total?: number | string;
       ath?: number;
     });
 

@@ -31,7 +31,6 @@ import {
 } from '../../../components/ui/sheet';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { AddAssetForm } from '@/components/AddAssetForm';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 interface DataTableProps<TData, TValue> {

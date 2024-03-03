@@ -15,6 +15,7 @@ export default function Assets() {
   };
 
   const sortedAssets = [...assets].sort(compareByWallet);
+  console.log('---  🚀 ---> | sortedAssets:', sortedAssets);
 
   return (
     <div className='mx-auto'>

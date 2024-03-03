@@ -1,7 +1,6 @@
 // Prompt AI: I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
 //TODO: Fix bug Assets Page: resilience if the coin is not found
-//TODO: Fix bug buttons on the +Asset Form
 
 // TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
 // TODO: example: https://ui.shadcn.com/examples/tasks
@@ -52,13 +51,14 @@
 // TODO: Search Asset
 
 // BACKLOG:
+
 // TODO: If there is cash on TFSA or HFSA, show it on the card or send a alert
 // TODO: think about other alerts
 // TODO: Card with link of Data Analysis to check on the daily basis (Obdisian)
-
 // ----------------------------------------------------------------------------------------------
 
 // DONE ========================================================================================
+//TODO: Fix bug buttons on the +Asset Form
 // TODO: Wealthsimple Assets is not getting prices (check if APIs are working or of the values are Hardcoded)
 // TODO: Create the Crypto column of how much in percentage we want of each Asset and show how much is missing or over the limit
 // TODO: Many Assets (Stock-CAD) is not priced

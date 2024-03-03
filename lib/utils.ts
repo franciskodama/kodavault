@@ -15,6 +15,13 @@ export const currencyFormatter = (number: number) =>
     maximumFractionDigits: 2,
   }).format(number);
 
+export const thousandAndDecimalFormatter = (number: number) =>
+  new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(number);
+
 export const numberFormatter = new Intl.NumberFormat('en-US', {
   style: 'decimal',
   minimumFractionDigits: 2,
