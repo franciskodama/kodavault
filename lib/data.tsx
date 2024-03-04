@@ -1,7 +1,7 @@
 export const currencyRates = {
   quotes: {
-    USDCAD: 1.35,
-    USDBRL: 4.94,
+    USDCAD: 1.34,
+    USDBRL: 4.95,
   },
 };
 // export const cryptoDiversification = [

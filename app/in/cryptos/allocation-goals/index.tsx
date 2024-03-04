@@ -9,6 +9,7 @@ import {
   getTotalByKey,
   numberFormatter,
   numberFormatterNoDecimals,
+  thousandFormatter,
 } from '../../../../lib/utils';
 import { columns } from './columns';
 import { getCryptoGoals } from '@/lib/actions';
@@ -21,6 +22,7 @@ export type MergedArrayItem = {
   total: number | string;
   share: number | string;
   goal?: number;
+  offset: number | string;
   priority?: 'High' | 'Medium' | 'Low' | null;
   obs?: string | null;
 };
@@ -107,6 +109,11 @@ export default function AllocationGoals({ assets }: { assets: Asset[] }) {
 
     totalByCoin.forEach(({ value, total }) => {
       const goalData = goalsMap.get(value);
+
+      if (goalData?.coin === 'USDT') {
+        return;
+      }
+
       mergedArray.push({
         id: goalData ? goalData.id : uuidv4(),
         uid,
@@ -114,6 +121,9 @@ export default function AllocationGoals({ assets }: { assets: Asset[] }) {
         total: numberFormatterNoDecimals.format(total),
         share: `${numberFormatter.format((total / tableTotal) * 100)} %`,
         goal: goalData ? goalData.goal : 0,
+        offset: thousandFormatter(
+          Number(goalData && tableTotal * (goalData.goal / 100) - total)
+        ),
         priority: goalData ? goalData.priority : null,
         obs: goalData ? goalData.obs : null,
       });
@@ -127,6 +137,7 @@ export default function AllocationGoals({ assets }: { assets: Asset[] }) {
           coin,
           total: 0,
           goal,
+          offset: 0,
           obs: obs ?? '',
           share: 0,
         });

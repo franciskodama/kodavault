@@ -1,20 +1,16 @@
 // Prompt AI: I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
-// TODO: Fix bug Assets Page: resilience if the coin is not found
 // TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
 // TODO: example: https://ui.shadcn.com/examples/tasks
 // TODO: Add Priority
-
 // TODO: Fix ILV and CRO that is saying to buy them
 // TODO: Create button Clear and Minimum Amount (0.01)
 // TODO: https://ui.shadcn.com/docs/components/tabs
 // TODO: Criar TAGS para Crypto Assets? Safe, Gema, Risky, Bet
-
 // TODO: Show the field (form) with the goal pulled from CoinGoal database
 // TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
 // TODO: Create button to save the goal for each asset (current line) + Save in the database
 // TODO: What to do if there is a goal for a new asset the user desire, but they didn't buy it yet? They have see the goal to remember to buy it.
-
 // TODO: What appears on SELL and BUY because of the goal, need to appear in the next purchases card
 
 //------------------------------------------
@@ -22,12 +18,10 @@
 // TODO: Resistences and Supports?
 
 // PRIORITIES 1:
-// TODO: I included asset symbol === 111111 and broke the application
-// TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
 // TODO: PRIO3 is not priced
 // TODO: APE is not priced
 // TODO: Have validation on the Forms
-// TODO: alert: recommendation if the amount is too much for a little potential growth
+// TODO: alert: recommendation if the amount is too much for a little potential growthxx
 
 // SMALL PRIORITIES:
 // TODO: Avatar Dropdown Style (no border is weird)
@@ -57,6 +51,7 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE ========================================================================================
+// TODO: Fix bug Assets Page: resilience if the coin is not found
 //TODO: Fix bug buttons on the +Asset Form
 // TODO: Wealthsimple Assets is not getting prices (check if APIs are working or of the values are Hardcoded)
 // TODO: Create the Crypto column of how much in percentage we want of each Asset and show how much is missing or over the limit
