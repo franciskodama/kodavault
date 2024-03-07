@@ -4,8 +4,6 @@ export const fetchCryptoPrice = async (symbol: string | null) => {
       `https://api.coincap.io/v2/assets?search=${symbol}`,
       {
         method: 'GET',
-        // TODO: Commented headers to get the right price of the Crypto Asset.
-        // TODO: Perhaps, I reached the limit of calls to this API
         headers: {
           'Accept-Encoding': 'deflate',
           Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,

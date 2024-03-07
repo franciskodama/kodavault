@@ -110,9 +110,9 @@ export default function AllocationGoals({ assets }: { assets: Asset[] }) {
     totalByCoin.forEach(({ value, total }) => {
       const goalData = goalsMap.get(value);
 
-      if (goalData?.coin === 'USDT') {
-        return;
-      }
+      // if (goalData?.coin !== 'USDT') {
+      //   return;
+      // }
 
       mergedArray.push({
         id: goalData ? goalData.id : uuidv4(),

@@ -101,7 +101,12 @@ export function DataTable<TData, TValue>({
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className='text-right text-xs text-slate-600 font-light'
+                    className='÷text-right text-xs text-slate-600 font-light'
+                    // className={`${
+                    //   cell.getContext().cell.column.id === 'price'
+                    //     ? ' text-slate-600'
+                    //     : ' text-red-600'
+                    // } text-right text-xs font-light`}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

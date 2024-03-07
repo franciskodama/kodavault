@@ -86,7 +86,12 @@ export default function Dashboard() {
                 {/* <div className='w-1/4 bg-slate-600 border-2' /> */}
 
                 {/* <CardKeyAssets /> */}
-                <CardNextPurchases />
+                <CardTotal
+                  emoji={'🧺'}
+                  description={`Assets' Location Breakdown`}
+                  assets={assets}
+                  customKey={'wallet'}
+                />
                 <CardTotal
                   emoji={'💵'}
                   description={`Assets' Origin Breakdown`}
@@ -119,6 +124,11 @@ export default function Dashboard() {
                 assets={assets}
                 description={'Total Vault in USD, CAD, BRL.'}
               />
+
+              <div className='mb-2'>
+                <CardNextPurchases />
+              </div>
+
               <Notifications />
             </div>
           </div>
