@@ -16,10 +16,11 @@ export const fetchCryptoPrice = async (symbol: string | null) => {
   }
 };
 
-export const fetchGlobalMetrics = async (symbol: string | null) => {
+// We need to upgrade the plan to have it
+export const fetchGlobalMetrics = async () => {
   try {
     const response = await fetch(
-      `https://api.coincap.io/v1/global-metrics/quotes/latest`,
+      `https://api.coinmarketcap.com/v1/global-metrics/quotes/latest?convert=BTC,SGD`,
       {
         method: 'GET',
         headers: {
