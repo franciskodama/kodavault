@@ -15,6 +15,25 @@ export const fetchCryptoPrice = async (symbol: string | null) => {
     return { error };
   }
 };
+
+export const fetchGlobalMetrics = async (symbol: string | null) => {
+  try {
+    const response = await fetch(
+      `https://api.coincap.io/v1/global-metrics/quotes/latest`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept-Encoding': 'deflate',
+          Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
+        },
+      }
+    ).then((res) => res.json());
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
 export const getAllTimeHighData = async () => {
   try {
     const url = 'https://api.coingecko.com/api/v3/coins/markets';
