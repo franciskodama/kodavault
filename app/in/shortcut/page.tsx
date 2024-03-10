@@ -22,7 +22,7 @@ export default async function ShortcutPage() {
     const result = await getShortcuts(uid);
 
     if (Array.isArray(result)) {
-      shortcuts = result;
+      // shortcuts = result;
     } else {
       // Handle the case where result is not an array (e.g., "", { error: unknown; }, or null)
       console.error('Failed to load shortcuts:', result);
