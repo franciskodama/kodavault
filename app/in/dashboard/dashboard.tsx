@@ -11,6 +11,8 @@ import { Asset, AssetsByType } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
 import { currencyRates } from '@/lib/data';
+import { use } from 'react';
+import { fetchGlobalMetrics } from '@/lib/crypto.server';
 // import { currencyRates } from '@/lib/prices';
 
 // const currencyRates = {
@@ -22,6 +24,10 @@ import { currencyRates } from '@/lib/data';
 
 export default function Dashboard() {
   const { assets, assetsByType, isLoading } = useAssetsContext();
+
+  // const url = 'https://api.coincap.io/v1/global-metrics/quotes/latest';
+  // const globalMetrics = use(fetchGlobalMetrics());
+  // const globalMetrics = use(fetch(url).then((res) => res.json()));
 
   // ------------------------------------------------------------------------
   // const athCoins = await getAllTimeHighData();
@@ -86,7 +92,12 @@ export default function Dashboard() {
                 {/* <div className='w-1/4 bg-slate-600 border-2' /> */}
 
                 {/* <CardKeyAssets /> */}
-                <CardNextPurchases />
+                <CardTotal
+                  emoji={'🧺'}
+                  description={`Assets' Location Breakdown`}
+                  assets={assets}
+                  customKey={'wallet'}
+                />
                 <CardTotal
                   emoji={'💵'}
                   description={`Assets' Origin Breakdown`}
@@ -119,6 +130,11 @@ export default function Dashboard() {
                 assets={assets}
                 description={'Total Vault in USD, CAD, BRL.'}
               />
+
+              <div className='mb-2'>
+                <CardNextPurchases />
+              </div>
+
               <Notifications />
             </div>
           </div>

@@ -19,14 +19,18 @@ export const includePriceToCryptoAssets = async (
   const transformedAssets = await Promise.all(
     cryptoAssetsArray.map(async (item: UnpricedAsset) => {
       const thisCryptoPrice = await fetchCryptoPrice(item.asset);
-      const price = thisCryptoPrice.data[0].priceUsd;
+      const price = !thisCryptoPrice.data[0]
+        ? 0
+        : thisCryptoPrice.data[0].priceUsd;
       const total = price * item.qty;
 
       return {
         ...item,
         qty: item.qty,
         price:
-          price.split('.')[0] > 99
+          price === 0
+            ? 0
+            : price.split('.')[0] > 99
             ? Number(Number(price).toFixed(2))
             : Number(Number(price).toFixed(4)),
         total:

@@ -152,3 +152,16 @@ export async function updateCoinShareGoal(formData: CryptoGoalAllocation) {
     return false;
   }
 }
+
+export const getShortcuts = async (uid: string) => {
+  try {
+    const shortcuts = await prisma.shortcut.findMany({
+      where: {
+        uid,
+      },
+    });
+    return shortcuts;
+  } catch (error) {
+    return { error };
+  }
+};

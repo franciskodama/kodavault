@@ -4,8 +4,6 @@ export const fetchCryptoPrice = async (symbol: string | null) => {
       `https://api.coincap.io/v2/assets?search=${symbol}`,
       {
         method: 'GET',
-        // TODO: Commented headers to get the right price of the Crypto Asset.
-        // TODO: Perhaps, I reached the limit of calls to this API
         headers: {
           'Accept-Encoding': 'deflate',
           Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
@@ -17,6 +15,26 @@ export const fetchCryptoPrice = async (symbol: string | null) => {
     return { error };
   }
 };
+
+// We need to upgrade the plan to have it
+export const fetchGlobalMetrics = async () => {
+  try {
+    const response = await fetch(
+      `https://api.coinmarketcap.com/v1/global-metrics/quotes/latest?convert=BTC,SGD`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept-Encoding': 'deflate',
+          Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
+        },
+      }
+    ).then((res) => res.json());
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
 export const getAllTimeHighData = async () => {
   try {
     const url = 'https://api.coingecko.com/api/v3/coins/markets';
