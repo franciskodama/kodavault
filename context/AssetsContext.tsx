@@ -11,6 +11,7 @@ type AssetsContext = {
   assets: Asset[];
   setAssets: React.Dispatch<React.SetStateAction<Asset[]>>;
   assetsByType: AssetsByType;
+  refreshAssets: () => Promise<void>;
 };
 
 type pricedAssetsObj = {
@@ -28,28 +29,59 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setIsLoading(true);
 
-      try {
-        if (uid) {
-          const unpricedAssets = await fetchAssets(uid);
-          const { _assets, _assetsByType } = await fetchAssetsWithPrices(
-            unpricedAssets
-          );
-          setAssets(_assets);
-          setAssetsByType(_assetsByType);
-        }
-      } catch (error) {
-        console.error('Error loading assets:', error);
-      } finally {
-        setIsLoading(false);
+  //     try {
+  //       if (uid) {
+  //         const unpricedAssets = await fetchAssets(uid);
+  //         const { _assets, _assetsByType } = await fetchAssetsWithPrices(
+  //           unpricedAssets
+  //         );
+  //         setAssets(_assets);
+  //         setAssetsByType(_assetsByType);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error loading assets:', error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   if (uid) {
+  //     fetchData();
+  //   } else {
+  //     setAssets([]);
+  //     setAssetsByType({});
+  //     setIsLoading(false);
+  //   }
+  // }, [uid]);
+
+  const refreshAssets = async () => {
+    try {
+      if (uid) {
+        const unpricedAssets = await fetchAssets(uid);
+        const { _assets, _assetsByType } = await fetchAssetsWithPrices(
+          unpricedAssets
+        );
+        setAssets(_assets);
+        setAssetsByType(_assetsByType);
+        // -----------------------------------------
+        console.log('data refreshed');
+        // -----------------------------------------
       }
-    };
+    } catch (error) {
+      console.error('Error loading assets:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     if (uid) {
-      fetchData();
+      setIsLoading(true);
+      refreshAssets();
     } else {
       setAssets([]);
       setAssetsByType({});
@@ -59,7 +91,7 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AssetsContext.Provider
-      value={{ isLoading, assets, setAssets, assetsByType }}
+      value={{ isLoading, assets, setAssets, assetsByType, refreshAssets }}
     >
       <div>{children}</div>
     </AssetsContext.Provider>

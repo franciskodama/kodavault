@@ -7,22 +7,17 @@ import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { currencyFormatter } from '@/lib/utils';
-import { Asset, AssetsByType } from '@/lib/types';
+import { Asset, AssetsByType, Currency } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
-import { currencyRates } from '@/lib/data';
 import { use } from 'react';
 import { fetchGlobalMetrics } from '@/lib/crypto.server';
-// import { currencyRates } from '@/lib/prices';
 
-// const currencyRates = {
-//   quotes: {
-//     USDCAD: 1.35,
-//     USDBRL: 4.94,
-//   },
-// };
-
-export default function Dashboard() {
+export default function Dashboard({
+  currencyRates,
+}: {
+  currencyRates: Currency;
+}) {
   const { assets, assetsByType, isLoading } = useAssetsContext();
 
   // const url = 'https://api.coincap.io/v1/global-metrics/quotes/latest';
@@ -63,7 +58,7 @@ export default function Dashboard() {
                 >
                   <span>🇨🇦</span>
                 </a>
-                {` CAD: ${currencyFormatter(currencyRates.quotes.USDCAD)}`}
+                {` CAD: ${currencyFormatter(currencyRates.data.CAD)}`}
               </div>
               <div className='ml-4'>
                 <a
@@ -72,7 +67,7 @@ export default function Dashboard() {
                 >
                   <span>🇧🇷</span>
                 </a>
-                {` BRL: ${currencyFormatter(currencyRates.quotes.USDBRL)}`}
+                {` BRL: ${currencyFormatter(currencyRates.data.BRL)}`}
               </div>
             </div>
             <div className='flex justify-end items-center gap-2 mr-8'>
@@ -127,6 +122,7 @@ export default function Dashboard() {
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
             <div className='flex flex-col basis-1/5'>
               <CardTotalAllCurrency
+                currencyRates={currencyRates}
                 assets={assets}
                 description={'Total Vault in USD, CAD, BRL.'}
               />
