@@ -13,9 +13,11 @@ import {
 } from './ui/sheet';
 import { AddAssetForm } from './AddAssetForm';
 import { Button } from './ui/button';
+import { useAssetsContext } from '@/context/AssetsContext';
 
 export default function NavMenu() {
   const pathname = usePathname();
+  const { refreshAssets } = useAssetsContext();
 
   return (
     <>
@@ -102,6 +104,11 @@ export default function NavMenu() {
               <AddAssetForm />
             </SheetContent>
           </Sheet>
+        </li>
+        <li>
+          <Button size='md' onClick={refreshAssets} variant={'ghost'}>
+            Refresh Data
+          </Button>
         </li>
       </ul>
     </>
