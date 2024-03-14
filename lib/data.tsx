@@ -1,32 +1,3 @@
-export const currencyRates = {
-  quotes: {
-    USDCAD: 1.34,
-    USDBRL: 4.95,
-  },
-};
-// export const cryptoDiversification = [
-//   { symbol: 'BTC', percentage: 50 },
-//   { symbol: 'MATIC', percentage: 10 },
-//   { symbol: 'ETH', percentage: 10 },
-//   { symbol: 'ADA', percentage: 10 },
-//   { symbol: 'LINK', percentage: 5 },
-//   { symbol: 'UNI', percentage: 2.76 },
-//   { symbol: 'DOT', percentage: 2.31 },
-//   { symbol: 'AAVE', percentage: 1.83 },
-//   { symbol: 'TRX', percentage: 1.64 },
-//   { symbol: 'NEAR', percentage: 1.15 },
-//   { symbol: 'AVAX', percentage: 0.94 },
-//   { symbol: 'AGIX', percentage: 0.69 },
-//   { symbol: 'EGLD', percentage: 0.6 },
-//   { symbol: 'CHZ', percentage: 0.58 },
-//   { symbol: 'SOL', percentage: 0.31 },
-//   { symbol: 'MKR', percentage: 0.3 },
-//   { symbol: 'SAND', percentage: 0.3 },
-//   { symbol: 'HBAR', percentage: 0.29 },
-//   { symbol: 'ENJ', percentage: 0.28 },
-//   { symbol: 'CRO', percentage: null },
-// ];
-
 export const hardcodedAthCoins = [
   { symbol: 'BTC', ath: 69045 },
   { symbol: 'AGIX', ath: 0.63 },

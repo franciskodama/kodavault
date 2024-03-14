@@ -55,6 +55,12 @@ export type AssetReducedWithAth = {
   percentagePotential: number | string;
 };
 
+export type Currency = {
+  data: {
+    [key: string]: number;
+  };
+};
+
 export type Inputs = {
   id?: string;
   uid: string;

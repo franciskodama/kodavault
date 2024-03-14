@@ -1,7 +1,6 @@
 'use client';
 
-// import { currencyRates } from '@/lib/prices';
-import { Asset } from '@/lib/types';
+import { Asset, Currency } from '@/lib/types';
 import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
 import {
   Card,
@@ -10,9 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card';
-import { useContext } from 'react';
-import { AssetsContext } from '@/context/AssetsContext';
-import { currencyRates } from '@/lib/data';
 
 type totalArrayProps = {
   currency: string;
@@ -20,29 +16,17 @@ type totalArrayProps = {
   emoji: string;
 };
 
-// const currencyRates = {
-//   quotes: {
-//     USDCAD: 1.35,
-//     USDBRL: 4.94,
-//   },
-// };
-
 export const CardTotalAllCurrency = ({
+  currencyRates,
   assets,
   description = '',
 }: {
+  currencyRates: Currency;
   assets: Asset[];
   description?: string;
 }) => {
   const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
   const btc = assets.find((item: any) => item.asset === 'BTC');
-  // const { setAssets } = useContext(AssetsContext);
-  // setAssets(_assets);
-
-  // ------------------------------------------------------------------------------
-  // TODO: Create a 2 fields to type USDCAD and USDBRL
-  // TODO: Connect to API to get the currency values for USDCAD and USDBRL (when it's )
-  // ------------------------------------------------------------------------------
 
   let totalArray: totalArrayProps[] = [];
   if (btc?.price) {
@@ -54,12 +38,12 @@ export const CardTotalAllCurrency = ({
       },
       {
         currency: 'CAD',
-        value: total * currencyRates.quotes.USDCAD,
+        value: total * currencyRates.data.CAD,
         emoji: '🇨🇦',
       },
       {
         currency: 'BRL',
-        value: total * currencyRates.quotes.USDBRL,
+        value: total * currencyRates.data.BRL,
         emoji: '🇧🇷',
       },
       {
