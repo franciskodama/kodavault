@@ -146,7 +146,7 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
         <>
           {assetRow && (
             <div className='flex items-center'>
-              <p
+              <div
                 className={`font-bold flex items-center justify-center uppercase text-white h-6 w-[8ch] px-1 m-1 text-center rounded-[2px] 
                 ${
                   assetRow.priority === null
@@ -167,7 +167,7 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
                 >
                   {assetRow.priority === null ? '-' : assetRow.priority}
                 </p>
-              </p>
+              </div>
             </div>
           )}
         </>

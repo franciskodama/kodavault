@@ -1,6 +1,6 @@
 'use server';
 
-import { fetchCryptoPrice } from './crypto.server';
+import { fetchCryptoPrice, fetchCryptoPriceCoinGecko } from './crypto.server';
 import { getCurrency } from './currency.server';
 import { fetchStockPrices } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
@@ -8,6 +8,11 @@ import { Asset, UnpricedAsset } from './types';
 export const includePriceToCryptoAssets = async (
   cryptoAssetsArray: UnpricedAsset[]
 ): Promise<Asset[]> => {
+  // =====================================================
+  const coinGecko = await fetchCryptoPriceCoinGecko('ethereum');
+  console.log('---  🚀 ---> | coinGecko:', coinGecko);
+  // =====================================================
+
   const transformedAssets = await Promise.all(
     cryptoAssetsArray.map(async (item: UnpricedAsset) => {
       const thisCryptoPrice = await fetchCryptoPrice(item.asset);
