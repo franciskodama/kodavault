@@ -48,7 +48,9 @@ export const fetchAssetsWithPrices = async (
     [];
 
   const assets = [...cryptoAssets, ...stocksAssets, ...cashAssets];
-  console.log('---  🚀 ---> | assets:', assets);
+  //==================================================================
+  // console.log('---  🚀 ---> | assets:', assets);
+  //==================================================================
 
   const assetsByType = {
     Crypto: cryptoAssets || [],

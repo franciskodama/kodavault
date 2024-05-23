@@ -9,9 +9,14 @@ export const includePriceToCryptoAssets = async (
   cryptoAssetsArray: UnpricedAsset[]
 ): Promise<Asset[]> => {
   // =====================================================
-  const coinGecko = await fetchCryptoPriceCoinGecko('ethereum');
-  console.log('---  🚀 ---> | coinGecko:', coinGecko);
+  // const coinGecko = await fetchCryptoPriceCoinGecko('ethereum');
+  // console.log('---  🚀 ---> | coinGecko:', coinGecko);
   // =====================================================
+  // https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=1000&sort=market_cap&cryptocurrency_type=all&tag=all
+  // =====================================================
+
+  const testThisCryptoPrice = await fetchCryptoPrice('MUBI');
+  console.log('---  🚀 ---> | testThisCryptoPrice:', testThisCryptoPrice);
 
   const transformedAssets = await Promise.all(
     cryptoAssetsArray.map(async (item: UnpricedAsset) => {
