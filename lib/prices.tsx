@@ -1,6 +1,10 @@
 'use server';
 
-import { fetchCryptoPrice, fetchCryptoPriceCoinGecko } from './crypto.server';
+import {
+  fetchCryptoListings,
+  fetchCryptoPrice,
+  fetchCryptoPriceCoinGecko,
+} from './crypto.server';
 import { getCurrency } from './currency.server';
 import { fetchStockPrices } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
@@ -15,8 +19,11 @@ export const includePriceToCryptoAssets = async (
   // https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=1000&sort=market_cap&cryptocurrency_type=all&tag=all
   // =====================================================
 
-  const testThisCryptoPrice = await fetchCryptoPrice('MUBI');
-  console.log('---  🚀 ---> | testThisCryptoPrice:', testThisCryptoPrice);
+  // const testThisCryptoPrice = await fetchCryptoPrice('xrd');
+  // console.log('---  🚀 ---> | testThisCryptoPrice:', testThisCryptoPrice);
+
+  const testThisCryptoListings = await fetchCryptoListings();
+  console.log('---  🚀 ---> | testThisCryptoListings:', testThisCryptoListings);
 
   const transformedAssets = await Promise.all(
     cryptoAssetsArray.map(async (item: UnpricedAsset) => {

@@ -1,3 +1,22 @@
+export const fetchCryptoListings = async () => {
+  try {
+    const response = await fetch(
+      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=1000&sort=market_cap&cryptocurrency_type=all&tag=all      `,
+      {
+        method: 'GET',
+        headers: {
+          'Accept-Encoding': 'deflate',
+          // Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
+          'X-CMC_PRO_API_KEY': process.env.NEXT_PUBLIC_COINCAP_KEY,
+        },
+      }
+    ).then((res) => res.json());
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
 export const fetchCryptoPrice = async (symbol: string | null) => {
   try {
     const response = await fetch(
