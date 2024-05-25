@@ -8,6 +8,7 @@ const headers: HeadersInit = {
   'X-CMC_PRO_API_KEY': apiKey,
 };
 
+// Not using yet for now, but let's create a page to rank the coins
 export const fetchCryptoListings = async () => {
   try {
     const response = await fetch(
@@ -15,12 +16,6 @@ export const fetchCryptoListings = async () => {
       {
         method: 'GET',
         headers: headers,
-        // {
-        // 'Accept-Encoding': 'deflate',
-        // Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
-        // 'X-CMC_PRO_API_KEY': process.env.NEXT_PUBLIC_COINCAP_KEY,
-        // Authorization: process.env.NEXT_PUBLIC_COINCAP_KEY,
-        // },
       }
     ).then((res) => res.json());
     return response;
@@ -29,7 +24,7 @@ export const fetchCryptoListings = async () => {
   }
 };
 
-export const fetchCryptoQuotes = async (symbol: string | null) => {
+export const fetchCryptoQuote = async (symbol: string | null) => {
   try {
     const response = await fetch(
       `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=${symbol}`,
@@ -44,23 +39,24 @@ export const fetchCryptoQuotes = async (symbol: string | null) => {
   }
 };
 
-export const fetchCryptoPrice = async (symbol: string | null) => {
-  try {
-    const response = await fetch(
-      `https://api.coincap.io/v2/assets?search=${symbol}`,
-      {
-        method: 'GET',
-        headers: {
-          'Accept-Encoding': 'deflate',
-          Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
-        },
-      }
-    ).then((res) => res.json());
-    return response;
-  } catch (error) {
-    return { error };
-  }
-};
+// TRASH
+// export const fetchCryptoPrice = async (symbol: string | null) => {
+//   try {
+//     const response = await fetch(
+//       `https://api.coincap.io/v2/assets?search=${symbol}`,
+//       {
+//         method: 'GET',
+//         headers: {
+//           'Accept-Encoding': 'deflate',
+//           Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
+//         },
+//       }
+//     ).then((res) => res.json());
+//     return response;
+//   } catch (error) {
+//     return { error };
+//   }
+// };
 
 // export const fetchCryptoPriceCoinGecko = async (symbol: string | null) => {
 //   try {
