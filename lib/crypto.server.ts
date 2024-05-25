@@ -1,14 +1,26 @@
+const apiKey = process.env.NEXT_PUBLIC_COINCAP_KEY;
+
+if (!apiKey) {
+  throw new Error('API key is not defined');
+}
+
+const headers: HeadersInit = {
+  'X-CMC_PRO_API_KEY': apiKey,
+};
+
 export const fetchCryptoListings = async () => {
   try {
     const response = await fetch(
       `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=1000&sort=market_cap&cryptocurrency_type=all&tag=all      `,
       {
         method: 'GET',
-        headers: {
-          'Accept-Encoding': 'deflate',
-          // Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
-          'X-CMC_PRO_API_KEY': process.env.NEXT_PUBLIC_COINCAP_KEY,
-        },
+        headers: headers,
+        // {
+        // 'Accept-Encoding': 'deflate',
+        // Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
+        // 'X-CMC_PRO_API_KEY': process.env.NEXT_PUBLIC_COINCAP_KEY,
+        // Authorization: process.env.NEXT_PUBLIC_COINCAP_KEY,
+        // },
       }
     ).then((res) => res.json());
     return response;
