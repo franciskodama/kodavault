@@ -4,6 +4,7 @@ import {
   fetchCryptoListings,
   fetchCryptoPrice,
   fetchCryptoPriceCoinGecko,
+  fetchCryptoQuotes,
 } from './crypto.server';
 import { getCurrency } from './currency.server';
 import { fetchStockPrices } from './stock.server';
@@ -22,8 +23,14 @@ export const includePriceToCryptoAssets = async (
   // const testThisCryptoPrice = await fetchCryptoPrice('xrd');
   // console.log('---  🚀 ---> | testThisCryptoPrice:', testThisCryptoPrice);
 
-  const testThisCryptoListings = await fetchCryptoListings();
-  console.log('---  🚀 ---> | testThisCryptoListings:', testThisCryptoListings);
+  const testThisCryptoQuote = await fetchCryptoQuotes('mubi');
+  console.log(
+    '---  🚀 ---> | testThisCryptoQuote:',
+    testThisCryptoQuote.data.MUBI[0].quote
+  );
+
+  // const testThisCryptoListings = await fetchCryptoListings();
+  // console.log('---  🚀 ---> | testThisCryptoListings:', testThisCryptoListings);
 
   const transformedAssets = await Promise.all(
     cryptoAssetsArray.map(async (item: UnpricedAsset) => {
