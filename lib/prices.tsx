@@ -1,6 +1,6 @@
 'use server';
 
-import { fetchCryptoPrice, fetchCryptoPriceCoinGecko } from './crypto.server';
+import { fetchCryptoQuote } from './crypto.server';
 import { getCurrency } from './currency.server';
 import { fetchStockPrices } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
@@ -8,35 +8,36 @@ import { Asset, UnpricedAsset } from './types';
 export const includePriceToCryptoAssets = async (
   cryptoAssetsArray: UnpricedAsset[]
 ): Promise<Asset[]> => {
-  // =====================================================
-  const coinGecko = await fetchCryptoPriceCoinGecko('ethereum');
-  console.log('---  🚀 ---> | coinGecko:', coinGecko);
-  // =====================================================
-
   const transformedAssets = await Promise.all(
     cryptoAssetsArray.map(async (item: UnpricedAsset) => {
-      const thisCryptoPrice = await fetchCryptoPrice(item.asset);
-      const price = !thisCryptoPrice.data[0]
+      const thisCryptoQuote = await fetchCryptoQuote(item.asset);
+      const quote = !thisCryptoQuote.data?.[item.asset][0].quote
         ? 0
-        : thisCryptoPrice.data[0].priceUsd;
-      const total = price * item.qty;
+        : thisCryptoQuote.data?.[item.asset][0].quote.USD.price;
+
+      const total = quote * item.qty;
+
+      const formattedPrice =
+        quote === 0
+          ? 0
+          : Math.floor(quote) > 99
+          ? Number(quote.toFixed(2))
+          : Number(quote.toFixed(4));
+
+      const formattedTotal =
+        Math.floor(total) > 99
+          ? Number(total.toFixed(2))
+          : Number(total.toFixed(4));
 
       return {
         ...item,
         qty: item.qty,
-        price:
-          price === 0
-            ? 0
-            : price.split('.')[0] > 99
-            ? Number(Number(price).toFixed(2))
-            : Number(Number(price).toFixed(4)),
-        total:
-          Number(total.toString().split('.')[0]) > 99
-            ? Number(Number(total).toFixed(2))
-            : Number(Number(total).toFixed(4)),
+        price: formattedPrice,
+        total: formattedTotal,
       };
     })
   );
+
   return transformedAssets;
 };
 

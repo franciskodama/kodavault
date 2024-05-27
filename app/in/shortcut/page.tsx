@@ -3,7 +3,7 @@ import { getShortcuts } from '@/lib/actions';
 import { currentUser } from '@clerk/nextjs';
 import { Shortcut } from './shortcut';
 
-export type Shortcut = {
+export type ShortcutType = {
   id: string;
   created_at: Date;
   name: string;
@@ -16,7 +16,7 @@ export type Shortcut = {
 export default async function ShortcutPage() {
   const user = await currentUser();
   const uid = user && user.emailAddresses[0].emailAddress;
-  let shortcuts: Shortcut[] = [];
+  let shortcuts: ShortcutType[] = [];
 
   if (uid) {
     const result = await getShortcuts(uid);
