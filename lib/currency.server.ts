@@ -4,6 +4,11 @@ export const getCurrency = async () => {
       `https://api.freecurrencyapi.com/v1/latest?apikey=${process.env.NEXT_PUBLIC_FREECURRENCYAPI}`,
       {
         method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+          Expires: '0',
+        },
       }
     ).then((res) => res.json());
     return response;
