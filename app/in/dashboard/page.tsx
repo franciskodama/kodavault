@@ -1,6 +1,6 @@
 import { fetchGlobalMetrics } from '@/lib/crypto.server';
 import Dashboard from './dashboard';
-import { getCurrency } from '@/lib/currency.server';
+import { currencyRatesApiStatus, getCurrency } from '@/lib/currency.server';
 
 export default async function DashboardPage() {
   // We need to upgrade the plan to have it
@@ -8,6 +8,12 @@ export default async function DashboardPage() {
   // console.log('---  🚀 ---> | globalMetrics:', globalMetrics);
 
   const currencyRates = await getCurrency();
+
+  // ===============================================================
+  const getCurrencyApiStatus = await currencyRatesApiStatus();
+  console.log('---  🚀 ---> | getCurrencyApiStatus:', getCurrencyApiStatus);
+  console.log('---  🚀 ---> | currencyRates:', currencyRates);
+  // ===============================================================
 
   return (
     <>
