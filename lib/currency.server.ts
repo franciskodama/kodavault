@@ -25,6 +25,9 @@ export const currencyRatesApiStatus = async () => {
         method: 'GET',
         headers: {
           'Accept-Encoding': 'deflate',
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+          Expires: '0',
         },
       }
     ).then((res) => res.json());
