@@ -7,6 +7,7 @@
 // TODO: Create button Clear and Minimum Amount (0.01)
 // TODO: https://ui.shadcn.com/docs/components/tabs
 // TODO: Criar TAGS para Crypto Assets? Safe, Gema, Risky, Bet
+// TODO: Include Category for Crypto Assets as Tags. I'm not sure if it is a good idea. Too much work for not much value.
 // TODO: Show the field (form) with the goal pulled from CoinGoal database
 // TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
 // TODO: Create button to save the goal for each asset (current line) + Save in the database
@@ -18,10 +19,8 @@
 // TODO: Resistences and Supports?
 
 // PRIORITIES 1:
-// TODO: PRIO3 is not priced
-// TODO: APE is not priced
 // TODO: Have validation on the Forms
-// TODO: alert: recommendation if the amount is too much for a little potential growthxx
+// TODO: alert: recommendation if the amount is too much for a little potential growth
 
 // SMALL PRIORITIES:
 // TODO: Avatar Dropdown Style (no border is weird)
@@ -82,5 +81,7 @@
 // TODO: Include Observation field (Look at Stochastic Analysis 4h, MACD 3D and W)
 // TODO: Add Asset: if there isn't this asset symbol in the CoinGaol table, create it with goal = 0
 // TODO: Crypto Page: tabs on the top of the page to change the table between ATH and Allocation goals
+// TODO: PRIO3 is not priced
+// TODO: APE is not priced
 
 // =============================================================================================
