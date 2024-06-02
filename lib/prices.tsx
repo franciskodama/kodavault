@@ -2,7 +2,7 @@
 
 import { fetchCryptoQuote } from './crypto.server';
 import { getCurrency } from './currency.server';
-import { fetchStockPrices } from './stock.server';
+import { fetchUSStockPrices, fetchStockPrices } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
 
 export const includePriceToCryptoAssets = async (
@@ -57,6 +57,10 @@ export const includePriceToStockAssets = async (
   const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');
 
   const result = await fetchStockPrices(symbolsToMakeACall);
+
+  // const usResult = await fetchUSStockPrices(symbolsToMakeACall);
+  const usResult = await fetchUSStockPrices('HOOD');
+  console.log('---  🚀 ---> | usResult:', usResult);
 
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
     (item) => !result.body.find((el: any) => el.symbol === item)

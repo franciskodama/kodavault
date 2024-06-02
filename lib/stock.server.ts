@@ -1,26 +1,33 @@
+const apiKey = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
+
+if (!apiKey) {
+  throw new Error('API key is not defined');
+}
+
+const options = {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Key': apiKey,
+    'X-RapidAPI-Host': 'yahoo-finance15.p.rapidapi.com',
+  },
+};
+
+export const fetchUSStockPrices = async (symbols: string) => {
+  try {
+    const response = await fetch(
+      `https://yahoo-finance15.p.rapidapi.com/api/v1/markets/quote?ticker=${symbols}&type=STOCKS`,
+      options
+    );
+    const result = await response.text();
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const fetchStockPrices = async (symbols: string) => {
   return resultHardcoded;
 };
-
-// THIS API ----> https://rapidapi.com/sparior/api/yahoo-finance15/
-// export const fetchStockPrices = async (symbols: string) => {
-//   try {
-//     const response = await fetch(
-//       // `https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/${symbol}`,
-//       `https://yahoo-finance15.p.rapidapi.com/api/v1/markets/stock/quotes?ticker=${symbols}`,
-//       {
-//         method: 'GET',
-//         headers: {
-//           'X-RapidAPI-Key': `${process.env.NEXT_PUBLIC_RAPIDAPI_KEY}`,
-//           'X-RapidAPI-Host': 'yahoo-finance15.p.rapidapi.com',
-//         },
-//       }
-//     ).then((res) => res.json());
-//     return response;
-//   } catch (error) {
-//     return { error };
-//   }
-// };
 
 const resultHardcoded: any = {
   body: [
@@ -42,20 +49,3 @@ const resultHardcoded: any = {
     { symbol: 'PETR4.SA', regularMarketPrice: 39.96, currency: 'BRL' },
   ],
 };
-
-// export const fetchStockPricesUsd = async (symbol: string) => {
-//   try {
-//     const response = await fetch(
-//       `https://api.twelvedata.com/quote?symbol=${symbol}&apikey=${process.env.NEXT_PUBLIC_TWELVEDATA_KEY}`,
-//       {
-//         headers: {
-//           'Accept-Encoding': 'deflate',
-//           Authorization: `apikey ${process.env.NEXT_PUBLIC_TWELVEDATA_KEY}`,
-//         },
-//       }
-//     ).then((res) => res.json());
-//     return response;
-//   } catch (error) {
-//     return { error };
-//   }
-// };

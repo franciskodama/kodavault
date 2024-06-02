@@ -18,14 +18,7 @@ export default function Dashboard({
   currencyRates: Currency;
 }) {
   const { assets, assetsByType, isLoading } = useAssetsContext();
-
-  // const url = 'https://api.coincap.io/v1/global-metrics/quotes/latest';
-  // const globalMetrics = use(fetchGlobalMetrics());
-  // const globalMetrics = use(fetch(url).then((res) => res.json()));
-
-  // ------------------------------------------------------------------------
-  // const athCoins = await getAllTimeHighData();
-  // ------------------------------------------------------------------------
+  console.log('---  🚀 ---> | assets:', assets);
 
   let btcPrice;
   if (assetsByType.Crypto?.length > 0) {
