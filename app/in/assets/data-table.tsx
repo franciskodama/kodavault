@@ -68,7 +68,7 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn('asset')?.setFilterValue(event.target.value)
           }
-          className='max-w-sm w-[14ch]'
+          className='max-w-sm w-[16ch]'
         />
         <Input
           placeholder='Filter by Wallet'
@@ -76,7 +76,7 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn('wallet')?.setFilterValue(event.target.value)
           }
-          className='ml-4 max-w-sm w-[14ch]'
+          className='ml-4 max-w-sm w-[16ch]'
         />
         <Input
           placeholder='Filter by Currency'
@@ -86,7 +86,7 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn('currency')?.setFilterValue(event.target.value)
           }
-          className='ml-4 max-w-sm w-[14ch]'
+          className='ml-4 max-w-sm w-[16ch]'
         />
       </div>
 
