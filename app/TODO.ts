@@ -19,6 +19,7 @@
 // TODO: Resistences and Supports?
 
 // PRIORITIES 1:
+// TODO: Assets page, Filter by Exchange
 // TODO: Have validation on the Forms
 // TODO: alert: recommendation if the amount is too much for a little potential growth
 
