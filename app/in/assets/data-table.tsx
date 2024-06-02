@@ -68,7 +68,25 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn('asset')?.setFilterValue(event.target.value)
           }
-          className='max-w-sm w-[14ch]'
+          className='max-w-sm w-[16ch]'
+        />
+        <Input
+          placeholder='Filter by Wallet'
+          value={(table.getColumn('wallet')?.getFilterValue() as string) ?? ''}
+          onChange={(event) =>
+            table.getColumn('wallet')?.setFilterValue(event.target.value)
+          }
+          className='ml-4 max-w-sm w-[16ch]'
+        />
+        <Input
+          placeholder='Filter by Currency'
+          value={
+            (table.getColumn('currency')?.getFilterValue() as string) ?? ''
+          }
+          onChange={(event) =>
+            table.getColumn('currency')?.setFilterValue(event.target.value)
+          }
+          className='ml-4 max-w-sm w-[16ch]'
         />
       </div>
 
@@ -102,11 +120,6 @@ export function DataTable<TData, TValue>({
                   <TableCell
                     key={cell.id}
                     className='÷text-right text-xs text-slate-600 font-light'
-                    // className={`${
-                    //   cell.getContext().cell.column.id === 'price'
-                    //     ? ' text-slate-600'
-                    //     : ' text-red-600'
-                    // } text-right text-xs font-light`}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
