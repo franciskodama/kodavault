@@ -19,7 +19,8 @@
 // TODO: Resistences and Supports?
 
 // PRIORITIES 1:
-// TODO: Assets page, Filter by Exchange
+// TODO: Assets page, Filter by Exchange + Currency using Dropdown
+// TODO: Fix bug on Production Environment because it doesn't work (show assets)
 // TODO: Have validation on the Forms
 // TODO: alert: recommendation if the amount is too much for a little potential growth
 
@@ -84,5 +85,6 @@
 // TODO: Crypto Page: tabs on the top of the page to change the table between ATH and Allocation goals
 // TODO: PRIO3 is not priced
 // TODO: APE is not priced
+// TODO: Assets page, Filter by Exchange
 
 // =============================================================================================

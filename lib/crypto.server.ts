@@ -39,66 +39,6 @@ export const fetchCryptoQuote = async (symbol: string | null) => {
   }
 };
 
-// TRASH
-// export const fetchCryptoPrice = async (symbol: string | null) => {
-//   try {
-//     const response = await fetch(
-//       `https://api.coincap.io/v2/assets?search=${symbol}`,
-//       {
-//         method: 'GET',
-//         headers: {
-//           'Accept-Encoding': 'deflate',
-//           Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
-//         },
-//       }
-//     ).then((res) => res.json());
-//     return response;
-//   } catch (error) {
-//     return { error };
-//   }
-// };
-
-// export const fetchCryptoPriceCoinGecko = async (symbol: string | null) => {
-//   try {
-//     const response = await fetch(
-//       // `https://api.coingecko.com/api/v3/simple/supported_vs_currencies`,
-//       // `https://api.coingecko.com/api/v3/simple/token_price/${symbol}`,
-//       // `https://api.coingecko.com/api/v3/simple/token_price/id`,
-//       // `https://api.coingecko.com/api/v3/ping`,
-//       // `https://api.coingecko.com/api/v3/simple/price?ids=btc&vs_currencies=usd`,
-//       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=btc`,
-//       {
-//         method: 'GET',
-//         headers: {
-//           'x-cg-pro-api-key': `${process.env.NEXT_PUBLIC_COINGECKO_KEY}`,
-//         },
-//       }
-//     ).then((res) => res.json());
-//     return response;
-//   } catch (error) {
-//     return { error };
-//   }
-// };
-
-// We need to upgrade the plan to have it
-export const fetchGlobalMetrics = async () => {
-  try {
-    const response = await fetch(
-      `https://api.coinmarketcap.com/v1/global-metrics/quotes/latest?convert=BTC,SGD`,
-      {
-        method: 'GET',
-        headers: {
-          'Accept-Encoding': 'deflate',
-          Authorization: `Authorization=Bearer ${process.env.NEXT_PUBLIC_COINCAP_KEY}`,
-        },
-      }
-    ).then((res) => res.json());
-    return response;
-  } catch (error) {
-    return { error };
-  }
-};
-
 export const getAllTimeHighData = async () => {
   try {
     const url = 'https://api.coingecko.com/api/v3/coins/markets';

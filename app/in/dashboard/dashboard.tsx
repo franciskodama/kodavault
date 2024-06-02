@@ -11,7 +11,6 @@ import { Asset, AssetsByType, Currency } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
 import { use } from 'react';
-import { fetchGlobalMetrics } from '@/lib/crypto.server';
 
 export default function Dashboard({
   currencyRates,
@@ -84,8 +83,6 @@ export default function Dashboard({
           <div className='flex gap-2'>
             <div className='flex flex-col basis-4/5 gap-2'>
               <div className='flex flex-wrap gap-2'>
-                {/* <div className='w-1/4 bg-slate-600 border-2' /> */}
-
                 {/* <CardKeyAssets /> */}
                 <CardTotal
                   emoji={'🧺'}
