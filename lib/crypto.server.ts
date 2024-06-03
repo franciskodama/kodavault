@@ -6,6 +6,9 @@ if (!apiKey) {
 
 const headers: HeadersInit = {
   'X-CMC_PRO_API_KEY': apiKey,
+  'Cache-Control': 'no-cache',
+  Pragma: 'no-cache',
+  Expires: '0',
 };
 
 // Not using yet for now, but let's create a page to rank the coins
