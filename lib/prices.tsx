@@ -59,7 +59,7 @@ export const includePriceToStockAssets = async (
   const result = await fetchStockPrices(symbolsToMakeACall);
 
   // const usResult = await fetchUSStockPrices(symbolsToMakeACall);
-  const usResult = await fetchUSStockPrices('HOOD');
+  const usResult = await fetchUSStockPrices('GLXY');
   console.log('---  🚀 ---> | usResult:', usResult);
 
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
