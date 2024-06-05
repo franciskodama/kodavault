@@ -1,3 +1,7 @@
+// https://site.financialmodelingprep.com/developer/docs/batch-quote-quote
+// https://rapidapi.com/my-saved-apis
+// -------------------------------------------
+
 const apiKey = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
 
 if (!apiKey) {
