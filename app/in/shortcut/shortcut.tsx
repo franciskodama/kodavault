@@ -4,8 +4,7 @@ import { ShortcutType } from './page';
 export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
   return (
     <div>
-      <h1 className='text-3xl mb-4'>Shortcuts</h1>
-      <ul className='flex flex-col items-center justify-center w-full text-sm'>
+      <ul className='flex flex-col items-center justify-center mt-12 w-full text-sm'>
         {shortcuts.length > 0 &&
           shortcuts.map((shortcut: ShortcutType) => (
             <li
