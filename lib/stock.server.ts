@@ -1,3 +1,51 @@
+// ============ UNIBIT ============
+
+const apiKeyUniBit = process.env.NEXT_PUBLIC_UNIBIT_KEY;
+
+if (!apiKeyUniBit) {
+  throw new Error('API key is not defined');
+}
+
+export const fetchStockPricesUniBit = async (symbols: string) => {
+  try {
+    const response = await fetch(
+      `https://api.unibit.ai/api/realtimestock/${symbols}?size=10&AccessKey=${apiKeyUniBit}`,
+      {
+        method: 'GET',
+      }
+    ).then((res) => res.json());
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
+// ============ TWELVE DATA ============
+
+// Small Credits - 🙁
+
+export const fetchStockPricesUsd = async (symbol: string) => {
+  try {
+    const response = await fetch(
+      `https://api.twelvedata.com/quote?symbol=${symbol}&apikey=${process.env.NEXT_PUBLIC_TWELVEDATA_KEY}`,
+      {
+        headers: {
+          'Accept-Encoding': 'deflate',
+          Authorization: `apikey ${process.env.NEXT_PUBLIC_TWELVEDATA_KEY}`,
+        },
+      }
+    ).then((res) => res.json());
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
+// ============ FMP ============
+
+// https://site.financialmodelingprep.com/developer/docs/batch-quote-quote
+// https://rapidapi.com/my-saved-apis
+
 const apiKeyNew = process.env.NEXT_PUBLIC_FMP_KEY;
 
 if (!apiKeyNew) {
@@ -17,9 +65,22 @@ export const fetchStockPricesNew = async (symbols: string) => {
     return { error };
   }
 };
-// https://site.financialmodelingprep.com/developer/docs/batch-quote-quote
-// https://rapidapi.com/my-saved-apis
-// -------------------------------------------
+
+export const fetchStockPricesCad = async (symbols: string) => {
+  try {
+    const response = await fetch(
+      `https://financialmodelingprep.com/api/v3/quotes/TSX?apikey=${apiKeyNew}`,
+      {
+        method: 'GET',
+      }
+    ).then((res) => res.json());
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
+// ============ YAHOO ============
 
 const apiKey = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
 
@@ -47,6 +108,8 @@ export const fetchUSStockPrices = async (symbols: string) => {
     console.error(error);
   }
 };
+
+// ============ HARDCODED ============
 
 export const fetchStockPrices = async (symbols: string) => {
   return resultHardcoded;
