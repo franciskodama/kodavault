@@ -1,3 +1,22 @@
+const apiKeyNew = process.env.NEXT_PUBLIC_FMP_KEY;
+
+if (!apiKeyNew) {
+  throw new Error('API key is not defined');
+}
+
+export const fetchStockPricesNew = async (symbols: string) => {
+  try {
+    const response = await fetch(
+      `https://financialmodelingprep.com/api/v3/profile/${symbols}?apikey=${apiKeyNew}`,
+      {
+        method: 'GET',
+      }
+    ).then((res) => res.json());
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
 // https://site.financialmodelingprep.com/developer/docs/batch-quote-quote
 // https://rapidapi.com/my-saved-apis
 // -------------------------------------------

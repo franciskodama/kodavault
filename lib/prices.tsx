@@ -2,7 +2,11 @@
 
 import { fetchCryptoQuote } from './crypto.server';
 import { getCurrency } from './currency.server';
-import { fetchUSStockPrices, fetchStockPrices } from './stock.server';
+import {
+  fetchUSStockPrices,
+  fetchStockPrices,
+  fetchStockPricesNew,
+} from './stock.server';
 import { Asset, UnpricedAsset } from './types';
 
 export const includePriceToCryptoAssets = async (
@@ -59,8 +63,12 @@ export const includePriceToStockAssets = async (
   const result = await fetchStockPrices(symbolsToMakeACall);
 
   // const usResult = await fetchUSStockPrices(symbolsToMakeACall);
-  const usResult = await fetchUSStockPrices('GLXY');
-  console.log('---  🚀 ---> | usResult:', usResult);
+  // const usResult = await fetchUSStockPrices('GLXY');
+  // console.log('---  🚀 ---> | usResult:', usResult);
+
+  // const resultNew = await fetchStockPricesNew('GLXY.TO');
+  const resultNew = await fetchStockPricesNew('AAPL,FB,GOOG,MSFT');
+  console.log('---  🚀 ---> | resultNew:', resultNew);
 
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
     (item) => !result.body.find((el: any) => el.symbol === item)
