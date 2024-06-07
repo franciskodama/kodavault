@@ -57,7 +57,6 @@ export const includePriceToStockAssets = async (
   });
 
   const symbolsToMakeACall = symbolAndExchange.toString();
-  // console.log('---  🚀 ---> | symbolsToMakeACall:', symbolsToMakeACall);
   const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');
 
   const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
@@ -77,16 +76,16 @@ export const includePriceToStockAssets = async (
   );
 
   try {
-    if (currencyRates) {
+    if (currencyRates && currencyRates.data) {
       const onlySymbolAndPriceArray = result.body.map((item: any) => {
         return {
           asset: item.symbol.split('.')[0],
           price:
             item.regularMarketPrice /
             (item.currency === 'CAD'
-              ? Number(currencyRates.data.CAD)
+              ? Number(currencyRates.data?.CAD)
               : item.currency === 'BRL'
-              ? Number(currencyRates.data.BRL)
+              ? Number(currencyRates.data?.BRL)
               : 1),
         };
       });
@@ -115,6 +114,10 @@ export const includePriceToCashAssets = async (
   cashAssetsArray: UnpricedAsset[]
 ) => {
   const currencyRates = await getCurrency();
+
+  if (!currencyRates || !currencyRates.data) {
+    return [];
+  }
 
   const transformedAssets = cashAssetsArray.map((item: UnpricedAsset) => {
     let price = 1;
