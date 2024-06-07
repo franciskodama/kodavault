@@ -9,6 +9,8 @@ import {
   fetchStockPricesUsd,
   fetchStockPricesCad,
   fetchStockPricesUniBit,
+  fetchFromSpreadsheet,
+  fetchStockPricesFromSheets,
 } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
 
@@ -66,14 +68,17 @@ export const includePriceToStockAssets = async (
 
   const result = await fetchStockPrices(symbolsToMakeACall);
 
+  const spreadSheetresult = await fetchStockPricesFromSheets();
+  console.log('---  🚀 ---> | spreadSheetresult:', spreadSheetresult);
+
   // const result = await fetchStockPricesUsd(symbolsToMakeACall);
   // console.log('---  🚀 ---> | result:', result);
 
   // const resultCad = await fetchStockPricesCad(symbolsToMakeACall);
   // console.log('---  🚀 ---> | resultCad:', resultCad);
 
-  const resultCad = await fetchStockPricesUniBit('GLXY.TO');
-  console.log('---  🚀 ---> | resultCad:', resultCad);
+  // const resultCad = await fetchStockPricesUniBit('GLXY.TO');
+  // console.log('---  🚀 ---> | resultCad:', resultCad);
 
   // const usResult = await fetchUSStockPrices(symbolsToMakeACall);
   // const usResult = await fetchUSStockPrices('MFST');

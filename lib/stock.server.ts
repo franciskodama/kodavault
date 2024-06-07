@@ -1,3 +1,46 @@
+// ============ GOOGLE SPREADSHEET SAPANISH GUY============
+// https://www.youtube.com/watch?v=bs0SLSs_wyk
+export const fetchStockPricesFromSheets = async () => {
+  try {
+    const csv = await fetch(
+      `https://docs.google.com/spreadsheets/d/e/2PACX-1vTNPEr-A9HW3VBIRr5xPBp7g00TtKXv7iwbBeO_m1eEWiYvK9t6b5JM4-styVPbaBClUbL3r2_FNl88/pub?gid=0&single=true&output=csv`
+    ).then((res) => res.text());
+    const data = csv
+      .split('\n')
+      .slice(1)
+      .map((row: string) => {
+        const [symbol, price] = row.split(',');
+        return { symbol, price: Number(price) };
+      });
+    return data;
+  } catch (error) {
+    return { error };
+  }
+};
+
+// ============ GOOGLE SPREADSHEET ============
+
+const spreadsheetId = process.env.NEXT_PUBLIC_SPREADSHEET_ID;
+
+if (!spreadsheetId) {
+  throw new Error('Spreadsheet Id is not defined');
+}
+// NEXT_PUBLIC_SPREADSHEET_API_KEY
+
+export const fetchFromSpreadsheet = async (symbols: string) => {
+  try {
+    const response = await fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?key=${process.env.NEXT_PUBLIC_SPREADSHEET_API_KEY}`,
+      {
+        method: 'GET',
+      }
+    ).then((res) => res.json());
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
 // ============ UNIBIT ============
 
 const apiKeyUniBit = process.env.NEXT_PUBLIC_UNIBIT_KEY;
