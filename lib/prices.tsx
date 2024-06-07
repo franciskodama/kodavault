@@ -63,7 +63,7 @@ export const includePriceToStockAssets = async (
   const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
 
   const stockQuotes = await fetchStockPricesFromSheets();
-  console.log('---  🚀 ---> | stockQuotes:', stockQuotes);
+  // console.log('---  🚀 ---> | stockQuotes:', stockQuotes);
 
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
     (item) => !result.body.find((el: any) => el.symbol === item)

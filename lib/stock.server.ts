@@ -1,14 +1,23 @@
 export const fetchStockPricesFromSheets = async () => {
   try {
     const csv = await fetch(
-      `https://docs.google.com/spreadsheets/d/e/2PACX-1vTNPEr-A9HW3VBIRr5xPBp7g00TtKXv7iwbBeO_m1eEWiYvK9t6b5JM4-styVPbaBClUbL3r2_FNl88/pub?gid=0&single=true&output=csv`
+      `https://docs.google.com/spreadsheets/d/e/2PACX-1vTNPEr-A9HW3VBIRr5xPBp7g00TtKXv7iwbBeO_m1eEWiYvK9t6b5JM4-styVPbaBClUbL3r2_FNl88/pub?gid=0&single=true&output=csv`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept-Encoding': 'deflate',
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+          Expires: '0',
+        },
+      }
     ).then((res) => res.text());
     const data = csv
       .split('\n')
       .slice(1)
       .map((row: string) => {
-        const [symbol, price] = row.split(',');
-        return { symbol, price: Number(price) };
+        const [symbol, price, currency] = row.split(',');
+        return { symbol, price: Number(price), currency };
       });
     return data;
   } catch (error) {
