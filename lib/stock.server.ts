@@ -1,117 +1,92 @@
-// ============ UNIBIT ============
-
-const apiKeyUniBit = process.env.NEXT_PUBLIC_UNIBIT_KEY;
-
-if (!apiKeyUniBit) {
-  throw new Error('API key is not defined');
-}
-
-export const fetchStockPricesUniBit = async (symbols: string) => {
+export const fetchStockPricesFromSheets = async () => {
   try {
-    const response = await fetch(
-      `https://api.unibit.ai/api/realtimestock/${symbols}?size=10&AccessKey=${apiKeyUniBit}`,
-      {
-        method: 'GET',
-      }
-    ).then((res) => res.json());
-    return response;
+    const csv = await fetch(
+      `https://docs.google.com/spreadsheets/d/e/2PACX-1vTNPEr-A9HW3VBIRr5xPBp7g00TtKXv7iwbBeO_m1eEWiYvK9t6b5JM4-styVPbaBClUbL3r2_FNl88/pub?gid=0&single=true&output=csv`
+    ).then((res) => res.text());
+    const data = csv
+      .split('\n')
+      .slice(1)
+      .map((row: string) => {
+        const [symbol, price] = row.split(',');
+        return { symbol, price: Number(price) };
+      });
+    return data;
   } catch (error) {
     return { error };
   }
 };
 
-// ============ TWELVE DATA ============
-
-// Small Credits - 🙁
-
-export const fetchStockPricesUsd = async (symbol: string) => {
-  try {
-    const response = await fetch(
-      `https://api.twelvedata.com/quote?symbol=${symbol}&apikey=${process.env.NEXT_PUBLIC_TWELVEDATA_KEY}`,
-      {
-        headers: {
-          'Accept-Encoding': 'deflate',
-          Authorization: `apikey ${process.env.NEXT_PUBLIC_TWELVEDATA_KEY}`,
-        },
-      }
-    ).then((res) => res.json());
-    return response;
-  } catch (error) {
-    return { error };
-  }
-};
-
-// ============ FMP ============
+// ============ FMP API ========================================================================
 
 // https://site.financialmodelingprep.com/developer/docs/batch-quote-quote
 // https://rapidapi.com/my-saved-apis
 
-const apiKeyNew = process.env.NEXT_PUBLIC_FMP_KEY;
+// const apiKeyNew = process.env.NEXT_PUBLIC_FMP_KEY;
 
-if (!apiKeyNew) {
-  throw new Error('API key is not defined');
-}
+// if (!apiKeyNew) {
+//   throw new Error('API key is not defined');
+// }
 
-export const fetchStockPricesNew = async (symbols: string) => {
-  try {
-    const response = await fetch(
-      `https://financialmodelingprep.com/api/v3/profile/${symbols}?apikey=${apiKeyNew}`,
-      {
-        method: 'GET',
-      }
-    ).then((res) => res.json());
-    return response;
-  } catch (error) {
-    return { error };
-  }
-};
+// export const fetchStockPricesNew = async (symbols: string) => {
+//   try {
+//     const response = await fetch(
+//       `https://financialmodelingprep.com/api/v3/profile/${symbols}?apikey=${apiKeyNew}`,
+//       {
+//         method: 'GET',
+//       }
+//     ).then((res) => res.json());
+//     return response;
+//   } catch (error) {
+//     return { error };
+//   }
+// };
 
-export const fetchStockPricesCad = async (symbols: string) => {
-  try {
-    const response = await fetch(
-      `https://financialmodelingprep.com/api/v3/quotes/TSX?apikey=${apiKeyNew}`,
-      {
-        method: 'GET',
-      }
-    ).then((res) => res.json());
-    return response;
-  } catch (error) {
-    return { error };
-  }
-};
+// export const fetchStockPricesCad = async (symbols: string) => {
+//   try {
+//     const response = await fetch(
+//       `https://financialmodelingprep.com/api/v3/quotes/TSX?apikey=${apiKeyNew}`,
+//       {
+//         method: 'GET',
+//       }
+//     ).then((res) => res.json());
+//     return response;
+//   } catch (error) {
+//     return { error };
+//   }
+// };
 
-// ============ YAHOO ============
+// ============ YAHOO ========================================================================
 
-const apiKey = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
+// const apiKey = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
 
-if (!apiKey) {
-  throw new Error('API key is not defined');
-}
+// if (!apiKey) {
+//   throw new Error('API key is not defined');
+// }
 
-const options = {
-  method: 'GET',
-  headers: {
-    'X-RapidAPI-Key': apiKey,
-    'X-RapidAPI-Host': 'yahoo-finance15.p.rapidapi.com',
-  },
-};
+// const options = {
+//   method: 'GET',
+//   headers: {
+//     'X-RapidAPI-Key': apiKey,
+//     'X-RapidAPI-Host': 'yahoo-finance15.p.rapidapi.com',
+//   },
+// };
 
-export const fetchUSStockPrices = async (symbols: string) => {
-  try {
-    const response = await fetch(
-      `https://yahoo-finance15.p.rapidapi.com/api/v1/markets/quote?ticker=${symbols}&type=STOCKS`,
-      options
-    );
-    const result = await response.text();
-    console.log(result);
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const fetchUSStockPrices = async (symbols: string) => {
+//   try {
+//     const response = await fetch(
+//       `https://yahoo-finance15.p.rapidapi.com/api/v1/markets/quote?ticker=${symbols}&type=STOCKS`,
+//       options
+//     );
+//     const result = await response.text();
+//     console.log(result);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
-// ============ HARDCODED ============
+// ============ HARDCODED ============================================================
 
-export const fetchStockPrices = async (symbols: string) => {
+export const fetchHardcodedStockPrices = async (symbols: string) => {
   return resultHardcoded;
 };
 
