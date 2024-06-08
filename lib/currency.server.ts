@@ -1,4 +1,4 @@
-type CurrencyData = {
+export type CurrencyData = {
   [key: string]: number;
 };
 

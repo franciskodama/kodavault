@@ -8,6 +8,13 @@ import {
 } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
 
+type CurrencyData = {
+  data?: {
+    [key: string]: number;
+  };
+  error?: unknown;
+};
+
 export const includePriceToCryptoAssets = async (
   cryptoAssetsArray: UnpricedAsset[]
 ): Promise<Asset[]> => {
@@ -113,10 +120,14 @@ export const includePriceToStockAssets = async (
 export const includePriceToCashAssets = async (
   cashAssetsArray: UnpricedAsset[]
 ) => {
-  const currencyRates = await getCurrency();
+  const currencyRates: CurrencyData = await getCurrency();
 
-  if (!currencyRates || !currencyRates.data) {
-    return [];
+  if (!currencyRates.data) {
+    return cashAssetsArray.map((item: UnpricedAsset) => ({
+      ...item,
+      price: 1,
+      total: item.qty,
+    }));
   }
 
   const transformedAssets = cashAssetsArray.map((item: UnpricedAsset) => {
@@ -124,11 +135,11 @@ export const includePriceToCashAssets = async (
     let total = item.qty;
 
     if (item.currency === 'CAD') {
-      price = 1 / currencyRates.data.CAD;
-      total = item.qty / currencyRates.data.CAD;
+      price = 1 / (currencyRates.data?.CAD || 1);
+      total = item.qty / (currencyRates.data?.CAD || 1);
     } else if (item.currency === 'BRL') {
-      price = 1 / currencyRates.data.BRL;
-      total = item.qty / currencyRates.data.BRL;
+      price = 1 / (currencyRates.data?.BRL || 1);
+      total = item.qty / (currencyRates.data?.BRL || 1);
     }
 
     return {
