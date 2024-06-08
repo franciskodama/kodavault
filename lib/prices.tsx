@@ -15,6 +15,15 @@ type CurrencyData = {
   error?: unknown;
 };
 
+type StockData = {
+  body?: {
+    symbol: string;
+    regularMarketPrice: number;
+    currency: string;
+  }[];
+  error?: unknown;
+};
+
 export const includePriceToCryptoAssets = async (
   cryptoAssetsArray: UnpricedAsset[]
 ): Promise<Asset[]> => {
@@ -69,22 +78,25 @@ export const includePriceToStockAssets = async (
   const symbolsToMakeACall = symbolAndExchange.toString();
   const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');
 
-  const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
+  // const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
   // console.log('---  🚀 ---> | result:', result);
 
-  const stockQuotes = await fetchStockPricesFromSheets();
-  console.log('---  🚀 ---> | stockQuotes:', stockQuotes);
+  const result: StockData = await fetchStockPricesFromSheets();
+  console.log('---  🚀 ---> | stockQuotes:', result);
 
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
-    (item) => !result.body.find((el: any) => el.symbol === item)
+    (item) => result.body && !result.body.find((el: any) => el.symbol === item)
   );
   console.log('---  🚀 ---> | missingSymbols:', missingSymbols);
 
-  missingSymbols.map((item: any) =>
-    result.body.push({
-      symbol: item,
-      regularMarketPrice: 0,
-    })
+  missingSymbols.map(
+    (item: any) =>
+      result.body &&
+      result.body.push({
+        symbol: item,
+        regularMarketPrice: 0,
+        currency: 'USD',
+      })
   );
 
   try {

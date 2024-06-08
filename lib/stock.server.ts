@@ -25,7 +25,7 @@ export const fetchStockPricesFromSheets = async () => {
           currency: currency.slice(0, 3),
         };
       });
-    return data;
+    return { body: data };
   } catch (error) {
     return { error };
   }
