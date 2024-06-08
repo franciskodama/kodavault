@@ -66,37 +66,31 @@ export const includePriceToStockAssets = async (
   const currencyRates = await getCurrency();
   let symbolAndExchange: string[] = [];
 
-  // console.log('---  🚀 ---> | stockAssetsArray:', stockAssetsArray);
-
   stockAssetsArray.map(async (item: UnpricedAsset) => {
     symbolAndExchange.push(
       `${item.asset}${item.exchange === null ? '' : `.${item.exchange}`}`
     );
   });
-  // console.log('---  🚀 ---> | symbolAndExchange:', symbolAndExchange);
-
   const symbolsToMakeACall = symbolAndExchange.toString();
   const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');
 
-  // const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
-  // console.log('---  🚀 ---> | result:', result);
+  const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
+  console.log('---  🚀 ---> | result:', result);
 
-  const result: StockData = await fetchStockPricesFromSheets();
-  console.log('---  🚀 ---> | stockQuotes:', result);
+  const stockQuotes: StockData = await fetchStockPricesFromSheets();
+  console.log('---  🚀 ---> | stockQuotes:', stockQuotes);
 
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
-    (item) => result.body && !result.body.find((el: any) => el.symbol === item)
+    (item) => !result.body.find((el: any) => el.symbol === item)
   );
   console.log('---  🚀 ---> | missingSymbols:', missingSymbols);
 
-  missingSymbols.map(
-    (item: any) =>
-      result.body &&
-      result.body.push({
-        symbol: item,
-        regularMarketPrice: 0,
-        currency: 'USD',
-      })
+  missingSymbols.map((item: any) =>
+    result.body.push({
+      symbol: item,
+      regularMarketPrice: 0,
+      // currency: 'USD',
+    })
   );
 
   try {
