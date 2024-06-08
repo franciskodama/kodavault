@@ -1,7 +1,7 @@
 export const fetchStockPricesFromSheets = async () => {
   try {
-    const csv = await fetch(
-      `https://docs.google.com/spreadsheets/d/e/2PACX-1vTNPEr-A9HW3VBIRr5xPBp7g00TtKXv7iwbBeO_m1eEWiYvK9t6b5JM4-styVPbaBClUbL3r2_FNl88/pub?gid=0&single=true&output=csv`,
+    const tsv = await fetch(
+      `https://docs.google.com/spreadsheets/d/e/2PACX-1vTNPEr-A9HW3VBIRr5xPBp7g00TtKXv7iwbBeO_m1eEWiYvK9t6b5JM4-styVPbaBClUbL3r2_FNl88/pub?output=tsv`,
       {
         method: 'GET',
         headers: {
@@ -12,12 +12,18 @@ export const fetchStockPricesFromSheets = async () => {
         },
       }
     ).then((res) => res.text());
-    const data = csv
+    const data = tsv
       .split('\n')
       .slice(1)
-      .map((row: string) => {
-        const [symbol, price, currency] = row.split(',');
-        return { symbol, price: Number(price), currency };
+      .map((row) => {
+        const commasRow = row.replace(/\s+/g, ',');
+        const [symbol, price, currency] = commasRow.split(',');
+
+        return {
+          symbol,
+          regularMarketPrice: Number(price),
+          currency: currency.slice(0, 3),
+        };
       });
     return data;
   } catch (error) {
