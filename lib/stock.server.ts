@@ -101,27 +101,27 @@ export const fetchStockPricesFromSheets = async () => {
 
 // ============ HARDCODED ============================================================
 
-export const fetchHardcodedStockPrices = async (symbols: string) => {
-  return resultHardcoded;
-};
+// export const fetchHardcodedStockPrices = async (symbols: string) => {
+//   return resultHardcoded;
+// };
 
-const resultHardcoded: any = {
-  body: [
-    { symbol: 'PYPL34.SA', regularMarketPrice: 17.96, currency: 'BRL' },
-    { symbol: 'CSU.TO', regularMarketPrice: 3841.98, currency: 'CAD' },
-    { symbol: 'EU.V', regularMarketPrice: 5.66, currency: 'CAD' },
-    { symbol: 'ATD.TO', regularMarketPrice: 80.14, currency: 'CAD' },
-    { symbol: 'VFV.TO', regularMarketPrice: 130, currency: 'CAD' },
-    { symbol: 'TSND.TO', regularMarketPrice: 2.0, currency: 'CAD' },
-    { symbol: 'T.TO', regularMarketPrice: 22.76, currency: 'CAD' },
-    { symbol: 'DOL.TO', regularMarketPrice: 127.12, currency: 'CAD' },
-    { symbol: 'ATZ.TO', regularMarketPrice: 36.4, currency: 'CAD' },
-    { symbol: 'IVVB11.SA', regularMarketPrice: 317.03, currency: 'BRL' },
-    { symbol: 'GLXY.TO', regularMarketPrice: 16.25, currency: 'CAD' },
-    { symbol: 'HOOD', regularMarketPrice: 22.18, currency: 'USD' },
-    { symbol: 'KLBN11.SA', regularMarketPrice: 20, currency: 'BRL' },
-    { symbol: 'VALE3.SA', regularMarketPrice: 60.41, currency: 'BRL' },
-    { symbol: 'WEED.TO', regularMarketPrice: 9.63, currency: 'CAD' },
-    { symbol: 'PETR4.SA', regularMarketPrice: 36.94, currency: 'BRL' },
-  ],
-};
+// const resultHardcoded: any = {
+//   body: [
+//     { symbol: 'PYPL34.SA', regularMarketPrice: 17.96, currency: 'BRL' },
+//     { symbol: 'CSU.TO', regularMarketPrice: 3841.98, currency: 'CAD' },
+//     { symbol: 'EU.V', regularMarketPrice: 5.66, currency: 'CAD' },
+//     { symbol: 'ATD.TO', regularMarketPrice: 80.14, currency: 'CAD' },
+//     { symbol: 'VFV.TO', regularMarketPrice: 130, currency: 'CAD' },
+//     { symbol: 'TSND.TO', regularMarketPrice: 2.0, currency: 'CAD' },
+//     { symbol: 'T.TO', regularMarketPrice: 22.76, currency: 'CAD' },
+//     { symbol: 'DOL.TO', regularMarketPrice: 127.12, currency: 'CAD' },
+//     { symbol: 'ATZ.TO', regularMarketPrice: 36.4, currency: 'CAD' },
+//     { symbol: 'IVVB11.SA', regularMarketPrice: 317.03, currency: 'BRL' },
+//     { symbol: 'GLXY.TO', regularMarketPrice: 16.25, currency: 'CAD' },
+//     { symbol: 'HOOD', regularMarketPrice: 22.18, currency: 'USD' },
+//     { symbol: 'KLBN11.SA', regularMarketPrice: 20, currency: 'BRL' },
+//     { symbol: 'VALE3.SA', regularMarketPrice: 60.41, currency: 'BRL' },
+//     { symbol: 'WEED.TO', regularMarketPrice: 9.63, currency: 'CAD' },
+//     { symbol: 'PETR4.SA', regularMarketPrice: 36.94, currency: 'BRL' },
+//   ],
+// };

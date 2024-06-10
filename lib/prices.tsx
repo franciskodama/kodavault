@@ -2,10 +2,7 @@
 
 import { fetchCryptoQuote } from './crypto.server';
 import { getCurrency } from './currency.server';
-import {
-  fetchHardcodedStockPrices,
-  fetchStockPricesFromSheets,
-} from './stock.server';
+import { fetchStockPricesFromSheets } from './stock.server';
 import { Asset, UnpricedAsset } from './types';
 
 type CurrencyData = {
@@ -62,11 +59,11 @@ export const includePriceToCryptoAssets = async (
   return transformedAssets;
 };
 
-// ------------ History ------------
+// ------------ History of includePriceToStockAssets fuction ------------
 // This piece of code was written to use APIs, but they didn't give us for free the symbols we need (Canadian and Brazilian stocks).
 // So, as the APIs asks for upgrade, we created a spreadsheet using Google Finance Formulas that needs to be updated manually
 // Although we have this solution, the code will maintain the collection of symbols to make a call in the future with an API.
-// ---------------------------------
+// ----------------------------------------------------------------------
 
 export const includePriceToStockAssets = async (
   stockAssetsArray: UnpricedAsset[]
@@ -82,11 +79,8 @@ export const includePriceToStockAssets = async (
   });
   const symbolsToMakeACall = symbolAndExchange.toString();
   const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');
-
   // const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
-
   const result: StockData = await fetchStockPricesFromSheets();
-  console.log('---  🚀 ---> | stockQuotes:', result);
 
   if (!result?.body) {
     throw new Error('Stock quotes body is undefined');
@@ -96,6 +90,7 @@ export const includePriceToStockAssets = async (
     (item) => !result.body!.find((el: StockQuote) => el.symbol === item)
   );
   console.log('---  🚀 ---> | missingSymbols:', missingSymbols);
+
   missingSymbols.map((item: any) =>
     result.body!.push({
       symbol: item,
