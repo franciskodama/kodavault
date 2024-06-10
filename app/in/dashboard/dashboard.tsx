@@ -7,7 +7,7 @@ import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { currencyFormatter } from '@/lib/utils';
-import { Asset, AssetsByType, Currency } from '@/lib/types';
+import { Asset, AssetsByType, CurrencyData } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
 import { use } from 'react';
@@ -15,10 +15,9 @@ import { use } from 'react';
 export default function Dashboard({
   currencyRates,
 }: {
-  currencyRates: Currency;
+  currencyRates: CurrencyData;
 }) {
   const { assets, assetsByType, isLoading } = useAssetsContext();
-  console.log('---  🚀 ---> | assets:', assets);
 
   let btcPrice;
   if (assetsByType.Crypto?.length > 0) {
@@ -50,7 +49,9 @@ export default function Dashboard({
                 >
                   <span>🇨🇦</span>
                 </a>
-                {` CAD: ${currencyFormatter(currencyRates.data.CAD)}`}
+
+                {currencyRates.data &&
+                  ` CAD: ${currencyFormatter(currencyRates.data.CAD)}`}
               </div>
               <div className='ml-4'>
                 <a
@@ -59,7 +60,8 @@ export default function Dashboard({
                 >
                   <span>🇧🇷</span>
                 </a>
-                {` BRL: ${currencyFormatter(currencyRates.data.BRL)}`}
+                {currencyRates.data &&
+                  ` BRL: ${currencyFormatter(currencyRates.data.BRL)}`}
               </div>
             </div>
             <div className='flex justify-end items-center gap-2 mr-8'>
