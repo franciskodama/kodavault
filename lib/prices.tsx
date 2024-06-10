@@ -15,12 +15,14 @@ type CurrencyData = {
   error?: unknown;
 };
 
+type StockQuote = {
+  symbol: string;
+  regularMarketPrice: number;
+  currency: string;
+};
+
 type StockData = {
-  body?: {
-    symbol: string;
-    regularMarketPrice: number;
-    currency: string;
-  }[];
+  body?: StockQuote[];
   error?: unknown;
 };
 
@@ -60,6 +62,12 @@ export const includePriceToCryptoAssets = async (
   return transformedAssets;
 };
 
+// ------------ History ------------
+// This piece of code was written to use APIs, but they didn't give us for free the symbols we need (Canadian and Brazilian stocks).
+// So, as the APIs asks for upgrade, we created a spreadsheet using Google Finance Formulas that needs to be updated manually
+// Although we have this solution, the code will maintain the collection of symbols to make a call in the future with an API.
+// ---------------------------------
+
 export const includePriceToStockAssets = async (
   stockAssetsArray: UnpricedAsset[]
 ) => {
@@ -68,28 +76,31 @@ export const includePriceToStockAssets = async (
 
   stockAssetsArray.map(async (item: UnpricedAsset) => {
     symbolAndExchange.push(
-      `${item.asset}${item.exchange === null ? '' : `.${item.exchange}`}`
+      // `${item.asset}${item.exchange === null ? '' : `.${item.exchange}`}`
+      item.asset
     );
   });
   const symbolsToMakeACall = symbolAndExchange.toString();
   const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');
 
-  const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
-  console.log('---  🚀 ---> | result:', result);
+  // const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
 
-  const stockQuotes: StockData = await fetchStockPricesFromSheets();
-  console.log('---  🚀 ---> | stockQuotes:', stockQuotes);
+  const result: StockData = await fetchStockPricesFromSheets();
+  console.log('---  🚀 ---> | stockQuotes:', result);
+
+  if (!result?.body) {
+    throw new Error('Stock quotes body is undefined');
+  }
 
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
-    (item) => !result.body.find((el: any) => el.symbol === item)
+    (item) => !result.body!.find((el: StockQuote) => el.symbol === item)
   );
   console.log('---  🚀 ---> | missingSymbols:', missingSymbols);
-
   missingSymbols.map((item: any) =>
-    result.body.push({
+    result.body!.push({
       symbol: item,
       regularMarketPrice: 0,
-      // currency: 'USD',
+      currency: 'USD',
     })
   );
 
@@ -116,8 +127,10 @@ export const includePriceToStockAssets = async (
 
           return {
             ...item,
-            price: Number(thisStock.price).toFixed(2),
-            total: Number(Number(thisStock.price * item.qty).toFixed(2)),
+            price: Number(thisStock?.price ?? 0).toFixed(2),
+            total: Number(
+              (Number(thisStock?.price ?? 0) * item.qty).toFixed(2)
+            ),
           };
         }
       );
