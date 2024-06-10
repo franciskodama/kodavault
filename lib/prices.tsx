@@ -3,14 +3,7 @@
 import { fetchCryptoQuote } from './crypto.server';
 import { getCurrency } from './currency.server';
 import { fetchStockPricesFromSheets } from './stock.server';
-import { Asset, UnpricedAsset } from './types';
-
-type CurrencyData = {
-  data?: {
-    [key: string]: number;
-  };
-  error?: unknown;
-};
+import { Asset, CurrencyData, UnpricedAsset } from './types';
 
 type StockQuote = {
   symbol: string;

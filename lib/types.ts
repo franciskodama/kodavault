@@ -56,9 +56,12 @@ export type AssetReducedWithAth = {
 };
 
 export type Currency = {
-  data: {
-    [key: string]: number;
-  };
+  [key: string]: number;
+};
+
+export type CurrencyData = {
+  data?: Currency;
+  error?: unknown;
 };
 
 export type Inputs = {

@@ -1,6 +1,6 @@
 'use client';
 
-import { Asset, Currency } from '@/lib/types';
+import { Asset, Currency, CurrencyData } from '@/lib/types';
 import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
 import {
   Card,
@@ -21,7 +21,7 @@ export const CardTotalAllCurrency = ({
   assets,
   description = '',
 }: {
-  currencyRates: Currency;
+  currencyRates: CurrencyData;
   assets: Asset[];
   description?: string;
 }) => {
@@ -29,7 +29,7 @@ export const CardTotalAllCurrency = ({
   const btc = assets.find((item: any) => item.asset === 'BTC');
 
   let totalArray: totalArrayProps[] = [];
-  if (btc?.price) {
+  if (currencyRates.data && btc?.price) {
     totalArray = [
       {
         currency: 'USD',

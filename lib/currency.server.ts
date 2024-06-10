@@ -1,13 +1,6 @@
-export type CurrencyData = {
-  [key: string]: number;
-};
+import { Currency, CurrencyData } from './types';
 
-type ResponseData = {
-  data?: CurrencyData;
-  error?: unknown;
-};
-
-export const getCurrency = async (): Promise<ResponseData> => {
+export const getCurrency = async (): Promise<CurrencyData> => {
   try {
     const csv = await fetch(
       `https://docs.google.com/spreadsheets/d/e/2PACX-1vRXhHkYpkVB8nx8Ws7Q4h8g6q7MJg-rotoQemAfPdRWXhWHJWjivg7fcDw4m-9YxnQvPyxEkwpTKopW/pub?gid=0&single=true&output=csv`,
@@ -29,7 +22,7 @@ export const getCurrency = async (): Promise<ResponseData> => {
         return { coin, price: Number(price) };
       });
 
-    const result = data.reduce<CurrencyData>((acc, { coin, price }) => {
+    const result = data.reduce<Currency>((acc, { coin, price }) => {
       const currencyCode = coin.slice(-3);
       acc[currencyCode] = price;
       return acc;
