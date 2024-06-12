@@ -19,7 +19,6 @@
 // TODO: Resistences and Supports?
 
 // PRIORITIES 1:
-// TODO: Q.ETH is USD and there is the possibility only to set it in CAD
 // TODO: DJT in the Dashboard
 // TODO: Assets page, Filter by Exchange + Currency using Dropdown
 // TODO: Fix bug on Production Environment because it doesn't work (show assets)
@@ -54,8 +53,9 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE ========================================================================================
+// TODO: Q.ETH is USD and there is the possibility only to set it in CAD
 // TODO: Fix bug Assets Page: resilience if the coin is not found
-//TODO: Fix bug buttons on the +Asset Form
+// TODO: Fix bug buttons on the +Asset Form
 // TODO: Wealthsimple Assets is not getting prices (check if APIs are working or of the values are Hardcoded)
 // TODO: Create the Crypto column of how much in percentage we want of each Asset and show how much is missing or over the limit
 // TODO: Many Assets (Stock-CAD) is not priced
