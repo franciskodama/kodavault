@@ -53,6 +53,7 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE ========================================================================================
+// TODO: Table Alignment in the Assets Page
 // TODO: Q.ETH is USD and there is the possibility only to set it in CAD
 // TODO: Fix bug Assets Page: resilience if the coin is not found
 // TODO: Fix bug buttons on the +Asset Form

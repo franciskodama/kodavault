@@ -38,6 +38,8 @@ export default function RootLayout({
           footerActionLink: 'text-slate-500',
           formResendCodeLink: 'text-slate-500',
           identityPreviewEditButton: 'text-slate-500',
+          userButtonPopoverCard:
+            'border-[1px] border-slate-200 rounded-[4px] shadow-sm bg-[#FFFFFF]',
         },
         signIn: {
           baseTheme: neobrutalism,
