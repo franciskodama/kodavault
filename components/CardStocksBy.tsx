@@ -34,6 +34,17 @@ export const CardStocksBy = ({
     return acc;
   }, {});
 
+  const accKeys: string[] = Object.keys(groupedByCustomKey);
+
+  // const test = accKeys.map((key: string) => {
+  //   console.log('---  🚀 ---> | key:', key);
+
+  //   groupedByCustomKey.key.map((item: any) => {
+  //     console.log('---  🚀 ---> | item:', item);
+  //   });
+  // });
+
+  console.log('---  🚀 ---> | accKeys:', accKeys);
   console.log('---  🚀 ---> | groupedByCustomKey:', groupedByCustomKey);
 
   const totalArray = getTotalByKey(assets, customKey);
@@ -52,7 +63,31 @@ export const CardStocksBy = ({
             <CardDescription className='text-xs'>{description}</CardDescription>
           </CardHeader>
           <CardContent>
-            {/* {groupedByCustomKey.map((item) => (
+            {/* --------------------------------------------------- */}
+            {/* {accKeys.map((key: string) =>
+              groupedByCustomKey.key.map((item: any) => (
+                <div key={item.value} className='flex justify-between'>
+                  <h3>{item.value}</h3>
+                  <div className='flex'>
+                    <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
+                      item.total
+                    )}`}</p>
+                    <p
+                      className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                        (item.total / total) * 100 > 50
+                          ? 'bg-red-500'
+                          : 'bg-green-500'
+                      }`}
+                    >{`${numberFormatter.format(
+                      (item.total / total) * 100
+                    )}%`}</p>
+                  </div>
+                </div>
+              ))
+            )} */}
+
+            {/* --------------------------------------------------- */}
+            {/* {groupedByCustomKey.accKeys[0].map((item: any) => (
               <div key={item.value} className='flex justify-between'>
                 <h3>{item.value}</h3>
                 <div className='flex'>
@@ -69,10 +104,11 @@ export const CardStocksBy = ({
                     (item.total / total) * 100
                   )}%`}</p>
                 </div>
-              </div> */}
-            ))}
+              </div>
+            ))} */}
+
             {/* 
-            {sortedArray.map((item) => (
+{sortedArray.map((item) => (
               <div key={item.value} className='flex justify-between'>
                 <h3>{item.value}</h3>
                 <div className='flex'>
