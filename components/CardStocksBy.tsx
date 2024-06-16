@@ -79,7 +79,12 @@ export const CardStocksBy = ({
                             : 'bg-green-500'
                         }`}
                       >{`${numberFormatter.format(
-                        (item.total / total) * 100
+                        (item.total /
+                          getTotalByKey(groupedByCustomKey[key], key).reduce(
+                            (sum: number, item) => sum + item.total,
+                            0
+                          )) *
+                          100
                       )}%`}</p>
                     </div>
                   </div>
