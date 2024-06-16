@@ -66,8 +66,8 @@ export const CardStocksBy = ({
           <CardContent>
             {/* --------------------------------------------------- */}
             {accKeys.map((key: string) => (
-              <div key={key}>
-                <h3 className='capitalize font-bold text-md bg-slate-50 mb-4'>
+              <div key={key} className='border rounded-[2px] mb-2 p-2'>
+                <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
                   {key}
                 </h3>
                 {groupedByCustomKey[key].map((item: any) => (
@@ -91,7 +91,7 @@ export const CardStocksBy = ({
                   </div>
                 ))}
 
-                <CardFooter className='flex justify-between text-xs text-slate-500 font-medium border rounded-[2px] mb-12 mt-2 p-2'>
+                <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
                   <h3>Total</h3>
                   {numberFormatterNoDecimals.format(
                     totalArray.reduce(
