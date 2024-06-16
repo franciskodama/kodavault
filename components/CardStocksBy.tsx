@@ -25,7 +25,7 @@ export const CardStocksBy = ({
   emoji?: string;
   description?: string;
 }) => {
-  // Main Card
+  // Main Card "Total By Stock"
   const totalArray = getTotalByKey(assets, customKey);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
@@ -39,6 +39,7 @@ export const CardStocksBy = ({
 
     return acc;
   }, {});
+  console.log('---  🚀 ---> | groupedByCustomKey:', groupedByCustomKey);
 
   const sortedArray = (arr: Asset[]) =>
     arr.sort((a: Asset, b: Asset) => b!.total! - a!.total!);
@@ -64,7 +65,7 @@ export const CardStocksBy = ({
                   {key}
                 </h3>
                 {sortedArray(groupedByCustomKey[key]).map((item: any) => (
-                  <div key={item.value} className='flex justify-between'>
+                  <div key={item.total} className='flex justify-between'>
                     <h3>{item.asset}</h3>
                     <h3>{item.value}</h3>
                     <div className='flex'>
