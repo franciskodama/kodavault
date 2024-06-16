@@ -39,7 +39,6 @@ export const CardStocksBy = ({
 
     return acc;
   }, {});
-  console.log('---  🚀 ---> | groupedByCustomKey:', groupedByCustomKey);
 
   const sortedArray = (arr: Asset[]) =>
     arr.sort((a: Asset, b: Asset) => b!.total! - a!.total!);
