@@ -19,6 +19,8 @@
 // TODO: Resistences and Supports?
 
 // PRIORITIES 1:
+// TODO: Stocks by Currency (BRL, CAD, USD)
+// TODO: Stocks by Location (BR, CA)
 // TODO: DJT in the Dashboard
 // TODO: Assets page, Filter by Exchange + Currency using Dropdown
 // TODO: Fix bug on Production Environment because it doesn't work (show assets)
