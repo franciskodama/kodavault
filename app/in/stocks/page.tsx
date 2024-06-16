@@ -18,10 +18,10 @@ export default function StocksPage() {
       </div> */}
       <div>
         {stocksAssets.length > 0 && (
-          <div className='flex flex-wrap gap'>
+          <div className='flex flex-wrap gap-2'>
             <CardTotal
               emoji={'🔖'}
-              description={'Total value grouped by stocks'}
+              description={'Total value grouped by Stocks'}
               assets={stocksAssets}
               customKey={'stock'}
             />
@@ -32,25 +32,23 @@ export default function StocksPage() {
               customKey={'currency'}
             />
             <CardStocksBy
-              emoji={'🔖'}
-              description={'Stocks by Country'}
+              emoji={'🌎'}
+              description={'Assets by Country Stocks'}
               assets={stocksAssets}
               customKey={'subtype'}
             />
             <CardStocksBy
-              emoji={'🔖'}
+              emoji={'🏦'}
               description={'Stocks by Exchange'}
               assets={stocksAssets}
               customKey={'wallet'}
             />
             <CardStocksBy
-              emoji={'🔖'}
+              emoji={'🧺'}
               description={'Stocks by Account Type'}
               assets={stocksAssets}
               customKey={'account'}
             />
-
-            <div className='w-[90em] border-2' />
           </div>
         )}
       </div>

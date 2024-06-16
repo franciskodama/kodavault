@@ -25,32 +25,25 @@ export const CardStocksBy = ({
   emoji?: string;
   description?: string;
 }) => {
+  // Main Card
+  const totalArray = getTotalByKey(assets, customKey);
+  const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
+
+  // Other Cards
   const groupedByCustomKey = assets.reduce((acc: any, item: any) => {
     const value = item[customKey];
     if (!acc[value]) {
       acc[value] = [];
     }
     acc[value].push(item);
+
     return acc;
   }, {});
 
+  const sortedArray = (arr: Asset[]) =>
+    arr.sort((a: Asset, b: Asset) => b!.total! - a!.total!);
+
   const accKeys: string[] = Object.keys(groupedByCustomKey);
-
-  // accKeys.map((key: string) => {
-  // console.log('---  🚀 ---> | key:', key);
-  // console.log('---  🚀 ---> |  SPECIAL ---:', groupedByCustomKey[key]);
-
-  //   groupedByCustomKey.key.map((item: any) => {
-  //     console.log('---  🚀 ---> | item:', item);
-  //   });
-  // });
-
-  console.log('---  🚀 ---> | accKeys:', accKeys);
-  console.log('---  🚀 ---> | groupedByCustomKey:', groupedByCustomKey);
-
-  const totalArray = getTotalByKey(assets, customKey);
-  const sortedArray = totalArray.sort((a, b) => b.total - a.total);
-  const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
   return (
     <Card className='flex-1'>
@@ -63,14 +56,14 @@ export const CardStocksBy = ({
             </CardTitle>
             <CardDescription className='text-xs'>{description}</CardDescription>
           </CardHeader>
+
           <CardContent>
-            {/* --------------------------------------------------- */}
             {accKeys.map((key: string) => (
               <div key={key} className='border rounded-[2px] mb-2 p-2'>
                 <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
                   {key}
                 </h3>
-                {groupedByCustomKey[key].map((item: any) => (
+                {sortedArray(groupedByCustomKey[key]).map((item: any) => (
                   <div key={item.value} className='flex justify-between'>
                     <h3>{item.asset}</h3>
                     <h3>{item.value}</h3>
@@ -92,9 +85,9 @@ export const CardStocksBy = ({
                 ))}
 
                 <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
-                  <h3>Total</h3>
+                  <h3>Subtotal</h3>
                   {numberFormatterNoDecimals.format(
-                    totalArray.reduce(
+                    getTotalByKey(groupedByCustomKey[key], key).reduce(
                       (sum: number, item) => sum + item.total,
                       0
                     )
@@ -102,56 +95,8 @@ export const CardStocksBy = ({
                 </CardFooter>
               </div>
             ))}
-
-            {/* --------------------------------------------------- */}
-            {/* {groupedByCustomKey.accKeys[0].map((item: any) => (
-              <div key={item.value} className='flex justify-between'>
-                <h3>{item.value}</h3>
-                <div className='flex'>
-                  <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
-                    item.total
-                  )}`}</p>
-                  <p
-                    className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
-                      (item.total / total) * 100 > 50
-                        ? 'bg-red-500'
-                        : 'bg-green-500'
-                    }`}
-                  >{`${numberFormatter.format(
-                    (item.total / total) * 100
-                  )}%`}</p>
-                </div>
-              </div>
-            ))} */}
-
-            {/* 
-{sortedArray.map((item) => (
-              <div key={item.value} className='flex justify-between'>
-                <h3>{item.value}</h3>
-                <div className='flex'>
-                  <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
-                    item.total
-                  )}`}</p>
-                  <p
-                    className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
-                      (item.total / total) * 100 > 50
-                        ? 'bg-red-500'
-                        : 'bg-green-500'
-                    }`}
-                  >{`${numberFormatter.format(
-                    (item.total / total) * 100
-                  )}%`}</p>
-                </div>
-              </div>
-            ))} */}
           </CardContent>
         </div>
-        {/* <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
-          <h3>Total</h3>
-          {numberFormatterNoDecimals.format(
-            totalArray.reduce((sum: number, item) => sum + item.total, 0)
-          )}
-        </CardFooter> */}
       </div>
     </Card>
   );
