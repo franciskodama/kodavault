@@ -82,7 +82,7 @@ export const includePriceToStockAssets = async (
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
     (item) => !result.body!.find((el: StockQuote) => el.symbol === item)
   );
-  console.log('---  🚀 ---> | missingSymbols:', missingSymbols);
+  // console.log('---  🚀 ---> | missingSymbols:', missingSymbols);
 
   missingSymbols.map((item: any) =>
     result.body!.push({
