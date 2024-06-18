@@ -9,8 +9,8 @@ export type ShortcutType = {
   name: string;
   uid: string;
   url: string;
-  description?: string | null;
-  category?: string | null;
+  description: string;
+  category: string;
 };
 
 export default async function ShortcutPage() {
@@ -24,9 +24,8 @@ export default async function ShortcutPage() {
     if (Array.isArray(result)) {
       shortcuts = result;
     } else {
-      // Handle the case where result is not an array (e.g., "", { error: unknown; }, or null)
       console.error('Failed to load shortcuts:', result);
-      shortcuts = []; // Ensures shortcuts is always an array of Shortcut
+      shortcuts = [];
     }
   }
 
