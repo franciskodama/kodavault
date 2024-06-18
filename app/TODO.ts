@@ -19,6 +19,7 @@
 // TODO: Resistences and Supports?
 
 // PRIORITIES 1:
+// TODO: Hello, Francis! Greetings on Header
 // TODO: Stocks by Currency (BRL, CAD, USD)
 // TODO: Stocks by Location (BR, CA)
 // TODO: DJT in the Dashboard

@@ -129,6 +129,7 @@ model Shortcut {
   id          String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   description String                 @default("I am for...")
   category    category_enum_f421eb4b @default(miscellaneous)
+  from        String
 }
 
 enum priority_enum_593899f8 {

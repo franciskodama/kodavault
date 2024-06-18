@@ -22,35 +22,96 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
 
   return (
     <div>
-      <ul className='flex flex-col justify-center mt-12 w-full text-sm border'>
-        {shortcutCategoriesKeys.map((key: string) => (
-          <Accordion key={key} type='single' collapsible>
-            <AccordionItem value={key}>
-              <AccordionTrigger>{key}</AccordionTrigger>
+      <div className='flex flex-col justify-center mt-12 w-full text-sm'>
+        {shortcutCategoriesKeys.length > 0 &&
+          shortcutCategoriesKeys.map((key: string) => (
+            <Accordion key={key} type='single' collapsible>
+              <AccordionItem value={key}>
+                <AccordionTrigger className='flex flex-col items-center'>
+                  <div className='text-3xl'>{getEmoji(key)}</div>
+                  <h3 className='text-sm uppercase font-light'>{key}</h3>
+                </AccordionTrigger>
 
-              {shortcutByCategory[key].map((shortcut: ShortcutType) => (
-                <AccordionContent key={shortcut.id}>
-                  <li className='flex items-center w-full text-left gap-2 mb-4'>
-                    <Link href={shortcut.url} target='_blank'>
-                      <p className='w-[20em]'>{shortcut.name}</p>
-                    </Link>
-
-                    {/* <Separator orientation='vertical' /> */}
-                    {/* <Separator orientation='horizontal' /> */}
-
-                    <div className='flex items-center justify-center h-[4ch] w-[14ch] bg-blue-400 rounded-[2px] text-white text-center'>
-                      {shortcut.category}
-                    </div>
-                    <p className='flex items-center border w-1/3 ml-4 h-[4ch]'>
-                      {shortcut.description}
-                    </p>
-                  </li>
-                </AccordionContent>
-              ))}
-            </AccordionItem>
-          </Accordion>
-        ))}
-      </ul>
+                {shortcutByCategory[key].map((shortcut: ShortcutType) => (
+                  <AccordionContent key={shortcut.id}>
+                    <ul className='grid w-full'>
+                      <li className='flex items-center w-1/2 text-left'>
+                        <Link href={shortcut.url} target='_blank'>
+                          <p className='text-sm font-normal capitalize w-[18ch]'>
+                            {shortcut.name}
+                          </p>
+                        </Link>
+                        {/* <div
+                          className={`${getColor(
+                            key
+                          )} flex items-center justify-center h-[3ch] w-[12ch] rounded-[2px] text-xs text-white text-center`}
+                        > */}
+                        <div className='flex items-center justify-center h-[3ch] w-[20ch] rounded-[2px] uppercase text-light text-xs text-center border-2'>
+                          {shortcut.from}
+                        </div>
+                        <p className='flex items-center ml-4 h-[4ch] text-xs'>
+                          {shortcut.description}
+                        </p>
+                      </li>
+                    </ul>
+                  </AccordionContent>
+                ))}
+              </AccordionItem>
+            </Accordion>
+          ))}
+      </div>
     </div>
   );
 }
+
+const getEmoji = (key: string) => {
+  let emoji = '';
+
+  switch (key) {
+    case 'indicator':
+      emoji = '🧭';
+      break;
+    case 'analysis':
+      emoji = '🔬';
+      break;
+    case 'miscellaneous':
+      emoji = '🧶';
+      break;
+    case 'platform':
+      emoji = '⚓';
+      break;
+    case 'exchange':
+      emoji = '🏦 ';
+      break;
+    default:
+      break;
+  }
+
+  return emoji;
+};
+
+const getColor = (key: string) => {
+  let color = '';
+
+  switch (key) {
+    case 'indicator':
+      color = 'bg-blue-400';
+      break;
+    case 'analysis':
+      color = 'bg-green-400';
+      break;
+    case 'miscellaneous':
+      color = 'bg-red-400';
+      break;
+    case 'platform':
+      color = 'bg-purple-400';
+      break;
+    case 'exchange':
+      color = 'bg-orange-400';
+      break;
+    default:
+      break;
+  }
+
+  return color;
+};

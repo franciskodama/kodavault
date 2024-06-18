@@ -11,6 +11,7 @@ export type ShortcutType = {
   url: string;
   description: string;
   category: string;
+  from: string;
 };
 
 export default async function ShortcutPage() {
@@ -30,7 +31,7 @@ export default async function ShortcutPage() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center w-full'>
+    <div className='flex flex-col w-full p-4'>
       <Shortcut shortcuts={shortcuts} />
     </div>
   );
