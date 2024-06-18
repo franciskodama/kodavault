@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Separator } from '@/components/ui/separator';
+import { Checkbox } from '@/components/ui/checkbox';
 
 export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
   const shortcutByCategory = shortcuts.reduce((acc: any, shortcut: any) => {
@@ -27,15 +28,18 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
           shortcutCategoriesKeys.map((key: string) => (
             <Accordion key={key} type='single' collapsible>
               <AccordionItem value={key}>
-                <AccordionTrigger className='flex flex-col items-center'>
-                  <div className='text-3xl'>{getEmoji(key)}</div>
-                  <h3 className='text-sm uppercase font-light'>{key}</h3>
+                <AccordionTrigger className='flex items-center'>
+                  <div className='flex items-center gap-6 my-4'>
+                    <div className='text-2xl'>{getEmoji(key)}</div>
+                    <h3 className='text-xl font-semibold capitalize'>{key}</h3>
+                  </div>
                 </AccordionTrigger>
 
+                {/* <div className='mb-4'> */}
                 {shortcutByCategory[key].map((shortcut: ShortcutType) => (
                   <AccordionContent key={shortcut.id}>
                     <ul className='grid w-full'>
-                      <li className='flex items-center w-1/2 text-left'>
+                      <li className='flex items-center w-1/2 text-left border rounded-[2px] border-slate-200 p-2'>
                         <Link href={shortcut.url} target='_blank'>
                           <p className='text-sm font-normal capitalize w-[18ch]'>
                             {shortcut.name}
@@ -44,9 +48,9 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                         {/* <div
                           className={`${getColor(
                             key
-                          )} flex items-center justify-center h-[3ch] w-[12ch] rounded-[2px] text-xs text-white text-center`}
-                        > */}
-                        <div className='flex items-center justify-center h-[3ch] w-[20ch] rounded-[2px] uppercase text-light text-xs text-center border-2'>
+                            )} flex items-center justify-center h-[3ch] w-[12ch] rounded-[2px] text-xs text-white text-center`}
+                            > */}
+                        <div className='flex items-center justify-center h-[4ch] w-[20ch] rounded-[2px] uppercase text-light text-xs text-center border-2 border-dashed'>
                           {shortcut.from}
                         </div>
                         <p className='flex items-center ml-4 h-[4ch] text-xs'>
@@ -56,6 +60,7 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                     </ul>
                   </AccordionContent>
                 ))}
+                {/* </div> */}
               </AccordionItem>
             </Accordion>
           ))}
