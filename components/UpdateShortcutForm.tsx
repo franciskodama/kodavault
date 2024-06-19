@@ -4,20 +4,12 @@ import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
+import { ShortcutType } from '@/lib/types';
+import { updateShortcut } from '@/lib/actions';
+
 import { Button } from './ui/button';
 import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
-
-import {
-  getAccount,
-  getCurrency,
-  getExchange,
-  getWallet,
-  subtypeOptions,
-} from '@/lib/assets-form';
-
-import { Inputs, ShortcutType } from '@/lib/types';
-import { updateShortcut } from '@/lib/actions';
 
 export function UpdateShortcutForm({
   shortcut,
@@ -30,10 +22,6 @@ export function UpdateShortcutForm({
   const { toast } = useToast();
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
-
-  //   -----------------------------------------
-  console.log('---  🚀 ---> | uid:', uid);
-  //   -----------------------------------------
 
   const {
     register,
@@ -52,12 +40,6 @@ export function UpdateShortcutForm({
       from: shortcut?.from,
     },
   });
-
-  //   const shortcutSubtype = watch('subtype');
-  //   const shortcutWallet = getWallet(assetSubtype);
-  //   const shortcutCurrency: string[] = getCurrency(assetSubtype);
-  //   const shortcutAccount = getAccount(assetSubtype);
-  //   const shortcutExchange = getExchange(assetSubtype);
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-2';
   const classDiv = 'my-4';

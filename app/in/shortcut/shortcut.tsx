@@ -44,6 +44,7 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
 
   return (
     <div>
+      {/* <AddShortcutForm /> */}
       <div className='flex flex-col justify-center mt-12 w-full text-sm'>
         {shortcutCategoriesKeys.length > 0 &&
           shortcutCategoriesKeys.map((key: string) => (
