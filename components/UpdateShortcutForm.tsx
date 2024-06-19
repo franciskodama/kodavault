@@ -51,7 +51,7 @@ export function UpdateShortcutForm({
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
     if (!uid) {
-      return console.log('User not logged in');
+      return console.log('User not logged in 🤷🏻‍♂️');
     }
 
     const result = await updateShortcut({ ...data, uid: uid });

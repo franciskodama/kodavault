@@ -30,6 +30,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { UpdateShortcutForm } from '@/components/UpdateShortcutForm';
 import { ShortcutType } from '@/lib/types';
+import { AddShortcutForm } from '@/components/AddShortcutForm';
 
 export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
   const shortcutByCategory = shortcuts.reduce((acc: any, shortcut: any) => {
@@ -44,7 +45,7 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
 
   return (
     <div>
-      {/* <AddShortcutForm /> */}
+      <AddShortcutForm shortcutCategoriesKeys={shortcutCategoriesKeys} />
       <div className='flex flex-col justify-center mt-12 w-full text-sm'>
         {shortcutCategoriesKeys.length > 0 &&
           shortcutCategoriesKeys.map((key: string) => (
@@ -81,8 +82,6 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                             {shortcut.description}
                           </p>
                         </div>
-
-                        {/* --------------------------------------- */}
 
                         <div className='flex items-center text-xl'>
                           <Sheet>
@@ -183,7 +182,6 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                             </AlertDialogContent>
                           </AlertDialog>
                         </div>
-                        {/* --------------------------------------- */}
                       </li>
                     </ul>
                   </AccordionContent>
