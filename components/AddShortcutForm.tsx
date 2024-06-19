@@ -7,8 +7,25 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { addShortcut } from '@/lib/actions';
 import { Button } from './ui/button';
 import { ShortcutType } from '@/lib/types';
-import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from '@/components/ui/command';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { ChevronsUpDown } from 'lucide-react';
+
+type shortcutCategory = {
+  label: string;
+  value: string;
+};
 
 export function AddShortcutForm({
   shortcutCategoriesKeys,
@@ -20,6 +37,10 @@ export function AddShortcutForm({
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
+  //Combobox
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+
   const {
     register,
     handleSubmit,
@@ -29,11 +50,8 @@ export function AddShortcutForm({
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-2';
   const classDiv = 'my-4';
-  const classUl = 'flex flex-wrap gap-2';
   const classTitle = 'font-bold mb-2';
   const classError = 'text-red-500 font-bold my-2';
-  const classLabelRadio =
-    'inline-flex items-center justify-center py-1 w-[8em] h-[2.5em] border-2 rounded-[2px] cursor-pointer text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
     if (!uid) {
@@ -69,19 +87,28 @@ export function AddShortcutForm({
     }, 2000);
   };
 
+  let categoryArray: any = [];
+  shortcutCategoriesKeys.map((category: string) => {
+    const categoryObj = {
+      value: category,
+      label: category,
+    };
+    categoryArray.push(categoryObj);
+  });
+
   return (
     <>
       <form
         onSubmit={handleSubmit(processForm)}
-        className='border items-center flex p-2 gap-2'
+        className='border items-center flex p-1 gap-2'
       >
         <div className={classDiv}>
-          <label className={classTitle} htmlFor='name'>
+          {/* <label className={classTitle} htmlFor='name'>
             Title
-          </label>
+          </label> */}
           <input
             className={classInput}
-            placeholder='Ex.: Fear and Greed Index'
+            placeholder='Title'
             {...register('name', { required: "Title can't be empty" })}
           />
           {errors.name?.message && (
@@ -90,12 +117,12 @@ export function AddShortcutForm({
         </div>
 
         <div className={classDiv}>
-          <label className={classTitle} htmlFor='from'>
+          {/* <label className={classTitle} htmlFor='from'>
             From
-          </label>
+          </label> */}
           <input
             className={classInput}
-            placeholder='Ex.: Coinglass'
+            placeholder='From (ex.: Coinglass)'
             {...register('from', { required: "From can't be empty" })}
           />
           {errors.from?.message && (
@@ -104,31 +131,61 @@ export function AddShortcutForm({
         </div>
 
         <div className={classDiv}>
-          <h3 className={classTitle}>Category</h3>
-          <ul className={classUl}>
-            {shortcutCategoriesKeys.map((category) => (
-              <li key={category}>
-                <input
-                  className='hidden peer'
-                  type='radio'
-                  value={category}
-                  id={category}
-                  {...register('category')}
-                />
-                <label className={classLabelRadio} htmlFor={category}>
-                  <span>{category}</span>
-                </label>
-              </li>
-            ))}
-          </ul>
+          {/* <h3 className={classTitle}>Category</h3> */}
+
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant='outline'
+                role='combobox'
+                aria-expanded={open}
+                className='w-[200px] justify-between'
+              >
+                {value
+                  ? categoryArray.find(
+                      (category: shortcutCategory) =>
+                        categoryArray.value === value
+                    )?.label
+                  : 'Select category...'}
+                <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className='w-[200px] p-0'>
+              <Command>
+                <CommandInput placeholder='Search framework...' />
+                <CommandEmpty>No category found.</CommandEmpty>
+                <CommandGroup>
+                  {categoryArray.map((category: shortcutCategory) => (
+                    <CommandItem
+                      key={category.value}
+                      value={category.value}
+                      onSelect={(currentValue) => {
+                        setValue(currentValue === value ? '' : currentValue);
+                        setOpen(false);
+                      }}
+                    >
+                      {/* <Check
+                  className={cn(
+                    'mr-2 h-4 w-4',
+                    value === framework.value ? 'opacity-100' : 'opacity-0'
+                  )}
+                /> */}
+                      {category.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
 
         <div className={classDiv}>
-          <label className={classTitle} htmlFor='description'>
+          {/* <label className={classTitle} htmlFor='description'>
             Description
-          </label>
+          </label> */}
           <input
-            className={classInput}
+            // className={classInput}
+            className={`${classInput} w-[50em]`}
             placeholder='Description'
             {...register('name', { required: "Description can't be empty" })}
           />
@@ -138,7 +195,7 @@ export function AddShortcutForm({
         </div>
 
         <Button className='' type='submit'>
-          Add Asset
+          Add Shortcut
         </Button>
       </form>
     </>
