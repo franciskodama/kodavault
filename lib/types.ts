@@ -96,3 +96,22 @@ export type CryptoGoalAllocation = {
   priority?: 'High' | 'Medium' | 'Low' | null;
   obs?: string | null;
 };
+
+export type ShortcutType = {
+  id: string;
+  created_at: Date;
+  name: string;
+  uid: string;
+  url: string;
+  description: string;
+  category: ShortcutCategoryEnum;
+  from: string;
+};
+
+enum ShortcutCategoryEnum {
+  OPTION_ONE = 'indicator',
+  OPTION_TWO = 'analysis',
+  OPTION_THREE = 'miscellaneous',
+  OPTION_FOUR = 'platform',
+  OPTION_FIVE = 'exchange',
+}

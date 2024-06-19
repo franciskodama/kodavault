@@ -2,7 +2,7 @@
 
 import { uuid } from 'uuidv4';
 import prisma from './prisma';
-import { CryptoGoalAllocation, Inputs } from './types';
+import { CryptoGoalAllocation, Inputs, ShortcutType } from './types';
 import { revalidatePath } from 'next/cache';
 
 export async function addAsset(formData: Inputs) {
@@ -165,3 +165,29 @@ export const getShortcuts = async (uid: string) => {
     return { error };
   }
 };
+
+export async function updateShortcut(formData: ShortcutType) {
+  const { id, name, uid, url, description, category, from } = formData;
+
+  try {
+    await prisma.shortcut.update({
+      where: {
+        id,
+      },
+      data: {
+        id,
+        created_at: new Date(),
+        name,
+        uid,
+        url,
+        description,
+        category,
+        from,
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}

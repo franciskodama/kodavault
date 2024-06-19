@@ -2,17 +2,7 @@ import WorkInProgress from '@/components/WorkInProgress';
 import { getShortcuts } from '@/lib/actions';
 import { currentUser } from '@clerk/nextjs';
 import { Shortcut } from './shortcut';
-
-export type ShortcutType = {
-  id: string;
-  created_at: Date;
-  name: string;
-  uid: string;
-  url: string;
-  description: string;
-  category: string;
-  from: string;
-};
+import { ShortcutType } from '@/lib/types';
 
 export default async function ShortcutPage() {
   const user = await currentUser();
