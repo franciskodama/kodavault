@@ -182,9 +182,9 @@ export const columns: ColumnDef<Asset>[] = [
                 </SheetTrigger>
                 <SheetContent>
                   <SheetHeader>
-                    <SheetTitle>Update a new Asset</SheetTitle>
+                    <SheetTitle>Update Asset</SheetTitle>
                     <SheetDescription>
-                      Update an Existing Asset
+                      Modify the details of your existing asset.
                     </SheetDescription>
                   </SheetHeader>
                   <UpdateAssetForm asset={asset} />

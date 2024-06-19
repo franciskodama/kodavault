@@ -90,12 +90,15 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                             </SheetTrigger>
                             <SheetContent>
                               <SheetHeader>
-                                <SheetTitle>Update a new Asset</SheetTitle>
+                                <SheetTitle>Update Shortcut</SheetTitle>
                                 <SheetDescription>
-                                  Update an Existing Asset
+                                  Modify the details of your existing shortcut.
                                 </SheetDescription>
                               </SheetHeader>
-                              <UpdateShortcutForm shortcut={shortcut} />
+                              <UpdateShortcutForm
+                                shortcut={shortcut}
+                                shortcutCategoriesKeys={shortcutCategoriesKeys}
+                              />
                             </SheetContent>
                           </Sheet>
                           <AlertDialog>
