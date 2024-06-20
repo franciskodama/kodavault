@@ -147,7 +147,6 @@ export function UpdateShortcutForm({
               ))}
             </ul>
           </div>
-
           <Button className='mt-8' type='submit'>
             Update a Shortcut
           </Button>

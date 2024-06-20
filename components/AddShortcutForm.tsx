@@ -20,7 +20,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { ChevronsUpDown } from 'lucide-react';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type shortcutCategory = {
   label: string;
@@ -32,6 +33,7 @@ export function AddShortcutForm({
 }: {
   shortcutCategoriesKeys: string[];
 }) {
+  console.log('---  🚀 ---> | shortcutCategoriesKeys:', shortcutCategoriesKeys);
   const [data, setData] = useState<ShortcutType>();
   const { toast } = useToast();
   const { user } = useUser();
@@ -50,7 +52,7 @@ export function AddShortcutForm({
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-2';
   const classDiv = 'my-4';
-  const classTitle = 'font-bold mb-2';
+  //   const classTitle = 'font-bold mb-2';
   const classError = 'text-red-500 font-bold my-2';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
@@ -95,6 +97,7 @@ export function AddShortcutForm({
     };
     categoryArray.push(categoryObj);
   });
+  console.log('---  🚀 ---> | categoryArray:', categoryArray);
 
   return (
     <>
@@ -143,8 +146,7 @@ export function AddShortcutForm({
               >
                 {value
                   ? categoryArray.find(
-                      (category: shortcutCategory) =>
-                        categoryArray.value === value
+                      (category: shortcutCategory) => category.value === value
                     )?.label
                   : 'Select category...'}
                 <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
@@ -155,24 +157,33 @@ export function AddShortcutForm({
                 <CommandInput placeholder='Search framework...' />
                 <CommandEmpty>No category found.</CommandEmpty>
                 <CommandGroup>
-                  {categoryArray.map((category: shortcutCategory) => (
-                    <CommandItem
-                      key={category.value}
-                      value={category.value}
-                      onSelect={(currentValue) => {
-                        setValue(currentValue === value ? '' : currentValue);
-                        setOpen(false);
-                      }}
-                    >
-                      {/* <Check
-                  className={cn(
-                    'mr-2 h-4 w-4',
-                    value === framework.value ? 'opacity-100' : 'opacity-0'
-                  )}
-                /> */}
-                      {category.label}
-                    </CommandItem>
-                  ))}
+                  {shortcutCategoriesKeys
+                    ? categoryArray.map((category: shortcutCategory) => (
+                        <CommandItem
+                          key={category.value}
+                          value={category.value}
+                          onSelect={(currentValue) => {
+                            setValue(
+                              currentValue === value ? '' : currentValue
+                            );
+                            setOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              'mr-2 h-4 w-4',
+                              value === category.value
+                                ? 'opacity-100'
+                                : 'opacity-0'
+                            )}
+                          />
+                          {category.label}
+                        </CommandItem>
+                      ))
+                    : console.log(
+                        '---  🚀 ---> | categoryArray:',
+                        categoryArray
+                      )}
                 </CommandGroup>
               </Command>
             </PopoverContent>
@@ -194,9 +205,9 @@ export function AddShortcutForm({
           )}
         </div>
 
-        <Button className='' type='submit'>
+        {/* <Button className='' type='submit'>
           Add Shortcut
-        </Button>
+        </Button> */}
       </form>
     </>
   );
