@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -14,6 +14,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from '@/components/ui/command';
 import {
   Popover,
@@ -38,7 +39,6 @@ export function AddShortcutForm({
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-  //Combobox
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
@@ -51,7 +51,6 @@ export function AddShortcutForm({
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-2';
   const classDiv = 'my-4';
-  //   const classTitle = 'font-bold mb-2';
   const classError = 'text-red-500 font-bold my-2';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
@@ -88,17 +87,14 @@ export function AddShortcutForm({
     }, 2000);
   };
 
-  let categoryArray: any = [];
+  let categories: any = [];
   shortcutCategoriesKeys.map((category: string) => {
     const categoryObj = {
       value: category,
       label: category,
     };
-    categoryArray.push(categoryObj);
+    categories.push(categoryObj);
   });
-
-  const isCategoryArray = Array.isArray(categoryArray);
-  console.log('---  🚀 ---> | isCategoryArray:', isCategoryArray);
 
   return (
     <>
@@ -107,9 +103,6 @@ export function AddShortcutForm({
         className='border items-center flex p-1 gap-2'
       >
         <div className={classDiv}>
-          {/* <label className={classTitle} htmlFor='name'>
-            Title
-          </label> */}
           <input
             className={classInput}
             placeholder='Title'
@@ -121,9 +114,6 @@ export function AddShortcutForm({
         </div>
 
         <div className={classDiv}>
-          {/* <label className={classTitle} htmlFor='from'>
-            From
-          </label> */}
           <input
             className={classInput}
             placeholder='From (ex.: Coinglass)'
@@ -135,9 +125,7 @@ export function AddShortcutForm({
         </div>
 
         <div className={classDiv}>
-          {/* <h3 className={classTitle}>Category</h3> */}
-
-          {/* <Popover open={open} onOpenChange={setOpen}>
+          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
                 variant='outline'
@@ -146,7 +134,7 @@ export function AddShortcutForm({
                 className='w-[200px] justify-between'
               >
                 {value
-                  ? categoryArray.find(
+                  ? categories.find(
                       (category: shortcutCategory) => category.value === value
                     )?.label
                   : 'Select category...'}
@@ -155,48 +143,38 @@ export function AddShortcutForm({
             </PopoverTrigger>
             <PopoverContent className='w-[200px] p-0'>
               <Command>
-                <CommandInput placeholder='Search framework...' />
-                <CommandEmpty>No category found.</CommandEmpty>
-                <CommandGroup>
-                  {shortcutCategoriesKeys
-                    ? categoryArray.map((category: shortcutCategory) => (
-                        <CommandItem
-                          key={category.value}
-                          value={category.value}
-                          onSelect={(currentValue) => {
-                            setValue(
-                              currentValue === value ? '' : currentValue
-                            );
-                            setOpen(false);
-                          }}
-                        >
-                          <Check
-                            className={cn(
-                              'mr-2 h-4 w-4',
-                              value === category.value
-                                ? 'opacity-100'
-                                : 'opacity-0'
-                            )}
-                          />
-                          {category.label}
-                        </CommandItem>
-                      ))
-                    : console.log(
-                        '---  🚀 ---> | categoryArray:',
-                        categoryArray
-                      )}
-                </CommandGroup>
+                <CommandList>
+                  <CommandEmpty>No category found.</CommandEmpty>
+                  <CommandGroup>
+                    {categories.map((category: shortcutCategory) => (
+                      <CommandItem
+                        key={category.value}
+                        value={category.value}
+                        onSelect={(currentValue) => {
+                          setValue(currentValue === value ? '' : currentValue);
+                          setOpen(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            value === category.value
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          )}
+                        />
+                        {category.label}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
               </Command>
             </PopoverContent>
-          </Popover> */}
+          </Popover>
         </div>
 
         <div className={classDiv}>
-          {/* <label className={classTitle} htmlFor='description'>
-            Description
-          </label> */}
           <input
-            // className={classInput}
             className={`${classInput} w-[50em]`}
             placeholder='Description'
             {...register('name', { required: "Description can't be empty" })}
@@ -206,9 +184,9 @@ export function AddShortcutForm({
           )}
         </div>
 
-        {/* <Button className='' type='submit'>
+        <Button className='' type='submit'>
           Add Shortcut
-        </Button> */}
+        </Button>
       </form>
     </>
   );
