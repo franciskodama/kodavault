@@ -1,8 +1,8 @@
-import WorkInProgress from '@/components/WorkInProgress';
 import { getShortcuts } from '@/lib/actions';
 import { currentUser } from '@clerk/nextjs';
 import { Shortcut } from './shortcut';
 import { ShortcutType } from '@/lib/types';
+import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
 
 export default async function ShortcutPage() {
   const user = await currentUser();

@@ -104,20 +104,22 @@ export type ShortcutType = {
   uid: string;
   url: string;
   description: string;
-  category: ShortcutCategoryEnum;
+  category: category_enum_f421eb4b;
   from: string;
-  color: ShortcutColorEnum;
+  color: color_enum_bd2ecc46;
 };
 
-export enum ShortcutCategoryEnum {
-  OPTION_ONE = 'indicator',
-  OPTION_TWO = 'analysis',
-  OPTION_THREE = 'miscellaneous',
-  OPTION_FOUR = 'platform',
-  OPTION_FIVE = 'exchange',
+export enum category_enum_f421eb4b {
+  OPTION_ONE = 'exchange',
+  OPTION_TWO = 'knowledge',
+  OPTION_THREE = 'course',
+  OPTION_FOUR = 'analysis',
+  OPTION_FIVE = 'indicator',
+  OPTION_SIX = 'miscellaneous',
+  OPTION_SEVEN = 'platform',
 }
 
-export enum ShortcutColorEnum {
+export enum color_enum_bd2ecc46 {
   OPTION_ONE = 'blue',
   OPTION_TWO = 'red',
   OPTION_THREE = 'green',

@@ -32,6 +32,7 @@ import { toast } from '@/components/ui/use-toast';
 import { UpdateShortcutForm } from '@/components/UpdateShortcutForm';
 import { ShortcutType } from '@/lib/types';
 import { AddShortcutForm } from '@/components/AddShortcutForm';
+import { ButtonsActions } from './buttons-actions';
 // import { deleteShortcut } from '@/lib/actions';
 
 export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
@@ -52,7 +53,7 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
 
   return (
     <div>
-      <AddShortcutForm shortcutCategoriesKeys={shortcutCategoriesKeys} />
+      <AddShortcutForm />
       <div className='flex flex-col justify-center mt-12 w-full text-sm'>
         {shortcutCategoriesKeys.length > 0 &&
           shortcutCategoriesKeys.map((key: string) => (
@@ -84,7 +85,6 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                                   shortcut.color
                                 )} flex items-center justify-center h-[3ch] w-[12ch] rounded-[2px] text-xs text-white text-center`}
                               >
-                                {/* <Separator orientation='vertical' /> */}
                                 {shortcut.from}
                               </div>
                               <p className='flex items-center ml-4 h-[4ch] text-xs'>
@@ -105,12 +105,7 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                                       shortcut.
                                     </SheetDescription>
                                   </SheetHeader>
-                                  <UpdateShortcutForm
-                                    shortcut={shortcut}
-                                    shortcutCategoriesKeys={
-                                      shortcutCategoriesKeys
-                                    }
-                                  />
+                                  <UpdateShortcutForm shortcut={shortcut} />
                                 </SheetContent>
                               </Sheet>
                               <AlertDialog>
@@ -165,6 +160,7 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                                   </AlertDialogHeader>
 
                                   <AlertDialogFooter>
+                                    {/* <ButtonsActions shortcut={shortcut} /> */}
                                     {/* <AlertDialogCancel
                                       onClick={() => {
                                         toast({
@@ -209,6 +205,16 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
   );
 }
 
+export const allCategories = [
+  'exchange',
+  'knowledge',
+  'course',
+  'analysis',
+  'indicator',
+  'miscellaneous',
+  'platform',
+];
+
 const getEmoji = (key: string) => {
   let emoji = '';
 
@@ -226,7 +232,13 @@ const getEmoji = (key: string) => {
       emoji = '⚓';
       break;
     case 'exchange':
-      emoji = '🏦 ';
+      emoji = '🏦';
+      break;
+    case 'course':
+      emoji = '🧑🏻‍🎓';
+      break;
+    case 'knowledge':
+      emoji = '🧠';
       break;
     default:
       break;

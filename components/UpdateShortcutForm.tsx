@@ -10,14 +10,9 @@ import { updateShortcut } from '@/lib/actions';
 import { Button } from './ui/button';
 import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
+import { allCategories } from '@/app/in/shortcut/shortcut';
 
-export function UpdateShortcutForm({
-  shortcut,
-  shortcutCategoriesKeys,
-}: {
-  shortcut: ShortcutType;
-  shortcutCategoriesKeys: string[];
-}) {
+export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
   const [data, setData] = useState<ShortcutType>();
   const { toast } = useToast();
   const { user } = useUser();
@@ -131,7 +126,7 @@ export function UpdateShortcutForm({
           <div className={classDiv}>
             <h3 className={classTitle}>Wallet</h3>
             <ul className={classUl}>
-              {shortcutCategoriesKeys.map((categoriesKey) => (
+              {allCategories.map((categoriesKey) => (
                 <li key={categoriesKey}>
                   <input
                     className='hidden peer'

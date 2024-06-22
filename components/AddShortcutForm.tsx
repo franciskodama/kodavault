@@ -23,18 +23,14 @@ import {
 } from '@/components/ui/popover';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getColor } from '@/app/in/shortcut/shortcut';
+import { allCategories, getColor } from '@/app/in/shortcut/shortcut';
 
-type shortcutCategory = {
+type comboOptions = {
   label: string;
   value: string;
 };
 
-export function AddShortcutForm({
-  shortcutCategoriesKeys,
-}: {
-  shortcutCategoriesKeys: string[];
-}) {
+export function AddShortcutForm() {
   const [data, setData] = useState<ShortcutType>();
   const { toast } = useToast();
   const { user } = useUser();
@@ -91,7 +87,7 @@ export function AddShortcutForm({
   };
 
   let categories: any = [];
-  shortcutCategoriesKeys.map((category: string) => {
+  allCategories.map((category: string) => {
     const categoryObj = {
       value: category,
       label: category,
@@ -142,7 +138,7 @@ export function AddShortcutForm({
             >
               {value ? (
                 categories.find(
-                  (category: shortcutCategory) => category.value === value
+                  (category: comboOptions) => category.value === value
                 )?.label
               ) : (
                 <span className='text-xs font-normal opacity-60'>
@@ -157,7 +153,7 @@ export function AddShortcutForm({
               <CommandList>
                 <CommandEmpty>No category found.</CommandEmpty>
                 <CommandGroup>
-                  {categories.map((category: shortcutCategory) => (
+                  {categories.map((category: comboOptions) => (
                     <CommandItem
                       key={category.value}
                       value={category.value}
@@ -190,9 +186,8 @@ export function AddShortcutForm({
               className='w-[140px] justify-between'
             >
               {valueColor ? (
-                colors.find(
-                  (colors: shortcutCategory) => colors.value === value
-                )?.label
+                colors.find((colors: comboOptions) => colors.value === value)
+                  ?.label
               ) : (
                 <span className='text-xs font-normal opacity-60'>Color</span>
               )}
@@ -204,7 +199,7 @@ export function AddShortcutForm({
               <CommandList>
                 <CommandEmpty>No color found.</CommandEmpty>
                 <CommandGroup>
-                  {colors.map((color: shortcutCategory) => (
+                  {colors.map((color: comboOptions) => (
                     <CommandItem
                       key={color.value}
                       value={color.value}
