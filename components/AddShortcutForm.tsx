@@ -21,7 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Check, ChevronsUpDown } from 'lucide-react';
+import { Check, ChevronsUpDown, Divide } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type shortcutCategory = {
@@ -49,8 +49,7 @@ export function AddShortcutForm({
     formState: { errors },
   } = useForm<ShortcutType>({});
 
-  const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-2';
-  const classDiv = 'my-4';
+  const classInput = 'border border-slate-200 h-10 p-2 rounded-xs';
   const classError = 'text-red-500 font-bold my-2';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
@@ -100,89 +99,92 @@ export function AddShortcutForm({
     <>
       <form
         onSubmit={handleSubmit(processForm)}
-        className='border items-center flex p-1 gap-2'
+        className='items-center flex gap-2'
       >
-        <div className={classDiv}>
-          <input
-            className={classInput}
-            placeholder='Title'
-            {...register('name', { required: "Title can't be empty" })}
-          />
-          {errors.name?.message && (
-            <p className={classError}>{errors.name.message}</p>
-          )}
-        </div>
+        <input
+          className={`${classInput} w-[28ch]`}
+          placeholder='Title'
+          {...register('name', { required: "Title can't be empty" })}
+        />
+        {errors.name?.message && (
+          <p className={classError}>{errors.name.message}</p>
+        )}
 
-        <div className={classDiv}>
-          <input
-            className={classInput}
-            placeholder='From (ex.: Coinglass)'
-            {...register('from', { required: "From can't be empty" })}
-          />
-          {errors.from?.message && (
-            <p className={classError}>{errors.from.message}</p>
-          )}
-        </div>
+        <input
+          className={`${classInput} w-[28ch]`}
+          placeholder='From (ex.: Coinglass)'
+          {...register('from', { required: "From can't be empty" })}
+        />
+        {errors.from?.message && (
+          <p className={classError}>{errors.from.message}</p>
+        )}
 
-        <div className={classDiv}>
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant='outline'
-                role='combobox'
-                aria-expanded={open}
-                className='w-[200px] justify-between'
-              >
-                {value
-                  ? categories.find(
-                      (category: shortcutCategory) => category.value === value
-                    )?.label
-                  : 'Select category...'}
-                <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className='w-[200px] p-0'>
-              <Command>
-                <CommandList>
-                  <CommandEmpty>No category found.</CommandEmpty>
-                  <CommandGroup>
-                    {categories.map((category: shortcutCategory) => (
-                      <CommandItem
-                        key={category.value}
-                        value={category.value}
-                        onSelect={(currentValue) => {
-                          setValue(currentValue === value ? '' : currentValue);
-                          setOpen(false);
-                        }}
-                      >
-                        <Check
-                          className={cn(
-                            'mr-2 h-4 w-4',
-                            value === category.value
-                              ? 'opacity-100'
-                              : 'opacity-0'
-                          )}
-                        />
-                        {category.label}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        </div>
+        <input
+          className={`${classInput} w-[28ch]`}
+          placeholder='Url'
+          {...register('url', { required: "Url can't be empty" })}
+        />
+        {errors.url?.message && (
+          <p className={classError}>{errors.url.message}</p>
+        )}
 
-        <div className={classDiv}>
-          <input
-            className={`${classInput} w-[50em]`}
-            placeholder='Description'
-            {...register('name', { required: "Description can't be empty" })}
-          />
-          {errors.description?.message && (
-            <p className={classError}>{errors.description.message}</p>
-          )}
-        </div>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant='outline'
+              role='combobox'
+              aria-expanded={open}
+              className='w-[200px] justify-between'
+            >
+              {value ? (
+                categories.find(
+                  (category: shortcutCategory) => category.value === value
+                )?.label
+              ) : (
+                <span className='text-xs font-normal opacity-60'>
+                  Select category...
+                </span>
+              )}
+              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className='w-[200px] p-0'>
+            <Command>
+              <CommandList>
+                <CommandEmpty>No category found.</CommandEmpty>
+                <CommandGroup>
+                  {categories.map((category: shortcutCategory) => (
+                    <CommandItem
+                      key={category.value}
+                      value={category.value}
+                      onSelect={(currentValue) => {
+                        setValue(currentValue === value ? '' : currentValue);
+                        setOpen(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          'mr-2 h-4 w-4',
+                          value === category.value ? 'opacity-100' : 'opacity-0'
+                        )}
+                      />
+                      {category.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+
+        <input
+          className={`${classInput} w-[50em]`}
+          placeholder='Description'
+          {...register('name', { required: "Description can't be empty" })}
+        />
+        {errors.description?.message && (
+          <p className={classError}>{errors.description.message}</p>
+        )}
 
         <Button className='' type='submit'>
           Add Shortcut
