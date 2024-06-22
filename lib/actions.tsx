@@ -214,3 +214,18 @@ export async function updateShortcut(formData: ShortcutType) {
     return false;
   }
 }
+
+export async function deleteShortcut(id: string) {
+  try {
+    await prisma.shortcut.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath('/in/shortcut');
+  } catch (error) {
+    console.log(error);
+    throw new Error('🚨 Failed to delete Shortcut');
+  }
+}

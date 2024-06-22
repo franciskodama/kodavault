@@ -27,9 +27,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { toast } from '@/components/ui/use-toast';
+
 import { UpdateShortcutForm } from '@/components/UpdateShortcutForm';
 import { ShortcutType } from '@/lib/types';
 import { AddShortcutForm } from '@/components/AddShortcutForm';
+// import { deleteShortcut } from '@/lib/actions';
 
 export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
   const shortcutByCategory = shortcuts.reduce((acc: any, shortcut: any) => {
@@ -41,6 +44,11 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
   }, {});
 
   const shortcutCategoriesKeys = Object.keys(shortcutByCategory);
+
+  // const handleDeleteShortcut = async (id: string) => {
+  //   await deleteShortcut(id);
+  //   window.location.reload();
+  // };
 
   return (
     <div>
@@ -71,14 +79,12 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                                   {shortcut.name}
                                 </p>
                               </Link>
-                              {/* <div
-                          className={`${getColor(
-                            key
-                            )} flex items-center justify-center h-[3ch] w-[12ch] rounded-[2px] text-xs text-white text-center`}
-                            > */}
-
-                              {/* <Separator orientation='vertical' /> */}
-                              <div className='flex items-center justify-center h-[4ch] w-[20ch] rounded-[2px] uppercase text-light text-xs text-center border border-dashed'>
+                              <div
+                                className={`${getColor(
+                                  shortcut.color
+                                )} flex items-center justify-center h-[3ch] w-[12ch] rounded-[2px] text-xs text-white text-center`}
+                              >
+                                {/* <Separator orientation='vertical' /> */}
                                 {shortcut.from}
                               </div>
                               <p className='flex items-center ml-4 h-[4ch] text-xs'>
@@ -158,37 +164,34 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                                     </AlertDialogDescription>
                                   </AlertDialogHeader>
 
-                                  {/* AFter we include the delete button, we need to check the margin bottom of the bordered square */}
-
-                                  {/* <AlertDialogFooter> */}
-                                  {/* <AlertDialogCancel
-                                  onClick={() => {
-                                    console.log('Clicked!');
-                                    toast({
-                                      title: 'Operation Cancelled! ❌',
-                                      description: `Phew! 😮‍💨 Crisis averted. You successfully cancelled the operation.`,
-                                      variant: 'destructive',
-                                    });
-                                  }}
-                                >
-                                  Cancel
-                                </AlertDialogCancel> */}
-                                  {/* <AlertDialogAction
-                                  onClick={() => {
-                                    console.log('Clicked!');
-                                    if (asset) {
-                                      handleDeleteAsset(asset.id);
-                                      toast({
-                                        title: 'Asset gone! 💀',
-                                        description: `The Asset ${asset.asset} has been successfully deleted from ${asset.wallet}.`,
-                                        variant: 'dark',
-                                      });
-                                    }
-                                  }}
-                                >
-                                  Continue
-                                </AlertDialogAction> */}
-                                  {/* </AlertDialogFooter> */}
+                                  <AlertDialogFooter>
+                                    {/* <AlertDialogCancel
+                                      onClick={() => {
+                                        toast({
+                                          title: 'Operation Cancelled! ❌',
+                                          description: `Phew! 😮‍💨 Crisis averted. You successfully cancelled the operation.`,
+                                          variant: 'destructive',
+                                        });
+                                      }}
+                                    >
+                                      Cancel
+                                    </AlertDialogCancel> */}
+                                    {/* <AlertDialogAction
+                                    onClick={() => {
+                                      if (shortcut) {
+                                        handleDeleteShortcut(shortcut.id);
+                                        console.log('DELETED WAS CLICKED');
+                                        toast({
+                                          title: 'Asset gone! 💀',
+                                          description: `The Shortcut ${shortcut.name} has been successfully deleted!`,
+                                          variant: 'dark',
+                                        });
+                                      }
+                                    }}
+                                    >
+                                      Continue
+                                    </AlertDialogAction> */}
+                                  </AlertDialogFooter>
                                 </AlertDialogContent>
                               </AlertDialog>
                             </div>
@@ -232,24 +235,30 @@ const getEmoji = (key: string) => {
   return emoji;
 };
 
-const getColor = (key: string) => {
+export const getColor = (key: string) => {
   let color = '';
 
   switch (key) {
-    case 'indicator':
+    case 'blue':
       color = 'bg-blue-400';
       break;
-    case 'analysis':
-      color = 'bg-green-400';
-      break;
-    case 'miscellaneous':
+    case 'red':
       color = 'bg-red-400';
       break;
-    case 'platform':
-      color = 'bg-purple-400';
+    case 'green':
+      color = 'bg-green-400';
       break;
-    case 'exchange':
+    case 'orange':
       color = 'bg-orange-400';
+      break;
+    case 'black':
+      color = 'bg-gray-900';
+      break;
+    case 'gray':
+      color = 'bg-slate-300';
+      break;
+    case 'pink':
+      color = 'bg-pink-400';
       break;
     default:
       break;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -21,8 +21,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Check, ChevronsUpDown, Divide } from 'lucide-react';
+import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getColor } from '@/app/in/shortcut/shortcut';
 
 type shortcutCategory = {
   label: string;
@@ -41,6 +42,9 @@ export function AddShortcutForm({
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
+
+  const [openColor, setOpenColor] = useState(false);
+  const [valueColor, setValueColor] = useState('');
 
   const {
     register,
@@ -134,7 +138,7 @@ export function AddShortcutForm({
               variant='outline'
               role='combobox'
               aria-expanded={open}
-              className='w-[200px] justify-between'
+              className='w-[220px] justify-between'
             >
               {value ? (
                 categories.find(
@@ -177,19 +181,112 @@ export function AddShortcutForm({
           </PopoverContent>
         </Popover>
 
+        <Popover open={openColor} onOpenChange={setOpenColor}>
+          <PopoverTrigger asChild>
+            <Button
+              variant='outline'
+              role='combobox'
+              aria-expanded={openColor}
+              className='w-[140px] justify-between'
+            >
+              {valueColor ? (
+                colors.find(
+                  (colors: shortcutCategory) => colors.value === value
+                )?.label
+              ) : (
+                <span className='text-xs font-normal opacity-60'>Color</span>
+              )}
+              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className='w-[110px] p-0'>
+            <Command>
+              <CommandList>
+                <CommandEmpty>No color found.</CommandEmpty>
+                <CommandGroup>
+                  {colors.map((color: shortcutCategory) => (
+                    <CommandItem
+                      key={color.value}
+                      value={color.value}
+                      onSelect={(currentValue) => {
+                        setValueColor(
+                          currentValue === valueColor ? '' : currentValue
+                        );
+                        setOpenColor(false);
+                      }}
+                      className='flex w-full'
+                    >
+                      <div
+                        className={`${getColor(
+                          color.value
+                        )} flex items-center justify-center w-6 h-6 rounded-full mr-2`}
+                      >
+                        <Check
+                          className={cn(
+                            'h-4 w-4 text-white',
+                            valueColor === color.value
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          )}
+                        />
+                      </div>
+
+                      {color.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+
         <input
           className={`${classInput} w-[50em]`}
           placeholder='Description'
-          {...register('name', { required: "Description can't be empty" })}
+          {...register('description', {
+            required: "Description can't be empty",
+          })}
         />
         {errors.description?.message && (
           <p className={classError}>{errors.description.message}</p>
         )}
 
-        <Button className='' type='submit'>
+        <Button className='' type='submit' variant='darkerOutline'>
           Add Shortcut
         </Button>
       </form>
     </>
   );
 }
+
+const colors = [
+  {
+    value: 'blue',
+    label: 'Blue',
+  },
+
+  {
+    value: 'green',
+    label: 'Green',
+  },
+  {
+    value: 'red',
+    label: 'Red',
+  },
+  {
+    value: 'orange',
+    label: 'Orange',
+  },
+  {
+    value: 'pink',
+    label: 'Pink',
+  },
+  {
+    value: 'black',
+    label: 'Black',
+  },
+  {
+    value: 'gray',
+    label: 'Gray',
+  },
+];

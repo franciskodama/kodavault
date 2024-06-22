@@ -106,12 +106,23 @@ export type ShortcutType = {
   description: string;
   category: ShortcutCategoryEnum;
   from: string;
+  color: ShortcutColorEnum;
 };
 
-enum ShortcutCategoryEnum {
+export enum ShortcutCategoryEnum {
   OPTION_ONE = 'indicator',
   OPTION_TWO = 'analysis',
   OPTION_THREE = 'miscellaneous',
   OPTION_FOUR = 'platform',
   OPTION_FIVE = 'exchange',
+}
+
+export enum ShortcutColorEnum {
+  OPTION_ONE = 'blue',
+  OPTION_TWO = 'red',
+  OPTION_THREE = 'green',
+  OPTION_FOUR = 'orange',
+  OPTION_FIVE = 'black',
+  OPTION_SEX = 'gray',
+  OPTION_SEVEN = 'pink',
 }
