@@ -33,7 +33,6 @@ export function AddShortcutForm({
 }: {
   shortcutCategoriesKeys: string[];
 }) {
-  console.log('---  🚀 ---> | shortcutCategoriesKeys:', shortcutCategoriesKeys);
   const [data, setData] = useState<ShortcutType>();
   const { toast } = useToast();
   const { user } = useUser();
@@ -97,7 +96,9 @@ export function AddShortcutForm({
     };
     categoryArray.push(categoryObj);
   });
-  console.log('---  🚀 ---> | categoryArray:', categoryArray);
+
+  const isCategoryArray = Array.isArray(categoryArray);
+  console.log('---  🚀 ---> | isCategoryArray:', isCategoryArray);
 
   return (
     <>
@@ -136,7 +137,7 @@ export function AddShortcutForm({
         <div className={classDiv}>
           {/* <h3 className={classTitle}>Category</h3> */}
 
-          <Popover open={open} onOpenChange={setOpen}>
+          {/* <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
                 variant='outline'
@@ -187,7 +188,7 @@ export function AddShortcutForm({
                 </CommandGroup>
               </Command>
             </PopoverContent>
-          </Popover>
+          </Popover> */}
         </div>
 
         <div className={classDiv}>
