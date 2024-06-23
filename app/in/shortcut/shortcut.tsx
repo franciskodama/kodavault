@@ -81,9 +81,9 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                                 </p>
                               </Link>
                               <div
-                                className={`${getColor(
-                                  shortcut.color
-                                )} flex items-center justify-center h-[3ch] w-[12ch] rounded-[2px] text-xs text-white text-center`}
+                                className={`${
+                                  shortcut.color && getColor(shortcut.color)
+                                } flex items-center justify-center h-[3ch] w-[12ch] rounded-[2px] text-xs text-white text-center`}
                               >
                                 {shortcut.from}
                               </div>

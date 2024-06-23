@@ -214,7 +214,7 @@ export function AddShortcutForm() {
                       <div
                         className={`${getColor(
                           color.value
-                        )} flex items-center justify-center w-6 h-6 rounded-full mr-2`}
+                        )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
                       >
                         <Check
                           className={cn(

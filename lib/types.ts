@@ -1,3 +1,5 @@
+import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
+
 export type UnpricedAsset = {
   id: string;
   account: string;
@@ -106,25 +108,5 @@ export type ShortcutType = {
   description: string;
   category: category_enum_f421eb4b;
   from: string;
-  color: color_enum_bd2ecc46;
+  color: color_enum_bd2ecc46 | null;
 };
-
-export enum category_enum_f421eb4b {
-  OPTION_ONE = 'exchange',
-  OPTION_TWO = 'knowledge',
-  OPTION_THREE = 'course',
-  OPTION_FOUR = 'analysis',
-  OPTION_FIVE = 'indicator',
-  OPTION_SIX = 'miscellaneous',
-  OPTION_SEVEN = 'platform',
-}
-
-export enum color_enum_bd2ecc46 {
-  OPTION_ONE = 'blue',
-  OPTION_TWO = 'red',
-  OPTION_THREE = 'green',
-  OPTION_FOUR = 'orange',
-  OPTION_FIVE = 'black',
-  OPTION_SEX = 'gray',
-  OPTION_SEVEN = 'pink',
-}
