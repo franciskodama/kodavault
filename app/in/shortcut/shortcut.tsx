@@ -215,6 +215,16 @@ export const allCategories = [
   'platform',
 ];
 
+export const allColors = [
+  'blue',
+  'green',
+  'red',
+  'orange',
+  'pink',
+  'black',
+  'gray',
+];
+
 const getEmoji = (key: string) => {
   let emoji = '';
 

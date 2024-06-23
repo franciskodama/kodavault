@@ -193,7 +193,7 @@ export function AddShortcutForm() {
                 className={`${getColor(
                   valueColor
                 )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
-              ></div>
+              />
               {valueColor ? (
                 <span className='text-xs font-normal opacity-60'>
                   {
