@@ -12,7 +12,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
@@ -24,6 +23,7 @@ import {
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { allCategories, getColor } from '@/app/in/shortcut/shortcut';
+import { spawn } from 'child_process';
 
 type comboOptions = {
   label: string;
@@ -36,8 +36,8 @@ export function AddShortcutForm() {
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
+  const [openCategory, setOpenCategory] = useState(false);
+  const [valueCategory, setValueCategory] = useState('');
 
   const [openColor, setOpenColor] = useState(false);
   const [valueColor, setValueColor] = useState('');
@@ -128,17 +128,17 @@ export function AddShortcutForm() {
           <p className={classError}>{errors.url.message}</p>
         )}
 
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover open={openCategory} onOpenChange={setOpenCategory}>
           <PopoverTrigger asChild>
             <Button
               variant='outline'
               role='combobox'
-              aria-expanded={open}
+              aria-expanded={openCategory}
               className='w-[220px] justify-between'
             >
-              {value ? (
+              {valueCategory ? (
                 categories.find(
-                  (category: comboOptions) => category.value === value
+                  (category: comboOptions) => category.value === valueCategory
                 )?.label
               ) : (
                 <span className='text-xs font-normal opacity-60'>
@@ -148,7 +148,7 @@ export function AddShortcutForm() {
               <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className='w-[200px] p-0'>
+          <PopoverContent className='w-[160px] p-0'>
             <Command>
               <CommandList>
                 <CommandEmpty>No category found.</CommandEmpty>
@@ -158,17 +158,21 @@ export function AddShortcutForm() {
                       key={category.value}
                       value={category.value}
                       onSelect={(currentValue) => {
-                        setValue(currentValue === value ? '' : currentValue);
-                        setOpen(false);
+                        setValueCategory(
+                          currentValue === valueCategory ? '' : currentValue
+                        );
+                        setOpenCategory(false);
                       }}
                     >
                       <Check
                         className={cn(
                           'mr-2 h-4 w-4',
-                          value === category.value ? 'opacity-100' : 'opacity-0'
+                          valueCategory === category.value
+                            ? 'opacity-100'
+                            : 'opacity-0'
                         )}
                       />
-                      {category.label}
+                      <span className='text-xs'>{category.label}</span>
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -183,18 +187,28 @@ export function AddShortcutForm() {
               variant='outline'
               role='combobox'
               aria-expanded={openColor}
-              className='w-[140px] justify-between'
+              className='w-[160px] justify-between'
             >
+              <div
+                className={`${getColor(
+                  valueColor
+                )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
+              ></div>
               {valueColor ? (
-                colors.find((colors: comboOptions) => colors.value === value)
-                  ?.label
+                <span className='text-xs font-normal opacity-60'>
+                  {
+                    colors.find(
+                      (colors: comboOptions) => colors.value === valueColor
+                    )?.label
+                  }
+                </span>
               ) : (
                 <span className='text-xs font-normal opacity-60'>Color</span>
               )}
               <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className='w-[110px] p-0'>
+          <PopoverContent className='w-[125px] p-0'>
             <Command>
               <CommandList>
                 <CommandEmpty>No color found.</CommandEmpty>
@@ -209,7 +223,7 @@ export function AddShortcutForm() {
                         );
                         setOpenColor(false);
                       }}
-                      className='flex w-full'
+                      className='flex w-full text-xs'
                     >
                       <div
                         className={`${getColor(
@@ -218,14 +232,13 @@ export function AddShortcutForm() {
                       >
                         <Check
                           className={cn(
-                            'h-4 w-4 text-white',
+                            'h-3 w-3 text-white',
                             valueColor === color.value
                               ? 'opacity-100'
                               : 'opacity-0'
                           )}
                         />
                       </div>
-
                       {color.label}
                     </CommandItem>
                   ))}
