@@ -1,3 +1,5 @@
+import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
+
 export type UnpricedAsset = {
   id: string;
   account: string;
@@ -95,4 +97,16 @@ export type CryptoGoalAllocation = {
   coin: string;
   priority?: 'High' | 'Medium' | 'Low' | null;
   obs?: string | null;
+};
+
+export type ShortcutType = {
+  id: string;
+  created_at: Date;
+  name: string;
+  uid: string;
+  url: string;
+  description: string;
+  category: category_enum_f421eb4b;
+  from: string;
+  color: color_enum_bd2ecc46 | null;
 };

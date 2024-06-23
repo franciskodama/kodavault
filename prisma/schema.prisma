@@ -122,13 +122,15 @@ model CoinGoal {
 }
 
 model Shortcut {
-  created_at  DateTime                @default(now()) @db.Timestamptz(6)
+  created_at  DateTime               @default(now()) @db.Timestamptz(6)
   name        String
   uid         String
   url         String
-  id          String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  description String?
-  category    category_enum_f421eb4b? @default(miscellaneous)
+  id          String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  description String                 @default("I am for...")
+  category    category_enum_f421eb4b @default(miscellaneous)
+  from        String
+  color       color_enum_bd2ecc46?   @default(gray)
 }
 
 enum priority_enum_593899f8 {
@@ -145,4 +147,14 @@ enum category_enum_f421eb4b {
   indicator
   miscellaneous
   platform
+}
+
+enum color_enum_bd2ecc46 {
+  blue
+  red
+  green
+  orange
+  black
+  gray
+  pink
 }

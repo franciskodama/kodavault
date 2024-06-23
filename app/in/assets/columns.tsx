@@ -102,21 +102,6 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: 'type',
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         className={tableHeaderClass}
-  //         variant='ghost'
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-  //       >
-  //         Type
-  //         <ArrowUpDown className='ml-2 h-4 w-4' />
-  //       </Button>
-  //     );
-  //   },
-  // },
   {
     accessorKey: 'subtype',
     header: ({ column }) => {
@@ -182,9 +167,9 @@ export const columns: ColumnDef<Asset>[] = [
                 </SheetTrigger>
                 <SheetContent>
                   <SheetHeader>
-                    <SheetTitle>Update a new Asset</SheetTitle>
+                    <SheetTitle>Update Asset</SheetTitle>
                     <SheetDescription>
-                      Update an Existing Asset
+                      Modify the details of your existing asset.
                     </SheetDescription>
                   </SheetHeader>
                   <UpdateAssetForm asset={asset} />

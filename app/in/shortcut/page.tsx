@@ -1,17 +1,7 @@
-import WorkInProgress from '@/components/WorkInProgress';
 import { getShortcuts } from '@/lib/actions';
 import { currentUser } from '@clerk/nextjs';
 import { Shortcut } from './shortcut';
-
-export type ShortcutType = {
-  id: string;
-  created_at: Date;
-  name: string;
-  uid: string;
-  url: string;
-  description?: string | null;
-  category?: string | null;
-};
+import { ShortcutType } from '@/lib/types';
 
 export default async function ShortcutPage() {
   const user = await currentUser();
@@ -24,14 +14,13 @@ export default async function ShortcutPage() {
     if (Array.isArray(result)) {
       shortcuts = result;
     } else {
-      // Handle the case where result is not an array (e.g., "", { error: unknown; }, or null)
       console.error('Failed to load shortcuts:', result);
-      shortcuts = []; // Ensures shortcuts is always an array of Shortcut
+      shortcuts = [];
     }
   }
 
   return (
-    <div className='flex flex-col items-center justify-center w-full'>
+    <div className='flex flex-col w-full p-4'>
       <Shortcut shortcuts={shortcuts} />
     </div>
   );
