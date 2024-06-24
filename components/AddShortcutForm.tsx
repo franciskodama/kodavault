@@ -139,7 +139,7 @@ export function AddShortcutForm() {
                   variant='outline'
                   role='combobox'
                   aria-expanded={openCategory}
-                  className='w-[120px] justify-between'
+                  className='w-[120px]'
                 >
                   {valueCategory ? (
                     <span className='text-xs font-normal opacity-60 capitalize'>
@@ -158,7 +158,7 @@ export function AddShortcutForm() {
                   <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className='w-[120px] p-0'>
+              <PopoverContent className='w-[130px] p-0'>
                 <Command>
                   <CommandList>
                     <CommandEmpty>No category found.</CommandEmpty>
@@ -201,7 +201,7 @@ export function AddShortcutForm() {
                   variant='outline'
                   role='combobox'
                   aria-expanded={openColor}
-                  className='w-[120px] justify-between'
+                  className='w-[120px]'
                 >
                   <div
                     className={`${getColor(
