@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Form } from 'react-hook-form';
 
 import { addShortcut } from '@/lib/actions';
 import { Button } from './ui/button';
@@ -97,11 +97,12 @@ export function AddShortcutForm() {
 
   return (
     <>
+      {/* <Form> */}
       <form onSubmit={handleSubmit(processForm)}>
         <ul className='flex items-start gap-2'>
           <li className={classLi}>
             <input
-              className={`${classInput} w-[28ch]`}
+              className={`${classInput} w-[20ch]`}
               placeholder='Title'
               {...register('name', { required: "Title can't be empty" })}
             />
@@ -112,7 +113,7 @@ export function AddShortcutForm() {
 
           <li className={classLi}>
             <input
-              className={`${classInput} w-[28ch]`}
+              className={`${classInput} w-[20ch]`}
               placeholder='From (ex.: Coinglass)'
               {...register('from', { required: "From can't be empty" })}
             />
@@ -123,7 +124,7 @@ export function AddShortcutForm() {
 
           <li className={classLi}>
             <input
-              className={`${classInput} w-[28ch]`}
+              className={`${classInput} w-[20ch]`}
               placeholder='Url'
               {...register('url', { required: "Url can't be empty" })}
             />
@@ -139,7 +140,7 @@ export function AddShortcutForm() {
                   variant='outline'
                   role='combobox'
                   aria-expanded={openCategory}
-                  className='w-[120px]'
+                  className='w-[125px]'
                 >
                   {valueCategory ? (
                     <span className='text-xs font-normal opacity-60 capitalize'>
@@ -158,11 +159,10 @@ export function AddShortcutForm() {
                   <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className='w-[130px] p-0'>
+              <PopoverContent className='w-[125px] p-0'>
                 <Command>
                   <CommandList>
-                    <CommandEmpty>No category found.</CommandEmpty>
-                    <CommandGroup>
+                    <CommandGroup {...register('category')}>
                       {categories.map((category: comboOptions) => (
                         <CommandItem
                           key={category.value}
@@ -201,7 +201,7 @@ export function AddShortcutForm() {
                   variant='outline'
                   role='combobox'
                   aria-expanded={openColor}
-                  className='w-[120px]'
+                  className='w-[125px]'
                 >
                   <div
                     className={`${getColor(
@@ -224,7 +224,7 @@ export function AddShortcutForm() {
                   <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className='w-[120px] p-0'>
+              <PopoverContent className='w-[125px] p-0'>
                 <Command>
                   <CommandList>
                     <CommandEmpty>No color found.</CommandEmpty>
@@ -285,6 +285,7 @@ export function AddShortcutForm() {
           </li>
         </ul>
       </form>
+      {/* </Form> */}
     </>
   );
 }

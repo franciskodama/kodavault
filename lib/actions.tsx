@@ -1,9 +1,9 @@
 'use server';
 
-import { uuid } from 'uuidv4';
 import prisma from './prisma';
 import { CryptoGoalAllocation, Inputs, ShortcutType } from './types';
 import { revalidatePath } from 'next/cache';
+import { v4 } from 'uuid';
 
 export async function addAsset(formData: Inputs) {
   const {
@@ -21,7 +21,7 @@ export async function addAsset(formData: Inputs) {
   try {
     await prisma.asset.create({
       data: {
-        id: uuid(),
+        id: v4(),
         created_at: new Date(),
         asset,
         qty: Number(qty),
@@ -135,7 +135,7 @@ export async function updateCoinShareGoal(formData: CryptoGoalAllocation) {
     } else {
       await prisma.coinGoal.create({
         data: {
-          id: uuid(),
+          id: v4(),
           uid,
           created_at: new Date(),
           coin,
@@ -172,7 +172,7 @@ export async function addShortcut(formData: ShortcutType) {
   try {
     await prisma.shortcut.create({
       data: {
-        id: uuid(),
+        id: v4(),
         created_at: new Date(),
         name,
         uid,
