@@ -167,7 +167,7 @@ export const getShortcuts = async (uid: string) => {
 };
 
 export async function addShortcut(formData: ShortcutType) {
-  const { name, uid, url, description, category, from } = formData;
+  const { name, uid, url, description, category, from, color } = formData;
 
   try {
     await prisma.shortcut.create({
@@ -180,6 +180,7 @@ export async function addShortcut(formData: ShortcutType) {
         description,
         category,
         from,
+        color,
       },
     });
     return true;
@@ -190,7 +191,7 @@ export async function addShortcut(formData: ShortcutType) {
 }
 
 export async function updateShortcut(formData: ShortcutType) {
-  const { id, name, uid, url, description, category, from } = formData;
+  const { id, name, uid, url, description, category, from, color } = formData;
 
   try {
     await prisma.shortcut.update({
@@ -206,6 +207,7 @@ export async function updateShortcut(formData: ShortcutType) {
         description,
         category,
         from,
+        color,
       },
     });
     return true;

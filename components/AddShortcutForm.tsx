@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler, Form } from 'react-hook-form';
 
@@ -10,7 +10,6 @@ import { ShortcutType } from '@/lib/types';
 import { useToast } from './ui/use-toast';
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandItem,
   CommandList,
@@ -22,12 +21,45 @@ import {
 } from '@/components/ui/popover';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { allCategories, getColor } from '@/app/in/shortcut/shortcut';
+import { allCategories, allColors, getColor } from '@/app/in/shortcut/shortcut';
+import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
 
 type comboOptions = {
   label: string;
   value: string;
 };
+
+// const colors: comboOptions[] = [
+//   {
+//     value: 'blue',
+//     label: 'Blue',
+//   },
+
+//   {
+//     value: 'green',
+//     label: 'Green',
+//   },
+//   {
+//     value: 'red',
+//     label: 'Red',
+//   },
+//   {
+//     value: 'orange',
+//     label: 'Orange',
+//   },
+//   {
+//     value: 'pink',
+//     label: 'Pink',
+//   },
+//   {
+//     value: 'black',
+//     label: 'Black',
+//   },
+//   {
+//     value: 'gray',
+//     label: 'Gray',
+//   },
+// ];
 
 export function AddShortcutForm() {
   const [data, setData] = useState<ShortcutType>();
@@ -36,15 +68,16 @@ export function AddShortcutForm() {
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
   const [openCategory, setOpenCategory] = useState(false);
-  const [valueCategory, setValueCategory] = useState('');
+  const [valueCategory, setValueCategory] = useState<string | null>(null);
 
   const [openColor, setOpenColor] = useState(false);
-  const [valueColor, setValueColor] = useState('');
+  const [valueColor, setValueColor] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ShortcutType>({});
 
@@ -95,9 +128,25 @@ export function AddShortcutForm() {
     categories.push(categoryObj);
   });
 
+  let colors: any = [];
+  allColors.map((color: string) => {
+    const colorObj = {
+      value: color,
+      label: color,
+    };
+    colors.push(colorObj);
+  });
+
+  useEffect(() => {
+    setValue('color', valueColor as color_enum_bd2ecc46 | null);
+  }, [valueColor, setValue]);
+
+  useEffect(() => {
+    setValue('category', valueCategory as category_enum_f421eb4b | null);
+  }, [valueCategory, setValue]);
+
   return (
     <>
-      {/* <Form> */}
       <form onSubmit={handleSubmit(processForm)}>
         <ul className='flex items-start gap-2'>
           <li className={classLi}>
@@ -162,7 +211,7 @@ export function AddShortcutForm() {
               <PopoverContent className='w-[125px] p-0'>
                 <Command>
                   <CommandList>
-                    <CommandGroup {...register('category')}>
+                    <CommandGroup>
                       {categories.map((category: comboOptions) => (
                         <CommandItem
                           key={category.value}
@@ -192,6 +241,7 @@ export function AddShortcutForm() {
                 </Command>
               </PopoverContent>
             </Popover>
+            <input type='hidden' {...register('category')} />
           </li>
 
           <li className={classLi}>
@@ -204,15 +254,15 @@ export function AddShortcutForm() {
                   className='w-[125px]'
                 >
                   <div
-                    className={`${getColor(
-                      valueColor
-                    )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
+                    className={`${
+                      valueColor && getColor(valueColor)
+                    } flex items-center justify-center w-4 h-4 rounded-full mr-2`}
                   />
                   {valueColor ? (
-                    <span className='text-xs font-normal opacity-60'>
+                    <span className='text-xs font-normal opacity-60 capitalize'>
                       {
                         colors.find(
-                          (colors: comboOptions) => colors.value === valueColor
+                          (color: comboOptions) => color.value === valueColor
                         )?.label
                       }
                     </span>
@@ -227,7 +277,6 @@ export function AddShortcutForm() {
               <PopoverContent className='w-[125px] p-0'>
                 <Command>
                   <CommandList>
-                    <CommandEmpty>No color found.</CommandEmpty>
                     <CommandGroup>
                       {colors.map((color: comboOptions) => (
                         <CommandItem
@@ -263,7 +312,74 @@ export function AddShortcutForm() {
                 </Command>
               </PopoverContent>
             </Popover>
+            <input type='hidden' {...register('color')} />
           </li>
+          {/* 
+          <li className={classLi}>
+            <Popover open={openColor} onOpenChange={setOpenColor}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant='outline'
+                  role='combobox'
+                  aria-expanded={openColor}
+                  className='w-[125px]'
+                >
+                  {valueColor ? (
+                    <span className='text-xs font-normal opacity-60'>
+                      {
+                        colors.find(
+                          (colors: comboOptions) => colors.value === valueColor
+                        )?.label
+                      }
+                    </span>
+                  ) : (
+                    <span className='text-xs font-normal opacity-60'>
+                      Color
+                    </span>
+                  )}
+                  <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className='w-[125px] p-0'>
+                <Command>
+                  <CommandList>
+                    <CommandGroup>
+                      {colors.map((color: comboOptions) => (
+                        <CommandItem
+                          key={color.value}
+                          value={color.value}
+                          onSelect={(currentValue) => {
+                            setValueColor(
+                              currentValue === valueColor ? '' : currentValue
+                            );
+                            setOpenColor(false);
+                          }}
+                          className='flex w-full text-xs'
+                        >
+                          <div
+                            className={`${getColor(
+                              color.value
+                            )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
+                          >
+                            <Check
+                              className={cn(
+                                'h-3 w-3 text-white',
+                                valueColor === color.value
+                                  ? 'opacity-100'
+                                  : 'opacity-0'
+                              )}
+                            />
+                          </div>
+                          {color.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+            <input type='hidden' {...register('color')} />
+          </li> */}
 
           <li className={`${classLi} w-full`}>
             <input
@@ -285,39 +401,6 @@ export function AddShortcutForm() {
           </li>
         </ul>
       </form>
-      {/* </Form> */}
     </>
   );
 }
-
-const colors = [
-  {
-    value: 'blue',
-    label: 'Blue',
-  },
-
-  {
-    value: 'green',
-    label: 'Green',
-  },
-  {
-    value: 'red',
-    label: 'Red',
-  },
-  {
-    value: 'orange',
-    label: 'Orange',
-  },
-  {
-    value: 'pink',
-    label: 'Pink',
-  },
-  {
-    value: 'black',
-    label: 'Black',
-  },
-  {
-    value: 'gray',
-    label: 'Gray',
-  },
-];
