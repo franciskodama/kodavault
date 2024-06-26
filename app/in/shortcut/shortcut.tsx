@@ -33,6 +33,7 @@ import { UpdateShortcutForm } from '@/components/UpdateShortcutForm';
 import { ShortcutType } from '@/lib/types';
 import { AddShortcutForm } from '@/components/AddShortcutForm';
 import { ButtonsActions } from './buttons-actions';
+import { deleteShortcut } from '@/lib/actions';
 // import { deleteShortcut } from '@/lib/actions';
 
 export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
@@ -160,7 +161,7 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                                   </AlertDialogHeader>
 
                                   <AlertDialogFooter>
-                                    {/* <ButtonsActions shortcut={shortcut} /> */}
+                                    <ButtonsActions shortcut={shortcut} />
                                     {/* <AlertDialogCancel
                                       onClick={() => {
                                         toast({
@@ -171,19 +172,19 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
                                       }}
                                     >
                                       Cancel
-                                    </AlertDialogCancel> */}
-                                    {/* <AlertDialogAction
-                                    onClick={() => {
-                                      if (shortcut) {
-                                        handleDeleteShortcut(shortcut.id);
-                                        console.log('DELETED WAS CLICKED');
-                                        toast({
-                                          title: 'Asset gone! 💀',
-                                          description: `The Shortcut ${shortcut.name} has been successfully deleted!`,
-                                          variant: 'dark',
-                                        });
-                                      }
-                                    }}
+                                    </AlertDialogCancel>
+                                    <AlertDialogAction
+                                      onClick={() => {
+                                        if (shortcut) {
+                                          handleDeleteShortcut(shortcut.id);
+                                          console.log('DELETED WAS CLICKED');
+                                          toast({
+                                            title: 'Asset gone! 💀',
+                                            description: `The Shortcut ${shortcut.name} has been successfully deleted!`,
+                                            variant: 'dark',
+                                          });
+                                        }
+                                      }}
                                     >
                                       Continue
                                     </AlertDialogAction> */}

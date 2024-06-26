@@ -29,38 +29,6 @@ type comboOptions = {
   value: string;
 };
 
-// const colors: comboOptions[] = [
-//   {
-//     value: 'blue',
-//     label: 'Blue',
-//   },
-
-//   {
-//     value: 'green',
-//     label: 'Green',
-//   },
-//   {
-//     value: 'red',
-//     label: 'Red',
-//   },
-//   {
-//     value: 'orange',
-//     label: 'Orange',
-//   },
-//   {
-//     value: 'pink',
-//     label: 'Pink',
-//   },
-//   {
-//     value: 'black',
-//     label: 'Black',
-//   },
-//   {
-//     value: 'gray',
-//     label: 'Gray',
-//   },
-// ];
-
 export function AddShortcutForm() {
   const [data, setData] = useState<ShortcutType>();
   const { toast } = useToast();
@@ -241,7 +209,6 @@ export function AddShortcutForm() {
                 </Command>
               </PopoverContent>
             </Popover>
-            <input type='hidden' {...register('category')} />
           </li>
 
           <li className={classLi}>
@@ -312,74 +279,7 @@ export function AddShortcutForm() {
                 </Command>
               </PopoverContent>
             </Popover>
-            <input type='hidden' {...register('color')} />
           </li>
-          {/* 
-          <li className={classLi}>
-            <Popover open={openColor} onOpenChange={setOpenColor}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant='outline'
-                  role='combobox'
-                  aria-expanded={openColor}
-                  className='w-[125px]'
-                >
-                  {valueColor ? (
-                    <span className='text-xs font-normal opacity-60'>
-                      {
-                        colors.find(
-                          (colors: comboOptions) => colors.value === valueColor
-                        )?.label
-                      }
-                    </span>
-                  ) : (
-                    <span className='text-xs font-normal opacity-60'>
-                      Color
-                    </span>
-                  )}
-                  <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className='w-[125px] p-0'>
-                <Command>
-                  <CommandList>
-                    <CommandGroup>
-                      {colors.map((color: comboOptions) => (
-                        <CommandItem
-                          key={color.value}
-                          value={color.value}
-                          onSelect={(currentValue) => {
-                            setValueColor(
-                              currentValue === valueColor ? '' : currentValue
-                            );
-                            setOpenColor(false);
-                          }}
-                          className='flex w-full text-xs'
-                        >
-                          <div
-                            className={`${getColor(
-                              color.value
-                            )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
-                          >
-                            <Check
-                              className={cn(
-                                'h-3 w-3 text-white',
-                                valueColor === color.value
-                                  ? 'opacity-100'
-                                  : 'opacity-0'
-                              )}
-                            />
-                          </div>
-                          {color.label}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-            <input type='hidden' {...register('color')} />
-          </li> */}
 
           <li className={`${classLi} w-full`}>
             <input
