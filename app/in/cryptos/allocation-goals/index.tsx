@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 } from 'uuid';
 import { useUser } from '@clerk/nextjs';
 
 import { Asset, CryptoGoals } from '../../../../lib/types';
@@ -115,7 +115,7 @@ export default function AllocationGoals({ assets }: { assets: Asset[] }) {
       // }
 
       mergedArray.push({
-        id: goalData ? goalData.id : uuidv4(),
+        id: goalData ? goalData.id : v4(),
         uid,
         coin: value,
         total: numberFormatterNoDecimals.format(total),
@@ -132,7 +132,7 @@ export default function AllocationGoals({ assets }: { assets: Asset[] }) {
     cryptoGoals.forEach(({ coin, goal, obs }) => {
       if (!totalsMap.has(coin)) {
         mergedArray.push({
-          id: uuidv4(),
+          id: v4(),
           uid,
           coin,
           total: 0,

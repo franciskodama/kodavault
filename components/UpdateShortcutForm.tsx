@@ -10,7 +10,7 @@ import { updateShortcut } from '@/lib/actions';
 import { Button } from './ui/button';
 import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
-import { allCategories } from '@/app/in/shortcut/shortcut';
+import { allCategories, allColors, getColor } from '@/app/in/shortcut/shortcut';
 
 export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
   const [data, setData] = useState<ShortcutType>();
@@ -33,6 +33,7 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
       description: shortcut?.description,
       category: shortcut?.category,
       from: shortcut?.from,
+      color: shortcut?.color,
     },
   });
 
@@ -42,7 +43,7 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
   const classTitle = 'font-bold mb-2';
   const classError = 'text-red-500 font-bold my-2';
   const classLabelRadio =
-    'inline-flex items-center justify-center py-1 w-[8em] h-[2.5em] border-2 rounded-[2px] cursor-pointer text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100';
+    'capitalize inline-flex items-center justify-center py-1 w-[8em] h-[2.5em] border-2 rounded-[2px] cursor-pointer text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
     if (!uid) {
@@ -124,7 +125,7 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
           </div>
 
           <div className={classDiv}>
-            <h3 className={classTitle}>Wallet</h3>
+            <h3 className={classTitle}>Category</h3>
             <ul className={classUl}>
               {allCategories.map((categoriesKey) => (
                 <li key={categoriesKey}>
@@ -142,6 +143,34 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
               ))}
             </ul>
           </div>
+
+          <div className={classDiv}>
+            <h3 className={classTitle}>Color</h3>
+            <ul className={classUl}>
+              {allColors.map((color) => (
+                <li key={color}>
+                  <input
+                    className='hidden peer'
+                    type='radio'
+                    value={color}
+                    id={color}
+                    {...register('color')}
+                  />
+                  <div className='capitalize inline-flex items-center pl-4 py-1 w-[8em] h-[2.5em] border-2 rounded-[2px] cursor-pointer text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100'>
+                    <div
+                      className={`${getColor(
+                        color
+                      )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
+                    />
+                    <label htmlFor={color}>
+                      <span>{color}</span>
+                    </label>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <Button className='mt-8' type='submit'>
             Update a Shortcut
           </Button>

@@ -1,9 +1,9 @@
 'use server';
 
-import { uuid } from 'uuidv4';
 import prisma from './prisma';
 import { CryptoGoalAllocation, Inputs, ShortcutType } from './types';
 import { revalidatePath } from 'next/cache';
+import { v4 } from 'uuid';
 
 export async function addAsset(formData: Inputs) {
   const {
@@ -21,7 +21,7 @@ export async function addAsset(formData: Inputs) {
   try {
     await prisma.asset.create({
       data: {
-        id: uuid(),
+        id: v4(),
         created_at: new Date(),
         asset,
         qty: Number(qty),
@@ -135,7 +135,7 @@ export async function updateCoinShareGoal(formData: CryptoGoalAllocation) {
     } else {
       await prisma.coinGoal.create({
         data: {
-          id: uuid(),
+          id: v4(),
           uid,
           created_at: new Date(),
           coin,
@@ -167,12 +167,12 @@ export const getShortcuts = async (uid: string) => {
 };
 
 export async function addShortcut(formData: ShortcutType) {
-  const { name, uid, url, description, category, from } = formData;
+  const { name, uid, url, description, category, from, color } = formData;
 
   try {
     await prisma.shortcut.create({
       data: {
-        id: uuid(),
+        id: v4(),
         created_at: new Date(),
         name,
         uid,
@@ -180,6 +180,7 @@ export async function addShortcut(formData: ShortcutType) {
         description,
         category,
         from,
+        color,
       },
     });
     return true;
@@ -190,7 +191,7 @@ export async function addShortcut(formData: ShortcutType) {
 }
 
 export async function updateShortcut(formData: ShortcutType) {
-  const { id, name, uid, url, description, category, from } = formData;
+  const { id, name, uid, url, description, category, from, color } = formData;
 
   try {
     await prisma.shortcut.update({
@@ -206,6 +207,7 @@ export async function updateShortcut(formData: ShortcutType) {
         description,
         category,
         from,
+        color,
       },
     });
     return true;

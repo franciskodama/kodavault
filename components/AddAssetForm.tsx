@@ -109,6 +109,7 @@ export function AddAssetForm() {
 
     reset();
     setData(data);
+
     setTimeout(() => {
       window.location.reload();
     }, 2000);

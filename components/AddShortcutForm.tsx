@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Form } from 'react-hook-form';
 
 import { addShortcut } from '@/lib/actions';
 import { Button } from './ui/button';
@@ -10,9 +10,7 @@ import { ShortcutType } from '@/lib/types';
 import { useToast } from './ui/use-toast';
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
@@ -23,7 +21,8 @@ import {
 } from '@/components/ui/popover';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { allCategories, getColor } from '@/app/in/shortcut/shortcut';
+import { allCategories, allColors, getColor } from '@/app/in/shortcut/shortcut';
+import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
 
 type comboOptions = {
   label: string;
@@ -36,21 +35,23 @@ export function AddShortcutForm() {
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
+  const [openCategory, setOpenCategory] = useState(false);
+  const [valueCategory, setValueCategory] = useState<string | null>(null);
 
   const [openColor, setOpenColor] = useState(false);
-  const [valueColor, setValueColor] = useState('');
+  const [valueColor, setValueColor] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ShortcutType>({});
 
+  const classLi = 'flex flex-col';
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs';
-  const classError = 'text-red-500 font-bold my-2';
+  const classError = 'text-red-500 font-bold my-2 ml-2';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
     if (!uid) {
@@ -95,193 +96,211 @@ export function AddShortcutForm() {
     categories.push(categoryObj);
   });
 
+  let colors: any = [];
+  allColors.map((color: string) => {
+    const colorObj = {
+      value: color,
+      label: color,
+    };
+    colors.push(colorObj);
+  });
+
+  useEffect(() => {
+    setValue('color', valueColor as color_enum_bd2ecc46 | null);
+  }, [valueColor, setValue]);
+
+  useEffect(() => {
+    setValue('category', valueCategory as category_enum_f421eb4b | null);
+  }, [valueCategory, setValue]);
+
   return (
     <>
-      <form
-        onSubmit={handleSubmit(processForm)}
-        className='items-center flex gap-2'
-      >
-        <input
-          className={`${classInput} w-[28ch]`}
-          placeholder='Title'
-          {...register('name', { required: "Title can't be empty" })}
-        />
-        {errors.name?.message && (
-          <p className={classError}>{errors.name.message}</p>
-        )}
+      <form onSubmit={handleSubmit(processForm)}>
+        <ul className='flex items-start gap-2'>
+          <li className={classLi}>
+            <input
+              className={`${classInput} w-[20ch]`}
+              placeholder='Title'
+              {...register('name', { required: "Title can't be empty" })}
+            />
+            {errors.name?.message && (
+              <p className={classError}>{errors.name.message}</p>
+            )}
+          </li>
 
-        <input
-          className={`${classInput} w-[28ch]`}
-          placeholder='From (ex.: Coinglass)'
-          {...register('from', { required: "From can't be empty" })}
-        />
-        {errors.from?.message && (
-          <p className={classError}>{errors.from.message}</p>
-        )}
+          <li className={classLi}>
+            <input
+              className={`${classInput} w-[20ch]`}
+              placeholder='From (ex.: Coinglass)'
+              {...register('from', { required: "From can't be empty" })}
+            />
+            {errors.from?.message && (
+              <p className={classError}>{errors.from.message}</p>
+            )}
+          </li>
 
-        <input
-          className={`${classInput} w-[28ch]`}
-          placeholder='Url'
-          {...register('url', { required: "Url can't be empty" })}
-        />
-        {errors.url?.message && (
-          <p className={classError}>{errors.url.message}</p>
-        )}
+          <li className={classLi}>
+            <input
+              className={`${classInput} w-[20ch]`}
+              placeholder='Url'
+              {...register('url', { required: "Url can't be empty" })}
+            />
+            {errors.url?.message && (
+              <p className={classError}>{errors.url.message}</p>
+            )}
+          </li>
 
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant='outline'
-              role='combobox'
-              aria-expanded={open}
-              className='w-[220px] justify-between'
-            >
-              {value ? (
-                categories.find(
-                  (category: comboOptions) => category.value === value
-                )?.label
-              ) : (
-                <span className='text-xs font-normal opacity-60'>
-                  Select category...
-                </span>
-              )}
-              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+          <li className={classLi}>
+            <Popover open={openCategory} onOpenChange={setOpenCategory}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant='outline'
+                  role='combobox'
+                  aria-expanded={openCategory}
+                  className='w-[125px]'
+                >
+                  {valueCategory ? (
+                    <span className='text-xs font-normal opacity-60 capitalize'>
+                      {
+                        categories.find(
+                          (category: comboOptions) =>
+                            category.value === valueCategory
+                        )?.label
+                      }
+                    </span>
+                  ) : (
+                    <span className='text-xs font-normal opacity-60'>
+                      Category
+                    </span>
+                  )}
+                  <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className='w-[125px] p-0'>
+                <Command>
+                  <CommandList>
+                    <CommandGroup>
+                      {categories.map((category: comboOptions) => (
+                        <CommandItem
+                          key={category.value}
+                          value={category.value}
+                          onSelect={(currentValue) => {
+                            setValueCategory(
+                              currentValue === valueCategory ? '' : currentValue
+                            );
+                            setOpenCategory(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              'mr-2 h-4 w-4',
+                              valueCategory === category.value
+                                ? 'opacity-100'
+                                : 'opacity-0'
+                            )}
+                          />
+                          <span className='text-xs capitalize'>
+                            {category.label}
+                          </span>
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          </li>
+
+          <li className={classLi}>
+            <Popover open={openColor} onOpenChange={setOpenColor}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant='outline'
+                  role='combobox'
+                  aria-expanded={openColor}
+                  className='w-[125px]'
+                >
+                  <div
+                    className={`${
+                      valueColor && getColor(valueColor)
+                    } flex items-center justify-center w-4 h-4 rounded-full mr-2`}
+                  />
+                  {valueColor ? (
+                    <span className='text-xs font-normal opacity-60 capitalize'>
+                      {
+                        colors.find(
+                          (color: comboOptions) => color.value === valueColor
+                        )?.label
+                      }
+                    </span>
+                  ) : (
+                    <span className='text-xs font-normal opacity-60'>
+                      Color
+                    </span>
+                  )}
+                  <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className='w-[125px] p-0'>
+                <Command>
+                  <CommandList>
+                    <CommandGroup>
+                      {colors.map((color: comboOptions) => (
+                        <CommandItem
+                          key={color.value}
+                          value={color.value}
+                          onSelect={(currentValue) => {
+                            setValueColor(
+                              currentValue === valueColor ? '' : currentValue
+                            );
+                            setOpenColor(false);
+                          }}
+                          className='flex w-full text-xs'
+                        >
+                          <div
+                            className={`${getColor(
+                              color.value
+                            )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
+                          >
+                            <Check
+                              className={cn(
+                                'h-3 w-3 text-white',
+                                valueColor === color.value
+                                  ? 'opacity-100'
+                                  : 'opacity-0'
+                              )}
+                            />
+                          </div>
+                          {color.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          </li>
+
+          <li className={`${classLi} w-full`}>
+            <input
+              className={classInput}
+              placeholder='Description'
+              {...register('description', {
+                required: "Description can't be empty",
+              })}
+            />
+            {errors.description?.message && (
+              <p className={classError}>{errors.description.message}</p>
+            )}
+          </li>
+
+          <li>
+            <Button className='' type='submit' variant='darkerOutline'>
+              Add Shortcut
             </Button>
-          </PopoverTrigger>
-          <PopoverContent className='w-[200px] p-0'>
-            <Command>
-              <CommandList>
-                <CommandEmpty>No category found.</CommandEmpty>
-                <CommandGroup>
-                  {categories.map((category: comboOptions) => (
-                    <CommandItem
-                      key={category.value}
-                      value={category.value}
-                      onSelect={(currentValue) => {
-                        setValue(currentValue === value ? '' : currentValue);
-                        setOpen(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4',
-                          value === category.value ? 'opacity-100' : 'opacity-0'
-                        )}
-                      />
-                      {category.label}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
-
-        <Popover open={openColor} onOpenChange={setOpenColor}>
-          <PopoverTrigger asChild>
-            <Button
-              variant='outline'
-              role='combobox'
-              aria-expanded={openColor}
-              className='w-[140px] justify-between'
-            >
-              {valueColor ? (
-                colors.find((colors: comboOptions) => colors.value === value)
-                  ?.label
-              ) : (
-                <span className='text-xs font-normal opacity-60'>Color</span>
-              )}
-              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className='w-[110px] p-0'>
-            <Command>
-              <CommandList>
-                <CommandEmpty>No color found.</CommandEmpty>
-                <CommandGroup>
-                  {colors.map((color: comboOptions) => (
-                    <CommandItem
-                      key={color.value}
-                      value={color.value}
-                      onSelect={(currentValue) => {
-                        setValueColor(
-                          currentValue === valueColor ? '' : currentValue
-                        );
-                        setOpenColor(false);
-                      }}
-                      className='flex w-full'
-                    >
-                      <div
-                        className={`${getColor(
-                          color.value
-                        )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
-                      >
-                        <Check
-                          className={cn(
-                            'h-4 w-4 text-white',
-                            valueColor === color.value
-                              ? 'opacity-100'
-                              : 'opacity-0'
-                          )}
-                        />
-                      </div>
-
-                      {color.label}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
-
-        <input
-          className={`${classInput} w-[50em]`}
-          placeholder='Description'
-          {...register('description', {
-            required: "Description can't be empty",
-          })}
-        />
-        {errors.description?.message && (
-          <p className={classError}>{errors.description.message}</p>
-        )}
-
-        <Button className='' type='submit' variant='darkerOutline'>
-          Add Shortcut
-        </Button>
+          </li>
+        </ul>
       </form>
     </>
   );
 }
-
-const colors = [
-  {
-    value: 'blue',
-    label: 'Blue',
-  },
-
-  {
-    value: 'green',
-    label: 'Green',
-  },
-  {
-    value: 'red',
-    label: 'Red',
-  },
-  {
-    value: 'orange',
-    label: 'Orange',
-  },
-  {
-    value: 'pink',
-    label: 'Pink',
-  },
-  {
-    value: 'black',
-    label: 'Black',
-  },
-  {
-    value: 'gray',
-    label: 'Gray',
-  },
-];
