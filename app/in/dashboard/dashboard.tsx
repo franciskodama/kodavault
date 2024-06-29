@@ -11,6 +11,7 @@ import { Asset, AssetsByType, CurrencyData } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
 import { use } from 'react';
+import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
 
 export default function Dashboard({
   currencyRates,
@@ -120,7 +121,8 @@ export default function Dashboard({
               />
 
               <div className='mb-2'>
-                <CardNextPurchases />
+                {/* <CardNextPurchases /> */}
+                <CardAssetsOnTheRise />
               </div>
 
               <Notifications />
@@ -129,7 +131,7 @@ export default function Dashboard({
 
           {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
           <div className='flex flex-wrap gap-2'>
-            <div className='w-1/3 bg-slate-600 border-2' />
+            {/* <div className='w-1/3 bg-slate-600 border-2' /> */}
             <CardTotal
               emoji={'🧺'}
               description={'Total value grouped by wallet'}
