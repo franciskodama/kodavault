@@ -239,8 +239,8 @@ export async function addNetWorthEvolution(chartData: ChartData) {
     await prisma.netWorthEvolution.create({
       data: {
         id: v4(),
-        uid: uid,
         created_at: new Date(),
+        uid,
         usd_total: usdTotal,
         cad_total: cadTotal,
         brl_total: brlTotal,

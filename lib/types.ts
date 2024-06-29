@@ -119,7 +119,7 @@ export type totalArrayProps = {
 
 export type ChartData = {
   id?: string;
-  uid?: string;
+  uid: string;
   created_at?: Date;
   usdTotal: number;
   cadTotal: number;

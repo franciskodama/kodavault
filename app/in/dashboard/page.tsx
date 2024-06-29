@@ -20,21 +20,21 @@ export default async function DashboardPage() {
     assetsByType.Crypto.find((item: any) => item.asset === 'BTC')?.price
   );
 
-  let chartData: ChartData[] = [];
-  if (currencyRates.data && btcPrice) {
-    chartData = [
-      {
-        uid,
-        usdTotal: total,
-        cadTotal: total * currencyRates.data.CAD,
-        brlTotal: total * currencyRates.data.BRL,
-        btcTotal: total / btcPrice,
-      },
-    ];
+  let chartData: ChartData | null = null;
+  if (uid && currencyRates.data && btcPrice) {
+    chartData = {
+      uid,
+      usdTotal: total,
+      cadTotal: total * currencyRates.data.CAD,
+      brlTotal: total * currencyRates.data.BRL,
+      btcTotal: total / btcPrice,
+    };
   }
 
-  const result = await addNetWorthEvolution({ chartData });
-  console.log('---  🚀 ---> | result:', result);
+  if (chartData) {
+    const result = await addNetWorthEvolution(chartData);
+    console.log('---  🚀 ---> | result:', result);
+  }
 
   return (
     <>

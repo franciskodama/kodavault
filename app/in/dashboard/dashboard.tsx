@@ -104,7 +104,7 @@ export default function Dashboard({
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
-                <ChartPage assets={assets} currencyRates={currencyRates} />
+                {/* <ChartPage assets={assets} currencyRates={currencyRates} /> */}
               </div>
             </div>
 
