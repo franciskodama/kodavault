@@ -11,22 +11,19 @@ import { useAssetsContext } from '@/context/AssetsContext';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
 import { use } from 'react';
 import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
-import Chart from './chart/page';
+import ChartPage from './chart/page';
 
 export default function Dashboard({
   currencyRates,
+  assets,
+  assetsByType,
+  btcPrice,
 }: {
   currencyRates: CurrencyData;
+  assets: Asset[];
+  assetsByType: AssetsByType;
+  btcPrice: number;
 }) {
-  const { assets, assetsByType, isLoading } = useAssetsContext();
-
-  let btcPrice;
-  if (assetsByType.Crypto?.length > 0) {
-    btcPrice = Number(
-      assetsByType.Crypto.find((item: any) => item.asset === 'BTC')?.price
-    );
-  }
-
   return (
     <>
       {assets.length > 0 && assetsByType && (
@@ -107,7 +104,7 @@ export default function Dashboard({
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
-                <Chart assets={assets} currencyRates={currencyRates} />
+                <ChartPage assets={assets} currencyRates={currencyRates} />
               </div>
             </div>
 

@@ -134,12 +134,13 @@ model Shortcut {
 }
 
 model NetWorthEvolution {
-  id         Int      @id @default(autoincrement())
   created_at DateTime @unique @default(now()) @db.Date
   usd_total  Float    @default(0)
   cad_total  Float    @default(0)
   brl_total  Float    @default(0)
   btc_total  Float    @default(0)
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  uid        String?
 }
 
 enum priority_enum_593899f8 {

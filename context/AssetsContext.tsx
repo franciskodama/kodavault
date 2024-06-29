@@ -29,42 +29,12 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setIsLoading(true);
-
-  //     try {
-  //       if (uid) {
-  //         const unpricedAssets = await fetchAssets(uid);
-  //         const { _assets, _assetsByType } = await fetchAssetsWithPrices(
-  //           unpricedAssets
-  //         );
-  //         setAssets(_assets);
-  //         setAssetsByType(_assetsByType);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error loading assets:', error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   if (uid) {
-  //     fetchData();
-  //   } else {
-  //     setAssets([]);
-  //     setAssetsByType({});
-  //     setIsLoading(false);
-  //   }
-  // }, [uid]);
-
   const refreshAssets = async () => {
     try {
       if (uid) {
         const unpricedAssets = await fetchAssets(uid);
-        const { _assets, _assetsByType } = await fetchAssetsWithPrices(
-          unpricedAssets
-        );
+        const { assets: _assets, assetsByType: _assetsByType } =
+          await fetchAssetsWithPrices(unpricedAssets);
         setAssets(_assets);
         setAssetsByType(_assetsByType);
         // -----------------------------------------

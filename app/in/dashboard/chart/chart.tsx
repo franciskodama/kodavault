@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { DataChart, totalArrayProps } from '@/lib/types';
+import { ChartData } from '@/lib/types';
 import {
   LineChart,
   Line,
@@ -21,7 +21,7 @@ import {
 
 // https://recharts.org/en-US/guide/getting-started
 
-export default function ChartClient({ data }: { data: DataChart[] }) {
+export default function ChartClient({ chartData }: { chartData: ChartData[] }) {
   return (
     <>
       <Card className='w-full'>
@@ -41,7 +41,7 @@ export default function ChartClient({ data }: { data: DataChart[] }) {
                 <LineChart
                   width={1000}
                   height={300}
-                  data={data}
+                  data={chartData}
                   margin={{
                     top: 5,
                     right: 30,

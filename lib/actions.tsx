@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from './prisma';
-import { CryptoGoalAllocation, DataChart, Inputs, ShortcutType } from './types';
+import { ChartData, CryptoGoalAllocation, Inputs, ShortcutType } from './types';
 import { revalidatePath } from 'next/cache';
 import { v4 } from 'uuid';
 
@@ -232,13 +232,14 @@ export async function deleteShortcut(id: string) {
   }
 }
 
-export async function addNetWorthEvolution(data: DataChart) {
-  const { created_at, usdTotal, cadTotal, brlTotal, btcTotal } = data;
+export async function addNetWorthEvolution(chartData: ChartData) {
+  const { uid, usdTotal, cadTotal, brlTotal, btcTotal } = chartData;
 
   try {
-    await prisma.shortcut.create({
+    await prisma.netWorthEvolution.create({
       data: {
         id: v4(),
+        uid: uid,
         created_at: new Date(),
         usd_total: usdTotal,
         cad_total: cadTotal,

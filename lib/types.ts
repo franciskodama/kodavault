@@ -117,8 +117,10 @@ export type totalArrayProps = {
   emoji: string;
 };
 
-export type DataChart = {
-  created_at: Date;
+export type ChartData = {
+  id?: string;
+  uid?: string;
+  created_at?: Date;
   usdTotal: number;
   cadTotal: number;
   brlTotal: number;
