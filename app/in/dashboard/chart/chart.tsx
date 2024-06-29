@@ -30,13 +30,13 @@ export default function Chart() {
                 <span className='text-3xl'>📈</span>
               </CardTitle>
               <CardDescription className='text-xs'>
-                {`This is a Chart, I don't know if you know`}`
+                {`Follow up your networth during the year`}
               </CardDescription>
             </CardHeader>
             <CardContent className='w-full'>
               <div className='w-full p-8'>
                 <LineChart
-                  width={500}
+                  width={1000}
                   height={300}
                   data={data}
                   margin={{
@@ -51,12 +51,12 @@ export default function Chart() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Line
+                  {/* <Line
                     type='monotone'
                     dataKey='visit'
                     stroke='#8884d8'
                     strokeDasharray='5 5'
-                  />
+                  /> */}
                   <Line
                     type='monotone'
                     dataKey='click'

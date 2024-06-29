@@ -105,10 +105,9 @@ export default function Dashboard({
                   customKey={'cash'}
                 />
               </div>
-              <Transactions />
+              {/* <Transactions /> */}
               <div className='flex'>
                 <Chart />
-                <div className='w-1/2 bg-slate-600 border-2' />
               </div>
             </div>
 
