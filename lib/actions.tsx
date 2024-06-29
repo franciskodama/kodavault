@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from './prisma';
-import { CryptoGoalAllocation, Inputs, ShortcutType } from './types';
+import { CryptoGoalAllocation, DataChart, Inputs, ShortcutType } from './types';
 import { revalidatePath } from 'next/cache';
 import { v4 } from 'uuid';
 
@@ -229,5 +229,26 @@ export async function deleteShortcut(id: string) {
   } catch (error) {
     console.log(error);
     throw new Error('🚨 Failed to delete Shortcut');
+  }
+}
+
+export async function addNetWorthEvolution(data: DataChart) {
+  const { created_at, usdTotal, cadTotal, brlTotal, btcTotal } = data;
+
+  try {
+    await prisma.shortcut.create({
+      data: {
+        id: v4(),
+        created_at: new Date(),
+        usd_total: usdTotal,
+        cad_total: cadTotal,
+        brl_total: brlTotal,
+        btc_total: btcTotal,
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
   }
 }

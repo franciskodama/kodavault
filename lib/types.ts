@@ -110,3 +110,17 @@ export type ShortcutType = {
   from: string;
   color: color_enum_bd2ecc46 | null;
 };
+
+export type totalArrayProps = {
+  currency: string;
+  value: number;
+  emoji: string;
+};
+
+export type DataChart = {
+  created_at: Date;
+  usdTotal: number;
+  cadTotal: number;
+  brlTotal: number;
+  btcTotal: number;
+};

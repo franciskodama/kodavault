@@ -133,6 +133,15 @@ model Shortcut {
   color       color_enum_bd2ecc46?    @default(gray)
 }
 
+model NetWorthEvolution {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @unique @default(now()) @db.Date
+  usd_total  Float    @default(0)
+  cad_total  Float    @default(0)
+  brl_total  Float    @default(0)
+  btc_total  Float    @default(0)
+}
+
 enum priority_enum_593899f8 {
   High
   Medium

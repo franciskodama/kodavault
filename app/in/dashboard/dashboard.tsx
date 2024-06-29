@@ -2,7 +2,6 @@
 
 import { CardTotal } from '@/components/CardTotal';
 import Transactions from './transactions/transactions';
-import Chart from './chart/chart';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
@@ -12,6 +11,7 @@ import { useAssetsContext } from '@/context/AssetsContext';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
 import { use } from 'react';
 import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
+import Chart from './chart/page';
 
 export default function Dashboard({
   currencyRates,
@@ -107,7 +107,7 @@ export default function Dashboard({
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
-                <Chart />
+                <Chart assets={assets} currencyRates={currencyRates} />
               </div>
             </div>
 
