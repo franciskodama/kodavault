@@ -21,7 +21,11 @@ import {
 
 // https://recharts.org/en-US/guide/getting-started
 
-export default function ChartClient({ chartData }: { chartData: ChartData[] }) {
+export default function NetWorthEvolutionChart({
+  chartData,
+}: {
+  chartData: ChartData[];
+}) {
   return (
     <>
       <Card className='w-full'>
@@ -41,7 +45,7 @@ export default function ChartClient({ chartData }: { chartData: ChartData[] }) {
                 <LineChart
                   width={1000}
                   height={300}
-                  data={chartData}
+                  // data={chartData}
                   margin={{
                     top: 5,
                     right: 30,

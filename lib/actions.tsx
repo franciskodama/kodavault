@@ -253,3 +253,16 @@ export async function addNetWorthEvolution(chartData: ChartData) {
     return false;
   }
 }
+
+export const getNetWorthEvolution = async (uid: string) => {
+  try {
+    const netWorthEvolution = await prisma.netWorthEvolution.findMany({
+      where: {
+        uid,
+      },
+    });
+    return netWorthEvolution;
+  } catch (error) {
+    return { error };
+  }
+};

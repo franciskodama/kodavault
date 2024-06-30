@@ -4,8 +4,8 @@ import { currentUser } from '@clerk/nextjs';
 
 import { getCurrency } from '@/lib/currency.server';
 import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
-import { Asset, AssetsByType, ChartData } from '@/lib/types';
-import { addNetWorthEvolution } from '@/lib/actions';
+import { ChartData } from '@/lib/types';
+import { addNetWorthEvolution, getNetWorthEvolution } from '@/lib/actions';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -29,12 +29,10 @@ export default async function DashboardPage() {
       brlTotal: total * currencyRates.data.BRL,
       btcTotal: total / btcPrice,
     };
+    await addNetWorthEvolution(chartData);
   }
 
-  if (chartData) {
-    const result = await addNetWorthEvolution(chartData);
-    console.log('---  🚀 ---> | result:', result);
-  }
+  const netWorthEvolutionArray = await getNetWorthEvolution(uid ? uid : '');
 
   return (
     <>
@@ -44,6 +42,7 @@ export default async function DashboardPage() {
           assets={assets}
           assetsByType={assetsByType}
           btcPrice={btcPrice}
+          chartData={netWorthEvolutionArray}
         />
       )}
     </>
