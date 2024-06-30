@@ -266,3 +266,6 @@ export const getNetWorthEvolution = async (uid: string) => {
     return { error };
   }
 };
+
+// “It's kind of fun to do the impossible.” - Walt Disney
+

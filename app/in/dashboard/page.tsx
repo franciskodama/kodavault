@@ -33,6 +33,7 @@ export default async function DashboardPage() {
   }
 
   const netWorthEvolutionArray = await getNetWorthEvolution(uid ? uid : '');
+  console.log('---  🚀 ---> | netWorthEvolutionArray:', netWorthEvolutionArray);
 
   return (
     <>
@@ -42,7 +43,7 @@ export default async function DashboardPage() {
           assets={assets}
           assetsByType={assetsByType}
           btcPrice={btcPrice}
-          chartData={netWorthEvolutionArray}
+          // chartData={netWorthEvolutionArray}
         />
       )}
     </>
