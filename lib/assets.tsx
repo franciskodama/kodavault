@@ -56,8 +56,8 @@ export const fetchAssetsWithPrices = async (
   };
 
   const result = {
-    _assets: assets,
-    _assetsByType: assetsByType,
+    assets,
+    assetsByType,
   };
 
   return result;

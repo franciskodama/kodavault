@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from './prisma';
-import { CryptoGoalAllocation, Inputs, ShortcutType } from './types';
+import { ChartData, CryptoGoalAllocation, Inputs, ShortcutType } from './types';
 import { revalidatePath } from 'next/cache';
 import { v4 } from 'uuid';
 
@@ -231,3 +231,41 @@ export async function deleteShortcut(id: string) {
     throw new Error('🚨 Failed to delete Shortcut');
   }
 }
+
+export async function addNetWorthEvolution(chartData: ChartData) {
+  const { uid, usdTotal, cadTotal, brlTotal, btcTotal } = chartData;
+
+  try {
+    await prisma.netWorthEvolution.create({
+      data: {
+        id: v4(),
+        created_at: new Date(),
+        uid,
+        usd_total: usdTotal,
+        cad_total: cadTotal,
+        brl_total: brlTotal,
+        btc_total: btcTotal,
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export const getNetWorthEvolution = async (uid: string) => {
+  try {
+    const netWorthEvolution = await prisma.netWorthEvolution.findMany({
+      where: {
+        uid,
+      },
+    });
+    return netWorthEvolution;
+  } catch (error) {
+    return { error };
+  }
+};
+
+// “It's kind of fun to do the impossible.” - Walt Disney
+

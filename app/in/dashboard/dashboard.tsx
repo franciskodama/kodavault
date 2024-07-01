@@ -2,31 +2,30 @@
 
 import { CardTotal } from '@/components/CardTotal';
 import Transactions from './transactions/transactions';
-import Chart from './chart/chart';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { currencyFormatter } from '@/lib/utils';
-import { Asset, AssetsByType, CurrencyData } from '@/lib/types';
+import { Asset, AssetsByType, ChartData, CurrencyData } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
 import { use } from 'react';
 import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
+import NetWorthEvolutionChart from './charts/net-worth-evolution';
 
 export default function Dashboard({
   currencyRates,
-}: {
+  assets,
+  assetsByType,
+  btcPrice,
+}: // chartData,
+{
   currencyRates: CurrencyData;
+  assets: Asset[];
+  assetsByType: AssetsByType;
+  btcPrice: number;
+  // chartData: ChartData;
 }) {
-  const { assets, assetsByType, isLoading } = useAssetsContext();
-
-  let btcPrice;
-  if (assetsByType.Crypto?.length > 0) {
-    btcPrice = Number(
-      assetsByType.Crypto.find((item: any) => item.asset === 'BTC')?.price
-    );
-  }
-
   return (
     <>
       {assets.length > 0 && assetsByType && (
@@ -107,7 +106,7 @@ export default function Dashboard({
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
-                <Chart />
+                {/* <NetWorthEvolutionChart chartData={chartData} /> */}
               </div>
             </div>
 

@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { ChartData } from '@/lib/types';
 import {
   LineChart,
   Line,
@@ -18,7 +19,13 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-export default function Chart() {
+// https://recharts.org/en-US/guide/getting-started
+
+export default function NetWorthEvolutionChart({
+  chartData,
+}: {
+  chartData: ChartData[];
+}) {
   return (
     <>
       <Card className='w-full'>
@@ -26,11 +33,11 @@ export default function Chart() {
           <div className='flex flex-col w-full'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
-                <span>{`Year Recap`}</span>
+                <span>{`Net Worth Evolution`}</span>
                 <span className='text-3xl'>📈</span>
               </CardTitle>
               <CardDescription className='text-xs'>
-                {`Follow up your networth during the year`}
+                {`Track the progression of your net worth over time.`}
               </CardDescription>
             </CardHeader>
             <CardContent className='w-full'>
@@ -38,7 +45,7 @@ export default function Chart() {
                 <LineChart
                   width={1000}
                   height={300}
-                  data={data}
+                  // data={chartData}
                   margin={{
                     top: 5,
                     right: 30,
@@ -47,7 +54,7 @@ export default function Chart() {
                   }}
                 >
                   {/* <CartesianGrid strokeDasharray='3 3' /> */}
-                  <XAxis dataKey='name' />
+                  <XAxis dataKey='created_at' />
                   <YAxis />
                   <Tooltip />
                   <Legend />
@@ -72,48 +79,3 @@ export default function Chart() {
     </>
   );
 }
-
-const data = [
-  {
-    name: 'Page A',
-    visit: 4000,
-    click: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    visit: 3000,
-    click: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    visit: 2000,
-    click: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    visit: 2780,
-    click: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    visit: 1890,
-    click: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Page F',
-    visit: 2390,
-    click: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'Page G',
-    visit: 3490,
-    click: 4300,
-    amt: 2100,
-  },
-];
