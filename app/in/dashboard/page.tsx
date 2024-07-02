@@ -6,6 +6,7 @@ import { getCurrency } from '@/lib/currency.server';
 import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
 import { ChartData } from '@/lib/types';
 import { addNetWorthEvolution, getNetWorthEvolution } from '@/lib/actions';
+import { fetchStockPricesFromSheets } from '@/lib/stock.server';
 
 export default async function DashboardPage() {
   const user = await currentUser();
