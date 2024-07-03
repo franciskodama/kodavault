@@ -8,7 +8,7 @@ import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets.jsx';
 config();
 
 export default async function dailyTask() {
-  const uid = 'fk@fkodama.com';
+  const uid = '';
 
   try {
     const currencyRates = await getCurrency();
