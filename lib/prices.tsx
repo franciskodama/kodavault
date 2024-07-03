@@ -73,10 +73,20 @@ export const includePriceToStockAssets = async (
   const symbolsToMakeACall = symbolAndExchange.toString();
   const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');
   // const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
-  const result: StockData = await fetchStockPricesFromSheets();
 
-  if (!result?.body) {
-    throw new Error('Stock quotes body is undefined');
+  let stockPrices: StockData = { body: [] };
+  let result: StockData = await fetchStockPricesFromSheets();
+
+  if (!result.body) {
+    symbolsToCheckResultFromTheCall.map((item: string) => {
+      stockPrices.body?.push({
+        symbol: item,
+        regularMarketPrice: 0,
+        currency: 'USD',
+      });
+    });
+    result = stockPrices;
+    // console.log('---  🚀 ---> | result:', result);
   }
 
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
