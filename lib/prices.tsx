@@ -103,7 +103,7 @@ export const includePriceToStockAssets = async (
   );
 
   try {
-    if (currencyRates && currencyRates.data) {
+    if (result.body && currencyRates && currencyRates.data) {
       const onlySymbolAndPriceArray = result.body.map((item: any) => {
         return {
           asset: item.symbol.split('.')[0],

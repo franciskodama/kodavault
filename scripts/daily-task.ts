@@ -42,6 +42,8 @@ export default async function dailyTask() {
   }
 }
 
+console.log('Daily task scheduled!');
+
 // cron.schedule('0 0 * * *', dailyTask);
 
 dailyTask();
