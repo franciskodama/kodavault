@@ -18,11 +18,11 @@ export default async function dailyTask() {
     );
 
     const total = assets.reduce(
-      (sum: number, item: any) => sum + item.total,
+      (sum, item) => sum + item.total,
       0
     );
     const btcPrice = Number(
-      assetsByType.Crypto.find((item: any) => item.asset === 'BTC')?.price
+      assetsByType.Crypto.find((item) => item.asset === 'BTC')?.price
     );
 
     let chartData = null;
