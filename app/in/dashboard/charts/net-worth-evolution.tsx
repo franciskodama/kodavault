@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { netWorthChartData } from '@/lib/types';
+import { dateFormatter } from '@/lib/utils';
 import {
   LineChart,
   Line,
@@ -26,7 +27,12 @@ export default function NetWorthEvolutionChart({
 }: {
   netWorthChartData: netWorthChartData[];
 }) {
-  console.log('---  🚀 ---> | netWorthChartData from end:', netWorthChartData);
+  const formattedDateData = netWorthChartData.map(
+    (item: netWorthChartData) => ({
+      ...item,
+      created_at: item.created_at && dateFormatter(item.created_at),
+    })
+  );
 
   return (
     <>
@@ -47,7 +53,7 @@ export default function NetWorthEvolutionChart({
                 <LineChart
                   width={1000}
                   height={300}
-                  data={netWorthChartData}
+                  data={formattedDateData}
                   margin={{
                     top: 5,
                     right: 30,

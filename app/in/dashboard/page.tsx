@@ -39,6 +39,12 @@ export default async function DashboardPage() {
       rawNetWorthChartData.error
     );
   }
+  const sortedNetWorthChartData: netWorthChartData[] = netWorthChartData
+    .filter(
+      (item): item is netWorthChartData & { created_at: Date } =>
+        item.created_at !== undefined
+    )
+    .sort((a, b) => a.created_at.getTime() - b.created_at.getTime());
 
   return (
     <>
@@ -48,7 +54,7 @@ export default async function DashboardPage() {
           assets={assets}
           assetsByType={assetsByType}
           btcPrice={btcPrice}
-          netWorthChartData={netWorthChartData}
+          netWorthChartData={sortedNetWorthChartData}
         />
       )}
     </>
