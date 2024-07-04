@@ -2,15 +2,19 @@
   "crons": [
     {
       "path": "/api/cron-networth-evolution",
-      "schedule": "0 5 * * *"
+      "schedule": "0 1 * * *"
     },
     {
       "path": "/api/cron",
-      "schedule": "0 5 * * *"
+      "schedule": "0 3 * * *"
     },
     {
       "path": "/api/cron-test",
       "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron-one-more",
+      "schedule": "0 8 * * *"
     }
   ]
 }

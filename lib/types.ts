@@ -11,7 +11,7 @@ export type UnpricedAsset = {
   subtype: string;
   currency: string;
   uid: string;
-  exchange: string | null;
+  exchange: string;
   crypto?: string;
   stock?: string;
   cash?: string;
