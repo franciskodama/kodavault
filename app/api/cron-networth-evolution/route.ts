@@ -1,45 +1,67 @@
+import { addNetWorthEvolution } from '@/lib/actions';
 import { fetchAssetsWithPrices } from '@/lib/assets';
 import { getAssets } from '@/lib/assets.server';
 import { getCurrency } from '@/lib/currency.server';
-import { UnpricedAsset } from '@/lib/types';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { netWorthChartData, UnpricedAsset } from '@/lib/types';
 
 export async function GET() {
-  // req: NextApiRequest,
-  // res: NextApiResponse
-  // if (req.method !== 'GET') {
-  //   return res.status(405).json({ message: 'Method not allowed' });
-  // }
-  // const uid: string | undefined = process.env.NEXT_PUBLIC_MY_UID;
+  const uid: string = process.env.NEXT_PUBLIC_MY_UID ?? '';
 
-  // if (!uid) {
-  //   return res.status(400).json({ message: 'User ID not provided' });
-  // }
+  if (!uid) {
+    return Response.json({ message: 'User User ID not provided' });
+  }
 
-  // try {
-  //   const currency = await getCurrency();
-  //   let unpricedAssets: UnpricedAsset[] = [];
+  try {
+    const currencyRates = await getCurrency();
+    const rawAssets = await getAssets(uid);
 
-  //   const assets = await getAssets(uid);
-  //   if (Array.isArray(assets)) {
-  //     unpricedAssets = assets.map((asset: any) => ({
-  //       ...asset,
-  //       exchange: asset.exchange ?? '',
-  //     }));
-  //   } else if ('error' in assets) {
-  //     return res.status(500).json({ error: assets.error });
-  //   } else {
-  //     return res
-  //       .status(500)
-  //       .json({ error: 'Unexpected response format from getAssets' });
-  //   }
+    let unpricedAssets: UnpricedAsset[] = [];
+    if (Array.isArray(rawAssets)) {
+      unpricedAssets = rawAssets.map((rawAsset: any) => ({
+        ...rawAsset,
+        exchange: rawAsset.exchange ?? '',
+      }));
+    } else if ('error' in rawAssets) {
+      return Response.json({ error: rawAssets.error });
+    } else {
+      return Response.json({
+        error:
+          'Unexpected response format from getAssets. Check if it is an array.',
+      });
+    }
 
-  //   const result = await fetchAssetsWithPrices(unpricedAssets);
-  const test = 'Hello World!';
+    const { assets } = await fetchAssetsWithPrices(unpricedAssets);
 
-  return Response.json({ test });
-  // } catch (error) {
-  //   console.error('ERROR:', error);
-  //   return res.json({ error: 'Internal Server Error' });
-  // }
+    const total = assets.reduce(
+      (sum: number, item: any) => sum + item.total,
+      0
+    );
+    const btc = assets.find((item: any) => item.asset === 'BTC');
+
+    let networthData: netWorthChartData;
+    if (currencyRates.data && btc.price) {
+      networthData = {
+        uid: uid,
+        usdTotal: total,
+        cadTotal: total * currencyRates.data.CAD,
+        brlTotal: total * currencyRates.data.BRL,
+        btcTotal: total / btc.price,
+      };
+    } else {
+      networthData = {
+        uid: uid,
+        usdTotal: 0,
+        cadTotal: 0,
+        brlTotal: 0,
+        btcTotal: 0,
+      };
+    }
+
+    const result = await addNetWorthEvolution(networthData);
+
+    return Response.json({ result });
+  } catch (error) {
+    console.error('ERROR:', error);
+    return Response.json({ error: 'Internal Server Error' });
+  }
 }

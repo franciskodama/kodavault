@@ -117,10 +117,10 @@ export type totalArrayProps = {
   emoji: string;
 };
 
-export type ChartData = {
+export type netWorthChartData = {
   id?: string;
+  created_at?: Date | string;
   uid: string;
-  created_at?: Date;
   usdTotal: number;
   cadTotal: number;
   brlTotal: number;

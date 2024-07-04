@@ -6,7 +6,12 @@ import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { currencyFormatter } from '@/lib/utils';
-import { Asset, AssetsByType, ChartData, CurrencyData } from '@/lib/types';
+import {
+  Asset,
+  AssetsByType,
+  netWorthChartData,
+  CurrencyData,
+} from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
 import { use } from 'react';
@@ -18,13 +23,13 @@ export default function Dashboard({
   assets,
   assetsByType,
   btcPrice,
-}: // chartData,
-{
+  netWorthChartData,
+}: {
   currencyRates: CurrencyData;
   assets: Asset[];
   assetsByType: AssetsByType;
   btcPrice: number;
-  // chartData: ChartData;
+  netWorthChartData: netWorthChartData[];
 }) {
   return (
     <>
@@ -106,7 +111,7 @@ export default function Dashboard({
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
-                {/* <NetWorthEvolutionChart chartData={chartData} /> */}
+                <NetWorthEvolutionChart netWorthChartData={netWorthChartData} />
               </div>
             </div>
 

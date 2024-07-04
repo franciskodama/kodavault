@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ChartData } from '@/lib/types';
+import { netWorthChartData } from '@/lib/types';
 import {
   LineChart,
   Line,
@@ -22,10 +22,12 @@ import {
 // https://recharts.org/en-US/guide/getting-started
 
 export default function NetWorthEvolutionChart({
-  chartData,
+  netWorthChartData,
 }: {
-  chartData: ChartData[];
+  netWorthChartData: netWorthChartData[];
 }) {
+  console.log('---  🚀 ---> | netWorthChartData from end:', netWorthChartData);
+
   return (
     <>
       <Card className='w-full'>
@@ -45,7 +47,7 @@ export default function NetWorthEvolutionChart({
                 <LineChart
                   width={1000}
                   height={300}
-                  // data={chartData}
+                  data={netWorthChartData}
                   margin={{
                     top: 5,
                     right: 30,
@@ -53,23 +55,29 @@ export default function NetWorthEvolutionChart({
                     bottom: 5,
                   }}
                 >
-                  {/* <CartesianGrid strokeDasharray='3 3' /> */}
+                  <CartesianGrid strokeDasharray='3 3' />
                   <XAxis dataKey='created_at' />
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  {/* <Line
-                    type='monotone'
-                    dataKey='visit'
-                    stroke='#8884d8'
-                    strokeDasharray='5 5'
-                  /> */}
                   <Line
                     type='monotone'
-                    dataKey='click'
-                    stroke='#82ca9d'
-                    strokeDasharray='3 4 5 2'
+                    dataKey='usdTotal'
+                    stroke='#0c00f8'
+                    // strokeDasharray='5 5'
                   />
+                  <Line
+                    type='monotone'
+                    dataKey='cadTotal'
+                    stroke='#ff0000'
+                    // strokeDasharray='3 4 5 2'
+                  />
+                  {/* <Line
+                    type='monotone'
+                    dataKey='brlTotal'
+                    stroke='#00ff2f'
+                    strokeDasharray='3 4 5 2'
+                  /> */}
                 </LineChart>
               </div>
             </CardContent>
