@@ -7,7 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ChartData } from '@/lib/types';
+import { netWorthChartData } from '@/lib/types';
+import { dateFormatter } from '@/lib/utils';
 import {
   LineChart,
   Line,
@@ -19,13 +20,22 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-// https://recharts.org/en-US/guide/getting-started
+// https://recharts.org/en-US/api/LineChart
 
 export default function NetWorthEvolutionChart({
-  chartData,
+  netWorthChartData,
 }: {
-  chartData: ChartData[];
+  netWorthChartData: netWorthChartData[];
 }) {
+  const formattedData = netWorthChartData.map((item: netWorthChartData) => ({
+    ...item,
+    created_at: dateFormatter(item.created_at),
+    USD: item.usdTotal,
+    CAD: item.cadTotal,
+    BRL: item.brlTotal,
+    BTC: item.btcTotal * 100000,
+  }));
+
   return (
     <>
       <Card className='w-full'>
@@ -44,8 +54,8 @@ export default function NetWorthEvolutionChart({
               <div className='w-full p-8'>
                 <LineChart
                   width={1000}
-                  height={300}
-                  // data={chartData}
+                  height={365}
+                  data={formattedData}
                   margin={{
                     top: 5,
                     right: 30,
@@ -53,22 +63,43 @@ export default function NetWorthEvolutionChart({
                     bottom: 5,
                   }}
                 >
-                  {/* <CartesianGrid strokeDasharray='3 3' /> */}
-                  <XAxis dataKey='created_at' />
-                  <YAxis />
+                  <CartesianGrid strokeDasharray='3 3' />
+                  <XAxis tickSize={6} dataKey='created_at' />
+                  <YAxis domain={[0, 'auto']} tickCount={10} />
                   <Tooltip />
-                  <Legend />
-                  {/* <Line
-                    type='monotone'
-                    dataKey='visit'
-                    stroke='#8884d8'
-                    strokeDasharray='5 5'
-                  /> */}
+                  <Legend
+                    // width={1000}
+                    wrapperStyle={{
+                      bottom: -20,
+                      right: 0,
+                    }}
+                  />
                   <Line
                     type='monotone'
-                    dataKey='click'
-                    stroke='#82ca9d'
-                    strokeDasharray='3 4 5 2'
+                    dataKey='USD'
+                    stroke='#0c00f8'
+                    // strokeDasharray='5 5'
+                  />
+                  <Line
+                    type='monotone'
+                    dataKey='CAD'
+                    stroke='#ff0000'
+                    // strokeDasharray='3 4 5 2'
+                  />
+                  <Line
+                    type='monotone'
+                    dataKey='BRL'
+                    stroke='#00ff2f'
+                    // strokeDasharray='3 4 5 2'
+                  />
+                  <Line
+                    type='monotone'
+                    dataKey='BTC'
+                    stroke='#ff5e00'
+                    // strokeDasharray='3 4 5 2'
+                  />
+                  <Tooltip
+                    wrapperStyle={{ width: 100, backgroundColor: '#ccc' }}
                   />
                 </LineChart>
               </div>
@@ -79,3 +110,27 @@ export default function NetWorthEvolutionChart({
     </>
   );
 }
+
+// const renderCustomAxisTick = ({ x, y, payload }) => {
+//   let emoji = '';
+
+//   switch (payload.value) {
+//     case 'USD':
+//       emoji = '🇺🇸';
+//       break;
+//     case 'CAD':
+//       emoji = '🇨🇦';
+//       break;
+//     case 'BRL':
+//       emoji = '🇧🇷';
+//       break;
+//     case 'BTC':
+//       emoji = '🥇';
+//       break;
+
+//     default:
+//       emoji = '';
+//   }
+
+//   return <div>{emoji}</div>;
+// };

@@ -1,7 +1,12 @@
 'use server';
 
 import prisma from './prisma';
-import { ChartData, CryptoGoalAllocation, Inputs, ShortcutType } from './types';
+import {
+  netWorthChartData,
+  CryptoGoalAllocation,
+  Inputs,
+  ShortcutType,
+} from './types';
 import { revalidatePath } from 'next/cache';
 import { v4 } from 'uuid';
 
@@ -232,8 +237,10 @@ export async function deleteShortcut(id: string) {
   }
 }
 
-export async function addNetWorthEvolution(chartData: ChartData) {
-  const { uid, usdTotal, cadTotal, brlTotal, btcTotal } = chartData;
+export async function addNetWorthEvolution(
+  netWorthChartData: netWorthChartData
+) {
+  const { uid, usdTotal, cadTotal, brlTotal, btcTotal } = netWorthChartData;
 
   try {
     await prisma.netWorthEvolution.create({
@@ -249,7 +256,7 @@ export async function addNetWorthEvolution(chartData: ChartData) {
     });
     return true;
   } catch (error) {
-    console.log(error);
+    console.log('Error in addNetWorthEvolution:', error);
     return false;
   }
 }
@@ -268,4 +275,3 @@ export const getNetWorthEvolution = async (uid: string) => {
 };
 
 // “It's kind of fun to do the impossible.” - Walt Disney
-

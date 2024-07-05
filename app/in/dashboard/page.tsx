@@ -4,8 +4,9 @@ import { currentUser } from '@clerk/nextjs';
 
 import { getCurrency } from '@/lib/currency.server';
 import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
-import { ChartData } from '@/lib/types';
-import { addNetWorthEvolution, getNetWorthEvolution } from '@/lib/actions';
+import { netWorthChartData } from '@/lib/types';
+import { getNetWorthEvolution } from '@/lib/actions';
+import { dateFormatter } from '@/lib/utils';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -15,25 +16,35 @@ export default async function DashboardPage() {
   const unpricedAssets = await fetchAssets(uid ? uid : '');
   const { assets, assetsByType } = await fetchAssetsWithPrices(unpricedAssets);
 
-  const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
   const btcPrice = Number(
     assetsByType.Crypto.find((item: any) => item.asset === 'BTC')?.price
   );
 
-  let chartData: ChartData | null = null;
-  if (uid && currencyRates.data && btcPrice) {
-    chartData = {
-      uid,
-      usdTotal: total,
-      cadTotal: total * currencyRates.data.CAD,
-      brlTotal: total * currencyRates.data.BRL,
-      btcTotal: total / btcPrice,
-    };
-    await addNetWorthEvolution(chartData);
-  }
+  const rawNetWorthChartData = await getNetWorthEvolution(uid ? uid : '');
 
-  const netWorthEvolutionArray = await getNetWorthEvolution(uid ? uid : '');
-  console.log('---  🚀 ---> | netWorthEvolutionArray:', netWorthEvolutionArray);
+  let netWorthChartData: netWorthChartData[] = [];
+  if (!('error' in rawNetWorthChartData)) {
+    netWorthChartData = rawNetWorthChartData.map((item: any) => ({
+      id: item.id,
+      created_at: item.created_at,
+      uid: item.uid,
+      usdTotal: item.usd_total,
+      cadTotal: item.cad_total,
+      brlTotal: item.brl_total,
+      btcTotal: item.btc_total,
+    }));
+  } else {
+    console.error(
+      'Error fetching Net Worth Evolution data:',
+      rawNetWorthChartData.error
+    );
+  }
+  const sortedNetWorthChartData: netWorthChartData[] = netWorthChartData
+    .filter(
+      (item): item is netWorthChartData & { created_at: Date } =>
+        item.created_at !== undefined
+    )
+    .sort((a, b) => a.created_at.getTime() - b.created_at.getTime());
 
   return (
     <>
@@ -43,7 +54,7 @@ export default async function DashboardPage() {
           assets={assets}
           assetsByType={assetsByType}
           btcPrice={btcPrice}
-          // chartData={netWorthEvolutionArray}
+          netWorthChartData={sortedNetWorthChartData}
         />
       )}
     </>

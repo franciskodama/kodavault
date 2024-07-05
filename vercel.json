@@ -1,12 +1,8 @@
 {
   "crons": [
     {
-      "path": "/api/cron",
-      "schedule": "0 3 * * *"
-    },
-    {
-      "path": "/api/cron-test",
-      "schedule": "0 5 * * *"
+      "path": "/api/cron-networth-evolution",
+      "schedule": "0 23 * * *"
     }
   ]
 }
