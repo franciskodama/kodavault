@@ -8,7 +8,11 @@ import { authMiddleware } from '@clerk/nextjs';
 // https://clerk.com/docs/references/nextjs/auth-middleware
 
 export default authMiddleware({
-  publicRoutes: ['/', '/in/dashboard', '/api/cron-networth-evolution'],
+  publicRoutes: [
+    '/',
+    // '/in/dashboard',
+    '/api/cron-networth-evolution',
+  ],
 });
 
 export const config = {
