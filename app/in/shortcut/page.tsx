@@ -1,7 +1,7 @@
 import { getShortcuts } from '@/lib/actions';
-import { currentUser } from '@clerk/nextjs';
 import { Shortcut } from './shortcut';
 import { ShortcutType } from '@/lib/types';
+import { currentUser } from '@clerk/nextjs/server';
 
 export default async function ShortcutPage() {
   const user = await currentUser();

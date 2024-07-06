@@ -1,12 +1,11 @@
 import Dashboard from './dashboard';
 
-import { currentUser } from '@clerk/nextjs';
-
 import { getCurrency } from '@/lib/currency.server';
 import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
 import { netWorthChartData } from '@/lib/types';
 import { getNetWorthEvolution } from '@/lib/actions';
 import { dateFormatter } from '@/lib/utils';
+import { currentUser } from '@clerk/nextjs/server';
 
 export default async function DashboardPage() {
   const user = await currentUser();
