@@ -5,6 +5,8 @@ import { getCurrency } from '@/lib/currency.server';
 import { netWorthChartData, UnpricedAsset } from '@/lib/types';
 
 export async function GET() {
+  console.log('Cron job triggered');
+
   const uid: string = process.env.NEXT_PUBLIC_MY_UID ?? '';
 
   if (!uid) {
@@ -59,7 +61,7 @@ export async function GET() {
 
     const result = await addNetWorthEvolution(networthData);
 
-    return Response.json({ result });
+    return Response.json({ message: 'Cron job executed successfully' });
   } catch (error) {
     console.error('ERROR:', error);
     return Response.json({ error: 'Internal Server Error' });
