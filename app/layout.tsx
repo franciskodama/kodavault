@@ -25,8 +25,6 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider
-      afterSignInUrl='/in/dashboard'
-      afterSignUpUrl='/'
       appearance={{
         elements: {
           logoBox: 'hidden',
