@@ -31,6 +31,18 @@ export default function Dashboard({
   btcPrice: number;
   netWorthChartData: netWorthChartData[];
 }) {
+  const nowUTC = new Date();
+  const year = nowUTC.getUTCFullYear();
+  const month = String(nowUTC.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(nowUTC.getUTCDate()).padStart(2, '0');
+  const hours = String(nowUTC.getUTCHours()).padStart(2, '0');
+  const minutes = String(nowUTC.getUTCMinutes()).padStart(2, '0');
+  const seconds = String(nowUTC.getUTCSeconds()).padStart(2, '0');
+
+  const formattedUTC = `${year}-${month}-${day} ${hours}:${minutes}:${seconds} UTC`;
+
+  console.log(formattedUTC);
+
   return (
     <>
       {assets.length > 0 && assetsByType && (
