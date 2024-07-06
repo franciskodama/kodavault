@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/cron-networth-evolution",
-      "schedule": "0 10 * * *"
+      "schedule": "32 14 * * *"
     }
   ]
 }
