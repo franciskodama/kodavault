@@ -22,7 +22,7 @@ export const fetchAssets = async (userEmail: string) => {
 export const fetchAssetsWithPrices = async (
   unpricedAssets: UnpricedAsset[]
 ) => {
-  const assetsGroupedByType = groupAssetsByType(unpricedAssets);
+  const assetsGroupedByType = groupAssetsBySomething(unpricedAssets, 'type');
 
   const [cryptoAssetsWithPrice, cashAssetsWithPrice, stockAssetsWithPrice] =
     await Promise.all([
@@ -63,11 +63,11 @@ export const fetchAssetsWithPrices = async (
   return result;
 };
 
-export const groupAssetsByType = (assets: Asset[]) => {
+export const groupAssetsBySomething = (assets: Asset[], something: string) => {
   return assets.reduce((groupedAssets: any, asset: any) => {
-    const type = asset.type;
-    if (!groupedAssets[type]) groupedAssets[type] = [];
-    groupedAssets[type].push(asset);
+    const somethingKey = asset[something];
+    if (!groupedAssets[somethingKey]) groupedAssets[somethingKey] = [];
+    groupedAssets[somethingKey].push(asset);
 
     return groupedAssets;
   }, {});

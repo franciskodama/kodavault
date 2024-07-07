@@ -1,4 +1,8 @@
-import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
+import {
+  category_enum_f421eb4b,
+  color_enum_bd2ecc46,
+  purpose_enum_ceee32b0,
+} from '@prisma/client';
 
 export type UnpricedAsset = {
   id: string;
@@ -15,6 +19,7 @@ export type UnpricedAsset = {
   crypto?: string;
   stock?: string;
   cash?: string;
+  purpose?: purpose_enum_ceee32b0;
 };
 
 export type Asset =
@@ -77,6 +82,7 @@ export type Inputs = {
   currency: string;
   exchange: string;
   account: string;
+  purpose: purpose_enum_ceee32b0 | null;
 };
 
 export type CryptoGoals = {

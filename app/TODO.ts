@@ -18,7 +18,15 @@
 // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
 // TODO: Resistences and Supports?
 
+// ERROS:
+// TODO: On Update Asset: we need to correct the format of the number (decimals, commas and dots)
+// TODO: Context
+// TODO: Reload when we update an asset
+
 // PRIORITIES 1:
+// TODO: Crypto For Trading
+// TODO: Assets to be aware of: for position trade checking RSI and other indicators (ie.: DOL, GLXY...)
+
 // TODO: Hello, Francis! Greetings on Header
 // TODO: Stocks by Currency (BRL, CAD, USD)
 // TODO: Stocks by Location (BR, CA)
@@ -56,6 +64,9 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE ========================================================================================
+// TODO: Created Purpose Property in the Assets Page
+// TODO: Chart of Net Worth Evolution on Dashboard
+// TODO: Cron Job for the Net Worth Evolution Chart
 // TODO: Table Alignment in the Assets Page
 // TODO: Q.ETH is USD and there is the possibility only to set it in CAD
 // TODO: Fix bug Assets Page: resilience if the coin is not found

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { updateAsset } from '@/lib/actions';
 import { Button } from './ui/button';
@@ -17,6 +17,7 @@ import {
   getExchange,
   getWallet,
   subtypeOptions,
+  purposeOptions,
 } from '@/lib/assets-form';
 
 export function UpdateAssetForm({ asset }: { asset: Asset }) {
@@ -43,6 +44,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       currency: asset?.currency,
       exchange: asset?.exchange,
       account: asset?.account,
+      purpose: asset?.purpose,
     },
   });
 
@@ -139,6 +141,26 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
             {errors.qty?.message && (
               <p className={classError}>{errors.qty.message}</p>
             )}
+          </div>
+
+          <div className={classDiv}>
+            <h3 className={classTitle}>Purpose</h3>
+            <ul className={classUl}>
+              {purposeOptions.map((purposeOption) => (
+                <li key={purposeOption}>
+                  <input
+                    className='hidden peer'
+                    type='radio'
+                    value={purposeOption}
+                    id={purposeOption}
+                    {...register('purpose')}
+                  />
+                  <label className={classLabelRadio} htmlFor={purposeOption}>
+                    <span>{purposeOption}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className={classDiv}>

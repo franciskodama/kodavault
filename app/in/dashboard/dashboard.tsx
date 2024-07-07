@@ -1,10 +1,8 @@
 'use client';
 
 import { CardTotal } from '@/components/CardTotal';
-import Transactions from './transactions/transactions';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
-import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { currencyFormatter } from '@/lib/utils';
 import {
   Asset,
@@ -12,11 +10,8 @@ import {
   netWorthChartData,
   CurrencyData,
 } from '@/lib/types';
-import { useAssetsContext } from '@/context/AssetsContext';
-import { CardKeyAssets } from '@/components/CardKeyAssets';
-import { use } from 'react';
-import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
 import NetWorthEvolutionChart from './charts/net-worth-evolution';
+import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 
 export default function Dashboard({
   currencyRates,
@@ -32,17 +27,17 @@ export default function Dashboard({
   netWorthChartData: netWorthChartData[];
 }) {
   // -------------------- DEBUG -----------------------------------------
-  const nowUTC = new Date();
-  const year = nowUTC.getUTCFullYear();
-  const month = String(nowUTC.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
-  const day = String(nowUTC.getUTCDate()).padStart(2, '0');
-  const hours = String(nowUTC.getUTCHours()).padStart(2, '0');
-  const minutes = String(nowUTC.getUTCMinutes()).padStart(2, '0');
-  const seconds = String(nowUTC.getUTCSeconds()).padStart(2, '0');
+  // const nowUTC = new Date();
+  // const year = nowUTC.getUTCFullYear();
+  // const month = String(nowUTC.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+  // const day = String(nowUTC.getUTCDate()).padStart(2, '0');
+  // const hours = String(nowUTC.getUTCHours()).padStart(2, '0');
+  // const minutes = String(nowUTC.getUTCMinutes()).padStart(2, '0');
+  // const seconds = String(nowUTC.getUTCSeconds()).padStart(2, '0');
 
-  const formattedUTC = `${year}-${month}-${day} ${hours}:${minutes}:${seconds} UTC`;
+  // const formattedUTC = `${year}-${month}-${day} ${hours}:${minutes}:${seconds} UTC`;
 
-  console.log(formattedUTC);
+  // console.log(formattedUTC);
   // -------------------- -----------------------------------------
 
   return (
@@ -139,7 +134,8 @@ export default function Dashboard({
 
               <div className='mb-2'>
                 {/* <CardNextPurchases /> */}
-                <CardAssetsOnTheRise />
+                {/* <CardAssetsOnTheRise /> */}
+                <CardCryptosForTrading assets={assets} />
               </div>
 
               <Notifications />
