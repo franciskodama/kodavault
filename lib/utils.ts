@@ -1,6 +1,7 @@
 // ---------------------------------------------------------------------------
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { Asset } from './types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -96,3 +97,13 @@ export const getTotalByKey = (assets: any[], key: string): ResultProps[] => {
 };
 
 // ---------------------------------------------------------------------------
+
+export const groupAssetsBySomething = (assets: Asset[], something: string) => {
+  return assets.reduce((groupedAssets: any, asset: any) => {
+    const somethingKey = asset[something];
+    if (!groupedAssets[somethingKey]) groupedAssets[somethingKey] = [];
+    groupedAssets[somethingKey].push(asset);
+
+    return groupedAssets;
+  }, {});
+};

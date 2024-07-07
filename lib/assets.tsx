@@ -7,7 +7,7 @@ import {
   includePriceToStockAssets,
 } from './prices';
 import { Asset, UnpricedAsset } from './types';
-import { includeNewKeyForCardTitle } from './utils';
+import { groupAssetsBySomething, includeNewKeyForCardTitle } from './utils';
 
 export const fetchAssets = async (userEmail: string) => {
   const assetData = await getAssets(userEmail);
@@ -61,14 +61,4 @@ export const fetchAssetsWithPrices = async (
   };
 
   return result;
-};
-
-export const groupAssetsBySomething = (assets: Asset[], something: string) => {
-  return assets.reduce((groupedAssets: any, asset: any) => {
-    const somethingKey = asset[something];
-    if (!groupedAssets[somethingKey]) groupedAssets[somethingKey] = [];
-    groupedAssets[somethingKey].push(asset);
-
-    return groupedAssets;
-  }, {});
 };
