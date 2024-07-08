@@ -17,8 +17,8 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
   const assetsForTrading = groupAssetsBySomething(assets, 'purpose');
   const tradingAssets = assetsForTrading.Trade;
 
-  console.log('---  🚀 ---> | assets:', assets);
-  console.log('---  🚀 ---> | tradingAssets:', tradingAssets[0].wallet);
+  // console.log('---  🚀 ---> | assets:', assets);
+  // console.log('---  🚀 ---> | tradingAssets:', tradingAssets[0].wallet);
 
   const total = tradingAssets.reduce(
     (sum: number, item: any) => sum + item.total,
