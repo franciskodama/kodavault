@@ -4,8 +4,8 @@ import { getCurrency } from '@/lib/currency.server';
 import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
 import { netWorthChartData } from '@/lib/types';
 import { getNetWorthEvolution } from '@/lib/actions';
-import { dateFormatter } from '@/lib/utils';
 import { currentUser } from '@clerk/nextjs/server';
+import { Loading } from '@/components/Loading';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -47,14 +47,19 @@ export default async function DashboardPage() {
 
   return (
     <>
-      {currencyRates && assets && assetsByType && (
-        <Dashboard
-          currencyRates={currencyRates}
-          assets={assets}
-          assetsByType={assetsByType}
-          btcPrice={btcPrice}
-          netWorthChartData={sortedNetWorthChartData}
-        />
+      {currencyRates ? (
+        assets &&
+        assetsByType && (
+          <Dashboard
+            currencyRates={currencyRates}
+            assets={assets}
+            assetsByType={assetsByType}
+            btcPrice={btcPrice}
+            netWorthChartData={sortedNetWorthChartData}
+          />
+        )
+      ) : (
+        <Loading />
       )}
     </>
   );

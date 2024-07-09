@@ -28,7 +28,6 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
 
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
-
   const refreshAssets = async () => {
     try {
       if (uid) {

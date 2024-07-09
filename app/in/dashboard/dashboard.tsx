@@ -26,6 +26,7 @@ export default function Dashboard({
   btcPrice: number;
   netWorthChartData: netWorthChartData[];
 }) {
+  console.log('---  🚀 ---> | assetsByType:', assetsByType);
   return (
     <>
       {assets.length > 0 && assetsByType && (
