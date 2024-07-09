@@ -12,6 +12,8 @@ export const subtypeOptions = [
   'Cash-BRL',
 ];
 
+export const purposeOptions = ['Trade', 'Investment'];
+
 export const getType = (subtype: string) => {
   switch (subtype) {
     case 'BTC':

@@ -55,9 +55,7 @@ export const CardAssetsOnTheRise = () => {
         </div>
         <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
           <h3>Total</h3>
-          {numberFormatterNoDecimals.format(
-            nextPurchases.reduce((sum: number, item) => sum + item.total, 0)
-          )}
+          {numberFormatterNoDecimals.format(total)}
         </CardFooter>
       </div>
     </Card>

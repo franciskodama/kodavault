@@ -58,6 +58,7 @@ export async function updateAsset(formData: Inputs) {
     exchange,
     account,
     uid,
+    purpose,
   } = formData;
 
   try {
@@ -77,6 +78,7 @@ export async function updateAsset(formData: Inputs) {
         currency,
         account,
         exchange,
+        purpose,
       },
     });
     return true;
@@ -273,5 +275,3 @@ export const getNetWorthEvolution = async (uid: string) => {
     return { error };
   }
 };
-
-// “It's kind of fun to do the impossible.” - Walt Disney

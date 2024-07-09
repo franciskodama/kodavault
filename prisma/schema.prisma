@@ -99,16 +99,17 @@ model applicant_tracking_system {
 
 model Asset {
   asset      String
-  qty        Float    @default(0)
+  qty        Float                  @default(0)
   wallet     String
   type       String
   uid        String
   subtype    String
   currency   String
   account    String
-  exchange   String?  @default("null")
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  id         String   @id(map: "Asset_pkey1") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  exchange   String?                @default("null")
+  created_at DateTime               @default(now()) @db.Timestamptz(6)
+  id         String                 @id(map: "Asset_pkey1") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  purpose    purpose_enum_ceee32b0? @default(Investment)
 }
 
 model CoinGoal {
@@ -167,4 +168,9 @@ enum color_enum_bd2ecc46 {
   black
   gray
   pink
+}
+
+enum purpose_enum_ceee32b0 {
+  Investment
+  Trade
 }
