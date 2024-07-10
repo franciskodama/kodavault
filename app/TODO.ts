@@ -15,7 +15,6 @@
 // TODO: What appears on SELL and BUY because of the goal, need to appear in the next purchases card
 
 //------------------------------------------
-// TODO: Fear and Greed
 // TODO: BTC Dominance
 // TODO: Altseason Indicators
 // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
@@ -62,14 +61,16 @@
 // TODO: Search Asset
 
 // BACKLOG:
-
 // TODO: If there is cash on TFSA or HFSA, show it on the card or send a alert
 // TODO: think about other alerts
 // TODO: Card with link of Data Analysis to check on the daily basis (Obdisian)
 // ----------------------------------------------------------------------------------------------
 
-// DONE ========================================================================================
+// DONE =======================================================================================
+// TODO: Greetings
+// TODO: Fear and Greed
 // TODO: Created Purpose Property in the Assets Page
+// TODO: API Refactoring Crypto
 // TODO: Chart of Net Worth Evolution on Dashboard
 // TODO: Cron Job for the Net Worth Evolution Chart
 // TODO: Table Alignment in the Assets Page
