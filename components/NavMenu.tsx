@@ -107,25 +107,3 @@ export default function NavMenu() {
     </>
   );
 }
-
-const getGreeting = (name: string) => {
-  const chosen = Math.random();
-  switch (true) {
-    case chosen > 1 / 2:
-      return `Hi ${name}`;
-    case chosen > 1 / 4:
-      return `Hello ${name}`;
-    case chosen > 1 / 8:
-      return `Hey ${name}`;
-    case chosen > 1 / 16:
-      return `👋 ${name}`;
-    case chosen > 1 / 32:
-      return `Yo! ${name}!`;
-    case chosen > 1 / 64:
-      return `Sup ${name}`;
-    case chosen > 1 / 128:
-      return `Ahoy ${name}`;
-    default:
-      return `Lookin' 🔥 ${name}`;
-  }
-};

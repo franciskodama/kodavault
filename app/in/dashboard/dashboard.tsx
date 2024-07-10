@@ -125,6 +125,7 @@ export default function Dashboard({
                 <CardCryptosForTrading assets={assets} />
               </div>
 
+              {/* If we need: https://rapidapi.com/rpi4gx/api/fear-and-greed-index/playground/apiendpoint_042f2700-015a-41a9-aa6b-6c87dd95da0c */}
               <div className='rounded-sm border shadow-sm mb-2'>
                 <Image
                   src='https://alternative.me/crypto/fear-and-greed-index.png'
