@@ -32,7 +32,7 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
-                <span>Assets for Trading</span>
+                <span>Cryptos for Trading</span>
                 <span className='text-3xl'>🛒</span>
               </CardTitle>
               <CardDescription className='text-xs'>

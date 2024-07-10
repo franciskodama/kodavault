@@ -12,6 +12,7 @@ import {
 } from '@/lib/types';
 import NetWorthEvolutionChart from './charts/net-worth-evolution';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
+import Image from 'next/image';
 
 export default function Dashboard({
   currencyRates,
@@ -122,6 +123,12 @@ export default function Dashboard({
                 {/* <CardNextPurchases /> */}
                 {/* <CardAssetsOnTheRise /> */}
                 <CardCryptosForTrading assets={assets} />
+                <Image
+                  src='https://alternative.me/crypto/fear-and-greed-index.png'
+                  alt='Latest Crypto Fear & Greed Index'
+                  width={300}
+                  height={300}
+                />
               </div>
 
               <Notifications />
