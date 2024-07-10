@@ -26,7 +26,7 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
   );
 
   return (
-    <Card className='w-[22.5em]'>
+    <Card className='w-full'>
       {tradingAssets && (
         <div className='flex flex-col justify-between h-full'>
           <div className='flex flex-col'>
