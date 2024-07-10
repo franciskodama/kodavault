@@ -26,10 +26,9 @@ export default function Dashboard({
   btcPrice: number;
   netWorthChartData: netWorthChartData[];
 }) {
-  console.log('---  🚀 ---> | assetsByType:', assetsByType);
   return (
     <>
-      {assets.length > 0 && assetsByType && (
+      {assets.length && assetsByType && (
         <div className='flex flex-col gap-2'>
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
           <div className='flex justify-end items-center'>

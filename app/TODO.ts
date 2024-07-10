@@ -17,11 +17,13 @@
 //------------------------------------------
 // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
 // TODO: Resistences and Supports?
-
+// TODO: // Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
 // ERROS:
 // TODO: On Update Asset: we need to correct the format of the number (decimals, commas and dots)
 // TODO: Context
 // TODO: Reload when we update an asset
+// ⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() (or the deprecated authMiddleware()). Please ensure the following:
+// -  clerkMiddleware() (or the deprecated authMiddleware()) is used in your Next.js Middleware.
 
 // PRIORITIES 1:
 // TODO: Crypto For Trading

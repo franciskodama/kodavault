@@ -27,7 +27,9 @@ export const fetchCryptoListings = async () => {
   }
 };
 
-export const fetchCryptoQuote = async (symbol: string | null) => {
+export const fetchQuotesForCryptos = async (
+  symbol: string | string[] | null
+) => {
   try {
     const response = await fetch(
       `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=${symbol}`,
