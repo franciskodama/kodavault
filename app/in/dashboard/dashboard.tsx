@@ -123,6 +123,9 @@ export default function Dashboard({
                 {/* <CardNextPurchases /> */}
                 {/* <CardAssetsOnTheRise /> */}
                 <CardCryptosForTrading assets={assets} />
+              </div>
+
+              <div className='rounded-sm border shadow-sm mb-2'>
                 <Image
                   src='https://alternative.me/crypto/fear-and-greed-index.png'
                   alt='Latest Crypto Fear & Greed Index'

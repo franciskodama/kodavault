@@ -13,11 +13,9 @@ import {
 } from './ui/sheet';
 import { AddAssetForm } from './AddAssetForm';
 import { Button } from './ui/button';
-import { useAssetsContext } from '@/context/AssetsContext';
 
 export default function NavMenu() {
   const pathname = usePathname();
-  const { refreshAssets } = useAssetsContext();
 
   return (
     <>
@@ -105,12 +103,29 @@ export default function NavMenu() {
             </SheetContent>
           </Sheet>
         </li>
-        <li>
-          <Button size='md' onClick={refreshAssets} variant={'ghost'}>
-            Refresh Data
-          </Button>
-        </li>
       </ul>
     </>
   );
 }
+
+const getGreeting = (name: string) => {
+  const chosen = Math.random();
+  switch (true) {
+    case chosen > 1 / 2:
+      return `Hi ${name}`;
+    case chosen > 1 / 4:
+      return `Hello ${name}`;
+    case chosen > 1 / 8:
+      return `Hey ${name}`;
+    case chosen > 1 / 16:
+      return `👋 ${name}`;
+    case chosen > 1 / 32:
+      return `Yo! ${name}!`;
+    case chosen > 1 / 64:
+      return `Sup ${name}`;
+    case chosen > 1 / 128:
+      return `Ahoy ${name}`;
+    default:
+      return `Lookin' 🔥 ${name}`;
+  }
+};
