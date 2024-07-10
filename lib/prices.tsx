@@ -1,6 +1,6 @@
 'use server';
 
-import { fetchCryptoQuote } from './crypto.server';
+import { fetchQuotesForCryptos } from './crypto.server';
 import { getCurrency } from './currency.server';
 import { fetchStockPricesFromSheets } from './stock.server';
 import { Asset, CurrencyData, UnpricedAsset } from './types';
@@ -19,39 +19,54 @@ type StockData = {
 export const includePriceToCryptoAssets = async (
   cryptoAssetsArray: UnpricedAsset[]
 ): Promise<Asset[]> => {
-  const transformedAssets = await Promise.all(
-    cryptoAssetsArray.map(async (item: UnpricedAsset) => {
-      const thisCryptoQuote = await fetchCryptoQuote(item.asset);
-      const quote = !thisCryptoQuote.data?.[item.asset][0].quote
-        ? 0
-        : thisCryptoQuote.data?.[item.asset][0].quote.USD.price;
-
-      const total = quote * item.qty;
-
-      const formattedPrice =
-        quote === 0
-          ? 0
-          : Math.floor(quote) > 99
-          ? Number(quote.toFixed(2))
-          : Number(quote.toFixed(4));
-
-      const formattedTotal =
-        Math.floor(total) > 99
-          ? Number(total.toFixed(2))
-          : Number(total.toFixed(4));
-
-      return {
-        ...item,
-        qty: item.qty,
-        price: formattedPrice,
-        total: formattedTotal,
-      };
-    })
+  const symbols = cryptoAssetsArray.reduce(
+    (acc: string[], item: UnpricedAsset) => {
+      acc.push(item.asset);
+      return acc;
+    },
+    []
   );
+
+  const quotes = await fetchQuotesForCryptos(symbols);
+
+  const transformedAssets = cryptoAssetsArray.map((item: UnpricedAsset) => {
+    const foundAsset = getFirstObject(quotes.data, item.asset);
+    const quote = !foundAsset ? 0 : foundAsset.quote.USD.price;
+    const total = quote * item.qty;
+
+    const formattedPrice =
+      quote === 0
+        ? 0
+        : Math.floor(quote) > 99
+        ? Number(quote.toFixed(2))
+        : Number(quote.toFixed(4));
+
+    const formattedTotal =
+      Math.floor(total) > 99
+        ? Number(total.toFixed(2))
+        : Number(total.toFixed(4));
+
+    return {
+      ...item,
+      qty: item.qty,
+      price: formattedPrice,
+      total: formattedTotal,
+    };
+  });
 
   return transformedAssets;
 };
 
+const getFirstObject = (data: any, symbol: string) => {
+  if (
+    data.hasOwnProperty(symbol) &&
+    Array.isArray(data[symbol]) &&
+    data[symbol].length > 0
+  ) {
+    return data[symbol][0];
+  }
+  return null;
+};
 // ------------ History of includePriceToStockAssets fuction ------------
 // This piece of code was written to use APIs, but they didn't give us for free the symbols we need (Canadian and Brazilian stocks).
 // So, as the APIs asks for upgrade, we created a spreadsheet using Google Finance Formulas that needs to be updated manually
@@ -72,7 +87,6 @@ export const includePriceToStockAssets = async (
   });
   const symbolsToMakeACall = symbolAndExchange.toString();
   const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');
-  // const result = await fetchHardcodedStockPrices(symbolsToMakeACall);
 
   let stockPrices: StockData = { body: [] };
   let result: StockData = await fetchStockPricesFromSheets();
@@ -86,13 +100,11 @@ export const includePriceToStockAssets = async (
       });
     });
     result = stockPrices;
-    // console.log('---  🚀 ---> | result:', result);
   }
 
   const missingSymbols = symbolsToCheckResultFromTheCall.filter(
     (item) => !result.body!.find((el: StockQuote) => el.symbol === item)
   );
-  // console.log('---  🚀 ---> | missingSymbols:', missingSymbols);
 
   missingSymbols.map((item: any) =>
     result.body!.push({
