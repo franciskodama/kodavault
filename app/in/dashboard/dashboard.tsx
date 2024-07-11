@@ -109,6 +109,23 @@ export default function Dashboard({
               <div className='flex'>
                 <NetWorthEvolutionChart netWorthChartData={netWorthChartData} />
               </div>
+
+              {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
+              <div className='flex flex-wrap gap-2'>
+                {/* <div className='w-1/3 bg-slate-600 border-2' /> */}
+                <CardTotal
+                  emoji={'🧺'}
+                  description={'Total value grouped by wallet'}
+                  assets={assets}
+                  customKey={'wallet'}
+                />
+                <CardTotal
+                  emoji={'🗂️'}
+                  description={'Total value grouped by subtype'}
+                  assets={assets}
+                  customKey={'subtype'}
+                />
+              </div>
             </div>
 
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
@@ -137,23 +154,6 @@ export default function Dashboard({
 
               <Notifications />
             </div>
-          </div>
-
-          {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
-          <div className='flex flex-wrap gap-2'>
-            {/* <div className='w-1/3 bg-slate-600 border-2' /> */}
-            <CardTotal
-              emoji={'🧺'}
-              description={'Total value grouped by wallet'}
-              assets={assets}
-              customKey={'wallet'}
-            />
-            <CardTotal
-              emoji={'🗂️'}
-              description={'Total value grouped by subtype'}
-              assets={assets}
-              customKey={'subtype'}
-            />
           </div>
         </div>
       )}
