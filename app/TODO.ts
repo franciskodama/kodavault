@@ -31,7 +31,6 @@
 // TODO: Crypto For Trading
 // TODO: Assets to be aware of: for position trade checking RSI and other indicators (ie.: DOL, GLXY...)
 
-// TODO: Hello, Francis! Greetings on Header
 // TODO: Stocks by Currency (BRL, CAD, USD)
 // TODO: Stocks by Location (BR, CA)
 // TODO: DJT in the Dashboard
@@ -67,10 +66,10 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
-// TODO: Greetings
+// TODO: Hello, Francis! Greetings on Header
 // TODO: Fear and Greed
 // TODO: Created Purpose Property in the Assets Page
-// TODO: API Refactoring Crypto
+// TODO: API Refactoring Crypto for one call
 // TODO: Chart of Net Worth Evolution on Dashboard
 // TODO: Cron Job for the Net Worth Evolution Chart
 // TODO: Table Alignment in the Assets Page
