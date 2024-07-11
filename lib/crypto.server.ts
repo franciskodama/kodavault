@@ -84,3 +84,22 @@ export const getAllTimeHighData = async () => {
     console.error('Error fetching data:', error);
   }
 };
+
+export const getGlobalData = async () => {
+  try {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+      },
+    };
+
+    const response = fetch(
+      `https://pro-api.coingecko.com/api/v3/global?x_cg_pro_api_key=${process.env.NEXT_PUBLIC_COINGECKO_KEY}`,
+      options
+    ).then((res) => res.json());
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
