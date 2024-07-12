@@ -87,15 +87,22 @@ export const getAllTimeHighData = async () => {
 
 export const getGlobalData = async () => {
   try {
-    const options = {
+    const apiKeyCoinGecko = process.env.NEXT_PUBLIC_COINGECKO_KEY;
+
+    if (!apiKeyCoinGecko) {
+      throw new Error('API key is missing');
+    }
+
+    const options: RequestInit = {
       method: 'GET',
       headers: {
         accept: 'application/json',
+        'x-cg-pro-api-key': apiKeyCoinGecko,
       },
     };
 
     const response = fetch(
-      `https://pro-api.coingecko.com/api/v3/global?x_cg_pro_api_key=${process.env.NEXT_PUBLIC_COINGECKO_KEY}`,
+      `https://pro-api.coingecko.com/api/v3/global`,
       options
     ).then((res) => res.json());
     return response;
