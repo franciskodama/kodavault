@@ -16,8 +16,8 @@ export default async function DashboardPage() {
   // const quotes = await fetchQuotesForCryptos('BTC');
   // console.log('---  🚀 ---> | quotes:', quotes.data['BTC'][0].tags);
 
-  const globalData = await getGlobalData();
-  console.log('---  🚀 ---> | globalData:', globalData);
+  // const globalData = await getGlobalData();
+  // console.log('---  🚀 ---> | globalData:', globalData);
 
   // ==========================================
 
