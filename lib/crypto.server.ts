@@ -102,7 +102,7 @@ export const getGlobalData = async () => {
     };
 
     const response = fetch(
-      `https://pro-api.coingecko.com/api/v3/global`,
+      `https://api.coingecko.com/api/v3/global`,
       options
     ).then((res) => res.json());
     return response;

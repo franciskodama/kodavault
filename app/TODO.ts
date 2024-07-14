@@ -20,6 +20,7 @@
 // TODO: BTC Dominance
 // TODO: Altseason Indicators
 // TODO: DJT in the Dashboard
+
 // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
 // TODO: Resistences and Supports?
 // TODO: // Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)

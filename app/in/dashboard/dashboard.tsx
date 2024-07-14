@@ -13,6 +13,7 @@ import {
 import NetWorthEvolutionChart from './charts/net-worth-evolution';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import Image from 'next/image';
+import Script from 'next/script';
 
 export default function Dashboard({
   currencyRates,
@@ -20,12 +21,14 @@ export default function Dashboard({
   assetsByType,
   btcPrice,
   netWorthChartData,
+  uid,
 }: {
   currencyRates: CurrencyData;
   assets: Asset[];
   assetsByType: AssetsByType;
   btcPrice: number;
   netWorthChartData: netWorthChartData[];
+  uid: string;
 }) {
   return (
     <>
@@ -73,9 +76,13 @@ export default function Dashboard({
               <div>{`< 50%`}</div>
             </div>
           </div>
-
+          {/* <div className='h-[5em] border-2'>
+            <Script
+              src='https://widget.coincodex.com/include.js?type=4&ticker=top10&period=1D&textColor=000000&borderColor=dddddd&backgroundColor=ffffff&hoverColor=transparent&currency=USD&range=1D'
+              strategy='lazyOnload'
+            />
+          </div> */}
           {/* -------- 1st Row Cards --------------------------------------------------------------------------------------- */}
-
           <div className='flex gap-2'>
             <div className='flex flex-col basis-4/5 gap-2'>
               <div className='flex flex-wrap gap-2'>
@@ -142,7 +149,6 @@ export default function Dashboard({
                 <CardCryptosForTrading assets={assets} />
               </div>
 
-              {/* If we need: https://rapidapi.com/rpi4gx/api/fear-and-greed-index/playground/apiendpoint_042f2700-015a-41a9-aa6b-6c87dd95da0c */}
               <div className='rounded-sm border shadow-sm mb-2'>
                 <Image
                   src='https://alternative.me/crypto/fear-and-greed-index.png'
@@ -151,6 +157,56 @@ export default function Dashboard({
                   height={300}
                 />
               </div>
+
+              <div className='h-[5em] border-2 border-red-500'>
+                <Script
+                  strategy='lazyOnload'
+                  // strategy='afterInteractive'
+                  src='https://widget.coincodex.com/include.js?type=1&ticker=bitfinex-bitcoin-dominance-perps&history_days=30&chartLineColor=1f79e1&chartFillColor=e8f1fc&textColor1=1e2e42&textColor2=617283&linkColor=4a90e2&borderColor=dddddd&backgroundColor=ffffff'
+                />
+
+                {/* https://coinmarketcap.com/widget/price-marquee/ */}
+                <Script
+                  strategy='lazyOnload'
+                  type='text/javascript'
+                  src='https://files.coinmarketcap.com/static/widget/coinMarquee.js'
+                ></Script>
+                <div
+                  id='coinmarketcap-widget-marquee'
+                  // coins='1,1027,825'
+                  // currency='USD'
+                  // theme='light'
+                  // transparent='true'
+                  // show-symbol-logo='true'
+                ></div>
+
+                <Script src='https://widgets.coingecko.com/gecko-coin-price-marquee-widget.js'></Script>
+                {/* <gecko-coin-price-marquee-widget
+                locale='en'
+                outlined='true'
+                coin-ids=''
+                initial-currency='usd'
+                ></gecko-coin-price-marquee-widget> */}
+              </div>
+              {uid === 'marianazorzo@gmail.com' && (
+                <div className='rounded-sm border shadow-sm mb-2'>
+                  <div className='flex justify-between pl-4 pr-4 mt-6'>
+                    <span className='font-semibold text-xl'>
+                      Millionaire of the Year!
+                    </span>
+                    <span className='text-3xl'>🤑</span>
+                  </div>
+                  <span className='text-xs ml-4 text-slate-400'>
+                    Swimming in Money, Yo!
+                  </span>
+                  <Image
+                    src='/mari.png'
+                    alt='Latest Crypto Fear & Greed Index'
+                    width={300}
+                    height={100}
+                  />
+                </div>
+              )}
 
               <Notifications />
             </div>
