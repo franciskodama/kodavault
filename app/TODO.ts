@@ -23,8 +23,9 @@
 
 // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
 // TODO: Resistences and Supports?
-// TODO: // Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
-// ERROS:
+// TODO: Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
+
+// ERRORS:
 // TODO: On Update Asset: we need to correct the format of the number (decimals, commas and dots)
 // TODO: Context
 // TODO: Reload when we update an asset
@@ -32,11 +33,8 @@
 // -  clerkMiddleware() (or the deprecated authMiddleware()) is used in your Next.js Middleware.
 
 // PRIORITIES 1:
-// TODO: Crypto For Trading
 // TODO: Assets to be aware of: for position trade checking RSI and other indicators (ie.: DOL, GLXY...)
 
-// TODO: Stocks by Currency (BRL, CAD, USD)
-// TODO: Stocks by Location (BR, CA)
 // TODO: Assets page, Filter by Exchange + Currency using Dropdown
 // TODO: Fix bug on Production Environment because it doesn't work (show assets)
 // TODO: Have validation on the Forms
@@ -69,9 +67,12 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Crypto For Trading
 // TODO: Hello, Francis! Greetings on Header
 // TODO: Fear and Greed
 // TODO: Created Purpose Property in the Assets Page
+// TODO: Stocks by Currency (BRL, CAD, USD)
+// TODO: Stocks by Location (BR, CA)
 // TODO: API Refactoring Crypto for one call
 // TODO: Chart of Net Worth Evolution on Dashboard
 // TODO: Cron Job for the Net Worth Evolution Chart
