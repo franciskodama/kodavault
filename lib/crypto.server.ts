@@ -84,3 +84,29 @@ export const getAllTimeHighData = async () => {
     console.error('Error fetching data:', error);
   }
 };
+
+export const getGlobalData = async () => {
+  try {
+    const apiKeyCoinGecko = process.env.NEXT_PUBLIC_COINGECKO_KEY;
+
+    if (!apiKeyCoinGecko) {
+      throw new Error('API key is missing');
+    }
+
+    const options: RequestInit = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        'x-cg-pro-api-key': apiKeyCoinGecko,
+      },
+    };
+
+    const response = fetch(
+      `https://api.coingecko.com/api/v3/global`,
+      options
+    ).then((res) => res.json());
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};

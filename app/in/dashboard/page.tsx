@@ -6,10 +6,27 @@ import { netWorthChartData } from '@/lib/types';
 import { getNetWorthEvolution } from '@/lib/actions';
 import { currentUser } from '@clerk/nextjs/server';
 import { Loading } from '@/components/Loading';
+import {
+  fetchQuotesForCryptos,
+  getAllTimeHighData,
+  getGlobalData,
+} from '@/lib/crypto.server';
 
 export default async function DashboardPage() {
   const user = await currentUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
+
+  // =============== FOR TESTING ===============
+  // const quotes = await fetchQuotesForCryptos('BTC');
+  // console.log('---  🚀 ---> | quotes:', quotes.data['BTC'][0].tags);
+
+  // const globalData = await getGlobalData();
+  // console.log('---  🚀 ---> | globalData:', globalData);
+
+  // const athAssets = getAllTimeHighData();
+  // console.log('---  🚀 ---> | athAssets:', athAssets);
+
+  // ==========================================
 
   const currencyRates = await getCurrency();
   const unpricedAssets = await fetchAssets(uid ? uid : '');
@@ -49,13 +66,15 @@ export default async function DashboardPage() {
     <>
       {currencyRates ? (
         assets &&
-        assetsByType && (
+        assetsByType &&
+        uid && (
           <Dashboard
             currencyRates={currencyRates}
             assets={assets}
             assetsByType={assetsByType}
             btcPrice={btcPrice}
             netWorthChartData={sortedNetWorthChartData}
+            uid={uid}
           />
         )
       ) : (
