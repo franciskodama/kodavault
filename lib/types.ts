@@ -1,4 +1,5 @@
 import {
+  category_enum_6c7fcd47,
   category_enum_f421eb4b,
   color_enum_bd2ecc46,
   purpose_enum_ceee32b0,
@@ -20,6 +21,7 @@ export type UnpricedAsset = {
   stock?: string;
   cash?: string;
   purpose?: purpose_enum_ceee32b0;
+  category?: purpose_enum_ceee32b0;
 };
 
 export type Asset =
@@ -83,6 +85,7 @@ export type Inputs = {
   exchange: string;
   account: string;
   purpose: purpose_enum_ceee32b0 | null;
+  category: category_enum_6c7fcd47 | null;
 };
 
 export type CryptoGoals = {

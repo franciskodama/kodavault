@@ -59,6 +59,7 @@ export async function updateAsset(formData: Inputs) {
     account,
     uid,
     purpose,
+    category,
   } = formData;
 
   try {
@@ -79,6 +80,7 @@ export async function updateAsset(formData: Inputs) {
         account,
         exchange,
         purpose,
+        category,
       },
     });
     return true;

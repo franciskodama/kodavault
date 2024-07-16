@@ -18,6 +18,7 @@ import {
   getWallet,
   subtypeOptions,
   purposeOptions,
+  categoryOptions,
 } from '@/lib/assets-form';
 
 export function UpdateAssetForm({ asset }: { asset: Asset }) {
@@ -45,6 +46,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       exchange: asset?.exchange,
       account: asset?.account,
       purpose: asset?.purpose,
+      category: asset?.category,
     },
   });
 
@@ -144,26 +146,6 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
           </div>
 
           <div className={classDiv}>
-            <h3 className={classTitle}>Purpose</h3>
-            <ul className={classUl}>
-              {purposeOptions.map((purposeOption) => (
-                <li key={purposeOption}>
-                  <input
-                    className='hidden peer'
-                    type='radio'
-                    value={purposeOption}
-                    id={purposeOption}
-                    {...register('purpose')}
-                  />
-                  <label className={classLabelRadio} htmlFor={purposeOption}>
-                    <span>{purposeOption}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className={classDiv}>
             <h3 className={classTitle}>Wallet</h3>
             <ul className={classUl}>
               {assetWallet.map((walletOption) => (
@@ -177,6 +159,46 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
                   />
                   <label className={classLabelRadio} htmlFor={walletOption}>
                     <span>{walletOption}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={classDiv}>
+            <h3 className={classTitle}>Category</h3>
+            <ul className={classUl}>
+              {categoryOptions.map((categoryOption) => (
+                <li key={categoryOption}>
+                  <input
+                    className='hidden peer'
+                    type='radio'
+                    value={categoryOption}
+                    id={categoryOption}
+                    {...register('category')}
+                  />
+                  <label className={classLabelRadio} htmlFor={categoryOption}>
+                    <span>{categoryOption}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={classDiv}>
+            <h3 className={classTitle}>Purpose</h3>
+            <ul className={classUl}>
+              {purposeOptions.map((purposeOption) => (
+                <li key={purposeOption}>
+                  <input
+                    className='hidden peer'
+                    type='radio'
+                    value={purposeOption}
+                    id={purposeOption}
+                    {...register('purpose')}
+                  />
+                  <label className={classLabelRadio} htmlFor={purposeOption}>
+                    <span>{purposeOption}</span>
                   </label>
                 </li>
               ))}
