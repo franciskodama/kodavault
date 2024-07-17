@@ -118,6 +118,21 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
+    accessorKey: 'category',
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Category
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+  },
+  {
     accessorKey: 'purpose',
     header: ({ column }) => {
       return (

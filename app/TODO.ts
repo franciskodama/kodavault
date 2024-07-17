@@ -26,6 +26,7 @@
 // TODO: Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
 
 // ERRORS:
+// TODO: Qty of the Update Asset must be formatted correctly to save in the database
 // TODO: On Update Asset: we need to correct the format of the number (decimals, commas and dots)
 // TODO: Context
 // TODO: Reload when we update an asset
@@ -44,6 +45,22 @@
 // TODO: Avatar Dropdown Style (no border is weird)
 // TODO: Dark Mode https://ui.shadcn.com/docs/dark-mode/next
 // TODO: Font Bug
+
+// 1.	AI: Cryptocurrencies leveraging artificial intelligence for various applications.
+// 2.	Meme: Tokens created around internet memes or cultural references, often with a humorous aspect.
+// 3.	DeFi: Decentralized finance platforms providing financial services without traditional intermediaries.
+// 4.	Oracles: Protocols that connect smart contracts with real-world data and external APIs.
+// 5.	Stablecoins: Cryptocurrencies designed to maintain a stable value, often pegged to fiat currencies.
+// 6.	Gaming: Tokens used in gaming ecosystems for in-game purchases, rewards, and transactions.
+// 7.	Infrastructure: Cryptocurrencies that provide foundational technology for building and supporting blockchain networks.
+// 8.	Data: Cryptocurrencies focused on data storage, sharing, and privacy.
+// 9.	Interoperability: Platforms enabling different blockchain networks to communicate and interact with each other.
+// 10.	Unknown: Cryptocurrencies with unclear or unspecified use cases.
+// 11.	Exchange: Tokens associated with cryptocurrency exchanges, often providing benefits like fee discounts.
+// 12.	None: Tokens that do not fit into any specific category or lack detailed information.
+// 13.	NFT: Non-fungible tokens representing unique digital assets like art, collectibles, and real estate.
+// 14.	Safehaven: Cryptocurrencies perceived as secure investments during market volatility.
+// 15.	Privacy: Cryptocurrencies designed to enhance transaction privacy and anonymity.
 
 // PRIORITIES 2:
 // TODO: Knowledge Page: Place to save videos about coins for future reference

@@ -13,6 +13,22 @@ export const subtypeOptions = [
 ];
 
 export const purposeOptions = ['Trade', 'Investment'];
+export const categoryOptions = [
+  'AI',
+  'Meme',
+  'DeFi',
+  'Oracles',
+  'Stablecoins',
+  'Gaming',
+  'Infrastructure',
+  'Data',
+  'Interoperability',
+  'Unknown',
+  'Exchange',
+  'None',
+  'NFT',
+  'Safehaven',
+];
 
 export const getType = (subtype: string) => {
   switch (subtype) {
