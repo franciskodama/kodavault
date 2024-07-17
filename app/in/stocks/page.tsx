@@ -1,6 +1,6 @@
 'use client';
 
-import { CardStocksBy } from '@/components/CardStocksBy';
+import { CardAssetsBy } from '@/components/CardAssetsBy';
 import { CardTotal } from '@/components/CardTotal';
 import { Loading } from '@/components/Loading';
 import { useAssetsContext } from '@/context/AssetsContext';
@@ -25,25 +25,25 @@ export default function StocksPage() {
                 assets={stocksAssets}
                 customKey={'stock'}
               />
-              <CardStocksBy
+              <CardAssetsBy
                 emoji={'🪙'}
                 description={'USD, CAD, and BRL'}
                 assets={stocksAssets}
                 customKey={'currency'}
               />
-              <CardStocksBy
+              <CardAssetsBy
                 emoji={'🌎'}
                 description={'Assets by Country Stocks'}
                 assets={stocksAssets}
                 customKey={'subtype'}
               />
-              <CardStocksBy
+              <CardAssetsBy
                 emoji={'🏦'}
                 description={'Stocks by Exchange'}
                 assets={stocksAssets}
                 customKey={'wallet'}
               />
-              <CardStocksBy
+              <CardAssetsBy
                 emoji={'🧺'}
                 description={'Stocks by Account Type'}
                 assets={stocksAssets}

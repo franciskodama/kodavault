@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../components/ui/card';
+} from './ui/card';
 
 import {
   numberFormatterNoDecimals,
@@ -14,7 +14,7 @@ import {
 } from '../lib/utils';
 import { Asset } from '../lib/types';
 
-export const CardStocksBy = ({
+export const CardAssetsBy = ({
   assets,
   customKey,
   emoji = '',

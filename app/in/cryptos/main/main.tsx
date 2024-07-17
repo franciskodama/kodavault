@@ -1,4 +1,4 @@
-import { CardStocksBy } from '@/components/CardStocksBy';
+import { CardAssetsBy } from '@/components/CardAssetsBy';
 import { CardTotal } from '@/components/CardTotal';
 import { Asset } from '@/lib/types';
 
@@ -12,13 +12,13 @@ export default function Main({ assets }: { assets: Asset[] }) {
         assets={assets}
         customKey={'crypto'}
       />
-      <CardStocksBy
+      <CardAssetsBy
         emoji={'🎯'}
         description={'Assets by Purpose'}
         assets={assets}
         customKey={'purpose'}
       />
-      <CardStocksBy
+      <CardAssetsBy
         emoji={'🏦'}
         description={'Coins by Exchange'}
         assets={assets}

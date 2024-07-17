@@ -23,7 +23,7 @@ export default function Cryptos() {
         </div>
       ) : (
         <div className='flex w-full gap-2'>
-          <Tabs defaultValue='allocation-goals' className='w-full'>
+          <Tabs defaultValue='main' className='w-full'>
             <TabsList>
               <TabsTrigger value='main'>Main</TabsTrigger>
               <TabsTrigger value='allocation-goals'>
