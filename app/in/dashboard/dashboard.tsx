@@ -1,5 +1,3 @@
-'use client';
-
 import { CardTotal } from '@/components/CardTotal';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import Notifications from './notifications/notifications';
@@ -13,7 +11,6 @@ import {
 import NetWorthEvolutionChart from './charts/net-worth-evolution';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import Image from 'next/image';
-import Script from 'next/script';
 
 export default function Dashboard({
   currencyRates,
@@ -158,14 +155,13 @@ export default function Dashboard({
                 />
               </div>
 
-              <div className='h-[5em] border-2 border-red-500'>
+              {/* <div className='h-[5em] border-2 border-red-500'>
                 <Script
                   strategy='lazyOnload'
-                  // strategy='afterInteractive'
+                  strategy='afterInteractive'
                   src='https://widget.coincodex.com/include.js?type=1&ticker=bitfinex-bitcoin-dominance-perps&history_days=30&chartLineColor=1f79e1&chartFillColor=e8f1fc&textColor1=1e2e42&textColor2=617283&linkColor=4a90e2&borderColor=dddddd&backgroundColor=ffffff'
                 />
-
-                {/* https://coinmarketcap.com/widget/price-marquee/ */}
+                https://coinmarketcap.com/widget/price-marquee/
                 <Script
                   strategy='lazyOnload'
                   type='text/javascript'
@@ -173,21 +169,20 @@ export default function Dashboard({
                 ></Script>
                 <div
                   id='coinmarketcap-widget-marquee'
-                  // coins='1,1027,825'
-                  // currency='USD'
-                  // theme='light'
-                  // transparent='true'
-                  // show-symbol-logo='true'
+                  coins='1,1027,825'
+                  currency='USD'
+                  theme='light'
+                  transparent='true'
+                  show-symbol-logo='true'
                 ></div>
-
                 <Script src='https://widgets.coingecko.com/gecko-coin-price-marquee-widget.js'></Script>
-                {/* <gecko-coin-price-marquee-widget
-                locale='en'
-                outlined='true'
-                coin-ids=''
-                initial-currency='usd'
-                ></gecko-coin-price-marquee-widget> */}
-              </div>
+                <gecko-coin-price-marquee-widget
+                  locale='en'
+                  outlined='true'
+                  coin-ids=''
+                  initial-currency='usd'
+                ></gecko-coin-price-marquee-widget>
+              </div> */}
               {uid === 'marianazorzo@gmail.com' && (
                 <div className='rounded-sm border shadow-sm mb-2'>
                   <div className='flex justify-between pl-4 pr-4 mt-6'>

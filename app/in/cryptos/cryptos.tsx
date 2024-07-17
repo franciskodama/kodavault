@@ -10,6 +10,7 @@ import { CardNextPurchases } from '@/components/CardNextPurchases';
 import PriceProjections from './price-projections';
 import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
+import Main from './main/main';
 
 export default function Cryptos() {
   const { assetsByType, isLoading } = useAssetsContext();
@@ -24,6 +25,7 @@ export default function Cryptos() {
         <div className='flex w-full gap-2'>
           <Tabs defaultValue='allocation-goals' className='w-full'>
             <TabsList>
+              <TabsTrigger value='main'>Main</TabsTrigger>
               <TabsTrigger value='allocation-goals'>
                 Allocation Goals
               </TabsTrigger>
@@ -32,6 +34,10 @@ export default function Cryptos() {
                 Price Projections
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value='main' className='flex gap-2 mt-4'>
+              <Main assets={assetsByType.Crypto} />
+            </TabsContent>
 
             <TabsContent value='allocation-goals' className='flex gap-2 mt-4'>
               <AllocationGoals assets={assetsByType.Crypto} />
