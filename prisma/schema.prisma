@@ -187,4 +187,8 @@ enum category_enum_6c7fcd47 {
   Data
   Interoperability
   Unknown
+  Exchange
+  None
+  NFT
+  Safehaven
 }

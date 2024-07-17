@@ -23,6 +23,11 @@ export const categoryOptions = [
   'Infrastructure',
   'Data',
   'Interoperability',
+  'Unknown',
+  'Exchange',
+  'None',
+  'NFT',
+  'Safehaven',
 ];
 
 export const getType = (subtype: string) => {

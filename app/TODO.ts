@@ -26,6 +26,7 @@
 // TODO: Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
 
 // ERRORS:
+// TODO: Qty of the Update Asset must be formatted correctly to save in the database
 // TODO: On Update Asset: we need to correct the format of the number (decimals, commas and dots)
 // TODO: Context
 // TODO: Reload when we update an asset

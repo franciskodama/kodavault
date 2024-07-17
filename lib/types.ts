@@ -21,7 +21,7 @@ export type UnpricedAsset = {
   stock?: string;
   cash?: string;
   purpose?: purpose_enum_ceee32b0;
-  category?: purpose_enum_ceee32b0;
+  category?: category_enum_6c7fcd47;
 };
 
 export type Asset =
