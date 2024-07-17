@@ -61,6 +61,7 @@
 // 13.	NFT: Non-fungible tokens representing unique digital assets like art, collectibles, and real estate.
 // 14.	Safehaven: Cryptocurrencies perceived as secure investments during market volatility.
 // 15.	Privacy: Cryptocurrencies designed to enhance transaction privacy and anonymity.
+// Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
 
 // PRIORITIES 2:
 // TODO: Knowledge Page: Place to save videos about coins for future reference
