@@ -191,4 +191,10 @@ enum category_enum_6c7fcd47 {
   None
   NFT
   Safehaven
+  Smart_Contracts  @map("Smart Contracts")
+  Sports
+  Media
+  Privacy
+  Identity
+  Supply_Chain     @map("Supply Chain")
 }
