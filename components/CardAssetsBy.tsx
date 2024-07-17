@@ -15,11 +15,13 @@ import {
 import { Asset } from '../lib/types';
 
 export const CardAssetsBy = ({
+  assetType,
   assets,
   customKey,
   emoji = '',
   description = '',
 }: {
+  assetType: string;
   assets: Asset[];
   customKey: string;
   emoji?: string;
@@ -51,7 +53,7 @@ export const CardAssetsBy = ({
         <div className='flex flex-col'>
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
-              <span>{`Stocks By ${customKey}`}</span>
+              <span>{`${assetType} By ${customKey}`}</span>
               <span className='text-3xl'>{emoji}</span>
             </CardTitle>
             <CardDescription className='text-xs'>{description}</CardDescription>

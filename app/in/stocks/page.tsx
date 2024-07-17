@@ -26,24 +26,28 @@ export default function StocksPage() {
                 customKey={'stock'}
               />
               <CardAssetsBy
+                assetType={'Stocks'}
                 emoji={'🪙'}
                 description={'USD, CAD, and BRL'}
                 assets={stocksAssets}
                 customKey={'currency'}
               />
               <CardAssetsBy
+                assetType={'Stocks'}
                 emoji={'🌎'}
                 description={'Assets by Country Stocks'}
                 assets={stocksAssets}
                 customKey={'subtype'}
               />
               <CardAssetsBy
+                assetType={'Stocks'}
                 emoji={'🏦'}
                 description={'Stocks by Exchange'}
                 assets={stocksAssets}
                 customKey={'wallet'}
               />
               <CardAssetsBy
+                assetType={'Stocks'}
                 emoji={'🧺'}
                 description={'Stocks by Account Type'}
                 assets={stocksAssets}
