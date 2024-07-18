@@ -27,7 +27,7 @@ export const CardAssetsBy = ({
   emoji?: string;
   description?: string;
 }) => {
-  // Main Card "Total By Stock"
+  // Main Card "Total By Asset"
   const totalArray = getTotalByKey(assets, customKey);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
