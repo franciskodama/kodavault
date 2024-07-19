@@ -60,17 +60,16 @@ export default function CryptoChartPie({
                     </Pie>
                     <Tooltip
                       itemStyle={{
-                        backgroundColor: 'red',
+                        backgroundColor: '#DDF906',
                         fontStyle: 'bold',
-                        // border: '10px solid red',
                       }}
                       wrapperStyle={{
-                        borderRadius: '15px',
-                        backgroundColor: 'green',
+                        borderRadius: '2px',
+                        border: '1px solid #000',
                       }}
                       contentStyle={{
                         borderRadius: '2px',
-                        backgroundColor: 'yellow',
+                        backgroundColor: '#DDF906',
                       }}
                       labelStyle={{
                         color: 'blue',
@@ -92,30 +91,66 @@ export default function CryptoChartPie({
   );
 }
 
+// const getColor = (name: string) => {
+//   let color = '#FFFFFF';
+
+//   switch (name) {
+//     case 'Ledger':
+//       color = '#000000';
+//       break;
+//     case 'Trezor':
+//       color = '#00C49F';
+//       break;
+//     case 'Binance':
+//       color = '#FFBB28';
+//       break;
+//     case 'Bybit':
+//       color = '#daf700';
+//       break;
+//     case 'Crypto.com\n':
+//       color = '#00dcfe';
+//       break;
+//     case 'Gate.io':
+//       color = '#0088FE';
+//       break;
+//     default:
+//       color = '#fe00dc';
+//       break;
+//   }
+
+//   return color;
+// };
+
 const getColor = (name: string) => {
   let color = '#FFFFFF';
 
   switch (name) {
-    case 'Ledger':
-      color = '#000000';
-      break;
-    case 'Trezor':
-      color = '#00C49F';
-      break;
     case 'Binance':
-      color = '#FFBB28';
+      color = '#F3BA2F';
       break;
     case 'Bybit':
-      color = '#daf700';
-      break;
-    case 'Crypto.com\n':
-      color = '#00dcfe';
+      color = '#DDF906';
       break;
     case 'Gate.io':
-      color = '#0088FE';
+      color = 'rgb(239 68 68)';
+      break;
+    case 'Crypto.com':
+      color = '#0033A0';
+      break;
+    case 'Ledger':
+      color = 'hsl(222.2 47.4% 11.2%)';
+      break;
+    case 'Trezor':
+      color = 'rgb(34 197 94)';
+      break;
+    case 'BingX':
+      color = '#2D70B7';
+      break;
+    case 'MetaMask':
+      color = '#F6851B';
       break;
     default:
-      color = '#fe00dc';
+      color = '#fe00dc'; // Default color
       break;
   }
 
