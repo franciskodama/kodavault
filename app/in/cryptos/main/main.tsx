@@ -2,7 +2,11 @@ import { CardAssetsBy } from '@/components/CardAssetsBy';
 import { CardTotal } from '@/components/CardTotal';
 import { Asset } from '@/lib/types';
 import CryptoChartPie from './crypto-chart-pie';
-import { getTotalByKey, thousandFormatter } from '@/lib/utils';
+import {
+  getTotalByKey,
+  numberFormatterNoDecimals,
+  thousandFormatter,
+} from '@/lib/utils';
 
 export type TotalByWallet = {
   value: string;
@@ -15,13 +19,16 @@ export default function Main({ assets }: { assets: Asset[] }) {
   const transformKeys = (
     arr: TotalByWallet[]
   ): { name: string; value: number }[] =>
-    arr.map((item) => ({ name: item.value, value: item.total }));
-  // thousandFormatter()
+    arr.map((item) => ({
+      name: item.value,
+      value: Math.floor(item.total),
+    }));
   const chartData = transformKeys(totalByWallet);
+  console.log('---  🚀 ---> | chartData:', chartData);
 
   return (
     <>
-      <div className='flex flex-wrap gap-2 w-2/3'>
+      <div className='flex flex-wrap gap-2 w-1/2'>
         <CardTotal
           emoji={'🪙'}
           description={'Total value grouped by Coins'}
@@ -35,6 +42,10 @@ export default function Main({ assets }: { assets: Asset[] }) {
           assets={assets}
           customKey={'purpose'}
         />
+      </div>
+
+      <div className='w-1/2'>
+        <CryptoChartPie chartData={chartData} />
         <CardAssetsBy
           assetType={'Cryptos'}
           emoji={'🏦'}
@@ -42,10 +53,6 @@ export default function Main({ assets }: { assets: Asset[] }) {
           assets={assets}
           customKey={'wallet'}
         />
-      </div>
-
-      <div className='w-1/3'>
-        {chartData.length > 0 && <CryptoChartPie chartData={chartData} />}
       </div>
     </>
   );
