@@ -5,14 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  Cell,
-  LabelList,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-} from 'recharts';
+import { thousandFormatter } from '@/lib/utils';
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+
 type chartData = {
   name: string;
   value: number;
@@ -25,14 +20,6 @@ export default function CryptoChartPie({
 }) {
   // https://recharts.org/en-US/api/PieChart
   // https://recharts.org/en-US/api/Tooltip#active
-  const colors = [
-    '#0088FE',
-    '#00C49F',
-    '#FFBB28',
-    '#FF8042',
-    '#ff42ef',
-    '#42efff',
-  ];
 
   return (
     <>
@@ -59,22 +46,41 @@ export default function CryptoChartPie({
                       cx='50%'
                       cy='50%'
                       outerRadius={150}
-                      fill='#8884d8'
+                      // fill='#8884d8'
                       labelLine={false}
                       label
+                      legendType='circle'
                     >
                       {chartData.map((entry, index) => (
                         <Cell
                           key={`cell-${index}`}
-                          // fill={colors[index % colors.length]}
                           fill={getColor(entry.name)}
                         />
                       ))}
                     </Pie>
                     <Tooltip
+                      itemStyle={{
+                        backgroundColor: 'red',
+                        fontStyle: 'bold',
+                        // border: '10px solid red',
+                      }}
+                      wrapperStyle={{
+                        borderRadius: '15px',
+                        backgroundColor: 'green',
+                      }}
+                      contentStyle={{
+                        borderRadius: '2px',
+                        backgroundColor: 'yellow',
+                      }}
+                      labelStyle={{
+                        color: 'blue',
+                        fontSize: '20px',
+                      }}
+                      formatter={thousandFormatter}
                       active={true}
                       viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
                     />
+                    {/* https://recharts.org/en-US/api/Tooltip#formatter */}
                   </PieChart>
                 </ResponsiveContainer>
               </div>

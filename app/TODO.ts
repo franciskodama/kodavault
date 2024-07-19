@@ -17,6 +17,7 @@
 //------------------------------------------
 // WORKING ON:
 // TODO: Cryptos Page needs to have a sub Dashboard like the Stocks Page (main reason: how much by Exchange)
+// TODO: Crypto Page: Pie Chart for Wallet Shares
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 
 // NEXT:
