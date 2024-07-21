@@ -152,6 +152,7 @@ export default function Dashboard({
                   alt='Latest Crypto Fear & Greed Index'
                   width={300}
                   height={300}
+                  priority
                 />
               </div>
 

@@ -2,11 +2,8 @@ import { CardAssetsBy } from '@/components/CardAssetsBy';
 import { CardTotal } from '@/components/CardTotal';
 import { Asset } from '@/lib/types';
 import CryptoChartPie from './crypto-chart-pie';
-import {
-  getTotalByKey,
-  numberFormatterNoDecimals,
-  thousandFormatter,
-} from '@/lib/utils';
+import { getTotalByKey } from '@/lib/utils';
+import CryptoByWallet from './cryptos-by-wallet';
 
 export type TotalByWallet = {
   value: string;
@@ -45,13 +42,7 @@ export default function Main({ assets }: { assets: Asset[] }) {
 
       <div className='w-1/2 gap-2'>
         <CryptoChartPie chartData={chartData} />
-        <CardAssetsBy
-          assetType={'Cryptos'}
-          emoji={'🏦'}
-          description={'Coins by Exchange'}
-          assets={assets}
-          customKey={'wallet'}
-        />
+        <CryptoByWallet assets={assets} totalByWallet={totalByWallet} />
       </div>
     </>
   );

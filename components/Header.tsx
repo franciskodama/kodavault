@@ -22,6 +22,7 @@ export default function Header() {
           width={100}
           height={100}
           className='h-auto w-auto'
+          priority
         />
       </Link>
       <div className='flex items-center'>
