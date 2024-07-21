@@ -24,7 +24,6 @@ export default function Main({ assets }: { assets: Asset[] }) {
       value: Math.floor(item.total),
     }));
   const chartData = transformKeys(totalByWallet);
-  console.log('---  🚀 ---> | chartData:', chartData);
 
   return (
     <>
@@ -44,7 +43,7 @@ export default function Main({ assets }: { assets: Asset[] }) {
         />
       </div>
 
-      <div className='w-1/2'>
+      <div className='w-1/2 gap-2'>
         <CryptoChartPie chartData={chartData} />
         <CardAssetsBy
           assetType={'Cryptos'}

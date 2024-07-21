@@ -23,7 +23,7 @@ export default function CryptoChartPie({
 
   return (
     <>
-      <Card className='w-full'>
+      <Card className='w-full mb-2'>
         <div className='flex flex-col justify-between h-full w-full'>
           <div className='flex flex-col w-full'>
             <CardHeader>

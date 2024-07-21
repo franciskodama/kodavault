@@ -47,6 +47,15 @@ export const CardAssetsBy = ({
 
   const accKeys: string[] = Object.keys(groupedByCustomKey);
 
+  // const sortGroupsByLength = (arr: Asset[]) => {};
+
+  const sortGroupedAssetsByLength = (groupedAssets: Asset[][]): Asset[][] => {
+    return groupedAssets.sort((a, b) => a.length - b.length);
+  };
+
+  const test = sortGroupedAssetsByLength(groupedByCustomKey);
+  console.log('---  🚀 ---> | test:', test);
+
   return (
     <Card className='flex-1'>
       <div className='flex flex-col justify-between h-full'>
@@ -59,9 +68,15 @@ export const CardAssetsBy = ({
             <CardDescription className='text-xs'>{description}</CardDescription>
           </CardHeader>
 
-          <CardContent>
+          <CardContent
+            className={
+              assetType === 'Cryptos' && customKey === 'wallet'
+                ? 'flex flex-wrap gap-2 w-full'
+                : ''
+            }
+          >
             {accKeys.map((key: string) => (
-              <div key={key} className='border rounded-[2px] mb-2 p-2'>
+              <div key={key} className='border rounded-[2px] mb-2 p-2 grow'>
                 <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
                   {key}
                 </h3>
