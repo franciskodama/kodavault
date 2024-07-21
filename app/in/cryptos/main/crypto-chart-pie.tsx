@@ -46,7 +46,6 @@ export default function CryptoChartPie({
                       cx='50%'
                       cy='50%'
                       outerRadius={150}
-                      // fill='#8884d8'
                       labelLine={false}
                       label
                       legendType='circle'
@@ -60,20 +59,28 @@ export default function CryptoChartPie({
                     </Pie>
                     <Tooltip
                       itemStyle={{
-                        backgroundColor: '#DDF906',
+                        backgroundColor: '#FFF',
                         fontStyle: 'bold',
+                        // height: '35px',
                       }}
                       wrapperStyle={{
                         borderRadius: '2px',
-                        border: '1px solid #000',
+                        // border: '1px solid #FFF',
                       }}
                       contentStyle={{
+                        height: '37px',
+                        fontSize: '12px',
                         borderRadius: '2px',
-                        backgroundColor: '#DDF906',
+                        fontWeight: 'bold',
+                        // backgroundColor: '#DDF906',
+                        backgroundColor: '#FFF',
                       }}
                       labelStyle={{
+                        // top: '-10px',
+                        // height: '-10px',
                         color: 'blue',
                         fontSize: '20px',
+                        fontWeight: 'bold',
                       }}
                       formatter={thousandFormatter}
                       active={true}
