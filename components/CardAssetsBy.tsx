@@ -47,15 +47,6 @@ export const CardAssetsBy = ({
 
   const accKeys: string[] = Object.keys(groupedByCustomKey);
 
-  // const sortGroupsByLength = (arr: Asset[]) => {};
-
-  const sortGroupedAssetsByLength = (groupedAssets: Asset[][]): Asset[][] => {
-    return groupedAssets.sort((a, b) => a.length - b.length);
-  };
-
-  const test = sortGroupedAssetsByLength(groupedByCustomKey);
-  console.log('---  🚀 ---> | test:', test);
-
   return (
     <Card className='flex-1'>
       <div className='flex flex-col justify-between h-full'>
