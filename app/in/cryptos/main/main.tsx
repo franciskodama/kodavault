@@ -1,13 +1,8 @@
 import { CardAssetsBy } from '@/components/CardAssetsBy';
 import { CardTotal } from '@/components/CardTotal';
-import { Asset } from '@/lib/types';
+import { Asset, TotalByWallet } from '@/lib/types';
 import { getTotalByKey } from '@/lib/utils';
 import CryptoByWallet from './cryptos-by-wallet';
-
-export type TotalByWallet = {
-  value: string;
-  total: number;
-};
 
 export default function Main({ assets }: { assets: Asset[] }) {
   const totalByWallet = getTotalByKey(assets, 'wallet');

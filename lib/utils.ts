@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { Asset, UnpricedAsset } from './types';
+import { Asset, TotalByWallet, UnpricedAsset } from './types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -70,25 +70,22 @@ export const includeNewKeyForCardTitle = (array: any, newkey: string) =>
 
 // ---------------------------------------------------------------------------
 
-type ResultProps = {
-  value: string;
-  total: number;
-};
-
-export const getTotalByKey = (assets: any[], key: string): ResultProps[] => {
+export const getTotalByKey = (assets: any[], key: string): TotalByWallet[] => {
   const groupedData: { [key: string]: number } = {};
 
   assets.reduce((acc, item) => {
-    const keyValue = item[key];
+    if (!item) return acc; // Skip undefined assets
+
+    const keyValue = item[key] as unknown as string;
 
     if (!groupedData[keyValue]) {
       groupedData[keyValue] = 0;
     }
 
-    groupedData[keyValue] += parseFloat(item.total);
+    groupedData[keyValue] += parseFloat((item.total ?? 0).toString());
 
     return acc;
-  }, [] as ResultProps[]);
+  }, [] as TotalByWallet[]);
 
   return Object.keys(groupedData).map((item) => ({
     value: item,
@@ -98,12 +95,20 @@ export const getTotalByKey = (assets: any[], key: string): ResultProps[] => {
 
 // ---------------------------------------------------------------------------
 
-export const groupAssetsBySomething = (assets: Asset[], something: string) => {
-  return assets.reduce((groupedAssets: any, asset: any) => {
-    const somethingKey = asset[something];
-    if (!groupedAssets[somethingKey]) groupedAssets[somethingKey] = [];
-    groupedAssets[somethingKey].push(asset);
+export const groupAssetsBySomething = (
+  assets: Asset[],
+  something: keyof Asset
+) => {
+  return assets.reduce(
+    (groupedAssets: Record<string, Asset[]>, asset: Asset | undefined) => {
+      if (!asset) return groupedAssets;
 
-    return groupedAssets;
-  }, {});
+      const somethingKey = asset[something];
+      if (!groupedAssets[somethingKey]) groupedAssets[somethingKey] = [];
+      groupedAssets[somethingKey].push(asset);
+
+      return groupedAssets;
+    },
+    {}
+  );
 };

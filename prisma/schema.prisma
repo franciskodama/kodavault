@@ -130,9 +130,9 @@ model Shortcut {
   url         String
   id          String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   description String                  @default("I am for...")
-  category    category_enum_f421eb4b? @default(miscellaneous)
+  category    category_enum_f421eb4b? @default(Miscellaneous)
   from        String
-  color       color_enum_bd2ecc46?    @default(gray)
+  color       color_enum_bd2ecc46?    @default(Gray)
 }
 
 model NetWorthEvolution {
@@ -152,23 +152,25 @@ enum priority_enum_593899f8 {
 }
 
 enum category_enum_f421eb4b {
-  exchange
-  knowledge
-  course
-  analysis
-  indicator
-  miscellaneous
-  platform
+  Exchange
+  Knowledge
+  Course
+  Analysis
+  Indicator
+  Miscellaneous
+  Platform
+  Video
+  Friend
 }
 
 enum color_enum_bd2ecc46 {
-  blue
-  red
-  green
-  orange
-  black
-  gray
-  pink
+  Blue
+  Red
+  Green
+  Orange
+  Black
+  Gray
+  Pink
 }
 
 enum purpose_enum_ceee32b0 {

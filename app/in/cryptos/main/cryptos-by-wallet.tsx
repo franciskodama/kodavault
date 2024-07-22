@@ -6,14 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Asset } from '@/lib/types';
+import { Asset, TotalByWallet } from '@/lib/types';
 import {
   getTotalByKey,
   numberFormatter,
   numberFormatterNoDecimals,
   thousandFormatter,
 } from '@/lib/utils';
-import { TotalByWallet } from './main';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 type chartData = {
@@ -30,8 +29,8 @@ export default function CryptoByWallet({
   totalByWallet: TotalByWallet[];
   chartData: chartData[];
 }) {
-  console.log('---  🚀 ---> | totalByWallet:', totalByWallet);
   const groupedByWallet = assets.reduce((acc: any, item: any) => {
+    if (!item) return acc;
     const wallet = item.wallet;
     if (!acc[wallet]) {
       acc[wallet] = [];
@@ -40,6 +39,7 @@ export default function CryptoByWallet({
 
     return acc;
   }, {});
+
   console.log('---  🚀 ---> | groupedByWallet:', groupedByWallet);
 
   // const sortGroupsByLength = (groupedAssets: Asset[][]): Asset[][] => {
@@ -62,28 +62,32 @@ export default function CryptoByWallet({
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
                 <span>Cryptos By Wallet</span>
-                <span className='text-3xl'>🏦</span>
+                <span className='text-3xl'>🍕</span>
               </CardTitle>
               <CardDescription className='text-xs'>
                 Total by Wallet
               </CardDescription>
             </CardHeader>
             <CardContent className='flex flex-wrap gap-2 w-full'>
-              {totalByWallet.map((item: TotalByWallet) => (
-                <div
-                  key={item.value}
-                  className='border rounded-[2px] mb-2 p-2 grow'
-                >
-                  <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
-                    {item.value}
-                  </h3>
-                  <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
-                    {numberFormatterNoDecimals.format(item.total)}
-                  </CardFooter>
-                </div>
-              ))}
+              {totalByWallet
+                .sort(
+                  (a: TotalByWallet, b: TotalByWallet) => b!.total! - a!.total!
+                )
+                .map((item: TotalByWallet) => (
+                  <div
+                    key={item.value}
+                    className='border rounded-[2px] mb-2 p-2 grow'
+                  >
+                    <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
+                      {item.value.includes('Crypto') ? 'Crypto' : item.value}
+                    </h3>
+                    <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
+                      {numberFormatterNoDecimals.format(item.total)}
+                    </CardFooter>
+                  </div>
+                ))}
 
-              <div className='w-full p-8'>
+              <div className='w-full p-2'>
                 <ResponsiveContainer width='100%' height={300}>
                   <PieChart width={800} height={800}>
                     <Pie
@@ -94,7 +98,6 @@ export default function CryptoByWallet({
                       cy='50%'
                       outerRadius={150}
                       labelLine={false}
-                      // label
                       legendType='circle'
                     >
                       {chartData.map((entry, index) => (
@@ -154,50 +157,95 @@ export default function CryptoByWallet({
                 Coins by Exchange
               </CardDescription>
             </CardHeader>
-
             <CardContent className='flex flex-wrap gap-2 w-full'>
-              {accKeys.map((key: string) => (
+              {/* {groupedByWallet.map((item: any) => (
+                <div
+                  key={item[0]}
+                  className='border rounded-[2px] mb-2 p-2 grow'
+                >
+                  <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
+                    {item[0]}
+                  </h3>
+                  {sortedArray(groupedByCustomKey[key]).map((item: any) => (
+                    <div key={item.total} className='flex justify-between'>
+                      <h3>{item.asset}</h3>
+                      <h3>{item.value}</h3>
+                      <div className='flex'>
+                        <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
+                          item.total
+                        )}`}</p>
+                        <p
+                          className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                            (item.total / total) * 100 > 50
+                              ? 'bg-red-500'
+                              : 'bg-green-500'
+                          }`}
+                        >{`${numberFormatter.format(
+                          (item.total /
+                            getTotalByKey(groupedByCustomKey[key], key).reduce(
+                              (sum: number, item) => sum + item.total,
+                              0
+                            )) *
+                            100
+                        )}%`}</p>
+                      </div>
+                    </div>
+                  ))}
+                  <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
+                    <h3>Subtotal</h3>
+                    {numberFormatterNoDecimals.format(
+                      getTotalByKey(groupedByCustomKey[key], key).reduce(
+                        (sum: number, item) => sum + item.total,
+                        0
+                      )
+                    )}
+                  </CardFooter>
+                </div>
+              ))} */}
+
+              {/* ==================================== */}
+
+              {/* {accKeys.map((key: string) => (
                 <div key={key} className='border rounded-[2px] mb-2 p-2 grow'>
                   <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
                     {key}
                   </h3>
-                  {/* {sortedArray(groupedByCustomKey[key]).map((item: any) => (
-                  <div key={item.total} className='flex justify-between'>
-                  <h3>{item.asset}</h3>
-                  <h3>{item.value}</h3>
-                  <div className='flex'>
-                  <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
-                    item.total
-                    )}`}</p>
-                    <p
-                    className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
-                      (item.total / total) * 100 > 50
-                      ? 'bg-red-500'
-                      : 'bg-green-500'
-                      }`}
-                      >{`${numberFormatter.format(
-                        (item.total /
-                        getTotalByKey(groupedByCustomKey[key], key).reduce(
-                          (sum: number, item) => sum + item.total,
-                          0
-                          )) *
-                          100
-                          )}%`}</p>
-                          </div>
-                          </div>
-                          ))} */}
-
+                  {sortedArray(groupedByWallet[key]).map((item: any) => (
+                    <div key={item.total} className='flex justify-between'>
+                      <h3>{item.asset}</h3>
+                      <h3>{item.value}</h3>
+                      <div className='flex'>
+                        <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
+                          item.total
+                        )}`}</p>
+                        <p
+                          className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                            (item.total / total) * 100 > 50
+                              ? 'bg-red-500'
+                              : 'bg-green-500'
+                          }`}
+                        >{`${numberFormatter.format(
+                          (item.total /
+                            getTotalByKey(groupedByCustomKey[key], key).reduce(
+                              (sum: number, item) => sum + item.total,
+                              0
+                            )) *
+                            100
+                        )}%`}</p>
+                      </div>
+                    </div>
+                  ))}
                   <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
                     <h3>Subtotal</h3>
-                    {/* {numberFormatterNoDecimals.format(
-                    getTotalByKey(groupedByCustomKey[key], key).reduce(
-                      (sum: number, item) => sum + item.total,
-                      0
+                    {numberFormatterNoDecimals.format(
+                      getTotalByKey(groupedByCustomKey[key], key).reduce(
+                        (sum: number, item) => sum + item.total,
+                        0
                       )
-                      )} */}
+                    )}
                   </CardFooter>
                 </div>
-              ))}
+              ))} */}
             </CardContent>
           </div>
         </div>
