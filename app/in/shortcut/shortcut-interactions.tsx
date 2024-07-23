@@ -209,27 +209,34 @@ const getEmoji = (key: string) => {
   let emoji = '';
 
   switch (key) {
-    case 'indicator':
+    case 'Indicator':
       emoji = '🧭';
       break;
-    case 'analysis':
+    case 'Analysis':
       emoji = '🔬';
       break;
-    case 'miscellaneous':
+    case 'Miscellaneous':
       emoji = '🧶';
       break;
-    case 'platform':
+    case 'Platform':
       emoji = '⚓';
       break;
-    case 'exchange':
+    case 'Exchange':
       emoji = '🏦';
       break;
-    case 'course':
+    case 'Course':
       emoji = '🧑🏻‍🎓';
       break;
-    case 'knowledge':
+    case 'Knowledge':
       emoji = '🧠';
       break;
+    case 'Video':
+      emoji = '📺';
+      break;
+    case 'Friend':
+      emoji = '🤷🏻‍♂️';
+      break;
+
     default:
       break;
   }
