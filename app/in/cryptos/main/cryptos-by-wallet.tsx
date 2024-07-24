@@ -39,8 +39,23 @@ export default function CryptoByWallet({
 
     return acc;
   }, {});
-
   console.log('---  🚀 ---> | groupedByWallet:', groupedByWallet);
+
+  const sortSubArraysByTotal = (objWithArrays: any) => {
+    let groupedAndSortedArray;
+    const keys: string[] = Object.keys(groupedByWallet);
+    console.log('---  🚀 ---> | keys:', keys);
+
+    // keys.map((key: string) => {
+    //   const subArraySorted = objWithArrays[key].sort(
+    //     (a: Asset, b: Asset) => b!.total! - a!.total!
+    //   );
+    //   groupedAndSortedArray.push(subArraySorted);
+    // });
+  };
+
+  const test = sortSubArraysByTotal(groupedByWallet);
+  console.log('---  🚀 ---> | test:', test);
 
   // const sortGroupsByLength = (groupedAssets: Asset[][]): Asset[][] => {
   //   return groupedAssets.sort((a, b) => a.length - b.length);
@@ -51,8 +66,6 @@ export default function CryptoByWallet({
 
   const sortedArray = (arr: Asset[]) =>
     arr.sort((a: Asset, b: Asset) => b!.total! - a!.total!);
-
-  const accKeys: string[] = Object.keys(groupedByWallet);
 
   return (
     <>
@@ -267,7 +280,7 @@ const getColor = (name: string) => {
     case 'Gate.io':
       color = 'rgb(239 68 68)';
       break;
-    case 'Crypto.com':
+    case 'Crypto':
       color = '#0033A0';
       break;
     case 'Ledger':

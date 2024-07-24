@@ -29,8 +29,10 @@
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 
 // NEXT:
+// TODO: Filter by Exchange must be a dropdown (assets page)
 // TODO: Check ATH if it's not hardcoded
 // TODO: BTC Dominance
+// TODO: Include MM Wallet
 
 // TODO: Altseason Indicators
 // TODO: DJT in the Dashboard
@@ -39,6 +41,7 @@
 // TODO: Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
 
 // ERRORS:
+// TODO: Error if try to Add Asset "Supply Chain"
 // TODO: Qty of the Update Asset must be formatted correctly to save in the database
 // TODO: On Update Asset: we need to correct the format of the number (decimals, commas and dots)
 // TODO: Context
