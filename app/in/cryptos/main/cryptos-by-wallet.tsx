@@ -39,33 +39,28 @@ export default function CryptoByWallet({
 
     return acc;
   }, {});
-  console.log('---  🚀 ---> | groupedByWallet:', groupedByWallet);
 
-  const sortSubArraysByTotal = (objWithArrays: any) => {
-    let groupedAndSortedArray;
-    const keys: string[] = Object.keys(groupedByWallet);
-    console.log('---  🚀 ---> | keys:', keys);
+  const sortAssetsByTotal = (objWithAssetsArrays: any) => {
+    let mainArrayWithSortedAssetsArray: any[] = [];
+    const keys: string[] = Object.keys(objWithAssetsArrays);
 
-    // keys.map((key: string) => {
-    //   const subArraySorted = objWithArrays[key].sort(
-    //     (a: Asset, b: Asset) => b!.total! - a!.total!
-    //   );
-    //   groupedAndSortedArray.push(subArraySorted);
-    // });
+    keys.forEach((key: string) => {
+      const sortedAssetsArray = objWithAssetsArrays[key].sort(
+        (a: Asset, b: Asset) => b!.total! - a!.total!
+      );
+      mainArrayWithSortedAssetsArray.push(sortedAssetsArray);
+    });
+    return mainArrayWithSortedAssetsArray;
   };
 
-  const test = sortSubArraysByTotal(groupedByWallet);
-  console.log('---  🚀 ---> | test:', test);
+  const sortedAssets = sortAssetsByTotal(groupedByWallet);
 
-  // const sortGroupsByLength = (groupedAssets: Asset[][]): Asset[][] => {
-  //   return groupedAssets.sort((a, b) => a.length - b.length);
-  // };
+  const sortGroupsByLength = (groupedAssets: Asset[][]): Asset[][] => {
+    return groupedAssets.sort((a, b) => a.length - b.length);
+  };
 
-  // const groupsSortedByLength = sortGroupsByLength(groupedByWallet);
-  // console.log('---  🚀 ---> | groupsSortedByLength:', groupsSortedByLength);
-
-  const sortedArray = (arr: Asset[]) =>
-    arr.sort((a: Asset, b: Asset) => b!.total! - a!.total!);
+  const groupsSortedByLength = sortGroupsByLength(sortedAssets);
+  console.log('---  🚀 ---> | groupsSortedByLength:', groupsSortedByLength);
 
   return (
     <>
@@ -167,7 +162,7 @@ export default function CryptoByWallet({
                 <span className='text-3xl'>🏦</span>
               </CardTitle>
               <CardDescription className='text-xs'>
-                Coins by Exchange
+                Coins by Exchanged
               </CardDescription>
             </CardHeader>
             <CardContent className='flex flex-wrap gap-2 w-full'>
