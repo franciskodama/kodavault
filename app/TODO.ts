@@ -1,40 +1,19 @@
 // Prompt AI: I have this app to manage my investments where I show a spreadsheet with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
-// TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
-// TODO: example: https://ui.shadcn.com/examples/tasks
-// TODO: Add Priority
-// TODO: Fix ILV and CRO that is saying to buy them
-// TODO: Create button Clear and Minimum Amount (0.01)
-// TODO: https://ui.shadcn.com/docs/components/tabs
-// TODO: Criar TAGS para Crypto Assets? Safe, Gema, Risky, Bet
-// TODO: Include Category for Crypto Assets as Tags. I'm not sure if it is a good idea. Too much work for not much value.
-// TODO: Show the field (form) with the goal pulled from CoinGoal database
-// TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
-// TODO: Create button to save the goal for each asset (current line) + Save in the database
-// TODO: What to do if there is a goal for a new asset the user desire, but they didn't buy it yet? They have see the goal to remember to buy it.
-// TODO: What appears on SELL and BUY because of the goal, need to appear in the next purchases card
-
-// - Context: https://www.youtube.com/results?search_query=nextjs+context
-// - Video Indian Guy: https://www.youtube.com/watch?v=Ou2IAs7W1Ig
-// - When I edit the CAD Cash in Wealthsimple Asset, it does not appear Wealthsimple as an option to choose from
-// - Assets need to accept QETH.U
-// - Clerk: no email code verification
-// - Dollar price as Props instead of Context
-// - Vault - Não vamos fazer 100X: https://youtu.be/XISm92VwglI?si=OvaYIsQrLriyLdaO
-
 //------------------------------------------
 // WORKING ON:
-// TODO: Cryptos Page needs to have a sub Dashboard like the Stocks Page (main reason: how much by Exchange)
-// TODO: Crypto Page: Pie Chart for Wallet Shares
+// TODO: Include MM Wallet
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
-
-// NEXT:
+// TODO: Altseason Indicators
 // TODO: Filter by Exchange must be a dropdown (assets page)
 // TODO: Check ATH if it's not hardcoded
 // TODO: BTC Dominance
-// TODO: Include MM Wallet
 
-// TODO: Altseason Indicators
+// NEXT:
+// TODO: When I edit the CAD Cash in Wealthsimple Asset, it does not appear Wealthsimple as an option to choose from
+// TODO: Assets need to accept QETH.U
+// TODO: Não vamos fazer 100X: https://youtu.be/XISm92VwglI?si=OvaYIsQrLriyLdaO
+
 // TODO: DJT in the Dashboard
 // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
 // TODO: Resistences and Supports?
@@ -61,6 +40,15 @@
 // TODO: Avatar Dropdown Style (no border is weird)
 // TODO: Dark Mode https://ui.shadcn.com/docs/dark-mode/next
 // TODO: Font Bug
+// TODO: For edit pencil: https://ui.shadcn.com/docs/components/tooltip
+// TODO: Fix ILV and CRO that is saying to buy them
+// TODO: Create button Clear and Minimum Amount (0.01)
+// TODO: Criar TAGS para Crypto Assets? Safe, Gema, Risky, Bet
+// TODO: Show the field (form) with the goal pulled from CoinGoal database
+// TODO: If there is asset but there is no goal, create the fiedl with the value 0 and the user press save, it create the item on Coingoal
+// TODO: Create button to save the goal for each asset (current line) + Save in the database
+// TODO: What to do if there is a goal for a new asset the user desire, but they didn't buy it yet? They have see the goal to remember to buy it.
+// TODO: What appears on SELL and BUY because of the goal, need to appear in the next purchases card
 
 // 1.	AI: Cryptocurrencies leveraging artificial intelligence for various applications.
 // 2.	Meme: Tokens created around internet memes or cultural references, often with a humorous aspect.
@@ -101,6 +89,9 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Include Category for Crypto Assets as Tags. I'm not sure if it is a good idea. Too much work for not much value.
+// TODO: Cryptos Page needs to have a sub Dashboard like the Stocks Page (main reason: how much by Exchange)
+// TODO: Crypto Page: Pie Chart for Wallet Shares
 // TODO: Crypto For Trading
 // TODO: Hello, Francis! Greetings on Header
 // TODO: Fear and Greed
@@ -111,6 +102,7 @@
 // TODO: Chart of Net Worth Evolution on Dashboard
 // TODO: Cron Job for the Net Worth Evolution Chart
 // TODO: Table Alignment in the Assets Page
+// TODO: https://ui.shadcn.com/docs/components/tabs - Tabs for Cryptos page
 // TODO: Q.ETH is USD and there is the possibility only to set it in CAD
 // TODO: Fix bug Assets Page: resilience if the coin is not found
 // TODO: Fix bug buttons on the +Asset Form
