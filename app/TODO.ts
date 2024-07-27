@@ -14,13 +14,25 @@
 // TODO: What to do if there is a goal for a new asset the user desire, but they didn't buy it yet? They have see the goal to remember to buy it.
 // TODO: What appears on SELL and BUY because of the goal, need to appear in the next purchases card
 
+// - Context: https://www.youtube.com/results?search_query=nextjs+context
+// - Video Indian Guy: https://www.youtube.com/watch?v=Ou2IAs7W1Ig
+// - When I edit the CAD Cash in Wealthsimple Asset, it does not appear Wealthsimple as an option to choose from
+// - Assets need to accept QETH.U
+// - Clerk: no email code verification
+// - Dollar price as Props instead of Context
+// - Vault - Não vamos fazer 100X: https://youtu.be/XISm92VwglI?si=OvaYIsQrLriyLdaO
+
 //------------------------------------------
 // WORKING ON:
 // TODO: Cryptos Page needs to have a sub Dashboard like the Stocks Page (main reason: how much by Exchange)
+// TODO: Crypto Page: Pie Chart for Wallet Shares
+// TODO: CronJob: https://console.cron-job.org/jobs/5201103
 
 // NEXT:
+// TODO: Filter by Exchange must be a dropdown (assets page)
 // TODO: Check ATH if it's not hardcoded
 // TODO: BTC Dominance
+// TODO: Include MM Wallet
 
 // TODO: Altseason Indicators
 // TODO: DJT in the Dashboard
@@ -29,6 +41,7 @@
 // TODO: Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
 
 // ERRORS:
+// TODO: Error if try to Add Asset "Supply Chain"
 // TODO: Qty of the Update Asset must be formatted correctly to save in the database
 // TODO: On Update Asset: we need to correct the format of the number (decimals, commas and dots)
 // TODO: Context

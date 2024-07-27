@@ -9,7 +9,6 @@ import {
   SheetTrigger,
 } from './ui/sheet';
 import { AddAssetForm } from './AddAssetForm';
-import { Button } from './ui/button';
 
 export default function NoAssets() {
   return (

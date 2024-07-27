@@ -77,11 +77,11 @@ export const getSymbol = (subtype: string) => {
 export const getWallet = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
-      return ['Binance', 'Bybit', 'Gate.io', 'Crypto.com', 'Ledger', 'Trezor'];
+      return ['Binance', 'Bybit', 'Gate.io', 'Crypto', 'Ledger', 'Trezor'];
     case 'ETH':
-      return ['Binance', 'Bybit', 'Gate.io', 'Crypto.com', 'Ledger', 'Trezor'];
+      return ['Binance', 'Bybit', 'Gate.io', 'Crypto', 'Ledger', 'Trezor'];
     case 'Altcoin':
-      return ['Binance', 'Bybit', 'Gate.io', 'Crypto.com', 'Ledger', 'Trezor'];
+      return ['Binance', 'Bybit', 'Gate.io', 'Crypto', 'Ledger', 'Trezor'];
     case 'Stock-USD':
       return ['Wealthsimple', 'Clear'];
     case 'Stock-CAD':
@@ -89,7 +89,7 @@ export const getWallet = (subtype: string) => {
     case 'Stock-BRL':
       return ['Clear', 'XP'];
     case 'Cash-USD':
-      return ['Binance', 'Bybit', 'Gate.io', 'Crypto.com', 'Ledger', 'Trezor'];
+      return ['Binance', 'Bybit', 'Gate.io', 'Crypto', 'Ledger', 'Trezor'];
     case 'Cash-CAD':
       return ['Tangerine', 'Scotiabank'];
     case 'Cash-BRL':
@@ -99,7 +99,7 @@ export const getWallet = (subtype: string) => {
         'Binance',
         'Bybit',
         'Gate.io',
-        'Crypto.com',
+        'Crypto',
         'Wealthsimple',
         'Ledger',
         'Trezor',

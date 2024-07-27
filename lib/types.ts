@@ -135,3 +135,8 @@ export type netWorthChartData = {
   brlTotal: number;
   btcTotal: number;
 };
+
+export type TotalByWallet = {
+  value: string;
+  total: number;
+};

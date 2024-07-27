@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../components/ui/card';
+} from './ui/card';
 
 import {
   numberFormatterNoDecimals,
@@ -14,18 +14,20 @@ import {
 } from '../lib/utils';
 import { Asset } from '../lib/types';
 
-export const CardStocksBy = ({
+export const CardAssetsBy = ({
+  assetType,
   assets,
   customKey,
   emoji = '',
   description = '',
 }: {
+  assetType: string;
   assets: Asset[];
   customKey: string;
   emoji?: string;
   description?: string;
 }) => {
-  // Main Card "Total By Stock"
+  // Main Card "Total By Asset"
   const totalArray = getTotalByKey(assets, customKey);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
@@ -51,15 +53,21 @@ export const CardStocksBy = ({
         <div className='flex flex-col'>
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
-              <span>{`Stocks By ${customKey}`}</span>
+              <span>{`${assetType} By ${customKey}`}</span>
               <span className='text-3xl'>{emoji}</span>
             </CardTitle>
             <CardDescription className='text-xs'>{description}</CardDescription>
           </CardHeader>
 
-          <CardContent>
+          <CardContent
+            className={
+              assetType === 'Cryptos' && customKey === 'wallet'
+                ? 'flex flex-wrap gap-2 w-full'
+                : ''
+            }
+          >
             {accKeys.map((key: string) => (
-              <div key={key} className='border rounded-[2px] mb-2 p-2'>
+              <div key={key} className='border rounded-[2px] mb-2 p-2 grow'>
                 <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
                   {key}
                 </h3>

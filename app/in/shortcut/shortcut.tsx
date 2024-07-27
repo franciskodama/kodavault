@@ -25,48 +25,50 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
 }
 
 export const allCategories = [
-  'exchange',
-  'knowledge',
-  'course',
-  'analysis',
-  'indicator',
-  'miscellaneous',
-  'platform',
+  'Exchange',
+  'Knowledge',
+  'Course',
+  'Analysis',
+  'Indicator',
+  'Miscellaneous',
+  'Platform',
+  'Video',
+  'Friend',
 ];
 
 export const allColors = [
-  'blue',
-  'green',
-  'red',
-  'orange',
-  'pink',
-  'black',
-  'gray',
+  'Blue',
+  'Green',
+  'Red',
+  'Orange',
+  'Pink',
+  'Black',
+  'Gray',
 ];
 
 export const getColor = (key: string) => {
   let color = '';
 
   switch (key) {
-    case 'blue':
+    case 'Blue':
       color = 'bg-blue-400';
       break;
-    case 'red':
+    case 'Red':
       color = 'bg-red-400';
       break;
-    case 'green':
+    case 'Green':
       color = 'bg-green-400';
       break;
-    case 'orange':
+    case 'Orange':
       color = 'bg-orange-400';
       break;
-    case 'black':
+    case 'Black':
       color = 'bg-gray-900';
       break;
-    case 'gray':
+    case 'Gray':
       color = 'bg-slate-300';
       break;
-    case 'pink':
+    case 'Pink':
       color = 'bg-pink-400';
       break;
     default:
