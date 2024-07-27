@@ -6,17 +6,22 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
-import {
-  numberFormatterNoDecimals,
-  numberFormatter,
-  groupAssetsBySomething,
-} from '../lib/utils';
+import { numberFormatterNoDecimals, numberFormatter } from '../lib/utils';
 import { Asset } from '@/lib/types';
 
 export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
-  const assetsForTrading = groupAssetsBySomething(
-    assets,
-    'purpose' as keyof Asset
+  const assetsForTrading = assets.reduce<Record<string, Asset[]>>(
+    (groupedAssets, asset) => {
+      if (!asset) return groupedAssets;
+
+      const purposeKey = asset.purpose as unknown as string;
+
+      if (!groupedAssets[purposeKey]) groupedAssets[purposeKey] = [];
+      groupedAssets[purposeKey].push(asset);
+
+      return groupedAssets;
+    },
+    {}
   );
   const tradingAssets = assetsForTrading.Trade;
 

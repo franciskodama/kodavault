@@ -95,20 +95,14 @@ export const getTotalByKey = (assets: any[], key: string): TotalByWallet[] => {
 
 // ---------------------------------------------------------------------------
 
-export const groupAssetsBySomething = (
-  assets: Asset[],
-  something: keyof Asset
-) => {
-  return assets.reduce(
-    (groupedAssets: Record<string, Asset[]>, asset: Asset | undefined) => {
-      if (!asset) return groupedAssets;
+export const groupAssetsBySomething = (assets: Asset[], something: string) => {
+  return assets.reduce((groupedAssets: any, asset: any) => {
+    const somethingKey = asset[something];
+    if (!groupedAssets[somethingKey]) groupedAssets[somethingKey] = [];
+    groupedAssets[somethingKey].push(asset);
 
-      const somethingKey = asset[something];
-      if (!groupedAssets[somethingKey]) groupedAssets[somethingKey] = [];
-      groupedAssets[somethingKey].push(asset);
-
-      return groupedAssets;
-    },
-    {}
-  );
+    return groupedAssets;
+  }, {});
 };
+
+// ---------------------------------------------------------------------------
