@@ -69,7 +69,6 @@ export async function GET() {
     );
     return Response.json({ message: 'Cron job executed successfully' });
   } catch (error) {
-    console.error('ERROR:', error);
-    return Response.json({ error: 'Internal Server Error' });
+    return Response.json({ error: error });
   }
 }
