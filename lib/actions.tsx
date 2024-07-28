@@ -6,6 +6,7 @@ import {
   CryptoGoalAllocation,
   Inputs,
   ShortcutType,
+  Asset,
 } from './types';
 import { revalidatePath } from 'next/cache';
 import { v4 } from 'uuid';
@@ -277,6 +278,23 @@ export const getNetWorthEvolution = async (uid: string) => {
       },
     });
     return netWorthEvolution;
+  } catch (error) {
+    return { error };
+  }
+};
+
+export const getUids = async () => {
+  try {
+    const assets = await prisma.asset.findMany();
+
+    const userIds = new Set();
+    for (const asset of assets) {
+      const userId = asset.uid;
+      userIds.add(userId);
+    }
+    const uids = Array.from(userIds);
+
+    return uids;
   } catch (error) {
     return { error };
   }

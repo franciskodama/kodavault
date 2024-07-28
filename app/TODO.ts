@@ -3,6 +3,8 @@
 //------------------------------------------
 // WORKING ON:
 // TODO: Include MM Wallet
+// TODO: Smart Contract button (alignment)
+
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: Altseason Indicators
 // TODO: Filter by Exchange must be a dropdown (assets page)

@@ -193,7 +193,7 @@ enum category_enum_6c7fcd47 {
   None
   NFT
   Safehaven
-  Smart_Contracts  @map("Smart Contracts")
+  Smart_Contract   @map("Smart Contract")
   Sports
   Media
   Privacy
