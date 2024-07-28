@@ -247,7 +247,7 @@ const getColor = (name: string) => {
     case 'BingX':
       color = '#2D70B7';
       break;
-    case 'MetaMask':
+    case 'Metamask':
       color = '#F6851B';
       break;
     default:

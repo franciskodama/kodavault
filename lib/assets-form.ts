@@ -77,11 +77,35 @@ export const getSymbol = (subtype: string) => {
 export const getWallet = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
-      return ['Binance', 'Bybit', 'Gate.io', 'Crypto', 'Ledger', 'Trezor'];
+      return [
+        'Binance',
+        'Bybit',
+        'Gate.io',
+        'Crypto',
+        'Ledger',
+        'Trezor',
+        'Metamask',
+      ];
     case 'ETH':
-      return ['Binance', 'Bybit', 'Gate.io', 'Crypto', 'Ledger', 'Trezor'];
+      return [
+        'Binance',
+        'Bybit',
+        'Gate.io',
+        'Crypto',
+        'Ledger',
+        'Trezor',
+        'Metamask',
+      ];
     case 'Altcoin':
-      return ['Binance', 'Bybit', 'Gate.io', 'Crypto', 'Ledger', 'Trezor'];
+      return [
+        'Binance',
+        'Bybit',
+        'Gate.io',
+        'Crypto',
+        'Ledger',
+        'Trezor',
+        'Metamask',
+      ];
     case 'Stock-USD':
       return ['Wealthsimple', 'Clear'];
     case 'Stock-CAD':
@@ -89,7 +113,15 @@ export const getWallet = (subtype: string) => {
     case 'Stock-BRL':
       return ['Clear', 'XP'];
     case 'Cash-USD':
-      return ['Binance', 'Bybit', 'Gate.io', 'Crypto', 'Ledger', 'Trezor'];
+      return [
+        'Binance',
+        'Bybit',
+        'Gate.io',
+        'Crypto',
+        'Ledger',
+        'Trezor',
+        'Metamask',
+      ];
     case 'Cash-CAD':
       return ['Tangerine', 'Scotiabank'];
     case 'Cash-BRL':
@@ -104,6 +136,7 @@ export const getWallet = (subtype: string) => {
         'Ledger',
         'Trezor',
         'Tangerine',
+        'Metamask',
       ];
   }
 };

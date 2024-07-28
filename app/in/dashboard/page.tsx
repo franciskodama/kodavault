@@ -3,7 +3,7 @@ import Dashboard from './dashboard';
 import { getCurrency } from '@/lib/currency.server';
 import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
 import { netWorthChartData } from '@/lib/types';
-import { getNetWorthEvolution } from '@/lib/actions';
+import { getNetWorthEvolution, getUids } from '@/lib/actions';
 import { currentUser } from '@clerk/nextjs/server';
 import { Loading } from '@/components/Loading';
 import {
