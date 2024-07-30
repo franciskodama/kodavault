@@ -69,5 +69,24 @@ export async function GET() {
       return Response.json({ error: error });
     }
   }
-  return Response.json({ message: 'Cron job executed successfully' });
+  // return Response.json({ message: 'Cron job executed successfully' })
+
+  return (
+    Response.json({ message: 'Cron job executed successfully' }),
+    {
+      headers: {
+        'Cache-Control': 'no-store',
+      },
+    }
+  );
+
+  // return Response.json({ message: 'Cron job executed successfully' });
+  // return new Response(
+  //   JSON.stringify({ message: 'Cron job executed successfully' }),
+  //   {
+  //     headers: {
+  //       'Cache-Control': 'no-store',
+  //     },
+  //   }
+  // );
 }
