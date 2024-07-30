@@ -136,7 +136,7 @@ model Shortcut {
 }
 
 model NetWorthEvolution {
-  created_at DateTime @unique @default(now()) @db.Date
+  created_at DateTime @default(now()) @db.Date
   usd_total  Float    @default(0)
   cad_total  Float    @default(0)
   brl_total  Float    @default(0)
