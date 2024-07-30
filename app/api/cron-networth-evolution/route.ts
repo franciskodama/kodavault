@@ -63,6 +63,7 @@ export async function GET() {
         };
       }
 
+      console.log('---  🚀 ---> | networthData:', networthData);
       await addNetWorthEvolution(networthData);
     } catch (error) {
       return Response.json({ error: error });
