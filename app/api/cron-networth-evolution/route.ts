@@ -69,7 +69,18 @@ export async function GET() {
       return Response.json({ error: error });
     }
   }
-  return Response.json({ message: 'Cron job executed successfully' });
+  return (
+    Response.json({ message: 'Cron job executed successfully' }),
+    {
+      headers: {
+        'Cache-Control':
+          'no-store, no-cache, must-revalidate, proxy-revalidate',
+        Pragma: 'no-cache',
+        Expires: '0',
+        'Surrogate-Control': 'no-store',
+      },
+    }
+  );
 }
 
 // import { addNetWorthEvolution, getUids } from '@/lib/actions';
