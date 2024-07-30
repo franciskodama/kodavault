@@ -2,10 +2,13 @@
 
 //------------------------------------------
 // WORKING ON:
+
 // TODO: Include MM Wallet
 // TODO: Smart Contract button (alignment)
 
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
+// TODO: After CronJob Fix, return the commented code in the middleware file
+
 // TODO: Altseason Indicators
 // TODO: Filter by Exchange must be a dropdown (assets page)
 // TODO: Check ATH if it's not hardcoded

@@ -9,7 +9,14 @@ export async function GET() {
   const uids = await getUids();
 
   if (!Array.isArray(uids)) {
-    return Response.json({ message: 'User IDs call error! 👻' });
+    return new Response(
+      JSON.stringify({ message: 'User IDs call error! 👻' }),
+      {
+        headers: {
+          'Cache-Control': 'no-store',
+        },
+      }
+    );
   }
 
   for (const uid of uids) {
@@ -28,12 +35,23 @@ export async function GET() {
           exchange: rawAsset.exchange ?? '',
         }));
       } else if ('error' in rawAssets) {
-        return Response.json({ error: rawAssets.error });
-      } else {
-        return Response.json({
-          error:
-            'Unexpected response format from getAssets. Check if it is an array.',
+        return new Response(JSON.stringify({ error: rawAssets.error }), {
+          headers: {
+            'Cache-Control': 'no-store',
+          },
         });
+      } else {
+        return new Response(
+          JSON.stringify({
+            error:
+              'Unexpected response format from getAssets. Check if it is an array.',
+          }),
+          {
+            headers: {
+              'Cache-Control': 'no-store',
+            },
+          }
+        );
       }
 
       const { assets } = await fetchAssetsWithPrices(unpricedAssets);
@@ -66,11 +84,13 @@ export async function GET() {
       console.log('---  🚀 ---> | networthData:', networthData);
       await addNetWorthEvolution(networthData);
     } catch (error) {
-      return Response.json({ error: error });
+      return new Response(JSON.stringify({ error: error }), {
+        headers: {
+          'Cache-Control': 'no-store',
+        },
+      });
     }
   }
-  // return Response.json({ message: 'Cron job executed successfully' })
-
   return new Response(
     JSON.stringify({ message: 'Cron job executed successfully' }),
     {
@@ -79,14 +99,4 @@ export async function GET() {
       },
     }
   );
-
-  // return Response.json({ message: 'Cron job executed successfully' });
-  // return new Response(
-  //   JSON.stringify({ message: 'Cron job executed successfully' }),
-  //   {
-  //     headers: {
-  //       'Cache-Control': 'no-store',
-  //     },
-  //   }
-  // );
 }
