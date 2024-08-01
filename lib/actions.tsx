@@ -24,6 +24,7 @@ export async function addAsset(formData: Inputs) {
     uid,
     category,
     purpose,
+    tag,
   } = formData;
 
   try {
@@ -42,6 +43,7 @@ export async function addAsset(formData: Inputs) {
         exchange,
         category,
         purpose,
+        tag,
       },
     });
     return true;
@@ -65,6 +67,7 @@ export async function updateAsset(formData: Inputs) {
     uid,
     purpose,
     category,
+    tag,
   } = formData;
 
   try {
@@ -86,6 +89,7 @@ export async function updateAsset(formData: Inputs) {
         exchange,
         purpose,
         category,
+        tag,
       },
     });
     return true;

@@ -190,7 +190,6 @@ export function AddAssetForm() {
             </ul>
           </div>
 
-          {/* ------------------------------ */}
           <div className={classDiv}>
             <h3 className={classTitle}>Category</h3>
             <ul className={classUl}>
@@ -210,7 +209,6 @@ export function AddAssetForm() {
               ))}
             </ul>
           </div>
-          {/* ------------------------------ */}
 
           <div className={classDiv}>
             <h3 className={classTitle}>Purpose</h3>
@@ -230,6 +228,20 @@ export function AddAssetForm() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className={classDiv}>
+            <label className={classTitle} htmlFor='tag'>
+              Tag
+            </label>
+            <input
+              className={classInput}
+              placeholder='Tag'
+              {...register('tag')}
+            />
+            {/* {errors.qty?.message && (
+              <p className={classError}>{errors.qty.message}</p>
+            )} */}
           </div>
 
           {assetCurrency.length > 1 && (

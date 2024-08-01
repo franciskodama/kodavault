@@ -47,6 +47,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       account: asset?.account,
       purpose: asset?.purpose,
       category: asset?.category,
+      tag: asset?.tag,
     },
   });
 
@@ -203,6 +204,20 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className={classDiv}>
+            <label className={classTitle} htmlFor='tag'>
+              Tag
+            </label>
+            <input
+              className={classInput}
+              placeholder='Tag'
+              {...register('tag')}
+            />
+            {/* {errors.qty?.message && (
+              <p className={classError}>{errors.qty.message}</p>
+            )} */}
           </div>
 
           <div className={classDiv}>

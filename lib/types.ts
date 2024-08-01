@@ -22,6 +22,7 @@ export type UnpricedAsset = {
   cash?: string;
   purpose?: purpose_enum_ceee32b0;
   category?: category_enum_6c7fcd47;
+  tag?: string;
 };
 
 export type Asset =
@@ -86,6 +87,7 @@ export type Inputs = {
   account: string;
   purpose: purpose_enum_ceee32b0 | null;
   category: category_enum_6c7fcd47 | null;
+  tag?: string;
 };
 
 export type CryptoGoals = {

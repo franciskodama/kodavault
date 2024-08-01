@@ -3,6 +3,10 @@
 //------------------------------------------
 // WORKING ON:
 
+// TODO: Tag properties of Assets
+// TODO: Delete Tag button on Update Assets
+// TODO: Fix the annoying reload when Add, Update and Delete Assets
+
 // TODO: Include MM Wallet
 // TODO: Smart Contract button (alignment)
 
