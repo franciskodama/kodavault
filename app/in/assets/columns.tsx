@@ -37,7 +37,6 @@ import { UpdateAssetForm } from '@/components/UpdateAssetForm';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
-import { revalidatePath } from 'next/cache';
 
 export const columns: ColumnDef<Asset>[] = [
   {

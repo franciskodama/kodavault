@@ -210,14 +210,19 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
             <label className={classTitle} htmlFor='tag'>
               Tag
             </label>
-            <input
-              className={classInput}
-              placeholder='Tag'
-              {...register('tag')}
-            />
-            {/* {errors.qty?.message && (
+            <div className='flex items-center gap-2'>
+              <input
+                className={classInput}
+                placeholder='Tag'
+                {...register('tag')}
+              />
+              {/* {errors.qty?.message && (
               <p className={classError}>{errors.qty.message}</p>
-            )} */}
+              )} */}
+              <Button className='mt-2' variant={'outline'}>
+                Clear
+              </Button>
+            </div>
           </div>
 
           <div className={classDiv}>
