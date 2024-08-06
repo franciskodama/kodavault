@@ -39,7 +39,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       id: asset?.id,
       subtype: asset?.subtype,
       asset: asset?.asset,
-      qty: asset?.qty,
+      qty: asset?.qty.toString().replace(',', ''),
       wallet: asset?.wallet,
       type: asset?.type,
       currency: asset?.currency,

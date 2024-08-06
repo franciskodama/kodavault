@@ -78,7 +78,7 @@ export type Inputs = {
   id?: string;
   uid: string;
   asset: string;
-  qty: number;
+  qty: number | string;
   wallet: string;
   type: string;
   subtype: string;

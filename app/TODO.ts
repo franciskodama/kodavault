@@ -2,7 +2,8 @@
 
 //------------------------------------------
 // WORKING ON:
-
+// TODO: Quantity in the forms for Updating Assets (error formatting)
+// TODO: Quantity in the forms for  Assets (error formatting)
 // TODO: Tag properties of Assets
 // TODO: Delete Tag button on Update Assets
 // TODO: Fix the annoying reload when Add, Update and Delete Assets
