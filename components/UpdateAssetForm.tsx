@@ -23,6 +23,7 @@ import {
 
 export function UpdateAssetForm({ asset }: { asset: Asset }) {
   const [data, setData] = useState<Inputs>();
+  // const [assetTag, setAssetTag] = useState<string>();
   const { toast } = useToast();
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
@@ -32,6 +33,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
     watch,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
@@ -50,6 +52,11 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       tag: asset?.tag,
     },
   });
+
+  // const clearTag = (e: any) => {
+  //   e.target.reset(); // reset after form submit
+  //   setAssetTag('');
+  // };
 
   const assetSubtype = watch('subtype');
   const assetWallet = getWallet(assetSubtype);
@@ -216,15 +223,17 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
                 placeholder='Tag'
                 {...register('tag')}
               />
-              {/* {errors.qty?.message && (
-              <p className={classError}>{errors.qty.message}</p>
-              )} */}
-              <Button className='mt-2' variant={'outline'}>
+              {/* <button
+                className='border-2 border-slate-500 h-10 mt-2 px-4 rounded-[2px] font-bold hover:bg-accent hover:text-accent-foreground'
+                type='button'
+                onClick={() => setValue('tag', '')}
+              >
                 Clear
-              </Button>
+              </button> */}
             </div>
           </div>
-
+          {/* https://codesandbox.io/s/react-hook-form-set-inputselect-value-forked-kh0mk */}
+          {/* to fix options of the dropdpown */}
           <div className={classDiv}>
             <h3 className={classTitle}>Currency</h3>
             <ul className={classUl}>
