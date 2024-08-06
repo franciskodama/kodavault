@@ -129,6 +129,12 @@ export default function Dashboard({
                   assets={assets}
                   customKey={'subtype'}
                 />
+                <CardTotal
+                  emoji={'🏷️'}
+                  description={'Total value grouped by tag'}
+                  assets={assets}
+                  customKey={'tag'}
+                />
               </div>
             </div>
 

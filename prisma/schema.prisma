@@ -111,6 +111,7 @@ model Asset {
   id         String                  @id(map: "Asset_pkey1") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   purpose    purpose_enum_ceee32b0?  @default(Investment)
   category   category_enum_6c7fcd47? @default(Unknown)
+  tag        String?
 }
 
 model CoinGoal {
@@ -193,10 +194,11 @@ enum category_enum_6c7fcd47 {
   None
   NFT
   Safehaven
-  Smart_Contract   @map("Smart Contract")
+  SmartContract
   Sports
   Media
   Privacy
   Identity
-  Supply_Chain     @map("Supply Chain")
+  SupplyChain
+  RWA
 }

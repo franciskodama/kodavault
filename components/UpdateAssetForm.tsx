@@ -39,7 +39,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       id: asset?.id,
       subtype: asset?.subtype,
       asset: asset?.asset,
-      qty: asset?.qty,
+      qty: asset?.qty.toString().replace(',', ''),
       wallet: asset?.wallet,
       type: asset?.type,
       currency: asset?.currency,
@@ -47,6 +47,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       account: asset?.account,
       purpose: asset?.purpose,
       category: asset?.category,
+      tag: asset?.tag,
     },
   });
 
@@ -203,6 +204,25 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className={classDiv}>
+            <label className={classTitle} htmlFor='tag'>
+              Tag
+            </label>
+            <div className='flex items-center gap-2'>
+              <input
+                className={classInput}
+                placeholder='Tag'
+                {...register('tag')}
+              />
+              {/* {errors.qty?.message && (
+              <p className={classError}>{errors.qty.message}</p>
+              )} */}
+              <Button className='mt-2' variant={'outline'}>
+                Clear
+              </Button>
+            </div>
           </div>
 
           <div className={classDiv}>

@@ -20,6 +20,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 import { ArrowUpDown } from 'lucide-react';
 
@@ -31,7 +37,6 @@ import { UpdateAssetForm } from '@/components/UpdateAssetForm';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
-import { revalidatePath } from 'next/cache';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -111,7 +116,7 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Subtype
+          Type
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
@@ -148,6 +153,21 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
+    accessorKey: 'tag',
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Tag
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+  },
+  {
     accessorKey: 'exchange',
     header: ({ column }) => {
       return (
@@ -156,7 +176,14 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Exchange
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>FX</TooltipTrigger>
+              <TooltipContent>
+                <p>Foreign Exchange</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
@@ -171,7 +198,14 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Currency
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>$</TooltipTrigger>
+              <TooltipContent>
+                <p>Currency</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
