@@ -2,11 +2,9 @@
 
 //------------------------------------------
 // WORKING ON:
-// TODO: Quantity in the forms for Updating Assets (error formatting)
-// TODO: Quantity in the forms for  Assets (error formatting)
-// TODO: Tag properties of Assets
 // TODO: Delete Tag button on Update Assets
 // TODO: Fix the annoying reload when Add, Update and Delete Assets
+// TODO: Filter by Exchange must be a dropdown (assets page)
 
 // TODO: Include MM Wallet
 // TODO: Smart Contract button (alignment)
@@ -14,16 +12,13 @@
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: After CronJob Fix, return the commented code in the middleware file
 
-// TODO: Altseason Indicators
-// TODO: Filter by Exchange must be a dropdown (assets page)
-// TODO: Check ATH if it's not hardcoded
-// TODO: BTC Dominance
-
 // NEXT:
 // TODO: When I edit the CAD Cash in Wealthsimple Asset, it does not appear Wealthsimple as an option to choose from
 // TODO: Assets need to accept QETH.U
 // TODO: Não vamos fazer 100X: https://youtu.be/XISm92VwglI?si=OvaYIsQrLriyLdaO
-
+// TODO: Altseason Indicators
+// TODO: Check ATH if it's not hardcoded
+// TODO: BTC Dominance
 // TODO: DJT in the Dashboard
 // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
 // TODO: Resistences and Supports?
@@ -99,6 +94,9 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Tag properties of Assets
+// TODO: Total by Tag in Dashboard
+// TODO: Quantity in the forms for Updating Assets (error formatting)
 // TODO: Include Category for Crypto Assets as Tags. I'm not sure if it is a good idea. Too much work for not much value.
 // TODO: Cryptos Page needs to have a sub Dashboard like the Stocks Page (main reason: how much by Exchange)
 // TODO: Crypto Page: Pie Chart for Wallet Shares
