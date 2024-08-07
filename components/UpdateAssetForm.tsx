@@ -223,17 +223,16 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
                 placeholder='Tag'
                 {...register('tag')}
               />
-              {/* <button
-                className='border-2 border-slate-500 h-10 mt-2 px-4 rounded-[2px] font-bold hover:bg-accent hover:text-accent-foreground'
+              <Button
+                className='mt-2'
                 type='button'
+                variant='outline'
                 onClick={() => setValue('tag', '')}
               >
                 Clear
-              </button> */}
+              </Button>
             </div>
           </div>
-          {/* https://codesandbox.io/s/react-hook-form-set-inputselect-value-forked-kh0mk */}
-          {/* to fix options of the dropdpown */}
           <div className={classDiv}>
             <h3 className={classTitle}>Currency</h3>
             <ul className={classUl}>
@@ -303,7 +302,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
           </Button>
 
           <SheetClose asChild>
-            <Button className='my-4' type='submit' variant={'outline'}>
+            <Button className='my-4' variant={'outline'}>
               Close
             </Button>
           </SheetClose>

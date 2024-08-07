@@ -28,12 +28,13 @@ export const categoryOptions = [
   'None',
   'NFT',
   'Safehaven',
-  'Smart Contracts',
+  'SmartContract',
   'Sports',
   'Media',
   'Privacy',
   'Identity',
-  'Supply Chain',
+  'SupplyChain',
+  'RWA',
 ];
 
 export const getType = (subtype: string) => {

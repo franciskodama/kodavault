@@ -295,7 +295,7 @@ export function AddShortcutForm() {
           </li>
 
           <li>
-            <Button className='' type='submit' variant='darkerOutline'>
+            <Button className='' variant='darkerOutline'>
               Add Shortcut
             </Button>
           </li>
