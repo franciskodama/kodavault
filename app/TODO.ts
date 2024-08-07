@@ -2,13 +2,14 @@
 
 //------------------------------------------
 // WORKING ON:
-// TODO: Delete Tag button on Update Assets
+// TODO: Error if try to Add Asset "Supply Chain"
+// ⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() (or the deprecated authMiddleware()). Please ensure the following:
+// -  clerkMiddleware() (or the deprecated authMiddleware()) is used in your Next.js Middleware.
 // TODO: Fix the annoying reload when Add, Update and Delete Assets
 // TODO: Filter by Exchange must be a dropdown (assets page)
 
 // TODO: Include MM Wallet
 // TODO: Smart Contract button (alignment)
-
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: After CronJob Fix, return the commented code in the middleware file
 
@@ -25,17 +26,10 @@
 // TODO: Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
 
 // ERRORS:
-// TODO: Error if try to Add Asset "Supply Chain"
-// TODO: Qty of the Update Asset must be formatted correctly to save in the database
-// TODO: On Update Asset: we need to correct the format of the number (decimals, commas and dots)
 // TODO: Context
-// TODO: Reload when we update an asset
-// ⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() (or the deprecated authMiddleware()). Please ensure the following:
-// -  clerkMiddleware() (or the deprecated authMiddleware()) is used in your Next.js Middleware.
 
 // PRIORITIES 1:
 // TODO: Assets to be aware of: for position trade checking RSI and other indicators (ie.: DOL, GLXY...)
-
 // TODO: Assets page, Filter by Exchange + Currency using Dropdown
 // TODO: Fix bug on Production Environment because it doesn't work (show assets)
 // TODO: Have validation on the Forms
@@ -95,6 +89,7 @@
 
 // DONE =======================================================================================
 // TODO: Tag properties of Assets
+// TODO: Clear Tag button on Update Assets
 // TODO: Total by Tag in Dashboard
 // TODO: Quantity in the forms for Updating Assets (error formatting)
 // TODO: Include Category for Crypto Assets as Tags. I'm not sure if it is a good idea. Too much work for not much value.
