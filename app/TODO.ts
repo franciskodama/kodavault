@@ -2,12 +2,10 @@
 
 //------------------------------------------
 // WORKING ON:
-// TODO: Error if try to Add Asset "Supply Chain"
 // ⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() (or the deprecated authMiddleware()). Please ensure the following:
 // -  clerkMiddleware() (or the deprecated authMiddleware()) is used in your Next.js Middleware.
 // TODO: Fix the annoying reload when Add, Update and Delete Assets
 // TODO: Filter by Exchange must be a dropdown (assets page)
-
 // TODO: Include MM Wallet
 // TODO: Smart Contract button (alignment)
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
@@ -88,6 +86,7 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Error if try to Add Asset "Supply Chain"
 // TODO: Tag properties of Assets
 // TODO: Clear Tag button on Update Assets
 // TODO: Total by Tag in Dashboard
