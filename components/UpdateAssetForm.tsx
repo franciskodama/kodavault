@@ -23,7 +23,6 @@ import {
 
 export function UpdateAssetForm({ asset }: { asset: Asset }) {
   const [data, setData] = useState<Inputs>();
-  // const [assetTag, setAssetTag] = useState<string>();
   const { toast } = useToast();
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
@@ -52,11 +51,6 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       tag: asset?.tag,
     },
   });
-
-  // const clearTag = (e: any) => {
-  //   e.target.reset(); // reset after form submit
-  //   setAssetTag('');
-  // };
 
   const assetSubtype = watch('subtype');
   const assetWallet = getWallet(assetSubtype);
