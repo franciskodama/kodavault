@@ -7,7 +7,6 @@
 // TODO: Fix the annoying reload when Add, Update and Delete Assets
 // TODO: Filter by Exchange must be a dropdown (assets page)
 // TODO: Include MM Wallet
-// TODO: Smart Contract button (alignment)
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: After CronJob Fix, return the commented code in the middleware file
 
@@ -86,6 +85,7 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Smart Contract button (alignment)
 // TODO: Error if try to Add Asset "Supply Chain"
 // TODO: Tag properties of Assets
 // TODO: Clear Tag button on Update Assets
