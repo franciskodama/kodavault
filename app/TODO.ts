@@ -11,6 +11,7 @@
 // TODO: After CronJob Fix, return the commented code in the middleware file
 
 // NEXT:
+// TODO: Assets Forms: If chooses BTC we need to give the right category selected - For all the other coins too, but no hardcode (or api) info we show all the options
 // TODO: When I edit the CAD Cash in Wealthsimple Asset, it does not appear Wealthsimple as an option to choose from
 // TODO: Assets need to accept QETH.U
 // TODO: Não vamos fazer 100X: https://youtu.be/XISm92VwglI?si=OvaYIsQrLriyLdaO
