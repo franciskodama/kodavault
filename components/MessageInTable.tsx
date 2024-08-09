@@ -12,6 +12,7 @@ import { AddAssetForm } from './AddAssetForm';
 
 export type MessageInTable = {
   image: string;
+  objectPosition: string;
   alt: string;
   title: string;
   subtitle: string;
@@ -22,6 +23,7 @@ export type MessageInTable = {
 
 export default function MessageInTable({
   image,
+  objectPosition,
   alt,
   title,
   subtitle,
@@ -37,7 +39,7 @@ export default function MessageInTable({
             src={image}
             alt={alt}
             className='object-cover rounded-sm border-primary'
-            objectPosition='center 100%'
+            objectPosition={objectPosition}
             fill
           />
         </AspectRatio>

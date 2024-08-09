@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 
 import {
@@ -21,16 +20,6 @@ import {
   TableHeader,
   TableRow,
 } from '../../../components/ui/table';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '../../../components/ui/sheet';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { AddAssetForm } from '@/components/AddAssetForm';
 import { Input } from '@/components/ui/input';
 import MessageInTable from '@/components/MessageInTable';
 
@@ -131,11 +120,12 @@ export function DataTable<TData, TValue>({
             <TableRow>
               <TableCell colSpan={columns.length} className='h-24 text-center'>
                 <MessageInTable
-                  image={'/are-you-sure.gif'}
-                  alt={'Poor boy Queen song'}
-                  title={'Spice it up by adding some assets!'}
-                  subtitle={'Spice it up by adding some assets!'}
-                  buttonCopy={'Add this Asset'}
+                  image={'/biden.webp'}
+                  objectPosition={'50% 10%'}
+                  alt={'Looking for something'}
+                  title={'Oops! Asset Not Found 👻'}
+                  subtitle={'Looks like this asset is hiding from us.'}
+                  buttonCopy={'Add it Now!'}
                   formTitle={'Add a new Asset'}
                   formSubtitle={
                     'Add a New Asset and expand your investment portfolio.'
