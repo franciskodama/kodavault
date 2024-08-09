@@ -87,12 +87,12 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       });
     }
 
-    reset();
     setData(data);
+    reset();
 
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 2000);
   };
 
   return (

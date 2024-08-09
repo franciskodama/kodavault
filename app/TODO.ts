@@ -1,16 +1,14 @@
 // Prompt AI: I have this app (Next.js, Typescript, Prisma) to manage my investments. I use the App version of Nextjs (it's not the pages version). This app is where I show a table with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
-//------------------------------------------
 // WORKING ON:
-// ⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware() (or the deprecated authMiddleware()). Please ensure the following:
-// -  clerkMiddleware() (or the deprecated authMiddleware()) is used in your Next.js Middleware.
 // TODO: Fix the annoying reload when Add, Update and Delete Assets
 // TODO: Filter by Exchange must be a dropdown (assets page)
-// TODO: Include MM Wallet
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: After CronJob Fix, return the commented code in the middleware file
+// TODO: Include MM Wallet + Phantom
 
 // NEXT:
+// TODO: If a Token doesn't exist in the search (Assets Page), we show the right message
 // TODO: Assets Forms: If chooses BTC we need to give the right category selected - For all the other coins too, but no hardcode (or api) info we show all the options
 // TODO: When I edit the CAD Cash in Wealthsimple Asset, it does not appear Wealthsimple as an option to choose from
 // TODO: Assets need to accept QETH.U
