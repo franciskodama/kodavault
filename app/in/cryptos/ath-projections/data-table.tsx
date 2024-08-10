@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 
 import {
@@ -13,9 +12,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { AddAssetForm } from '@/components/AddAssetForm';
 import { Input } from '@/components/ui/input';
 import {
   Table,
@@ -25,15 +21,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Sheet } from 'lucide-react';
-import {
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
 
+import MessageInTable from '@/components/MessageInTable';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
@@ -72,7 +61,6 @@ export function DataTable<TData, TValue>({
           className='max-w-sm w-[14ch]'
         />
       </div>
-
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -112,40 +100,18 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className='h-24 text-center'>
-                <div className='flex items-center justify-around'>
-                  <div className='w-[450px] mx-auto my-8'>
-                    <AspectRatio ratio={16 / 9}>
-                      <Image
-                        src='/no-assets-poor-boy.webp'
-                        alt='John Travolta looking at around inside a wallet'
-                        className='object-cover rounded-sm border-primary'
-                        objectPosition='center 100%'
-                        fill
-                      />
-                    </AspectRatio>
-                  </div>
-                  <div className='flex flex-col w-[450px] mx-auto'>
-                    <p className='text-2xl font-semibold'>
-                      Spice it up by adding some assets!
-                    </p>
-                    <p className='text-base my-2'>{`Let's make your financial playground pop! 🚀`}</p>
-                    <Sheet>
-                      <SheetTrigger className='border-2 border-slate-500 h-10 px-4 rounded-[2px] font-semibold my-4 text-sm '>
-                        Add Your First Asset
-                      </SheetTrigger>
-                      <SheetContent>
-                        <SheetHeader>
-                          <SheetTitle>Add a new Asset</SheetTitle>
-                          <SheetDescription>
-                            Add a New Asset and expand your investment
-                            portfolio.
-                          </SheetDescription>
-                        </SheetHeader>
-                        <AddAssetForm />
-                      </SheetContent>
-                    </Sheet>
-                  </div>
-                </div>
+                <MessageInTable
+                  image={'/no-assets-poor-boy.webp'}
+                  objectPosition={'center 100%'}
+                  alt={'Poor boy song by Queen'}
+                  title={`Let's make your financial playground pop! 🚀`}
+                  subtitle={'Spice it up by adding some assets!'}
+                  buttonCopy={'Add Your First Asset'}
+                  formTitle={'Add a new Asset'}
+                  formSubtitle={
+                    'Add a New Asset and expand your investment portfolio.'
+                  }
+                />
               </TableCell>
             </TableRow>
           )}
