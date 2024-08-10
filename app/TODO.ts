@@ -24,6 +24,7 @@
 
 // ERRORS:
 // TODO: Context
+// TODO: Clerk Middleware Error because of the usage of a Clerk function on the [[...rest]] page (Homepage) and is not working in the middleware exception
 
 // PRIORITIES 1:
 // TODO: Assets to be aware of: for position trade checking RSI and other indicators (ie.: DOL, GLXY...)
