@@ -4,9 +4,27 @@ import Footer from '@/components/Footer';
 import { currentUser } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import SignInPage from '../sign-in/page';
+import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
+import { signal } from '@preact/signals-react';
 
 export default async function HomePage() {
   const user = await currentUser();
+  // const uid = user?.emailAddresses?.[0]?.emailAddress;
+  // console.log('---  🚀 ---> | uid:', uid);
+
+  // const refreshAssets = async () => {
+  //   try {
+  //     if (uid) {
+  //       const unpricedAssets = await fetchAssets(uid);
+  //       const result = await fetchAssetsWithPrices(unpricedAssets);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error loading assets:', error);
+  //   }
+  // };
+
+  // const assets = signal(await refreshAssets());
+  // console.log('---  🚀 ---> | assets:', assets);
 
   if (user) {
     redirect('/in/dashboard');

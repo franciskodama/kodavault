@@ -1,6 +1,7 @@
 // Prompt AI: I have this app (Next.js, Typescript, Prisma) to manage my investments. I use the App version of Nextjs (it's not the pages version). This app is where I show a table with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
 // WORKING ON:
+// TODO: from Context to Signals
 // TODO: When we filter by asset on the Assets Page, if there are the same symbol in the same exchange, it shows below, the sum of it.
 // TODO: Fix the annoying reload when Add, Update and Delete Assets
 // TODO: Filter by Exchange must be a dropdown (assets page)
@@ -23,7 +24,6 @@
 // TODO: Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
 
 // ERRORS:
-// TODO: Context
 
 // PRIORITIES 1:
 // TODO: Assets to be aware of: for position trade checking RSI and other indicators (ie.: DOL, GLXY...)
