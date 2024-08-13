@@ -30,7 +30,7 @@ export const getCurrency = async (): Promise<CurrencyData> => {
 
     return { data: result };
   } catch (error) {
-    return { error };
+    return { data: null, error };
   }
 };
 

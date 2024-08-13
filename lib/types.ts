@@ -70,7 +70,7 @@ export type Currency = {
 };
 
 export type CurrencyData = {
-  data?: Currency;
+  data?: Currency | null;
   error?: unknown;
 };
 

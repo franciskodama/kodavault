@@ -6,20 +6,20 @@ import { useUser } from '@clerk/nextjs';
 import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
 import { Asset, AssetsByType, UnpricedAsset } from '@/lib/types';
 
-type AssetsContext = {
-  isLoading: boolean;
-  assets: Asset[];
-  setAssets: React.Dispatch<React.SetStateAction<Asset[]>>;
-  assetsByType: AssetsByType;
-  refreshAssets: () => Promise<void>;
-};
+// type AssetsContext = {
+//   isLoading: boolean;
+//   assets: Asset[];
+//   setAssets: React.Dispatch<React.SetStateAction<Asset[]>>;
+//   assetsByType: AssetsByType;
+//   refreshAssets: () => Promise<void>;
+// };
 
-type pricedAssetsObj = {
-  assets: Asset[];
-  assetsByType: AssetsByType;
-};
+// type pricedAssetsObj = {
+//   assets: Asset[];
+//   assetsByType: AssetsByType;
+// };
 
-export function AssetsProvider() {
+export function AssetsSignal() {
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 

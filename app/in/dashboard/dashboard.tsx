@@ -1,29 +1,29 @@
+import Image from 'next/image';
+
 import { CardTotal } from '@/components/CardTotal';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
+import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import Notifications from './notifications/notifications';
 import { currencyFormatter } from '@/lib/utils';
 import {
   Asset,
   AssetsByType,
-  netWorthChartData,
   CurrencyData,
+  netWorthChartData,
 } from '@/lib/types';
 import NetWorthEvolutionChart from './charts/net-worth-evolution';
-import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
-import Image from 'next/image';
-
 export default function Dashboard({
+  btcPrice,
   currencyRates,
   assets,
   assetsByType,
-  btcPrice,
   netWorthChartData,
   uid,
 }: {
+  btcPrice: number;
   currencyRates: CurrencyData;
   assets: Asset[];
   assetsByType: AssetsByType;
-  btcPrice: number;
   netWorthChartData: netWorthChartData[];
   uid: string;
 }) {
