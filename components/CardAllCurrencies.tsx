@@ -1,6 +1,6 @@
 'use client';
 
-import { Asset, Currency, CurrencyData, totalArrayProps } from '@/lib/types';
+import { Asset, CurrencyData, totalArrayProps } from '@/lib/types';
 import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
 import {
   Card,
@@ -11,10 +11,12 @@ import {
 } from '../components/ui/card';
 
 export const CardTotalAllCurrency = ({
+  btcPrice,
   currencyRates,
   assets,
   description = '',
 }: {
+  btcPrice: number;
   currencyRates: CurrencyData;
   assets: Asset[];
   description?: string;
@@ -23,7 +25,7 @@ export const CardTotalAllCurrency = ({
   const btc = assets.find((item: any) => item.asset === 'BTC');
 
   let totalArray: totalArrayProps[] = [];
-  if (currencyRates.data && btc?.price) {
+  if (currencyRates.data && btcPrice) {
     totalArray = [
       {
         currency: 'USD',
@@ -42,7 +44,7 @@ export const CardTotalAllCurrency = ({
       },
       {
         currency: 'BTC',
-        value: total / btc.price,
+        value: total / btcPrice,
         emoji: '🥇',
       },
     ];

@@ -14,8 +14,18 @@ import {
   getGlobalData,
 } from '@/lib/crypto.server';
 
-export const currencyRates = signal<CurrencyData | null>(null);
 export const btcPrice = signal<number | null>(null);
+export const currencyRates = signal<CurrencyData | null>(null);
+
+export const fetchBtcPrice = async () => {
+  try {
+    const result = await fetchQuotesForCryptos('BTC');
+    btcPrice.value = result.data.BTC[0].quote.USD.price;
+    console.log('---  🚀 ---> | btcPrice:', btcPrice.value);
+  } catch (error) {
+    console.error('Error loading currency:', error);
+  }
+};
 
 export const fetchCurrency = async () => {
   try {
@@ -25,18 +35,9 @@ export const fetchCurrency = async () => {
     console.error('Error loading currency:', error);
   }
 };
-fetchCurrency();
 
-export const fetchBtcPrice = async () => {
-  try {
-    const result = await fetchQuotesForCryptos('BTC');
-    btcPrice.value = result.data.quotes.USD.price;
-    console.log('---  🚀 ---> | btcPrice:', btcPrice.value);
-  } catch (error) {
-    console.error('Error loading currency:', error);
-  }
-};
 fetchBtcPrice();
+fetchCurrency();
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -73,19 +74,15 @@ export default async function DashboardPage() {
 
   return (
     <>
-      {currencyRates.value && btcPrice.value ? (
-        assets &&
-        assetsByType &&
-        uid && (
-          <Dashboard
-            currencyRates={currencyRates.value}
-            btcPrice={btcPrice.value}
-            assets={assets}
-            assetsByType={assetsByType}
-            netWorthChartData={sortedNetWorthChartData}
-            uid={uid}
-          />
-        )
+      {btcPrice.value && currencyRates.value && uid ? (
+        <Dashboard
+          currencyRates={currencyRates.value}
+          btcPrice={btcPrice.value}
+          assets={assets}
+          assetsByType={assetsByType}
+          netWorthChartData={sortedNetWorthChartData}
+          uid={uid}
+        />
       ) : (
         <Loading />
       )}

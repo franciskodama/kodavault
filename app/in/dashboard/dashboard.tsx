@@ -141,6 +141,7 @@ export default function Dashboard({
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
             <div className='flex flex-col basis-1/5'>
               <CardTotalAllCurrency
+                btcPrice={btcPrice}
                 currencyRates={currencyRates}
                 assets={assets}
                 description={'Total Vault in USD, CAD, BRL.'}
