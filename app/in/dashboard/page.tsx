@@ -21,7 +21,6 @@ export const fetchBtcPrice = async () => {
   try {
     const result = await fetchQuotesForCryptos('BTC');
     btcPrice.value = result.data.BTC[0].quote.USD.price;
-    console.log('---  🚀 ---> | btcPrice:', btcPrice.value);
   } catch (error) {
     console.error('Error loading currency:', error);
   }
