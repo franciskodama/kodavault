@@ -1,39 +1,18 @@
-import { signal } from '@preact/signals-react';
+import { currentUser } from '@clerk/nextjs/server';
 
 import Dashboard from './dashboard';
-
-import { getCurrency } from '@/lib/currency.server';
-import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
-import { netWorthChartData, CurrencyData } from '@/lib/types';
-import { getNetWorthEvolution, getUids } from '@/lib/actions';
-import { currentUser } from '@clerk/nextjs/server';
 import { Loading } from '@/components/Loading';
+import { netWorthChartData } from '@/lib/types';
+import { getNetWorthEvolution, getUids } from '@/lib/actions';
+
 import {
-  fetchQuotesForCryptos,
-  getAllTimeHighData,
-  getGlobalData,
-} from '@/lib/crypto.server';
-
-export const btcPrice = signal<number | null>(null);
-export const currencyRates = signal<CurrencyData | null>(null);
-
-export const fetchBtcPrice = async () => {
-  try {
-    const result = await fetchQuotesForCryptos('BTC');
-    btcPrice.value = result.data.BTC[0].quote.USD.price;
-  } catch (error) {
-    console.error('Error loading currency:', error);
-  }
-};
-
-export const fetchCurrency = async () => {
-  try {
-    const result = await getCurrency();
-    currencyRates.value = result;
-  } catch (error) {
-    console.error('Error loading currency:', error);
-  }
-};
+  assetsSignal,
+  btcPrice,
+  currencyRates,
+  fetchBtcPrice,
+  fetchCurrency,
+  fetchRawAssets,
+} from '@/context/signals';
 
 fetchBtcPrice();
 fetchCurrency();
@@ -41,9 +20,7 @@ fetchCurrency();
 export default async function DashboardPage() {
   const user = await currentUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
-
-  const unpricedAssets = await fetchAssets(uid ? uid : '');
-  const { assets, assetsByType } = await fetchAssetsWithPrices(unpricedAssets);
+  await fetchRawAssets(uid ? uid : '');
 
   const rawNetWorthChartData = await getNetWorthEvolution(uid ? uid : '');
 
@@ -73,12 +50,12 @@ export default async function DashboardPage() {
 
   return (
     <>
-      {btcPrice.value && currencyRates.value && uid ? (
+      {assetsSignal.value && btcPrice.value && currencyRates.value && uid ? (
         <Dashboard
           currencyRates={currencyRates.value}
           btcPrice={btcPrice.value}
-          assets={assets}
-          assetsByType={assetsByType}
+          assets={assetsSignal.value?.assets}
+          assetsByType={assetsSignal.value?.assetsByType}
           netWorthChartData={sortedNetWorthChartData}
           uid={uid}
         />
