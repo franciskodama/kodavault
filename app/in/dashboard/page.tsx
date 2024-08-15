@@ -52,7 +52,6 @@ export default async function DashboardPage() {
       )
       .sort((a, b) => a.created_at.getTime() - b.created_at.getTime());
 
-    // Wait for signals to be ready
     if (assetsSignal.value && btcPrice.value && currencyRates.value && uid) {
       return (
         <Dashboard

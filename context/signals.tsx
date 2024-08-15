@@ -43,7 +43,7 @@ export const fetchAssets = async (uid: string) => {
       const unpricedAssets = await fetchAssetsWithoutPrices(uid);
       const result = await fetchAssetsWithPrices(unpricedAssets);
       assetsSignal.value = result;
-      return result;
+      // return result;
     }
   } catch (error) {
     console.error('Error loading assets:', error);
