@@ -3,8 +3,8 @@
 import { useUser } from '@clerk/nextjs';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
-import { Asset, AssetsByType, UnpricedAsset } from '@/lib/types';
+import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
+import { Asset, AssetsByType } from '@/lib/types';
 
 type AssetsContext = {
   isLoading: boolean;
@@ -31,7 +31,7 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const refreshAssets = async () => {
     try {
       if (uid) {
-        const unpricedAssets = await fetchAssets(uid);
+        const unpricedAssets = await fetchAssetsWithoutPrices(uid);
         const { assets: _assets, assetsByType: _assetsByType } =
           await fetchAssetsWithPrices(unpricedAssets);
         setAssets(_assets);

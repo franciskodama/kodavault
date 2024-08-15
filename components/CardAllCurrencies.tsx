@@ -1,6 +1,6 @@
 'use client';
 
-import { Asset, CurrencyData, totalArrayProps } from '@/lib/types';
+import { Asset, Currencies, totalArrayProps } from '@/lib/types';
 import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
 import {
   Card,
@@ -17,7 +17,7 @@ export const CardTotalAllCurrency = ({
   description = '',
 }: {
   btcPrice: number;
-  currencyRates: CurrencyData;
+  currencyRates: Currencies;
   assets: Asset[];
   description?: string;
 }) => {

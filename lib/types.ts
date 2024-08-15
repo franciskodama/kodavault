@@ -37,6 +37,11 @@ export type AssetsByType = {
   [key: string]: Asset[];
 };
 
+export type AssetsAndAssetsByType = {
+  assets: Asset[];
+  assetsByType: AssetsByType;
+};
+
 export type AssetForAth = {
   id: string;
   account: string;
@@ -69,7 +74,7 @@ export type Currency = {
   [key: string]: number;
 };
 
-export type CurrencyData = {
+export type Currencies = {
   data?: Currency | null;
   error?: unknown;
 };

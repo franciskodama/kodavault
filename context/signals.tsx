@@ -1,9 +1,9 @@
 import { signal } from '@preact/signals-react';
 
+import { getCurrencies } from '@/lib/currency.server';
 import { fetchQuotesForCryptos } from '@/lib/crypto.server';
-import { getCurrency } from '@/lib/currency.server';
-import { Asset, AssetsByType, CurrencyData } from '@/lib/types';
-import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
+import { AssetsAndAssetsByType, Currencies } from '@/lib/types';
+import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
 
 // -------------------------------------------------------------------
 
@@ -20,39 +20,32 @@ export const fetchBtcPrice = async () => {
 
 // -------------------------------------------------------------------
 
-export const currencyRates = signal<CurrencyData | null>(null);
+export const currencyRates = signal<Currencies | null>(null);
 
-export const fetchCurrency = async () => {
+export const fetchCurrencies = async () => {
   try {
-    const result = await getCurrency();
+    const result = await getCurrencies();
     currencyRates.value = result;
   } catch (error) {
     console.error('Error loading currency:', error);
   }
 };
+
 // -------------------------------------------------------------------
 
-type AssetsProps = {
-  assets: Asset[];
-  assetsByType: AssetsByType;
-};
+export const assetsSignal = signal<AssetsAndAssetsByType | undefined>(
+  undefined
+);
 
-export const assetsSignal = signal<AssetsProps | undefined>(undefined);
-// export const loadingSignal = signal<boolean>(true);
-// export const errorSignal = signal<Error | undefined>(undefined);
-
-export const fetchRawAssets = async (uid: string) => {
+export const fetchAssets = async (uid: string) => {
   try {
     if (uid) {
-      const unpricedAssets = await fetchAssets(uid);
+      const unpricedAssets = await fetchAssetsWithoutPrices(uid);
       const result = await fetchAssetsWithPrices(unpricedAssets);
       assetsSignal.value = result;
       return result;
     }
   } catch (error) {
     console.error('Error loading assets:', error);
-    //   errorSignal.value = error as Error;
-    // } finally {
-    //   loadingSignal.value = false;
   }
 };

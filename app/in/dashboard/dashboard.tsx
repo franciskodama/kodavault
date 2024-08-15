@@ -8,7 +8,7 @@ import { currencyFormatter } from '@/lib/utils';
 import {
   Asset,
   AssetsByType,
-  CurrencyData,
+  Currencies,
   netWorthChartData,
 } from '@/lib/types';
 import NetWorthEvolutionChart from './charts/net-worth-evolution';
@@ -21,7 +21,7 @@ export default function Dashboard({
   uid,
 }: {
   btcPrice: number;
-  currencyRates: CurrencyData;
+  currencyRates: Currencies;
   assets: Asset[];
   assetsByType: AssetsByType;
   netWorthChartData: netWorthChartData[];

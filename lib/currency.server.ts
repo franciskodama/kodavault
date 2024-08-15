@@ -1,6 +1,6 @@
-import { Currency, CurrencyData } from './types';
+import { Currency, Currencies } from './types';
 
-export const getCurrency = async (): Promise<CurrencyData> => {
+export const getCurrencies = async (): Promise<Currencies> => {
   try {
     const csv = await fetch(
       `https://docs.google.com/spreadsheets/d/e/2PACX-1vRXhHkYpkVB8nx8Ws7Q4h8g6q7MJg-rotoQemAfPdRWXhWHJWjivg7fcDw4m-9YxnQvPyxEkwpTKopW/pub?gid=0&single=true&output=csv`,

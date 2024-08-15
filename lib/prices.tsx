@@ -1,9 +1,9 @@
 'use server';
 
 import { fetchQuotesForCryptos } from './crypto.server';
-import { getCurrency } from './currency.server';
+import { getCurrencies } from './currency.server';
 import { fetchStockPricesFromSheets } from './stock.server';
-import { Asset, CurrencyData, UnpricedAsset } from './types';
+import { Asset, Currencies, UnpricedAsset } from './types';
 
 type StockQuote = {
   symbol: string;
@@ -76,7 +76,7 @@ const getFirstObject = (data: any, symbol: string) => {
 export const includePriceToStockAssets = async (
   stockAssetsArray: UnpricedAsset[]
 ) => {
-  const currencyRates = await getCurrency();
+  const currencyRates = await getCurrencies();
   let symbolAndExchange: string[] = [];
 
   stockAssetsArray.map(async (item: UnpricedAsset) => {
@@ -154,7 +154,7 @@ export const includePriceToStockAssets = async (
 export const includePriceToCashAssets = async (
   cashAssetsArray: UnpricedAsset[]
 ) => {
-  const currencyRates: CurrencyData = await getCurrency();
+  const currencyRates: Currencies = await getCurrencies();
 
   if (!currencyRates.data) {
     return cashAssetsArray.map((item: UnpricedAsset) => ({
