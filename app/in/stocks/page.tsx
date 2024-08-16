@@ -1,9 +1,12 @@
+import { assetsSignal } from '@/context/signals';
 import Stocks from './stocks';
 
 export default function StocksPage() {
   return (
     <>
-      <Stocks />
+      {assetsSignal.value ? (
+        <Stocks stockAssets={assetsSignal.value?.assetsByType.Stocks} />
+      ) : null}
     </>
   );
 }

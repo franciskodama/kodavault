@@ -1,4 +1,5 @@
 import { currentUser } from '@clerk/nextjs/server';
+
 import Dashboard from './dashboard';
 import { Loading } from '@/components/Loading';
 import { netWorthChartData } from '@/lib/types';
