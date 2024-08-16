@@ -1,11 +1,15 @@
 import { assetsSignal } from '@/context/signals';
 import Assets from './assets';
+import { Loading } from '@/components/Loading';
 
 export default function AssetsPage() {
-  const assets = assetsSignal.value;
-  console.log('---  🚀 ---> | assets:', assets);
-
   return (
-    <div className='mx-auto'>{assets ? <Assets assets={assets} /> : null}</div>
+    <div className='mx-auto'>
+      {assetsSignal.value ? (
+        <Assets assets={assetsSignal.value?.assets} />
+      ) : (
+        <Loading />
+      )}
+    </div>
   );
 }

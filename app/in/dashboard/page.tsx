@@ -21,8 +21,10 @@ export default async function DashboardPage() {
     const user = await currentUser();
     const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-    if (uid) {
+    if (uid && !assetsSignal.value) {
       await fetchAssets(uid);
+      fetchBtcPrice();
+      fetchCurrencies();
     }
 
     const rawNetWorthChartData = await getNetWorthEvolution(uid ? uid : '');

@@ -43,6 +43,7 @@ export const fetchAssets = async (uid: string) => {
       const unpricedAssets = await fetchAssetsWithoutPrices(uid);
       const result = await fetchAssetsWithPrices(unpricedAssets);
       assetsSignal.value = result;
+      console.log('triggered assetsSignal');
       // return result;
     }
   } catch (error) {
