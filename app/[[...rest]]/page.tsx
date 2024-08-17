@@ -11,7 +11,7 @@ export default async function HomePage() {
   const user = await currentUser();
 
   if (user) {
-    redirect(`/in/dashboard`);
+    redirect(`/in`);
   }
 
   return (
@@ -30,7 +30,6 @@ export default async function HomePage() {
                 className='rounded-md object-cover'
               />
             </div>
-
             <div className='flex justify-center w-1/2'>
               <SignInPage />
             </div>

@@ -14,8 +14,8 @@ import {
   fetchCurrencies,
 } from '@/context/signals';
 
-fetchBtcPrice();
-fetchCurrencies();
+// fetchBtcPrice();
+// fetchCurrencies();
 
 export default async function DashboardPage() {
   try {

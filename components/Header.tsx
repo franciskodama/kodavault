@@ -26,11 +26,11 @@ export default function Header() {
         />
       </Link>
       <div className='flex items-center'>
-        {pathname.includes('/in/') && (
-          <>
-            <NavMenu />
-          </>
-        )}
+        {/* {pathname.includes('/in/') && (
+          <> */}
+        <NavMenu />
+        {/* </>
+        )} */}
         {user?.firstName ? (
           <h4 className='ml-12 mr-4 font-semibold text-sm'>
             {greeting}
