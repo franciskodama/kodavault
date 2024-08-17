@@ -54,11 +54,11 @@ export default async function InPage() {
     if (assetsSignal.value && btcPrice.value && currencyRates.value && uid) {
       return (
         <Dashboard
-          currencyRates={currencyRates.value}
-          btcPrice={btcPrice.value}
-          assets={assetsSignal.value.assets}
-          assetsByType={assetsSignal.value.assetsByType}
-          netWorthChartData={sortedNetWorthChartData}
+          // currencyRates={currencyRates.value}
+          // btcPrice={btcPrice.value}
+          // assets={assetsSignal.value.assets}
+          // assetsByType={assetsSignal.value.assetsByType}
+          // netWorthChartData={sortedNetWorthChartData}
           uid={uid}
         />
       );

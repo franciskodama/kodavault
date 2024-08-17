@@ -1,35 +1,32 @@
 import Image from 'next/image';
 
+import { assetsSignal, btcPrice, currencyRates } from '@/context/signals';
+
 import { CardTotal } from '@/components/CardTotal';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import Notifications from './notifications/notifications';
 import { currencyFormatter } from '@/lib/utils';
-import {
-  Asset,
-  AssetsByType,
-  Currencies,
-  netWorthChartData,
-} from '@/lib/types';
-import NetWorthEvolutionChart from './charts/net-worth-evolution';
-export default function Dashboard({
-  btcPrice,
-  currencyRates,
-  assets,
-  assetsByType,
-  netWorthChartData,
-  uid,
-}: {
-  btcPrice: number;
-  currencyRates: Currencies;
-  assets: Asset[];
-  assetsByType: AssetsByType;
-  netWorthChartData: netWorthChartData[];
-  uid: string;
-}) {
+export default function Dashboard({ uid }: { uid: string }) {
+  //   {
+  //   btcPrice,
+  //   currencyRates,
+  //   assets,
+  //   assetsByType,
+  //   netWorthChartData,
+  //   uid,
+  // }: {
+  //   btcPrice: number;
+  //   currencyRates: Currencies;
+  //   assets: Asset[];
+  //   assetsByType: AssetsByType;
+  //   netWorthChartData: netWorthChartData[];
+  //   uid: string;
+  // }
+
   return (
     <>
-      {assets.length && assetsByType && (
+      {assetsSignal.value && btcPrice.value && currencyRates.value && uid && (
         <div className='flex flex-col gap-2'>
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
           <div className='flex justify-end items-center'>
@@ -41,7 +38,8 @@ export default function Dashboard({
                 >
                   <span>🪙</span>
                 </a>
-                {btcPrice && ` BTC/USD: ${currencyFormatter(btcPrice)}`}
+                {btcPrice.value &&
+                  ` BTC/USD: ${currencyFormatter(btcPrice.value)}`}
               </div>
               <div>
                 <a
@@ -51,8 +49,8 @@ export default function Dashboard({
                   <span>🇨🇦</span>
                 </a>
 
-                {currencyRates.data &&
-                  ` CAD: ${currencyFormatter(currencyRates.data.CAD)}`}
+                {currencyRates.value?.data &&
+                  ` CAD: ${currencyFormatter(currencyRates.value.data.CAD)}`}
               </div>
               <div className='ml-4'>
                 <a
@@ -61,8 +59,8 @@ export default function Dashboard({
                 >
                   <span>🇧🇷</span>
                 </a>
-                {currencyRates.data &&
-                  ` BRL: ${currencyFormatter(currencyRates.data.BRL)}`}
+                {currencyRates.value?.data &&
+                  ` BRL: ${currencyFormatter(currencyRates.value.data.BRL)}`}
               </div>
             </div>
             <div className='flex justify-end items-center gap-2 mr-8'>
@@ -87,25 +85,25 @@ export default function Dashboard({
                 <CardTotal
                   emoji={'🧺'}
                   description={`Assets' Location Breakdown`}
-                  assets={assets}
+                  assets={assetsSignal.value.assets}
                   customKey={'wallet'}
                 />
                 <CardTotal
                   emoji={'💵'}
                   description={`Assets' Origin Breakdown`}
-                  assets={assets}
+                  assets={assetsSignal.value.assets}
                   customKey={'currency'}
                 />
                 <CardTotal
                   emoji={'💰'}
                   description={'Total value grouped by type'}
-                  assets={assets}
+                  assets={assetsSignal.value.assets}
                   customKey={'type'}
                 />
                 <CardTotal
                   emoji={'🤑'}
                   description={'Total value grouped by currency'}
-                  assets={assetsByType.Cash}
+                  assets={assetsSignal.value.assetsByType.Cash}
                   customKey={'cash'}
                 />
               </div>
@@ -120,19 +118,19 @@ export default function Dashboard({
                 <CardTotal
                   emoji={'🧺'}
                   description={'Total value grouped by wallet'}
-                  assets={assets}
+                  assets={assetsSignal.value.assets}
                   customKey={'wallet'}
                 />
                 <CardTotal
                   emoji={'🗂️'}
                   description={'Total value grouped by subtype'}
-                  assets={assets}
+                  assets={assetsSignal.value.assets}
                   customKey={'subtype'}
                 />
                 <CardTotal
                   emoji={'🏷️'}
                   description={'Total value grouped by tag'}
-                  assets={assets}
+                  assets={assetsSignal.value.assets}
                   customKey={'tag'}
                 />
               </div>
@@ -141,16 +139,16 @@ export default function Dashboard({
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
             <div className='flex flex-col basis-1/5'>
               <CardTotalAllCurrency
-                btcPrice={btcPrice}
-                currencyRates={currencyRates}
-                assets={assets}
+                btcPrice={btcPrice.value}
+                currencyRates={currencyRates.value}
+                assets={assetsSignal.value.assets}
                 description={'Total Vault in USD, CAD, BRL.'}
               />
 
               <div className='mb-2'>
                 {/* <CardNextPurchases /> */}
                 {/* <CardAssetsOnTheRise /> */}
-                <CardCryptosForTrading assets={assets} />
+                <CardCryptosForTrading assets={assetsSignal.value.assets} />
               </div>
 
               <div className='rounded-sm border shadow-sm mb-2'>
