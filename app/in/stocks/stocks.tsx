@@ -1,7 +1,10 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { Asset } from '@/lib/types';
 import { Loading } from '@/components/Loading';
+import { assetsSignal } from '@/context/signals';
 import { CardTotal } from '@/components/CardTotal';
 import { CardAssetsBy } from '@/components/CardAssetsBy';
 // import { useAssetsContext } from '@/context/AssetsContext';
@@ -9,6 +12,18 @@ import { CardAssetsBy } from '@/components/CardAssetsBy';
 export default function Stocks({ stockAssets }: { stockAssets: Asset[] }) {
   // const { assets, isLoading } = useAssetsContext();
   // const stockAssets = assets.filter((asset) => asset?.type === 'Stock');
+  console.log('---  🚀 ---> | stockAssets:', stockAssets);
+
+  useEffect(() => {
+    if (!assetsSignal.value) {
+      // This condition may involve re-fetching or restoring the signal value
+      console.log(
+        'assetsSignal is not defined. You may need to refetch or handle it.'
+      );
+    } else {
+      console.log('assetsSignal -------> ', assetsSignal.value);
+    }
+  }, []);
 
   return (
     <>
