@@ -1,13 +1,13 @@
 import { addNetWorthEvolution, getUids } from '@/lib/actions';
 import { fetchAssetsWithPrices } from '@/lib/assets';
 import { getAssets } from '@/lib/assets.server';
-import { getCurrency } from '@/lib/currency.server';
+import { getCurrencies } from '@/lib/currency.server';
 import { netWorthChartData, UnpricedAsset } from '@/lib/types';
 
 export async function GET() {
   console.log('Cron job triggered');
 
-  const currencyRates = await getCurrency();
+  const currencyRates = await getCurrencies();
   const uids = await getUids();
 
   if (!Array.isArray(uids)) {
