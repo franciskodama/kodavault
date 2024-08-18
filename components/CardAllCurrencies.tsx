@@ -11,12 +11,10 @@ import {
 } from '../components/ui/card';
 
 export const CardTotalAllCurrency = ({
-  btcPrice,
   currencyRates,
   assets,
   description = '',
 }: {
-  btcPrice: number;
   currencyRates: Currencies;
   assets: Asset[];
   description?: string;
@@ -25,7 +23,7 @@ export const CardTotalAllCurrency = ({
   const btc = assets.find((item: any) => item.asset === 'BTC');
 
   let totalArray: totalArrayProps[] = [];
-  if (currencyRates.data && btcPrice) {
+  if (currencyRates.data && btc?.price) {
     totalArray = [
       {
         currency: 'USD',
@@ -44,7 +42,7 @@ export const CardTotalAllCurrency = ({
       },
       {
         currency: 'BTC',
-        value: total / btcPrice,
+        value: total / btc.price,
         emoji: '🥇',
       },
     ];

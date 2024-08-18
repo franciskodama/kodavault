@@ -1,39 +1,35 @@
-import Image from 'next/image';
-import { effect } from '@preact/signals-react';
-
-import {
-  assetsSignal,
-  btcPrice,
-  currencyRates,
-  fetchAssets,
-} from '@/context/signals';
-
 import { CardTotal } from '@/components/CardTotal';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
-import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import Notifications from './notifications/notifications';
 import { currencyFormatter } from '@/lib/utils';
+import {
+  Asset,
+  AssetsByType,
+  Currencies,
+  netWorthChartData,
+} from '@/lib/types';
+import NetWorthEvolutionChart from './charts/net-worth-evolution';
+import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
+import Image from 'next/image';
 
-export default function Dashboard({ uid }: { uid: string }) {
-  //   {
-  //   btcPrice,
-  //   currencyRates,
-  //   assets,
-  //   assetsByType,
-  //   netWorthChartData,
-  //   uid,
-  // }: {
-  //   btcPrice: number;
-  //   currencyRates: Currencies;
-  //   assets: Asset[];
-  //   assetsByType: AssetsByType;
-  //   netWorthChartData: netWorthChartData[];
-  //   uid: string;
-  // }
-
+export default function Dashboard({
+  currencyRates,
+  assets,
+  assetsByType,
+  btcPrice,
+  netWorthChartData,
+  uid,
+}: {
+  currencyRates: Currencies;
+  assets: Asset[];
+  assetsByType: AssetsByType;
+  btcPrice: number;
+  netWorthChartData: netWorthChartData[];
+  uid: string;
+}) {
   return (
     <>
-      {assetsSignal.value && btcPrice.value && currencyRates.value && uid && (
+      {assets.length && assetsByType && (
         <div className='flex flex-col gap-2'>
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
           <div className='flex justify-end items-center'>
@@ -45,8 +41,7 @@ export default function Dashboard({ uid }: { uid: string }) {
                 >
                   <span>🪙</span>
                 </a>
-                {btcPrice.value &&
-                  ` BTC/USD: ${currencyFormatter(btcPrice.value)}`}
+                {btcPrice && ` BTC/USD: ${currencyFormatter(btcPrice)}`}
               </div>
               <div>
                 <a
@@ -56,8 +51,8 @@ export default function Dashboard({ uid }: { uid: string }) {
                   <span>🇨🇦</span>
                 </a>
 
-                {currencyRates.value?.data &&
-                  ` CAD: ${currencyFormatter(currencyRates.value.data.CAD)}`}
+                {currencyRates.data &&
+                  ` CAD: ${currencyFormatter(currencyRates.data.CAD)}`}
               </div>
               <div className='ml-4'>
                 <a
@@ -66,8 +61,8 @@ export default function Dashboard({ uid }: { uid: string }) {
                 >
                   <span>🇧🇷</span>
                 </a>
-                {currencyRates.value?.data &&
-                  ` BRL: ${currencyFormatter(currencyRates.value.data.BRL)}`}
+                {currencyRates.data &&
+                  ` BRL: ${currencyFormatter(currencyRates.data.BRL)}`}
               </div>
             </div>
             <div className='flex justify-end items-center gap-2 mr-8'>
@@ -92,32 +87,32 @@ export default function Dashboard({ uid }: { uid: string }) {
                 <CardTotal
                   emoji={'🧺'}
                   description={`Assets' Location Breakdown`}
-                  assets={assetsSignal.value.assets}
+                  assets={assets}
                   customKey={'wallet'}
                 />
                 <CardTotal
                   emoji={'💵'}
                   description={`Assets' Origin Breakdown`}
-                  assets={assetsSignal.value.assets}
+                  assets={assets}
                   customKey={'currency'}
                 />
                 <CardTotal
                   emoji={'💰'}
                   description={'Total value grouped by type'}
-                  assets={assetsSignal.value.assets}
+                  assets={assets}
                   customKey={'type'}
                 />
                 <CardTotal
                   emoji={'🤑'}
                   description={'Total value grouped by currency'}
-                  assets={assetsSignal.value.assetsByType.Cash}
+                  assets={assetsByType.Cash}
                   customKey={'cash'}
                 />
               </div>
               {/* <Transactions /> */}
-              <div className='flex'>
-                {/* <NetWorthEvolutionChart netWorthChartData={netWorthChartData} /> */}
-              </div>
+              {/* <div className='flex'>
+                <NetWorthEvolutionChart netWorthChartData={netWorthChartData} />
+              </div> */}
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
               <div className='flex flex-wrap gap-2'>
@@ -125,19 +120,19 @@ export default function Dashboard({ uid }: { uid: string }) {
                 <CardTotal
                   emoji={'🧺'}
                   description={'Total value grouped by wallet'}
-                  assets={assetsSignal.value.assets}
+                  assets={assets}
                   customKey={'wallet'}
                 />
                 <CardTotal
                   emoji={'🗂️'}
                   description={'Total value grouped by subtype'}
-                  assets={assetsSignal.value.assets}
+                  assets={assets}
                   customKey={'subtype'}
                 />
                 <CardTotal
                   emoji={'🏷️'}
                   description={'Total value grouped by tag'}
-                  assets={assetsSignal.value.assets}
+                  assets={assets}
                   customKey={'tag'}
                 />
               </div>
@@ -146,16 +141,15 @@ export default function Dashboard({ uid }: { uid: string }) {
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
             <div className='flex flex-col basis-1/5'>
               <CardTotalAllCurrency
-                btcPrice={btcPrice.value}
-                currencyRates={currencyRates.value}
-                assets={assetsSignal.value.assets}
+                currencyRates={currencyRates}
+                assets={assets}
                 description={'Total Vault in USD, CAD, BRL.'}
               />
 
               <div className='mb-2'>
                 {/* <CardNextPurchases /> */}
                 {/* <CardAssetsOnTheRise /> */}
-                <CardCryptosForTrading assets={assetsSignal.value.assets} />
+                <CardCryptosForTrading assets={assets} />
               </div>
 
               <div className='rounded-sm border shadow-sm mb-2'>
