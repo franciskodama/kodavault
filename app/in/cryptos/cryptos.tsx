@@ -12,12 +12,15 @@ import AthProjections from './ath-projections';
 import { useAssetsContext } from '@/context/AssetsContext';
 
 export default function Cryptos() {
-  const { assets, isLoading } = useAssetsContext();
-  const cryptoAssets = assets.filter((asset) => asset?.type === 'Crypto');
+  const { assetsByType, isLoading } = useAssetsContext();
 
   return (
     <>
-      {cryptoAssets.length > 0 ? (
+      {isLoading ? (
+        <div className='flex justify-center items-center h-[70em]'>
+          <Loading />
+        </div>
+      ) : (
         <div className='flex w-full gap-2'>
           <Tabs defaultValue='main' className='w-full'>
             <TabsList>
@@ -32,26 +35,22 @@ export default function Cryptos() {
             </TabsList>
 
             <TabsContent value='main' className='flex gap-2 mt-4'>
-              <Main assets={cryptoAssets} />
+              <Main assets={assetsByType.Crypto} />
             </TabsContent>
 
             <TabsContent value='allocation-goals' className='flex gap-2 mt-4'>
-              <AllocationGoals assets={cryptoAssets} />
+              <AllocationGoals assets={assetsByType.Crypto} />
               <CardNextPurchases />
             </TabsContent>
 
             <TabsContent value='ath' className='mt-4'>
-              <AthProjections assets={cryptoAssets} />
+              <AthProjections assets={assetsByType.Crypto} />
             </TabsContent>
 
             <TabsContent value='price-projections' className='mt-4'>
-              <PriceProjections assets={cryptoAssets} />
+              <PriceProjections assets={assetsByType.Crypto} />
             </TabsContent>
           </Tabs>
-        </div>
-      ) : (
-        <div className='flex justify-center items-center h-[70em]'>
-          <Loading />
         </div>
       )}
     </>
