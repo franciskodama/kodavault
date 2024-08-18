@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-    // experimental: {
-    //     serverActions: true
-    // }
     images: {
         unoptimized: false,
         remotePatterns: [
@@ -11,9 +8,10 @@ const nextConfig = {
             protocol: "https",
             hostname: "**.cloudfront.net",
           },
-        ],
-        domains: [
-          "alternative.me",
+          {
+            protocol: "https",
+            hostname: "alternative.me",
+          },
         ],
       },
 }

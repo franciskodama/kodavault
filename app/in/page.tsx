@@ -1,7 +1,5 @@
-import Dashboard from './dashboard';
-
-import { getCurrency } from '@/lib/currency.server';
-import { fetchAssets, fetchAssetsWithPrices } from '@/lib/assets';
+import { getCurrencies } from '@/lib/currency.server';
+import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
 import { netWorthChartData } from '@/lib/types';
 import { getNetWorthEvolution, getUids } from '@/lib/actions';
 import { currentUser } from '@clerk/nextjs/server';
@@ -11,6 +9,7 @@ import {
   getAllTimeHighData,
   getGlobalData,
 } from '@/lib/crypto.server';
+import Dashboard from './dashboard/dashboard';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -28,8 +27,8 @@ export default async function DashboardPage() {
 
   // ==========================================
 
-  const currencyRates = await getCurrency();
-  const unpricedAssets = await fetchAssets(uid ? uid : '');
+  const currencyRates = await getCurrencies();
+  const unpricedAssets = await fetchAssetsWithoutPrices(uid ? uid : '');
   const { assets, assetsByType } = await fetchAssetsWithPrices(unpricedAssets);
 
   const btcPrice = Number(

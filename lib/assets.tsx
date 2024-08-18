@@ -9,7 +9,7 @@ import {
 import { Asset, UnpricedAsset } from './types';
 import { groupAssetsBySomething, includeNewKeyForCardTitle } from './utils';
 
-export const fetchAssets = async (userEmail: string) => {
+export const fetchAssetsWithoutPrices = async (userEmail: string) => {
   const assetData = await getAssets(userEmail);
   if (Array.isArray(assetData)) {
     return assetData as UnpricedAsset[];

@@ -64,8 +64,8 @@ export default function NetWorthEvolutionChart({
                   }}
                 >
                   <CartesianGrid strokeDasharray='3 3' />
-                  <XAxis tickSize={6} dataKey='created_at' />
-                  <YAxis domain={[0, 'auto']} tickCount={10} />
+                  <XAxis xAxisId={0} tickSize={6} dataKey='created_at' />
+                  <YAxis yAxisId={0} domain={[0, 'auto']} tickCount={10} />
                   <Tooltip />
                   <Legend
                     // width={1000}
@@ -75,24 +75,32 @@ export default function NetWorthEvolutionChart({
                     }}
                   />
                   <Line
+                    xAxisId={0}
+                    yAxisId={0}
                     type='monotone'
                     dataKey='USD'
                     stroke='#0c00f8'
                     // strokeDasharray='5 5'
                   />
                   <Line
+                    xAxisId={0}
+                    yAxisId={0}
                     type='monotone'
                     dataKey='CAD'
                     stroke='#ff0000'
                     // strokeDasharray='3 4 5 2'
                   />
                   <Line
+                    xAxisId={0}
+                    yAxisId={0}
                     type='monotone'
                     dataKey='BRL'
                     stroke='#00ff2f'
                     // strokeDasharray='3 4 5 2'
                   />
                   <Line
+                    xAxisId={0}
+                    yAxisId={0}
                     type='monotone'
                     dataKey='BTC'
                     stroke='#ff5e00'

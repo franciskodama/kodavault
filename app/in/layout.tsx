@@ -6,13 +6,15 @@ import { AssetsProvider } from '@/context/AssetsContext';
 
 export default function InLayout({ children }: { children: React.ReactNode }) {
   return (
-    // <Providers>
-    <AssetsProvider>
-      <Header />
-      {children}
-      <Toaster />
-      <Footer />
-    </AssetsProvider>
-    // </Providers>
+    <>
+      <Providers>
+        <AssetsProvider>
+          <Header />
+          {children}
+          <Toaster />
+          <Footer />
+        </AssetsProvider>
+      </Providers>
+    </>
   );
 }

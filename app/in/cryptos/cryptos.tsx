@@ -1,16 +1,15 @@
 'use client';
 
-import { useAssetsContext } from '@/context/AssetsContext';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
+import Main from './main/main';
+import { Asset } from '@/lib/types';
 import { Loading } from '@/components/Loading';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import PriceProjections from './price-projections';
 import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
-import Main from './main/main';
+import { useAssetsContext } from '@/context/AssetsContext';
 
 export default function Cryptos() {
   const { assetsByType, isLoading } = useAssetsContext();

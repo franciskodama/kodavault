@@ -5,8 +5,8 @@ import { currencyFormatter } from '@/lib/utils';
 import {
   Asset,
   AssetsByType,
+  Currencies,
   netWorthChartData,
-  CurrencyData,
 } from '@/lib/types';
 import NetWorthEvolutionChart from './charts/net-worth-evolution';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
@@ -20,7 +20,7 @@ export default function Dashboard({
   netWorthChartData,
   uid,
 }: {
-  currencyRates: CurrencyData;
+  currencyRates: Currencies;
   assets: Asset[];
   assetsByType: AssetsByType;
   btcPrice: number;
@@ -110,9 +110,9 @@ export default function Dashboard({
                 />
               </div>
               {/* <Transactions /> */}
-              <div className='flex'>
+              {/* <div className='flex'>
                 <NetWorthEvolutionChart netWorthChartData={netWorthChartData} />
-              </div>
+              </div> */}
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
               <div className='flex flex-wrap gap-2'>
