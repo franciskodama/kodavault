@@ -1,12 +1,19 @@
 import Image from 'next/image';
+import { effect } from '@preact/signals-react';
 
-import { assetsSignal, btcPrice, currencyRates } from '@/context/signals';
+import {
+  assetsSignal,
+  btcPrice,
+  currencyRates,
+  fetchAssets,
+} from '@/context/signals';
 
 import { CardTotal } from '@/components/CardTotal';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import Notifications from './notifications/notifications';
 import { currencyFormatter } from '@/lib/utils';
+
 export default function Dashboard({ uid }: { uid: string }) {
   //   {
   //   btcPrice,

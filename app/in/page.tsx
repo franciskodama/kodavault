@@ -20,9 +20,9 @@ export default async function InPage() {
     const user = await currentUser();
     const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-    if (uid && !assetsSignal.value) {
-      await fetchAssets(uid);
-    }
+    // if (uid && !assetsSignal.value) {
+    //   await fetchAssets(uid);
+    // }
 
     const rawNetWorthChartData = await getNetWorthEvolution(uid ? uid : '');
 
