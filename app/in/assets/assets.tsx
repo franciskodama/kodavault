@@ -5,8 +5,10 @@ import { columns } from './columns';
 import { DataTable } from './data-table';
 import { thousandAndDecimalFormatter, thousandFormatter } from '@/lib/utils';
 import { Asset } from '@/lib/types';
+import { useAssetsContext } from '@/context/AssetsContext';
 
-export default function Assets({ assets }: { assets: Asset[] }) {
+export default function Assets() {
+  const { assets, isLoading } = useAssetsContext();
   const compareByWallet = (a: any, b: any) => {
     if (a.wallet < b.wallet) return -1;
     if (a.wallet > b.wallet) return 1;
@@ -25,12 +27,12 @@ export default function Assets({ assets }: { assets: Asset[] }) {
 
   return (
     <div className='mx-auto'>
-      {assets ? (
-        <DataTable columns={columns} data={formatatedNumbersAssets} />
-      ) : (
+      {isLoading ? (
         <div className='flex justify-center items-center h-[70em]'>
           <Loading />
         </div>
+      ) : (
+        <DataTable columns={columns} data={formatatedNumbersAssets} />
       )}
     </div>
   );
