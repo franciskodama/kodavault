@@ -9,8 +9,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PriceProjections from './price-projections';
 import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
+import { useAssetsContext } from '@/context/AssetsContext';
 
-export default function Cryptos({ cryptoAssets }: { cryptoAssets: Asset[] }) {
+export default function Cryptos() {
+  const { assets, isLoading } = useAssetsContext();
+  const cryptoAssets = assets.filter((asset) => asset?.type === 'Crypto');
+
   return (
     <>
       {cryptoAssets.length > 0 ? (
