@@ -24,6 +24,7 @@ import { Input } from '@/components/ui/input';
 import MessageInTable from '@/components/MessageInTable';
 import { Asset } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
+import { thousandFormatter } from '@/lib/utils';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -56,7 +57,7 @@ export function DataTable<TData, TValue>({
 
   const getRepeatedAssetInSameWallet = (assetName: string) => {
     const repeatedAssetRows = assets.filter(
-      (item: Asset) => item?.asset === assetName
+      (item: Asset) => item?.asset === assetName.toUpperCase()
     );
 
     const total = repeatedAssetRows.reduce(
@@ -113,21 +114,17 @@ export function DataTable<TData, TValue>({
         {assets && (
           <div className='flex items-center w-full ml-4'>
             <p className='text-sm font-bold'>Total Qty:</p>
-            {
+            {thousandFormatter(
               getRepeatedAssetInSameWallet(
-                (
-                  table.getColumn('asset')?.getFilterValue() as string
-                ).toUpperCase() ?? ''
+                (table.getColumn('asset')?.getFilterValue() as string) ?? ''
               ).totalQty
-            }
+            )}
             <p className='text-sm font-bold mx-4'>Total:</p>
-            {
+            {thousandFormatter(
               getRepeatedAssetInSameWallet(
-                (
-                  table.getColumn('asset')?.getFilterValue() as string
-                ).toUpperCase() ?? ''
+                (table.getColumn('asset')?.getFilterValue() as string) ?? ''
               ).total
-            }
+            )}
           </div>
         )}
         {/* ------------------------------------------ */}
