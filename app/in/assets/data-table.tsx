@@ -53,15 +53,29 @@ export function DataTable<TData, TValue>({
 
   // ------------------------------------
   const { assets, isLoading } = useAssetsContext();
-  console.log('---  🚀 ---> | assets:', assets);
 
-  const getTotalRepeatedAssetInSameWallet = (assetName: string) => {
-    // const repeatedAssets = assets.filter(
-    //   (item: Asset) => item?.asset === assetName
-    // );
-    // console.log('---  🚀 ---> | repeatedAssets:', repeatedAssets);
-    // return repeatedAssets.length;
-    return assetName;
+  const getRepeatedAssetInSameWallet = (assetName: string) => {
+    const repeatedAssetRows = assets.filter(
+      (item: Asset) => item?.asset === assetName
+    );
+
+    const total = repeatedAssetRows.reduce(
+      (sum: number, item: Asset | undefined) => {
+        if (!item) return sum;
+        return sum + (item.total ?? 0);
+      },
+      0
+    );
+
+    const totalQty = repeatedAssetRows.reduce(
+      (sum: number, item: Asset | undefined) => {
+        if (!item) return sum;
+        return sum + (item.qty ?? 0);
+      },
+      0
+    );
+
+    return { total, totalQty };
   };
   // ------------------------------------
 
@@ -98,19 +112,22 @@ export function DataTable<TData, TValue>({
         {/* ------------------------------------------ */}
         {assets && (
           <div className='flex items-center w-full ml-4'>
-            <p className='text-sm font-bold'>
-              {`Total Qty of ${
-                (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-              }:
-              `}
-            </p>
-            {getTotalRepeatedAssetInSameWallet(
-              (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-            )}
+            <p className='text-sm font-bold'>Total Qty:</p>
+            {
+              getRepeatedAssetInSameWallet(
+                (
+                  table.getColumn('asset')?.getFilterValue() as string
+                ).toUpperCase() ?? ''
+              ).totalQty
+            }
             <p className='text-sm font-bold mx-4'>Total:</p>
-            {getTotalRepeatedAssetInSameWallet(
-              (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-            )}
+            {
+              getRepeatedAssetInSameWallet(
+                (
+                  table.getColumn('asset')?.getFilterValue() as string
+                ).toUpperCase() ?? ''
+              ).total
+            }
           </div>
         )}
         {/* ------------------------------------------ */}
