@@ -22,6 +22,8 @@ import {
 } from '../../../components/ui/table';
 import { Input } from '@/components/ui/input';
 import MessageInTable from '@/components/MessageInTable';
+import { Asset } from '@/lib/types';
+import { useAssetsContext } from '@/context/AssetsContext';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -48,6 +50,20 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
+
+  // ------------------------------------
+  const { assets, isLoading } = useAssetsContext();
+  console.log('---  🚀 ---> | assets:', assets);
+
+  const getTotalRepeatedAssetInSameWallet = (assetName: string) => {
+    // const repeatedAssets = assets.filter(
+    //   (item: Asset) => item?.asset === assetName
+    // );
+    // console.log('---  🚀 ---> | repeatedAssets:', repeatedAssets);
+    // return repeatedAssets.length;
+    return assetName;
+  };
+  // ------------------------------------
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -78,6 +94,26 @@ export function DataTable<TData, TValue>({
           }
           className='ml-4 max-w-sm w-[16ch]'
         />
+
+        {/* ------------------------------------------ */}
+        {assets && (
+          <div className='flex items-center w-full ml-4'>
+            <p className='text-sm font-bold'>
+              {`Total Qty of ${
+                (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+              }:
+              `}
+            </p>
+            {getTotalRepeatedAssetInSameWallet(
+              (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+            )}
+            <p className='text-sm font-bold mx-4'>Total:</p>
+            {getTotalRepeatedAssetInSameWallet(
+              (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+            )}
+          </div>
+        )}
+        {/* ------------------------------------------ */}
       </div>
 
       <Table>
