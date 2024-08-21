@@ -24,7 +24,7 @@ import { Input } from '@/components/ui/input';
 import MessageInTable from '@/components/MessageInTable';
 import { Asset } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
-import { thousandFormatter } from '@/lib/utils';
+import { thousandAndDecimalFormatter } from '@/lib/utils';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -52,13 +52,14 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  // ------------------------------------
   const { assets, isLoading } = useAssetsContext();
 
-  const getRepeatedAssetInSameWallet = (assetName: string) => {
+  const getRepeatedAssetTotal = (assetName: string) => {
     const repeatedAssetRows = assets.filter(
       (item: Asset) => item?.asset === assetName.toUpperCase()
     );
+
+    const isRepeatedAsset = repeatedAssetRows.length > 1;
 
     const total = repeatedAssetRows.reduce(
       (sum: number, item: Asset | undefined) => {
@@ -76,9 +77,8 @@ export function DataTable<TData, TValue>({
       0
     );
 
-    return { total, totalQty };
+    return { isRepeatedAsset, assetName, total, totalQty };
   };
-  // ------------------------------------
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -110,24 +110,36 @@ export function DataTable<TData, TValue>({
           className='ml-4 max-w-sm w-[16ch]'
         />
 
-        {/* ------------------------------------------ */}
-        {assets && (
-          <div className='flex items-center w-full ml-4'>
-            <p className='text-sm font-bold'>Total Qty:</p>
-            {thousandFormatter(
-              getRepeatedAssetInSameWallet(
+        {getRepeatedAssetTotal(
+          (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+        ).isRepeatedAsset && (
+          <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 border-slate-500 rounded-[2px] text-left'>
+            <div className='flex items-center w-full'>
+              <p className='w-[6ch]'>Asset:</p>
+              {getRepeatedAssetTotal(
                 (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-              ).totalQty
-            )}
-            <p className='text-sm font-bold mx-4'>Total:</p>
-            {thousandFormatter(
-              getRepeatedAssetInSameWallet(
-                (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-              ).total
-            )}
+              ).assetName.toUpperCase()}
+            </div>
+            <p className='mx-6'>|</p>
+            <div className='flex items-center w-full'>
+              <p className='w-[9ch]'>Total Qty:</p>
+              {thousandAndDecimalFormatter(
+                getRepeatedAssetTotal(
+                  (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+                ).totalQty
+              )}
+            </div>
+            <p className='mx-6'>|</p>
+            <div className='flex items-center w-full'>
+              <p className='w-[6ch]'>Total:</p>
+              {thousandAndDecimalFormatter(
+                getRepeatedAssetTotal(
+                  (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+                ).total
+              )}
+            </div>
           </div>
         )}
-        {/* ------------------------------------------ */}
       </div>
 
       <Table>
