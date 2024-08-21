@@ -113,7 +113,7 @@ export function DataTable<TData, TValue>({
         {getRepeatedAssetTotal(
           (table.getColumn('asset')?.getFilterValue() as string) ?? ''
         ).isRepeatedAsset && (
-          <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 border-slate-500 rounded-[2px] text-left'>
+          <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
             <div className='flex items-center w-full'>
               <p className='w-[6ch]'>Asset:</p>
               {getRepeatedAssetTotal(
