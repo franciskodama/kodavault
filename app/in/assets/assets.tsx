@@ -4,7 +4,6 @@ import { Loading } from '@/components/Loading';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { thousandAndDecimalFormatter, thousandFormatter } from '@/lib/utils';
-import { Asset } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 
 export default function Assets() {
