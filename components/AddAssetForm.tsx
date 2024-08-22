@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -22,8 +22,10 @@ import {
   purposeOptions,
   subtypeOptions,
 } from '@/lib/assets-form';
+import { useAssetsContext } from '@/context/AssetsContext';
 
 export function AddAssetForm() {
+  const { refreshAssets } = useAssetsContext();
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
   const { user } = useUser();
@@ -37,6 +39,8 @@ export function AddAssetForm() {
     setValue,
     formState: { errors },
   } = useForm<Inputs>({});
+
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   const assetSubtype = watch('subtype');
   const assetType = getType(assetSubtype);
@@ -101,6 +105,8 @@ export function AddAssetForm() {
         description: 'Your new asset is already available.',
         variant: 'success',
       });
+      await refreshAssets();
+      closeRef.current?.click();
     } else {
       toast({
         title: '👻 Boho! Error occurred!',
@@ -111,10 +117,6 @@ export function AddAssetForm() {
 
     reset();
     setData(data);
-
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
   };
 
   return (
@@ -239,9 +241,6 @@ export function AddAssetForm() {
               placeholder='Tag'
               {...register('tag')}
             />
-            {/* {errors.qty?.message && (
-              <p className={classError}>{errors.qty.message}</p>
-            )} */}
           </div>
 
           {assetCurrency.length > 1 && (
@@ -314,7 +313,7 @@ export function AddAssetForm() {
           </Button>
 
           <SheetClose asChild>
-            <Button className='my-4' variant='outline'>
+            <Button ref={closeRef} className='my-4' variant='outline'>
               Close
             </Button>
           </SheetClose>
