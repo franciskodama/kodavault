@@ -18,13 +18,14 @@
 // - Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
 
 // WORKING ON:
+// TODO: Filter by Exchange must be a dropdown (assets page)
+
 // TODO: Dashboard taking too much time to load
 // TODO: If it's BTC, we already give it a category - the same for the others altcoins.
 // TODO: Arrumar reload on Shortcut, etc.. pages
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
-// TODO: Filter by Exchange must be a dropdown (assets page)
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
-// TODO: After CronJob Fix, return the commented code in the middleware file
+// TODO: After CronJob Fix, return the commented code in the middleware f
 // TODO: Include MM Wallet + Phantom
 
 // NEXT:
