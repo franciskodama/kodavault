@@ -1,7 +1,24 @@
 // Prompt AI: I have this app (Next.js, Typescript, Prisma) to manage my investments. I use the App version of Nextjs (it's not the pages version). This app is where I show a table with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
 
+// - AI: Cryptocurrencies leveraging artificial intelligence for various applications.
+// - Meme: Tokens created around internet memes or cultural references, often with a humorous aspect.
+// - DeFi: Decentralized finance platforms providing financial services without traditional intermediaries.
+// - Oracles: Protocols that connect smart contracts with real-world data and external APIs.
+// - Stablecoins: Cryptocurrencies designed to maintain a stable value, often pegged to fiat currencies.
+// - Gaming: Tokens used in gaming ecosystems for in-game purchases, rewards, and transactions.
+// - Infrastructure: Cryptocurrencies that provide foundational technology for building and supporting blockchain networks.
+// - Data: Cryptocurrencies focused on data storage, sharing, and privacy.
+// - Interoperability: Platforms enabling different blockchain networks to communicate and interact with each other.
+// - Unknown: Cryptocurrencies with unclear or unspecified use cases.
+// - Exchange: Tokens associated with cryptocurrency exchanges, often providing benefits like fee discounts.
+// - None: Tokens that do not fit into any specific category or lack detailed information.
+// - NFT: Non-fungible tokens representing unique digital assets like art, collectibles, and real estate.
+// - Safehaven: Cryptocurrencies perceived as secure investments during market volatility.
+// - Privacy: Cryptocurrencies designed to enhance transaction privacy and anonymity.
+// - Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
+
 // WORKING ON:
-// TODO: Fix the annoying reload when Add, Update and Delete Assets
+// TODO: Dashboard taking too much time to load
 // TODO: If it's BTC, we already give it a category - the same for the others altcoins.
 // TODO: Arrumar reload on Shortcut, etc.. pages
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
@@ -11,7 +28,6 @@
 // TODO: Include MM Wallet + Phantom
 
 // NEXT:
-// TODO: If a Token doesn't exist in the search (Assets Page), we show the right message
 // TODO: Assets Forms: If chooses BTC we need to give the right category selected - For all the other coins too, but no hardcode (or api) info we show all the options
 // TODO: When I edit the CAD Cash in Wealthsimple Asset, it does not appear Wealthsimple as an option to choose from
 // TODO: Assets need to accept QETH.U
@@ -49,23 +65,6 @@
 // TODO: What to do if there is a goal for a new asset the user desire, but they didn't buy it yet? They have see the goal to remember to buy it.
 // TODO: What appears on SELL and BUY because of the goal, need to appear in the next purchases card
 
-// 1.	AI: Cryptocurrencies leveraging artificial intelligence for various applications.
-// 2.	Meme: Tokens created around internet memes or cultural references, often with a humorous aspect.
-// 3.	DeFi: Decentralized finance platforms providing financial services without traditional intermediaries.
-// 4.	Oracles: Protocols that connect smart contracts with real-world data and external APIs.
-// 5.	Stablecoins: Cryptocurrencies designed to maintain a stable value, often pegged to fiat currencies.
-// 6.	Gaming: Tokens used in gaming ecosystems for in-game purchases, rewards, and transactions.
-// 7.	Infrastructure: Cryptocurrencies that provide foundational technology for building and supporting blockchain networks.
-// 8.	Data: Cryptocurrencies focused on data storage, sharing, and privacy.
-// 9.	Interoperability: Platforms enabling different blockchain networks to communicate and interact with each other.
-// 10.	Unknown: Cryptocurrencies with unclear or unspecified use cases.
-// 11.	Exchange: Tokens associated with cryptocurrency exchanges, often providing benefits like fee discounts.
-// 12.	None: Tokens that do not fit into any specific category or lack detailed information.
-// 13.	NFT: Non-fungible tokens representing unique digital assets like art, collectibles, and real estate.
-// 14.	Safehaven: Cryptocurrencies perceived as secure investments during market volatility.
-// 15.	Privacy: Cryptocurrencies designed to enhance transaction privacy and anonymity.
-// Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
-
 // PRIORITIES 2:
 // TODO: Knowledge Page: Place to save videos about coins for future reference
 // TODO: Resources Page (?):Card with link for the image of the cycle of the market (already in the public folder)
@@ -88,7 +87,9 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Fix the annoying reload when Add, Update and Delete Assets
 // TODO: When we filter by asset on the Assets Page, if there are the same symbol in the same exchange, it shows below, the sum of it.
+// TODO: If a Token doesn't exist in the search (Assets Page), we show the right message
 // TODO: Smart Contract button (alignment)
 // TODO: Error if try to Add Asset "Supply Chain"
 // TODO: Tag properties of Assets
