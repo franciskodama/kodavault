@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -20,12 +20,16 @@ import {
   purposeOptions,
   categoryOptions,
 } from '@/lib/assets-form';
+import { useAssetsContext } from '@/context/AssetsContext';
 
 export function UpdateAssetForm({ asset }: { asset: Asset }) {
+  const { refreshAssets } = useAssetsContext();
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
+
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   const {
     register,
@@ -79,6 +83,8 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
         description: 'Your Asset is already updated.',
         variant: 'success',
       });
+      await refreshAssets();
+      closeRef.current?.click();
     } else {
       toast({
         title: '🚨 Uh oh! Something went wrong!',
@@ -89,10 +95,6 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
 
     setData(data);
     reset();
-
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 2000);
   };
 
   return (
@@ -296,7 +298,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
           </Button>
 
           <SheetClose asChild>
-            <Button className='my-4' variant={'outline'}>
+            <Button ref={closeRef} className='my-4' variant={'outline'}>
               Close
             </Button>
           </SheetClose>

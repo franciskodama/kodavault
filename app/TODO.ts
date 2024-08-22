@@ -2,7 +2,7 @@
 
 // WORKING ON:
 // TODO: Fix the annoying reload when Add, Update and Delete Assets
-
+// TODO: If it's BTC, we already give it a category - the same for the others altcoins.
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
 // TODO: Filter by Exchange must be a dropdown (assets page)
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
