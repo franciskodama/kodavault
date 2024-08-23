@@ -60,7 +60,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const [openWalletDropbox, setOpenWalletDropbox] = useState(false);
-  const [value, setValue] = useState('');
+  const [valueWalletDropbox, setValueWalletDropbox] = useState('');
 
   const table = useReactTable({
     data,
@@ -132,8 +132,9 @@ export function DataTable<TData, TValue>({
               aria-expanded={openWalletDropbox}
               className='ml-4 w-[16ch] justify-between font-normal text-slate-500'
             >
-              {value
-                ? wallets.find((wallet) => wallet.value === value)?.label
+              {valueWalletDropbox
+                ? wallets.find((wallet) => wallet.value === valueWalletDropbox)
+                    ?.label
                 : 'Filter by Wallet'}
               <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
             </Button>
@@ -148,7 +149,11 @@ export function DataTable<TData, TValue>({
                       key={wallet.value}
                       value={wallet.value}
                       onSelect={(currentValue) => {
-                        setValue(currentValue === value ? '' : currentValue);
+                        setValueWalletDropbox(
+                          currentValue === valueWalletDropbox
+                            ? ''
+                            : currentValue
+                        );
                         table.getColumn('wallet')?.setFilterValue(currentValue);
                         setOpenWalletDropbox(false);
                       }}
@@ -156,7 +161,9 @@ export function DataTable<TData, TValue>({
                       <Check
                         className={cn(
                           'mr-2 h-4 w-4',
-                          value === wallet.value ? 'opacity-100' : 'opacity-0'
+                          valueWalletDropbox === wallet.value
+                            ? 'opacity-100'
+                            : 'opacity-0'
                         )}
                       />
                       {wallet.label}
