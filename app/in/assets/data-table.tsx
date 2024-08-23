@@ -59,6 +59,9 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
+  const [openWalletDropbox, setOpenWalletDropbox] = useState(false);
+  const [value, setValue] = useState('');
+
   const table = useReactTable({
     data,
     columns,
@@ -121,17 +124,49 @@ export function DataTable<TData, TValue>({
           }
           className='max-w-sm w-[16ch]'
         />
-        {/* ================================================================================================ */}
-        {wallets.length > 0 && <WalletsDropdown wallets={wallets} />}
-        <Input
-          placeholder='Filter by Wallet'
-          value={(table.getColumn('wallet')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('wallet')?.setFilterValue(event.target.value)
-          }
-          className='ml-4 max-w-sm w-[16ch]'
-        />
-        {/* ================================================================================================ */}
+        <Popover open={openWalletDropbox} onOpenChange={setOpenWalletDropbox}>
+          <PopoverTrigger asChild>
+            <Button
+              variant='outline'
+              role='combobox'
+              aria-expanded={openWalletDropbox}
+              className='ml-4 w-[16ch] justify-between font-normal text-slate-500'
+            >
+              {value
+                ? wallets.find((wallet) => wallet.value === value)?.label
+                : 'Filter by Wallet'}
+              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className='w-[200px] p-0'>
+            <Command>
+              <CommandList>
+                <CommandEmpty>No wallet found.</CommandEmpty>
+                <CommandGroup>
+                  {wallets.map((wallet) => (
+                    <CommandItem
+                      key={wallet.value}
+                      value={wallet.value}
+                      onSelect={(currentValue) => {
+                        setValue(currentValue === value ? '' : currentValue);
+                        table.getColumn('wallet')?.setFilterValue(currentValue);
+                        setOpenWalletDropbox(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          'mr-2 h-4 w-4',
+                          value === wallet.value ? 'opacity-100' : 'opacity-0'
+                        )}
+                      />
+                      {wallet.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
         <Input
           placeholder='Filter by Currency'
           value={
@@ -230,59 +265,5 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
     </div>
-  );
-}
-
-export function WalletsDropdown({
-  wallets,
-}: {
-  wallets: { value: string; label: string }[];
-}) {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant='outline'
-          role='combobox'
-          aria-expanded={open}
-          className='ml-4 w-[16ch] justify-between font-normal text-slate-500'
-        >
-          {value
-            ? wallets.find((wallet) => wallet.value === value)?.label
-            : 'Filter by Wallet'}
-          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className='w-[200px] p-0'>
-        <Command>
-          <CommandList>
-            <CommandEmpty>No wallet found.</CommandEmpty>
-            <CommandGroup>
-              {wallets.map((wallet) => (
-                <CommandItem
-                  key={wallet.value}
-                  value={wallet.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? '' : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      'mr-2 h-4 w-4',
-                      value === wallet.value ? 'opacity-100' : 'opacity-0'
-                    )}
-                  />
-                  {wallet.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
   );
 }
