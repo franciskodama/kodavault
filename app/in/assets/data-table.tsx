@@ -20,16 +20,37 @@ import {
   TableHeader,
   TableRow,
 } from '../../../components/ui/table';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
+import { Check, ChevronsUpDown } from 'lucide-react';
+
 import MessageInTable from '@/components/MessageInTable';
 import { Asset } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
-import { thousandAndDecimalFormatter } from '@/lib/utils';
+import { cn, thousandAndDecimalFormatter } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
 }
+
+type Framework = {
+  value: string;
+  label: string;
+};
 
 export function DataTable<TData, TValue>({
   columns,
@@ -76,9 +97,18 @@ export function DataTable<TData, TValue>({
       },
       0
     );
-
     return { isRepeatedAsset, assetName, total, totalQty };
   };
+
+  const walletsArray = Array.from(
+    new Set(assets.map((asset) => asset?.wallet))
+  );
+  const wallets = walletsArray
+    .filter((wallet): wallet is string => wallet !== undefined)
+    .map((wallet) => ({
+      value: wallet,
+      label: wallet,
+    }));
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -91,6 +121,8 @@ export function DataTable<TData, TValue>({
           }
           className='max-w-sm w-[16ch]'
         />
+        {/* ================================================================================================ */}
+        {wallets.length > 0 && <WalletsDropdown wallets={wallets} />}
         <Input
           placeholder='Filter by Wallet'
           value={(table.getColumn('wallet')?.getFilterValue() as string) ?? ''}
@@ -99,6 +131,7 @@ export function DataTable<TData, TValue>({
           }
           className='ml-4 max-w-sm w-[16ch]'
         />
+        {/* ================================================================================================ */}
         <Input
           placeholder='Filter by Currency'
           value={
@@ -109,7 +142,6 @@ export function DataTable<TData, TValue>({
           }
           className='ml-4 max-w-sm w-[16ch]'
         />
-
         {getRepeatedAssetTotal(
           (table.getColumn('asset')?.getFilterValue() as string) ?? ''
         ).isRepeatedAsset && (
@@ -141,7 +173,6 @@ export function DataTable<TData, TValue>({
           </div>
         )}
       </div>
-
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -199,5 +230,59 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
     </div>
+  );
+}
+
+export function WalletsDropdown({
+  wallets,
+}: {
+  wallets: { value: string; label: string }[];
+}) {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant='outline'
+          role='combobox'
+          aria-expanded={open}
+          className='ml-4 w-[16ch] justify-between font-normal text-slate-500'
+        >
+          {value
+            ? wallets.find((wallet) => wallet.value === value)?.label
+            : 'Filter by Wallet'}
+          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className='w-[200px] p-0'>
+        <Command>
+          <CommandList>
+            <CommandEmpty>No wallet found.</CommandEmpty>
+            <CommandGroup>
+              {wallets.map((wallet) => (
+                <CommandItem
+                  key={wallet.value}
+                  value={wallet.value}
+                  onSelect={(currentValue) => {
+                    setValue(currentValue === value ? '' : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      'mr-2 h-4 w-4',
+                      value === wallet.value ? 'opacity-100' : 'opacity-0'
+                    )}
+                  />
+                  {wallet.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
 }
