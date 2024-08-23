@@ -24,7 +24,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
@@ -36,21 +35,16 @@ import {
 import { Input } from '@/components/ui/input';
 import { Check, ChevronsUpDown } from 'lucide-react';
 
-import MessageInTable from '@/components/MessageInTable';
 import { Asset } from '@/lib/types';
+import { Button } from '@/components/ui/button';
+import MessageInTable from '@/components/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { cn, thousandAndDecimalFormatter } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
 }
-
-type Framework = {
-  value: string;
-  label: string;
-};
 
 export function DataTable<TData, TValue>({
   columns,
@@ -106,12 +100,19 @@ export function DataTable<TData, TValue>({
   const walletsArray = Array.from(
     new Set(assets.map((asset) => asset?.wallet))
   );
+
   const wallets = walletsArray
     .filter((wallet): wallet is string => wallet !== undefined)
     .map((wallet) => ({
       value: wallet,
       label: wallet,
     }));
+
+  wallets.push({
+    value: '',
+    label: '',
+  });
+  console.log('---  🚀 ---> | wallets:', wallets);
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -139,7 +140,7 @@ export function DataTable<TData, TValue>({
               <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className='w-[200px] p-0'>
+          <PopoverContent className='w-[20ch] p-0'>
             <Command>
               <CommandList>
                 <CommandEmpty>No wallet found.</CommandEmpty>
