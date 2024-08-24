@@ -34,6 +34,11 @@ export const CardAssetsBy = ({
   // Other Cards
   const groupedByCustomKey = assets.reduce((acc: any, item: any) => {
     const value = item[customKey];
+
+    if (value === null || value === undefined) {
+      return acc;
+    }
+
     if (!acc[value]) {
       acc[value] = [];
     }
@@ -61,7 +66,8 @@ export const CardAssetsBy = ({
 
           <CardContent
             className={
-              assetType === 'Cryptos' && customKey === 'wallet'
+              (assetType === 'Cryptos' && customKey === 'wallet') ||
+              customKey === 'category'
                 ? 'flex flex-wrap gap-2 w-full'
                 : ''
             }

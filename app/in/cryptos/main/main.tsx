@@ -17,30 +17,52 @@ export default function Main({ assets }: { assets: Asset[] }) {
   const chartData = transformKeys(totalByWallet);
 
   return (
-    <>
-      <div className='flex flex-wrap gap-2 w-1/2'>
-        <CardTotal
-          emoji={'🪙'}
-          description={'Total value grouped by Coins'}
-          assets={assets}
-          customKey={'crypto'}
-        />
-        <CardAssetsBy
-          assetType={'Cryptos'}
-          emoji={'🎯'}
-          description={'Assets by Purpose'}
-          assets={assets}
-          customKey={'purpose'}
-        />
+    <div className='flex flex-col w-full gap-2'>
+      <div className='flex gap-2'>
+        <div className='w-1/2 gap-2'>
+          <CryptoByWallet
+            chartData={chartData}
+            assets={assets}
+            totalByWallet={totalByWallet}
+          />
+        </div>
+        <div className='w-1/5'>
+          <CardTotal
+            emoji={'🪙'}
+            description={'Total value grouped by Coins'}
+            assets={assets}
+            customKey={'crypto'}
+          />
+        </div>
+        <div className='w-1/5'>
+          <CardAssetsBy
+            assetType={'Cryptos'}
+            emoji={'🎯'}
+            description={'Assets by Purpose'}
+            assets={assets}
+            customKey={'purpose'}
+          />
+        </div>
+        <div className='w-1/5'>
+          <CardAssetsBy
+            assetType={'Cryptos'}
+            emoji={'🏷️'}
+            description={'Assets by Tag'}
+            assets={assets}
+            customKey={'tag'}
+          />
+        </div>
       </div>
 
-      <div className='w-1/2 gap-2'>
-        <CryptoByWallet
-          chartData={chartData}
+      <div className='w-full'>
+        <CardAssetsBy
+          assetType={'Cryptos'}
+          emoji={'🗂️'}
+          description={'Assets by Category'}
           assets={assets}
-          totalByWallet={totalByWallet}
+          customKey={'category'}
         />
       </div>
-    </>
+    </div>
   );
 }
