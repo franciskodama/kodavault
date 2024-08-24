@@ -141,7 +141,7 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn('asset')?.setFilterValue(event.target.value)
           }
-          className='max-w-sm w-[16ch]'
+          className='max-w-sm w-[20ch]'
         />
         <Popover open={openWalletDropbox} onOpenChange={setOpenWalletDropbox}>
           <PopoverTrigger asChild>
@@ -149,7 +149,7 @@ export function DataTable<TData, TValue>({
               variant='outline'
               role='combobox'
               aria-expanded={openWalletDropbox}
-              className='ml-4 w-[16ch] justify-between font-normal text-slate-500'
+              className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
             >
               {valueWalletDropbox
                 ? wallets.find((wallet) => wallet.value === valueWalletDropbox)
@@ -158,7 +158,7 @@ export function DataTable<TData, TValue>({
               <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className='w-[20ch] p-0'>
+          <PopoverContent className='w-[23ch] p-0'>
             <Command>
               <CommandList>
                 <CommandEmpty>No wallet found.</CommandEmpty>
@@ -208,7 +208,7 @@ export function DataTable<TData, TValue>({
               variant='outline'
               role='combobox'
               aria-expanded={openCurrencyDropbox}
-              className='ml-4 w-[16ch] justify-between font-normal text-slate-500'
+              className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
             >
               {valueCurrencyDropbox
                 ? currencies.find(
@@ -218,7 +218,7 @@ export function DataTable<TData, TValue>({
               <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className='w-[20ch] p-0'>
+          <PopoverContent className='w-[23ch] p-0'>
             <Command>
               <CommandList>
                 <CommandEmpty>No currency found.</CommandEmpty>
