@@ -11,6 +11,7 @@ import {
 import NetWorthEvolutionChart from './charts/net-worth-evolution';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import Image from 'next/image';
+import NetWorthChart from './charts/net-worth';
 
 export default function Dashboard({
   currencyRates,
@@ -110,9 +111,10 @@ export default function Dashboard({
                 />
               </div>
               {/* <Transactions /> */}
-              {/* <div className='flex'>
-                <NetWorthEvolutionChart netWorthChartData={netWorthChartData} />
-              </div> */}
+              <div className='flex'>
+                {/* <NetWorthEvolutionChart netWorthChartData={netWorthChartData} /> */}
+                <NetWorthChart netWorthChartData={netWorthChartData} />
+              </div>
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
               <div className='flex flex-wrap gap-2'>
