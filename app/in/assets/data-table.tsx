@@ -165,6 +165,7 @@ export function DataTable<TData, TValue>({
                 <CommandGroup>
                   {wallets.map((wallet) => (
                     <CommandItem
+                      className='text-xs'
                       key={wallet.value}
                       value={wallet.value}
                       onSelect={(currentValue) => {
@@ -224,6 +225,7 @@ export function DataTable<TData, TValue>({
                 <CommandGroup>
                   {currencies.map((currency) => (
                     <CommandItem
+                      className='text-xs'
                       key={currency.value}
                       value={currency.value}
                       onSelect={(currentValue) => {
@@ -257,16 +259,6 @@ export function DataTable<TData, TValue>({
           </PopoverContent>
         </Popover>
 
-        {/* <Input
-          placeholder='Filter by Currency'
-          value={
-            (table.getColumn('currency')?.getFilterValue() as string) ?? ''
-          }
-          onChange={(event) =>
-            table.getColumn('currency')?.setFilterValue(event.target.value)
-          }
-          className='ml-4 max-w-sm w-[16ch]'
-        /> */}
         {getRepeatedAssetTotal(
           (table.getColumn('asset')?.getFilterValue() as string) ?? ''
         ).isRepeatedAsset && (
