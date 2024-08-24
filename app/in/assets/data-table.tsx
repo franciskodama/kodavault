@@ -20,11 +20,26 @@ import {
   TableHeader,
   TableRow,
 } from '../../../components/ui/table';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
-import MessageInTable from '@/components/MessageInTable';
+import { Check, ChevronsUpDown } from 'lucide-react';
+
 import { Asset } from '@/lib/types';
+import { Button } from '@/components/ui/button';
+import MessageInTable from '@/components/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
-import { thousandAndDecimalFormatter } from '@/lib/utils';
+import { cn, thousandAndDecimalFormatter } from '@/lib/utils';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,6 +52,12 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+  const [openWalletDropbox, setOpenWalletDropbox] = useState(false);
+  const [valueWalletDropbox, setValueWalletDropbox] = useState('');
+
+  const [openCurrencyDropbox, setOpenCurrencyDropbox] = useState(false);
+  const [valueCurrencyDropbox, setValueCurrencyDropbox] = useState('');
 
   const table = useReactTable({
     data,
@@ -76,9 +97,40 @@ export function DataTable<TData, TValue>({
       },
       0
     );
-
     return { isRepeatedAsset, assetName, total, totalQty };
   };
+
+  const walletsArray = Array.from(
+    new Set(assets.map((asset) => asset?.wallet))
+  );
+
+  const wallets = walletsArray
+    .filter((wallet): wallet is string => wallet !== undefined)
+    .map((wallet) => ({
+      value: wallet,
+      label: wallet,
+    }));
+
+  wallets.push({
+    value: 'No Filter',
+    label: 'No Filter',
+  });
+
+  const currencyArray = Array.from(
+    new Set(assets.map((asset) => asset?.currency))
+  );
+
+  const currencies = currencyArray
+    .filter((currency): currency is string => currency !== undefined)
+    .map((currency) => ({
+      value: currency,
+      label: currency,
+    }));
+
+  currencies.push({
+    value: 'No Filter',
+    label: 'No Filter',
+  });
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -89,26 +141,123 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn('asset')?.setFilterValue(event.target.value)
           }
-          className='max-w-sm w-[16ch]'
+          className='max-w-sm w-[20ch]'
         />
-        <Input
-          placeholder='Filter by Wallet'
-          value={(table.getColumn('wallet')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('wallet')?.setFilterValue(event.target.value)
-          }
-          className='ml-4 max-w-sm w-[16ch]'
-        />
-        <Input
-          placeholder='Filter by Currency'
-          value={
-            (table.getColumn('currency')?.getFilterValue() as string) ?? ''
-          }
-          onChange={(event) =>
-            table.getColumn('currency')?.setFilterValue(event.target.value)
-          }
-          className='ml-4 max-w-sm w-[16ch]'
-        />
+        <Popover open={openWalletDropbox} onOpenChange={setOpenWalletDropbox}>
+          <PopoverTrigger asChild>
+            <Button
+              variant='outline'
+              role='combobox'
+              aria-expanded={openWalletDropbox}
+              className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
+            >
+              {valueWalletDropbox
+                ? wallets.find((wallet) => wallet.value === valueWalletDropbox)
+                    ?.label
+                : 'Filter by Wallet'}
+              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className='w-[23ch] p-0'>
+            <Command>
+              <CommandList>
+                <CommandEmpty>No wallet found.</CommandEmpty>
+                <CommandGroup>
+                  {wallets.map((wallet) => (
+                    <CommandItem
+                      className='text-xs'
+                      key={wallet.value}
+                      value={wallet.value}
+                      onSelect={(currentValue) => {
+                        setValueWalletDropbox(
+                          currentValue === valueWalletDropbox
+                            ? ''
+                            : currentValue
+                        );
+                        table
+                          .getColumn('wallet')
+                          ?.setFilterValue(
+                            currentValue === 'No Filter' ? '' : currentValue
+                          );
+                        setOpenWalletDropbox(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          'mr-2 h-4 w-4',
+                          valueWalletDropbox === wallet.value
+                            ? 'opacity-100'
+                            : 'opacity-0'
+                        )}
+                      />
+                      {wallet.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+
+        <Popover
+          open={openCurrencyDropbox}
+          onOpenChange={setOpenCurrencyDropbox}
+        >
+          <PopoverTrigger asChild>
+            <Button
+              variant='outline'
+              role='combobox'
+              aria-expanded={openCurrencyDropbox}
+              className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
+            >
+              {valueCurrencyDropbox
+                ? currencies.find(
+                    (currency) => currency.value === valueCurrencyDropbox
+                  )?.label
+                : 'Filter by Currency'}
+              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className='w-[23ch] p-0'>
+            <Command>
+              <CommandList>
+                <CommandEmpty>No currency found.</CommandEmpty>
+                <CommandGroup>
+                  {currencies.map((currency) => (
+                    <CommandItem
+                      className='text-xs'
+                      key={currency.value}
+                      value={currency.value}
+                      onSelect={(currentValue) => {
+                        setValueCurrencyDropbox(
+                          currentValue === valueCurrencyDropbox
+                            ? ''
+                            : currentValue
+                        );
+                        table
+                          .getColumn('currency')
+                          ?.setFilterValue(
+                            currentValue === 'No Filter' ? '' : currentValue
+                          );
+                        setOpenCurrencyDropbox(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          'mr-2 h-4 w-4',
+                          valueCurrencyDropbox === currency.value
+                            ? 'opacity-100'
+                            : 'opacity-0'
+                        )}
+                      />
+                      {currency.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
 
         {getRepeatedAssetTotal(
           (table.getColumn('asset')?.getFilterValue() as string) ?? ''
@@ -141,7 +290,6 @@ export function DataTable<TData, TValue>({
           </div>
         )}
       </div>
-
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
