@@ -109,10 +109,9 @@ export function DataTable<TData, TValue>({
     }));
 
   wallets.push({
-    value: '',
-    label: '',
+    value: 'No Filter',
+    label: 'No Filter',
   });
-  console.log('---  🚀 ---> | wallets:', wallets);
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -155,7 +154,11 @@ export function DataTable<TData, TValue>({
                             ? ''
                             : currentValue
                         );
-                        table.getColumn('wallet')?.setFilterValue(currentValue);
+                        table
+                          .getColumn('wallet')
+                          ?.setFilterValue(
+                            currentValue === 'No Filter' ? '' : currentValue
+                          );
                         setOpenWalletDropbox(false);
                       }}
                     >
