@@ -56,6 +56,9 @@ export function DataTable<TData, TValue>({
   const [openWalletDropbox, setOpenWalletDropbox] = useState(false);
   const [valueWalletDropbox, setValueWalletDropbox] = useState('');
 
+  const [openCurrencyDropbox, setOpenCurrencyDropbox] = useState(false);
+  const [valueCurrencyDropbox, setValueCurrencyDropbox] = useState('');
+
   const table = useReactTable({
     data,
     columns,
@@ -109,6 +112,22 @@ export function DataTable<TData, TValue>({
     }));
 
   wallets.push({
+    value: 'No Filter',
+    label: 'No Filter',
+  });
+
+  const currencyArray = Array.from(
+    new Set(assets.map((asset) => asset?.currency))
+  );
+
+  const currencies = currencyArray
+    .filter((currency): currency is string => currency !== undefined)
+    .map((currency) => ({
+      value: currency,
+      label: currency,
+    }));
+
+  currencies.push({
     value: 'No Filter',
     label: 'No Filter',
   });
@@ -178,7 +197,67 @@ export function DataTable<TData, TValue>({
             </Command>
           </PopoverContent>
         </Popover>
-        <Input
+
+        <Popover
+          open={openCurrencyDropbox}
+          onOpenChange={setOpenCurrencyDropbox}
+        >
+          <PopoverTrigger asChild>
+            <Button
+              variant='outline'
+              role='combobox'
+              aria-expanded={openCurrencyDropbox}
+              className='ml-4 w-[16ch] justify-between font-normal text-slate-500'
+            >
+              {valueCurrencyDropbox
+                ? currencies.find(
+                    (currency) => currency.value === valueCurrencyDropbox
+                  )?.label
+                : 'Filter by Currency'}
+              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className='w-[20ch] p-0'>
+            <Command>
+              <CommandList>
+                <CommandEmpty>No currency found.</CommandEmpty>
+                <CommandGroup>
+                  {currencies.map((currency) => (
+                    <CommandItem
+                      key={currency.value}
+                      value={currency.value}
+                      onSelect={(currentValue) => {
+                        setValueCurrencyDropbox(
+                          currentValue === valueCurrencyDropbox
+                            ? ''
+                            : currentValue
+                        );
+                        table
+                          .getColumn('currency')
+                          ?.setFilterValue(
+                            currentValue === 'No Filter' ? '' : currentValue
+                          );
+                        setOpenCurrencyDropbox(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          'mr-2 h-4 w-4',
+                          valueCurrencyDropbox === currency.value
+                            ? 'opacity-100'
+                            : 'opacity-0'
+                        )}
+                      />
+                      {currency.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+
+        {/* <Input
           placeholder='Filter by Currency'
           value={
             (table.getColumn('currency')?.getFilterValue() as string) ?? ''
@@ -187,7 +266,7 @@ export function DataTable<TData, TValue>({
             table.getColumn('currency')?.setFilterValue(event.target.value)
           }
           className='ml-4 max-w-sm w-[16ch]'
-        />
+        /> */}
         {getRepeatedAssetTotal(
           (table.getColumn('asset')?.getFilterValue() as string) ?? ''
         ).isRepeatedAsset && (
