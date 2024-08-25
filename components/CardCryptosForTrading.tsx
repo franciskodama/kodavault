@@ -8,6 +8,7 @@ import {
 } from './ui/card';
 import { numberFormatterNoDecimals, numberFormatter } from '../lib/utils';
 import { Asset } from '@/lib/types';
+import { v4 } from 'uuid';
 
 export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
   const assetsForTrading = assets.reduce<Record<string, Asset[]>>(
@@ -46,7 +47,7 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
             </CardHeader>
             <CardContent>
               {tradingAssets.map((item: any) => (
-                <div key={item?.asset} className='flex justify-between'>
+                <div key={v4()} className='flex justify-between'>
                   <h3 className='w-[8ch]'>{item?.asset}</h3>
                   <p>{item?.wallet}</p>
                   <div className='flex'>
