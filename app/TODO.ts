@@ -22,7 +22,7 @@
 // TODO: Check the categories for the altcoins (hardcoded array)
 // TODO: If it's BTC, we already give it a category
 // TODO: Give the altcoins automatically the right category on Add Assets
-// TODO: What to do on Update? --> Give the altcoins automatically the right category on Add Assets
+// TODO: What to do on Update? --> Give the altcoins automatically the right category on Add Assets (when changes the assets must clear the category)
 
 // TODO: Dashboard taking too much time to load
 // TODO: Arrumar reload on Shortcut, etc.. pages
