@@ -12,10 +12,10 @@ import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
 
 import {
-  getAccount,
-  getCurrency,
-  getExchange,
-  getWallet,
+  getAccounts,
+  getCurrencies,
+  getExchanges,
+  getWallets,
   subtypeOptions,
   purposeOptions,
   categoryOptions,
@@ -57,10 +57,10 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
   });
 
   const assetSubtype = watch('subtype');
-  const assetWallet = getWallet(assetSubtype);
-  const assetCurrency: string[] = getCurrency(assetSubtype);
-  const assetAccount = getAccount(assetSubtype);
-  const assetExchange = getExchange(assetSubtype);
+  const assetWallet = getWallets(assetSubtype);
+  const assetCurrency: string[] = getCurrencies(assetSubtype);
+  const assetAccount = getAccounts(assetSubtype);
+  const assetExchange = getExchanges(assetSubtype);
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-2';
   const classDiv = 'my-4';

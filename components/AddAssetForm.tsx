@@ -13,12 +13,13 @@ import { useToast } from './ui/use-toast';
 import {
   categoryOptions,
   fixedSymbolsArr,
-  getAccount,
-  getCurrency,
-  getExchange,
-  getSymbol,
-  getType,
-  getWallet,
+  getAccounts,
+  getCategories,
+  getCurrencies,
+  getExchanges,
+  getSymbols,
+  getTypes,
+  getWallets,
   purposeOptions,
   subtypeOptions,
 } from '@/lib/assets-form';
@@ -43,12 +44,13 @@ export function AddAssetForm() {
   const closeRef = useRef<HTMLButtonElement>(null);
 
   const assetSubtype = watch('subtype');
-  const assetType = getType(assetSubtype);
-  const assetSymbol = getSymbol(assetSubtype);
-  const assetWallet = getWallet(assetSubtype);
-  const assetCurrency: string[] = getCurrency(assetSubtype);
-  const assetAccount = getAccount(assetSubtype);
-  const assetExchange = getExchange(assetSubtype);
+  const assetType = getTypes(assetSubtype);
+  const assetSymbol = getSymbols(assetSubtype);
+  const assetWallet = getWallets(assetSubtype);
+  const assetCategory = getCategories(assetSubtype);
+  const assetCurrency: string[] = getCurrencies(assetSubtype);
+  const assetAccount = getAccounts(assetSubtype);
+  const assetExchange = getExchanges(assetSubtype);
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-2';
   const classDiv = 'my-4';
@@ -191,26 +193,28 @@ export function AddAssetForm() {
               ))}
             </ul>
           </div>
-
-          <div className={classDiv}>
-            <h3 className={classTitle}>Category</h3>
-            <ul className={classUl}>
-              {categoryOptions.map((categoryOption) => (
-                <li key={categoryOption}>
-                  <input
-                    className='hidden peer'
-                    type='radio'
-                    value={categoryOption}
-                    id={categoryOption}
-                    {...register('category')}
-                  />
-                  <label className={classLabelRadio} htmlFor={categoryOption}>
-                    <span>{categoryOption}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* ------------------ */}
+          {assetCategory.length > 1 && (
+            <div className={classDiv}>
+              <h3 className={classTitle}>Category</h3>
+              <ul className={classUl}>
+                {categoryOptions.map((categoryOption) => (
+                  <li key={categoryOption}>
+                    <input
+                      className='hidden peer'
+                      type='radio'
+                      value={categoryOption}
+                      id={categoryOption}
+                      {...register('category')}
+                    />
+                    <label className={classLabelRadio} htmlFor={categoryOption}>
+                      <span>{categoryOption}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className={classDiv}>
             <h3 className={classTitle}>Purpose</h3>

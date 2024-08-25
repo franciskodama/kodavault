@@ -37,7 +37,7 @@ export const categoryOptions = [
   'RWA',
 ];
 
-export const getType = (subtype: string) => {
+export const getTypes = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
       return 'Crypto';
@@ -60,7 +60,7 @@ export const getType = (subtype: string) => {
   }
 };
 
-export const getSymbol = (subtype: string) => {
+export const getSymbols = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
       return 'BTC';
@@ -75,7 +75,7 @@ export const getSymbol = (subtype: string) => {
   }
 };
 
-export const getWallet = (subtype: string) => {
+export const getWallets = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
       return [
@@ -142,7 +142,54 @@ export const getWallet = (subtype: string) => {
   }
 };
 
-export const getCurrency = (subtype: string) => {
+export const getCategories = (subtype: string) => {
+  switch (subtype) {
+    case 'BTC':
+      return ['Safehaven'];
+    case 'ETH':
+      return ['Infrastructure'];
+    case 'Altcoin':
+      return [
+        'AI',
+        'Data',
+        'DeFi',
+        'Exchange',
+        'Gaming',
+        'Identity',
+        'Infrastructure',
+        'Interoperability',
+        'Meme',
+        'Media',
+        'NFT',
+        'None',
+        'Oracles',
+        'Privacy',
+        'RWA',
+        'Safehaven',
+        'SmartContract',
+        'Sports',
+        'Stablecoins',
+        'SupplyChain',
+        'Unknown',
+      ];
+    case 'Stock-USD':
+      return ['None'];
+    case 'Stock-CAD':
+      return ['None'];
+    case 'Stock-BRL':
+      return ['None'];
+    case 'Cash-USD':
+      return ['None'];
+    case 'Cash-CAD':
+      return ['None'];
+    case 'Cash-BRL':
+      return ['None'];
+    default:
+      return ['None'];
+  }
+};
+
+export const getCurrencies = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
       return ['USD'];
@@ -167,7 +214,7 @@ export const getCurrency = (subtype: string) => {
   }
 };
 
-export const getAccount = (subtype: string) => {
+export const getAccounts = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
       return ['Investment'];
@@ -192,7 +239,7 @@ export const getAccount = (subtype: string) => {
   }
 };
 
-export const getExchange = (subtype: string) => {
+export const getExchanges = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
       return ['N/A'];
