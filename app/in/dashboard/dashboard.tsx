@@ -6,25 +6,29 @@ import {
   Asset,
   AssetsByType,
   Currencies,
-  netWorthChartData,
+  // netWorthChartData,
+  rawNetWorthChartData,
 } from '@/lib/types';
 import NetWorthEvolutionChart from './charts/net-worth-evolution';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import Image from 'next/image';
+// import NetWorthChart from './charts/net-worth';
+import { GoalGauge } from './charts/gauge';
+import NetWorthChart from './charts/net-worth';
 
 export default function Dashboard({
   currencyRates,
   assets,
   assetsByType,
   btcPrice,
-  netWorthChartData,
+  rawNetWorthChartData,
   uid,
 }: {
   currencyRates: Currencies;
   assets: Asset[];
   assetsByType: AssetsByType;
   btcPrice: number;
-  netWorthChartData: netWorthChartData[];
+  rawNetWorthChartData: rawNetWorthChartData[];
   uid: string;
 }) {
   return (
@@ -110,9 +114,11 @@ export default function Dashboard({
                 />
               </div>
               {/* <Transactions /> */}
-              {/* <div className='flex'>
-                <NetWorthEvolutionChart netWorthChartData={netWorthChartData} />
-              </div> */}
+              <div className='flex'>
+                {/* <NetWorthEvolutionChart netWorthChartData={netWorthChartData} /> */}
+                <NetWorthChart rawNetWorthChartData={rawNetWorthChartData} />
+                {/* <GoalGauge /> */}
+              </div>
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
               <div className='flex flex-wrap gap-2'>
