@@ -124,9 +124,9 @@ export const getWallets = (subtype: string) => {
         'Metamask',
       ];
     case 'Cash-CAD':
-      return ['Tangerine', 'Scotiabank'];
+      return ['Tangerine', 'Scotiabank', 'Neo'];
     case 'Cash-BRL':
-      return ['Binance', 'Bybit', 'Nubank', 'Inter'];
+      return ['Binance', 'Bybit', 'Nubank', 'Inter', 'Itaú'];
     default:
       return [
         'Binance',
@@ -186,6 +186,156 @@ export const getCategories = (subtype: string) => {
       return ['None'];
     default:
       return ['None'];
+  }
+};
+
+// export const getCategoryBySymbol = (symbol: string) => {
+//   switch (symbol) {
+//     case 'AAVE':
+//       return ['DeFi'];
+
+//     default:
+//       return ['None'];
+//   }
+// };
+
+export const getCategoryBySymbol = (symbol: string) => {
+  if (altcoinsCategories.includes(symbol)) {
+    return altcoinsCategories.find((altcoin) => altcoin.coin === symbol)
+      ?.category;
+  } else {
+    return 'Unknown';
+  }
+};
+
+const altcoinsCategories = [
+  { coin: 'AAVE', category: 'DeFi' },
+  { coin: 'THETA', category: 'Infrastructure' },
+  { coin: 'EGLD', category: 'Infrastructure' },
+  { coin: 'CHZ', category: 'Gaming' },
+  { coin: 'TRX', category: 'Infrastructure' },
+  { coin: 'CRO', category: 'Exchange' },
+  { coin: 'INJ', category: 'DeFi' },
+  { coin: 'NEAR', category: 'Infrastructure' },
+  { coin: 'ATOM', category: 'Interoperability' },
+  { coin: 'TIA', category: 'DeFi' },
+  { coin: 'PENDLE', category: 'DeFi' },
+  { coin: 'IMX', category: 'NFT' },
+  { coin: 'WLD', category: 'AI' },
+  { coin: 'MUBI', category: 'Unknown' },
+  { coin: 'ROSE', category: 'Privacy' },
+  { coin: 'PYTH', category: 'Oracles' },
+  { coin: 'TFUEL', category: 'Infrastructure' },
+  { coin: 'RSR', category: 'DeFi' },
+  { coin: 'STX', category: 'Infrastructure' },
+  { coin: 'RUNE', category: 'DeFi' },
+  { coin: 'AKT', category: 'Infrastructure' },
+  { coin: 'XRD', category: 'Infrastructure' },
+  { coin: 'LPT', category: 'Infrastructure' },
+  { coin: 'ENJ', category: 'NFT' },
+  { coin: 'QETH', category: 'DeFi' },
+  { coin: 'BTC', category: 'Store of Value' },
+  { coin: 'RNDR', category: 'AI' },
+  { coin: 'FIL', category: 'Data' },
+  { coin: 'VRA', category: 'Gaming' },
+  { coin: 'SNX', category: 'DeFi' },
+  { coin: 'MKR', category: 'DeFi' },
+  { coin: 'JASMY', category: 'Data' },
+  { coin: 'FLOKI', category: 'Meme' },
+  { coin: 'PEPE', category: 'Meme' },
+  { coin: 'POPCAT', category: 'Meme' },
+  { coin: 'BRETT', category: 'Meme' },
+  { coin: 'CAKE', category: 'DeFi' },
+  { coin: 'TAO', category: 'Infrastructure' },
+  { coin: 'PEOPLE', category: 'Unknown' },
+];
+
+export const getCategoryTooltip = (category: string) => {
+  switch (category) {
+    case 'AI':
+      return [
+        'Cryptocurrencies leveraging artificial intelligence for various applications.',
+      ];
+    case 'Meme':
+      return [
+        'Tokens created around internet memes or cultural references, often with a humorous aspect.',
+      ];
+    case 'DeFi':
+      return [
+        'Decentralized finance platforms providing financial services without traditional intermediaries.',
+      ];
+    case 'Oracles':
+      return [
+        'Protocols that connect smart contracts with real-world data and external APIs.',
+      ];
+    case 'Stablecoins':
+      return [
+        'Cryptocurrencies designed to maintain a stable value, often pegged to fiat currencies.',
+      ];
+    case 'Gaming':
+      return [
+        'Tokens used in gaming ecosystems for in-game purchases, rewards, and transactions.',
+      ];
+    case 'Infrastructure':
+      return [
+        'Cryptocurrencies that provide foundational technology for building and supporting blockchain networks.',
+      ];
+    case 'Data':
+      return [
+        'Cryptocurrencies focused on data storage, sharing, and privacy.',
+      ];
+    case 'Interoperability':
+      return [
+        'Platforms enabling different blockchain networks to communicate and interact with each other.',
+      ];
+    case 'Unknown':
+      return ['Cryptocurrencies with unclear or unspecified use cases.'];
+    case 'Exchange':
+      return [
+        'Tokens associated with cryptocurrency exchanges, often providing benefits like fee discounts.',
+      ];
+    case 'None':
+      return [
+        'Tokens that do not fit into any specific category or lack detailed information.',
+      ];
+    case 'NFT':
+      return [
+        'Non-fungible tokens representing unique digital assets like art, collectibles, and real estate.',
+      ];
+    case 'Safehaven':
+      return [
+        'Cryptocurrencies perceived as secure investments during market volatility.',
+      ];
+    case 'Privacy':
+      return [
+        'Cryptocurrencies designed to enhance transaction privacy and anonymity.',
+      ];
+    case 'SupplyChain':
+      return [
+        'Cryptocurrencies focused on improving transparency, traceability, and efficiency in the supply chain industry.',
+      ];
+    case 'Identity':
+      return [
+        'Cryptocurrencies that focus on digital identity management and verification.',
+      ];
+    case 'Media':
+      return [
+        'Cryptocurrencies related to media, entertainment, and content creation.',
+      ];
+    case 'RWA':
+      return [
+        'Tokens that represent real-world assets such as real estate, commodities, or financial instruments.',
+      ];
+    case 'SmartContract':
+      return [
+        'Cryptocurrencies that focus on smart contract functionality, enabling decentralized applications and automated agreements.',
+      ];
+    case 'Sports':
+      return [
+        'Tokens used in the sports industry for fan engagement, ticketing, and other sports-related activities.',
+      ];
+    default:
+      return null;
   }
 };
 

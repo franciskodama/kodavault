@@ -15,6 +15,7 @@ import {
   fixedSymbolsArr,
   getAccounts,
   getCategories,
+  getCategoryTooltip,
   getCurrencies,
   getExchanges,
   getSymbols,
@@ -24,6 +25,12 @@ import {
   subtypeOptions,
 } from '@/lib/assets-form';
 import { useAssetsContext } from '@/context/AssetsContext';
+import {
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+  Tooltip,
+} from './ui/tooltip';
 
 export function AddAssetForm() {
   const { refreshAssets } = useAssetsContext();
@@ -193,23 +200,37 @@ export function AddAssetForm() {
               ))}
             </ul>
           </div>
-          {/* ------------------ */}
+
           {assetCategory.length > 1 && (
             <div className={classDiv}>
               <h3 className={classTitle}>Category</h3>
               <ul className={classUl}>
                 {categoryOptions.map((categoryOption) => (
                   <li key={categoryOption}>
-                    <input
-                      className='hidden peer'
-                      type='radio'
-                      value={categoryOption}
-                      id={categoryOption}
-                      {...register('category')}
-                    />
-                    <label className={classLabelRadio} htmlFor={categoryOption}>
-                      <span>{categoryOption}</span>
-                    </label>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <input
+                            className='hidden peer'
+                            type='radio'
+                            value={categoryOption}
+                            id={categoryOption}
+                            {...register('category')}
+                          />
+                          <label
+                            className={classLabelRadio}
+                            htmlFor={categoryOption}
+                          >
+                            <span>{categoryOption}</span>
+                          </label>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className='text-xs w-[20ch]'>
+                            {getCategoryTooltip(categoryOption)}
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </li>
                 ))}
               </ul>
@@ -242,7 +263,7 @@ export function AddAssetForm() {
             </label>
             <input
               className={classInput}
-              placeholder='Tag'
+              placeholder='Tag the asset, if needed.'
               {...register('tag')}
             />
           </div>
