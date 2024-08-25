@@ -11,18 +11,29 @@ import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
 
 import {
+  altcoinsCategories,
   categoryOptions,
   fixedSymbolsArr,
-  getAccount,
-  getCurrency,
-  getExchange,
-  getSymbol,
-  getType,
-  getWallet,
+  getAccounts,
+  getCategories,
+  getCategoryBySymbol,
+  getCategoryTooltip,
+  getCurrencies,
+  getExchanges,
+  getSymbols,
+  getTypes,
+  getWallets,
   purposeOptions,
   subtypeOptions,
 } from '@/lib/assets-form';
 import { useAssetsContext } from '@/context/AssetsContext';
+import {
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+  Tooltip,
+} from './ui/tooltip';
+import { category_enum_6c7fcd47 } from '@prisma/client';
 
 export function AddAssetForm() {
   const { refreshAssets } = useAssetsContext();
@@ -43,12 +54,14 @@ export function AddAssetForm() {
   const closeRef = useRef<HTMLButtonElement>(null);
 
   const assetSubtype = watch('subtype');
-  const assetType = getType(assetSubtype);
-  const assetSymbol = getSymbol(assetSubtype);
-  const assetWallet = getWallet(assetSubtype);
-  const assetCurrency: string[] = getCurrency(assetSubtype);
-  const assetAccount = getAccount(assetSubtype);
-  const assetExchange = getExchange(assetSubtype);
+  const assetType = getTypes(assetSubtype);
+  const assetSymbol = getSymbols(assetSubtype);
+  const symbolTyped = watch('asset');
+  const assetWallet = getWallets(assetSubtype);
+  const assetCategory = getCategories(assetSubtype);
+  const assetCurrency: string[] = getCurrencies(assetSubtype);
+  const assetAccount = getAccounts(assetSubtype);
+  const assetExchange = getExchanges(assetSubtype);
 
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-2';
   const classDiv = 'my-4';
@@ -87,6 +100,13 @@ export function AddAssetForm() {
       setValue('exchange', assetExchange[0]);
     }
   }, [assetExchange, setValue]);
+
+  useEffect(() => {
+    if (altcoinsCategories.find((coin) => coin.symbol === symbolTyped)) {
+      const relatedCategory = getCategoryBySymbol(symbolTyped);
+      setValue('category', relatedCategory as category_enum_6c7fcd47);
+    }
+  }, [symbolTyped, setValue]);
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
     if (!uid) {
@@ -141,6 +161,7 @@ export function AddAssetForm() {
             ))}
           </ul>
         </div>
+
         <div className='flex flex-col'>
           {assetSymbol && fixedSymbolsArr.includes(assetSymbol) ? null : (
             <div className={classDiv}>
@@ -192,25 +213,42 @@ export function AddAssetForm() {
             </ul>
           </div>
 
-          <div className={classDiv}>
-            <h3 className={classTitle}>Category</h3>
-            <ul className={classUl}>
-              {categoryOptions.map((categoryOption) => (
-                <li key={categoryOption}>
-                  <input
-                    className='hidden peer'
-                    type='radio'
-                    value={categoryOption}
-                    id={categoryOption}
-                    {...register('category')}
-                  />
-                  <label className={classLabelRadio} htmlFor={categoryOption}>
-                    <span>{categoryOption}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {assetCategory.length > 1 && (
+            <div className={classDiv}>
+              <h3 className={classTitle}>Category</h3>
+              <ul className={classUl}>
+                {categoryOptions.map((categoryOption) => (
+                  <li key={categoryOption}>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <input
+                            className='hidden peer'
+                            type='radio'
+                            value={categoryOption}
+                            id={categoryOption}
+                            {...register('category')}
+                          />
+
+                          <label
+                            className={classLabelRadio}
+                            htmlFor={categoryOption}
+                          >
+                            <span>{categoryOption}</span>
+                          </label>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className='text-xs w-[20ch]'>
+                            {getCategoryTooltip(categoryOption)}
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className={classDiv}>
             <h3 className={classTitle}>Purpose</h3>
@@ -238,7 +276,7 @@ export function AddAssetForm() {
             </label>
             <input
               className={classInput}
-              placeholder='Tag'
+              placeholder='Tag the asset, if needed.'
               {...register('tag')}
             />
           </div>

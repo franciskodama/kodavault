@@ -18,10 +18,13 @@
 // - Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
 
 // WORKING ON:
-// TODO: Filter by Exchange must be a dropdown (assets page)
+
+// TODO: Check the categories for the altcoins (hardcoded array)
+// TODO: If it's BTC, we already give it a category
+// TODO: Give the altcoins automatically the right category on Add Assets
+// TODO: What to do on Update? --> Give the altcoins automatically the right category on Add Assets (when changes the assets must clear the category)
 
 // TODO: Dashboard taking too much time to load
-// TODO: If it's BTC, we already give it a category - the same for the others altcoins.
 // TODO: Arrumar reload on Shortcut, etc.. pages
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
@@ -88,6 +91,7 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Filter by Exchange must be a dropdown (assets page)
 // TODO: Fix the annoying reload when Add, Update and Delete Assets
 // TODO: When we filter by asset on the Assets Page, if there are the same symbol in the same exchange, it shows below, the sum of it.
 // TODO: If a Token doesn't exist in the search (Assets Page), we show the right message

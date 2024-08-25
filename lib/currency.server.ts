@@ -35,7 +35,7 @@ export const getCurrencies = async (): Promise<Currencies> => {
 };
 
 // We are not using this API at the moment because of Cache problems, but it's here in case we need it
-// export const getCurrencyFromApi = async () => {
+// export const getCurrenciesFromApi = async () => {
 //   try {
 //     const response = await fetch(
 //       `https://api.freecurrencyapi.com/v1/latest?apikey=${process.env.NEXT_PUBLIC_FREECURRENCYAPI}`,
