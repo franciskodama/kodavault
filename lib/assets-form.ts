@@ -161,7 +161,7 @@ export const getCategories = (subtype: string) => {
         'Meme',
         'Media',
         'NFT',
-        'None',
+        'Governance',
         'Oracles',
         'Privacy',
         'RWA',
@@ -189,155 +189,203 @@ export const getCategories = (subtype: string) => {
   }
 };
 
-// export const getCategoryBySymbol = (symbol: string) => {
-//   switch (symbol) {
-//     case 'AAVE':
-//       return ['DeFi'];
-
-//     default:
-//       return ['None'];
-//   }
-// };
-
-export const getCategoryBySymbol = (symbol: string) => {
-  if (altcoinsCategories.includes(symbol)) {
-    return altcoinsCategories.find((altcoin) => altcoin.coin === symbol)
-      ?.category;
-  } else {
-    return 'Unknown';
-  }
+export const getCategoryBySymbol = (symbolTyped: string) => {
+  const altcoin = altcoinsCategories.find(
+    (coin) => coin.symbol === symbolTyped
+  );
+  return altcoin ? altcoin.category : 'Unknown';
 };
 
-const altcoinsCategories = [
-  { coin: 'AAVE', category: 'DeFi' },
-  { coin: 'THETA', category: 'Infrastructure' },
-  { coin: 'EGLD', category: 'Infrastructure' },
-  { coin: 'CHZ', category: 'Gaming' },
-  { coin: 'TRX', category: 'Infrastructure' },
-  { coin: 'CRO', category: 'Exchange' },
-  { coin: 'INJ', category: 'DeFi' },
-  { coin: 'NEAR', category: 'Infrastructure' },
-  { coin: 'ATOM', category: 'Interoperability' },
-  { coin: 'TIA', category: 'DeFi' },
-  { coin: 'PENDLE', category: 'DeFi' },
-  { coin: 'IMX', category: 'NFT' },
-  { coin: 'WLD', category: 'AI' },
-  { coin: 'MUBI', category: 'Unknown' },
-  { coin: 'ROSE', category: 'Privacy' },
-  { coin: 'PYTH', category: 'Oracles' },
-  { coin: 'TFUEL', category: 'Infrastructure' },
-  { coin: 'RSR', category: 'DeFi' },
-  { coin: 'STX', category: 'Infrastructure' },
-  { coin: 'RUNE', category: 'DeFi' },
-  { coin: 'AKT', category: 'Infrastructure' },
-  { coin: 'XRD', category: 'Infrastructure' },
-  { coin: 'LPT', category: 'Infrastructure' },
-  { coin: 'ENJ', category: 'NFT' },
-  { coin: 'QETH', category: 'DeFi' },
-  { coin: 'BTC', category: 'Store of Value' },
-  { coin: 'RNDR', category: 'AI' },
-  { coin: 'FIL', category: 'Data' },
-  { coin: 'VRA', category: 'Gaming' },
-  { coin: 'SNX', category: 'DeFi' },
-  { coin: 'MKR', category: 'DeFi' },
-  { coin: 'JASMY', category: 'Data' },
-  { coin: 'FLOKI', category: 'Meme' },
-  { coin: 'PEPE', category: 'Meme' },
-  { coin: 'POPCAT', category: 'Meme' },
-  { coin: 'BRETT', category: 'Meme' },
-  { coin: 'CAKE', category: 'DeFi' },
-  { coin: 'TAO', category: 'Infrastructure' },
-  { coin: 'PEOPLE', category: 'Unknown' },
+export const altcoinsCategories = [
+  { symbol: 'AAVE', category: 'DeFi' },
+  { symbol: 'THETA', category: 'Infrastructure' },
+  { symbol: 'EGLD', category: 'Infrastructure' },
+  { symbol: 'CHZ', category: 'Sports' },
+  { symbol: 'TRX', category: 'Infrastructure' },
+  { symbol: 'CRO', category: 'Exchange' },
+  { symbol: 'INJ', category: 'DeFi' },
+  { symbol: 'NEAR', category: 'Infrastructure' },
+  { symbol: 'ATOM', category: 'Interoperability' },
+  { symbol: 'TIA', category: 'DeFi' },
+  { symbol: 'PENDLE', category: 'DeFi' },
+  { symbol: 'IMX', category: 'NFT' },
+  { symbol: 'WLD', category: 'Identity' },
+  { symbol: 'MUBI', category: 'Interoperability' },
+  { symbol: 'ROSE', category: 'Privacy' },
+  { symbol: 'PYTH', category: 'Oracles' },
+  { symbol: 'TFUEL', category: 'Infrastructure' },
+  { symbol: 'RSR', category: 'DeFi' },
+  { symbol: 'STX', category: 'Infrastructure' },
+  { symbol: 'RUNE', category: 'DeFi' },
+  { symbol: 'AKT', category: 'Infrastructure' },
+  { symbol: 'XRD', category: 'Infrastructure' },
+  { symbol: 'LPT', category: 'Infrastructure' },
+  { symbol: 'ENJ', category: 'NFT' },
+  { symbol: 'QETH', category: 'DeFi' },
+  { symbol: 'RENDER', category: 'AI' },
+  { symbol: 'FIL', category: 'Data' },
+  { symbol: 'VRA', category: 'Gaming' },
+  { symbol: 'SNX', category: 'DeFi' },
+  { symbol: 'MKR', category: 'DeFi' },
+  { symbol: 'JASMY', category: 'Data' },
+  { symbol: 'FLOKI', category: 'Meme' },
+  { symbol: 'PEPE', category: 'Meme' },
+  { symbol: 'POPCAT', category: 'Meme' },
+  { symbol: 'BRETT', category: 'Meme' },
+  { symbol: 'CAKE', category: 'DeFi' },
+  { symbol: 'TAO', category: 'Infrastructure' },
+  { symbol: 'PEOPLE', category: 'Unknown' },
+  { symbol: 'HBAR', category: 'Infrastructure' },
+  { symbol: 'USDT', category: 'Stablecoins' },
+  { symbol: 'ENJ', category: 'NFT' },
+  { symbol: 'TFUEL', category: 'Infrastructure' },
+  { symbol: 'ROSE', category: 'Privacy' },
+  { symbol: 'TIA', category: 'DeFi' },
+  { symbol: 'BONK', category: 'Meme' },
+  { symbol: 'POPCAT', category: 'Meme' },
+  { symbol: 'ETH', category: 'Store of Value' },
+  { symbol: 'PEOPLE', category: 'Identity' },
+  { symbol: 'BRETT', category: 'Meme' },
+  { symbol: 'ICP', category: 'Infrastructure' },
+  { symbol: 'GALA', category: 'Gaming' },
+  { symbol: 'ASTR', category: 'Infrastructure' },
+  { symbol: 'BLUR', category: 'NFT' },
+  { symbol: 'HOT', category: 'Exchange' },
+  { symbol: 'DOGE', category: 'Meme' },
+  { symbol: 'SHIB', category: 'Meme' },
+  { symbol: 'SOL', category: 'Infrastructure' },
+  { symbol: 'LINK', category: 'Oracles' },
+  { symbol: 'ADA', category: 'Smart Contract' },
+  { symbol: 'MATIC', category: 'Smart Contract' },
+  { symbol: 'RENDER', category: 'AI' },
+  { symbol: 'AGIX', category: 'AI' },
+  { symbol: 'VET', category: 'Infrastructure' },
+  { symbol: 'TOKEN', category: 'RWA' },
+  { symbol: 'UNI', category: 'DeFi' },
+  { symbol: 'AVAX', category: 'Infrastructure' },
+  { symbol: 'APE', category: 'NFT' },
+  { symbol: 'DOT', category: 'Interoperability' },
+  { symbol: 'OCEAN', category: 'Data' },
+  { symbol: 'WIF', category: 'Meme' },
+  { symbol: 'FET', category: 'AI' },
+  { symbol: 'SAND', category: 'Gaming' },
+  { symbol: 'ILV', category: 'NFT' },
+  { symbol: 'BNB', category: 'Exchange' },
 ];
 
 export const getCategoryTooltip = (category: string) => {
-  switch (category) {
-    case 'AI':
-      return [
-        'Cryptocurrencies leveraging artificial intelligence for various applications.',
-      ];
-    case 'Meme':
-      return [
-        'Tokens created around internet memes or cultural references, often with a humorous aspect.',
-      ];
-    case 'DeFi':
-      return [
-        'Decentralized finance platforms providing financial services without traditional intermediaries.',
-      ];
-    case 'Oracles':
-      return [
-        'Protocols that connect smart contracts with real-world data and external APIs.',
-      ];
-    case 'Stablecoins':
-      return [
-        'Cryptocurrencies designed to maintain a stable value, often pegged to fiat currencies.',
-      ];
-    case 'Gaming':
-      return [
-        'Tokens used in gaming ecosystems for in-game purchases, rewards, and transactions.',
-      ];
-    case 'Infrastructure':
-      return [
-        'Cryptocurrencies that provide foundational technology for building and supporting blockchain networks.',
-      ];
-    case 'Data':
-      return [
-        'Cryptocurrencies focused on data storage, sharing, and privacy.',
-      ];
-    case 'Interoperability':
-      return [
-        'Platforms enabling different blockchain networks to communicate and interact with each other.',
-      ];
-    case 'Unknown':
-      return ['Cryptocurrencies with unclear or unspecified use cases.'];
-    case 'Exchange':
-      return [
-        'Tokens associated with cryptocurrency exchanges, often providing benefits like fee discounts.',
-      ];
-    case 'None':
-      return [
-        'Tokens that do not fit into any specific category or lack detailed information.',
-      ];
-    case 'NFT':
-      return [
-        'Non-fungible tokens representing unique digital assets like art, collectibles, and real estate.',
-      ];
-    case 'Safehaven':
-      return [
-        'Cryptocurrencies perceived as secure investments during market volatility.',
-      ];
-    case 'Privacy':
-      return [
-        'Cryptocurrencies designed to enhance transaction privacy and anonymity.',
-      ];
-    case 'SupplyChain':
-      return [
-        'Cryptocurrencies focused on improving transparency, traceability, and efficiency in the supply chain industry.',
-      ];
-    case 'Identity':
-      return [
-        'Cryptocurrencies that focus on digital identity management and verification.',
-      ];
-    case 'Media':
-      return [
-        'Cryptocurrencies related to media, entertainment, and content creation.',
-      ];
-    case 'RWA':
-      return [
-        'Tokens that represent real-world assets such as real estate, commodities, or financial instruments.',
-      ];
-    case 'SmartContract':
-      return [
-        'Cryptocurrencies that focus on smart contract functionality, enabling decentralized applications and automated agreements.',
-      ];
-    case 'Sports':
-      return [
-        'Tokens used in the sports industry for fan engagement, ticketing, and other sports-related activities.',
-      ];
-    default:
-      return null;
-  }
+  const tooltip = altcoinsCategoriesAndTooltip.find(
+    (item) => item.category === category
+  )?.tooltip;
+  return tooltip;
 };
+
+const altcoinsCategoriesAndTooltip = [
+  {
+    category: 'AI',
+    tooltip:
+      '🤖 Cryptocurrencies leveraging artificial intelligence for various applications.',
+  },
+  {
+    category: 'Data',
+    tooltip:
+      '💾 Cryptocurrencies focused on data storage, sharing, and privacy.',
+  },
+  {
+    category: 'DeFi',
+    tooltip:
+      '💰 Decentralized finance platforms providing financial services without traditional intermediaries.',
+  },
+  {
+    category: 'Exchange',
+    tooltip:
+      '💱 Tokens associated with cryptocurrency exchanges, often providing benefits like fee discounts.',
+  },
+  {
+    category: 'Gaming',
+    tooltip:
+      '🕹️ Tokens used in gaming ecosystems for in-game purchases, rewards, and transactions.',
+  },
+  {
+    category: 'Governance',
+    tooltip:
+      '🗳️ Cryptocurrencies used for community voting and decision-making.',
+  },
+  {
+    category: 'Identity',
+    tooltip:
+      '👤 Cryptocurrencies that focus on digital identity management and verification.',
+  },
+  {
+    category: 'Infrastructure',
+    tooltip:
+      '🚧 Cryptocurrencies that provide foundational technology for building and supporting blockchain networks.',
+  },
+  {
+    category: 'Interoperability',
+    tooltip:
+      '🔗 Platforms enabling different blockchain networks to communicate and interact with each other.',
+  },
+  {
+    category: 'Media',
+    tooltip:
+      '🎥 Cryptocurrencies related to media, entertainment, and content creation.',
+  },
+  {
+    category: 'Meme',
+    tooltip:
+      '🐶 Tokens created around internet memes or cultural references, often with a humorous aspect.',
+  },
+  {
+    category: 'NFT',
+    tooltip:
+      '🖼️ Non-fungible tokens representing unique digital assets like art, collectibles, and real estate.',
+  },
+  {
+    category: 'Oracles',
+    tooltip:
+      '👁️ Protocols that connect smart contracts with real-world data and external APIs.',
+  },
+  {
+    category: 'Privacy',
+    tooltip:
+      '🔒 Cryptocurrencies designed to enhance transaction privacy and anonymity.',
+  },
+  {
+    category: 'RWA',
+    tooltip:
+      '🏠 Tokens that represent real-world assets such as real estate, commodities, or financial instruments.',
+  },
+  {
+    category: 'Safehaven',
+    tooltip:
+      '🛡️ Cryptocurrencies perceived as secure investments during market volatility.',
+  },
+  {
+    category: 'SmartContract',
+    tooltip:
+      '📄 Cryptocurrencies that focus on smart contract functionality, enabling decentralized applications and automated agreements.',
+  },
+  {
+    category: 'Sports',
+    tooltip:
+      '⚽️ Tokens used in the sports industry for fan engagement, ticketing, and other sports-related activities.',
+  },
+  {
+    category: 'Stablecoins',
+    tooltip:
+      '⚖️ Cryptocurrencies designed to maintain a stable value, often pegged to fiat currencies.',
+  },
+  {
+    category: 'SupplyChain',
+    tooltip:
+      '📦 Cryptocurrencies focused on improving transparency, traceability, and efficiency in the supply chain industry.',
+  },
+  {
+    category: 'Unknown',
+    tooltip: '🤷🏻‍♂️ Cryptocurrencies with unclear or unspecified use cases.',
+  },
+];
 
 export const getCurrencies = (subtype: string) => {
   switch (subtype) {

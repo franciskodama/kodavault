@@ -11,10 +11,12 @@ import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
 
 import {
+  altcoinsCategories,
   categoryOptions,
   fixedSymbolsArr,
   getAccounts,
   getCategories,
+  getCategoryBySymbol,
   getCategoryTooltip,
   getCurrencies,
   getExchanges,
@@ -31,6 +33,7 @@ import {
   TooltipProvider,
   Tooltip,
 } from './ui/tooltip';
+import { category_enum_6c7fcd47 } from '@prisma/client';
 
 export function AddAssetForm() {
   const { refreshAssets } = useAssetsContext();
@@ -53,6 +56,7 @@ export function AddAssetForm() {
   const assetSubtype = watch('subtype');
   const assetType = getTypes(assetSubtype);
   const assetSymbol = getSymbols(assetSubtype);
+  const symbolTyped = watch('asset');
   const assetWallet = getWallets(assetSubtype);
   const assetCategory = getCategories(assetSubtype);
   const assetCurrency: string[] = getCurrencies(assetSubtype);
@@ -96,6 +100,13 @@ export function AddAssetForm() {
       setValue('exchange', assetExchange[0]);
     }
   }, [assetExchange, setValue]);
+
+  useEffect(() => {
+    if (altcoinsCategories.find((coin) => coin.symbol === symbolTyped)) {
+      const relatedCategory = getCategoryBySymbol(symbolTyped);
+      setValue('category', relatedCategory as category_enum_6c7fcd47);
+    }
+  }, [symbolTyped, setValue]);
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
     if (!uid) {
@@ -150,6 +161,7 @@ export function AddAssetForm() {
             ))}
           </ul>
         </div>
+
         <div className='flex flex-col'>
           {assetSymbol && fixedSymbolsArr.includes(assetSymbol) ? null : (
             <div className={classDiv}>
@@ -217,6 +229,7 @@ export function AddAssetForm() {
                             id={categoryOption}
                             {...register('category')}
                           />
+
                           <label
                             className={classLabelRadio}
                             htmlFor={categoryOption}
