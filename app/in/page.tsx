@@ -1,15 +1,16 @@
-import { getCurrencies } from '@/lib/currency.server';
-import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
-import { netWorthChartData } from '@/lib/types';
-import { getNetWorthEvolution, getUids } from '@/lib/actions';
 import { currentUser } from '@clerk/nextjs/server';
+
+import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
+import { getNetWorthEvolution, getUids } from '@/lib/actions';
+import { getCurrencies } from '@/lib/currency.server';
 import { Loading } from '@/components/Loading';
+import Dashboard from './dashboard/dashboard';
+
 import {
   fetchQuotesForCryptos,
   getAllTimeHighData,
   getGlobalData,
 } from '@/lib/crypto.server';
-import Dashboard from './dashboard/dashboard';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -35,11 +36,8 @@ export default async function DashboardPage() {
     assetsByType.Crypto.find((item: any) => item.asset === 'BTC')?.price
   );
 
-  const rawNetWorthChartData = await getNetWorthEvolution(uid ? uid : '');
-  console.log(
-    '---  🚀 ---> | rawNetWorthChartData aaaaa:',
-    rawNetWorthChartData
-  );
+  const netWorthChartData = await getNetWorthEvolution(uid ? uid : '');
+  console.log('---  🚀 ---> | netWorthChartData aaaaa:', netWorthChartData);
 
   // let netWorthChartData: netWorthChartData[] = [];
   // if (!('error' in rawNetWorthChartData)) {
@@ -72,14 +70,13 @@ export default async function DashboardPage() {
         assets &&
         assetsByType &&
         uid &&
-        rawNetWorthChartData && (
+        netWorthChartData && (
           <Dashboard
             currencyRates={currencyRates}
             assets={assets}
             assetsByType={assetsByType}
             btcPrice={btcPrice}
-            // netWorthChartData={sortedNetWorthChartData}
-            rawNetWorthChartData={rawNetWorthChartData}
+            netWorthChartData={netWorthChartData}
             uid={uid}
           />
         )

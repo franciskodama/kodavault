@@ -153,22 +153,32 @@ export type totalArrayProps = {
 //   uid: 'fk@fkodama.com'
 // },
 
-export type rawNetWorthChartData = {
+export type netWorthChartData = {
   created_at: Date | string;
   usd_total: number;
   cad_total: number;
   brl_total: number;
   btc_total: number;
   id: string;
-  uid: string;
+  uid: string | null;
 };
 
 // type chartDataXAndY = [string, string, string, string],
 
-// export type netWorthChartData = [
+// export type AddNetWorthChartData = [
 //   chartDataXAndY,
 //   [Date | string, number, number, number, number]
 // ];
+
+export type AddNetWorthChartData = {
+  id?: string;
+  created_at?: Date | string;
+  uid: string;
+  usdTotal: number;
+  cadTotal: number;
+  brlTotal: number;
+  btcTotal: number;
+};
 
 export type TotalByWallet = {
   value: string;

@@ -6,8 +6,7 @@ import {
   Asset,
   AssetsByType,
   Currencies,
-  // netWorthChartData,
-  rawNetWorthChartData,
+  netWorthChartData,
 } from '@/lib/types';
 import NetWorthEvolutionChart from './charts/net-worth-evolution';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
@@ -21,14 +20,14 @@ export default function Dashboard({
   assets,
   assetsByType,
   btcPrice,
-  rawNetWorthChartData,
+  netWorthChartData,
   uid,
 }: {
   currencyRates: Currencies;
   assets: Asset[];
   assetsByType: AssetsByType;
   btcPrice: number;
-  rawNetWorthChartData: rawNetWorthChartData[];
+  netWorthChartData: netWorthChartData[];
   uid: string;
 }) {
   return (
@@ -116,7 +115,7 @@ export default function Dashboard({
               {/* <Transactions /> */}
               <div className='flex'>
                 {/* <NetWorthEvolutionChart netWorthChartData={netWorthChartData} /> */}
-                <NetWorthChart rawNetWorthChartData={rawNetWorthChartData} />
+                <NetWorthChart netWorthChartData={netWorthChartData} />
                 {/* <GoalGauge /> */}
               </div>
 

@@ -8,20 +8,20 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { rawNetWorthChartData } from '@/lib/types';
+import { netWorthChartData } from '@/lib/types';
 import { dateFormatter } from '@/lib/utils';
 
 // https://www.react-google-charts.com/examples/line-chart
 
 export default function NetWorthChart({
-  rawNetWorthChartData,
+  netWorthChartData,
 }: {
-  rawNetWorthChartData: rawNetWorthChartData[];
+  netWorthChartData: netWorthChartData[];
 }) {
-  let netWorthChartData = [];
-  netWorthChartData.push([{ type: 'date', label: 'Day' }, 'USD', 'CAD', 'BTC']);
-  if (!('error' in rawNetWorthChartData)) {
-    netWorthChartData = rawNetWorthChartData.map((item: any) => [
+  let formattedData = [];
+  formattedData.push([{ type: 'date', label: 'Day' }, 'USD', 'CAD', 'BTC']);
+  if (!('error' in netWorthChartData)) {
+    formattedData = netWorthChartData.map((item: any) => [
       item.created_at,
       item.usd_total,
       item.cad_total,
@@ -31,10 +31,10 @@ export default function NetWorthChart({
   } else {
     console.error(
       'Error fetching Net Worth Evolution data:',
-      rawNetWorthChartData.error
+      netWorthChartData.error
     );
   }
-  console.log('---  🚀 ---> | netWorthChartData:', netWorthChartData);
+  // console.log('---  🚀 ---> | netWorthChartData:', netWorthChartData);
 
   //   const formattedData = netWorthChartData.map((item: netWorthChartData) => ({
   //     ...item,
