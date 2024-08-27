@@ -9,11 +9,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { netWorthChartData } from '@/lib/types';
-import {
-  dateFormatter,
-  numberFormatter,
-  numberFormatterNoDecimals,
-} from '@/lib/utils';
 import { Loading } from '@/components/Loading';
 
 // https://www.react-google-charts.com/examples/line-chart
