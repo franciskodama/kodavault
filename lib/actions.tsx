@@ -254,7 +254,7 @@ export async function deleteShortcut(id: string) {
 export async function addNetWorthEvolution(
   addNetWorthChartData: AddNetWorthChartData
 ) {
-  const { uid, usdTotal, cadTotal, brlTotal, btcTotal } = addNetWorthChartData;
+  const { uid, usd, cad, brl, btc } = addNetWorthChartData;
 
   try {
     await prisma.netWorthEvolution.create({
@@ -262,10 +262,10 @@ export async function addNetWorthEvolution(
         id: v4(),
         created_at: new Date(),
         uid,
-        usd_total: usdTotal,
-        cad_total: cadTotal,
-        brl_total: brlTotal,
-        btc_total: btcTotal,
+        usd,
+        cad,
+        brl,
+        btc,
       },
     });
     return true;
