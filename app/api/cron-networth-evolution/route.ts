@@ -2,7 +2,11 @@ import { addNetWorthEvolution, getUids } from '@/lib/actions';
 import { fetchAssetsWithPrices } from '@/lib/assets';
 import { getAssets } from '@/lib/assets.server';
 import { getCurrencies } from '@/lib/currency.server';
-import { netWorthChartData, UnpricedAsset } from '@/lib/types';
+import {
+  AddNetWorthChartData,
+  netWorthChartData,
+  UnpricedAsset,
+} from '@/lib/types';
 
 export async function GET() {
   const currencyRates = await getCurrencies();
@@ -62,7 +66,7 @@ export async function GET() {
       );
       const btc = assets.find((item: any) => item.asset === 'BTC');
 
-      let networthData: netWorthChartData;
+      let networthData: AddNetWorthChartData;
       if (currencyRates.data && btc.price) {
         networthData = {
           uid,
@@ -81,7 +85,6 @@ export async function GET() {
         };
       }
 
-      console.log('---  🚀 ---> | networthData:', networthData);
       await addNetWorthEvolution(networthData);
     } catch (error) {
       return new Response(JSON.stringify({ error: error }), {
