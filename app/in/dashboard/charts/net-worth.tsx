@@ -33,53 +33,17 @@ export default function NetWorthChart({
 }: {
   netWorthChartData: netWorthChartData[];
 }) {
-  // let formattedData: HeaderAndRowsChartData = [
-  //   [{ type: 'date', label: 'Day' }, 'USD', 'CAD', 'BRL', 'BTC'],
-  // ];
-
-  // Generate formatted data
   const formattedData: HeaderAndRowsChartData = [
-    [{ type: 'date', label: 'Day' }, 'USD', 'CAD', 'BRL', 'BTC'], // Header row
+    [{ type: 'date', label: 'Day' }, 'USD', 'CAD', 'BRL', 'BTC'],
     ...(netWorthChartData.map((item) => [
       transformDateToYearMonth(item.created_at),
       +item.usd_total.toFixed(0),
       +item.cad_total.toFixed(0),
       +item.brl_total.toFixed(0),
       +item.btc_total.toFixed(0) * 10000,
-    ]) as RowChartData[]), // Cast to RowChartData[]
+    ]) as RowChartData[]),
   ];
-
-  // if (!('error' in netWorthChartData)) {
-  //   const dataRows: RowChartData = netWorthChartData.map((item: any) => [
-  //     transformDateToYearMonth(item.created_at),
-  //     +item.usd_total.toFixed(0),
-  //     +item.cad_total.toFixed(0),
-  //     +item.brl_total.toFixed(0),
-  //     +item.btc_total.toFixed(0),
-  //   ]);
-
-  //   formattedData = [...formattedData, ...dataRows];
-  // } else {
-  //   console.error(
-  //     'Error fetching Net Worth Evolution data:',
-  //     netWorthChartData.error
-  //   );
-  // }
-
   console.log('---  🚀 ---> | formattedData new:', formattedData);
-
-  const test = [
-    [{ type: 'date', label: 'Day' }, 'USD', 'CAD', 'BRL', 'BTC'], // Header row
-    [new Date(2014, 1), 0, 0, 5, 10], // Example data row
-    [new Date(2014, 2), 10, 5, 15, 20],
-    [new Date(2014, 3), 23, 15, 35, 25],
-    [new Date(2014, 4), 17, 9, 25, 30],
-    [new Date(2014, 5), 18, 10, 45, 35],
-    [new Date(2014, 6), 9, 5, 55, 40],
-    [new Date(2014, 7), 11, 3, 35, 45],
-    [new Date(2014, 8), 27, 19, 35, 50],
-  ];
-  console.log('---  🚀 ---> | test:', test);
 
   const data = [
     ['USD', 'CAD', 'BRL', 'BTC'],
@@ -106,6 +70,9 @@ export default function NetWorthChart({
       //   viewWindow: { min: 0, max: 3000000 },
     },
   };
+
+  //Options
+  //  https://www.react-google-charts.com/components/chart
 
   const options1 = {
     chart: {
@@ -135,9 +102,6 @@ export default function NetWorthChart({
     },
   };
 
-  //Options
-  //  https://www.react-google-charts.com/components/chart
-
   return (
     <>
       <Card className='w-full'>
@@ -159,7 +123,7 @@ export default function NetWorthChart({
                     chartType='Line'
                     width='100%'
                     height='300px'
-                    data={test}
+                    data={formattedData}
                     options={options}
                   />
                 </div>
