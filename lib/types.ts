@@ -133,26 +133,6 @@ export type totalArrayProps = {
   emoji: string;
 };
 
-// export type netWorthChartData = {
-//   id?: string;
-//   created_at?: Date | string;
-//   uid: string;
-//   usdTotal: number;
-//   cadTotal: number;
-//   brlTotal: number;
-//   btcTotal: number;
-// };
-
-// {
-//   created_at: 2024-08-25T00:00:00.000Z,
-//   usd_total: 579794.4974999998,
-//   cad_total: 783302.3661224997,
-//   brl_total: 3214746.544467921,
-//   btc_total: 9.044673396520807,
-//   id: '4602cfd0-083c-4681-8054-00a73ec62a81',
-//   uid: 'fk@fkodama.com'
-// },
-
 export type netWorthChartData = {
   created_at: Date | string;
   usd_total: number;

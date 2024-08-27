@@ -34,7 +34,7 @@ export default function NetWorthChart({
   const formattedData: HeaderAndRowsChartData = [
     ['', 'USD', 'CAD', 'BRL', 'BTC'],
     ...(sortedNetWorthChartData.map((item) => [
-      transformDateToYearMonth(item.created_at),
+      transformDateToYearMonthDay(item.created_at),
       +item.usd_total.toFixed(0),
       +item.cad_total.toFixed(0),
       +item.brl_total.toFixed(0),
@@ -43,25 +43,50 @@ export default function NetWorthChart({
   ];
 
   const options = {
-    // width: 900,
-    height: 300,
+    // Works
     chart: {
       // title: 'Average Temperatures and Daylight in Iceland Throughout the Year',
       // subtitle: 'in millions of dollars (USD)',
     },
-    legend: { position: 'bottom' },
-    series: {
-      // Gives each series an axis name that matches the Y-axis below.
-      // 0: { axis: 'Temps' },
-      // 1: { axis: 'Daylight' },
-    },
+    colors: ['#0011ff', '#ff0000', '#0ed922', '#d5db2d'],
+    height: 400,
+    // width: 900,
+    legend: { position: 'left' },
+    // chartArea: { left: 50, top: 50, right: 50, bottom: 50 },
+
+    // Doesn't Works
+    // animation: {
+    //   startup: true,
+    //   easing: 'linear',
+    //   duration: 1500,
+    // },
+    // curveType: 'function',
+    // is3D: true,
+    // backgroundColor: '#10d541',
+    legendToggle: true,
+    series: [
+      // { color: '#D9544C' },
+      {
+        // Gives each series an axis name that matches the Y-axis below.
+        // 0: { axis: 'Temps' },
+        // 1: { axis: 'Daylight' },
+      },
+    ],
+    // hAxis?: { [otherOptionKey: string]: any; minValue?: any; maxValue?: any; ticks?: GoogleChartTicks; title?: string; viewWindow?: { ...; }; }; vAxis?: { ...; };
     hAxis: {
+      viewWindow: {
+        max: 10000,
+        min: -10000,
+      },
       title: 'Weeks',
-      //   viewWindow: { min: 0, max: 24 },
+      maxValue: 5000000,
     },
     vAxis: {
+      viewWindow: {
+        max: 10000,
+        min: -10000,
+      },
       title: '$',
-      //   viewWindow: { min: 0, max: 3000000 },
     },
     axes: {
       // Adds labels to each axis; they don't have to match the axis names.
@@ -90,19 +115,44 @@ export default function NetWorthChart({
               </CardDescription>
             </CardHeader>
             <CardContent className='w-full'>
-              {formattedData ? (
+              {formattedData && (
                 <div className='w-full p-8'>
                   <Chart
                     chartType='Line'
                     width='100%'
-                    height='300px'
+                    height='100%'
                     data={formattedData}
                     options={options}
+                    loader={<Loading />}
+                    chartPackages={['corechart', 'controls']}
+                    // chartWrapperParams={{ view: { columns: [0, 3] } }}
+                    controls={[
+                      {
+                        controlEvents: [
+                          {
+                            eventName: 'statechange',
+                            callback: ({ chartWrapper, controlWrapper }) => {
+                              console.log(
+                                'State changed to',
+                                controlWrapper?.getState()
+                              );
+                            },
+                          },
+                        ],
+                        controlType: 'CategoryFilter',
+                        options: {
+                          filterColumnIndex: 1,
+                          ui: {
+                            labelStacking: 'vertical',
+                            label: 'Currency Selection:',
+                            allowTyping: false,
+                            allowMultiple: false,
+                          },
+                        },
+                      },
+                    ]}
                   />
                 </div>
-              ) : (
-                // <Loading />
-                <p>Not Working</p>
               )}
             </CardContent>
           </div>
@@ -112,7 +162,7 @@ export default function NetWorthChart({
   );
 }
 
-const transformDateToYearMonth = (date: Date | string): Date => {
+const transformDateToYearMonthDay = (date: Date | string): Date => {
   if (typeof date === 'string') {
     return new Date(date);
   }
