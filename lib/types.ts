@@ -163,13 +163,6 @@ export type netWorthChartData = {
   uid: string | null;
 };
 
-// type chartDataXAndY = [string, string, string, string],
-
-// export type AddNetWorthChartData = [
-//   chartDataXAndY,
-//   [Date | string, number, number, number, number]
-// ];
-
 export type AddNetWorthChartData = {
   id?: string;
   created_at?: Date | string;

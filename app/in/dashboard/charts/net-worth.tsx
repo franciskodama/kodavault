@@ -9,53 +9,90 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { netWorthChartData } from '@/lib/types';
-import { dateFormatter } from '@/lib/utils';
+import {
+  dateFormatter,
+  numberFormatter,
+  numberFormatterNoDecimals,
+} from '@/lib/utils';
+import { Loading } from '@/components/Loading';
 
 // https://www.react-google-charts.com/examples/line-chart
+
+type HeaderRowChartData = [
+  { type: 'date'; label: 'Day' },
+  string,
+  string,
+  string,
+  string
+];
+type RowChartData = [Date, number, number, number, number];
+type HeaderAndRowsChartData = [HeaderRowChartData, ...RowChartData[]];
 
 export default function NetWorthChart({
   netWorthChartData,
 }: {
   netWorthChartData: netWorthChartData[];
 }) {
-  let formattedData = [];
-  formattedData.push([{ type: 'date', label: 'Day' }, 'USD', 'CAD', 'BTC']);
-  if (!('error' in netWorthChartData)) {
-    formattedData = netWorthChartData.map((item: any) => [
-      item.created_at,
-      item.usd_total,
-      item.cad_total,
-      item.brl_total,
-      item.btc_total,
-    ]);
-  } else {
-    console.error(
-      'Error fetching Net Worth Evolution data:',
-      netWorthChartData.error
-    );
-  }
-  // console.log('---  🚀 ---> | netWorthChartData:', netWorthChartData);
+  // let formattedData: HeaderAndRowsChartData = [
+  //   [{ type: 'date', label: 'Day' }, 'USD', 'CAD', 'BRL', 'BTC'],
+  // ];
 
-  //   const formattedData = netWorthChartData.map((item: netWorthChartData) => ({
-  //     ...item,
-  //     created_at: dateFormatter(item.created_at),
-  //     USD: item.usdTotal,
-  //     CAD: item.cadTotal,
-  //     BRL: item.brlTotal,
-  //     BTC: item.btcTotal * 100000,
-  //   }));
+  // Generate formatted data
+  const formattedData: HeaderAndRowsChartData = [
+    [{ type: 'date', label: 'Day' }, 'USD', 'CAD', 'BRL', 'BTC'], // Header row
+    ...(netWorthChartData.map((item) => [
+      transformDateToYearMonth(item.created_at),
+      +item.usd_total.toFixed(0),
+      +item.cad_total.toFixed(0),
+      +item.brl_total.toFixed(0),
+      +item.btc_total.toFixed(0) * 10000,
+    ]) as RowChartData[]), // Cast to RowChartData[]
+  ];
+
+  // if (!('error' in netWorthChartData)) {
+  //   const dataRows: RowChartData = netWorthChartData.map((item: any) => [
+  //     transformDateToYearMonth(item.created_at),
+  //     +item.usd_total.toFixed(0),
+  //     +item.cad_total.toFixed(0),
+  //     +item.brl_total.toFixed(0),
+  //     +item.btc_total.toFixed(0),
+  //   ]);
+
+  //   formattedData = [...formattedData, ...dataRows];
+  // } else {
+  //   console.error(
+  //     'Error fetching Net Worth Evolution data:',
+  //     netWorthChartData.error
+  //   );
+  // }
+
+  console.log('---  🚀 ---> | formattedData new:', formattedData);
+
+  const test = [
+    [{ type: 'date', label: 'Day' }, 'USD', 'CAD', 'BRL', 'BTC'], // Header row
+    [new Date(2014, 1), 0, 0, 5, 10], // Example data row
+    [new Date(2014, 2), 10, 5, 15, 20],
+    [new Date(2014, 3), 23, 15, 35, 25],
+    [new Date(2014, 4), 17, 9, 25, 30],
+    [new Date(2014, 5), 18, 10, 45, 35],
+    [new Date(2014, 6), 9, 5, 55, 40],
+    [new Date(2014, 7), 11, 3, 35, 45],
+    [new Date(2014, 8), 27, 19, 35, 50],
+  ];
+  console.log('---  🚀 ---> | test:', test);
 
   const data = [
     ['USD', 'CAD', 'BRL', 'BTC'],
-    [0, 0, 0, 5],
-    [1, 10, 5, 15],
-    [2, 23, 15, 35],
-    [3, 17, 9, 25],
-    [4, 18, 10, 45],
-    [5, 9, 5, 55],
-    [6, 11, 3, 35],
-    [7, 27, 19, 35],
+    [new Date(2014, 1), 0, 0, 5],
+    [new Date(2014, 2), 10, 5, 15],
+    [new Date(2014, 3), 23, 15, 35],
+    [new Date(2014, 4), 17, 9, 25],
+    [new Date(2014, 5), 18, 10, 45],
+    [new Date(2014, 6), 9, 5, 55],
+    [new Date(2014, 7), 11, 3, 35],
+    [new Date(2014, 8), 27, 19, 35],
   ];
+  console.log('---  🚀 ---> | data:', data);
 
   const options2 = {
     // title: 'Age vs. Weight comparison',
@@ -80,7 +117,7 @@ export default function NetWorthChart({
 
   const options = {
     chart: {
-      title: 'Average Temperatures and Daylight in Iceland Throughout the Year',
+      // title: 'Average Temperatures and Daylight in Iceland Throughout the Year',
     },
     width: 900,
     height: 500,
@@ -92,8 +129,8 @@ export default function NetWorthChart({
     axes: {
       // Adds labels to each axis; they don't have to match the axis names.
       y: {
-        Temps: { label: 'Temps (Celsius)' },
-        Daylight: { label: 'Daylight' },
+        Temps: { label: '$' },
+        Daylight: { label: 'Days' },
       },
     },
   };
@@ -116,15 +153,20 @@ export default function NetWorthChart({
               </CardDescription>
             </CardHeader>
             <CardContent className='w-full'>
-              <div className='w-full p-8'>
-                <Chart
-                  chartType='Line'
-                  width='100%'
-                  height='400px'
-                  data={data}
-                  options={options}
-                />
-              </div>
+              {formattedData ? (
+                <div className='w-full p-8'>
+                  <Chart
+                    chartType='Line'
+                    width='100%'
+                    height='300px'
+                    data={test}
+                    options={options}
+                  />
+                </div>
+              ) : (
+                // <Loading />
+                <p>Not Working</p>
+              )}
             </CardContent>
           </div>
         </div>
@@ -133,26 +175,9 @@ export default function NetWorthChart({
   );
 }
 
-// const renderCustomAxisTick = ({ x, y, payload }) => {
-//   let emoji = '';
-
-//   switch (payload.value) {
-//     case 'USD':
-//       emoji = '🇺🇸';
-//       break;
-//     case 'CAD':
-//       emoji = '🇨🇦';
-//       break;
-//     case 'BRL':
-//       emoji = '🇧🇷';
-//       break;
-//     case 'BTC':
-//       emoji = '🥇';
-//       break;
-
-//     default:
-//       emoji = '';
-//   }
-
-//   return <div>{emoji}</div>;
-// };
+const transformDateToYearMonth = (date: Date | string): Date => {
+  if (typeof date === 'string') {
+    return new Date(date);
+  }
+  return new Date(date.getFullYear(), date.getMonth());
+};

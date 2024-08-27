@@ -37,32 +37,6 @@ export default async function DashboardPage() {
   );
 
   const netWorthChartData = await getNetWorthEvolution(uid ? uid : '');
-  console.log('---  🚀 ---> | netWorthChartData aaaaa:', netWorthChartData);
-
-  // let netWorthChartData: netWorthChartData[] = [];
-  // if (!('error' in rawNetWorthChartData)) {
-  //   netWorthChartData = rawNetWorthChartData.map((item: any) => ({
-  //     id: item.id,
-  //     created_at: item.created_at,
-  //     uid: item.uid,
-  //     usdTotal: item.usd_total,
-  //     cadTotal: item.cad_total,
-  //     brlTotal: item.brl_total,
-  //     btcTotal: item.btc_total,
-  //   }));
-  // } else {
-  //   console.error(
-  //     'Error fetching Net Worth Evolution data:',
-  //     rawNetWorthChartData.error
-  //   );
-  // }
-
-  // const sortedNetWorthChartData: netWorthChartData[] = netWorthChartData
-  //   .filter(
-  //     (item): item is netWorthChartData & { created_at: Date } =>
-  //       item.created_at !== undefined
-  //   )
-  //   .sort((a, b) => a.created_at.getTime() - b.created_at.getTime());
 
   return (
     <>

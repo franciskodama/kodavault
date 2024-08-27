@@ -114,7 +114,6 @@ export default function Dashboard({
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
-                {/* <NetWorthEvolutionChart netWorthChartData={netWorthChartData} /> */}
                 <NetWorthChart netWorthChartData={netWorthChartData} />
                 {/* <GoalGauge /> */}
               </div>
