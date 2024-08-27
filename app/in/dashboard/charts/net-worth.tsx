@@ -30,10 +30,10 @@ export default function NetWorthChart({
     ['', 'USD', 'CAD', 'BRL', 'BTC'],
     ...(sortedNetWorthChartData.map((item) => [
       transformDateToYearMonthDay(item.created_at),
-      +item.usd_total.toFixed(0),
-      +item.cad_total.toFixed(0),
-      +item.brl_total.toFixed(0),
-      +item.btc_total.toFixed(0) * 10000,
+      +item.usd.toFixed(0),
+      +item.cad.toFixed(0),
+      +item.brl.toFixed(0),
+      +item.btc.toFixed(0) * 10000,
     ]) as RowChartData[]),
   ];
 

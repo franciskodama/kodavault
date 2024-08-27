@@ -135,10 +135,10 @@ export type totalArrayProps = {
 
 export type netWorthChartData = {
   created_at: Date | string;
-  usd_total: number;
-  cad_total: number;
-  brl_total: number;
-  btc_total: number;
+  usd: number;
+  cad: number;
+  brl: number;
+  btc: number;
   id: string;
   uid: string | null;
 };
@@ -147,10 +147,10 @@ export type AddNetWorthChartData = {
   id?: string;
   created_at?: Date | string;
   uid: string;
-  usdTotal: number;
-  cadTotal: number;
-  brlTotal: number;
-  btcTotal: number;
+  usd: number;
+  cad: number;
+  brl: number;
+  btc: number;
 };
 
 export type TotalByWallet = {
