@@ -30,10 +30,10 @@ export default function NetWorthEvolutionChart({
   const formattedData = netWorthChartData.map((item: netWorthChartData) => ({
     ...item,
     created_at: dateFormatter(item.created_at),
-    USD: item.usdTotal,
-    CAD: item.cadTotal,
-    BRL: item.brlTotal,
-    BTC: item.btcTotal * 100000,
+    USD: item.usd,
+    CAD: item.cad,
+    BRL: item.brl,
+    BTC: item.btc * 100000,
   }));
 
   return (

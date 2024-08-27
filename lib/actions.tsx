@@ -7,6 +7,7 @@ import {
   Inputs,
   ShortcutType,
   Asset,
+  AddNetWorthChartData,
 } from './types';
 import { revalidatePath } from 'next/cache';
 import { v4 } from 'uuid';
@@ -251,9 +252,9 @@ export async function deleteShortcut(id: string) {
 }
 
 export async function addNetWorthEvolution(
-  netWorthChartData: netWorthChartData
+  addNetWorthChartData: AddNetWorthChartData
 ) {
-  const { uid, usdTotal, cadTotal, brlTotal, btcTotal } = netWorthChartData;
+  const { uid, usd, cad, brl, btc } = addNetWorthChartData;
 
   try {
     await prisma.netWorthEvolution.create({
@@ -261,10 +262,10 @@ export async function addNetWorthEvolution(
         id: v4(),
         created_at: new Date(),
         uid,
-        usd_total: usdTotal,
-        cad_total: cadTotal,
-        brl_total: brlTotal,
-        btc_total: btcTotal,
+        usd,
+        cad,
+        brl,
+        btc,
       },
     });
     return true;
@@ -283,7 +284,8 @@ export const getNetWorthEvolution = async (uid: string) => {
     });
     return netWorthEvolution;
   } catch (error) {
-    return { error };
+    console.error('Error fetching net worth evolution:', error);
+    return [];
   }
 };
 

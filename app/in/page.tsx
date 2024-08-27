@@ -1,15 +1,16 @@
-import { getCurrencies } from '@/lib/currency.server';
-import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
-import { netWorthChartData } from '@/lib/types';
-import { getNetWorthEvolution, getUids } from '@/lib/actions';
 import { currentUser } from '@clerk/nextjs/server';
+
+import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
+import { getNetWorthEvolution, getUids } from '@/lib/actions';
+import { getCurrencies } from '@/lib/currency.server';
 import { Loading } from '@/components/Loading';
+import Dashboard from './dashboard/dashboard';
+
 import {
   fetchQuotesForCryptos,
   getAllTimeHighData,
   getGlobalData,
 } from '@/lib/crypto.server';
-import Dashboard from './dashboard/dashboard';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -35,44 +36,21 @@ export default async function DashboardPage() {
     assetsByType.Crypto.find((item: any) => item.asset === 'BTC')?.price
   );
 
-  const rawNetWorthChartData = await getNetWorthEvolution(uid ? uid : '');
-
-  let netWorthChartData: netWorthChartData[] = [];
-  if (!('error' in rawNetWorthChartData)) {
-    netWorthChartData = rawNetWorthChartData.map((item: any) => ({
-      id: item.id,
-      created_at: item.created_at,
-      uid: item.uid,
-      usdTotal: item.usd_total,
-      cadTotal: item.cad_total,
-      brlTotal: item.brl_total,
-      btcTotal: item.btc_total,
-    }));
-  } else {
-    console.error(
-      'Error fetching Net Worth Evolution data:',
-      rawNetWorthChartData.error
-    );
-  }
-  const sortedNetWorthChartData: netWorthChartData[] = netWorthChartData
-    .filter(
-      (item): item is netWorthChartData & { created_at: Date } =>
-        item.created_at !== undefined
-    )
-    .sort((a, b) => a.created_at.getTime() - b.created_at.getTime());
+  const netWorthChartData = await getNetWorthEvolution(uid ? uid : '');
 
   return (
     <>
       {currencyRates ? (
         assets &&
         assetsByType &&
-        uid && (
+        uid &&
+        netWorthChartData && (
           <Dashboard
             currencyRates={currencyRates}
             assets={assets}
             assetsByType={assetsByType}
             btcPrice={btcPrice}
-            netWorthChartData={sortedNetWorthChartData}
+            netWorthChartData={netWorthChartData}
             uid={uid}
           />
         )
