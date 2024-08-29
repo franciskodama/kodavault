@@ -121,31 +121,31 @@ export default function NetWorthChart({
                     loader={<Loading />}
                     chartPackages={['corechart', 'controls']}
                     // chartWrapperParams={{ view: { columns: [0, 3] } }}
-                    controls={[
-                      {
-                        controlEvents: [
-                          {
-                            eventName: 'statechange',
-                            callback: ({ chartWrapper, controlWrapper }) => {
-                              console.log(
-                                'State changed to',
-                                controlWrapper?.getState()
-                              );
-                            },
-                          },
-                        ],
-                        controlType: 'CategoryFilter',
-                        options: {
-                          filterColumnIndex: 1,
-                          ui: {
-                            labelStacking: 'vertical',
-                            label: 'Currency Selection:',
-                            allowTyping: false,
-                            allowMultiple: false,
-                          },
-                        },
-                      },
-                    ]}
+                    // controls={[
+                    //   {
+                    //     controlEvents: [
+                    //       {
+                    //         eventName: 'statechange',
+                    //         callback: ({ chartWrapper, controlWrapper }) => {
+                    //           console.log(
+                    //             'State changed to',
+                    //             controlWrapper?.getState()
+                    //           );
+                    //         },
+                    //       },
+                    //     ],
+                    //     controlType: 'CategoryFilter',
+                    //     options: {
+                    //       filterColumnIndex: 1,
+                    //       ui: {
+                    //         labelStacking: 'vertical',
+                    //         label: 'Currency Selection:',
+                    //         allowTyping: false,
+                    //         allowMultiple: false,
+                    //       },
+                    //     },
+                    //   },
+                    // ]}
                   />
                 </div>
               )}

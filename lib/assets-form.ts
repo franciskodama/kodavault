@@ -25,7 +25,7 @@ export const categoryOptions = [
   'Interoperability',
   'Unknown',
   'Exchange',
-  'None',
+  'Governance',
   'NFT',
   'Safehaven',
   'SmartContract',
@@ -147,7 +147,7 @@ export const getCategories = (subtype: string) => {
     case 'BTC':
       return ['Safehaven'];
     case 'ETH':
-      return ['Infrastructure'];
+      return ['SmartContract'];
     case 'Altcoin':
       return [
         'AI',
@@ -173,19 +173,19 @@ export const getCategories = (subtype: string) => {
         'Unknown',
       ];
     case 'Stock-USD':
-      return ['None'];
+      return ['Unknown'];
     case 'Stock-CAD':
-      return ['None'];
+      return ['Unknown'];
     case 'Stock-BRL':
-      return ['None'];
+      return ['Unknown'];
     case 'Cash-USD':
-      return ['None'];
+      return ['Unknown'];
     case 'Cash-CAD':
-      return ['None'];
+      return ['Unknown'];
     case 'Cash-BRL':
-      return ['None'];
+      return ['Unknown'];
     default:
-      return ['None'];
+      return ['Unknown'];
   }
 };
 
@@ -196,81 +196,112 @@ export const getCategoryBySymbol = (symbolTyped: string) => {
   return altcoin ? altcoin.category : 'Unknown';
 };
 
+// AI
+// Data
+// DeFi
+// Exchange
+// Gaming
+// Identity
+// Infrastructure
+// Interoperability
+// Media
+// Meme
+// NFT
+// Oracles
+// Privacy
+// RWA
+// Sports
+// Stablecoins
+// Smartcontract
+// Supplychain
+// Safeheaven
+// Unknown
+// None
+
 export const altcoinsCategories = [
-  { symbol: 'AAVE', category: 'DeFi' },
-  { symbol: 'THETA', category: 'Infrastructure' },
-  { symbol: 'EGLD', category: 'Infrastructure' },
-  { symbol: 'CHZ', category: 'Sports' },
-  { symbol: 'TRX', category: 'Infrastructure' },
-  { symbol: 'CRO', category: 'Exchange' },
-  { symbol: 'INJ', category: 'DeFi' },
-  { symbol: 'NEAR', category: 'Infrastructure' },
-  { symbol: 'ATOM', category: 'Interoperability' },
-  { symbol: 'TIA', category: 'DeFi' },
-  { symbol: 'PENDLE', category: 'DeFi' },
-  { symbol: 'IMX', category: 'NFT' },
-  { symbol: 'WLD', category: 'Identity' },
-  { symbol: 'MUBI', category: 'Interoperability' },
-  { symbol: 'ROSE', category: 'Privacy' },
-  { symbol: 'PYTH', category: 'Oracles' },
-  { symbol: 'TFUEL', category: 'Infrastructure' },
-  { symbol: 'RSR', category: 'DeFi' },
-  { symbol: 'STX', category: 'Infrastructure' },
-  { symbol: 'RUNE', category: 'DeFi' },
-  { symbol: 'AKT', category: 'Infrastructure' },
-  { symbol: 'XRD', category: 'Infrastructure' },
-  { symbol: 'LPT', category: 'Infrastructure' },
-  { symbol: 'ENJ', category: 'NFT' },
-  { symbol: 'QETH', category: 'DeFi' },
+  { symbol: 'AGIX', category: 'AI' },
+  { symbol: 'FET', category: 'AI' },
+  { symbol: 'OCEAN', category: 'AI' },
   { symbol: 'RENDER', category: 'AI' },
+
   { symbol: 'FIL', category: 'Data' },
-  { symbol: 'VRA', category: 'Gaming' },
-  { symbol: 'SNX', category: 'DeFi' },
+
+  { symbol: 'AAVE', category: 'DeFi' },
+  { symbol: 'INJ', category: 'DeFi' },
   { symbol: 'MKR', category: 'DeFi' },
-  { symbol: 'JASMY', category: 'Data' },
+  { symbol: 'PENDLE', category: 'DeFi' },
+  { symbol: 'RSR', category: 'DeFi' },
+  { symbol: 'RUNE', category: 'DeFi' },
+  { symbol: 'SNX', category: 'DeFi' },
+  { symbol: 'TIA', category: 'DeFi' },
+  { symbol: 'UNI', category: 'DeFi' },
+
+  { symbol: 'BNB', category: 'Exchange' },
+  { symbol: 'CRO', category: 'Exchange' },
+  { symbol: 'CAKE', category: 'Exchange' },
+
+  { symbol: 'GALA', category: 'Gaming' },
+  { symbol: 'SAND', category: 'Gaming' },
+
+  { symbol: 'PEOPLE', category: 'Identity' },
+  { symbol: 'WLD', category: 'Identity' },
+
+  { symbol: 'AKT', category: 'Infrastructure' },
+  { symbol: 'ASTR', category: 'Infrastructure' },
+  { symbol: 'AVAX', category: 'Infrastructure' },
+  { symbol: 'HBAR', category: 'Infrastructure' },
+  { symbol: 'HOT', category: 'Infrastructure' },
+  { symbol: 'ICP', category: 'Infrastructure' },
+  { symbol: 'NEAR', category: 'Infrastructure' },
+  { symbol: 'SOL', category: 'Infrastructure' },
+  { symbol: 'TAO', category: 'Infrastructure' },
+  { symbol: 'TFUEL', category: 'Infrastructure' },
+  { symbol: 'TRX', category: 'Infrastructure' },
+  { symbol: 'VET', category: 'Infrastructure' },
+  { symbol: 'XRD', category: 'Infrastructure' },
+
+  { symbol: 'ATOM', category: 'Interoperability' },
+  { symbol: 'DOT', category: 'Interoperability' },
+  { symbol: 'EGLD', category: 'Interoperability' },
+  { symbol: 'MUBI', category: 'Interoperability' },
+
+  { symbol: 'LPT', category: 'Media' },
+  { symbol: 'THETA', category: 'Media' },
+  { symbol: 'VRA', category: 'Media' },
+
+  { symbol: 'BONK', category: 'Meme' },
+  { symbol: 'BRETT', category: 'Meme' },
+  { symbol: 'DOGE', category: 'Meme' },
   { symbol: 'FLOKI', category: 'Meme' },
   { symbol: 'PEPE', category: 'Meme' },
   { symbol: 'POPCAT', category: 'Meme' },
-  { symbol: 'BRETT', category: 'Meme' },
-  { symbol: 'CAKE', category: 'DeFi' },
-  { symbol: 'TAO', category: 'Infrastructure' },
-  { symbol: 'PEOPLE', category: 'Unknown' },
-  { symbol: 'HBAR', category: 'Infrastructure' },
-  { symbol: 'USDT', category: 'Stablecoins' },
-  { symbol: 'ENJ', category: 'NFT' },
-  { symbol: 'TFUEL', category: 'Infrastructure' },
-  { symbol: 'ROSE', category: 'Privacy' },
-  { symbol: 'TIA', category: 'DeFi' },
-  { symbol: 'BONK', category: 'Meme' },
-  { symbol: 'POPCAT', category: 'Meme' },
-  { symbol: 'ETH', category: 'Store of Value' },
-  { symbol: 'PEOPLE', category: 'Identity' },
-  { symbol: 'BRETT', category: 'Meme' },
-  { symbol: 'ICP', category: 'Infrastructure' },
-  { symbol: 'GALA', category: 'Gaming' },
-  { symbol: 'ASTR', category: 'Infrastructure' },
-  { symbol: 'BLUR', category: 'NFT' },
-  { symbol: 'HOT', category: 'Exchange' },
-  { symbol: 'DOGE', category: 'Meme' },
   { symbol: 'SHIB', category: 'Meme' },
-  { symbol: 'SOL', category: 'Infrastructure' },
-  { symbol: 'LINK', category: 'Oracles' },
-  { symbol: 'ADA', category: 'Smart Contract' },
-  { symbol: 'MATIC', category: 'Smart Contract' },
-  { symbol: 'RENDER', category: 'AI' },
-  { symbol: 'AGIX', category: 'AI' },
-  { symbol: 'VET', category: 'Infrastructure' },
-  { symbol: 'TOKEN', category: 'RWA' },
-  { symbol: 'UNI', category: 'DeFi' },
-  { symbol: 'AVAX', category: 'Infrastructure' },
-  { symbol: 'APE', category: 'NFT' },
-  { symbol: 'DOT', category: 'Interoperability' },
-  { symbol: 'OCEAN', category: 'Data' },
   { symbol: 'WIF', category: 'Meme' },
-  { symbol: 'FET', category: 'AI' },
-  { symbol: 'SAND', category: 'Gaming' },
+
+  { symbol: 'APE', category: 'NFT' },
+  { symbol: 'BLUR', category: 'NFT' },
+  { symbol: 'ENJ', category: 'NFT' },
   { symbol: 'ILV', category: 'NFT' },
-  { symbol: 'BNB', category: 'Exchange' },
+  { symbol: 'IMX', category: 'NFT' },
+
+  { symbol: 'LINK', category: 'Oracles' },
+  { symbol: 'PYTH', category: 'Oracles' },
+
+  { symbol: 'JASMY', category: 'Privacy' },
+  { symbol: 'ROSE', category: 'Privacy' },
+
+  { symbol: 'TOKEN', category: 'RWA' },
+
+  { symbol: 'BTC', category: 'Safehaven' },
+
+  { symbol: 'ADA', category: 'SmartContract' },
+  { symbol: 'ETH', category: 'SmartContract' },
+  { symbol: 'MATIC', category: 'SmartContract' },
+  { symbol: 'STX', category: 'SmartContract' },
+
+  { symbol: 'CHZ', category: 'Sports' },
+
+  { symbol: 'USDT', category: 'Stablecoins' },
 ];
 
 export const getCategoryTooltip = (category: string) => {
