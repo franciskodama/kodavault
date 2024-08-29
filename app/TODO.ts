@@ -18,18 +18,15 @@
 // - Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
 
 // WORKING ON:
-// TODO: If it's BTC, we already give it a category
-// TODO: Give the altcoins automatically the right category on Add Assets
-// TODO: Check the categories for the altcoins (hardcoded array)
-
 // TODO: What to do on Update? --> Give the altcoins automatically the right category on Add Assets (when changes the assets must clear the category)
-
+// TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: Dashboard taking too much time to load
+
 // TODO: Arrumar reload on Shortcut, etc.. pages
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
-// TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: After CronJob Fix, return the commented code in the middleware f
-// TODO: Include MM Wallet + Phantom
+// TODO: Check ATH if it's not hardcoded
+// TODO: BTC Dominance
 
 // NEXT:
 // TODO: Assets Forms: If chooses BTC we need to give the right category selected - For all the other coins too, but no hardcode (or api) info we show all the options
@@ -37,16 +34,12 @@
 // TODO: Assets need to accept QETH.U
 // TODO: Não vamos fazer 100X: https://youtu.be/XISm92VwglI?si=OvaYIsQrLriyLdaO
 // TODO: Altseason Indicators
-// TODO: Check ATH if it's not hardcoded
-// TODO: BTC Dominance
 // TODO: DJT in the Dashboard
 // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
 // TODO: Resistences and Supports?
 // TODO: Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
 
 // ERRORS:
-// TODO: Context
-// TODO: Clerk Middleware Error because of the usage of a Clerk function on the [[...rest]] page (Homepage) and is not working in the middleware exception
 
 // PRIORITIES 1:
 // TODO: Assets to be aware of: for position trade checking RSI and other indicators (ie.: DOL, GLXY...)
@@ -91,6 +84,12 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Include MM Wallet
+// TODO: Context Error
+// TODO: Clerk Middleware Error because of the usage of a Clerk function on the [[...rest]] page (Homepage) and is not working in the middleware exception
+// TODO: If it's BTC, we already give it a category
+// TODO: Give the altcoins automatically the right category on Add Assets
+// TODO: Check the categories for the altcoins (hardcoded array)
 // TODO: Filter by Exchange must be a dropdown (assets page)
 // TODO: Fix the annoying reload when Add, Update and Delete Assets
 // TODO: When we filter by asset on the Assets Page, if there are the same symbol in the same exchange, it shows below, the sum of it.
