@@ -18,6 +18,8 @@
 // - Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
 
 // WORKING ON:
+// TODO: Reduce height of first cards on Dashboard to give space for the Gauge Indicator or Alerts
+// TODO: Gauge Indicator (Chart) for what? For Caixa?
 // TODO: What to do on Update? --> Give the altcoins automatically the right category on Add Assets (when changes the assets must clear the category)
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: Dashboard taking too much time to load
