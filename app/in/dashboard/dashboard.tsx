@@ -98,6 +98,7 @@ export default function Dashboard({
                   description={`Assets' Origin Breakdown`}
                   assets={assets}
                   customKey={'currency'}
+                  height={'h-[250px]'}
                 />
                 <CardTotal
                   emoji={'💰'}
