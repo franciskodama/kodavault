@@ -121,7 +121,7 @@ export default function Dashboard({
                       height={'h-[240px]'}
                     />
                   </div>
-                  <CardGauge />
+                  <CardGauge currencyRates={currencyRates} assets={assets} />
                 </div>
                 <Notifications />
               </div>

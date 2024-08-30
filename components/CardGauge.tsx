@@ -1,3 +1,4 @@
+import { Asset, Currencies } from '@/lib/types';
 import {
   Card,
   CardContent,
@@ -8,7 +9,16 @@ import {
 } from '../components/ui/card';
 import { GoalGauge } from '@/app/in/dashboard/charts/gauge';
 
-export const CardGauge = ({}: {}) => {
+export const CardGauge = ({
+  assets,
+  currencyRates,
+}: {
+  assets: Asset[];
+  currencyRates: Currencies;
+}) => {
+  const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
+  console.log('---  🚀 ---> | total:', total);
+
   return (
     <Card className='flex-1 h-[240px] w-full'>
       <div className='flex flex-col justify-between'>
