@@ -14,6 +14,7 @@ import Image from 'next/image';
 // import NetWorthChart from './charts/net-worth';
 import { GoalGauge } from './charts/gauge';
 import NetWorthChart from './charts/net-worth';
+import { CardGauge } from '@/components/CardGauge';
 
 export default function Dashboard({
   currencyRates,
@@ -120,8 +121,8 @@ export default function Dashboard({
                       height={'h-[240px]'}
                     />
                   </div>
-                  <div className='flex items-center w-fulls'>
-                    <GoalGauge />
+                  <div className='flex items-center w-full'>
+                    <CardGauge />
                   </div>
                 </div>
                 <Notifications />
