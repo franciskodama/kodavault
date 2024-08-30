@@ -40,12 +40,17 @@ export function GoalGauge({ totalSoFar }: { totalSoFar: number }) {
     [totalSoFar];
 
   return (
-    <Chart
-      chartType='Gauge'
-      width='100px'
-      height='100px'
-      data={data}
-      options={options}
-    />
+    <div className='relative border-2 w-full h-full flex justify-center items-center'>
+      <div className='z-0'>
+        <Chart
+          chartType='Gauge'
+          width='100px'
+          height='100px'
+          data={data}
+          options={options}
+        />
+      </div>
+      <p className='absolute bottom-0 right-80 z-10'>%</p>
+    </div>
   );
 }
