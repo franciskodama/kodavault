@@ -3,14 +3,10 @@
 import { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
 
-function getRandomNumber() {
-  return Math.random() * 100;
-}
-
-export function getData() {
+export function getData(totalSofar: number) {
   return [
     ['Label', 'Value'],
-    ['Goal', 1500000],
+    ['Goal', 1500000 - totalSofar],
   ];
 }
 
@@ -24,18 +20,20 @@ export const options = {
   minorTicks: 5,
 };
 
-export function GoalGauge() {
-  const [data, setData] = useState(getData);
+export function GoalGauge({ totalSofar }: { totalSofar: number }) {
+  console.log('---  🚀 ---> | totalSofar:', totalSofar);
+  const [data, setData] = useState(getData(totalSofar));
 
   useEffect(() => {
     const id = setInterval(() => {
-      setData(getData());
+      setData(getData(totalSofar));
     }, 3000);
 
     return () => {
       clearInterval(id);
     };
-  });
+  }),
+    [totalSofar];
 
   return (
     <Chart

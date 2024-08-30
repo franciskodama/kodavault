@@ -8,16 +8,12 @@ import {
   CardTitle,
 } from '../components/ui/card';
 import { GoalGauge } from '@/app/in/dashboard/charts/gauge';
+import { numberFormatterNoDecimals } from '@/lib/utils';
 
-export const CardGauge = ({
-  assets,
-  currencyRates,
-}: {
-  assets: Asset[];
-  currencyRates: Currencies;
-}) => {
-  const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
-  console.log('---  🚀 ---> | total:', total);
+export const CardGauge = ({ assets }: { assets: Asset[] }) => {
+  const totalSofar = Math.round(
+    assets.reduce((sum: number, item: any) => sum + item.total, 0)
+  );
 
   return (
     <Card className='flex-1 h-[240px] w-full'>
@@ -34,16 +30,13 @@ export const CardGauge = ({
           </CardHeader>
           <CardContent>
             <div className='w-full flex items-center justify-center pr-6'>
-              <GoalGauge />
+              <GoalGauge totalSofar={totalSofar} />
             </div>
           </CardContent>
         </div>
         {/* <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
           <h3>Missing</h3>
-          100000
-          {numberFormatterNoDecimals.format(
-            totalArray.reduce((sum: number, item) => sum + item.total, 0)
-          )}
+          {numberFormatterNoDecimals.format(1500000 - totalSofar)}
         </CardFooter> */}
       </div>
     </Card>

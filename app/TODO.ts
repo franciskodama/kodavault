@@ -19,6 +19,7 @@
 
 // WORKING ON:
 // TODO: Hide the TO TSX NY... Exchange
+// TODO: Set up a Goal: Add a Goal, update a Goal
 // TODO: If you don't have a net worth data show a message in the space of the chart
 // TODO: Reduce height of first cards on Dashboard to give space for the Gauge Indicator or Alerts
 // TODO: Gauge Indicator (Chart) for what? For Caixa?
