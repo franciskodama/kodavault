@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
 
-export function getData(totalSofar: number) {
+export function getData(goal: number, totalSoFar: number) {
+  const percentage = (totalSoFar / goal) * 100;
+
   return [
     ['Label', 'Value'],
-    ['Goal', 1500000 - totalSofar],
+    ['Goal', percentage],
   ];
 }
 
@@ -20,20 +22,22 @@ export const options = {
   minorTicks: 5,
 };
 
-export function GoalGauge({ totalSofar }: { totalSofar: number }) {
-  console.log('---  🚀 ---> | totalSofar:', totalSofar);
-  const [data, setData] = useState(getData(totalSofar));
+export function GoalGauge({ totalSoFar }: { totalSoFar: number }) {
+  console.log('---  🚀 ---> | totalSoFar:', totalSoFar);
+
+  const goal = 1000000;
+  const [data, setData] = useState(getData(goal, totalSoFar));
 
   useEffect(() => {
     const id = setInterval(() => {
-      setData(getData(totalSofar));
+      setData(getData(goal, totalSoFar));
     }, 3000);
 
     return () => {
       clearInterval(id);
     };
   }),
-    [totalSofar];
+    [totalSoFar];
 
   return (
     <Chart
