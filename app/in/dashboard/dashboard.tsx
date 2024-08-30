@@ -85,38 +85,50 @@ export default function Dashboard({
           {/* -------- 1st Row Cards --------------------------------------------------------------------------------------- */}
           <div className='flex gap-2'>
             <div className='flex flex-col basis-4/5 gap-2'>
-              <div className='flex flex-wrap gap-2'>
+              <div className='flex flex-wrap gap-2 border-2'>
                 {/* <CardKeyAssets /> */}
-                <CardTotal
-                  emoji={'🧺'}
-                  description={`Assets' Location Breakdown`}
-                  assets={assets}
-                  customKey={'wallet'}
-                />
-                <CardTotal
-                  emoji={'💵'}
-                  description={`Assets' Origin Breakdown`}
-                  assets={assets}
-                  customKey={'currency'}
-                  height={'h-[250px]'}
-                />
-                <CardTotal
-                  emoji={'💰'}
-                  description={'Total value grouped by type'}
-                  assets={assets}
-                  customKey={'type'}
-                />
-                <CardTotal
-                  emoji={'🤑'}
-                  description={'Total value grouped by currency'}
-                  assets={assetsByType.Cash}
-                  customKey={'cash'}
-                />
+                <div className='w-1/4'>
+                  <CardTotal
+                    emoji={'🧺'}
+                    description={`Assets' Location Breakdown`}
+                    assets={assets}
+                    customKey={'wallet'}
+                    height={'h-[500px]'}
+                  />
+                </div>
+                <div className='flex flex-wrap w-2/4 gap-2 border-2 border-red-500'>
+                  <CardTotal
+                    emoji={'💵'}
+                    description={`Assets' Origin Breakdown`}
+                    assets={assets}
+                    customKey={'currency'}
+                    height={'h-[240px]'}
+                  />
+                  <CardTotal
+                    emoji={'💰'}
+                    description={'Total value grouped by type'}
+                    assets={assets}
+                    customKey={'type'}
+                    height={'h-[240px]'}
+                  />
+                  <div className='w-1/2'>
+                    <CardTotal
+                      emoji={'🤑'}
+                      description={'Total value grouped by currency'}
+                      assets={assetsByType.Cash}
+                      customKey={'cash'}
+                      height={'h-[240px]'}
+                    />
+                  </div>
+                  <div className='flex items-center w-fulls'>
+                    <GoalGauge />
+                  </div>
+                </div>
+                <Notifications />
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
                 <NetWorthChart netWorthChartData={netWorthChartData} />
-                {/* <GoalGauge /> */}
               </div>
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
@@ -214,8 +226,6 @@ export default function Dashboard({
                   />
                 </div>
               )}
-
-              <Notifications />
             </div>
           </div>
         </div>
