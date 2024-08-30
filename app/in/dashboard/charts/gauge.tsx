@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
 
 export function getData(goal: number, totalSoFar: number) {
-  const percentage = (totalSoFar / goal) * 100;
+  const percentage = Math.floor((totalSoFar / goal) * 100);
 
   return [
     ['Label', 'Value'],
@@ -25,7 +25,7 @@ export const options = {
 export function GoalGauge({ totalSoFar }: { totalSoFar: number }) {
   console.log('---  🚀 ---> | totalSoFar:', totalSoFar);
 
-  const goal = 1000000;
+  const goal = 1500000;
   const [data, setData] = useState(getData(goal, totalSoFar));
 
   useEffect(() => {
