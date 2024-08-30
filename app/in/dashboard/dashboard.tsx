@@ -86,7 +86,7 @@ export default function Dashboard({
           {/* -------- 1st Row Cards --------------------------------------------------------------------------------------- */}
           <div className='flex gap-2'>
             <div className='flex flex-col basis-4/5 gap-2'>
-              <div className='flex flex-wrap gap-2 border-2'>
+              <div className='flex flex-wrap gap-2'>
                 {/* <CardKeyAssets /> */}
                 <div className='w-1/4'>
                   <CardTotal
@@ -94,10 +94,10 @@ export default function Dashboard({
                     description={`Assets' Location Breakdown`}
                     assets={assets}
                     customKey={'wallet'}
-                    height={'h-[500px]'}
+                    height={'h-[488px]'}
                   />
                 </div>
-                <div className='flex flex-wrap w-2/4 gap-2 border-2 border-red-500'>
+                <div className='flex flex-wrap w-2/4 gap-2'>
                   <CardTotal
                     emoji={'💵'}
                     description={`Assets' Origin Breakdown`}
@@ -121,9 +121,7 @@ export default function Dashboard({
                       height={'h-[240px]'}
                     />
                   </div>
-                  <div className='flex items-center w-full'>
-                    <CardGauge />
-                  </div>
+                  <CardGauge />
                 </div>
                 <Notifications />
               </div>

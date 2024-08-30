@@ -10,8 +10,8 @@ import { GoalGauge } from '@/app/in/dashboard/charts/gauge';
 
 export const CardGauge = ({}: {}) => {
   return (
-    <Card className='flex-1 h-full w-full'>
-      <div className='flex flex-col justify-between h-full'>
+    <Card className='flex-1 h-[240px] w-full'>
+      <div className='flex flex-col justify-between'>
         <div className='flex flex-col'>
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
@@ -23,16 +23,18 @@ export const CardGauge = ({}: {}) => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <GoalGauge />
+            <div className='w-full flex items-center justify-center pr-6'>
+              <GoalGauge />
+            </div>
           </CardContent>
         </div>
-        <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
+        {/* <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
           <h3>Missing</h3>
           100000
-          {/* {numberFormatterNoDecimals.format(
+          {numberFormatterNoDecimals.format(
             totalArray.reduce((sum: number, item) => sum + item.total, 0)
-          )} */}
-        </CardFooter>
+          )}
+        </CardFooter> */}
       </div>
     </Card>
   );

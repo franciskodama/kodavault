@@ -10,7 +10,7 @@ function getRandomNumber() {
 export function getData() {
   return [
     ['Label', 'Value'],
-    ['Goal', getRandomNumber()],
+    ['Goal', 1500000],
   ];
 }
 
