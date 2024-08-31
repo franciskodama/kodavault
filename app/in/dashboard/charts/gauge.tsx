@@ -50,9 +50,7 @@ export function GoalGauge({ totalSoFar }: { totalSoFar: number }) {
           options={options}
         />
       </div>
-      <p className='absolute bottom-10 right-50 z-10 border-2 border-red-600 bg-black text-white'>
-        %
-      </p>
+      <p className='absolute bottom-0 right-[73px] z-10 '>%</p>
     </div>
   );
 }
