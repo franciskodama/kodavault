@@ -26,20 +26,21 @@ export const CardGauge = ({ assets }: { assets: Asset[] }) => {
               <span>Goal Tracking</span>
               <span className='text-3xl'>🏁</span>
             </CardTitle>
-            <CardDescription className='text-xs'>
+            {/* <CardDescription className='text-xs'>
               Track your Goal
-            </CardDescription>
+            </CardDescription> */}
           </CardHeader>
           <CardContent>
-            <div className='flex border-2'>
-              <div className='w-full flex items-center justify-center pr-6'>
+            <div className='flex border-2 items-center justify-center'>
+              <div className='w-full flex pr-6'>
                 <GoalGauge totalSoFar={totalSoFar} />
               </div>
 
-              <div className='flex flex-col gap-2'>
-                <h3 className='font-bold text-xs'>Set up a new Goal</h3>
+              <div className='flex flex-col items-center w-full gap-1 border-2 border-orange-400'>
+                <h3 className='font-bold text-xs'>Current Goal</h3>
+                <p>{numberFormatterNoDecimals.format(totalSoFar * 10)}</p>
                 <Input />
-                <Button>Update</Button>
+                <Button className='w-full'>New Goal</Button>
               </div>
             </div>
           </CardContent>
