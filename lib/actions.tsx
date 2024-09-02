@@ -307,7 +307,7 @@ export const getUids = async () => {
   }
 };
 
-export async function addGoal({ uid, goal }: { uid: string; goal: number }) {
+export async function addGoal(uid: string, goal: number) {
   try {
     await prisma.goal.create({
       data: {
@@ -338,7 +338,7 @@ export const getGoal = async (uid: string) => {
   }
 };
 
-export async function updateGoal({ uid, goal }: { uid: string; goal: number }) {
+export async function updateGoal(uid: string, goal: number) {
   try {
     await prisma.goal.update({
       where: {

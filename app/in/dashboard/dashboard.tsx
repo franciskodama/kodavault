@@ -122,7 +122,7 @@ export default function Dashboard({
                       height={'h-[240px]'}
                     />
                   </div>
-                  <CardGauge assets={assets} goal={goal} />
+                  <CardGauge assets={assets} goal={goal} uid={uid} />
                 </div>
                 <Notifications />
               </div>
