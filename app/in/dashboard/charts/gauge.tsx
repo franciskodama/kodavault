@@ -23,8 +23,6 @@ export const options = {
 };
 
 export function GoalGauge({ totalSoFar }: { totalSoFar: number }) {
-  console.log('---  🚀 ---> | totalSoFar:', totalSoFar);
-
   const goal = 1500000;
   const [data, setData] = useState(getData(goal, totalSoFar));
 
@@ -50,7 +48,7 @@ export function GoalGauge({ totalSoFar }: { totalSoFar: number }) {
           options={options}
         />
       </div>
-      <p className='absolute bottom-0 right-[73px] z-10 '>%</p>
+      <p className='absolute bottom-0 right-[23px] z-10 '>%</p>
     </div>
   );
 }

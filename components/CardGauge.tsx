@@ -31,16 +31,21 @@ export const CardGauge = ({ assets }: { assets: Asset[] }) => {
             </CardDescription> */}
           </CardHeader>
           <CardContent>
-            <div className='flex border-2 items-center justify-center'>
+            <div className='flex items-center'>
               <div className='w-full flex pr-6'>
                 <GoalGauge totalSoFar={totalSoFar} />
               </div>
 
-              <div className='flex flex-col items-center w-full gap-1 border-2 border-orange-400'>
+              <div className='flex flex-col items-center w-full gap-1'>
                 <h3 className='font-bold text-xs'>Current Goal</h3>
                 <p>{numberFormatterNoDecimals.format(totalSoFar * 10)}</p>
-                <Input />
-                <Button className='w-full'>New Goal</Button>
+                <Input className='h-8 w-[10ch]' />
+                <Button
+                  variant={'outline'}
+                  className='w-[10ch] h-8 border-2 border-slate-500'
+                >
+                  New Goal
+                </Button>
               </div>
             </div>
           </CardContent>
