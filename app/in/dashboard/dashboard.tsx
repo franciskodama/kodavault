@@ -12,7 +12,6 @@ import NetWorthEvolutionChart from './charts/net-worth-evolution';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import Image from 'next/image';
 // import NetWorthChart from './charts/net-worth';
-import { GoalGauge } from './charts/gauge';
 import NetWorthChart from './charts/net-worth';
 import { CardGauge } from '@/components/CardGauge';
 
@@ -23,6 +22,7 @@ export default function Dashboard({
   btcPrice,
   netWorthChartData,
   uid,
+  goal,
 }: {
   currencyRates: Currencies;
   assets: Asset[];
@@ -30,6 +30,7 @@ export default function Dashboard({
   btcPrice: number;
   netWorthChartData: netWorthChartData[];
   uid: string;
+  goal: number;
 }) {
   return (
     <>
@@ -121,7 +122,7 @@ export default function Dashboard({
                       height={'h-[240px]'}
                     />
                   </div>
-                  <CardGauge assets={assets} />
+                  <CardGauge assets={assets} goal={goal} />
                 </div>
                 <Notifications />
               </div>

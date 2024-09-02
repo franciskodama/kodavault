@@ -22,8 +22,13 @@ export const options = {
   minorTicks: 5,
 };
 
-export function GoalGauge({ totalSoFar }: { totalSoFar: number }) {
-  const goal = 1500000;
+export function GoalGauge({
+  totalSoFar,
+  goal,
+}: {
+  totalSoFar: number;
+  goal: number;
+}) {
   const [data, setData] = useState(getData(goal, totalSoFar));
 
   useEffect(() => {
@@ -48,7 +53,7 @@ export function GoalGauge({ totalSoFar }: { totalSoFar: number }) {
           options={options}
         />
       </div>
-      <p className='absolute bottom-0 right-[23px] z-10 '>%</p>
+      <p className='absolute bottom-0 right-[23px] z-10'>%</p>
     </div>
   );
 }

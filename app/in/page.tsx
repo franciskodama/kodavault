@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server';
 
 import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
-import { getNetWorthEvolution, getUids } from '@/lib/actions';
+import { getGoal, getNetWorthEvolution, getUids } from '@/lib/actions';
 import { getCurrencies } from '@/lib/currency.server';
 import { Loading } from '@/components/Loading';
 import Dashboard from './dashboard/dashboard';
@@ -37,6 +37,7 @@ export default async function DashboardPage() {
   );
 
   const netWorthChartData = await getNetWorthEvolution(uid ? uid : '');
+  const goal = await getGoal(uid ? uid : '');
 
   return (
     <>
@@ -52,6 +53,7 @@ export default async function DashboardPage() {
             btcPrice={btcPrice}
             netWorthChartData={netWorthChartData}
             uid={uid}
+            goal={goal[0].goal ? goal[0].goal : 0}
           />
         )
       ) : (
