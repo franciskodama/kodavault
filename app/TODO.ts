@@ -18,6 +18,8 @@
 // - Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
 
 // WORKING ON:
+// TODO: Clear button for all filters on Asset Page
+// TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange
 // TODO: Hide the TO TSX NY... Exchange
 // TODO: Set up a Goal: Add a Goal, update a Goal
 // TODO: If you don't have a net worth data show a message in the space of the chart

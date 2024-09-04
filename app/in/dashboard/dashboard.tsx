@@ -32,6 +32,8 @@ export default function Dashboard({
   uid: string;
   goal: number;
 }) {
+  const cash = assets.filter((asset) => asset?.type === 'Cash');
+
   return (
     <>
       {assets.length && assetsByType && (
@@ -124,7 +126,7 @@ export default function Dashboard({
                   </div>
                   <CardGauge assets={assets} goal={goal} uid={uid} />
                 </div>
-                <Notifications />
+                <Notifications cash={cash} />
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
