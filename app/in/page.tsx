@@ -53,7 +53,7 @@ export default async function DashboardPage() {
             btcPrice={btcPrice}
             netWorthChartData={netWorthChartData}
             uid={uid}
-            goal={goal[0].goal ? goal[0].goal : 0}
+            goal={goal[0]?.goal ? goal[0].goal : 0}
           />
         )
       ) : (

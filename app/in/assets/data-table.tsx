@@ -12,6 +12,8 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { Check, ChevronsUpDown } from 'lucide-react';
+
 import {
   Table,
   TableBody,
@@ -33,13 +35,11 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
-import { Check, ChevronsUpDown } from 'lucide-react';
-
-import { Asset } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import MessageInTable from '@/components/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { cn, thousandAndDecimalFormatter } from '@/lib/utils';
+import { Asset } from '@/lib/types';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -198,7 +198,6 @@ export function DataTable<TData, TValue>({
             </Command>
           </PopoverContent>
         </Popover>
-
         <Popover
           open={openCurrencyDropbox}
           onOpenChange={setOpenCurrencyDropbox}
@@ -258,7 +257,6 @@ export function DataTable<TData, TValue>({
             </Command>
           </PopoverContent>
         </Popover>
-
         {getRepeatedAssetTotal(
           (table.getColumn('asset')?.getFilterValue() as string) ?? ''
         ).isRepeatedAsset && (
