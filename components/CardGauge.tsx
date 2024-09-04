@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '../components/ui/card';
@@ -32,25 +31,33 @@ export const CardGauge = ({
     assets.reduce((sum: number, item: any) => sum + item.total, 0)
   );
 
-  useEffect(() => {
-    setGoalInput(goalInput);
-
-    setTimeout(() => {
-      setUpdated(false);
-    }, 4000);
-  }, [updated, goalInput]);
-
   const handleSubmitAdd = async () => {
     const success = await addGoal(uid, goalInput);
-
     if (success) {
       setUpdated(true);
     }
   };
 
   const handleSubmitUpdate = async () => {
-    updateGoal(uid, goalInput);
+    const success = await updateGoal(uid, goalInput);
+    if (success) {
+      setUpdated(true);
+    }
   };
+
+  useEffect(() => {
+    console.log('Updated state changed:', updated);
+  }, [updated]);
+
+  useEffect(() => {
+    if (updated) {
+      const timer = setTimeout(() => {
+        setUpdated(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [updated]);
 
   return (
     <Card className='flex-1 h-[240px] w-full'>
@@ -68,20 +75,17 @@ export const CardGauge = ({
           <CardContent>
             <div className='flex items-center'>
               <div className='w-full flex pr-6'>
-                <GoalGauge totalSoFar={totalSoFar} goal={goal} />
+                <GoalGauge totalSoFar={totalSoFar} goal={goalInput} />
               </div>
 
               <div className='flex flex-col items-center w-full gap-2'>
                 <h3 className='font-bold text-xs'>Current Goal</h3>
-                {updated && <p>✅</p>}
-
                 <Input
                   className='h-8 w-[10ch] text-center text-slate-400 placeholder:text-xs placeholder:text-center placeholder:text-slate-200'
-                  placeholder={numberFormatterNoDecimals.format(goalInput)}
                   value={goalInput}
                   onChange={(e) => setGoalInput(Number(e.target.value))}
                 />
-                {goal === 0 ? (
+                {goalInput === 0 ? (
                   <Button
                     variant={'outline'}
                     className='w-[10ch] h-8 border-2 border-slate-500'
@@ -89,8 +93,7 @@ export const CardGauge = ({
                       handleSubmitAdd();
                     }}
                   >
-                    Add Goal
-                    {updated && <p>✅</p>}
+                    {updated ? <p>{`Added! ✅`}</p> : <p>Add Goal</p>}
                   </Button>
                 ) : (
                   <Button
@@ -101,7 +104,7 @@ export const CardGauge = ({
                     }}
                   >
                     Update
-                    {updated && <p>✅</p>}
+                    {updated && <p>{`d ✅`}</p>}
                   </Button>
                 )}
               </div>
