@@ -1,6 +1,7 @@
 'use client';
 
-import { Asset } from '@/lib/types';
+import { useEffect, useState } from 'react';
+
 import {
   Card,
   CardContent,
@@ -8,12 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card';
-import { GoalGauge } from '@/app/in/dashboard/charts/goal-gauge';
-import { numberFormatterNoDecimals } from '@/lib/utils';
 import { Input } from './ui/input';
+import { Asset } from '@/lib/types';
 import { Button } from './ui/button';
-import { useEffect, useState } from 'react';
 import { addGoal, updateGoal } from '@/lib/actions';
+import { GoalGauge } from '@/app/in/dashboard/charts/goal-gauge';
 
 export const CardGauge = ({
   assets,
@@ -44,10 +44,6 @@ export const CardGauge = ({
       setUpdated(true);
     }
   };
-
-  useEffect(() => {
-    console.log('Updated state changed:', updated);
-  }, [updated]);
 
   useEffect(() => {
     if (updated) {
@@ -81,6 +77,7 @@ export const CardGauge = ({
               <div className='flex flex-col items-center w-full gap-2'>
                 <h3 className='font-bold text-xs'>Current Goal</h3>
                 <Input
+                  // placeholder={numberFormatterNoDecimals.format(goalInput)}
                   className='h-8 w-[10ch] text-center text-slate-400 placeholder:text-xs placeholder:text-center placeholder:text-slate-200'
                   value={goalInput}
                   onChange={(e) => setGoalInput(Number(e.target.value))}
@@ -93,7 +90,7 @@ export const CardGauge = ({
                       handleSubmitAdd();
                     }}
                   >
-                    {updated ? <p>{`Added! ✅`}</p> : <p>Add Goal</p>}
+                    {updated ? <p>{`Added! ✓`}</p> : <p>Add Goal</p>}
                   </Button>
                 ) : (
                   <Button
@@ -104,7 +101,7 @@ export const CardGauge = ({
                     }}
                   >
                     Update
-                    {updated && <p>{`d ✅`}</p>}
+                    {updated && <p>{`d ✓`}</p>}
                   </Button>
                 )}
               </div>
