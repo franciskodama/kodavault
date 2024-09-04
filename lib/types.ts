@@ -157,3 +157,10 @@ export type TotalByWallet = {
   value: string;
   total: number;
 };
+
+export type Goal = {
+  id: string;
+  uid: string;
+  created_at?: Date;
+  goal?: number;
+};

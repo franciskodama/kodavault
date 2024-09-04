@@ -12,8 +12,8 @@ import NetWorthEvolutionChart from './charts/net-worth-evolution';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import Image from 'next/image';
 // import NetWorthChart from './charts/net-worth';
-import { GoalGauge } from './charts/gauge';
 import NetWorthChart from './charts/net-worth';
+import { CardGauge } from '@/components/CardGauge';
 
 export default function Dashboard({
   currencyRates,
@@ -22,6 +22,7 @@ export default function Dashboard({
   btcPrice,
   netWorthChartData,
   uid,
+  goal,
 }: {
   currencyRates: Currencies;
   assets: Asset[];
@@ -29,6 +30,7 @@ export default function Dashboard({
   btcPrice: number;
   netWorthChartData: netWorthChartData[];
   uid: string;
+  goal: number;
 }) {
   return (
     <>
@@ -87,36 +89,46 @@ export default function Dashboard({
             <div className='flex flex-col basis-4/5 gap-2'>
               <div className='flex flex-wrap gap-2'>
                 {/* <CardKeyAssets /> */}
-                <CardTotal
-                  emoji={'🧺'}
-                  description={`Assets' Location Breakdown`}
-                  assets={assets}
-                  customKey={'wallet'}
-                />
-                <CardTotal
-                  emoji={'💵'}
-                  description={`Assets' Origin Breakdown`}
-                  assets={assets}
-                  customKey={'currency'}
-                  height={'h-[250px]'}
-                />
-                <CardTotal
-                  emoji={'💰'}
-                  description={'Total value grouped by type'}
-                  assets={assets}
-                  customKey={'type'}
-                />
-                <CardTotal
-                  emoji={'🤑'}
-                  description={'Total value grouped by currency'}
-                  assets={assetsByType.Cash}
-                  customKey={'cash'}
-                />
+                <div className='w-1/4'>
+                  <CardTotal
+                    emoji={'🧺'}
+                    description={`Assets' Location Breakdown`}
+                    assets={assets}
+                    customKey={'wallet'}
+                    height={'h-[488px]'}
+                  />
+                </div>
+                <div className='flex flex-wrap w-2/4 gap-2'>
+                  <CardTotal
+                    emoji={'💵'}
+                    description={`Assets' Origin Breakdown`}
+                    assets={assets}
+                    customKey={'currency'}
+                    height={'h-[240px]'}
+                  />
+                  <CardTotal
+                    emoji={'💰'}
+                    description={'Total value grouped by type'}
+                    assets={assets}
+                    customKey={'type'}
+                    height={'h-[240px]'}
+                  />
+                  <div className='w-1/2'>
+                    <CardTotal
+                      emoji={'🤑'}
+                      description={'Total value grouped by currency'}
+                      assets={assetsByType.Cash}
+                      customKey={'cash'}
+                      height={'h-[240px]'}
+                    />
+                  </div>
+                  <CardGauge assets={assets} goal={goal} uid={uid} />
+                </div>
+                <Notifications />
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
                 <NetWorthChart netWorthChartData={netWorthChartData} />
-                {/* <GoalGauge /> */}
               </div>
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
@@ -214,8 +226,6 @@ export default function Dashboard({
                   />
                 </div>
               )}
-
-              <Notifications />
             </div>
           </div>
         </div>

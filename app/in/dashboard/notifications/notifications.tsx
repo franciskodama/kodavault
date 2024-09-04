@@ -15,7 +15,7 @@ export default function Notifications() {
   return (
     <>
       <div className='flex flex-col gap-2 flex-1'>
-        <Card className=''>
+        <Card className='h-[240px]'>
           <div className='flex flex-col justify-between h-full'>
             <div className='flex flex-col'>
               <CardHeader>
@@ -28,10 +28,10 @@ export default function Notifications() {
                 </CardDescription>
               </CardHeader>
               <CardContent className='relative'>
-                <p className='my-2'>
+                <p className='my-1 h-[3ch] text-ellipsis'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
                   elementum, diam id scelerisque volutpat, magna augue iaculis
-                  felis, a vulputate justo diam non libero.
+                  felis.
                 </p>
                 {/* <Image
                   src='/goat.gif'
@@ -51,7 +51,7 @@ export default function Notifications() {
           </div>
         </Card>
 
-        <Card className=''>
+        <Card className='h-[240px]'>
           <div className='flex flex-col justify-between h-full'>
             <div className='flex flex-col'>
               <CardHeader>
@@ -64,10 +64,10 @@ export default function Notifications() {
                 </CardDescription>
               </CardHeader>
               <CardContent className='relative'>
-                <p className='my-2'>
+                <p className='my-1 h-[3ch]'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
                   elementum, diam id scelerisque volutpat, magna augue iaculis
-                  felis, a vulputate justo diam non libero.
+                  felis.
                 </p>
                 {/* <Image
                   src='/mari.png'
