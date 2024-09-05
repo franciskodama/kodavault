@@ -1,7 +1,8 @@
-import { RocketIcon, SirenIcon } from 'lucide-react';
-import Image from 'next/image';
+'use client';
 
-import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { SirenIcon } from 'lucide-react';
+
 import {
   Card,
   CardContent,
@@ -11,8 +12,16 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Asset } from '@/lib/types';
+import { Button } from '@/components/ui/button';
+import { thousandFormatter } from '@/lib/utils';
 
 export default function CashAlert({ cash }: { cash: Asset[] }) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push('/in/assets');
+  };
+
   return (
     <>
       <Card className='h-[240px]'>
@@ -30,20 +39,26 @@ export default function CashAlert({ cash }: { cash: Asset[] }) {
             <CardContent className='relative'>
               {cash.map((asset) => {
                 return (
-                  <div key={asset?.id} className='my-1 h-[3ch]'>
-                    <p>
-                      Account:
-                      <span className='ml-1 font-bold'>{asset?.wallet}</span>
-                      {` | Total: `}
-                      <span className='font-bold'>{asset?.total}</span>
-                    </p>
+                  <div key={asset?.id} className='my-1'>
+                    <div className='flex w-full'>
+                      <div className='flex w-1/2'>
+                        <p className='text-[10px]'>Account:</p>
+                        <p className='ml-1 font-bold'>{asset?.wallet}</p>
+                      </div>
+                      <div className='flex w-1/2'>
+                        <p className='text-[10px]'>Total:</p>
+                        <p className='ml-1 font-bold'>
+                          {asset?.total && thousandFormatter(asset?.total)}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 );
               })}
             </CardContent>
           </div>
           <CardFooter className='flex justify-between text-sm text-slate-500 font-medium mx-1 px-2'>
-            <Button>
+            <Button size='mds' onClick={handleClick} className='mb-0'>
               <SirenIcon size={16} className='mr-2' />
               Go to Assets
             </Button>
