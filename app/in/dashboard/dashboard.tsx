@@ -1,19 +1,18 @@
-import { CardTotal } from '@/components/CardTotal';
-import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
-import Notifications from './notifications/notifications';
-import { currencyFormatter } from '@/lib/utils';
+import Image from 'next/image';
+
 import {
   Asset,
   AssetsByType,
   Currencies,
   netWorthChartData,
 } from '@/lib/types';
-import NetWorthEvolutionChart from './charts/net-worth-evolution';
+import { currencyFormatter } from '@/lib/utils';
+import { CardTotal } from '@/components/CardTotal';
+import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
-import Image from 'next/image';
-// import NetWorthChart from './charts/net-worth';
+import { GoalGaugeCard } from './charts/goal-gauge-card';
 import NetWorthChart from './charts/net-worth';
-import { CardGauge } from '@/components/CardGauge';
+import NotificationsPanel from './notifications/notifications-panel';
 
 export default function Dashboard({
   currencyRates,
@@ -124,9 +123,9 @@ export default function Dashboard({
                       height={'h-[240px]'}
                     />
                   </div>
-                  <CardGauge assets={assets} goal={goal} uid={uid} />
+                  <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
                 </div>
-                <Notifications cash={cash} />
+                <NotificationsPanel cash={cash} />
               </div>
               {/* <Transactions /> */}
               <div className='flex'>

@@ -13,7 +13,7 @@ import {
 import { Asset } from '@/lib/types';
 import CashAlert from './cash-alert';
 
-export default function Notifications({ cash }: { cash: Asset[] }) {
+export default function NotificationsPanel({ cash }: { cash: Asset[] }) {
   return (
     <>
       <div className='flex flex-col gap-2 flex-1'>
