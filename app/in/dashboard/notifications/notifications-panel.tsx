@@ -17,7 +17,8 @@ export default function NotificationsPanel({ cash }: { cash: Asset[] }) {
   return (
     <>
       <div className='flex flex-col gap-2 flex-1'>
-        <CashAlert cash={cash} />
+        {/* What happen if there is no cash to invest? What we will show? */}
+        {cash.length > 0 && <CashAlert cash={cash} />}
 
         <Card className='h-[240px]'>
           <div className='flex flex-col justify-between h-full'>
