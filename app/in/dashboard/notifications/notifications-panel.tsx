@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/card';
 import { Asset } from '@/lib/types';
 import CashAlert from './cash-alert';
+import NoNotifications from './no-notification';
 
 export default function NotificationsPanel({ cash }: { cash: Asset[] }) {
   return (
@@ -19,6 +20,7 @@ export default function NotificationsPanel({ cash }: { cash: Asset[] }) {
       <div className='flex flex-col gap-2 flex-1'>
         {/* What happen if there is no cash to invest? What we will show? */}
         {cash.length > 0 && <CashAlert cash={cash} />}
+        {cash.length < 1 && <NoNotifications />}
 
         <Card className='h-[240px]'>
           <div className='flex flex-col justify-between h-full'>
