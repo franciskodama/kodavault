@@ -53,10 +53,10 @@ export function AddAssetForm() {
 
   const closeRef = useRef<HTMLButtonElement>(null);
 
+  const symbolTyped = watch('asset');
   const assetSubtype = watch('subtype');
   const assetType = getTypes(assetSubtype);
   const assetSymbol = getSymbols(assetSubtype);
-  const symbolTyped = watch('asset');
   const assetWallet = getWallets(assetSubtype);
   const assetCategory = getCategories(assetSubtype);
   const assetCurrency: string[] = getCurrencies(assetSubtype);
@@ -73,6 +73,7 @@ export function AddAssetForm() {
 
   useEffect(() => {
     setValue('type', assetType ? assetType : '');
+    setValue('purpose', 'Investment');
   }, [assetType, setValue]);
 
   useEffect(() => {

@@ -110,7 +110,7 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
-    accessorKey: 'subtype',
+    accessorKey: 'type',
     header: ({ column }) => {
       return (
         <Button
@@ -119,6 +119,28 @@ export const columns: ColumnDef<Asset>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Type
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: 'subtype',
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>Sub-t</TooltipTrigger>
+              <TooltipContent>
+                <p>Subtype</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
@@ -246,7 +268,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
       {asset && (
         <div className='flex items-center text-xl'>
           <Sheet>
-            <SheetTrigger className='ml-4 hover:text-base w-12 bg-white border border-slate-300 rounded-[2px] '>
+            <SheetTrigger className='ml-4 hover:text-base w-8 bg-white border border-slate-300 rounded-[2px] '>
               ✏️
             </SheetTrigger>
             <SheetContent>
@@ -260,7 +282,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
             </SheetContent>
           </Sheet>
           <AlertDialog>
-            <AlertDialogTrigger className='ml-4 hover:text-base w-12 border border-slate-300 bg-white rounded-[2px]'>
+            <AlertDialogTrigger className='ml-4 hover:text-base w-8 border border-slate-300 bg-white rounded-[2px]'>
               💀
             </AlertDialogTrigger>
             <AlertDialogContent>

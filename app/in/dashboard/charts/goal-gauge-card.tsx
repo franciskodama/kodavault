@@ -8,14 +8,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '../components/ui/card';
-import { Input } from './ui/input';
+} from '../../../../components/ui/card';
+import { Input } from '../../../../components/ui/input';
 import { Asset } from '@/lib/types';
-import { Button } from './ui/button';
+import { Button } from '../../../../components/ui/button';
 import { addGoal, updateGoal } from '@/lib/actions';
 import { GoalGauge } from '@/app/in/dashboard/charts/goal-gauge';
 
-export const CardGauge = ({
+export const GoalGaugeCard = ({
   assets,
   goal,
   uid,
@@ -84,8 +84,9 @@ export const CardGauge = ({
                 />
                 {goalInput === 0 ? (
                   <Button
+                    size='md'
                     variant={'outline'}
-                    className='w-[10ch] h-8 border-2 border-slate-500'
+                    className='w-[10ch] border-2 border-slate-500'
                     onClick={() => {
                       handleSubmitAdd();
                     }}
@@ -94,8 +95,9 @@ export const CardGauge = ({
                   </Button>
                 ) : (
                   <Button
+                    size='md'
                     variant={'outline'}
-                    className='w-[10ch] h-8 border-2 border-slate-500'
+                    className='w-[10ch] border-2 border-slate-500'
                     onClick={() => {
                       handleSubmitUpdate();
                     }}
