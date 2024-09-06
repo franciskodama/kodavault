@@ -113,67 +113,67 @@ export function DataTable<TData, TValue>({
   };
 
   // -------------------------------
-  function getUniqueOptions(propName: string) {
-    return Array.from(new Set(assets.map((asset) => asset?[propName])))
-      .filter((value) => value !== undefined)
-      .map((value) => ({ value, label: value }));
-  }
+  // function getUniqueOptions(propName: string) {
+  //   return Array.from(new Set(assets.map((asset) => asset?[propName])))
+  //     .filter((value) => value !== undefined)
+  //     .map((value) => ({ value, label: value }));
+  // }
 
-  const wallets = getUniqueOptions('wallet');
-  wallets.push({ value: 'No Filter', label: 'No Filter' });
+  // const wallets = getUniqueOptions('wallet');
+  // wallets.push({ value: 'No Filter', label: 'No Filter' });
 
-  const currencies = getUniqueOptions('currency');
-  currencies.push({ value: 'No Filter', label: 'No Filter' });
+  // const currencies = getUniqueOptions('currency');
+  // currencies.push({ value: 'No Filter', label: 'No Filter' });
 
-  const types = getUniqueOptions('type');
-  types.push({ value: 'No Filter', label: 'No Filter' });
+  // const types = getUniqueOptions('type');
+  // types.push({ value: 'No Filter', label: 'No Filter' });
 
   // -------------------------------
-  // const walletsArray = Array.from(
-  //   new Set(assets.map((asset) => asset?.wallet))
-  // );
+  const walletsArray = Array.from(
+    new Set(assets.map((asset) => asset?.wallet))
+  );
 
-  // const wallets = walletsArray
-  //   .filter((wallet): wallet is string => wallet !== undefined)
-  //   .map((wallet) => ({
-  //     value: wallet,
-  //     label: wallet,
-  //   }));
+  const wallets = walletsArray
+    .filter((wallet): wallet is string => wallet !== undefined)
+    .map((wallet) => ({
+      value: wallet,
+      label: wallet,
+    }));
 
-  // wallets.push({
-  //   value: 'No Filter',
-  //   label: 'No Filter',
-  // });
+  wallets.push({
+    value: 'No Filter',
+    label: 'No Filter',
+  });
 
-  // const currencyArray = Array.from(
-  //   new Set(assets.map((asset) => asset?.currency))
-  // );
+  const currencyArray = Array.from(
+    new Set(assets.map((asset) => asset?.currency))
+  );
 
-  // const currencies = currencyArray
-  //   .filter((currency): currency is string => currency !== undefined)
-  //   .map((currency) => ({
-  //     value: currency,
-  //     label: currency,
-  //   }));
+  const currencies = currencyArray
+    .filter((currency): currency is string => currency !== undefined)
+    .map((currency) => ({
+      value: currency,
+      label: currency,
+    }));
 
-  // currencies.push({
-  //   value: 'No Filter',
-  //   label: 'No Filter',
-  // });
+  currencies.push({
+    value: 'No Filter',
+    label: 'No Filter',
+  });
 
-  // const typeArray = Array.from(new Set(assets.map((asset) => asset?.type))); //type
+  const typeArray = Array.from(new Set(assets.map((asset) => asset?.type))); //type
 
-  // const types = typeArray
-  //   .filter((type): type is string => type !== undefined)
-  //   .map((type) => ({
-  //     value: type,
-  //     label: type,
-  //   }));
+  const types = typeArray
+    .filter((type): type is string => type !== undefined)
+    .map((type) => ({
+      value: type,
+      label: type,
+    }));
 
-  // types.push({
-  //   value: 'No Filter',
-  //   label: 'No Filter',
-  // });
+  types.push({
+    value: 'No Filter',
+    label: 'No Filter',
+  });
 
   return (
     <div className='rounded-sm border border-slate-200'>
