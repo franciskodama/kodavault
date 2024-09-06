@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   ColumnDef,
@@ -44,11 +44,13 @@ import { Asset } from '@/lib/types';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
+  typeFilter?: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  typeFilter,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -58,6 +60,9 @@ export function DataTable<TData, TValue>({
 
   const [openCurrencyDropbox, setOpenCurrencyDropbox] = useState(false);
   const [valueCurrencyDropbox, setValueCurrencyDropbox] = useState('');
+
+  const [openTypeDropbox, setOpenTypeDropbox] = useState(false);
+  const [valueTypeDropbox, setValueTypeDropbox] = useState('');
 
   const table = useReactTable({
     data,
@@ -72,6 +77,13 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
+
+  useEffect(() => {
+    if (typeFilter) {
+      setValueTypeDropbox(typeFilter);
+      table.getColumn('type')?.setFilterValue(typeFilter);
+    }
+  }, [typeFilter, table]);
 
   const { assets, isLoading } = useAssetsContext();
 
@@ -100,37 +112,68 @@ export function DataTable<TData, TValue>({
     return { isRepeatedAsset, assetName, total, totalQty };
   };
 
-  const walletsArray = Array.from(
-    new Set(assets.map((asset) => asset?.wallet))
-  );
+  // -------------------------------
+  function getUniqueOptions(propName: string) {
+    return Array.from(new Set(assets.map((asset) => asset?[propName])))
+      .filter((value) => value !== undefined)
+      .map((value) => ({ value, label: value }));
+  }
 
-  const wallets = walletsArray
-    .filter((wallet): wallet is string => wallet !== undefined)
-    .map((wallet) => ({
-      value: wallet,
-      label: wallet,
-    }));
+  const wallets = getUniqueOptions('wallet');
+  wallets.push({ value: 'No Filter', label: 'No Filter' });
 
-  wallets.push({
-    value: 'No Filter',
-    label: 'No Filter',
-  });
+  const currencies = getUniqueOptions('currency');
+  currencies.push({ value: 'No Filter', label: 'No Filter' });
 
-  const currencyArray = Array.from(
-    new Set(assets.map((asset) => asset?.currency))
-  );
+  const types = getUniqueOptions('type');
+  types.push({ value: 'No Filter', label: 'No Filter' });
 
-  const currencies = currencyArray
-    .filter((currency): currency is string => currency !== undefined)
-    .map((currency) => ({
-      value: currency,
-      label: currency,
-    }));
+  // -------------------------------
+  // const walletsArray = Array.from(
+  //   new Set(assets.map((asset) => asset?.wallet))
+  // );
 
-  currencies.push({
-    value: 'No Filter',
-    label: 'No Filter',
-  });
+  // const wallets = walletsArray
+  //   .filter((wallet): wallet is string => wallet !== undefined)
+  //   .map((wallet) => ({
+  //     value: wallet,
+  //     label: wallet,
+  //   }));
+
+  // wallets.push({
+  //   value: 'No Filter',
+  //   label: 'No Filter',
+  // });
+
+  // const currencyArray = Array.from(
+  //   new Set(assets.map((asset) => asset?.currency))
+  // );
+
+  // const currencies = currencyArray
+  //   .filter((currency): currency is string => currency !== undefined)
+  //   .map((currency) => ({
+  //     value: currency,
+  //     label: currency,
+  //   }));
+
+  // currencies.push({
+  //   value: 'No Filter',
+  //   label: 'No Filter',
+  // });
+
+  // const typeArray = Array.from(new Set(assets.map((asset) => asset?.type))); //type
+
+  // const types = typeArray
+  //   .filter((type): type is string => type !== undefined)
+  //   .map((type) => ({
+  //     value: type,
+  //     label: type,
+  //   }));
+
+  // types.push({
+  //   value: 'No Filter',
+  //   label: 'No Filter',
+  // });
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -257,6 +300,60 @@ export function DataTable<TData, TValue>({
             </Command>
           </PopoverContent>
         </Popover>
+
+        <Popover open={openTypeDropbox} onOpenChange={setOpenTypeDropbox}>
+          <PopoverTrigger asChild>
+            <Button
+              variant='outline'
+              role='combobox'
+              aria-expanded={openTypeDropbox}
+              className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
+            >
+              {valueTypeDropbox
+                ? types.find((type) => type.value === valueTypeDropbox)?.label
+                : 'Filter by Type'}
+              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className='w-[23ch] p-0'>
+            <Command>
+              <CommandList>
+                <CommandEmpty>No type found.</CommandEmpty>
+                <CommandGroup>
+                  {types.map((type) => (
+                    <CommandItem
+                      className='text-xs'
+                      key={type.value}
+                      value={type.value}
+                      onSelect={(currentValue) => {
+                        setValueTypeDropbox(
+                          currentValue === valueTypeDropbox ? '' : currentValue
+                        );
+                        table
+                          .getColumn('type')
+                          ?.setFilterValue(
+                            currentValue === 'No Filter' ? '' : currentValue
+                          );
+                        setOpenTypeDropbox(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          'mr-2 h-4 w-4',
+                          valueTypeDropbox === type.value
+                            ? 'opacity-100'
+                            : 'opacity-0'
+                        )}
+                      />
+                      {type.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+
         {getRepeatedAssetTotal(
           (table.getColumn('asset')?.getFilterValue() as string) ?? ''
         ).isRepeatedAsset && (

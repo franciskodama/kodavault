@@ -18,8 +18,10 @@
 // - Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
 
 // WORKING ON:
-//TODO: What happen if there is no cash to invest? What we will show?
+// TODO: No Exchange so I can share with Nadgen
+// TODO: What happen if there is no cash to invest? What we will show?
 // TODO: Clear button for all filters on Asset Page
+// TODO: create a way to filter by cash
 // TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange
 // TODO: Hide the TO TSX NY... Exchange
 // TODO: Set up a Goal: Add a Goal, update a Goal

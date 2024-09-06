@@ -19,7 +19,7 @@ export default function CashAlert({ cash }: { cash: Asset[] }) {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push('/in/assets');
+    router.push('/in/assets?type=Cash');
   };
 
   const firstThreeCashAssets = [];

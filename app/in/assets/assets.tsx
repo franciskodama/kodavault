@@ -6,7 +6,7 @@ import { DataTable } from './data-table';
 import { thousandAndDecimalFormatter, thousandFormatter } from '@/lib/utils';
 import { useAssetsContext } from '@/context/AssetsContext';
 
-export default function Assets() {
+export default function Assets({ typeFilter }: { typeFilter: string }) {
   const { assets, isLoading } = useAssetsContext();
   const compareByWallet = (a: any, b: any) => {
     if (a.wallet < b.wallet) return -1;
@@ -31,7 +31,11 @@ export default function Assets() {
           <Loading />
         </div>
       ) : (
-        <DataTable columns={columns} data={formatatedNumbersAssets} />
+        <DataTable
+          columns={columns}
+          data={formatatedNumbersAssets}
+          typeFilter={typeFilter ? typeFilter : ''}
+        />
       )}
     </div>
   );
