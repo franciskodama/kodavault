@@ -6,9 +6,7 @@ import {
   CryptoGoalAllocation,
   Inputs,
   ShortcutType,
-  Asset,
   AddNetWorthChartData,
-  Goal,
 } from './types';
 import { revalidatePath } from 'next/cache';
 import { v4 } from 'uuid';
@@ -45,7 +43,7 @@ export async function addAsset(formData: Inputs) {
         exchange,
         category,
         purpose,
-        tag,
+        tag: tag === '' ? null : tag,
       },
     });
     return true;

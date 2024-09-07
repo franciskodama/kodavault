@@ -126,7 +126,7 @@ export const getWallets = (subtype: string) => {
     case 'Cash-CAD':
       return ['Tangerine', 'Scotiabank', 'Neo'];
     case 'Cash-BRL':
-      return ['Binance', 'Bybit', 'Nubank', 'Inter', 'Itaú'];
+      return ['Binance', 'Bybit', 'Nubank', 'Inter', 'Itaú', 'Clear'];
     default:
       return [
         'Binance',
