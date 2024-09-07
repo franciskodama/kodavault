@@ -11,7 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Asset } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 
 export default function NoNotifications() {

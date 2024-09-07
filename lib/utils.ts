@@ -106,3 +106,15 @@ export const groupAssetsBySomething = (assets: Asset[], something: string) => {
 };
 
 // ---------------------------------------------------------------------------
+
+export const getFirstThreeAssets = (assets: Asset[]) => {
+  const firstThreeAssets = [];
+  if (assets.length > 3) {
+    firstThreeAssets.push(...assets.slice(0, 3));
+  } else {
+    firstThreeAssets.push(...assets);
+  }
+  return firstThreeAssets;
+};
+
+// ---------------------------------------------------------------------------

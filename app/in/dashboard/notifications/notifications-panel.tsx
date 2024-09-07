@@ -13,16 +13,18 @@ import {
 import { Asset } from '@/lib/types';
 import CashAlert from './cash-alert';
 import NoNotifications from './no-notification';
+import TagAlert from './tag-alert';
 
 export default function NotificationsPanel({ cash }: { cash: Asset[] }) {
   return (
     <>
       <div className='flex flex-col gap-2 flex-1'>
-        {/* What happen if there is no cash to invest? What we will show? */}
         {cash.length > 0 && <CashAlert cash={cash} />}
         {cash.length < 1 && <NoNotifications />}
 
-        <Card className='h-[240px]'>
+        <TagAlert />
+
+        {/* <Card className='h-[240px]'>
           <div className='flex flex-col justify-between h-full'>
             <div className='flex flex-col'>
               <CardHeader>
@@ -40,13 +42,7 @@ export default function NotificationsPanel({ cash }: { cash: Asset[] }) {
                   elementum, diam id scelerisque volutpat, magna augue iaculis
                   felis.
                 </p>
-                {/* <Image
-                  src='/mari.png'
-                  width={200}
-                  height={200}
-                  alt='Mari in the middle of a buch of money'
-                  className='absolute bottom-0 right-10 rounded-md object-cover opacity-[50%]'
-                /> */}
+          
               </CardContent>
             </div>
             <CardFooter className='flex justify-between text-sm text-slate-500 font-medium m-1 p-2'>
@@ -56,8 +52,18 @@ export default function NotificationsPanel({ cash }: { cash: Asset[] }) {
               </Button>
             </CardFooter>
           </div>
-        </Card>
+        </Card> */}
       </div>
     </>
   );
+}
+
+{
+  /* <Image
+                  src='/mari.png'
+                  width={200}
+                  height={200}
+                  alt='Mari in the middle of a buch of money'
+                  className='absolute bottom-0 right-10 rounded-md object-cover opacity-[50%]'
+                /> */
 }
