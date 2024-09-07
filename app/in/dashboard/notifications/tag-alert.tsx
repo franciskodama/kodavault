@@ -23,11 +23,12 @@ export default function TagAlert() {
   const [tagInput, setTagInput] = useState<string>('');
   const { assets } = useAssetsContext();
 
-  const tagLocalStorage = localStorage.getItem('tag');
-
   useEffect(() => {
-    if (tagLocalStorage) {
-      setTagInput(tagLocalStorage);
+    if (typeof window !== 'undefined') {
+      const tagLocalStorage = window?.localStorage?.getItem('tag');
+      if (tagLocalStorage) {
+        setTagInput(tagLocalStorage);
+      }
     }
   }, []);
 
@@ -43,7 +44,7 @@ export default function TagAlert() {
 
   const handleChange = (value: string) => {
     setTagInput(value);
-    localStorage.setItem('tag', value);
+    window.localStorage.setItem('tag', value);
   };
 
   return (

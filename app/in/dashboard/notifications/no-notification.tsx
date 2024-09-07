@@ -35,7 +35,7 @@ export default function NoNotifications() {
               </CardDescription>
             </CardHeader>
             <CardContent className='relative'>
-              <h3 className='font-bold my-1'>Quiet inbox?</h3>
+              <h3 className='text-sm font-bold my-1'>Quiet inbox?</h3>
               <p className='pr-2'>
                 Enjoy seeing how close you are to your retirement goal.
               </p>
