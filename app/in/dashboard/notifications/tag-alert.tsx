@@ -17,14 +17,21 @@ import {
 import { Asset } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function TagAlert() {
-  const [tag, setTag] = useState<string>('');
+  const [tagInput, setTagInput] = useState<string>('');
   const { assets } = useAssetsContext();
 
-  const whatTag = 'gate';
-  const taggedAssets = assets.filter((asset) => asset?.tag === 'gate');
+  const tagLocalStorage = localStorage.getItem('tag');
+
+  useEffect(() => {
+    if (tagLocalStorage) {
+      setTagInput(tagLocalStorage);
+    }
+  }, []);
+
+  const taggedAssets = assets.filter((asset) => asset?.tag === tagInput);
 
   const sortedArray = (arr: Asset[]) =>
     arr.sort((a: Asset, b: Asset) => b!.total! - a!.total!);
@@ -33,6 +40,11 @@ export default function TagAlert() {
 
   const firstThreeAssets = getFirstThreeAssets(sortedTaggedAssets);
   const totalArray = getTotalByKey(taggedAssets, 'tag');
+
+  const handleChange = (value: string) => {
+    setTagInput(value);
+    localStorage.setItem('tag', value);
+  };
 
   return (
     <>
@@ -44,10 +56,10 @@ export default function TagAlert() {
                 <div className='flex items-center gap-2'>
                   <span>{`Tag`}</span>
                   <Input
-                    // placeholder={numberFormatterNoDecimals.format(goalInput)}
-                    className='h-8 w-[10ch] text-center text-slate-400 placeholder:text-xs placeholder:text-center placeholder:text-slate-200'
-                    // value={goalInput}
-                    // onChange={(e) => setGoalInput(Number(e.target.value))}
+                    className='h-8 pl-1 w-[8ch] text-left text-xl font-semibold'
+                    placeholder={tagInput}
+                    value={tagInput}
+                    onChange={(e) => handleChange(e.target.value)}
                   />
                 </div>
                 <span className='text-2xl'>🏷️</span>
@@ -57,27 +69,41 @@ export default function TagAlert() {
               </CardDescription>
             </CardHeader>
             <CardContent className='relative'>
-              <h3 className='mb-2'>{`Here’s a look at your top performers:`}</h3>
-              {firstThreeAssets.map((asset) => {
-                return (
-                  <div key={asset?.id} className='my-[4px] relative'>
-                    <div className='flex w-full'>
-                      <div className='flex w-3/5'>
-                        <p className='text-[10px]'>Asset:</p>
-                        <p className='ml-1 font-bold'>{asset?.asset}</p>
+              {sortedTaggedAssets.length < 1 ? (
+                <>
+                  <h3 className='text-sm font-bold my-1'>
+                    Tag missing, total waiting!
+                  </h3>
+                  <p>
+                    Add a tag to uncover the total amount you’ve invested in
+                    assets linked to it!
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3 className='mb-2'>{`Here’s a look at your top performers:`}</h3>
+                  {firstThreeAssets.map((asset) => {
+                    return (
+                      <div key={asset?.id} className='my-[4px] relative'>
+                        <div className='flex w-full'>
+                          <div className='flex w-3/5'>
+                            <p className='text-[10px]'>Asset:</p>
+                            <p className='ml-1 font-bold'>{asset?.asset}</p>
+                          </div>
+                          <div className='flex w-2/5'>
+                            <p className='text-[10px]'>Total:</p>
+                            <p className='ml-1 font-bold'>
+                              {asset?.total && thousandFormatter(asset?.total)}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <div className='flex w-2/5'>
-                        <p className='text-[10px]'>Total:</p>
-                        <p className='ml-1 font-bold'>
-                          {asset?.total && thousandFormatter(asset?.total)}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-              {sortedTaggedAssets.length > 3 && (
-                <p className='absolute bottom-1'>...</p>
+                    );
+                  })}
+                  {sortedTaggedAssets.length > 3 && (
+                    <p className='absolute bottom-1'>...</p>
+                  )}
+                </>
               )}
             </CardContent>
           </div>
