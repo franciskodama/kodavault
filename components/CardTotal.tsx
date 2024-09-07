@@ -1,8 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { Gem } from 'lucide-react';
-
 import {
   Card,
   CardContent,
@@ -17,7 +14,16 @@ import {
   numberFormatter,
 } from '../lib/utils';
 import { Asset } from '../lib/types';
-import { Button } from './ui/button';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from './ui/sheet';
+import { AddAssetForm } from './AddAssetForm';
+import { Gem } from 'lucide-react';
 
 export const CardTotal = ({
   assets,
@@ -32,14 +38,9 @@ export const CardTotal = ({
   description?: string;
   height?: string;
 }) => {
-  const router = useRouter();
   const totalArray = getTotalByKey(assets, customKey);
   const sortedArray = totalArray.sort((a, b) => b.total - a.total);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
-
-  const handleClick = () => {
-    router.push('/in/assets');
-  };
 
   return (
     <Card className={`flex-1 ${height ? height : 'h-full'}`}>
@@ -48,7 +49,9 @@ export const CardTotal = ({
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
               <span>{`Total By ${customKey}`}</span>
-              <span className='text-3xl'>{emoji}</span>
+              <span className='text-3xl'>
+                {sortedArray.length < 1 ? '🤷🏻‍♂️' : emoji}
+              </span>
             </CardTitle>
             <CardDescription className='text-xs'>{description}</CardDescription>
           </CardHeader>
@@ -94,10 +97,22 @@ export const CardTotal = ({
         >
           {sortedArray.length < 1 ? (
             <>
-              <Button size='md' onClick={handleClick}>
-                <Gem size={16} className='mr-2' />
-                Add an Asset
-              </Button>
+              <Sheet>
+                <SheetTrigger className='inline-flex text-sm font-medium items-center h-8 rounded-[2px] px-3 bg-primary text-primary-foreground hover:bg-primary/90'>
+                  <Gem size={16} className='mr-2' />
+                  Add an Asset +
+                  <span className='ml-1 capitalize'>{customKey}</span>
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Add a new Asset</SheetTitle>
+                    <SheetDescription>
+                      Add a New Asset and expand your investment portfolio.
+                    </SheetDescription>
+                  </SheetHeader>
+                  <AddAssetForm />
+                </SheetContent>
+              </Sheet>
             </>
           ) : (
             <>
