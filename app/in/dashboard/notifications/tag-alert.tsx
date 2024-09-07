@@ -1,8 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { SirenIcon } from 'lucide-react';
-
 import {
   Card,
   CardContent,
@@ -11,19 +8,20 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Asset } from '@/lib/types';
-import { Button } from '@/components/ui/button';
 import {
   getFirstThreeAssets,
   getTotalByKey,
   numberFormatterNoDecimals,
   thousandFormatter,
 } from '@/lib/utils';
+import { Asset } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
+import { Input } from '@/components/ui/input';
+import { useState } from 'react';
 
 export default function TagAlert() {
-  const { assets, assetsByType } = useAssetsContext();
-  const router = useRouter();
+  const [tag, setTag] = useState<string>('');
+  const { assets } = useAssetsContext();
 
   const whatTag = 'gate';
   const taggedAssets = assets.filter((asset) => asset?.tag === 'gate');
@@ -43,7 +41,15 @@ export default function TagAlert() {
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
-                <span>{`Tagged 'gate'`}</span>
+                <div className='flex items-center gap-2'>
+                  <span>{`Tag`}</span>
+                  <Input
+                    // placeholder={numberFormatterNoDecimals.format(goalInput)}
+                    className='h-8 w-[10ch] text-center text-slate-400 placeholder:text-xs placeholder:text-center placeholder:text-slate-200'
+                    // value={goalInput}
+                    // onChange={(e) => setGoalInput(Number(e.target.value))}
+                  />
+                </div>
                 <span className='text-2xl'>🏷️</span>
               </CardTitle>
               <CardDescription className='text-xs'>
@@ -73,7 +79,6 @@ export default function TagAlert() {
               {sortedTaggedAssets.length > 3 && (
                 <p className='absolute bottom-1'>...</p>
               )}
-              {/* Stay on track and keep an eye on how these investments evolve! */}
             </CardContent>
           </div>
           <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
