@@ -13,48 +13,45 @@ import {
 } from '@/components/ui/card';
 import { Asset } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { getFirstThreeAssets, thousandFormatter } from '@/lib/utils';
+import {
+  getFirstThreeAssets,
+  getTotalByKey,
+  numberFormatterNoDecimals,
+  thousandFormatter,
+} from '@/lib/utils';
 import { useAssetsContext } from '@/context/AssetsContext';
 
 export default function TagAlert() {
   const { assets, assetsByType } = useAssetsContext();
-  console.log('---  🚀 ---> | assets:', assets);
   const router = useRouter();
 
   const whatTag = 'gate';
-
   const taggedAssets = assets.filter((asset) => asset?.tag === 'gate');
-  console.log('---  🚀 ---> | taggedAssets:', taggedAssets);
 
   const sortedArray = (arr: Asset[]) =>
     arr.sort((a: Asset, b: Asset) => b!.total! - a!.total!);
 
   const sortedTaggedAssets = sortedArray(taggedAssets);
-  console.log('---  🚀 ---> | sortedTaggedAssets:', sortedTaggedAssets);
-
-  const handleClick = () => {
-    router.push('/in/assets?tag=gate');
-  };
 
   const firstThreeAssets = getFirstThreeAssets(sortedTaggedAssets);
+  const totalArray = getTotalByKey(taggedAssets, 'tag');
 
   return (
     <>
-      <Card className='h-[240px]'>
+      <Card className='h-[250px]'>
         <div className='flex flex-col justify-between h-full'>
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
                 <span>{`Tagged 'gate'`}</span>
-                <span className='text-3xl'>🏷️</span>
+                <span className='text-2xl'>🏷️</span>
               </CardTitle>
               <CardDescription className='text-xs'>
                 Assets categorized under this tag
               </CardDescription>
             </CardHeader>
             <CardContent className='relative'>
-              {/* Here’s a quick glance at your top performers: */}
-              Here’s a look at your top picks:
+              <h3 className='mb-2'>{`Here’s a look at your top performers:`}</h3>
               {firstThreeAssets.map((asset) => {
                 return (
                   <div key={asset?.id} className='my-[4px] relative'>
@@ -79,11 +76,11 @@ export default function TagAlert() {
               {/* Stay on track and keep an eye on how these investments evolve! */}
             </CardContent>
           </div>
-          <CardFooter className='flex justify-between text-sm text-slate-500 font-medium mx-1 px-2 pb-3'>
-            {/* <Button size='md' onClick={handleClick}>
-              <SirenIcon size={16} className='mr-2' />
-              TEst
-            </Button> */}
+          <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
+            <h3>Total</h3>
+            {numberFormatterNoDecimals.format(
+              totalArray.reduce((sum: number, item) => sum + item.total, 0)
+            )}
           </CardFooter>
         </div>
       </Card>

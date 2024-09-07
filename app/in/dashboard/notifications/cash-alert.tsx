@@ -25,7 +25,7 @@ export default function CashAlert({ cash }: { cash: Asset[] }) {
 
   return (
     <>
-      <Card className='h-[240px]'>
+      <Card className='h-[250px]'>
         <div className='flex flex-col justify-between h-full'>
           <div className='flex flex-col'>
             <CardHeader>
