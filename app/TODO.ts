@@ -25,10 +25,6 @@
 //   className='absolute bottom-0 right-10 rounded-md object-cover opacity-[50%]'
 // />;
 
-// TODO: What happen if there is no cash to invest? What we will show?
-// TODO: Tag Card + Save localstorage + No Tag, no total
-// TODO: Total By Cash: if no cash, show Message
-
 // WORKING ON:
 // TODO: No Exchange so I can share with Nadgen
 // TODO: Clear button for all filters on Asset Page
@@ -105,6 +101,11 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: What happen if there is no cash to invest? What we will show?
+// TODO: Tag Card + Save localstorage + No Tag, no total
+// TODO: Total By Something: if no Something, show Message to Add an Asset Something
+// TODO: Tag Card be empty and Cash is creating a '' instead of null
+// TODO: Include Clear as an option for Cash BRL
 // TODO: Include MM Wallet
 // TODO: Context Error
 // TODO: Clerk Middleware Error because of the usage of a Clerk function on the [[...rest]] page (Homepage) and is not working in the middleware exception
