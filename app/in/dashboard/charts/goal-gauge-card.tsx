@@ -56,7 +56,7 @@ export const GoalGaugeCard = ({
   }, [updated]);
 
   return (
-    <Card className='flex-1 h-[240px] w-full'>
+    <Card className='flex-1 h-[250px] w-full'>
       <div className='flex flex-col justify-between'>
         <div className='flex flex-col'>
           <CardHeader>

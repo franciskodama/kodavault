@@ -1,7 +1,5 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-
 import Image from 'next/image';
 import { UserButton, useUser } from '@clerk/nextjs';
 
@@ -9,7 +7,6 @@ import NavMenu from './NavMenu';
 import Link from 'next/link';
 
 export default function Header() {
-  const pathname = usePathname();
   const { user } = useUser();
   const greeting = getGreeting(user?.firstName ? user.firstName : '');
 
@@ -26,11 +23,7 @@ export default function Header() {
         />
       </Link>
       <div className='flex items-center'>
-        {/* {pathname.includes('/in/') && (
-          <> */}
         <NavMenu />
-        {/* </>
-        )} */}
         {user?.firstName ? (
           <h4 className='ml-12 mr-4 font-semibold text-sm'>
             {greeting}

@@ -17,9 +17,20 @@
 // - Privacy: Cryptocurrencies designed to enhance transaction privacy and anonymity.
 // - Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
 
+// <Image
+//   src='/mari.png'
+//   width={200}
+//   height={200}
+//   alt='Mari in the middle of a buch of money'
+//   className='absolute bottom-0 right-10 rounded-md object-cover opacity-[50%]'
+// />;
+
+// TODO: What happen if there is no cash to invest? What we will show?
+// TODO: Tag Card + Save localstorage + No Tag, no total
+// TODO: Total By Cash: if no cash, show Message
+
 // WORKING ON:
 // TODO: No Exchange so I can share with Nadgen
-// TODO: What happen if there is no cash to invest? What we will show?
 // TODO: Clear button for all filters on Asset Page
 // TODO: create a way to filter by cash
 // TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange

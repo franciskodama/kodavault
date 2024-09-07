@@ -96,7 +96,7 @@ export default function Dashboard({
                     description={`Assets' Location Breakdown`}
                     assets={assets}
                     customKey={'wallet'}
-                    height={'h-[488px]'}
+                    height={'h-[508px]'}
                   />
                 </div>
                 <div className='flex flex-wrap w-2/4 gap-2'>
@@ -105,14 +105,14 @@ export default function Dashboard({
                     description={`Assets' Origin Breakdown`}
                     assets={assets}
                     customKey={'currency'}
-                    height={'h-[240px]'}
+                    height={'h-[250px]'}
                   />
                   <CardTotal
                     emoji={'💰'}
                     description={'Total value grouped by type'}
                     assets={assets}
                     customKey={'type'}
-                    height={'h-[240px]'}
+                    height={'h-[250px]'}
                   />
                   <div className='w-1/2'>
                     <CardTotal
@@ -120,7 +120,7 @@ export default function Dashboard({
                       description={'Total value grouped by currency'}
                       assets={assetsByType.Cash}
                       customKey={'cash'}
-                      height={'h-[240px]'}
+                      height={'h-[250px]'}
                     />
                   </div>
                   <GoalGaugeCard assets={assets} goal={goal} uid={uid} />

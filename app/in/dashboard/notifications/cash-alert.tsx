@@ -13,30 +13,24 @@ import {
 } from '@/components/ui/card';
 import { Asset } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { thousandFormatter } from '@/lib/utils';
+import { getFirstThreeAssets, thousandFormatter } from '@/lib/utils';
 
 export default function CashAlert({ cash }: { cash: Asset[] }) {
   const router = useRouter();
+  const firstThreeAssets = getFirstThreeAssets(cash);
 
   const handleClick = () => {
     router.push('/in/assets?type=Cash');
   };
 
-  const firstThreeCashAssets = [];
-  if (cash.length > 3) {
-    firstThreeCashAssets.push(...cash.slice(0, 3));
-  } else {
-    firstThreeCashAssets.push(...cash);
-  }
-
   return (
     <>
-      <Card className='h-[240px]'>
+      <Card className='h-[250px]'>
         <div className='flex flex-col justify-between h-full'>
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
-                <span>{`Cash Available`}</span>
+                <span>Cash Available</span>
                 <span className='text-3xl'>🚨</span>
               </CardTitle>
               <CardDescription className='text-xs'>
@@ -44,7 +38,7 @@ export default function CashAlert({ cash }: { cash: Asset[] }) {
               </CardDescription>
             </CardHeader>
             <CardContent className='relative'>
-              {firstThreeCashAssets.map((asset) => {
+              {firstThreeAssets.map((asset) => {
                 return (
                   <div key={asset?.id} className='my-[4px] relative'>
                     <div className='flex w-full'>
