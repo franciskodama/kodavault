@@ -26,23 +26,16 @@
 // />;
 
 // WORKING ON:
-// TODO: No Exchange so I can share with Nadgen
+// TODO: If you don't have a net worth data show a message in the space of the chart
+// TODO: Dashboard taking too much time to load
+// TODO: CronJob: https://console.cron-job.org/jobs/5201103
+
 // TODO: Clear button for all filters on Asset Page
-// TODO: create a way to filter by cash
 // TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange
 // TODO: Hide the TO TSX NY... Exchange
-// TODO: Set up a Goal: Add a Goal, update a Goal
-// TODO: If you don't have a net worth data show a message in the space of the chart
-// TODO: Reduce height of first cards on Dashboard to give space for the Gauge Indicator or Alerts
-// TODO: Gauge Indicator (Chart) for what? For Caixa?
-// TODO: What to do on Update? --> Give the altcoins automatically the right category on Add Assets (when changes the assets must clear the category)
-// TODO: CronJob: https://console.cron-job.org/jobs/5201103
-// TODO: Dashboard taking too much time to load
-
 // TODO: Arrumar reload on Shortcut, etc.. pages
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
 // TODO: After CronJob Fix, return the commented code in the middleware f
-// TODO: Check ATH if it's not hardcoded
 // TODO: BTC Dominance
 
 // NEXT:
@@ -106,6 +99,11 @@
 // TODO: Total By Something: if no Something, show Message to Add an Asset Something
 // TODO: Tag Card be empty and Cash is creating a '' instead of null
 // TODO: Include Clear as an option for Cash BRL
+// TODO: Gauge Indicator (Chart) for what? For Caixa?
+// TODO: create a way to filter by cash
+// TODO: Set up a Goal: Add a Goal, update a Goal
+// TODO: Reduce height of first cards on Dashboard to give space for the Gauge Indicator or Alerts
+// TODO: What to do on Update? --> Give the altcoins automatically the right category on Add Assets (when changes the assets must clear the category)
 // TODO: Include MM Wallet
 // TODO: Context Error
 // TODO: Clerk Middleware Error because of the usage of a Clerk function on the [[...rest]] page (Homepage) and is not working in the middleware exception
