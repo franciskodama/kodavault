@@ -32,7 +32,6 @@ export default function Dashboard({
   goal: number;
 }) {
   const cash = assets.filter((asset) => asset?.type === 'Cash');
-  console.log('---  🚀 ---> | cash:', assetsByType.Cash.length);
 
   return (
     <>
@@ -116,17 +115,13 @@ export default function Dashboard({
                     height={'h-[250px]'}
                   />
                   <div className='w-1/2'>
-                    {assetsByType.Cash.length < 0 ? (
-                      <>nope</>
-                    ) : (
-                      <CardTotal
-                        emoji={'🤑'}
-                        description={'Total value grouped by currency'}
-                        assets={assetsByType.Cash}
-                        customKey={'cash'}
-                        height={'h-[250px]'}
-                      />
-                    )}
+                    <CardTotal
+                      emoji={'🤑'}
+                      description={'Total value grouped by currency'}
+                      assets={assetsByType.Cash}
+                      customKey={'cash'}
+                      height={'h-[250px]'}
+                    />
                   </div>
                   <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
                 </div>
