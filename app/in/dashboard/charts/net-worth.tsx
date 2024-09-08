@@ -164,7 +164,7 @@ export default function NetWorthChart({
                         You’ve just created your account, and we need some time
                         to gather the data for your net worth.
                       </p>
-                      <p className='rounded-[2px] py-2 px-4 mt-2 bg-primary text-white font-semibold'>
+                      <p className='rounded-[2px] py-2 px-4 mt-2 bg-primary text-white text-md font-semibold'>
                         Hang tight. Soon we’ll craft a masterpiece of your
                         financial journey!
                       </p>
@@ -176,7 +176,8 @@ export default function NetWorthChart({
                       width={500}
                       height={100}
                       alt='Lecter Hannibal telling to wait'
-                      className='object-fit rounded-md'
+                      className='rounded-md'
+                      objectFit='contain'
                       // objectPosition='10% 50%'
                     />
                   </div>

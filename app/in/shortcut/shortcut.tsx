@@ -1,4 +1,5 @@
 import { ShortcutType } from '@/lib/types';
+import MessageInTable from '@/components/MessageInTable';
 import { AddShortcutForm } from '@/components/AddShortcutForm';
 import { ShortcutInteractions } from './shortcut-interactions';
 
@@ -16,10 +17,26 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
   return (
     <>
       <AddShortcutForm />
-      <ShortcutInteractions
-        shortcutByCategory={shortcutByCategory}
-        shortcutCategoriesKeys={shortcutCategoriesKeys}
-      />
+      {shortcuts.length > 0 ? (
+        <ShortcutInteractions
+          shortcutByCategory={shortcutByCategory}
+          shortcutCategoriesKeys={shortcutCategoriesKeys}
+        />
+      ) : (
+        <MessageInTable
+          image={'/superman-where.webp'}
+          objectPosition={'50% 10%'}
+          alt={'Superman looking something'}
+          title={'🤷🏻‍♂️ No shortcuts saved yet!'}
+          subtitle={
+            'Start adding your favorite links and soon this space will be your go-to treasure chest of wisdom!'
+          }
+          buttonCopy={''}
+          hasNoButton={true}
+          formTitle={'Add a new Asset'}
+          formSubtitle={'Add a New Asset and expand your investment portfolio.'}
+        />
+      )}
     </>
   );
 }

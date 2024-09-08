@@ -4,6 +4,7 @@ import { Loading } from '@/components/Loading';
 import { CardTotal } from '@/components/CardTotal';
 import { CardAssetsBy } from '@/components/CardAssetsBy';
 import { useAssetsContext } from '@/context/AssetsContext';
+import MessageInTable from '@/components/MessageInTable';
 
 export default function Stocks() {
   const { assets, isLoading } = useAssetsContext();
@@ -17,7 +18,7 @@ export default function Stocks() {
         </div>
       ) : (
         <div>
-          {stockAssets.length > 0 && (
+          {stockAssets.length > 0 ? (
             <div className='flex flex-wrap gap-2'>
               <CardTotal
                 emoji={'🔖'}
@@ -54,6 +55,22 @@ export default function Stocks() {
                 customKey={'account'}
               />
             </div>
+          ) : (
+            <MessageInTable
+              image={'/look-over-the-fence.webp'}
+              objectPosition={'50% 10%'}
+              alt={'I am broke'}
+              title={'🤷🏻‍♂️ No stocks in your portfolio yet!'}
+              subtitle={
+                'Time to start building that empire. Add some stocks and watch your investments take off!'
+              }
+              buttonCopy={'Add a Stock'}
+              hasNoButton={false}
+              formTitle={'Add a new Asset'}
+              formSubtitle={
+                'Add a New Asset and expand your investment portfolio.'
+              }
+            />
           )}
         </div>
       )}

@@ -25,8 +25,11 @@
 //   className='absolute bottom-0 right-10 rounded-md object-cover opacity-[50%]'
 // />;
 
-// WORKING ON:
 // TODO: If you don't have a net worth data show a message in the space of the chart
+// TODO: Dashboard without any data. Show a message.
+// TODO: Shortcut without any data. Show a message.
+
+// WORKING ON:
 // TODO: Dashboard taking too much time to load
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 
