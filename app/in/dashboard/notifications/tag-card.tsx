@@ -19,7 +19,7 @@ import { useAssetsContext } from '@/context/AssetsContext';
 import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
 
-export default function TagAlert() {
+export default function TagCard() {
   const [tagInput, setTagInput] = useState<string>('');
   const { assets } = useAssetsContext();
 
@@ -79,6 +79,7 @@ export default function TagAlert() {
                     Add a tag to uncover the total amount you’ve invested in
                     assets linked to it!
                   </p>
+                  <p className='mt-2'>{`⚠️ Case sensitive.`}</p>
                 </>
               ) : (
                 <>

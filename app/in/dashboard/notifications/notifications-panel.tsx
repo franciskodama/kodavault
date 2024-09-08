@@ -1,7 +1,7 @@
 import { Asset } from '@/lib/types';
 import CashAlert from './cash-alert';
 import NoNotifications from './no-notification';
-import TagAlert from './tag-alert';
+import TagCard from './tag-card';
 
 export default function NotificationsPanel({ cash }: { cash: Asset[] }) {
   return (
@@ -9,7 +9,7 @@ export default function NotificationsPanel({ cash }: { cash: Asset[] }) {
       <div className='flex flex-col gap-2 flex-1'>
         {cash.length > 0 && <CashAlert cash={cash} />}
         {cash.length < 1 && <NoNotifications />}
-        <TagAlert />
+        <TagCard />
       </div>
     </>
   );
