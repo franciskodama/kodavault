@@ -38,7 +38,6 @@ export default function NetWorthChart({
       +item.btc.toFixed(0) * 10000,
     ]) as RowChartData[]),
   ];
-  console.log('---  🚀 ---> | formattedData:', formattedData);
 
   const options = {
     // Works
