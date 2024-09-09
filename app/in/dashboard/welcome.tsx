@@ -15,13 +15,13 @@ export default function Welcome() {
     <div className='flex items-center justify-around'>
       <div className='w-[450px] mx-auto my-8'>
         <AspectRatio ratio={16 / 9}>
-          {/* <Image
-            src={image}
-            alt={alt}
+          <Image
+            src={'/in/are-you-sure.gif'}
+            alt={'Are you sure'}
             className='object-cover rounded-sm border-primary'
-            objectPosition={objectPosition}
+            // objectPosition={coverPosition}
             fill
-          /> */}
+          />
         </AspectRatio>
       </div>
       <div className='flex flex-col w-[450px] mx-auto'>
