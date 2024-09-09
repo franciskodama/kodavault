@@ -26,10 +26,9 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
   );
   const tradingAssets = assetsForTrading.Trade;
 
-  const total = tradingAssets.reduce(
-    (sum: number, item: any) => sum + item.total,
-    0
-  );
+  const total =
+    tradingAssets &&
+    tradingAssets.reduce((sum: number, item: any) => sum + item.total, 0);
 
   return (
     <Card className='w-full'>

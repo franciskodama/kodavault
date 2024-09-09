@@ -1,5 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { AlertTriangle } from 'lucide-react';
+
 import {
   Card,
   CardContent,
@@ -17,7 +20,6 @@ import {
 import { Asset } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { Input } from '@/components/ui/input';
-import { useEffect, useState } from 'react';
 
 export default function TagCard() {
   const [tagInput, setTagInput] = useState<string>('');
@@ -79,7 +81,10 @@ export default function TagCard() {
                     Add a tag to uncover the total amount you’ve invested in
                     assets linked to it!
                   </p>
-                  <p className='mt-2'>{`⚠️ Case sensitive.`}</p>
+                  <div className='flex items-center gap-2 mt-2'>
+                    <AlertTriangle size={14} />
+                    <p> Case sensitive.</p>
+                  </div>
                 </>
               ) : (
                 <>

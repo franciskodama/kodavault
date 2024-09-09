@@ -10,6 +10,8 @@ import {
 } from '@/components/ui/card';
 import { netWorthChartData } from '@/lib/types';
 import { Loading } from '@/components/Loading';
+import Image from 'next/image';
+import { BarChartHorizontalIcon, Hourglass } from 'lucide-react';
 
 // https://www.react-google-charts.com/examples/line-chart
 
@@ -36,6 +38,7 @@ export default function NetWorthChart({
       +item.btc.toFixed(0) * 10000,
     ]) as RowChartData[]),
   ];
+  console.log('---  🚀 ---> | formattedData:', formattedData);
 
   const options = {
     // Works
@@ -110,7 +113,7 @@ export default function NetWorthChart({
               </CardDescription>
             </CardHeader>
             <CardContent className='w-full'>
-              {formattedData && (
+              {formattedData.length > 1 ? (
                 <div className='w-full p-8'>
                   <Chart
                     chartType='Line'
@@ -147,6 +150,36 @@ export default function NetWorthChart({
                     //   },
                     // ]}
                   />
+                </div>
+              ) : (
+                <div className='w-full p-8 border-2 flex'>
+                  <div className='flex justify-center items-center w-1/2'>
+                    <div className='flex flex-col w-2/3 gap-4 p-4'>
+                      {/* <Hourglass size={24} /> */}
+                      <BarChartHorizontalIcon size={24} />
+                      <h3 className='text-lg font-semibold'>
+                        No data to chart… yet!
+                      </h3>
+                      <p>
+                        You’ve just created your account, and we need some time
+                        to gather the data for your net worth.
+                      </p>
+                      <p className='rounded-[2px] py-2 px-4 mt-2 bg-primary text-white font-semibold'>
+                        Hang tight. Soon we’ll craft a masterpiece of your
+                        financial journey!
+                      </p>
+                    </div>
+                  </div>
+                  <div className='w-1/2'>
+                    <Image
+                      src='/patience.webp'
+                      width={500}
+                      height={100}
+                      alt='Lecter Hannibal telling to wait'
+                      className='object-fit rounded-md'
+                      // objectPosition='10% 50%'
+                    />
+                  </div>
                 </div>
               )}
             </CardContent>
