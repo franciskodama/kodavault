@@ -24,7 +24,7 @@ export default function NavMenu() {
         <Link href='/in/dashboard'>
           <li>
             <Button
-              variant={pathname === '/in/dashboard' ? 'default' : 'ghost'}
+              variant={pathname === '/in' ? 'default' : 'ghost'}
               size='md'
             >
               Dashboard
