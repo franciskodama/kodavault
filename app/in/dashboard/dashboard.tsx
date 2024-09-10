@@ -233,7 +233,7 @@ export default function Dashboard({
         </div>
       ) : (
         <>
-          <Welcome />
+          <Welcome uid={uid} />
         </>
       )}
     </>
