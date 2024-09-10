@@ -29,7 +29,6 @@
 // TODO: Dashboard taking too much time to load
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 
-// TODO: Clear button for all filters on Asset Page
 // TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange
 // TODO: Hide the TO TSX NY... Exchange
 // TODO: Arrumar reload on Shortcut, etc.. pages
@@ -93,6 +92,7 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Clear button for all filters on Asset Page
 // TODO: If you don't have a net worth data show a message in the space of the chart
 // TODO: Dashboard without any data. Show a message.
 // TODO: Shortcut without any data. Show a message.
