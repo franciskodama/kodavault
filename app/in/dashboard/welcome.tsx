@@ -12,33 +12,38 @@ import Image from 'next/image';
 
 export default function Welcome({ uid }: { uid: string }) {
   return (
-    <div className='relative flex flex-wrap w-full items-center justify-around'>
+    <div className='relative flex flex-wrap w-full items-center justify-center'>
       {pictures.map((picture) => (
         <div key={picture.id} className='w-[150px]'>
           <AspectRatio ratio={1 / 1}>
             <Image
               src={picture.src}
               alt={picture.alt}
-              className='object-cover rounded-sm'
-              // objectPosition={picture.coverPosition}
+              className='object-cover border'
               fill
             />
           </AspectRatio>
         </div>
       ))}
-      <div className='absolute top-50 -left-50 w-[60em] h-[23em] px-20 py-10 bg-white rounded-md'>
+      <div className='absolute top-50 -left-50 w-[60em] h-[24em] px-20 py-10 bg-white rounded-md'>
+        {/* border-2 border-primary drop-shadow-[3px_3px_#121212] */}
         <div className='flex flex-col w-full items-center justify-center mx-auto'>
           <p className='text-2xl font-semibold mb-4'>
             👋 Welcome aboard, {uid}!
           </p>
           <p className='text-base my-2'>
             You’ve just unlocked a world of investments and financial fun! 🎉
-            Get comfy, grab a coffee ☕, and let’s start building your path to
-            financial success together. 🚀 Ready to dive in? Let’s go!”
+          </p>
+          <p className='text-base mt-2'>
+            To get started, all you need to do is add your first asset.
+          </p>
+          <p className='text-base mb-2'>
+            Ready to take the plunge? 🚀 Let’s build your financial future
+            together!
           </p>
           <Sheet>
-            <SheetTrigger className='border-2 border-slate-500 h-10 px-4 rounded-[2px] font-semibold my-4 text-sm '>
-              buttonCopy
+            <SheetTrigger className='border-2 border-slate-500 h-10 px-4 rounded-[2px] font-semibold my-4 text-sm capitalize'>
+              Add your first asset
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
@@ -303,6 +308,24 @@ const pictures = [
   {
     id: 42,
     src: '/welcome/welcome-42.webp',
+    alt: '',
+    coverPosition: 'center',
+  },
+  {
+    id: 43,
+    src: '/welcome/welcome-43.webp',
+    alt: '',
+    coverPosition: 'center',
+  },
+  {
+    id: 44,
+    src: '/welcome/welcome-44.webp',
+    alt: '',
+    coverPosition: 'center',
+  },
+  {
+    id: 45,
+    src: '/welcome/welcome-45.webp',
     alt: '',
     coverPosition: 'center',
   },
