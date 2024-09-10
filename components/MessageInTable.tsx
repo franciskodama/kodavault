@@ -17,6 +17,7 @@ export type MessageInTable = {
   title: string;
   subtitle: string;
   buttonCopy: string;
+  hasNoButton?: boolean;
   formTitle: string;
   formSubtitle: string;
 };
@@ -28,6 +29,7 @@ export default function MessageInTable({
   title,
   subtitle,
   buttonCopy,
+  hasNoButton,
   formTitle,
   formSubtitle,
 }: MessageInTable) {
@@ -47,18 +49,21 @@ export default function MessageInTable({
       <div className='flex flex-col w-[450px] mx-auto'>
         <p className='text-2xl font-semibold'>{title}</p>
         <p className='text-base my-2'>{subtitle}</p>
-        <Sheet>
-          <SheetTrigger className='border-2 border-slate-500 h-10 px-4 rounded-[2px] font-semibold my-4 text-sm '>
-            {buttonCopy}
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>{formTitle}</SheetTitle>
-              <SheetDescription>{formSubtitle}</SheetDescription>
-            </SheetHeader>
-            <AddAssetForm />
-          </SheetContent>
-        </Sheet>
+
+        {!hasNoButton && (
+          <Sheet>
+            <SheetTrigger className='border-2 border-slate-500 h-10 px-4 rounded-[2px] font-semibold my-4 text-sm '>
+              {buttonCopy}
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>{formTitle}</SheetTitle>
+                <SheetDescription>{formSubtitle}</SheetDescription>
+              </SheetHeader>
+              <AddAssetForm />
+            </SheetContent>
+          </Sheet>
+        )}
       </div>
     </div>
   );

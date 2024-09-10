@@ -12,8 +12,9 @@ import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import { GoalGaugeCard } from './charts/goal-gauge-card';
 import NetWorthChart from './charts/net-worth';
+import MessageInTable from '@/components/MessageInTable';
 import NotificationsPanel from './notifications/notifications-panel';
-
+import Welcome from './welcome';
 export default function Dashboard({
   currencyRates,
   assets,
@@ -35,7 +36,7 @@ export default function Dashboard({
 
   return (
     <>
-      {assets.length && assetsByType && (
+      {assets.length && assetsByType ? (
         <div className='flex flex-col gap-2'>
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
           <div className='flex justify-end items-center'>
@@ -230,6 +231,10 @@ export default function Dashboard({
             </div>
           </div>
         </div>
+      ) : (
+        <>
+          <Welcome />
+        </>
       )}
     </>
   );
