@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
+import { Check, ChevronsUpDown, XIcon } from 'lucide-react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,7 +12,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { Check, ChevronsUpDown } from 'lucide-react';
 
 import {
   Table,
@@ -34,6 +33,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import MessageInTable from '@/components/MessageInTable';
@@ -161,7 +166,7 @@ export function DataTable<TData, TValue>({
     label: 'No Filter',
   });
 
-  const typeArray = Array.from(new Set(assets.map((asset) => asset?.type))); //type
+  const typeArray = Array.from(new Set(assets.map((asset) => asset?.type)));
 
   const types = typeArray
     .filter((type): type is string => type !== undefined)
@@ -174,6 +179,14 @@ export function DataTable<TData, TValue>({
     value: 'No Filter',
     label: 'No Filter',
   });
+
+  const handleClickClearAll = () => {
+    setValueWalletDropbox('');
+    setValueCurrencyDropbox('');
+    setValueTypeDropbox('');
+    setColumnFilters([]);
+    table.resetGlobalFilter();
+  };
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -300,7 +313,6 @@ export function DataTable<TData, TValue>({
             </Command>
           </PopoverContent>
         </Popover>
-
         <Popover open={openTypeDropbox} onOpenChange={setOpenTypeDropbox}>
           <PopoverTrigger asChild>
             <Button
@@ -384,6 +396,26 @@ export function DataTable<TData, TValue>({
             </div>
           </div>
         )}
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                size='md'
+                variant={'outline'}
+                className='h-10 ml-4 border-2 border-slate-500'
+                onClick={() => {
+                  handleClickClearAll();
+                }}
+              >
+                <XIcon className='h-4 w-4' />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Clear All Filters</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <Table>
         <TableHeader>
