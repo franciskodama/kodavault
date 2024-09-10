@@ -21,6 +21,7 @@ export default function Welcome({ uid }: { uid: string }) {
               alt={picture.alt}
               className='object-cover border'
               fill
+              unoptimized
             />
           </AspectRatio>
         </div>
