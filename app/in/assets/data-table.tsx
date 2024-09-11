@@ -423,7 +423,7 @@ export function DataTable<TData, TValue>({
           </Tooltip>
         </TooltipProvider>
       </div>
-      {stocksNoTotal.length > 0 && (
+      {stocksNoTotal?.length > 0 && (
         <div className='m-4'>
           <StocksNoSymbol stocksNoTotal={stocksNoTotal} />
         </div>

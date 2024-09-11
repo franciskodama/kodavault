@@ -1,7 +1,7 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 import { Asset } from '@/lib/types';
-import { Bomb, Siren, Terminal } from 'lucide-react';
+import { Bomb, Mailbox, MessageCircle, Siren, Terminal } from 'lucide-react';
 
 export default function StocksNoSymbol({
   stocksNoTotal,
@@ -17,7 +17,7 @@ export default function StocksNoSymbol({
             Looks like we’re missing the prices for these assets:
           </h3>
 
-          {stocksNoTotal.map((stock) => (
+          {stocksNoTotal?.map((stock) => (
             <p key={stock?.asset} className='text-white text-base w-[20ch]'>
               {stock?.asset}
             </p>
@@ -31,12 +31,13 @@ export default function StocksNoSymbol({
             Well, Francis is still pinching pennies and hasn’t paid for that
             fancy API to fetch prices automatically! 😅
             <br /> But don’t worry, once he manually updates the price in his
-            trusty spreadsheet, you’ll see it here.w
+            trusty spreadsheet, you’ll see it here.
           </p>
 
           <p className='border p-2 m-4'>
             As you’re Francis’ friend, do him a favor and send him a quick
-            message to remind him to add this asset to the spreadsheet. 😉”
+            message to remind him to add this asset to the spreadsheet.
+            <Mailbox className='h-8 w-8 m-4' color='white' strokeWidth={1.5} />
           </p>
         </AlertDescription>
       </Alert>
