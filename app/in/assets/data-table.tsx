@@ -45,6 +45,8 @@ import MessageInTable from '@/components/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { cn, thousandAndDecimalFormatter } from '@/lib/utils';
 import { Asset } from '@/lib/types';
+import { Loading } from '@/components/Loading';
+import StocksNoSymbol from './stocks-no-symbol';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -90,7 +92,7 @@ export function DataTable<TData, TValue>({
     }
   }, [typeFilter, table]);
 
-  const { assets, isLoading } = useAssetsContext();
+  const { assets, assetsByType, isLoading } = useAssetsContext();
 
   const getRepeatedAssetTotal = (assetName: string) => {
     const repeatedAssetRows = assets.filter(
@@ -187,6 +189,10 @@ export function DataTable<TData, TValue>({
     setColumnFilters([]);
     table.resetGlobalFilter();
   };
+
+  const stocksNoTotal = assetsByType?.Stock?.filter(
+    (asset) => asset?.total === 0
+  );
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -417,6 +423,12 @@ export function DataTable<TData, TValue>({
           </Tooltip>
         </TooltipProvider>
       </div>
+      {stocksNoTotal.length > 0 && (
+        <div className='m-4'>
+          <StocksNoSymbol stocksNoTotal={stocksNoTotal} />
+        </div>
+      )}
+
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -436,42 +448,53 @@ export function DataTable<TData, TValue>({
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && 'selected'}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell
-                    key={cell.id}
-                    className='text-right text-xs text-slate-600 font-light'
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      className='text-right text-xs text-slate-600 font-light'
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-24 text-center'
+                >
+                  <MessageInTable
+                    image={'/biden.webp'}
+                    objectPosition={'50% 10%'}
+                    alt={'Looking for something'}
+                    title={'Oops! Asset Not Found 👻'}
+                    subtitle={'Looks like this asset is hiding from us.'}
+                    buttonCopy={'Add it Now!'}
+                    formTitle={'Add a new Asset'}
+                    formSubtitle={
+                      'Add a New Asset and expand your investment portfolio.'
+                    }
+                  />
+                </TableCell>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className='h-24 text-center'>
-                <MessageInTable
-                  image={'/biden.webp'}
-                  objectPosition={'50% 10%'}
-                  alt={'Looking for something'}
-                  title={'Oops! Asset Not Found 👻'}
-                  subtitle={'Looks like this asset is hiding from us.'}
-                  buttonCopy={'Add it Now!'}
-                  formTitle={'Add a new Asset'}
-                  formSubtitle={
-                    'Add a New Asset and expand your investment portfolio.'
-                  }
-                />
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
+            )}
+          </TableBody>
+        )}
       </Table>
     </div>
   );

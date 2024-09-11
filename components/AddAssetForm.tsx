@@ -325,6 +325,10 @@ export function AddAssetForm() {
               </ul>
             </div>
           )}
+          {/* 
+          We don't need this for now (until we don't pay for an API to get the data
+          Today we get in from Google Sheet - Google Finance formula)
+          
           {assetExchange.length > 1 && (
             <div className={classDiv}>
               <h3 className={classTitle}>Exchange</h3>
@@ -345,7 +349,7 @@ export function AddAssetForm() {
                 ))}
               </ul>
             </div>
-          )}
+          )} */}
 
           <Button className='mt-8' type='submit'>
             Add Asset

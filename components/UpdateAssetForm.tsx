@@ -271,6 +271,11 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
             </div>
           )}
 
+          {/* 
+          
+          We don't need this for now (until we don't pay for an API to get the data
+          Today we get in from Google Sheet - Google Finance formula)
+
           {assetExchange[0] !== 'N/A' && (
             <div className={classDiv}>
               <h3 className={classTitle}>Exchange</h3>
@@ -291,7 +296,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
                 ))}
               </ul>
             </div>
-          )}
+          )} */}
 
           <Button className='mt-8' type='submit'>
             Update Asset
