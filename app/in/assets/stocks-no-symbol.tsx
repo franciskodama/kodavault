@@ -8,6 +8,8 @@ export default function StocksNoSymbol({
 }: {
   stocksNoTotal: Asset[];
 }) {
+  // https://freefrontend.com/css-border-examples/#google_vignette
+
   return (
     <div>
       <Alert className='bg-orange-400'>

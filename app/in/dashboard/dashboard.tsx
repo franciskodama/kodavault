@@ -22,6 +22,7 @@ export default function Dashboard({
   btcPrice,
   netWorthChartData,
   uid,
+  userName,
   goal,
 }: {
   currencyRates: Currencies;
@@ -30,6 +31,7 @@ export default function Dashboard({
   btcPrice: number;
   netWorthChartData: netWorthChartData[];
   uid: string;
+  userName: string;
   goal: number;
 }) {
   const cash = assets.filter((asset) => asset?.type === 'Cash');
@@ -233,7 +235,7 @@ export default function Dashboard({
         </div>
       ) : (
         <>
-          <Welcome uid={uid} />
+          <Welcome userName={userName} />
         </>
       )}
     </>

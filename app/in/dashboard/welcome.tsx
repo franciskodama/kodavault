@@ -10,9 +10,10 @@ import {
 } from '@/components/ui/sheet';
 import Image from 'next/image';
 
-export default function Welcome({ uid }: { uid: string }) {
+export default function Welcome({ userName }: { userName: string }) {
   return (
     <div className='relative flex flex-wrap w-full items-center justify-center'>
+      <div className='absolute px-4 w-full h-full z-10 bg-accent opacity-15' />
       {pictures.map((picture) => (
         <div key={picture.id} className='w-[150px]'>
           <AspectRatio ratio={1 / 1}>
@@ -26,11 +27,11 @@ export default function Welcome({ uid }: { uid: string }) {
           </AspectRatio>
         </div>
       ))}
-      <div className='absolute top-50 -left-50 w-[60em] h-[24em] px-20 py-10 bg-white rounded-md'>
+      <div className='absolute shadow-2xl drop-shadow-2xl top-50 -left-50 z-20 w-[60em] h-[24em] px-20 py-10 bg-white rounded-md'>
         {/* border-2 border-primary drop-shadow-[3px_3px_#121212] */}
         <div className='flex flex-col w-full items-center justify-center mx-auto'>
           <p className='text-2xl font-semibold mb-4'>
-            👋 Welcome aboard, {uid}!
+            👋 Welcome aboard, {userName}!
           </p>
           <p className='text-base my-2'>
             You’ve just unlocked a world of investments and financial fun! 🎉
@@ -39,7 +40,7 @@ export default function Welcome({ uid }: { uid: string }) {
             To get started, all you need to do is add your first asset.
           </p>
           <p className='text-base mb-2'>
-            Ready to take the plunge? 🚀 Let’s build your financial future
+            Ready to take the plunge? Let’s build your financial future
             together!
           </p>
           <Sheet>
