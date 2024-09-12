@@ -479,7 +479,7 @@ export function DataTable<TData, TValue>({
                   className='h-24 text-center'
                 >
                   <MessageInTable
-                    image={'/biden.webp'}
+                    image={'/superman-where.webp'}
                     objectPosition={'50% 10%'}
                     alt={'Looking for something'}
                     title={'Oops! Asset Not Found 👻'}
