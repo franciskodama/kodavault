@@ -13,7 +13,7 @@ import Image from 'next/image';
 export default function Welcome({ userName }: { userName: string }) {
   return (
     <div className='relative flex flex-wrap w-full items-center justify-center'>
-      <div className='absolute px-4 w-full h-full z-10 bg-accent opacity-15' />
+      <div className='absolute px-4 w-full h-full z-10 bg-white opacity-30' />
       {pictures.map((picture) => (
         <div key={picture.id} className='w-[150px]'>
           <AspectRatio ratio={1 / 1}>

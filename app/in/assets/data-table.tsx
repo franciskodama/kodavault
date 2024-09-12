@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Check, ChevronsUpDown, XIcon } from 'lucide-react';
+import { Bell, BellRing, Check, ChevronsUpDown, XIcon } from 'lucide-react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -70,6 +70,8 @@ export function DataTable<TData, TValue>({
 
   const [openTypeDropbox, setOpenTypeDropbox] = useState(false);
   const [valueTypeDropbox, setValueTypeDropbox] = useState('');
+
+  const [openNotification, setOpenNotification] = useState(false);
 
   const table = useReactTable({
     data,
@@ -196,238 +198,276 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className='rounded-sm border border-slate-200'>
-      <div className='flex items-center px-12 py-4'>
-        <Input
-          placeholder='Filter by Asset'
-          value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('asset')?.setFilterValue(event.target.value)
-          }
-          className='max-w-sm w-[20ch]'
-        />
-        <Popover open={openWalletDropbox} onOpenChange={setOpenWalletDropbox}>
-          <PopoverTrigger asChild>
-            <Button
-              variant='outline'
-              role='combobox'
-              aria-expanded={openWalletDropbox}
-              className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
-            >
-              {valueWalletDropbox
-                ? wallets.find((wallet) => wallet.value === valueWalletDropbox)
-                    ?.label
-                : 'Filter by Wallet'}
-              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className='w-[23ch] p-0'>
-            <Command>
-              <CommandList>
-                <CommandEmpty>No wallet found.</CommandEmpty>
-                <CommandGroup>
-                  {wallets.map((wallet) => (
-                    <CommandItem
-                      className='text-xs'
-                      key={wallet.value}
-                      value={wallet.value}
-                      onSelect={(currentValue) => {
-                        setValueWalletDropbox(
-                          currentValue === valueWalletDropbox
-                            ? ''
-                            : currentValue
-                        );
-                        table
-                          .getColumn('wallet')
-                          ?.setFilterValue(
-                            currentValue === 'No Filter' ? '' : currentValue
-                          );
-                        setOpenWalletDropbox(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4',
-                          valueWalletDropbox === wallet.value
-                            ? 'opacity-100'
-                            : 'opacity-0'
-                        )}
-                      />
-                      {wallet.label}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
-        <Popover
-          open={openCurrencyDropbox}
-          onOpenChange={setOpenCurrencyDropbox}
-        >
-          <PopoverTrigger asChild>
-            <Button
-              variant='outline'
-              role='combobox'
-              aria-expanded={openCurrencyDropbox}
-              className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
-            >
-              {valueCurrencyDropbox
-                ? currencies.find(
-                    (currency) => currency.value === valueCurrencyDropbox
-                  )?.label
-                : 'Filter by Currency'}
-              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className='w-[23ch] p-0'>
-            <Command>
-              <CommandList>
-                <CommandEmpty>No currency found.</CommandEmpty>
-                <CommandGroup>
-                  {currencies.map((currency) => (
-                    <CommandItem
-                      className='text-xs'
-                      key={currency.value}
-                      value={currency.value}
-                      onSelect={(currentValue) => {
-                        setValueCurrencyDropbox(
-                          currentValue === valueCurrencyDropbox
-                            ? ''
-                            : currentValue
-                        );
-                        table
-                          .getColumn('currency')
-                          ?.setFilterValue(
-                            currentValue === 'No Filter' ? '' : currentValue
-                          );
-                        setOpenCurrencyDropbox(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4',
-                          valueCurrencyDropbox === currency.value
-                            ? 'opacity-100'
-                            : 'opacity-0'
-                        )}
-                      />
-                      {currency.label}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
-        <Popover open={openTypeDropbox} onOpenChange={setOpenTypeDropbox}>
-          <PopoverTrigger asChild>
-            <Button
-              variant='outline'
-              role='combobox'
-              aria-expanded={openTypeDropbox}
-              className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
-            >
-              {valueTypeDropbox
-                ? types.find((type) => type.value === valueTypeDropbox)?.label
-                : 'Filter by Type'}
-              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className='w-[23ch] p-0'>
-            <Command>
-              <CommandList>
-                <CommandEmpty>No type found.</CommandEmpty>
-                <CommandGroup>
-                  {types.map((type) => (
-                    <CommandItem
-                      className='text-xs'
-                      key={type.value}
-                      value={type.value}
-                      onSelect={(currentValue) => {
-                        setValueTypeDropbox(
-                          currentValue === valueTypeDropbox ? '' : currentValue
-                        );
-                        table
-                          .getColumn('type')
-                          ?.setFilterValue(
-                            currentValue === 'No Filter' ? '' : currentValue
-                          );
-                        setOpenTypeDropbox(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4',
-                          valueTypeDropbox === type.value
-                            ? 'opacity-100'
-                            : 'opacity-0'
-                        )}
-                      />
-                      {type.label}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
-
-        {getRepeatedAssetTotal(
-          (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-        ).isRepeatedAsset && (
-          <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
-            <div className='flex items-center w-full'>
-              <p className='w-[6ch]'>Asset:</p>
-              {getRepeatedAssetTotal(
-                (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-              ).assetName.toUpperCase()}
-            </div>
-            <p className='mx-6'>|</p>
-            <div className='flex items-center w-full'>
-              <p className='w-[9ch]'>Total Qty:</p>
-              {thousandAndDecimalFormatter(
-                getRepeatedAssetTotal(
-                  (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-                ).totalQty
-              )}
-            </div>
-            <p className='mx-6'>|</p>
-            <div className='flex items-center w-full'>
-              <p className='w-[6ch]'>Total:</p>
-              {thousandAndDecimalFormatter(
-                getRepeatedAssetTotal(
-                  (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-                ).total
-              )}
-            </div>
-          </div>
-        )}
-
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
+      <div className='flex justify-between items-center px-8 py-4'>
+        <div className='flex items-center'>
+          <Input
+            placeholder='Filter by Asset'
+            value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
+            onChange={(event) =>
+              table.getColumn('asset')?.setFilterValue(event.target.value)
+            }
+            className='max-w-sm w-[20ch]'
+          />
+          <Popover open={openWalletDropbox} onOpenChange={setOpenWalletDropbox}>
+            <PopoverTrigger asChild>
               <Button
-                size='md'
-                variant={'outline'}
-                className='h-10 ml-4 border-2 border-slate-500'
-                onClick={() => {
-                  handleClickClearAll();
-                }}
+                variant='outline'
+                role='combobox'
+                aria-expanded={openWalletDropbox}
+                className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
               >
-                <XIcon className='h-4 w-4' />
+                {valueWalletDropbox
+                  ? wallets.find(
+                      (wallet) => wallet.value === valueWalletDropbox
+                    )?.label
+                  : 'Filter by Wallet'}
+                <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
               </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Clear All Filters</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
-      {stocksNoTotal?.length > 0 && (
-        <div className='m-4'>
-          <StocksNoSymbol stocksNoTotal={stocksNoTotal} />
+            </PopoverTrigger>
+            <PopoverContent className='w-[23ch] p-0'>
+              <Command>
+                <CommandList>
+                  <CommandEmpty>No wallet found.</CommandEmpty>
+                  <CommandGroup>
+                    {wallets.map((wallet) => (
+                      <CommandItem
+                        className='text-xs'
+                        key={wallet.value}
+                        value={wallet.value}
+                        onSelect={(currentValue) => {
+                          setValueWalletDropbox(
+                            currentValue === valueWalletDropbox
+                              ? ''
+                              : currentValue
+                          );
+                          table
+                            .getColumn('wallet')
+                            ?.setFilterValue(
+                              currentValue === 'No Filter' ? '' : currentValue
+                            );
+                          setOpenWalletDropbox(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            valueWalletDropbox === wallet.value
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          )}
+                        />
+                        {wallet.label}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+          <Popover
+            open={openCurrencyDropbox}
+            onOpenChange={setOpenCurrencyDropbox}
+          >
+            <PopoverTrigger asChild>
+              <Button
+                variant='outline'
+                role='combobox'
+                aria-expanded={openCurrencyDropbox}
+                className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
+              >
+                {valueCurrencyDropbox
+                  ? currencies.find(
+                      (currency) => currency.value === valueCurrencyDropbox
+                    )?.label
+                  : 'Filter by Currency'}
+                <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className='w-[23ch] p-0'>
+              <Command>
+                <CommandList>
+                  <CommandEmpty>No currency found.</CommandEmpty>
+                  <CommandGroup>
+                    {currencies.map((currency) => (
+                      <CommandItem
+                        className='text-xs'
+                        key={currency.value}
+                        value={currency.value}
+                        onSelect={(currentValue) => {
+                          setValueCurrencyDropbox(
+                            currentValue === valueCurrencyDropbox
+                              ? ''
+                              : currentValue
+                          );
+                          table
+                            .getColumn('currency')
+                            ?.setFilterValue(
+                              currentValue === 'No Filter' ? '' : currentValue
+                            );
+                          setOpenCurrencyDropbox(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            valueCurrencyDropbox === currency.value
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          )}
+                        />
+                        {currency.label}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+          <Popover open={openTypeDropbox} onOpenChange={setOpenTypeDropbox}>
+            <PopoverTrigger asChild>
+              <Button
+                variant='outline'
+                role='combobox'
+                aria-expanded={openTypeDropbox}
+                className='ml-4 w-[20ch] justify-between font-normal text-slate-500'
+              >
+                {valueTypeDropbox
+                  ? types.find((type) => type.value === valueTypeDropbox)?.label
+                  : 'Filter by Type'}
+                <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className='w-[23ch] p-0'>
+              <Command>
+                <CommandList>
+                  <CommandEmpty>No type found.</CommandEmpty>
+                  <CommandGroup>
+                    {types.map((type) => (
+                      <CommandItem
+                        className='text-xs'
+                        key={type.value}
+                        value={type.value}
+                        onSelect={(currentValue) => {
+                          setValueTypeDropbox(
+                            currentValue === valueTypeDropbox
+                              ? ''
+                              : currentValue
+                          );
+                          table
+                            .getColumn('type')
+                            ?.setFilterValue(
+                              currentValue === 'No Filter' ? '' : currentValue
+                            );
+                          setOpenTypeDropbox(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            valueTypeDropbox === type.value
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          )}
+                        />
+                        {type.label}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+
+          {getRepeatedAssetTotal(
+            (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+          ).isRepeatedAsset && (
+            <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
+              <div className='flex items-center w-full'>
+                <p className='w-[6ch]'>Asset:</p>
+                {getRepeatedAssetTotal(
+                  (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+                ).assetName.toUpperCase()}
+              </div>
+              <p className='mx-6'>|</p>
+              <div className='flex items-center w-full'>
+                <p className='w-[9ch]'>Total Qty:</p>
+                {thousandAndDecimalFormatter(
+                  getRepeatedAssetTotal(
+                    (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+                  ).totalQty
+                )}
+              </div>
+              <p className='mx-6'>|</p>
+              <div className='flex items-center w-full'>
+                <p className='w-[6ch]'>Total:</p>
+                {thousandAndDecimalFormatter(
+                  getRepeatedAssetTotal(
+                    (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+                  ).total
+                )}
+              </div>
+            </div>
+          )}
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  size='md'
+                  variant={'outline'}
+                  className='h-10 ml-4 border-2 border-slate-500'
+                  onClick={() => {
+                    handleClickClearAll();
+                  }}
+                >
+                  <XIcon className='h-4 w-4' />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Clear All Filters</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
-      )}
+
+        {stocksNoTotal?.length > 0 && !openNotification ? (
+          <>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    size='md'
+                    variant={'outline'}
+                    className='h-10 ml-4 border-2 border-slate-500'
+                    onClick={() => {
+                      setOpenNotification(true);
+                    }}
+                  >
+                    <BellRing className='h-4 w-4' />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className='flex items-center'>
+                    <p className='text-primary ml-2'>You have 1 notification</p>
+                    <p className='text-xs ml-2 text-slate-300'>See details</p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </>
+        ) : (
+          <div />
+        )}
+      </div>
+
+      {openNotification ? (
+        <div className='mx-8 mb-4'>
+          <StocksNoSymbol
+            stocksNoTotal={stocksNoTotal}
+            setOpenNotification={setOpenNotification}
+          />
+        </div>
+      ) : null}
 
       <Table>
         <TableHeader>
