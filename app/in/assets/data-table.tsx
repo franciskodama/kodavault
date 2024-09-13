@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Bell, BellRing, Check, ChevronsUpDown, XIcon } from 'lucide-react';
+import { BellRing, Check, ChevronsUpDown, XIcon } from 'lucide-react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -438,7 +438,7 @@ export function DataTable<TData, TValue>({
                   <Button
                     size='md'
                     variant={'outline'}
-                    className='h-10 ml-4 border-2 border-slate-500 bg-accent'
+                    className='h-10 ml-4 border-2 border-slate-500 bg-accent rounded-full'
                     onClick={() => {
                       setOpenNotification(true);
                     }}
