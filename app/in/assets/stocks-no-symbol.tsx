@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 
 import { Asset } from '@/lib/types';
@@ -13,6 +13,17 @@ export default function StocksNoSymbol({
   stocksNoTotal: Asset[];
   setOpenNotification: (value: boolean) => void;
 }) {
+  const symbols = stocksNoTotal.map((stock: Asset) => stock?.asset);
+
+  const handleClickMessageButton = () => {
+    const subject = encodeURIComponent('Add Assets');
+    const body = encodeURIComponent(`Assets to price: ${symbols.join(', ')}`);
+    // window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
+    console.log('clicked message button');
+    console.log(window.location.href);
+  };
+
   return (
     <div className='relative'>
       <Alert
@@ -30,14 +41,7 @@ export default function StocksNoSymbol({
           borderWidth: '1em',
         }}
       >
-        {/* <AlertTitle className='flex justify-between'>
-          <div className='flex items-center ml-2'>
-            <Siren className='h-8 w-8' color='black' strokeWidth={1.5} />
-            <h3 className='text-primary text-base ml-4'>Hi, Francis!</h3>
-          </div>
-        </AlertTitle> */}
         <AlertDescription className='relative flex flex-wrap items-start justify-between p-4'>
-          {/* <div className='flex items-start justify-between '> */}
           <div className='flex flex-col'>
             <div className='flex items-center mb-2'>
               <Bomb size={24} color='black' strokeWidth={1.8} />
@@ -81,21 +85,33 @@ export default function StocksNoSymbol({
 
           <div className='flex flex-col mr-20'>
             <p className='text-primary text-xs w-[35ch] mb-4'>
-              As you’re Francis’ friend, do him a favor and send him a quick
-              message to remind him to add this asset to the spreadsheet.
+              As his friend, give him a quick nudge to add
+              {stocksNoTotal?.length > 1 ? ' these' : ' this'} Asset
+              {stocksNoTotal?.length > 1 ? 's' : null} to the spreadsheet.
+              <br />
+              {`Help Francis Out. :)`}
             </p>
-
-            <button
-              // as='a'
-              ref={`mailto:${process.env.NEXT_PUBLIC_MY_UID}`}
-              // variant={'outline'}
-              className='flex items-center w-[24ch] border-2 border-primary capitalize'
+            <Button
+              variant={'outline'}
+              className='flex items-center border-2 border-primary capitalize'
+              onClick={handleClickMessageButton}
             >
-              Send him a message
+              Ping the Spreadsheet Master!
               <MessageCircle className='ml-2' size={24} strokeWidth={1.8} />
-            </button>
+            </Button>
           </div>
-          {/* </div> */}
+
+          {/* <a
+            href={`mailto:?subject=${encodeURIComponent(
+              'Add Assets'
+            )}&body=${encodeURIComponent(
+              `Assets to price: ${symbols.join(', ')}`
+            )}`}
+            className='inline-flex items-center justify-center whitespace-nowrap rounded-[2px] text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-2 border-primary capitalize h-10 px-4 py-2'
+          >
+            Ping the Spreadsheet Master!
+            <MessageCircle className='ml-2' size={24} strokeWidth={1.8} />
+          </a> */}
 
           <button
             className='absolute top-2 right-2 p-2'
