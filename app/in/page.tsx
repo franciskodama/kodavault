@@ -15,6 +15,7 @@ import {
 export default async function DashboardPage() {
   const user = await currentUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const userName = user?.firstName;
 
   // =============== FOR TESTING ===============
   // const quotes = await fetchQuotesForCryptos('BTC');
@@ -45,6 +46,7 @@ export default async function DashboardPage() {
         assets &&
         assetsByType &&
         uid &&
+        userName &&
         netWorthChartData && (
           <Dashboard
             currencyRates={currencyRates}
@@ -53,6 +55,7 @@ export default async function DashboardPage() {
             btcPrice={btcPrice}
             netWorthChartData={netWorthChartData}
             uid={uid}
+            userName={userName}
             goal={goal[0]?.goal ? goal[0].goal : 0}
           />
         )

@@ -57,7 +57,7 @@ export default function Stocks() {
             </div>
           ) : (
             <MessageInTable
-              image={'/look-over-the-fence.webp'}
+              image={'/searching.webp'}
               objectPosition={'50% 10%'}
               alt={'I am broke'}
               title={'🤷🏻‍♂️ No stocks in your portfolio yet!'}

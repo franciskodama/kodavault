@@ -26,11 +26,11 @@
 // />;
 
 // WORKING ON:
+// TODO: Export to CSV
+// TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange)
+// TODO: Stock Assets that we don't have data, we need to message user to contact the administrator to include Symbol (Google Finance/Sheet)
 // TODO: Dashboard taking too much time to load
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
-
-// TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange
-// TODO: Hide the TO TSX NY... Exchange
 // TODO: Arrumar reload on Shortcut, etc.. pages
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
 // TODO: After CronJob Fix, return the commented code in the middleware f
@@ -92,6 +92,8 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Hide the TO TSX NY... Exchange
+// TODO: Dashboard Menu must be highlighted when chosen
 // TODO: Clear button for all filters on Asset Page
 // TODO: If you don't have a net worth data show a message in the space of the chart
 // TODO: Dashboard without any data. Show a message.
