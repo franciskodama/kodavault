@@ -420,7 +420,7 @@ export function DataTable<TData, TValue>({
                     handleClickClearAll();
                   }}
                 >
-                  <XIcon className='h-4 w-4' />
+                  <XIcon size={18} strokeWidth={2.4} />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -438,7 +438,7 @@ export function DataTable<TData, TValue>({
                   <Button
                     size='md'
                     variant={'outline'}
-                    className='h-10 ml-4 border-2 border-slate-500'
+                    className='h-10 ml-4 border-2 border-slate-500 bg-accent'
                     onClick={() => {
                       setOpenNotification(true);
                     }}
