@@ -36,7 +36,8 @@ export default function StocksNoSymbol({
             <h3 className='text-primary text-base ml-4'>Hi, Francis!</h3>
           </div>
         </AlertTitle> */}
-        <AlertDescription className='flex items-start justify-between p-4'>
+        <AlertDescription className='relative flex flex-wrap items-start justify-between p-4'>
+          {/* <div className='flex items-start justify-between '> */}
           <div className='flex flex-col'>
             <div className='flex items-center mb-2'>
               <Bomb size={24} color='black' strokeWidth={1.8} />
@@ -46,7 +47,7 @@ export default function StocksNoSymbol({
               Looks like we’re missing
               <br />
               the price{stocksNoTotal?.length > 1 ? 's' : null} for{' '}
-              {stocksNoTotal?.length > 1 ? 'these' : 'this'} asset
+              {stocksNoTotal?.length > 1 ? 'these' : 'this'} Asset
               {stocksNoTotal?.length > 1 ? 's' : null}:
             </h3>
             <div className='flex flex-wrap mt-4 w-[16em]'>
@@ -61,40 +62,45 @@ export default function StocksNoSymbol({
             </div>
           </div>
 
-          <div className='flex justify-between'>
-            <div className=''>
+          <div className='flex flex-wrap justify-between'>
+            <div>
               <p className='font-bold text-lg mb-2'>Why?</p>
-              <div className='flex'>
-                <p className='text-xs w-[30ch]'>
-                  Well, Francis is still pinching pennies and hasn’t paid for
-                  that fancy API to fetch the stock prices automatically!
-                </p>
-                <p className='text-xs w-[30ch] ml-2'>
-                  But don’t worry, once he manually updates the price in his
-                  trusty spreadsheet, you’ll see it here.
-                </p>
-              </div>
+              <p className='text-xs w-[30ch]'>
+                Well, Francis is still pinching pennies and hasn’t paid for that
+                fancy API to fetch the stock prices automatically!
+              </p>
+            </div>
+            <div>
+              <p className='font-bold text-lg mb-2 text-transparent'>X</p>
+              <p className='text-xs w-[30ch] ml-2'>
+                But don’t worry, once he manually updates the price in his
+                trusty spreadsheet, you’ll see it here.
+              </p>
             </div>
           </div>
 
-          <div className='flex flex-col'>
+          <div className='flex flex-col mr-20'>
             <p className='text-primary text-xs w-[35ch] mb-4'>
               As you’re Francis’ friend, do him a favor and send him a quick
               message to remind him to add this asset to the spreadsheet.
             </p>
 
-            <Button
+            <button
               // as='a'
-              // href={`mailto:${process.env.NEXT_PUBLIC_MY_UID}`}
-              variant={'outline'}
+              ref={`mailto:${process.env.NEXT_PUBLIC_MY_UID}`}
+              // variant={'outline'}
               className='flex items-center w-[24ch] border-2 border-primary capitalize'
             >
               Send him a message
               <MessageCircle className='ml-2' size={24} strokeWidth={1.8} />
-            </Button>
+            </button>
           </div>
+          {/* </div> */}
 
-          <button onClick={() => setOpenNotification(false)}>
+          <button
+            className='absolute top-2 right-2 p-2'
+            onClick={() => setOpenNotification(false)}
+          >
             <X size={24} color='black' strokeWidth={1.8} />
           </button>
         </AlertDescription>
