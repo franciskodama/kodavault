@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { BellRing, Check, ChevronsUpDown, XIcon } from 'lucide-react';
 import {
   ColumnDef,
@@ -435,16 +436,21 @@ export function DataTable<TData, TValue>({
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <Button
-                    size='md'
-                    variant={'outline'}
-                    className='h-10 ml-4 border-2 border-slate-500 bg-accent rounded-full'
-                    onClick={() => {
-                      setOpenNotification(true);
-                    }}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                   >
-                    <BellRing className='h-4 w-4' />
-                  </Button>
+                    <Button
+                      size='md'
+                      variant={'outline'}
+                      className='h-10 ml-4 border-2 border-slate-500 rounded-full'
+                      onClick={() => {
+                        setOpenNotification(true);
+                      }}
+                    >
+                      <BellRing className='h-4 w-4' />
+                    </Button>
+                  </motion.button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <div className='flex items-center'>
@@ -460,14 +466,23 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      {openNotification ? (
-        <div className='mx-8 mb-4'>
-          <StocksNoSymbol
-            stocksNoTotal={stocksNoTotal}
-            setOpenNotification={setOpenNotification}
-          />
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {openNotification ? (
+          <motion.div
+            layout
+            initial={{ opacity: 0, y: 50, scale: 0.3 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+          >
+            <div className='mx-8 mb-4'>
+              <StocksNoSymbol
+                stocksNoTotal={stocksNoTotal}
+                setOpenNotification={setOpenNotification}
+              />
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
       <Table>
         <TableHeader>
