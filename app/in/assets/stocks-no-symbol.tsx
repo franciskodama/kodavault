@@ -16,12 +16,32 @@ export default function StocksNoSymbol({
   const symbols = stocksNoTotal.map((stock: Asset) => stock?.asset);
 
   const handleClickMessageButton = () => {
-    const subject = encodeURIComponent('Add Assets');
-    const body = encodeURIComponent(`Assets to price: ${symbols.join(', ')}`);
-    // window.location.href = `mailto:?subject=${subject}&body=${body}`;
-    window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
-    console.log('clicked message button');
-    console.log(window.location.href);
+    const email = process.env.NEXT_PUBLIC_MY_UID;
+
+    if (!email) {
+      console.error('Email environment variable not set');
+      return;
+    }
+
+    const subject = encodeURIComponent(
+      '[KODAVAULT] Francis, a Friendly Reminder: Time to Update Your Assets List!'
+    );
+    const body = encodeURIComponent(`
+      Hey Francis, 👋
+      
+      Looks like these assets are missing their prices in the app:
+      ${symbols.map((symbol) => `- ${symbol}`).join('\n')}
+      
+      Could you please add them to your trusty spreadsheet when you get a moment? 🙏🏻
+      Your users (like me!) thank you! 🙌
+      
+      Cheers! 🍻
+      `);
+
+    window.open(
+      `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`,
+      '_blank'
+    );
   };
 
   return (
