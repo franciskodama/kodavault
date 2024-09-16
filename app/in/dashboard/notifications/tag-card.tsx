@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { AlertTriangle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 import {
   Card,
@@ -88,25 +89,37 @@ export default function TagCard() {
                 </>
               ) : (
                 <>
-                  <h3 className='mb-2'>{`Here’s a look at your top performers:`}</h3>
-                  {firstThreeAssets.map((asset) => {
-                    return (
-                      <div key={asset?.id} className='my-[4px] relative'>
-                        <div className='flex w-full'>
-                          <div className='flex w-3/5'>
-                            <p className='text-[10px]'>Asset:</p>
-                            <p className='ml-1 font-bold'>{asset?.asset}</p>
-                          </div>
-                          <div className='flex w-2/5'>
-                            <p className='text-[10px]'>Total:</p>
-                            <p className='ml-1 font-bold'>
-                              {asset?.total && thousandFormatter(asset?.total)}
-                            </p>
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, y: 50, scale: 0.3 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.5,
+                      transition: { duration: 0.2 },
+                    }}
+                  >
+                    <h3 className='mb-2'>{`Here’s a look at your top performers:`}</h3>
+                    {firstThreeAssets.map((asset) => {
+                      return (
+                        <div key={asset?.id} className='my-[4px] relative'>
+                          <div className='flex w-full'>
+                            <div className='flex w-3/5'>
+                              <p className='text-[10px]'>Asset:</p>
+                              <p className='ml-1 font-bold'>{asset?.asset}</p>
+                            </div>
+                            <div className='flex w-2/5'>
+                              <p className='text-[10px]'>Total:</p>
+                              <p className='ml-1 font-bold'>
+                                {asset?.total &&
+                                  thousandFormatter(asset?.total)}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </motion.div>
                   {sortedTaggedAssets.length > 3 && (
                     <p className='absolute bottom-1'>...</p>
                   )}

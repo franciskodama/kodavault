@@ -1,5 +1,7 @@
 'use client';
 
+import { AnimatePresence, motion } from 'framer-motion';
+
 import Main from './main/main';
 import { Loading } from '@/components/Loading';
 import MessageInTable from '@/components/MessageInTable';
@@ -75,7 +77,6 @@ export default function Cryptos() {
                   'Add a New Asset and expand your investment portfolio.'
                 }
               />
-              ;
             </>
           )}
         </div>
