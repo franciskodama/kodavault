@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Bell, BellRing, Check, ChevronsUpDown, XIcon } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { BellRing, Check, ChevronsUpDown, XIcon } from 'lucide-react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -59,6 +60,8 @@ export function DataTable<TData, TValue>({
   data,
   typeFilter,
 }: DataTableProps<TData, TValue>) {
+  const { assets, assetsByType, isLoading } = useAssetsContext();
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -71,6 +74,7 @@ export function DataTable<TData, TValue>({
   const [openTypeDropbox, setOpenTypeDropbox] = useState(false);
   const [valueTypeDropbox, setValueTypeDropbox] = useState('');
 
+  const [clearFilterButton, setClearFilterButton] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
 
   const table = useReactTable({
@@ -94,7 +98,11 @@ export function DataTable<TData, TValue>({
     }
   }, [typeFilter, table]);
 
-  const { assets, assetsByType, isLoading } = useAssetsContext();
+  useEffect(() => {
+    if (valueWalletDropbox || valueCurrencyDropbox || valueTypeDropbox) {
+      setClearFilterButton(true);
+    }
+  }, [valueWalletDropbox, valueCurrencyDropbox, valueTypeDropbox]);
 
   const getRepeatedAssetTotal = (assetName: string) => {
     const repeatedAssetRows = assets.filter(
@@ -122,21 +130,32 @@ export function DataTable<TData, TValue>({
   };
 
   // -------------------------------
-  // function getUniqueOptions(propName: string) {
-  //   return Array.from(new Set(assets.map((asset) => asset?[propName])))
-  //     .filter((value) => value !== undefined)
-  //     .map((value) => ({ value, label: value }));
+
+  // function createFilterOptions<T, K extends keyof T>(
+  //   assets: T[],
+  //   key: K
+  // ): Array<{ value: string; label: string }> {
+  //   const uniqueValues = Array.from(new Set(assets.map((asset) => asset[key])));
+
+  //   const options = uniqueValues
+  //     .filter((value): value is NonNullable<T[K]> => value != null)
+  //     .map((value) => ({
+  //       value: String(value),
+  //       label: String(value),
+  //     }));
+
+  //   options.push({
+  //     value: 'No Filter',
+  //     label: 'No Filter',
+  //   });
+
+  //   return options;
   // }
 
-  // const wallets = getUniqueOptions('wallet');
-  // wallets.push({ value: 'No Filter', label: 'No Filter' });
-
-  // const currencies = getUniqueOptions('currency');
-  // currencies.push({ value: 'No Filter', label: 'No Filter' });
-
-  // const types = getUniqueOptions('type');
-  // types.push({ value: 'No Filter', label: 'No Filter' });
-
+  // // Usage:
+  // const wallets = createFilterOptions(assets, 'wallet');
+  // const currencies = createFilterOptions(assets, 'currency');
+  // const types = createFilterOptions(assets, 'type');
   // -------------------------------
   const walletsArray = Array.from(
     new Set(assets.map((asset) => asset?.wallet))
@@ -190,6 +209,7 @@ export function DataTable<TData, TValue>({
     setValueTypeDropbox('');
     setColumnFilters([]);
     table.resetGlobalFilter();
+    setClearFilterButton(false);
   };
 
   const stocksNoTotal = assetsByType?.Stock?.filter(
@@ -203,11 +223,13 @@ export function DataTable<TData, TValue>({
           <Input
             placeholder='Filter by Asset'
             value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
-            onChange={(event) =>
-              table.getColumn('asset')?.setFilterValue(event.target.value)
-            }
+            onChange={(event) => {
+              table.getColumn('asset')?.setFilterValue(event.target.value);
+              setClearFilterButton(true);
+            }}
             className='max-w-sm w-[20ch]'
           />
+
           <Popover open={openWalletDropbox} onOpenChange={setOpenWalletDropbox}>
             <PopoverTrigger asChild>
               <Button
@@ -409,25 +431,27 @@ export function DataTable<TData, TValue>({
             </div>
           )}
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  size='md'
-                  variant={'outline'}
-                  className='h-10 ml-4 border-2 border-slate-500'
-                  onClick={() => {
-                    handleClickClearAll();
-                  }}
-                >
-                  <XIcon size={18} strokeWidth={2.4} />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Clear All Filters</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {clearFilterButton && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    size='md'
+                    variant={'outline'}
+                    className='h-10 ml-4 border-2 border-slate-500'
+                    onClick={() => {
+                      handleClickClearAll();
+                    }}
+                  >
+                    <XIcon size={18} strokeWidth={2.4} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Clear All Filters</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
         </div>
 
         {stocksNoTotal?.length > 0 && !openNotification ? (
@@ -435,16 +459,21 @@ export function DataTable<TData, TValue>({
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <Button
-                    size='md'
-                    variant={'outline'}
-                    className='h-10 ml-4 border-2 border-slate-500 bg-accent'
-                    onClick={() => {
-                      setOpenNotification(true);
-                    }}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                   >
-                    <BellRing className='h-4 w-4' />
-                  </Button>
+                    <Button
+                      size='md'
+                      variant={'outline'}
+                      className='h-10 ml-4 border-2 border-slate-500 rounded-full'
+                      onClick={() => {
+                        setOpenNotification(true);
+                      }}
+                    >
+                      <BellRing className='h-4 w-4' />
+                    </Button>
+                  </motion.button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <div className='flex items-center'>
@@ -460,14 +489,23 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      {openNotification ? (
-        <div className='mx-8 mb-4'>
-          <StocksNoSymbol
-            stocksNoTotal={stocksNoTotal}
-            setOpenNotification={setOpenNotification}
-          />
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {openNotification ? (
+          <motion.div
+            layout
+            initial={{ opacity: 0, y: 50, scale: 0.3 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+          >
+            <div className='mx-8 mb-4'>
+              <StocksNoSymbol
+                stocksNoTotal={stocksNoTotal}
+                setOpenNotification={setOpenNotification}
+              />
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
       <Table>
         <TableHeader>

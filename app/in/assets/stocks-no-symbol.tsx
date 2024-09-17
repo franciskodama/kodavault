@@ -16,12 +16,32 @@ export default function StocksNoSymbol({
   const symbols = stocksNoTotal.map((stock: Asset) => stock?.asset);
 
   const handleClickMessageButton = () => {
-    const subject = encodeURIComponent('Add Assets');
-    const body = encodeURIComponent(`Assets to price: ${symbols.join(', ')}`);
-    // window.location.href = `mailto:?subject=${subject}&body=${body}`;
-    window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
-    console.log('clicked message button');
-    console.log(window.location.href);
+    const email = process.env.NEXT_PUBLIC_MY_UID;
+
+    if (!email) {
+      console.error('Email environment variable not set');
+      return;
+    }
+
+    const subject = encodeURIComponent(
+      '[KODAVAULT] Francis, a Friendly Reminder: Time to Update Your Assets List!'
+    );
+    const body = encodeURIComponent(`
+      Hey Francis, 👋
+      
+      Looks like these assets are missing their prices in the app:
+      ${symbols.map((symbol) => `- ${symbol}`).join('\n')}
+      
+      Could you please add them to your trusty spreadsheet when you get a moment? 🙏🏻
+      Your users (like me!) thank you! 🙌
+      
+      Cheers! 🍻
+      `);
+
+    window.open(
+      `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`,
+      '_blank'
+    );
   };
 
   return (
@@ -100,19 +120,6 @@ export default function StocksNoSymbol({
               <MessageCircle className='ml-2' size={24} strokeWidth={1.8} />
             </Button>
           </div>
-
-          {/* <a
-            href={`mailto:?subject=${encodeURIComponent(
-              'Add Assets'
-            )}&body=${encodeURIComponent(
-              `Assets to price: ${symbols.join(', ')}`
-            )}`}
-            className='inline-flex items-center justify-center whitespace-nowrap rounded-[2px] text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-2 border-primary capitalize h-10 px-4 py-2'
-          >
-            Ping the Spreadsheet Master!
-            <MessageCircle className='ml-2' size={24} strokeWidth={1.8} />
-          </a> */}
-
           <button
             className='absolute top-2 right-2 p-2'
             onClick={() => setOpenNotification(false)}
