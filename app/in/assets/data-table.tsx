@@ -130,21 +130,32 @@ export function DataTable<TData, TValue>({
   };
 
   // -------------------------------
-  // function getUniqueOptions(propName: string) {
-  //   return Array.from(new Set(assets.map((asset) => asset?[propName])))
-  //     .filter((value) => value !== undefined)
-  //     .map((value) => ({ value, label: value }));
+
+  // function createFilterOptions<T, K extends keyof T>(
+  //   assets: T[],
+  //   key: K
+  // ): Array<{ value: string; label: string }> {
+  //   const uniqueValues = Array.from(new Set(assets.map((asset) => asset[key])));
+
+  //   const options = uniqueValues
+  //     .filter((value): value is NonNullable<T[K]> => value != null)
+  //     .map((value) => ({
+  //       value: String(value),
+  //       label: String(value),
+  //     }));
+
+  //   options.push({
+  //     value: 'No Filter',
+  //     label: 'No Filter',
+  //   });
+
+  //   return options;
   // }
 
-  // const wallets = getUniqueOptions('wallet');
-  // wallets.push({ value: 'No Filter', label: 'No Filter' });
-
-  // const currencies = getUniqueOptions('currency');
-  // currencies.push({ value: 'No Filter', label: 'No Filter' });
-
-  // const types = getUniqueOptions('type');
-  // types.push({ value: 'No Filter', label: 'No Filter' });
-
+  // // Usage:
+  // const wallets = createFilterOptions(assets, 'wallet');
+  // const currencies = createFilterOptions(assets, 'currency');
+  // const types = createFilterOptions(assets, 'type');
   // -------------------------------
   const walletsArray = Array.from(
     new Set(assets.map((asset) => asset?.wallet))
