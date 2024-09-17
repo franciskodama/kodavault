@@ -60,6 +60,8 @@ export function DataTable<TData, TValue>({
   data,
   typeFilter,
 }: DataTableProps<TData, TValue>) {
+  const { assets, assetsByType, isLoading } = useAssetsContext();
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -72,6 +74,7 @@ export function DataTable<TData, TValue>({
   const [openTypeDropbox, setOpenTypeDropbox] = useState(false);
   const [valueTypeDropbox, setValueTypeDropbox] = useState('');
 
+  const [clearFilterButton, setClearFilterButton] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
 
   const table = useReactTable({
@@ -95,7 +98,11 @@ export function DataTable<TData, TValue>({
     }
   }, [typeFilter, table]);
 
-  const { assets, assetsByType, isLoading } = useAssetsContext();
+  useEffect(() => {
+    if (valueWalletDropbox || valueCurrencyDropbox || valueTypeDropbox) {
+      setClearFilterButton(true);
+    }
+  }, [valueWalletDropbox, valueCurrencyDropbox, valueTypeDropbox]);
 
   const getRepeatedAssetTotal = (assetName: string) => {
     const repeatedAssetRows = assets.filter(
@@ -191,6 +198,7 @@ export function DataTable<TData, TValue>({
     setValueTypeDropbox('');
     setColumnFilters([]);
     table.resetGlobalFilter();
+    setClearFilterButton(false);
   };
 
   const stocksNoTotal = assetsByType?.Stock?.filter(
@@ -204,9 +212,10 @@ export function DataTable<TData, TValue>({
           <Input
             placeholder='Filter by Asset'
             value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
-            onChange={(event) =>
-              table.getColumn('asset')?.setFilterValue(event.target.value)
-            }
+            onChange={(event) => {
+              table.getColumn('asset')?.setFilterValue(event.target.value);
+              setClearFilterButton(true);
+            }}
             className='max-w-sm w-[20ch]'
           />
           <Popover open={openWalletDropbox} onOpenChange={setOpenWalletDropbox}>
@@ -410,25 +419,27 @@ export function DataTable<TData, TValue>({
             </div>
           )}
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  size='md'
-                  variant={'outline'}
-                  className='h-10 ml-4 border-2 border-slate-500'
-                  onClick={() => {
-                    handleClickClearAll();
-                  }}
-                >
-                  <XIcon size={18} strokeWidth={2.4} />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Clear All Filters</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {clearFilterButton && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    size='md'
+                    variant={'outline'}
+                    className='h-10 ml-4 border-2 border-slate-500'
+                    onClick={() => {
+                      handleClickClearAll();
+                    }}
+                  >
+                    <XIcon size={18} strokeWidth={2.4} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Clear All Filters</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
         </div>
 
         {stocksNoTotal?.length > 0 && !openNotification ? (
