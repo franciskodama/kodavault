@@ -229,6 +229,7 @@ export function DataTable<TData, TValue>({
             }}
             className='max-w-sm w-[20ch]'
           />
+
           <Popover open={openWalletDropbox} onOpenChange={setOpenWalletDropbox}>
             <PopoverTrigger asChild>
               <Button
