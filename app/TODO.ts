@@ -26,10 +26,10 @@
 // />;
 
 // WORKING ON:
-// TODO: Export to CSV
-// TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange)
-// TODO: Stock Assets that we don't have data, we need to message user to contact the administrator to include Symbol (Google Finance/Sheet)
 // TODO: Dashboard taking too much time to load
+// TODO: Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
+// TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange)
+
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: Arrumar reload on Shortcut, etc.. pages
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
@@ -46,6 +46,8 @@
 // TODO: Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
 // TODO: Resistences and Supports?
 // TODO: Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
+
+// If we need to change auth(): https://www.youtube.com/shorts/x6hrvwNzj10
 
 // ERRORS:
 
@@ -92,6 +94,7 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Stock Assets that we don't have data, we need to message user to contact the administrator to include Symbol (Google Finance/Sheet)
 // TODO: Hide the TO TSX NY... Exchange
 // TODO: Dashboard Menu must be highlighted when chosen
 // TODO: Clear button for all filters on Asset Page
