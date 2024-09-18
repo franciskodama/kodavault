@@ -14,11 +14,6 @@ type AssetsContext = {
   refreshAssets: () => Promise<void>;
 };
 
-type pricedAssetsObj = {
-  assets: Asset[];
-  assetsByType: AssetsByType;
-};
-
 export const AssetsContext = createContext<AssetsContext | null>(null);
 
 export function AssetsProvider({ children }: { children: React.ReactNode }) {

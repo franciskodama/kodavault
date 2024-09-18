@@ -34,6 +34,7 @@ export default async function DashboardPage() {
       ath: crypto.ath,
     })
   );
+  console.log('---  🚀 ---> | athAssets:', athAssets);
 
   // ==========================================
 
