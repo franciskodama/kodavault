@@ -1,7 +1,5 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
-
 import Main from './main/main';
 import { Loading } from '@/components/Loading';
 import MessageInTable from '@/components/MessageInTable';
@@ -12,8 +10,17 @@ import PriceProjections from './price-projections';
 import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
 
-export default function Cryptos() {
+type athAssets = {
+  symbol: string;
+  image: string;
+  ath: number;
+};
+
+export default function Cryptos({ athAssets }: { athAssets: athAssets[] }) {
   const { assetsByType, isLoading } = useAssetsContext();
+
+  // const cryptoAssets = assetsByType.Crypto;
+  // FIlter cryptos that we have in cryptoAssets from the athAssets
 
   return (
     <>
