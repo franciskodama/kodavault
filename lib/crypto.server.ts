@@ -44,42 +44,41 @@ export const fetchQuotesForCryptos = async (
   }
 };
 
+type Params = {
+  vs_currency: string;
+  order: string;
+  per_page: number;
+  page: number;
+  sparkline: boolean;
+};
 export const getAllTimeHighData = async () => {
+  const url = 'https://api.coingecko.com/api/v3/coins/markets';
+  const apiKeyCoinGecko = process.env.NEXT_PUBLIC_COINGECKO_KEY;
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'x-cg-pro-api-key': apiKeyCoinGecko ? apiKeyCoinGecko : '',
+    },
+  };
+
+  const params: Params = {
+    vs_currency: 'usd',
+    order: 'market_cap_desc',
+    per_page: 100,
+    page: 1,
+    sparkline: false,
+  };
+
+  const queryParams = new URLSearchParams(
+    Object.entries(params).map(([key, value]) => [key, value.toString()])
+  );
+
   try {
-    const url = 'https://api.coingecko.com/api/v3/coins/markets';
-
-    interface Params {
-      vs_currency: string;
-      order: string;
-      per_page: number;
-      page: number;
-      sparkline: boolean;
-    }
-
-    const params: Params = {
-      vs_currency: 'usd',
-      order: 'market_cap_desc',
-      per_page: 100,
-      page: 1,
-      sparkline: false,
-    };
-
-    // Convert numeric values to strings before creating URLSearchParams
-    const queryParams = new URLSearchParams(
-      Object.entries(params).map(([key, value]) => [key, value.toString()])
-    );
-
-    const response = await fetch(`${url}?${queryParams}`);
+    const response = await fetch(`${url}?${queryParams}`, options);
     const data = await response.json();
 
-    const allTimeHighData = data.map(
-      (crypto: { symbol: string; ath: number }) => ({
-        symbol: crypto.symbol.toUpperCase(),
-        ath: crypto.ath,
-      })
-    );
-
-    return allTimeHighData;
+    return data;
   } catch (error) {
     console.error('Error fetching data:', error);
   }

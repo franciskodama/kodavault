@@ -11,7 +11,7 @@ export default function Header() {
   const greeting = getGreeting(user?.firstName ? user.firstName : '');
 
   return (
-    <div className='flex justify-between my-4 mx-4 p-4'>
+    <div className='flex justify-between m-4 p-4'>
       <Link href='/'>
         <Image
           src='/logo.png'
