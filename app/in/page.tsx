@@ -24,8 +24,16 @@ export default async function DashboardPage() {
   // const globalData = await getGlobalData();
   // console.log('---  🚀 ---> | globalData:', globalData);
 
-  // const athAssets = getAllTimeHighData();
-  // console.log('---  🚀 ---> | athAssets:', athAssets);
+  // ==========================================
+
+  const allTimeHighData = await getAllTimeHighData();
+  const athAssets = allTimeHighData.map(
+    (crypto: { symbol: string; ath: number; image: string }) => ({
+      symbol: crypto.symbol.toUpperCase(),
+      image: crypto.image,
+      ath: crypto.ath,
+    })
+  );
 
   // ==========================================
 
