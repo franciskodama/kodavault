@@ -10,17 +10,14 @@ import PriceProjections from './price-projections';
 import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
 
-type athAssets = {
+export type athData = {
   symbol: string;
-  image: string;
+  image?: string;
   ath: number;
 };
 
-export default function Cryptos({ athAssets }: { athAssets: athAssets[] }) {
+export default function Cryptos({ athData }: { athData: athData[] }) {
   const { assetsByType, isLoading } = useAssetsContext();
-
-  // const cryptoAssets = assetsByType.Crypto;
-  // FIlter cryptos that we have in cryptoAssets from the athAssets
 
   return (
     <>
@@ -58,7 +55,10 @@ export default function Cryptos({ athAssets }: { athAssets: athAssets[] }) {
                   </TabsContent>
 
                   <TabsContent value='ath' className='mt-4'>
-                    <AthProjections assets={assetsByType.Crypto} />
+                    <AthProjections
+                      assets={assetsByType.Crypto}
+                      athData={athData}
+                    />
                   </TabsContent>
 
                   <TabsContent value='price-projections' className='mt-4'>

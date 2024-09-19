@@ -31,6 +31,9 @@ export type Asset =
       price?: number;
       total?: number;
       ath?: number;
+      wallet?: string;
+      currency?: string;
+      type?: string;
     });
 
 export type AssetsByType = {
