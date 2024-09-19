@@ -24,6 +24,7 @@
 
 // ERRORS:
 // TODO: NaN Alloication Goals, Offset column
+// TODO: On Cryptos Page file:      {assetsByType.Crypto.length > 0 ? (
 
 // PRIORITIES 1:
 // TODO: Assets to be aware of: for position trade checking RSI and other indicators (ie.: DOL, GLXY...)
@@ -68,6 +69,7 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Logos of coins on Allocation Table and ATH table
 // TODO: Dashboard taking too much time to load
 // TODO: Stock Assets that we don't have data, we need to message user to contact the administrator to include Symbol (Google Finance/Sheet)
 // TODO: Hide the TO TSX NY... Exchange

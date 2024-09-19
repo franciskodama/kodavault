@@ -10,13 +10,17 @@ import PriceProjections from './price-projections';
 import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
 
-export type athData = {
+export type athImageData = {
   symbol: string;
-  image?: string;
   ath: number;
+  image?: string;
 };
 
-export default function Cryptos({ athData }: { athData: athData[] }) {
+export default function Cryptos({
+  athImageData,
+}: {
+  athImageData: athImageData[];
+}) {
   const { assetsByType, isLoading } = useAssetsContext();
 
   return (
@@ -52,7 +56,7 @@ export default function Cryptos({ athData }: { athData: athData[] }) {
                   >
                     <AllocationGoals
                       assets={assetsByType.Crypto}
-                      athData={athData}
+                      athImageData={athImageData}
                     />
                     <CardNextPurchases />
                   </TabsContent>
@@ -60,7 +64,7 @@ export default function Cryptos({ athData }: { athData: athData[] }) {
                   <TabsContent value='ath' className='mt-4'>
                     <AthProjections
                       assets={assetsByType.Crypto}
-                      athData={athData}
+                      athImageData={athImageData}
                     />
                   </TabsContent>
 

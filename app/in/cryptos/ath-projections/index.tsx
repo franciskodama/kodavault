@@ -4,7 +4,7 @@ import {
   numberFormatterNoDecimals,
 } from '../../../../lib/utils';
 import AthTable from './ath-table';
-import { athData } from '../cryptos';
+import { athImageData } from '../cryptos';
 import { Loading } from '../../../../components/Loading';
 import { Asset, AssetReducedWithAth } from '../../../../lib/types';
 import {
@@ -18,10 +18,10 @@ import {
 
 export default function AthProjections({
   assets,
-  athData,
+  athImageData,
 }: {
   assets: Asset[];
-  athData: athData[];
+  athImageData: athImageData[];
 }) {
   let cryptoAssetsWithAth: Asset[] = [];
   let sumQtyOfSameAssets: Asset[] = [];
@@ -33,8 +33,8 @@ export default function AthProjections({
   }
 
   cryptoAssetsWithAth = assets.map((item: any) => {
-    const existingAsset = athData.find(
-      (el: athData) => el.symbol === item.asset
+    const existingAsset = athImageData.find(
+      (el: athImageData) => el.symbol === item.asset
     );
     return {
       ...item,

@@ -4,7 +4,7 @@ import Cryptos from './cryptos';
 export default async function CryptosPage() {
   const allTimeHighData = await getAllTimeHighData();
 
-  const athData = allTimeHighData.map(
+  const athImageData = allTimeHighData.map(
     (crypto: { symbol: string; ath: number; image: string }) => ({
       symbol: crypto.symbol.toUpperCase(),
       image: crypto.image,
@@ -14,7 +14,7 @@ export default async function CryptosPage() {
 
   return (
     <div className='mx-auto'>
-      <Cryptos athData={athData} />
+      <Cryptos athImageData={athImageData} />
     </div>
   );
 }
