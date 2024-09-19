@@ -1,30 +1,3 @@
-// Prompt AI: I have this app (Next.js, Typescript, Prisma) to manage my investments. I use the App version of Nextjs (it's not the pages version). This app is where I show a table with each asset, with its proprieties, and also many cards to summarize specific data. Each card has a Title (name) and a description. I will have a card that shows the total amount of the whole vault in 3 different currencies (USD, CAD, BRL). How can I can this card and its description? It must be short.
-
-// - AI: Cryptocurrencies leveraging artificial intelligence for various applications.
-// - Meme: Tokens created around internet memes or cultural references, often with a humorous aspect.
-// - DeFi: Decentralized finance platforms providing financial services without traditional intermediaries.
-// - Oracles: Protocols that connect smart contracts with real-world data and external APIs.
-// - Stablecoins: Cryptocurrencies designed to maintain a stable value, often pegged to fiat currencies.
-// - Gaming: Tokens used in gaming ecosystems for in-game purchases, rewards, and transactions.
-// - Infrastructure: Cryptocurrencies that provide foundational technology for building and supporting blockchain networks.
-// - Data: Cryptocurrencies focused on data storage, sharing, and privacy.
-// - Interoperability: Platforms enabling different blockchain networks to communicate and interact with each other.
-// - Unknown: Cryptocurrencies with unclear or unspecified use cases.
-// - Exchange: Tokens associated with cryptocurrency exchanges, often providing benefits like fee discounts.
-// - None: Tokens that do not fit into any specific category or lack detailed information.
-// - NFT: Non-fungible tokens representing unique digital assets like art, collectibles, and real estate.
-// - Safehaven: Cryptocurrencies perceived as secure investments during market volatility.
-// - Privacy: Cryptocurrencies designed to enhance transaction privacy and anonymity.
-// - Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
-
-// <Image
-//   src='/mari.png'
-//   width={200}
-//   height={200}
-//   alt='Mari in the middle of a buch of money'
-//   className='absolute bottom-0 right-10 rounded-md object-cover opacity-[50%]'
-// />;
-
 // WORKING ON:
 // TODO: Dashboard taking too much time to load
 // TODO: Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
@@ -180,3 +153,20 @@
 // TODO: Assets page, Filter by Exchange
 
 // =============================================================================================
+
+// - AI: Cryptocurrencies leveraging artificial intelligence for various applications.
+// - Meme: Tokens created around internet memes or cultural references, often with a humorous aspect.
+// - DeFi: Decentralized finance platforms providing financial services without traditional intermediaries.
+// - Oracles: Protocols that connect smart contracts with real-world data and external APIs.
+// - Stablecoins: Cryptocurrencies designed to maintain a stable value, often pegged to fiat currencies.
+// - Gaming: Tokens used in gaming ecosystems for in-game purchases, rewards, and transactions.
+// - Infrastructure: Cryptocurrencies that provide foundational technology for building and supporting blockchain networks.
+// - Data: Cryptocurrencies focused on data storage, sharing, and privacy.
+// - Interoperability: Platforms enabling different blockchain networks to communicate and interact with each other.
+// - Unknown: Cryptocurrencies with unclear or unspecified use cases.
+// - Exchange: Tokens associated with cryptocurrency exchanges, often providing benefits like fee discounts.
+// - None: Tokens that do not fit into any specific category or lack detailed information.
+// - NFT: Non-fungible tokens representing unique digital assets like art, collectibles, and real estate.
+// - Safehaven: Cryptocurrencies perceived as secure investments during market volatility.
+// - Privacy: Cryptocurrencies designed to enhance transaction privacy and anonymity.
+// - Supply chain: Supply chain-focused coins are typically designed to improve transparency, traceability, and efficiency in the supply chain industry.
