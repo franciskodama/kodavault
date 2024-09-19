@@ -100,7 +100,7 @@ export function DataTable<TData, TValue>({
                         src={
                           cell.getValue()
                             ? (cell.getValue() as string)
-                            : '/red-x.png'
+                            : '/red-dot.webp'
                         }
                         width={30}
                         height={30}
