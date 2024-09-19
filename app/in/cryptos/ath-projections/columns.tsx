@@ -23,6 +23,10 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
+    accessorKey: 'image',
+    header: () => <div className={tableHeaderClass}></div>,
+  },
+  {
     accessorKey: 'qty',
     header: () => <div className={tableHeaderClass}>Qty</div>,
   },
