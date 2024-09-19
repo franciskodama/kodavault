@@ -1,7 +1,7 @@
 // WORKING ON:
-// TODO: Dashboard taking too much time to load
 // TODO: Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
 // TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange)
+// TODO: ATH: desconsider (checkbox) Assets that have ATH to high against their current price
 
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: Arrumar reload on Shortcut, etc.. pages
@@ -67,6 +67,7 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: Dashboard taking too much time to load
 // TODO: Stock Assets that we don't have data, we need to message user to contact the administrator to include Symbol (Google Finance/Sheet)
 // TODO: Hide the TO TSX NY... Exchange
 // TODO: Dashboard Menu must be highlighted when chosen

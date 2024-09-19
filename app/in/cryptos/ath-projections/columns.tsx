@@ -55,13 +55,6 @@ export const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: 'athTotalCurrency',
-    // header: () => (
-    //   <div className={tableHeaderClass}>
-    //     ATH Total
-    //     <span className='text-xs font-medium'>{` (est.)`}</span>
-    //   </div>
-    // ),
-
     header: ({ column }) => {
       return (
         <Button

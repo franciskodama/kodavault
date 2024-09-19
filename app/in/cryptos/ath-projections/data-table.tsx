@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className='rounded-sm border border-slate-200'>
-      <div className='flex items-center px-12 py-4'>
+      <div className='flex items-center px-12 py-4 mt-4'>
         <Input
           placeholder='Filter by Asset'
           value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
@@ -91,11 +91,23 @@ export function DataTable<TData, TValue>({
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className='text-right text-xs text-slate-600 font-light'
+                    className={`text-right text-xs text-slate-600 font-light ${
+                      cell.column.id === 'ath' && 'bg-slate-100 border'
+                    }`}
                   >
-                    {cell.column.id !== 'image' ? (
-                      flexRender(cell.column.columnDef.cell, cell.getContext())
-                    ) : (
+                    {cell.column.id !== 'image' && (
+                      <>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                        {cell.column.id === 'percentagePotential' &&
+                          cell.getValue() !== '∞' && (
+                            <span className='ml-1'>%</span>
+                          )}
+                      </>
+                    )}
+                    {cell.column.id === 'image' && (
                       <Image
                         src={
                           cell.getValue()
