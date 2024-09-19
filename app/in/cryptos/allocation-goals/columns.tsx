@@ -33,6 +33,10 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
     },
   },
   {
+    accessorKey: 'image',
+    header: () => <div className={tableHeaderClass}></div>,
+  },
+  {
     accessorKey: 'total',
     header: ({ column }) => {
       return (

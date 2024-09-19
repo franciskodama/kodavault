@@ -19,6 +19,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import MessageInTable from '@/components/MessageInTable';
+import Image from 'next/image';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -98,7 +99,27 @@ export function DataTable<TData, TValue>({
                     key={cell.id}
                     className='text-right text-xs text-slate-600 font-light'
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {cell.column.id !== 'image' && (
+                      <>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </>
+                    )}
+                    {cell.column.id === 'image' && (
+                      <Image
+                        src={
+                          cell.getValue()
+                            ? (cell.getValue() as string)
+                            : '/red-dot.webp'
+                        }
+                        width={30}
+                        height={30}
+                        alt='Logo of the coin'
+                        className='ml-2'
+                      />
+                    )}
                   </TableCell>
                 ))}
               </TableRow>

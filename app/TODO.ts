@@ -23,6 +23,7 @@
 // If we need to change auth(): https://www.youtube.com/shorts/x6hrvwNzj10
 
 // ERRORS:
+// TODO: NaN Alloication Goals, Offset column
 
 // PRIORITIES 1:
 // TODO: Assets to be aware of: for position trade checking RSI and other indicators (ie.: DOL, GLXY...)

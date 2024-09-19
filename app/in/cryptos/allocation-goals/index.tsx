@@ -14,9 +14,11 @@ import {
 import { columns } from './columns';
 import { getCryptoGoals } from '@/lib/actions';
 import { Loading } from '../../../../components/Loading';
+import { athData } from '../cryptos';
 
 export type MergedArrayItem = {
   id: string;
+  image: string;
   uid: string;
   coin: string;
   total: number | string;
@@ -29,7 +31,13 @@ export type MergedArrayItem = {
 
 type TotalByCoin = { value: string; total: number };
 
-export default function AllocationGoals({ assets }: { assets: Asset[] }) {
+export default function AllocationGoals({
+  assets,
+  athData,
+}: {
+  assets: Asset[];
+  athData: athData[];
+}) {
   const [cryptoGoals, setCryptoGoals] = useState<CryptoGoals[]>([]);
   const [totalByCoin, setTotalByCoin] = useState<TotalByCoin[]>([]);
   const { user } = useUser();
@@ -107,15 +115,19 @@ export default function AllocationGoals({ assets }: { assets: Asset[] }) {
 
     const mergedArray: MergedArrayItem[] = [];
 
+    // -------------------------------
+    const getImageUrl = (value: string) => {
+      const existingAsset = athData.find((el: athData) => el.symbol === value);
+      return existingAsset?.image ? existingAsset.image : '';
+    };
+    // -------------------------------
+
     totalByCoin.forEach(({ value, total }) => {
       const goalData = goalsMap.get(value);
 
-      // if (goalData?.coin !== 'USDT') {
-      //   return;
-      // }
-
       mergedArray.push({
         id: goalData ? goalData.id : v4(),
+        image: getImageUrl(value),
         uid,
         coin: value,
         total: numberFormatterNoDecimals.format(total),
@@ -133,6 +145,7 @@ export default function AllocationGoals({ assets }: { assets: Asset[] }) {
       if (!totalsMap.has(coin)) {
         mergedArray.push({
           id: v4(),
+          image: '',
           uid,
           coin,
           total: 0,

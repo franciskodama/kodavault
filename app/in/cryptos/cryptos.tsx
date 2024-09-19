@@ -50,7 +50,10 @@ export default function Cryptos({ athData }: { athData: athData[] }) {
                     value='allocation-goals'
                     className='flex gap-2 mt-4'
                   >
-                    <AllocationGoals assets={assetsByType.Crypto} />
+                    <AllocationGoals
+                      assets={assetsByType.Crypto}
+                      athData={athData}
+                    />
                     <CardNextPurchases />
                   </TabsContent>
 
