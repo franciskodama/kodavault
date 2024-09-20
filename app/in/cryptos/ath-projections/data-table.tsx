@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/table';
 
 import MessageInTable from '@/components/MessageInTable';
+import Image from 'next/image';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
@@ -51,7 +52,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className='rounded-sm border border-slate-200'>
-      <div className='flex items-center px-12 py-4'>
+      <div className='flex items-center px-12 py-4 mt-4'>
         <Input
           placeholder='Filter by Asset'
           value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
@@ -90,9 +91,36 @@ export function DataTable<TData, TValue>({
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className='text-right text-xs text-slate-600 font-light'
+                    className={`text-right text-xs text-slate-600 font-light ${
+                      cell.column.id === 'percentagePotential' &&
+                      'bg-slate-100 border'
+                    }`}
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {cell.column.id !== 'image' && (
+                      <>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                        {cell.column.id === 'percentagePotential' &&
+                          cell.getValue() !== '∞' && (
+                            <span className='ml-1'>%</span>
+                          )}
+                      </>
+                    )}
+                    {cell.column.id === 'image' && (
+                      <Image
+                        src={
+                          cell.getValue()
+                            ? (cell.getValue() as string)
+                            : '/red-dot.webp'
+                        }
+                        width={30}
+                        height={30}
+                        alt='Logo of the coin'
+                        className='ml-2'
+                      />
+                    )}
                   </TableCell>
                 ))}
               </TableRow>

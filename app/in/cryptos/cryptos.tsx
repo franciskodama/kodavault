@@ -1,7 +1,5 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
-
 import Main from './main/main';
 import { Loading } from '@/components/Loading';
 import MessageInTable from '@/components/MessageInTable';
@@ -12,7 +10,17 @@ import PriceProjections from './price-projections';
 import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
 
-export default function Cryptos() {
+export type athImageData = {
+  symbol: string;
+  ath: number;
+  image?: string;
+};
+
+export default function Cryptos({
+  athImageData,
+}: {
+  athImageData: athImageData[];
+}) {
   const { assetsByType, isLoading } = useAssetsContext();
 
   return (
@@ -46,12 +54,18 @@ export default function Cryptos() {
                     value='allocation-goals'
                     className='flex gap-2 mt-4'
                   >
-                    <AllocationGoals assets={assetsByType.Crypto} />
+                    <AllocationGoals
+                      assets={assetsByType.Crypto}
+                      athImageData={athImageData}
+                    />
                     <CardNextPurchases />
                   </TabsContent>
 
                   <TabsContent value='ath' className='mt-4'>
-                    <AthProjections assets={assetsByType.Crypto} />
+                    <AthProjections
+                      assets={assetsByType.Crypto}
+                      athImageData={athImageData}
+                    />
                   </TabsContent>
 
                   <TabsContent value='price-projections' className='mt-4'>

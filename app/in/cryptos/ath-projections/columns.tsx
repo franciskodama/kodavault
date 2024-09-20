@@ -23,6 +23,10 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
+    accessorKey: 'image',
+    header: () => <div className={tableHeaderClass}></div>,
+  },
+  {
     accessorKey: 'qty',
     header: () => <div className={tableHeaderClass}>Qty</div>,
   },
@@ -51,13 +55,6 @@ export const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: 'athTotalCurrency',
-    // header: () => (
-    //   <div className={tableHeaderClass}>
-    //     ATH Total
-    //     <span className='text-xs font-medium'>{` (est.)`}</span>
-    //   </div>
-    // ),
-
     header: ({ column }) => {
       return (
         <Button

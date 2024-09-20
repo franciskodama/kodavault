@@ -129,34 +129,6 @@ export function DataTable<TData, TValue>({
     return { isRepeatedAsset, assetName, total, totalQty };
   };
 
-  // -------------------------------
-
-  // function createFilterOptions<T, K extends keyof T>(
-  //   assets: T[],
-  //   key: K
-  // ): Array<{ value: string; label: string }> {
-  //   const uniqueValues = Array.from(new Set(assets.map((asset) => asset[key])));
-
-  //   const options = uniqueValues
-  //     .filter((value): value is NonNullable<T[K]> => value != null)
-  //     .map((value) => ({
-  //       value: String(value),
-  //       label: String(value),
-  //     }));
-
-  //   options.push({
-  //     value: 'No Filter',
-  //     label: 'No Filter',
-  //   });
-
-  //   return options;
-  // }
-
-  // // Usage:
-  // const wallets = createFilterOptions(assets, 'wallet');
-  // const currencies = createFilterOptions(assets, 'currency');
-  // const types = createFilterOptions(assets, 'type');
-  // -------------------------------
   const walletsArray = Array.from(
     new Set(assets.map((asset) => asset?.wallet))
   );

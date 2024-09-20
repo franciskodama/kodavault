@@ -26,18 +26,6 @@ export default async function DashboardPage() {
 
   // ==========================================
 
-  const allTimeHighData = await getAllTimeHighData();
-  const athAssets = allTimeHighData.map(
-    (crypto: { symbol: string; ath: number; image: string }) => ({
-      symbol: crypto.symbol.toUpperCase(),
-      image: crypto.image,
-      ath: crypto.ath,
-    })
-  );
-  console.log('---  🚀 ---> | athAssets:', athAssets);
-
-  // ==========================================
-
   const currencyRates = await getCurrencies();
   const unpricedAssets = await fetchAssetsWithoutPrices(uid ? uid : '');
   const { assets, assetsByType } = await fetchAssetsWithPrices(unpricedAssets);
