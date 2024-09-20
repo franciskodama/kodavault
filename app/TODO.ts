@@ -1,9 +1,10 @@
 // WORKING ON:
-// TODO: Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
 // TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange)
 // TODO: ATH: desconsider (checkbox) Assets that have ATH to high against their current price
-
+// TODO Shortcut styles of the shortcuts
+// TODO: Total after a filter on Assets Page
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
+// TODO: Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
 // TODO: Arrumar reload on Shortcut, etc.. pages
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
 // TODO: After CronJob Fix, return the commented code in the middleware f
