@@ -79,15 +79,14 @@ export function DataTable<TData, TValue>({
           }
           className='max-w-sm w-[14ch]'
         />
-
-        <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
-          <div className='flex items-center gap-2'>
-            <p>Gross Estimation:</p>
-            {`$ `}
-            {thousandFormatter(athTotal)}
-          </div>
-          {athTotalExclusions && (
+        {athTotalExclusions ? (
+          <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
             <>
+              <div className='flex items-center gap-2'>
+                <p>Gross Estimation:</p>
+                {`$ `}
+                {thousandFormatter(athTotal)}
+              </div>
               <p className='mx-6'>|</p>
               <div className='flex items-center gap-2'>
                 <p>Excluded Assets:</p>
@@ -101,8 +100,8 @@ export function DataTable<TData, TValue>({
                 {thousandFormatter(athTotal - athTotalExclusions)}
               </div>
             </>
-          )}
-        </div>
+          </div>
+        ) : null}
       </div>
       <Table>
         <TableHeader>

@@ -15,6 +15,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -152,10 +153,10 @@ export default function AthProjections({
                   )}
                 </CardContent>
               </div>
-              {/* <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
+              <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
                 <h3>Total</h3>
                 {currencyFormatter(athTotal)}
-              </CardFooter> */}
+              </CardFooter>
             </div>
           </Card>
         </div>
