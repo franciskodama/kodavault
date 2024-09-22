@@ -27,17 +27,20 @@ import MessageInTable from '@/components/MessageInTable';
 import Image from 'next/image';
 import { currencyFormatter, thousandFormatter } from '@/lib/utils';
 import { athTotals } from '.';
-interface DataTableProps<TData, TValue> {
+
+type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
   setExclusions: React.Dispatch<React.SetStateAction<string[]>>;
   totals: athTotals;
-}
+  exclusions: string[];
+};
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   setExclusions,
+  exclusions,
   totals,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -159,11 +162,16 @@ export function DataTable<TData, TValue>({
                         width={30}
                         height={30}
                         alt='Logo of the coin'
-                        className='ml-2'
+                        className='ml-2 w-[auto] h-[auto]'
                       />
                     )}
                     {cell.column.id === 'exclusion' && (
                       <Checkbox
+                        checked={
+                          exclusions.includes(row.getValue('asset'))
+                            ? true
+                            : false
+                        }
                         className='mr-8'
                         onCheckedChange={() =>
                           handleCheckbox(row.getValue('asset') as string)

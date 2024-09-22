@@ -7,9 +7,11 @@ export default function AthTable({
   athAssets,
   setExclusions,
   totals,
+  exclusions,
 }: {
   athAssets: AssetReducedWithAth[];
   setExclusions: React.Dispatch<React.SetStateAction<string[]>>;
+  exclusions: string[];
   totals: athTotals;
 }) {
   return (
@@ -19,6 +21,7 @@ export default function AthTable({
           columns={columns}
           data={athAssets}
           setExclusions={setExclusions}
+          exclusions={exclusions}
           totals={totals}
         />
       )}

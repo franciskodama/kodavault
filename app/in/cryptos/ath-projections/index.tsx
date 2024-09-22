@@ -32,22 +32,34 @@ export default function AthProjections({
   assets: Asset[];
   athImageData: athImageData[];
 }) {
-  const [exclusions, setExclusions] = useState<string[]>([]);
+  const [exclusions, setExclusions] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const localData = localStorage.getItem('cryptos-ath-exclusions');
+      return localData ? JSON.parse(localData) : [];
+    }
+    return [];
+  });
 
   useEffect(() => {
-    const exclusionsFromLocalStorage = JSON.parse(
-      localStorage.getItem('cryptos-ath-exclusions') || '[]'
-    );
-    console.log(
-      '---  🚀 ---> | exclusionsFromLocalStorage:',
-      exclusionsFromLocalStorage
-    );
-    // setExclusions(exclusionsFromLocalStorage);
-    // console.log('---  🚀 ---> | exclusions:', exclusions);
+    try {
+      const localData = JSON.parse(
+        localStorage.getItem('cryptos-ath-exclusions') || '[]'
+      );
+      localData && setExclusions(localData);
+    } catch (error) {
+      console.error('Error loading from localStorage:', error);
+    }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('cryptos-ath-exclusions', JSON.stringify(exclusions));
+    try {
+      localStorage.setItem(
+        'cryptos-ath-exclusions',
+        JSON.stringify(exclusions)
+      );
+    } catch (error) {
+      console.error('Error saving to localStorage:', error);
+    }
   }, [exclusions]);
 
   let cryptoAssetsWithAth: Asset[] = [];
@@ -145,6 +157,7 @@ export default function AthProjections({
                       <AthTable
                         athAssets={sortedAthAssets}
                         setExclusions={setExclusions}
+                        exclusions={exclusions}
                         totals={totals}
                       />
                     </div>
