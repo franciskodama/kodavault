@@ -1,12 +1,12 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 import {
   currencyFormatter,
   numberFormatter,
   numberFormatterNoDecimals,
 } from '../../../../lib/utils';
-import AthTable from './ath-table';
-import { athImageData } from '../cryptos';
-import { Loading } from '../../../../components/Loading';
-import { Asset, AssetReducedWithAth } from '../../../../lib/types';
 import {
   Card,
   CardContent,
@@ -15,6 +15,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import AthTable from './ath-table';
+import { athImageData } from '../cryptos';
+import { Loading } from '../../../../components/Loading';
+import { Asset, AssetReducedWithAth } from '../../../../lib/types';
+
+export type athTotals = {
+  athTotal: number;
+  athTotalExclusions: number;
+};
 
 export default function AthProjections({
   assets,
@@ -23,6 +32,36 @@ export default function AthProjections({
   assets: Asset[];
   athImageData: athImageData[];
 }) {
+  const [exclusions, setExclusions] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const localData = localStorage.getItem('cryptos-ath-exclusions');
+      return localData ? JSON.parse(localData) : [];
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    try {
+      const localData = JSON.parse(
+        localStorage.getItem('cryptos-ath-exclusions') || '[]'
+      );
+      localData && setExclusions(localData);
+    } catch (error) {
+      console.error('Error loading from localStorage:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        'cryptos-ath-exclusions',
+        JSON.stringify(exclusions)
+      );
+    } catch (error) {
+      console.error('Error saving to localStorage:', error);
+    }
+  }, [exclusions]);
+
   let cryptoAssetsWithAth: Asset[] = [];
   let sumQtyOfSameAssets: Asset[] = [];
   let athAssets: AssetReducedWithAth[] = [];
@@ -55,11 +94,9 @@ export default function AthProjections({
   }, []);
 
   athAssets = sumQtyOfSameAssets.map((item: any) => {
-    // --------------------------------------------------
-    // TODO: If Asset has 0 total value, make the code more resilient so it doesn't crash
-    // --------------------------------------------------
     return {
       asset: item.asset,
+      image: item.image,
       price: currencyFormatter(item.price),
       qty: numberFormatter.format(item.qty),
       currentTotal: currencyFormatter(item.qty * item.price),
@@ -70,7 +107,6 @@ export default function AthProjections({
       percentagePotential: numberFormatterNoDecimals.format(
         ((item.ath - item.price) / item.price) * 100
       ),
-      image: item.image,
     };
   });
 
@@ -80,13 +116,24 @@ export default function AthProjections({
     }
   );
 
-  const athTotal = sortedAthAssets.reduce(
-    (sum: number, item: AssetReducedWithAth) => {
+  const getTotal = (assets: AssetReducedWithAth[]) => {
+    return assets.reduce((sum: number, item: AssetReducedWithAth) => {
       const currentAthTotalNumber = Number(item.athTotalNumber);
       return sum + currentAthTotalNumber;
-    },
-    0
-  );
+    }, 0);
+  };
+
+  const exclusionsAssets = sortedAthAssets.filter((item: any) => {
+    return exclusions.includes(item.asset);
+  });
+
+  const athTotal = getTotal(sortedAthAssets);
+  const athTotalExclusions = getTotal(exclusionsAssets);
+
+  const totals: athTotals = {
+    athTotal,
+    athTotalExclusions,
+  };
 
   return (
     <>
@@ -105,9 +152,14 @@ export default function AthProjections({
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {athAssets.length > 0 ? (
+                  {sortedAthAssets.length > 0 ? (
                     <div>
-                      <AthTable athAssets={athAssets} />
+                      <AthTable
+                        athAssets={sortedAthAssets}
+                        setExclusions={setExclusions}
+                        exclusions={exclusions}
+                        totals={totals}
+                      />
                     </div>
                   ) : (
                     <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>

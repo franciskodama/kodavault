@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 import {
   ColumnDef,
@@ -12,7 +13,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { Input } from '@/components/ui/input';
+
 import {
   Table,
   TableBody,
@@ -21,20 +22,30 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-
+import { athTotals } from '.';
+import { Input } from '@/components/ui/input';
+import { thousandFormatter } from '@/lib/utils';
+import { Checkbox } from '@/components/ui/checkbox';
 import MessageInTable from '@/components/MessageInTable';
-import Image from 'next/image';
-interface DataTableProps<TData, TValue> {
+
+type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
-}
+  setExclusions: React.Dispatch<React.SetStateAction<string[]>>;
+  totals: athTotals;
+  exclusions: string[];
+};
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  setExclusions,
+  exclusions,
+  totals,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const { athTotal, athTotalExclusions } = totals;
 
   const table = useReactTable({
     data,
@@ -50,9 +61,19 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  const handleCheckbox = (asset: string) => {
+    setExclusions((prev) => {
+      if (prev.includes(asset)) {
+        return prev.filter((item) => item !== asset);
+      } else {
+        return [...prev, asset];
+      }
+    });
+  };
+
   return (
     <div className='rounded-sm border border-slate-200'>
-      <div className='flex items-center px-12 py-4 mt-4'>
+      <div className='flex items-center justify-between px-12 py-4 mt-4'>
         <Input
           placeholder='Filter by Asset'
           value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
@@ -61,6 +82,29 @@ export function DataTable<TData, TValue>({
           }
           className='max-w-sm w-[14ch]'
         />
+        {athTotalExclusions ? (
+          <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
+            <>
+              <div className='flex items-center gap-2'>
+                <p>Gross Estimation:</p>
+                {`$ `}
+                {thousandFormatter(athTotal)}
+              </div>
+              <p className='mx-6'>|</p>
+              <div className='flex items-center gap-2'>
+                <p>Excluded Assets:</p>
+                {`$ `}
+                {thousandFormatter(athTotalExclusions)}
+              </div>
+              <p className='mx-6'>|</p>
+              <div className='flex items-center gap-2 text-sm font-bold'>
+                <p>Net Estimation:</p>
+                {`$ `}
+                {thousandFormatter(athTotal - athTotalExclusions)}
+              </div>
+            </>
+          </div>
+        ) : null}
       </div>
       <Table>
         <TableHeader>
@@ -119,6 +163,20 @@ export function DataTable<TData, TValue>({
                         height={30}
                         alt='Logo of the coin'
                         className='ml-2'
+                        style={{ width: 'auto', height: 'auto' }}
+                      />
+                    )}
+                    {cell.column.id === 'exclusion' && (
+                      <Checkbox
+                        checked={
+                          exclusions.includes(row.getValue('asset'))
+                            ? true
+                            : false
+                        }
+                        className='mr-8'
+                        onCheckedChange={() =>
+                          handleCheckbox(row.getValue('asset') as string)
+                        }
                       />
                     )}
                   </TableCell>

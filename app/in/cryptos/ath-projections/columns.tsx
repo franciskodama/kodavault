@@ -3,7 +3,7 @@
 import { Asset } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '../../../../components/ui/button';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, XIcon } from 'lucide-react';
 import { tableHeaderClass } from '../../../../lib/classes';
 
 export const columns: ColumnDef<Asset>[] = [
@@ -100,5 +100,9 @@ export const columns: ColumnDef<Asset>[] = [
         </Button>
       );
     },
+  },
+  {
+    accessorKey: 'exclusion',
+    header: () => <div className={tableHeaderClass}></div>,
   },
 ];

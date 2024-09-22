@@ -41,8 +41,10 @@ export default function MessageInTable({
             src={image}
             alt={alt}
             className='object-cover rounded-sm border-primary'
-            objectPosition={objectPosition}
+            priority
             fill
+            sizes='(max-width: 500px) 100vw'
+            style={{ objectPosition: objectPosition }}
           />
         </AspectRatio>
       </div>

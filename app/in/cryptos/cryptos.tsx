@@ -31,7 +31,7 @@ export default function Cryptos({
         </div>
       ) : (
         <div>
-          {assetsByType.Crypto.length > 0 ? (
+          {assetsByType.Crypto ? (
             <>
               <div className='flex w-full gap-2'>
                 <Tabs defaultValue='main' className='w-full'>
