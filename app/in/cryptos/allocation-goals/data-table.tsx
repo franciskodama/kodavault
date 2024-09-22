@@ -118,6 +118,7 @@ export function DataTable<TData, TValue>({
                         height={30}
                         alt='Logo of the coin'
                         className='ml-2'
+                        style={{ width: 'auto', height: 'auto' }}
                       />
                     )}
                   </TableCell>

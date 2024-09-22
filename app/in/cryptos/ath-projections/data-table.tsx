@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 import {
   ColumnDef,
@@ -12,7 +13,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { Input } from '@/components/ui/input';
+
 import {
   Table,
   TableBody,
@@ -21,12 +22,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Checkbox } from '@/components/ui/checkbox';
-
-import MessageInTable from '@/components/MessageInTable';
-import Image from 'next/image';
-import { currencyFormatter, thousandFormatter } from '@/lib/utils';
 import { athTotals } from '.';
+import { Input } from '@/components/ui/input';
+import { thousandFormatter } from '@/lib/utils';
+import { Checkbox } from '@/components/ui/checkbox';
+import MessageInTable from '@/components/MessageInTable';
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
@@ -162,7 +162,8 @@ export function DataTable<TData, TValue>({
                         width={30}
                         height={30}
                         alt='Logo of the coin'
-                        className='ml-2 w-[auto] h-[auto]'
+                        className='ml-2'
+                        style={{ width: 'auto', height: 'auto' }}
                       />
                     )}
                     {cell.column.id === 'exclusion' && (

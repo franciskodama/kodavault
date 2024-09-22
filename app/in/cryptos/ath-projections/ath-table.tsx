@@ -1,7 +1,7 @@
-import { AssetReducedWithAth } from '@/lib/types';
+import { athTotals } from '.';
 import { columns } from './columns';
 import { DataTable } from './data-table';
-import { athTotals } from '.';
+import { AssetReducedWithAth } from '@/lib/types';
 
 export default function AthTable({
   athAssets,

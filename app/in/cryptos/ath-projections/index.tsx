@@ -7,10 +7,6 @@ import {
   numberFormatter,
   numberFormatterNoDecimals,
 } from '../../../../lib/utils';
-import AthTable from './ath-table';
-import { athImageData } from '../cryptos';
-import { Loading } from '../../../../components/Loading';
-import { Asset, AssetReducedWithAth } from '../../../../lib/types';
 import {
   Card,
   CardContent,
@@ -19,6 +15,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import AthTable from './ath-table';
+import { athImageData } from '../cryptos';
+import { Loading } from '../../../../components/Loading';
+import { Asset, AssetReducedWithAth } from '../../../../lib/types';
 
 export type athTotals = {
   athTotal: number;
