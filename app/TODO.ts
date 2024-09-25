@@ -1,5 +1,6 @@
 // WORKING ON:
 // TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange)
+// TODO: CardLongsAndShorts or Page for it?
 // TODO: ATH: desconsider (checkbox) Assets that have ATH to high against their current price
 // TODO Shortcut styles of the shortcuts
 // TODO: Total after a filter on Assets Page

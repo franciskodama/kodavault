@@ -72,6 +72,8 @@ export const getSymbols = (subtype: string) => {
       return 'CAD';
     case 'Cash-BRL':
       return 'BRL';
+    default:
+      return '';
   }
 };
 
