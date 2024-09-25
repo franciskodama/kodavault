@@ -44,7 +44,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import MessageInTable from '@/components/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
-import { cn, thousandAndDecimalFormatter } from '@/lib/utils';
+import {
+  cn,
+  thousandAndDecimalFormatter,
+  thousandFormatter,
+} from '@/lib/utils';
 import { Asset } from '@/lib/types';
 import { Loading } from '@/components/Loading';
 import StocksNoSymbol from './stocks-no-symbol';
@@ -60,6 +64,8 @@ export function DataTable<TData, TValue>({
   data,
   typeFilter,
 }: DataTableProps<TData, TValue>) {
+  // console.log('---  🚀 ---> | typeFilter:', typeFilter);
+  // console.log('---  🚀 ---> | data:', data);
   const { assets, assetsByType, isLoading } = useAssetsContext();
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -187,6 +193,8 @@ export function DataTable<TData, TValue>({
   const stocksNoTotal = assetsByType?.Stock?.filter(
     (asset) => asset?.total === 0
   );
+
+  const totalFiltered = 10000;
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -371,6 +379,18 @@ export function DataTable<TData, TValue>({
               </Command>
             </PopoverContent>
           </Popover>
+
+          {totalFiltered ? (
+            <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
+              <>
+                <div className='flex items-center gap-2 font-semibold'>
+                  <p>Total Filtered:</p>
+                  {`$ `}
+                  {thousandFormatter(totalFiltered)}
+                </div>
+              </>
+            </div>
+          ) : null}
 
           {getRepeatedAssetTotal(
             (table.getColumn('asset')?.getFilterValue() as string) ?? ''
