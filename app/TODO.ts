@@ -1,17 +1,16 @@
 // WORKING ON:
-// TODO: I create a new asset Cash and it was weird (filds for category and did not have Clear Exchange)
-// TODO: CardLongsAndShorts or Page for it?
-// TODO: ATH: desconsider (checkbox) Assets that have ATH to high against their current price
-// TODO Shortcut styles of the shortcuts
 // TODO: Total after a filter on Assets Page
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
+// TODO: After CronJob Fix, return the commented code in the middleware f
+// TODO: Shortcut styles of the shortcuts
 // TODO: Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
 // TODO: Arrumar reload on Shortcut, etc.. pages
+
+// TODO: CardLongsAndShorts or Page for it?
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
-// TODO: After CronJob Fix, return the commented code in the middleware f
-// TODO: BTC Dominance
 
 // NEXT:
+// TODO: BTC Dominance
 // TODO: Assets Forms: If chooses BTC we need to give the right category selected - For all the other coins too, but no hardcode (or api) info we show all the options
 // TODO: When I edit the CAD Cash in Wealthsimple Asset, it does not appear Wealthsimple as an option to choose from
 // TODO: Assets need to accept QETH.U
@@ -71,6 +70,11 @@
 // ----------------------------------------------------------------------------------------------
 
 // DONE =======================================================================================
+// TODO: ATH: desconsider (checkbox) Assets that have ATH to high against their current price
+// TODO: ATH: desconsider checkbox: save it on localStorage
+// TODO: Add Asset: fix empty field for Altcoin after pressed BTC button (for instance)
+// TODO: Add Asset: Cash-CAD doesn't show wealthsimple
+// TODO: I create a new asset Cash and it was weird (fields for category and did not have Clear Exchange)
 // TODO: Logos of coins on Allocation Table and ATH table
 // TODO: Dashboard taking too much time to load
 // TODO: Stock Assets that we don't have data, we need to message user to contact the administrator to include Symbol (Google Finance/Sheet)

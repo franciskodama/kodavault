@@ -1,10 +1,11 @@
 'use client';
 
+import { useUser } from '@clerk/nextjs';
+import { Bomb, MessageCircle, X } from 'lucide-react';
+
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-
 import { Asset } from '@/lib/types';
-import { Bomb, MessageCircle, X } from 'lucide-react';
 
 export default function StocksNoSymbol({
   stocksNoTotal,
@@ -13,6 +14,7 @@ export default function StocksNoSymbol({
   stocksNoTotal: Asset[];
   setOpenNotification: (value: boolean) => void;
 }) {
+  const firstName = useUser().user?.firstName;
   const symbols = stocksNoTotal.map((stock: Asset) => stock?.asset);
 
   const handleClickMessageButton = () => {
@@ -36,6 +38,7 @@ export default function StocksNoSymbol({
       Your users (like me!) thank you! 🙌
       
       Cheers! 🍻
+      ${firstName}
       `);
 
     window.open(
@@ -116,7 +119,7 @@ export default function StocksNoSymbol({
               className='flex items-center border-2 border-primary capitalize'
               onClick={handleClickMessageButton}
             >
-              Ping the Spreadsheet Master!
+              Inform Francis now!
               <MessageCircle className='ml-2' size={24} strokeWidth={1.8} />
             </Button>
           </div>

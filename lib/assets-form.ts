@@ -126,7 +126,7 @@ export const getWallets = (subtype: string) => {
         'Metamask',
       ];
     case 'Cash-CAD':
-      return ['Tangerine', 'Scotiabank', 'Neo'];
+      return ['Tangerine', 'Scotiabank', 'Wealthsimple', 'Neo'];
     case 'Cash-BRL':
       return ['Binance', 'Bybit', 'Nubank', 'Inter', 'Itaú', 'Clear'];
     default:
