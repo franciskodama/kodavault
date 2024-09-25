@@ -15,6 +15,9 @@ import NetWorthChart from './charts/net-worth';
 import MessageInTable from '@/components/MessageInTable';
 import NotificationsPanel from './notifications/notifications-panel';
 import Welcome from './welcome';
+import { CardNextPurchases } from '@/components/CardNextPurchases';
+import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
+import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
 export default function Dashboard({
   currencyRates,
   assets,
@@ -171,6 +174,7 @@ export default function Dashboard({
                 {/* <CardNextPurchases /> */}
                 {/* <CardAssetsOnTheRise /> */}
                 <CardCryptosForTrading assets={assets} />
+                <CardLongsAndShorts assets={assets} />
               </div>
 
               <div className='rounded-sm border shadow-sm mb-2'>
