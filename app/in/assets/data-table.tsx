@@ -49,23 +49,21 @@ import {
   thousandAndDecimalFormatter,
   thousandFormatter,
 } from '@/lib/utils';
-import { Asset } from '@/lib/types';
 import { Loading } from '@/components/Loading';
 import StocksNoSymbol from './stocks-no-symbol';
+import { Asset } from '@/lib/types';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
-  typeFilter?: string;
+  typeFilterAsParam?: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  typeFilter,
+  typeFilterAsParam,
 }: DataTableProps<TData, TValue>) {
-  // console.log('---  🚀 ---> | typeFilter:', typeFilter);
-  // console.log('---  🚀 ---> | data:', data);
   const { assets, assetsByType, isLoading } = useAssetsContext();
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -98,11 +96,11 @@ export function DataTable<TData, TValue>({
   });
 
   useEffect(() => {
-    if (typeFilter) {
-      setValueTypeDropbox(typeFilter);
-      table.getColumn('type')?.setFilterValue(typeFilter);
+    if (typeFilterAsParam) {
+      setValueTypeDropbox(typeFilterAsParam);
+      table.getColumn('type')?.setFilterValue(typeFilterAsParam);
     }
-  }, [typeFilter, table]);
+  }, [typeFilterAsParam, table]);
 
   useEffect(() => {
     if (valueWalletDropbox || valueCurrencyDropbox || valueTypeDropbox) {
@@ -194,7 +192,16 @@ export function DataTable<TData, TValue>({
     (asset) => asset?.total === 0
   );
 
-  const totalFiltered = 10000;
+  const filteredAssets = table
+    .getFilteredRowModel()
+    .rows.map((row) => row.original);
+  console.log('---  🚀 ---> | filteredAssets:', filteredAssets);
+
+  const totalFilteredAssets = filteredAssets
+    .map((item: any) => Number(item.price) * Number(item.qty))
+    .reduce((sum, item) => sum + (item ?? 0), 0);
+  console.log('---  🚀 ---> | totalFilteredAssets:', totalFilteredAssets);
+  // const totalFilteredAssets = 1000;
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -380,13 +387,13 @@ export function DataTable<TData, TValue>({
             </PopoverContent>
           </Popover>
 
-          {totalFiltered ? (
+          {totalFilteredAssets ? (
             <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
               <>
                 <div className='flex items-center gap-2 font-semibold'>
                   <p>Total Filtered:</p>
                   {`$ `}
-                  {thousandFormatter(totalFiltered)}
+                  {/* {thousandFormatter(totalFilteredAssets)} */}
                 </div>
               </>
             </div>
