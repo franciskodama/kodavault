@@ -195,13 +195,15 @@ export function DataTable<TData, TValue>({
   const filteredAssets = table
     .getFilteredRowModel()
     .rows.map((row) => row.original);
-  console.log('---  🚀 ---> | filteredAssets:', filteredAssets);
+  // console.log('---  🚀 ---> | filteredAssets:', filteredAssets);
 
   const totalFilteredAssets = filteredAssets
-    .map((item: any) => Number(item.price) * Number(item.qty))
-    .reduce((sum, item) => sum + (item ?? 0), 0);
-  console.log('---  🚀 ---> | totalFilteredAssets:', totalFilteredAssets);
-  // const totalFilteredAssets = 1000;
+    .map((item: any) => {
+      // Remove commas and convert to number
+      return parseFloat(item.total.replace(/,/g, ''));
+    })
+    .reduce((sum, current) => sum + current, 0);
+  // .reduce((sum, item) => sum + (item ?? 0), 0);
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -387,13 +389,15 @@ export function DataTable<TData, TValue>({
             </PopoverContent>
           </Popover>
 
+          {/* isRepeatedAsset &&  */}
+
           {totalFilteredAssets ? (
             <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
               <>
                 <div className='flex items-center gap-2 font-semibold'>
                   <p>Total Filtered:</p>
                   {`$ `}
-                  {/* {thousandFormatter(totalFilteredAssets)} */}
+                  {thousandFormatter(totalFilteredAssets)}
                 </div>
               </>
             </div>
