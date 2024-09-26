@@ -206,6 +206,8 @@ export function DataTable<TData, TValue>({
     (table.getColumn('asset')?.getFilterValue() as string) ?? ''
   ).isRepeatedAsset;
 
+  const filterIsActive = data.length !== filteredAssets.length;
+
   return (
     <div className='rounded-sm border border-slate-200'>
       <div className='flex justify-between items-center px-8 py-4'>
@@ -390,8 +392,8 @@ export function DataTable<TData, TValue>({
             </PopoverContent>
           </Popover>
 
-          {!areThereRepeatedAssets && totalFilteredAssets ? (
-            <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
+          {!areThereRepeatedAssets && filterIsActive ? (
+            <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 rounded-[2px] text-left'>
               <>
                 <div className='flex items-center gap-2 font-semibold'>
                   <p>Total Filtered:</p>
@@ -403,7 +405,7 @@ export function DataTable<TData, TValue>({
           ) : null}
 
           {areThereRepeatedAssets && (
-            <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
+            <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 border-slate-500 rounded-[2px] text-left'>
               <div className='flex items-center w-full'>
                 <p className='w-[6ch]'>Asset:</p>
                 {getRepeatedAssetTotal(
