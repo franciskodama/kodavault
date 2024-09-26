@@ -1,4 +1,5 @@
 // WORKING ON:
+// TODO: Add Assets: Cash in Exchanges don't need to have the option to choose will be always USD or BRL (it's the only option)
 // TODO: Total after a filter on Assets Page
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: After CronJob Fix, return the commented code in the middleware f
@@ -8,6 +9,8 @@
 
 // TODO: CardLongsAndShorts or Page for it?
 // TODO: Create a Page for the Elliott Waves Cheat Sheet
+
+// TODO: Create a Chrome extension (add and update assets): https://www.luckymedia.dev/blog/how-to-create-a-chrome-extension-with-react-typescript-tailwindcss-and-vite-in-2024 or https://github.com/vercel/next.js/tree/canary/examples/with-chrome-extension
 
 // NEXT:
 // TODO: BTC Dominance

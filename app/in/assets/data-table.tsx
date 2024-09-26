@@ -195,15 +195,16 @@ export function DataTable<TData, TValue>({
   const filteredAssets = table
     .getFilteredRowModel()
     .rows.map((row) => row.original);
-  // console.log('---  🚀 ---> | filteredAssets:', filteredAssets);
 
   const totalFilteredAssets = filteredAssets
     .map((item: any) => {
-      // Remove commas and convert to number
       return parseFloat(item.total.replace(/,/g, ''));
     })
     .reduce((sum, current) => sum + current, 0);
-  // .reduce((sum, item) => sum + (item ?? 0), 0);
+
+  const areThereRepeatedAssets = getRepeatedAssetTotal(
+    (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+  ).isRepeatedAsset;
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -389,9 +390,7 @@ export function DataTable<TData, TValue>({
             </PopoverContent>
           </Popover>
 
-          {/* isRepeatedAsset &&  */}
-
-          {totalFilteredAssets ? (
+          {!areThereRepeatedAssets && totalFilteredAssets ? (
             <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
               <>
                 <div className='flex items-center gap-2 font-semibold'>
@@ -403,9 +402,7 @@ export function DataTable<TData, TValue>({
             </div>
           ) : null}
 
-          {getRepeatedAssetTotal(
-            (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-          ).isRepeatedAsset && (
+          {areThereRepeatedAssets && (
             <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
               <div className='flex items-center w-full'>
                 <p className='w-[6ch]'>Asset:</p>
