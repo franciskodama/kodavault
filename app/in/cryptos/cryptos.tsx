@@ -41,9 +41,9 @@ export default function Cryptos({
                       Allocation Goals
                     </TabsTrigger>
                     <TabsTrigger value='ath'>ATH Estimation</TabsTrigger>
-                    <TabsTrigger value='price-projections'>
+                    {/* <TabsTrigger value='price-projections'>
                       Price Projections
-                    </TabsTrigger>
+                    </TabsTrigger> */}
                   </TabsList>
 
                   <TabsContent value='main' className='flex gap-2 mt-4'>
@@ -68,9 +68,9 @@ export default function Cryptos({
                     />
                   </TabsContent>
 
-                  <TabsContent value='price-projections' className='mt-4'>
+                  {/* <TabsContent value='price-projections' className='mt-4'>
                     <PriceProjections assets={assetsByType.Crypto} />
-                  </TabsContent>
+                  </TabsContent> */}
                 </Tabs>
               </div>
             </>

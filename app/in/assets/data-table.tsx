@@ -44,21 +44,30 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import MessageInTable from '@/components/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
-import { cn, thousandAndDecimalFormatter } from '@/lib/utils';
-import { Asset } from '@/lib/types';
+import {
+  cn,
+  thousandAndDecimalFormatter,
+  thousandFormatter,
+} from '@/lib/utils';
 import { Loading } from '@/components/Loading';
 import StocksNoSymbol from './stocks-no-symbol';
+import { Asset } from '@/lib/types';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
-  typeFilter?: string;
+  typeFilterAsParam?: string;
 }
+
+type OptionType = {
+  value: string;
+  label: string;
+};
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  typeFilter,
+  typeFilterAsParam,
 }: DataTableProps<TData, TValue>) {
   const { assets, assetsByType, isLoading } = useAssetsContext();
 
@@ -92,11 +101,11 @@ export function DataTable<TData, TValue>({
   });
 
   useEffect(() => {
-    if (typeFilter) {
-      setValueTypeDropbox(typeFilter);
-      table.getColumn('type')?.setFilterValue(typeFilter);
+    if (typeFilterAsParam) {
+      setValueTypeDropbox(typeFilterAsParam);
+      table.getColumn('type')?.setFilterValue(typeFilterAsParam);
     }
-  }, [typeFilter, table]);
+  }, [typeFilterAsParam, table]);
 
   useEffect(() => {
     if (valueWalletDropbox || valueCurrencyDropbox || valueTypeDropbox) {
@@ -133,47 +142,70 @@ export function DataTable<TData, TValue>({
     new Set(assets.map((asset) => asset?.wallet))
   );
 
-  const wallets = walletsArray
-    .filter((wallet): wallet is string => wallet !== undefined)
-    .map((wallet) => ({
-      value: wallet,
-      label: wallet,
-    }));
+  // const wallets = walletsArray
+  //   .filter((wallet): wallet is string => wallet !== undefined)
+  //   .map((wallet) => ({
+  //     value: wallet,
+  //     label: wallet,
+  //   }));
 
-  wallets.push({
-    value: 'No Filter',
-    label: 'No Filter',
-  });
+  // wallets.push({
+  //   value: 'No Filter',
+  //   label: 'No Filter',
+  // });
 
   const currencyArray = Array.from(
     new Set(assets.map((asset) => asset?.currency))
   );
 
-  const currencies = currencyArray
-    .filter((currency): currency is string => currency !== undefined)
-    .map((currency) => ({
-      value: currency,
-      label: currency,
-    }));
+  // const currencies = currencyArray
+  //   .filter((currency): currency is string => currency !== undefined)
+  //   .map((currency) => ({
+  //     value: currency,
+  //     label: currency,
+  //   }));
 
-  currencies.push({
-    value: 'No Filter',
-    label: 'No Filter',
-  });
+  // currencies.push({
+  //   value: 'No Filter',
+  //   label: 'No Filter',
+  // });
 
   const typeArray = Array.from(new Set(assets.map((asset) => asset?.type)));
 
-  const types = typeArray
-    .filter((type): type is string => type !== undefined)
-    .map((type) => ({
-      value: type,
-      label: type,
-    }));
+  // const types = typeArray
+  //   .filter((type): type is string => type !== undefined)
+  //   .map((type) => ({
+  //     value: type,
+  //     label: type,
+  //   }));
 
-  types.push({
-    value: 'No Filter',
-    label: 'No Filter',
-  });
+  // types.push({
+  //   value: 'No Filter',
+  //   label: 'No Filter',
+  // });
+
+  const convertArrayToOptions = <T extends string | undefined>(
+    array: T[]
+  ): OptionType[] => {
+    const options: OptionType[] = array
+      .filter((item): item is NonNullable<T> => item !== undefined)
+      .map((item) => ({
+        value: item,
+        label: item,
+      }));
+
+    options.push({
+      value: 'No Filter',
+      label: 'No Filter',
+    });
+
+    return options;
+  };
+
+  // Usage examples:
+  const wallets = convertArrayToOptions(walletsArray);
+  const currencies = convertArrayToOptions(currencyArray);
+  const types = convertArrayToOptions(typeArray);
 
   const handleClickClearAll = () => {
     setValueWalletDropbox('');
@@ -188,6 +220,23 @@ export function DataTable<TData, TValue>({
     (asset) => asset?.total === 0
   );
 
+  const filteredAssets = table
+    .getFilteredRowModel()
+    .rows.map((row) => row.original);
+
+  const totalFilteredAssets = filteredAssets
+    .map((item: any) => {
+      return parseFloat(item.total.replace(/,/g, ''));
+    })
+    .reduce((sum, current) => sum + current, 0);
+
+  const areThereRepeatedAssets = getRepeatedAssetTotal(
+    (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+  ).isRepeatedAsset;
+
+  const filterIsActive = data.length !== filteredAssets.length;
+  const inputFilterValue = table.getColumn('asset')?.getFilterValue() as string;
+
   return (
     <div className='rounded-sm border border-slate-200'>
       <div className='flex justify-between items-center px-8 py-4'>
@@ -195,8 +244,8 @@ export function DataTable<TData, TValue>({
           <Input
             placeholder='Filter by Asset'
             value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
-            onChange={(event) => {
-              table.getColumn('asset')?.setFilterValue(event.target.value);
+            onChange={(e) => {
+              table.getColumn('asset')?.setFilterValue(e.target.value);
               setClearFilterButton(true);
             }}
             className='max-w-sm w-[20ch]'
@@ -372,10 +421,20 @@ export function DataTable<TData, TValue>({
             </PopoverContent>
           </Popover>
 
-          {getRepeatedAssetTotal(
-            (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-          ).isRepeatedAsset && (
-            <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
+          {!areThereRepeatedAssets && filterIsActive ? (
+            <div className='flex items-center h-10 font-normal ml-4 px-4 border-2  bg-accent rounded-[2px] text-left'>
+              <>
+                <div className='flex items-center gap-2 font-semibold'>
+                  <p>Total Filtered:</p>
+                  {`$ `}
+                  {thousandFormatter(totalFilteredAssets)}
+                </div>
+              </>
+            </div>
+          ) : null}
+
+          {areThereRepeatedAssets && (
+            <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 bg-accent rounded-[2px] text-left'>
               <div className='flex items-center w-full'>
                 <p className='w-[6ch]'>Asset:</p>
                 {getRepeatedAssetTotal(
@@ -509,17 +568,27 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      className='text-right text-xs text-slate-600 font-light'
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    const assetValue = (row.original as { asset: string })
+                      .asset;
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className={`text-right text-xs text-slate-600 font-light ${
+                          inputFilterValue &&
+                          inputFilterValue.toLowerCase() ===
+                            assetValue.toLowerCase()
+                            ? 'bg-accent'
+                            : null
+                        }`}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))
             ) : (

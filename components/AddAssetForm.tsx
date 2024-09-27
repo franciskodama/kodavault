@@ -85,6 +85,18 @@ export function AddAssetForm() {
   }, [assetSymbol, setValue]);
 
   useEffect(() => {
+    if (assetSubtype) {
+      if (
+        ['Altcoin', 'Stock-USD', 'Stock-BRL', 'Stock-CAD'].includes(
+          assetSubtype
+        )
+      ) {
+        setValue('asset', '');
+      }
+    }
+  }, [assetSubtype, setValue]);
+
+  useEffect(() => {
     if (assetCurrency.length === 1) {
       setValue('currency', assetCurrency[0]);
     }

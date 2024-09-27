@@ -5,11 +5,11 @@ type PageProps = {
 };
 
 export default function AssetsPage({ searchParams }: PageProps) {
-  const typeFilter = searchParams.type || null;
+  const typeFilterAsParam = searchParams.type || null;
 
   return (
-    <div className='mx-auto'>
-      <Assets typeFilter={typeFilter ? typeFilter : ''} />
+    <div className='mx-auto bg-white'>
+      <Assets typeFilterAsParam={typeFilterAsParam ? typeFilterAsParam : ''} />
     </div>
   );
 }

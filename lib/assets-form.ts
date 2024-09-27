@@ -72,6 +72,8 @@ export const getSymbols = (subtype: string) => {
       return 'CAD';
     case 'Cash-BRL':
       return 'BRL';
+    default:
+      return '';
   }
 };
 
@@ -82,6 +84,7 @@ export const getWallets = (subtype: string) => {
         'Binance',
         'Bybit',
         'Gate.io',
+        'BloFin',
         'Crypto',
         'Ledger',
         'Trezor',
@@ -92,6 +95,7 @@ export const getWallets = (subtype: string) => {
         'Binance',
         'Bybit',
         'Gate.io',
+        'BloFin',
         'Crypto',
         'Ledger',
         'Trezor',
@@ -102,6 +106,7 @@ export const getWallets = (subtype: string) => {
         'Binance',
         'Bybit',
         'Gate.io',
+        'BloFin',
         'Crypto',
         'Ledger',
         'Trezor',
@@ -118,13 +123,14 @@ export const getWallets = (subtype: string) => {
         'Binance',
         'Bybit',
         'Gate.io',
+        'BloFin',
         'Crypto',
         'Ledger',
         'Trezor',
         'Metamask',
       ];
     case 'Cash-CAD':
-      return ['Tangerine', 'Scotiabank', 'Neo'];
+      return ['Tangerine', 'Scotiabank', 'Wealthsimple', 'Neo'];
     case 'Cash-BRL':
       return ['Binance', 'Bybit', 'Nubank', 'Inter', 'Itaú', 'Clear'];
     default:
@@ -132,6 +138,7 @@ export const getWallets = (subtype: string) => {
         'Binance',
         'Bybit',
         'Gate.io',
+        'BloFin',
         'Crypto',
         'Wealthsimple',
         'Ledger',
