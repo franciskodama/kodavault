@@ -422,7 +422,7 @@ export function DataTable<TData, TValue>({
           </Popover>
 
           {!areThereRepeatedAssets && filterIsActive ? (
-            <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 rounded-[2px] text-left'>
+            <div className='flex items-center h-10 font-normal ml-4 px-4 border-2  bg-accent rounded-[2px] text-left'>
               <>
                 <div className='flex items-center gap-2 font-semibold'>
                   <p>Total Filtered:</p>
