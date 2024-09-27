@@ -1,4 +1,5 @@
 // WORKING ON:
+// TODO: Altcoin Add Asset: after click on Category it has been activating the database
 // TODO: CronJob: https://console.cron-job.org/jobs/5201103
 // TODO: After CronJob Fix, return the commented code in the middleware f
 // TODO: Shortcut styles of the shortcuts
