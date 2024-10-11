@@ -216,7 +216,7 @@ export default function Dashboard({
                   initial-currency='usd'
                 ></gecko-coin-price-marquee-widget>
               </div> */}
-              {uid === 'marianazorzo@gmail.com' && (
+              {uid === process.env.NEXT_PUBLIC_HER_UID && (
                 <div className='rounded-sm border shadow-sm mb-2'>
                   <div className='flex justify-between pl-4 pr-4 mt-6'>
                     <span className='font-semibold text-xl'>
