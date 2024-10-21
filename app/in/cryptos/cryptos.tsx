@@ -31,7 +31,7 @@ export default function Cryptos({
         </div>
       ) : (
         <div>
-          {assetsByType.Crypto ? (
+          {assetsByType.Crypto && (
             <>
               <div className='flex w-full gap-2'>
                 <Tabs defaultValue='main' className='w-full'>
@@ -58,7 +58,7 @@ export default function Cryptos({
                       assets={assetsByType.Crypto}
                       athImageData={athImageData}
                     />
-                    <CardNextPurchases />
+                    {/* <CardNextPurchases /> */}
                   </TabsContent>
 
                   <TabsContent value='ath' className='mt-4'>
@@ -67,30 +67,11 @@ export default function Cryptos({
                       athImageData={athImageData}
                     />
                   </TabsContent>
-
                   {/* <TabsContent value='price-projections' className='mt-4'>
                     <PriceProjections assets={assetsByType.Crypto} />
                   </TabsContent> */}
                 </Tabs>
               </div>
-            </>
-          ) : (
-            <>
-              <MessageInTable
-                image={'/looking-weird.webp'}
-                objectPosition={'50% 5%'}
-                alt={'I am broke'}
-                title={'Hey, the blockchain’s waiting for you!'}
-                subtitle={
-                  'Start stacking those coins and get ready to explore the crypto universe! To the moon! 🚀'
-                }
-                buttonCopy={'Add a Crypto Asset'}
-                hasNoButton={false}
-                formTitle={'Add a new Asset'}
-                formSubtitle={
-                  'Add a New Asset and expand your investment portfolio.'
-                }
-              />
             </>
           )}
         </div>

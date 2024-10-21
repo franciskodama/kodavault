@@ -208,28 +208,6 @@ export const getCategoryBySymbol = (symbolTyped: string) => {
   return altcoin ? altcoin.category : 'Unknown';
 };
 
-// AI
-// Data
-// DeFi
-// Exchange
-// Gaming
-// Identity
-// Infrastructure
-// Interoperability
-// Media
-// Meme
-// NFT
-// Oracles
-// Privacy
-// RWA
-// Sports
-// Stablecoins
-// Smartcontract
-// Supplychain
-// Safeheaven
-// Unknown
-// None
-
 export const altcoinsCategories = [
   { symbol: 'AGIX', category: 'AI' },
   { symbol: 'FET', category: 'AI' },

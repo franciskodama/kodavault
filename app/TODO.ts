@@ -1,6 +1,4 @@
 // TODO: WORKING ON:
-// Add Disable the other fields if the type was not chosen
-// Change Clear Exchange to 'ClearXP'
 
 // Altcoin Add Asset: after click on Category it has been activating the database
 // CronJob: https://console.cron-job.org/jobs/5201103
@@ -75,6 +73,9 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Add Disable the other fields if the type was not chosen
+// Change Clear Exchange to 'ClearXP'
+// No assets found --> Message Box
 // Scroll on Sheet
 // Total after a filter on Assets Page
 // ATH: desconsider (checkbox) Assets that have ATH to high against their current price
