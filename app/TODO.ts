@@ -1,5 +1,6 @@
 // TODO: WORKING ON:
 // Add Disable the other fields if the type was not chosen
+// Change Clear Exchange to 'ClearXP'
 
 // Altcoin Add Asset: after click on Category it has been activating the database
 // CronJob: https://console.cron-job.org/jobs/5201103
