@@ -97,7 +97,7 @@ export function ShortcutInteractions({
                                 <SheetTrigger className='ml-4 hover:text-base w-12 bg-white border border-slate-300 rounded-[2px] '>
                                   ✏️
                                 </SheetTrigger>
-                                <SheetContent>
+                                <SheetContent className='max-h-screen overflow-y-scroll'>
                                   <SheetHeader>
                                     <SheetTitle>Update Shortcut</SheetTitle>
                                     <SheetDescription>

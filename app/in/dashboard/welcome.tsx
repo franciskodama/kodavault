@@ -47,7 +47,7 @@ export default function Welcome({ userName }: { userName: string }) {
             <SheetTrigger className='border-2 border-slate-500 h-10 px-4 rounded-[2px] font-semibold my-4 text-sm capitalize'>
               Add your first asset
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className='max-h-screen overflow-y-scroll'>
               <SheetHeader>
                 <SheetTitle>formTitle</SheetTitle>
                 <SheetDescription>formSubtitle</SheetDescription>

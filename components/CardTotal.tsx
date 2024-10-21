@@ -103,7 +103,7 @@ export const CardTotal = ({
                   Add an Asset +
                   <span className='ml-1 capitalize'>{customKey}</span>
                 </SheetTrigger>
-                <SheetContent>
+                <SheetContent className='max-h-screen overflow-y-scroll'>
                   <SheetHeader>
                     <SheetTitle>Add a new Asset</SheetTitle>
                     <SheetDescription>

@@ -92,13 +92,14 @@ export default function NavMenu() {
             <SheetTrigger className='ml-12 border-2 border-slate-500 h-8 px-4 rounded-[2px] font-medium'>
               + Asset
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className='max-h-screen overflow-y-scroll'>
               <SheetHeader>
                 <SheetTitle>Add a new Asset</SheetTitle>
                 <SheetDescription>
                   Add a New Asset and expand your investment portfolio.
                 </SheetDescription>
               </SheetHeader>
+
               <AddAssetForm />
             </SheetContent>
           </Sheet>

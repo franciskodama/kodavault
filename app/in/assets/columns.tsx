@@ -271,7 +271,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
             <SheetTrigger className='ml-4 hover:text-base w-8 bg-white border border-slate-300 rounded-[2px] '>
               ✏️
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className='max-h-screen overflow-y-scroll'>
               <SheetHeader>
                 <SheetTitle>Update Asset</SheetTitle>
                 <SheetDescription>
