@@ -4,11 +4,10 @@ import { useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
+import { Asset, Inputs } from '@/lib/types';
 import { updateAsset } from '@/lib/actions';
 import { Button } from './ui/button';
-import { Asset, Inputs } from '@/lib/types';
 import { SheetClose } from './ui/sheet';
-
 import { useToast } from './ui/use-toast';
 
 import {
@@ -22,6 +21,14 @@ import {
 } from '@/lib/assets-form';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { CustomRadioWithTooltip } from './CustomRadioWithTooltip';
+import {
+  classDiv,
+  classError,
+  classInput,
+  classLabelRadio,
+  classTitle,
+  classUl,
+} from '@/lib/classes';
 
 export function UpdateAssetForm({ asset }: { asset: Asset }) {
   const { refreshAssets } = useAssetsContext();
@@ -62,15 +69,6 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
   const assetCurrency: string[] = getCurrencies(assetSubtype);
   const assetAccount = getAccounts(assetSubtype);
   // const assetExchange = getExchanges(assetSubtype);
-
-  const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-2';
-  const classDiv = 'my-4';
-  const classUl = 'flex flex-wrap gap-2';
-  const classTitle = 'font-bold mb-2';
-  const classError =
-    'px-4 py-1 text-white bg-red-500 font-semibold border border-white';
-  const classLabelRadio =
-    'inline-flex items-center justify-center py-1 w-[8em] h-[2.5em] border-2 rounded-[2px] cursor-pointer text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100';
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
     if (!uid) {
@@ -271,7 +269,6 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
           )}
 
           {/* 
-          
           We don't need this for now (until we don't pay for an API to get the data
           Today we get in from Google Sheet - Google Finance formula)
 

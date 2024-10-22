@@ -58,7 +58,6 @@ export default function Cryptos({
                       assets={assetsByType.Crypto}
                       athImageData={athImageData}
                     />
-                    {/* <CardNextPurchases /> */}
                   </TabsContent>
 
                   <TabsContent value='ath' className='mt-4'>

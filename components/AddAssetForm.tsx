@@ -4,11 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { addAsset } from '@/lib/actions';
-import { Button } from './ui/button';
 import { Inputs } from '@/lib/types';
+import { Button } from './ui/button';
 import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
+import { addAsset } from '@/lib/actions';
+import { category_enum_6c7fcd47 } from '@prisma/client';
 
 import {
   altcoinsCategories,
@@ -27,9 +28,15 @@ import {
   subtypeOptions,
 } from '@/lib/assets-form';
 import { useAssetsContext } from '@/context/AssetsContext';
-import { category_enum_6c7fcd47 } from '@prisma/client';
-import { classError } from '@/lib/classes';
 import { CustomRadioWithTooltip } from './CustomRadioWithTooltip';
+import {
+  classDiv,
+  classError,
+  classInput,
+  classLabelRadio,
+  classTitle,
+  classUl,
+} from '@/lib/classes';
 
 export function AddAssetForm() {
   const { refreshAssets } = useAssetsContext();
@@ -57,14 +64,7 @@ export function AddAssetForm() {
   const assetCategory = getCategories(assetSubtype);
   const assetCurrency: string[] = getCurrencies(assetSubtype);
   const assetAccount = getAccounts(assetSubtype);
-  const assetExchange = getExchanges(assetSubtype);
-
-  const classInput = 'border border-slate-200 h-10 p-2 rounded-xs w-full mt-2';
-  const classDiv = 'my-4';
-  const classUl = 'flex flex-wrap gap-2';
-  const classTitle = 'font-bold mb-2';
-  const classLabelRadio =
-    'inline-flex items-center justify-center py-1 w-[8em] h-[2.5em] border-2 rounded-[2px] cursor-pointer text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100';
+  // const assetExchange = getExchanges(assetSubtype);
 
   useEffect(() => {
     setValue('type', assetType ? assetType : '');
@@ -103,11 +103,11 @@ export function AddAssetForm() {
     }
   }, [assetAccount, setValue]);
 
-  useEffect(() => {
-    if (assetExchange.length === 1) {
-      setValue('exchange', assetExchange[0]);
-    }
-  }, [assetExchange, setValue]);
+  // useEffect(() => {
+  //   if (assetExchange.length === 1) {
+  //     setValue('exchange', assetExchange[0]);
+  //   }
+  // }, [assetExchange, setValue]);
 
   useEffect(() => {
     if (altcoinsCategories.find((coin) => coin.symbol === symbolTyped)) {
