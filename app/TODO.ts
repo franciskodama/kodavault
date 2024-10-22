@@ -1,5 +1,6 @@
 // TODO: WORKING ON:
 // Responsivity
+// Check if we can delete the classes in Add Asset and Update Asset and use the import from './lib/classes'
 // Altcoin Add Asset: after click on Category it has been activating the database
 // CronJob: https://console.cron-job.org/jobs/5201103
 // After CronJob Fix, return the commented code in the middleware f

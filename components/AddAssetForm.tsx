@@ -34,6 +34,8 @@ import {
   Tooltip,
 } from './ui/tooltip';
 import { category_enum_6c7fcd47 } from '@prisma/client';
+import { classError } from '@/lib/classes';
+import CustomRadioWithTooltip from './CustomRadioWithTooltip';
 
 export function AddAssetForm() {
   const { refreshAssets } = useAssetsContext();
@@ -67,7 +69,6 @@ export function AddAssetForm() {
   const classDiv = 'my-4';
   const classUl = 'flex flex-wrap gap-2';
   const classTitle = 'font-bold mb-2';
-  const classError = 'text-red-500 font-bold my-2';
   const classLabelRadio =
     'inline-flex items-center justify-center py-1 w-[8em] h-[2.5em] border-2 rounded-[2px] cursor-pointer text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100';
 
@@ -233,31 +234,15 @@ export function AddAssetForm() {
                 <ul className={classUl}>
                   {categoryOptions.map((categoryOption) => (
                     <li key={categoryOption}>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <input
-                              className='hidden peer'
-                              type='radio'
-                              value={categoryOption}
-                              id={categoryOption}
-                              {...register('category')}
-                            />
-
-                            <label
-                              className={classLabelRadio}
-                              htmlFor={categoryOption}
-                            >
-                              <span>{categoryOption}</span>
-                            </label>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className='text-xs w-[20ch]'>
-                              {getCategoryTooltip(categoryOption)}
-                            </p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <li key={categoryOption}>
+                        <CustomRadioWithTooltip
+                          value={categoryOption}
+                          id={categoryOption}
+                          register={register('category')}
+                          tooltipContent={getCategoryTooltip(categoryOption)}
+                          labelClassName={classLabelRadio}
+                        />
+                      </li>
                     </li>
                   ))}
                 </ul>

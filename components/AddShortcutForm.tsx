@@ -23,6 +23,7 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { allCategories, allColors, getColor } from '@/app/in/shortcut/shortcut';
 import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
+import { classError } from '@/lib/classes';
 
 type comboOptions = {
   label: string;
@@ -51,7 +52,6 @@ export function AddShortcutForm() {
 
   const classLi = 'flex flex-col';
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs';
-  const classError = 'text-red-500 font-bold my-2 ml-2';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
     if (!uid) {

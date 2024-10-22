@@ -24,7 +24,7 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
         />
       ) : (
         <MessageInTable
-          image={'/biden.webp'}
+          image={'/dylan-severance.webp'}
           objectPosition={'50% 10%'}
           alt={'Superman looking something'}
           title={'🤷🏻‍♂️ No shortcuts saved yet!'}
