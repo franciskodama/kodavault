@@ -169,17 +169,14 @@ export default function NetWorthChart({
                       </p>
                     </div>
                   </div>
-                  <div className='w-1/2'>
-                    <Image
-                      src='/patience.webp'
-                      width={500}
-                      height={100}
-                      alt='Lecter Hannibal telling to wait'
-                      className='rounded-md'
-                      objectFit='contain'
-                      // objectPosition='10% 50%'
-                    />
-                  </div>
+                  <Image
+                    src='/patience.webp'
+                    width={500}
+                    height={100}
+                    alt='Lecter Hannibal telling to wait'
+                    className='rounded-md'
+                    objectFit='cover'
+                  />
                 </div>
               )}
             </CardContent>

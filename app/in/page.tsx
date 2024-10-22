@@ -11,6 +11,7 @@ import {
   getAllTimeHighData,
   getGlobalData,
 } from '@/lib/crypto.server';
+import { fetchBtcPrice } from '@/context/signals';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -30,9 +31,8 @@ export default async function DashboardPage() {
   const unpricedAssets = await fetchAssetsWithoutPrices(uid ? uid : '');
   const { assets, assetsByType } = await fetchAssetsWithPrices(unpricedAssets);
 
-  const btcPrice = Number(
-    assetsByType.Crypto.find((item: any) => item.asset === 'BTC')?.price
-  );
+  const fechedBtcPrice = await fetchQuotesForCryptos('BTC');
+  const btcPrice = fechedBtcPrice.data.BTC[0].quote.USD.price;
 
   const netWorthChartData = await getNetWorthEvolution(uid ? uid : '');
   const goal = await getGoal(uid ? uid : '');

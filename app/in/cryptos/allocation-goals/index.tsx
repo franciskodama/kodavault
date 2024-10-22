@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { v4 } from 'uuid';
 import { useUser } from '@clerk/nextjs';
 
-import { Asset, CryptoGoals } from '../../../../lib/types';
 import { DataTable } from './data-table';
+import { Asset, CryptoGoals } from '../../../../lib/types';
 import {
   getTotalByKey,
   numberFormatter,
@@ -12,9 +12,10 @@ import {
   thousandFormatter,
 } from '../../../../lib/utils';
 import { columns } from './columns';
+import { athImageData } from '../cryptos';
 import { getCryptoGoals } from '@/lib/actions';
 import { Loading } from '../../../../components/Loading';
-import { athImageData } from '../cryptos';
+import MessageInTable from '@/components/MessageInTable';
 
 export type MergedArrayItem = {
   id: string;
@@ -171,21 +172,25 @@ export default function AllocationGoals({
     uid,
   });
 
-  if (!sumGoals) {
-    return (
-      <div className='flex justify-center items-center w-full h-32'>
-        <Loading />;
-      </div>
-    );
-  }
-
   return (
-    <>
-      {sumGoals && (
-        <div className='w-full'>
-          <DataTable columns={columns} data={dataTable} sumGoals={sumGoals} />
-        </div>
+    <div className='flex flex-col w-full gap-2'>
+      {assets.length > 0 ? (
+        <DataTable columns={columns} data={dataTable} sumGoals={sumGoals} />
+      ) : (
+        <MessageInTable
+          image={'/looking-weird.webp'}
+          objectPosition={'50% 5%'}
+          alt={'I am broke'}
+          title={'Hey, the blockchain’s waiting for you!'}
+          subtitle={
+            'Start stacking those coins and get ready to explore the crypto universe! To the moon! 🚀'
+          }
+          buttonCopy={'Add a Crypto Asset'}
+          hasNoButton={false}
+          formTitle={'Add a new Asset'}
+          formSubtitle={'Add a New Asset and expand your investment portfolio.'}
+        />
       )}
-    </>
+    </div>
   );
 }

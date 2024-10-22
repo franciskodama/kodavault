@@ -140,7 +140,6 @@ export default function Dashboard({
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
               <div className='flex flex-wrap gap-2'>
-                {/* <div className='w-1/3 bg-slate-600 border-2' /> */}
                 <CardTotal
                   emoji={'🧺'}
                   description={'Total value grouped by wallet'}
@@ -165,6 +164,7 @@ export default function Dashboard({
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
             <div className='flex flex-col basis-1/5'>
               <CardTotalAllCurrency
+                btcPrice={btcPrice}
                 currencyRates={currencyRates}
                 assets={assets}
                 description={'Total Vault in USD, CAD, BRL.'}

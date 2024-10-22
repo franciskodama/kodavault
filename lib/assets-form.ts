@@ -116,11 +116,11 @@ export const getWallets = (subtype: string) => {
         'Metamask',
       ];
     case 'Stock-USD':
-      return ['Wealthsimple', 'Clear'];
+      return ['Wealthsimple', 'ClearXP'];
     case 'Stock-CAD':
       return ['Wealthsimple', 'Tangerine', 'Scotiabank'];
     case 'Stock-BRL':
-      return ['Clear', 'XP'];
+      return ['ClearXP', 'XP'];
     case 'Cash-USD':
       return [
         'Binance',
@@ -136,7 +136,7 @@ export const getWallets = (subtype: string) => {
     case 'Cash-CAD':
       return ['Tangerine', 'Scotiabank', 'Wealthsimple', 'Neo'];
     case 'Cash-BRL':
-      return ['Binance', 'Bybit', 'Nubank', 'Inter', 'Itaú', 'Clear'];
+      return ['Binance', 'Bybit', 'Nubank', 'Inter', 'Itaú', 'ClearXP'];
     default:
       return [
         'Binance',
@@ -207,28 +207,6 @@ export const getCategoryBySymbol = (symbolTyped: string) => {
   );
   return altcoin ? altcoin.category : 'Unknown';
 };
-
-// AI
-// Data
-// DeFi
-// Exchange
-// Gaming
-// Identity
-// Infrastructure
-// Interoperability
-// Media
-// Meme
-// NFT
-// Oracles
-// Privacy
-// RWA
-// Sports
-// Stablecoins
-// Smartcontract
-// Supplychain
-// Safeheaven
-// Unknown
-// None
 
 export const altcoinsCategories = [
   { symbol: 'AGIX', category: 'AI' },
@@ -472,11 +450,11 @@ export const getAccounts = (subtype: string) => {
     case 'Cash-USD':
       return ['Investment'];
     case 'Cash-CAD':
-      return ['cc', 'TFSA', 'FHSA'];
+      return ['Checking', 'TFSA', 'FHSA'];
     case 'Cash-BRL':
-      return ['cc'];
+      return ['Checking'];
     default:
-      return ['cc', 'Investment', 'TFSA', 'FHSA'];
+      return ['Checking', 'Investment', 'TFSA', 'FHSA'];
   }
 };
 
