@@ -43,7 +43,7 @@ export const CardTotal = ({
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
   return (
-    <Card className={`flex-1 ${height ? height : 'h-full'}`}>
+    <Card className={`w-full sm:flex-1 ${height ? height : 'h-full'}`}>
       <div className='flex flex-col justify-between h-full'>
         <div className='flex flex-col'>
           <CardHeader>

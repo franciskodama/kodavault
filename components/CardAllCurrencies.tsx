@@ -48,7 +48,6 @@ export const CardTotalAllCurrency = ({
       },
     ];
   }
-  console.log('---  🚀 ---> | totalArray:', totalArray);
 
   return (
     <Card className='bg-slate-600 mb-2'>

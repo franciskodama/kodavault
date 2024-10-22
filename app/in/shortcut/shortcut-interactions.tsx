@@ -54,7 +54,7 @@ export function ShortcutInteractions({
 
   return (
     <>
-      <div className='flex flex-col justify-center mt-12 w-full text-sm'>
+      <div className='flex flex-col justify-center sm:mt-12 w-full text-sm'>
         {shortcutCategoriesKeys.length > 0 &&
           shortcutCategoriesKeys.map((key: string) => (
             <div key={key}>

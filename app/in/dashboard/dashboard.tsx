@@ -42,9 +42,9 @@ export default function Dashboard({
   return (
     <>
       {assets.length && assetsByType ? (
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2 px-8 sm:p-0'>
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
-          <div className='flex justify-end items-center'>
+          <div className='flex flex-col sm:flex-row justify-end items-center'>
             <div className='flex items-center mr-8'>
               <div className='mr-4'>
                 <a
@@ -92,20 +92,20 @@ export default function Dashboard({
             />
           </div> */}
           {/* -------- 1st Row Cards --------------------------------------------------------------------------------------- */}
-          <div className='flex gap-2'>
-            <div className='flex flex-col basis-4/5 gap-2'>
+          <div className='flex flex-col sm:flex-row gap-2'>
+            <div className='flex flex-col sm:basis-4/5 gap-2'>
               <div className='flex flex-wrap gap-2'>
                 {/* <CardKeyAssets /> */}
-                <div className='w-1/4'>
+                <div className='sm:w-1/4 w-full'>
                   <CardTotal
                     emoji={'🧺'}
                     description={`Assets' Location Breakdown`}
                     assets={assets}
                     customKey={'wallet'}
-                    height={'h-[508px]'}
+                    // height={'h-[508px]'}
                   />
                 </div>
-                <div className='flex flex-wrap w-2/4 gap-2'>
+                <div className='flex flex-wrap sm:w-2/4 gap-2'>
                   <CardTotal
                     emoji={'💵'}
                     description={`Assets' Origin Breakdown`}
@@ -120,13 +120,13 @@ export default function Dashboard({
                     customKey={'type'}
                     height={'h-[250px]'}
                   />
-                  <div className='w-1/2'>
+                  <div className='sm:w-1/2 w-full'>
                     <CardTotal
                       emoji={'🤑'}
                       description={'Total value grouped by currency'}
                       assets={assetsByType.Cash}
                       customKey={'cash'}
-                      height={'h-[250px]'}
+                      // height={'h-[250px]'}
                     />
                   </div>
                   <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
@@ -162,7 +162,7 @@ export default function Dashboard({
             </div>
 
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
-            <div className='flex flex-col basis-1/5'>
+            <div className='flex flex-col sm:basis-1/5'>
               <CardTotalAllCurrency
                 btcPrice={btcPrice}
                 currencyRates={currencyRates}

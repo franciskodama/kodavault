@@ -21,15 +21,15 @@ export default function Main({ assets }: { assets: Asset[] }) {
     <div className='flex flex-col w-full gap-2'>
       {assets.length > 0 ? (
         <>
-          <div className='flex gap-2'>
-            <div className='w-1/2 gap-2'>
+          <div className='flex flex-col sm:flex-row gap-2 px-8 sm:px-0'>
+            <div className='sm:w-1/2 gap-2'>
               <CryptoByWallet
                 chartData={chartData}
                 assets={assets}
                 totalByWallet={totalByWallet}
               />
             </div>
-            <div className='w-1/5'>
+            <div className='sm:w-1/5'>
               <CardTotal
                 emoji={'🪙'}
                 description={'Total value grouped by Coins'}
@@ -37,7 +37,7 @@ export default function Main({ assets }: { assets: Asset[] }) {
                 customKey={'crypto'}
               />
             </div>
-            <div className='w-1/5'>
+            <div className='sm:w-1/5'>
               <CardAssetsBy
                 assetType={'Cryptos'}
                 emoji={'🎯'}
@@ -46,7 +46,7 @@ export default function Main({ assets }: { assets: Asset[] }) {
                 customKey={'purpose'}
               />
             </div>
-            <div className='w-1/5'>
+            <div className='sm:w-1/5'>
               <CardAssetsBy
                 assetType={'Cryptos'}
                 emoji={'🏷️'}

@@ -35,7 +35,7 @@ export default function Cryptos({
             <>
               <div className='flex w-full gap-2'>
                 <Tabs defaultValue='main' className='w-full'>
-                  <TabsList>
+                  <TabsList className='px-4 sm:px-0'>
                     <TabsTrigger value='main'>Main</TabsTrigger>
                     <TabsTrigger value='allocation-goals'>
                       Allocation Goals

@@ -50,7 +50,7 @@ export function AddShortcutForm() {
     formState: { errors },
   } = useForm<ShortcutType>({});
 
-  const classLi = 'flex flex-col';
+  const classLi = 'flex flex-col w-full sm:w-auto';
   const classInput = 'border border-slate-200 h-10 p-2 rounded-xs';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
@@ -116,10 +116,10 @@ export function AddShortcutForm() {
   return (
     <>
       <form onSubmit={handleSubmit(processForm)}>
-        <ul className='flex items-start gap-2'>
+        <ul className='flex flex-col sm:flex-row items-start gap-2 w-full'>
           <li className={classLi}>
             <input
-              className={`${classInput} w-[20ch]`}
+              className={`${classInput} sm:w-[20ch]`}
               placeholder='Title'
               {...register('name', { required: "Title can't be empty" })}
             />
@@ -130,7 +130,7 @@ export function AddShortcutForm() {
 
           <li className={classLi}>
             <input
-              className={`${classInput} w-[20ch]`}
+              className={`${classInput} sm:w-[20ch]`}
               placeholder='From (ex.: Coinglass)'
               {...register('from', { required: "From can't be empty" })}
             />
@@ -141,7 +141,7 @@ export function AddShortcutForm() {
 
           <li className={classLi}>
             <input
-              className={`${classInput} w-[20ch]`}
+              className={`${classInput} sm:w-[20ch]`}
               placeholder='Url'
               {...register('url', { required: "Url can't be empty" })}
             />
@@ -157,7 +157,7 @@ export function AddShortcutForm() {
                   variant='outline'
                   role='combobox'
                   aria-expanded={openCategory}
-                  className='w-[125px]'
+                  className='w-full sm:w-[150px]'
                 >
                   {valueCategory ? (
                     <span className='text-xs font-normal opacity-60 capitalize'>
@@ -176,7 +176,7 @@ export function AddShortcutForm() {
                   <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className='w-[125px] p-0'>
+              <PopoverContent className='p-0'>
                 <Command>
                   <CommandList>
                     <CommandGroup>
@@ -218,7 +218,7 @@ export function AddShortcutForm() {
                   variant='outline'
                   role='combobox'
                   aria-expanded={openColor}
-                  className='w-[125px]'
+                  className='w-full sm:w-[150px]'
                 >
                   <div
                     className={`${
@@ -234,14 +234,14 @@ export function AddShortcutForm() {
                       }
                     </span>
                   ) : (
-                    <span className='text-xs font-normal opacity-60'>
+                    <span className='text-xs text-slate-800 font-normal opacity-60'>
                       Color
                     </span>
                   )}
                   <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className='w-[125px] p-0'>
+              <PopoverContent className='p-0'>
                 <Command>
                   <CommandList>
                     <CommandGroup>

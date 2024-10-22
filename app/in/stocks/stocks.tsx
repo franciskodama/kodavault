@@ -19,7 +19,7 @@ export default function Stocks() {
       ) : (
         <div>
           {stockAssets.length > 0 ? (
-            <div className='flex flex-wrap gap-2'>
+            <div className='flex flex-wrap gap-2 px-8 sm:px-0'>
               <CardTotal
                 emoji={'🔖'}
                 description={'Total value grouped by Stocks'}

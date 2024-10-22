@@ -34,8 +34,8 @@ export default function MessageInTable({
   formSubtitle,
 }: MessageInTable) {
   return (
-    <div className='flex items-center justify-around'>
-      <div className='w-[450px] mx-auto my-8'>
+    <div className='flex flex-col sm:flex-row items-center justify-around px-8 sm:px-0'>
+      <div className='w-full sm:w-[450px] mx-auto my-8'>
         <AspectRatio ratio={16 / 9}>
           <Image
             src={image}
@@ -48,7 +48,7 @@ export default function MessageInTable({
           />
         </AspectRatio>
       </div>
-      <div className='flex flex-col w-[450px] mx-auto'>
+      <div className='flex flex-col sm:w-[450px] mx-auto'>
         <p className='text-2xl font-semibold'>{title}</p>
         <p className='text-base my-2'>{subtitle}</p>
 
