@@ -27,15 +27,9 @@ import {
   subtypeOptions,
 } from '@/lib/assets-form';
 import { useAssetsContext } from '@/context/AssetsContext';
-import {
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
-  Tooltip,
-} from './ui/tooltip';
 import { category_enum_6c7fcd47 } from '@prisma/client';
 import { classError } from '@/lib/classes';
-import CustomRadioWithTooltip from './CustomRadioWithTooltip';
+import { CustomRadioWithTooltip } from './CustomRadioWithTooltip';
 
 export function AddAssetForm() {
   const { refreshAssets } = useAssetsContext();
@@ -239,7 +233,9 @@ export function AddAssetForm() {
                           value={categoryOption}
                           id={categoryOption}
                           register={register('category')}
-                          tooltipContent={getCategoryTooltip(categoryOption)}
+                          tooltipContent={
+                            getCategoryTooltip(categoryOption) || ''
+                          }
                           labelClassName={classLabelRadio}
                         />
                       </li>

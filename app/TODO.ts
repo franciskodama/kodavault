@@ -74,6 +74,7 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Bug Tooltip was submitting the form without filling all the fields and clicking on Submit
 // Total Vault board: show what they have. It it's only one currency or not
 // Add Disable the other fields if the type was not chosen
 // Change Clear Exchange to 'ClearXP'

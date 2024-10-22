@@ -14,7 +14,6 @@ import { useToast } from './ui/use-toast';
 import {
   getAccounts,
   getCurrencies,
-  getExchanges,
   getWallets,
   subtypeOptions,
   purposeOptions,
@@ -22,7 +21,7 @@ import {
   getCategoryTooltip,
 } from '@/lib/assets-form';
 import { useAssetsContext } from '@/context/AssetsContext';
-import CustomRadioWithTooltip from './CustomRadioWithTooltip';
+import { CustomRadioWithTooltip } from './CustomRadioWithTooltip';
 
 export function UpdateAssetForm({ asset }: { asset: Asset }) {
   const { refreshAssets } = useAssetsContext();
@@ -181,7 +180,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
                     value={categoryOption}
                     id={categoryOption}
                     register={register('category')}
-                    tooltipContent={getCategoryTooltip(categoryOption)}
+                    tooltipContent={getCategoryTooltip(categoryOption) || ''}
                     labelClassName={classLabelRadio}
                   />
                 </li>
