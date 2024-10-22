@@ -1,5 +1,5 @@
 // TODO: WORKING ON:
-
+// Responsivity
 // Altcoin Add Asset: after click on Category it has been activating the database
 // CronJob: https://console.cron-job.org/jobs/5201103
 // After CronJob Fix, return the commented code in the middleware f
@@ -73,6 +73,7 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Total Vault board: show what they have. It it's only one currency or not
 // Add Disable the other fields if the type was not chosen
 // Change Clear Exchange to 'ClearXP'
 // No assets found --> Message Box
