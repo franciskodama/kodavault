@@ -35,7 +35,7 @@ export default function Welcome({ userName }: { userName: string }) {
           <p className='text-base mt-4'>
             You’ve just unlocked a world of investments and financial fun! 🎉
           </p>
-          <p className='text-base mt-2'>
+          <p className='text-base my-4 sm:mb-0'>
             To get started, all you need to do is add your first asset.
           </p>
           <p className='text-base mb-8'>
