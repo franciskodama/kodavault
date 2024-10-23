@@ -73,10 +73,10 @@ export function ShortcutInteractions({
                     <div key={shortcut.id}>
                       <AccordionContent>
                         <ul className='mb-[-0.8em]'>
-                          <li className='flex  justify-between items-center w-full border-b rounded-[2px] border-slate-200 p-2 pl-12'>
+                          <li className='flex flex-col sm:flex-row justify-between items-center w-full border-b rounded-[2px] border-slate-200 p-2 pl-12'>
                             <div className='flex'>
                               <Link href={shortcut.url} target='_blank'>
-                                <p className='text-sm font-normal capitalize w-[18ch]'>
+                                <p className='text-sm font-semibold capitalize w-[18ch]'>
                                   {shortcut.name}
                                 </p>
                               </Link>

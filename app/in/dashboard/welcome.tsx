@@ -13,7 +13,7 @@ import Image from 'next/image';
 export default function Welcome({ userName }: { userName: string }) {
   return (
     <div className='relative flex flex-wrap w-full items-center justify-center'>
-      <div className='absolute px-4 w-full h-full z-10 bg-white opacity-30' />
+      <div className='absolute px-4 w-full h-full z-10 bg-white opacity-20' />
       {pictures.map((picture) => (
         <div key={picture.id} className='w-[150px]'>
           <AspectRatio ratio={1 / 1}>
@@ -27,19 +27,18 @@ export default function Welcome({ userName }: { userName: string }) {
           </AspectRatio>
         </div>
       ))}
-      <div className='absolute shadow-2xl drop-shadow-2xl top-50 -left-50 z-20 w-[60em] h-[24em] px-20 py-10 bg-white rounded-md'>
-        {/* border-2 border-primary drop-shadow-[3px_3px_#121212] */}
+      <div className='absolute shadow-2xl drop-shadow-2xl top-32 -left-50 z-20 w-6/10 sm:h-2/5 mx-10 px-10 sm:px-20 py-10 bg-white rounded-xs'>
         <div className='flex flex-col w-full items-center justify-center mx-auto'>
-          <p className='text-2xl font-semibold mb-4'>
+          <p className='text-2xl font-semibold mb-4 text-center'>
             👋 Welcome aboard, {userName}!
           </p>
-          <p className='text-base my-2'>
+          <p className='text-base mt-4'>
             You’ve just unlocked a world of investments and financial fun! 🎉
           </p>
-          <p className='text-base mt-2'>
+          <p className='text-base my-4 sm:mb-0'>
             To get started, all you need to do is add your first asset.
           </p>
-          <p className='text-base mb-2'>
+          <p className='text-base mb-8'>
             Ready to take the plunge? Let’s build your financial future
             together!
           </p>

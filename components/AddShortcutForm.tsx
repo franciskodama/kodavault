@@ -139,9 +139,9 @@ export function AddShortcutForm() {
             )}
           </li>
 
-          <li className={classLi}>
+          <li className={`${classLi} sm:basis-full`}>
             <input
-              className={`${classInput} sm:w-[20ch]`}
+              className={classInput}
               placeholder='Url'
               {...register('url', { required: "Url can't be empty" })}
             />
@@ -157,7 +157,7 @@ export function AddShortcutForm() {
                   variant='outline'
                   role='combobox'
                   aria-expanded={openCategory}
-                  className='w-full sm:w-[150px]'
+                  className='w-full sm:w-[150px] justify-between'
                 >
                   {valueCategory ? (
                     <span className='text-xs font-normal opacity-60 capitalize'>
@@ -218,21 +218,24 @@ export function AddShortcutForm() {
                   variant='outline'
                   role='combobox'
                   aria-expanded={openColor}
-                  className='w-full sm:w-[150px]'
+                  className='w-full sm:w-[150px] justify-between'
                 >
-                  <div
-                    className={`${
-                      valueColor && getColor(valueColor)
-                    } flex items-center justify-center w-4 h-4 rounded-full mr-2`}
-                  />
                   {valueColor ? (
-                    <span className='text-xs font-normal opacity-60 capitalize'>
-                      {
-                        colors.find(
-                          (color: comboOptions) => color.value === valueColor
-                        )?.label
-                      }
-                    </span>
+                    <>
+                      <div
+                        className={`${
+                          valueColor && getColor(valueColor)
+                        } flex items-center justify-center w-4 h-4 rounded-full mr-2`}
+                      />
+
+                      <span className='text-xs font-normal opacity-60 capitalize'>
+                        {
+                          colors.find(
+                            (color: comboOptions) => color.value === valueColor
+                          )?.label
+                        }
+                      </span>
+                    </>
                   ) : (
                     <span className='text-xs text-slate-800 font-normal opacity-60'>
                       Color
@@ -295,9 +298,7 @@ export function AddShortcutForm() {
           </li>
 
           <li>
-            <Button className='' variant='darkerOutline'>
-              Add Shortcut
-            </Button>
+            <Button variant='darkerOutline'>Add Shortcut</Button>
           </li>
         </ul>
       </form>
