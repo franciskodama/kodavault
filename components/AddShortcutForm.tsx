@@ -298,9 +298,7 @@ export function AddShortcutForm() {
           </li>
 
           <li>
-            <Button className='' variant='darkerOutline'>
-              Add Shortcut
-            </Button>
+            <Button variant='darkerOutline'>Add Shortcut</Button>
           </li>
         </ul>
       </form>
