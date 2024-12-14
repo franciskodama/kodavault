@@ -562,23 +562,28 @@ export function DataTable<TData, TValue>({
                     {row.getVisibleCells().map((cell) => {
                       const assetValue = (row.original as { asset: string })
                         .asset;
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          className={`text-right text-xs text-slate-600 font-light ${
-                            inputFilterValue &&
-                            inputFilterValue.toLowerCase() ===
-                              assetValue.toLowerCase()
-                              ? 'bg-accent'
-                              : null
-                          }`}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      );
+
+                      if (assetValue === '0') {
+                        return <div key={cell.id}>Nothing</div>;
+                      } else {
+                        return (
+                          <TableCell
+                            key={cell.id}
+                            className={`text-right text-xs text-slate-600 font-light ${
+                              inputFilterValue &&
+                              inputFilterValue.toLowerCase() ===
+                                assetValue.toLowerCase()
+                                ? 'bg-accent'
+                                : null
+                            }`}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        );
+                      }
                     })}
                   </TableRow>
                 ))}
