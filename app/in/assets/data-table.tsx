@@ -529,32 +529,32 @@ export function DataTable<TData, TValue>({
           ) : null}
         </AnimatePresence>
 
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
+        {table.getRowModel().rows?.length ? (
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
 
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <TableBody>
-              {table.getRowModel().rows?.length &&
-                table.getRowModel().rows.map((row) => (
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <TableBody>
+                {table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && 'selected'}
@@ -562,11 +562,6 @@ export function DataTable<TData, TValue>({
                     {row.getVisibleCells().map((cell) => {
                       const assetValue = (row.original as { asset: string })
                         .asset;
-                      console.log('---  🚀 ---> | assetValue:', assetValue);
-
-                      // if (assetValue === '0') {
-                      //   return <div key={cell.id}>Nothing</div>;
-                      // } else {
                       return (
                         <TableCell
                           key={cell.id}
@@ -584,13 +579,23 @@ export function DataTable<TData, TValue>({
                           )}
                         </TableCell>
                       );
-                      // }
                     })}
                   </TableRow>
                 ))}
-            </TableBody>
-          )}
-        </Table>
+              </TableBody>
+            )}
+          </Table>
+        ) : (
+          <div className='flex flex-col gap-2 w-full items-center py-24 text-base'>
+            <p className='text-2xl font-semibold mb-4'>
+              Oops! Asset Not Found 👻
+            </p>
+            <p>We couldn’t find any asset matching that name or symbol.</p>
+            <p>
+              Double-check your spelling or try searching for something else.
+            </p>
+          </div>
+        )}
       </div>
     </>
   );

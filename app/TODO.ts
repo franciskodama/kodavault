@@ -15,7 +15,6 @@
 // Create a Chrome extension (add and update assets): https://www.luckymedia.dev/blog/how-to-create-a-chrome-extension-with-react-typescript-tailwindcss-and-vite-in-2024 or https://github.com/vercel/next.js/tree/canary/examples/with-chrome-extension
 
 // TODO: NEXT:
-// When filter no 0 - instead a message
 // Why we don't have the updated price for ETHX.B? It's correct in the spreadsheet
 // Super Positions tag
 // Check icon for the ones we make a big check like that. It will help me to check everytime all the tokens in different networks
@@ -83,6 +82,7 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// When filter no 0 - instead a message
 // Bug Tooltip was submitting the form without filling all the fields and clicking on Submit
 // Total Vault board: show what they have. It it's only one currency or not
 // Add Disable the other fields if the type was not chosen
