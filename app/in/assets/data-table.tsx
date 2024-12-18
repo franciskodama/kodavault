@@ -587,9 +587,8 @@ export function DataTable<TData, TValue>({
           </Table>
         ) : (
           <div className='flex flex-col gap-2 w-full items-center py-24 text-base'>
-            <p className='text-2xl font-semibold mb-4'>
-              Oops! Asset Not Found 👻
-            </p>
+            <p className='text-5xl'>👻</p>
+            <p className='text-2xl font-semibold mb-6'>Oops! Asset Not Found</p>
             <p>We couldn’t find any asset matching that name or symbol.</p>
             <p>
               Double-check your spelling or try searching for something else.
