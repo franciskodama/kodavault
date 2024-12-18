@@ -15,6 +15,15 @@
 // Create a Chrome extension (add and update assets): https://www.luckymedia.dev/blog/how-to-create-a-chrome-extension-with-react-typescript-tailwindcss-and-vite-in-2024 or https://github.com/vercel/next.js/tree/canary/examples/with-chrome-extension
 
 // TODO: NEXT:
+// When filter no 0 - instead a message
+// Why we don't have the updated price for ETHX.B? It's correct in the spreadsheet
+// Super Positions tag
+// Check icon for the ones we make a big check like that. It will help me to check everytime all the tokens in different networks
+// The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
+// Filter by tag on the Asset Page
+// Should we have on Ledger, a way to also say what Network are the coins?
+// Why do we have 2 Cryptos on the select on Asset Page?
+
 // BTC Dominance
 // Assets Forms: If chooses BTC we need to give the right category selected - For all the other coins too, but no hardcode (or api) info we show all the options
 // When I edit the CAD Cash in Wealthsimple Asset, it does not appear Wealthsimple as an option to choose from
