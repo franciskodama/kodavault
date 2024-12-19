@@ -15,7 +15,9 @@
 // Create a Chrome extension (add and update assets): https://www.luckymedia.dev/blog/how-to-create-a-chrome-extension-with-react-typescript-tailwindcss-and-vite-in-2024 or https://github.com/vercel/next.js/tree/canary/examples/with-chrome-extension
 
 // TODO: NEXT:
+// Change the domain: trezo.me
 // Why we don't have the updated price for ETHX.B? It's correct in the spreadsheet
+// Account can also be the Accounts/Networks in Ledger
 // Super Positions tag
 // Check icon for the ones we make a big check like that. It will help me to check everytime all the tokens in different networks
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working

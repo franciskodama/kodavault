@@ -112,6 +112,7 @@ model Asset {
   purpose    purpose_enum_ceee32b0?  @default(Investment)
   category   category_enum_6c7fcd47? @default(Unknown)
   tag        String?
+  reviewed   Boolean                 @default(false)
 }
 
 model CoinGoal {

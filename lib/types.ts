@@ -23,6 +23,7 @@ export type UnpricedAsset = {
   purpose?: purpose_enum_ceee32b0;
   category?: category_enum_6c7fcd47;
   tag?: string;
+  reviewed?: boolean;
 };
 
 export type Asset =
