@@ -108,10 +108,11 @@ export async function updateReviewedAsset(id: string, reviewed: boolean) {
       data: {
         reviewed,
       },
+      select: { id: true },
     });
     return true;
   } catch (error) {
-    console.log(error);
+    console.error('Failed to update asset review status:', error);
     return false;
   }
 }

@@ -247,28 +247,33 @@ export const columns: ColumnDef<Asset>[] = [
 ];
 
 const AssetReviewed: FC<{ asset: Asset }> = ({ asset }) => {
+  const { refreshAssets } = useAssetsContext();
+
+  if (asset?.asset === 'TURBO') {
+    console.log('---  🚀 ---> | asset:', asset);
+  }
+
+  if (asset?.asset === 'HBAR') {
+    console.log('---  🚀 ---> | asset:', asset);
+  }
+
   const handleReviewedAsset = async (id: string, reviewed: boolean) => {
-    const reviewedAsset = reviewed === undefined ? false : asset?.reviewed;
-
-    console.log('---  🚀 ---> | id:', id);
-    console.log('---  🚀 ---> | reviewedAsset:', reviewedAsset);
-
     try {
-      await updateReviewedAsset(id as string, reviewedAsset as boolean);
+      await updateReviewedAsset(id as string, reviewed as boolean);
+      await refreshAssets();
       toast({
-        title: `Updated Review Status! ${reviewed ? '✅' : '🚫'}`,
-        description: `The Asset ${
-          asset?.asset
-        } has been successfully updated as ${
-          reviewed ? 'Reviewed' : 'Unreviewed'
+        title: `${asset?.asset}: ${reviewed ? 'Reviewed' : 'Unreviewed'}  ${
+          reviewed ? ' ✅' : '🚫'
         }`,
-        variant: 'default',
+        description: `The Asset ${asset?.asset} has been successfully updated!`,
+        variant: reviewed ? 'success' : 'default',
       });
     } catch (error) {
-      console.error('Error deleting asset:', error);
+      console.error('Error updating reviewed status of asset:', error);
       toast({
         title: 'Error Updating Asset! 🚨',
-        description: 'Something went wrong while updating the Review Status.',
+        description:
+          'Something went wrong while updating the Review Status. Try again!',
         variant: 'destructive',
       });
     }
@@ -279,10 +284,9 @@ const AssetReviewed: FC<{ asset: Asset }> = ({ asset }) => {
       {asset && (
         <div className='flex items-center text-xl'>
           <Checkbox
-            checked={asset.reviewed ? true : false}
-            // className='mr-8'
+            checked={asset.reviewed}
             onCheckedChange={() =>
-              handleReviewedAsset(asset.id, asset.reviewed as boolean)
+              handleReviewedAsset(asset.id, !asset.reviewed as boolean)
             }
           />
         </div>
