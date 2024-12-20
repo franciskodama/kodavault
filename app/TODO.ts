@@ -14,17 +14,22 @@
 
 // Create a Chrome extension (add and update assets): https://www.luckymedia.dev/blog/how-to-create-a-chrome-extension-with-react-typescript-tailwindcss-and-vite-in-2024 or https://github.com/vercel/next.js/tree/canary/examples/with-chrome-extension
 
+// TODO ---------------------------------------------------------------------------
 // TODO: NEXT:
+// Change the domain: trezo.me --> Check on vercel if it's already valid
 // How many assets are there? How many cryptos?
-// Change the domain: trezo.me
 // Why we don't have the updated price for ETHX.B? It's correct in the spreadsheet
-// Account can also be the Accounts/Networks in Ledger
-// Super Positions tag
-// Check icon for the ones we make a big check like that. It will help me to check everytime all the tokens in different networks
+// cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
 // Filter by tag on the Asset Page
-// Should we have on Ledger, a way to also say what Network are the coins?
+
+// TODO: DONE LAST LIST DEC/2024:
+// Check icon for the ones we make a big check like that (Reviewed and Unreviewed)
+// Account can also be the Accounts/Networks in Ledger
+// When filter no 0 - instead a message
 // Why do we have 2 Cryptos on the select on Asset Page?
+
+// TODO ---------------------------------------------------------------------------
 
 // BTC Dominance
 // Assets Forms: If chooses BTC we need to give the right category selected - For all the other coins too, but no hardcode (or api) info we show all the options
@@ -85,7 +90,6 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
-// When filter no 0 - instead a message
 // Bug Tooltip was submitting the form without filling all the fields and clicking on Submit
 // Total Vault board: show what they have. It it's only one currency or not
 // Add Disable the other fields if the type was not chosen

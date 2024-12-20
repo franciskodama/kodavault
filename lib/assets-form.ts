@@ -438,14 +438,33 @@ export const getCurrencies = (subtype: string) => {
   }
 };
 
+const cryptoAccounts = [
+  '- Not Needed -',
+  'Solana',
+  'Cardano',
+  'Tron',
+  'Near',
+  'Polkadot',
+  'Stacks',
+  'Dogecoin',
+  'Ethereum',
+  'ICP',
+  'Filecoin',
+  'Astar',
+  'Ton',
+  'Binance BSC',
+  'Bitcoin/Segwit',
+  'Polygon',
+];
+
 export const getAccounts = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
-      return ['Investment'];
+      return ['Bitcoin/Segwit'];
     case 'ETH':
-      return ['Investment'];
+      return cryptoAccounts.sort();
     case 'Altcoin':
-      return ['Investment'];
+      return cryptoAccounts.sort();
     case 'Stock-USD':
       return ['Investment', 'TFSA', 'FHSA'];
     case 'Stock-CAD':
