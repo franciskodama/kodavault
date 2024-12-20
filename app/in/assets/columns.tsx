@@ -238,7 +238,18 @@ export const columns: ColumnDef<Asset>[] = [
   // },
   {
     id: 'review',
-    cell: ({ row }) => <AssetReviewed asset={row.original} />,
+    cell: ({ row }) => (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <AssetReviewed asset={row.original} />
+          </TooltipTrigger>
+          <TooltipContent>
+            {row.original?.reviewed ? 'Reviewed' : 'Unreviewed'}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    ),
   },
   {
     id: 'actions',
@@ -248,14 +259,6 @@ export const columns: ColumnDef<Asset>[] = [
 
 const AssetReviewed: FC<{ asset: Asset }> = ({ asset }) => {
   const { refreshAssets } = useAssetsContext();
-
-  if (asset?.asset === 'TURBO') {
-    console.log('---  🚀 ---> | asset:', asset);
-  }
-
-  if (asset?.asset === 'HBAR') {
-    console.log('---  🚀 ---> | asset:', asset);
-  }
 
   const handleReviewedAsset = async (id: string, reviewed: boolean) => {
     try {
