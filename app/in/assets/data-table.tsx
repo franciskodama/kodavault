@@ -51,7 +51,7 @@ import {
 } from '@/lib/utils';
 import { Loading } from '@/components/Loading';
 import StocksNoSymbol from './stocks-no-symbol';
-import { Asset } from '@/lib/types';
+import { Asset, AssetsByType, UnpricedAsset } from '@/lib/types';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -70,6 +70,7 @@ export function DataTable<TData, TValue>({
   typeFilterAsParam,
 }: DataTableProps<TData, TValue>) {
   const { assets, assetsByType, isLoading } = useAssetsContext();
+  console.log('---  🚀 ---> | assetsByType:', assetsByType);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -606,6 +607,11 @@ export function DataTable<TData, TValue>({
           </div>
         )}
       </div>
+      {/* <div className='flex justify-center items-center gap-12 text-xs font-semibold font-muted bg-muted p-3 border'>
+        <p>Cryptos: {assetsByType.Crypto.length}</p>
+        <p>Stocks: {assetsByType.Stock.length}</p>
+        <p>Cash: {assetsByType.Cash.length}</p>
+      </div> */}
     </>
   );
 }
