@@ -14,11 +14,10 @@ export default function Header() {
     <div className='flex justify-between m-4 p-4'>
       <Link href='/'>
         <Image
-          src='/trezo-logo.png'
+          src='/logo/trezo-logo-green.png'
           alt='Trezo.App Logo'
-          width={100}
-          height={100}
-          className='h-auto w-auto'
+          width={85}
+          height={85}
           priority
         />
       </Link>
