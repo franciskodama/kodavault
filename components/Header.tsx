@@ -14,8 +14,8 @@ export default function Header() {
     <div className='flex justify-between m-4 p-4'>
       <Link href='/'>
         <Image
-          src='/logo.png'
-          alt='Logo Koda Vault'
+          src='/trezo-logo.png'
+          alt='Trezo.App Logo'
           width={100}
           height={100}
           className='h-auto w-auto'
