@@ -405,6 +405,16 @@ export function DataTable<TData, TValue>({
               </PopoverContent>
             </Popover>
 
+            <Input
+              placeholder='Filter by Tag'
+              value={(table.getColumn('tag')?.getFilterValue() as string) ?? ''}
+              onChange={(e) => {
+                table.getColumn('tag')?.setFilterValue(e.target.value);
+                setClearFilterButton(true);
+              }}
+              className='max-w-sm w-[20ch] ml-4'
+            />
+
             {!areThereRepeatedAssets && filterIsActive ? (
               <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 border-2  bg-accent rounded-[2px] text-left'>
                 <>

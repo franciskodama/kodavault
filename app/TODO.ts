@@ -16,18 +16,18 @@
 
 // TODO ---------------------------------------------------------------------------
 // TODO: NEXT:
-// Change the domain: trezo.me --> Check on vercel if it's already valid
 // How many assets are there? How many cryptos?
-// Why we don't have the updated price for ETHX.B? It's correct in the spreadsheet
 // cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
-// Filter by tag on the Asset Page
 
 // TODO: DONE LAST LIST DEC/2024:
+// Filter by tag on the Asset Page
 // Check icon for the ones we make a big check like that (Reviewed and Unreviewed)
 // Account can also be the Accounts/Networks in Ledger
 // When filter no 0 - instead a message
 // Why do we have 2 Cryptos on the select on Asset Page?
+// Change the domain: trezo.app --> Check on vercel if it's already valid
+// Why we don't have the updated price for ETHX.B? It's correct in the spreadsheet
 
 // TODO ---------------------------------------------------------------------------
 
