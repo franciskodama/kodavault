@@ -70,7 +70,6 @@ export function DataTable<TData, TValue>({
   typeFilterAsParam,
 }: DataTableProps<TData, TValue>) {
   const { assets, assetsByType, isLoading } = useAssetsContext();
-  console.log('---  🚀 ---> | assetsByType:', assetsByType);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

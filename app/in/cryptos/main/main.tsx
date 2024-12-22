@@ -35,6 +35,7 @@ export default function Main({ assets }: { assets: Asset[] }) {
                 description={'Total value grouped by Coins'}
                 assets={assets}
                 customKey={'crypto'}
+                showQty={true}
               />
             </div>
             <div className='sm:w-1/5'>

@@ -12,6 +12,7 @@ import {
   numberFormatterNoDecimals,
   getTotalByKey,
   numberFormatter,
+  getQtyOfAssets,
 } from '../lib/utils';
 import { Asset } from '../lib/types';
 import {
@@ -22,6 +23,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { AddAssetForm } from './AddAssetForm';
 import { Gem } from 'lucide-react';
 
@@ -31,16 +38,19 @@ export const CardTotal = ({
   emoji = '',
   description = '',
   height = '',
+  showQty,
 }: {
   assets: Asset[];
   customKey: string;
   emoji?: string;
   description?: string;
   height?: string;
+  showQty?: boolean;
 }) => {
   const totalArray = getTotalByKey(assets, customKey);
   const sortedArray = totalArray.sort((a, b) => b.total - a.total);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
+  const qtyOfAssets = getQtyOfAssets(assets);
 
   return (
     <Card className={`w-full sm:flex-1 ${height ? height : 'h-full'}`}>
@@ -116,7 +126,23 @@ export const CardTotal = ({
             </>
           ) : (
             <>
-              <h3>Total</h3>
+              <h3>
+                Total
+                {showQty && (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <span className='ml-1 text-xs font-thin'>
+                          ({getQtyOfAssets(assets)})
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Total of Items</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+              </h3>
               {numberFormatterNoDecimals.format(
                 totalArray.reduce((sum: number, item) => sum + item.total, 0)
               )}
