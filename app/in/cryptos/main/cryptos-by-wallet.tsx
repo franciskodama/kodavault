@@ -1,4 +1,10 @@
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import {
   Card,
   CardContent,
   CardDescription,
@@ -8,11 +14,18 @@ import {
 } from '@/components/ui/card';
 import { Asset, TotalByWallet } from '@/lib/types';
 import {
+  getQtyOfAssets,
   numberFormatter,
   numberFormatterNoDecimals,
   thousandFormatter,
 } from '@/lib/utils';
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import {
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip as RechartsTooltip,
+} from 'recharts';
 
 type chartData = {
   name: string;
@@ -113,7 +126,7 @@ export default function CryptoByWallet({
                         />
                       ))}
                     </Pie>
-                    <Tooltip
+                    <RechartsTooltip
                       itemStyle={{
                         backgroundColor: '#FFF',
                         fontStyle: 'bold',
@@ -203,7 +216,27 @@ export default function CryptoByWallet({
                     </div>
                   ))}
                   <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
-                    <h3>Subtotal</h3>
+                    <h3>
+                      Subtotal
+                      {
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <span className='ml-1 text-xs font-thin'>
+                                {/* ({getQtyOfAssets(assets)}) */}
+                                {/* {groupedByWallet.wallets.length} */}
+                                {
+                                  //  walletsSortedByLength.wallet[0].length
+                                }
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Total of Items</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      }
+                    </h3>
                     {numberFormatterNoDecimals.format(
                       totalByWallet[
                         totalByWallet.findIndex(
