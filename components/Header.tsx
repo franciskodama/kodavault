@@ -18,6 +18,7 @@ export default function Header() {
           alt='Trezo.App Logo'
           width={75}
           height={75}
+          className='w-auto h-auto'
           priority
         />
       </Link>
