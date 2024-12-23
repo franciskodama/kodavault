@@ -17,8 +17,7 @@ export default function Header() {
           src='/logo/trezo-logo-green.png'
           alt='Trezo.App Logo'
           width={75}
-          height={75}
-          className='w-auto h-auto'
+          height={40.133}
           priority
         />
       </Link>
