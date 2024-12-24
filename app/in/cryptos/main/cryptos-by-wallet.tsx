@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/card';
 import { Asset, TotalByWallet } from '@/lib/types';
 import {
-  getQtyOfAssets,
   numberFormatter,
   numberFormatterNoDecimals,
   thousandFormatter,
@@ -173,8 +172,6 @@ export default function CryptoByWallet({
 
             <CardContent className='flex flex-wrap gap-2 w-full'>
               {walletsSortedByLength.map((wallet: any) => {
-                console.log('---  🚀 ---> | wallet:', wallet);
-
                 return (
                   <div
                     key={wallet?.[0]?.wallet}

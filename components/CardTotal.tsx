@@ -50,7 +50,6 @@ export const CardTotal = ({
   const totalArray = getTotalByKey(assets, customKey);
   const sortedArray = totalArray.sort((a, b) => b.total - a.total);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
-  const qtyOfAssets = getQtyOfAssets(assets);
 
   return (
     <Card className={`w-full sm:flex-1 ${height ? height : 'h-full'}`}>
