@@ -51,7 +51,7 @@ import {
 } from '@/lib/utils';
 import { Loading } from '@/components/Loading';
 import StocksNoSymbol from './stocks-no-symbol';
-import { Asset } from '@/lib/types';
+import { Asset, AssetsByType, UnpricedAsset } from '@/lib/types';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -405,6 +405,16 @@ export function DataTable<TData, TValue>({
               </PopoverContent>
             </Popover>
 
+            <Input
+              placeholder='Filter by Tag'
+              value={(table.getColumn('tag')?.getFilterValue() as string) ?? ''}
+              onChange={(e) => {
+                table.getColumn('tag')?.setFilterValue(e.target.value);
+                setClearFilterButton(true);
+              }}
+              className='max-w-sm w-[20ch] ml-4'
+            />
+
             {!areThereRepeatedAssets && filterIsActive ? (
               <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 border-2  bg-accent rounded-[2px] text-left'>
                 <>
@@ -596,6 +606,11 @@ export function DataTable<TData, TValue>({
           </div>
         )}
       </div>
+      {/* <div className='flex justify-center items-center gap-12 text-xs font-semibold font-muted bg-muted p-3 border'>
+        <p>Cryptos: {assetsByType.Crypto.length}</p>
+        <p>Stocks: {assetsByType.Stock.length}</p>
+        <p>Cash: {assetsByType.Cash.length}</p>
+      </div> */}
     </>
   );
 }

@@ -34,11 +34,12 @@ import { useAssetsContext } from '@/context/AssetsContext';
 import { Button } from '@/components/ui/button';
 import { tableHeaderClass } from '@/lib/classes';
 import { Asset } from '@/lib/types';
-import { deleteAsset } from '@/lib/actions';
+import { deleteAsset, updateReviewedAsset } from '@/lib/actions';
 import { UpdateAssetForm } from '@/components/UpdateAssetForm';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
+import { Checkbox } from '@/components/ui/checkbox';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -191,55 +192,111 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
   },
+  // {
+  //   accessorKey: 'exchange',
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         className={tableHeaderClass}
+  //         variant='ghost'
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+  //       >
+  //         <TooltipProvider>
+  //           <Tooltip>
+  //             <TooltipTrigger>FX</TooltipTrigger>
+  //             <TooltipContent>
+  //               <p>Foreign Exchange</p>
+  //             </TooltipContent>
+  //           </Tooltip>
+  //         </TooltipProvider>
+  //         <ArrowUpDown className='ml-2 h-4 w-4' />
+  //       </Button>
+  //     );
+  //   },
+  // },
+  // {
+  //   accessorKey: 'currency',
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         className={tableHeaderClass}
+  //         variant='ghost'
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+  //       >
+  //         <TooltipProvider>
+  //           <Tooltip>
+  //             <TooltipTrigger>$</TooltipTrigger>
+  //             <TooltipContent>
+  //               <p>Currency</p>
+  //             </TooltipContent>
+  //           </Tooltip>
+  //         </TooltipProvider>
+  //         <ArrowUpDown className='ml-2 h-4 w-4' />
+  //       </Button>
+  //     );
+  //   },
+  // },
   {
-    accessorKey: 'exchange',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>FX</TooltipTrigger>
-              <TooltipContent>
-                <p>Foreign Exchange</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: 'currency',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>$</TooltipTrigger>
-              <TooltipContent>
-                <p>Currency</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
+    id: 'review',
+    cell: ({ row }) => (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <AssetReviewed asset={row.original} />
+          </TooltipTrigger>
+          <TooltipContent>
+            {row.original?.reviewed ? 'Reviewed' : 'Unreviewed'}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    ),
   },
   {
     id: 'actions',
     cell: ({ row }) => <AssetActionsCell asset={row.original} />,
   },
 ];
+
+const AssetReviewed: FC<{ asset: Asset }> = ({ asset }) => {
+  const { refreshAssets } = useAssetsContext();
+
+  const handleReviewedAsset = async (id: string, reviewed: boolean) => {
+    try {
+      await updateReviewedAsset(id as string, reviewed as boolean);
+      await refreshAssets();
+      toast({
+        title: `${asset?.asset}: ${reviewed ? 'Reviewed' : 'Unreviewed'}  ${
+          reviewed ? ' ✅' : '🚫'
+        }`,
+        description: `The Asset ${asset?.asset} has been successfully updated!`,
+        variant: reviewed ? 'success' : 'default',
+      });
+    } catch (error) {
+      console.error('Error updating reviewed status of asset:', error);
+      toast({
+        title: 'Error Updating Asset! 🚨',
+        description:
+          'Something went wrong while updating the Review Status. Try again!',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  return (
+    <>
+      {asset && (
+        <div className='flex items-center text-xl'>
+          <Checkbox
+            checked={asset.reviewed}
+            onCheckedChange={() =>
+              handleReviewedAsset(asset.id, !asset.reviewed as boolean)
+            }
+          />
+        </div>
+      )}
+    </>
+  );
+};
 
 const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
   const { refreshAssets } = useAssetsContext();

@@ -6,11 +6,18 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 import {
   numberFormatterNoDecimals,
   getTotalByKey,
   numberFormatter,
+  getQtyOfAssets,
 } from '../lib/utils';
 import { Asset } from '../lib/types';
 
@@ -105,6 +112,7 @@ export const CardAssetsBy = ({
 
                 <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
                   <h3>Subtotal</h3>
+
                   {numberFormatterNoDecimals.format(
                     getTotalByKey(groupedByCustomKey[key], key).reduce(
                       (sum: number, item) => sum + item.total,

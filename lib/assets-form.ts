@@ -220,6 +220,7 @@ export const altcoinsCategories = [
   { symbol: 'RENDER', category: 'AI' },
 
   { symbol: 'FIL', category: 'Data' },
+  { symbol: 'BLZ', category: 'Data' },
 
   { symbol: 'AAVE', category: 'DeFi' },
   { symbol: 'INJ', category: 'DeFi' },
@@ -230,6 +231,7 @@ export const altcoinsCategories = [
   { symbol: 'SNX', category: 'DeFi' },
   { symbol: 'TIA', category: 'DeFi' },
   { symbol: 'UNI', category: 'DeFi' },
+  { symbol: 'SEI', category: 'DeFi' },
 
   { symbol: 'BNB', category: 'Exchange' },
   { symbol: 'CRO', category: 'Exchange' },
@@ -254,6 +256,8 @@ export const altcoinsCategories = [
   { symbol: 'TRX', category: 'Infrastructure' },
   { symbol: 'VET', category: 'Infrastructure' },
   { symbol: 'XRD', category: 'Infrastructure' },
+  { symbol: 'TON', category: 'Infrastructure' },
+  { symbol: 'CHR', category: 'Infrastructure' },
 
   { symbol: 'ATOM', category: 'Interoperability' },
   { symbol: 'DOT', category: 'Interoperability' },
@@ -297,6 +301,7 @@ export const altcoinsCategories = [
   { symbol: 'CHZ', category: 'Sports' },
 
   { symbol: 'USDT', category: 'Stablecoins' },
+  { symbol: 'VET', category: 'SupplyChain' },
 ];
 
 export const getCategoryTooltip = (category: string) => {
@@ -438,14 +443,33 @@ export const getCurrencies = (subtype: string) => {
   }
 };
 
+const cryptoAccounts = [
+  '- Not Needed -',
+  'Solana',
+  'Cardano',
+  'Tron',
+  'Near',
+  'Polkadot',
+  'Stacks',
+  'Dogecoin',
+  'Ethereum',
+  'ICP',
+  'Filecoin',
+  'Astar',
+  'Ton',
+  'Binance BSC',
+  'Bitcoin/Segwit',
+  'Polygon',
+];
+
 export const getAccounts = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
-      return ['Investment'];
+      return ['Bitcoin/Segwit'];
     case 'ETH':
-      return ['Investment'];
+      return cryptoAccounts.sort();
     case 'Altcoin':
-      return ['Investment'];
+      return cryptoAccounts.sort();
     case 'Stock-USD':
       return ['Investment', 'TFSA', 'FHSA'];
     case 'Stock-CAD':

@@ -95,6 +95,17 @@ export const getTotalByKey = (assets: any[], key: string): TotalByWallet[] => {
 
 // ---------------------------------------------------------------------------
 
+export const getQtyOfAssets = (assets: any[]) => {
+  const uniqueAssets = new Set(
+    assets
+      .filter((asset) => asset != undefined && asset.asset != undefined)
+      .map((asset) => asset.asset)
+  );
+  return uniqueAssets.size;
+};
+
+// ---------------------------------------------------------------------------
+
 export const groupAssetsBySomething = (assets: Asset[], something: string) => {
   return assets.reduce((groupedAssets: any, asset: any) => {
     const somethingKey = asset[something];

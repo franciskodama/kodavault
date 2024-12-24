@@ -99,6 +99,24 @@ export async function updateAsset(formData: Inputs) {
   }
 }
 
+export async function updateReviewedAsset(id: string, reviewed: boolean) {
+  try {
+    await prisma.asset.update({
+      where: {
+        id,
+      },
+      data: {
+        reviewed,
+      },
+      select: { id: true },
+    });
+    return true;
+  } catch (error) {
+    console.error('Failed to update asset review status:', error);
+    return false;
+  }
+}
+
 export async function deleteAsset(id: string) {
   try {
     await prisma.asset.delete({

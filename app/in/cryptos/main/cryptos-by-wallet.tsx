@@ -1,4 +1,10 @@
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import {
   Card,
   CardContent,
   CardDescription,
@@ -12,7 +18,13 @@ import {
   numberFormatterNoDecimals,
   thousandFormatter,
 } from '@/lib/utils';
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import {
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip as RechartsTooltip,
+} from 'recharts';
 
 type chartData = {
   name: string;
@@ -113,7 +125,7 @@ export default function CryptoByWallet({
                         />
                       ))}
                     </Pie>
-                    <Tooltip
+                    <RechartsTooltip
                       itemStyle={{
                         backgroundColor: '#FFF',
                         fontStyle: 'bold',
@@ -159,61 +171,79 @@ export default function CryptoByWallet({
             </CardHeader>
 
             <CardContent className='flex flex-wrap gap-2 w-full'>
-              {walletsSortedByLength.map((wallet: any) => (
-                <div
-                  key={wallet?.[0]?.wallet}
-                  className='border rounded-[2px] mb-2 p-2 grow'
-                >
-                  <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
-                    {wallet?.[0]?.wallet}
-                  </h3>
-                  {wallet.map((item: any) => (
-                    <div key={item.total} className='flex justify-between'>
-                      <h3>{item.asset}</h3>
-                      <h3>{item.value}</h3>
-                      <div className='flex'>
-                        <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
-                          item.total
-                        )}`}</p>
-                        <p
-                          className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
-                            (item.total /
-                              totalByWallet[
-                                totalByWallet.findIndex(
-                                  (item) => item.value === wallet?.[0]?.wallet
-                                )
-                              ].total) *
-                              100 >
-                            50
-                              ? 'bg-red-500'
-                              : 'bg-green-500'
-                          }`}
-                        >
-                          {`${numberFormatter.format(
-                            (item.total /
-                              totalByWallet[
-                                totalByWallet.findIndex(
-                                  (item) => item.value === wallet?.[0]?.wallet
-                                )
-                              ].total) *
-                              100
-                          )}%`}
-                        </p>
+              {walletsSortedByLength.map((wallet: any) => {
+                return (
+                  <div
+                    key={wallet?.[0]?.wallet}
+                    className='border rounded-[2px] mb-2 p-2 grow'
+                  >
+                    <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
+                      {wallet?.[0]?.wallet}
+                    </h3>
+                    {wallet.map((item: any) => (
+                      <div key={item.total} className='flex justify-between'>
+                        <h3>{item.asset}</h3>
+                        <h3>{item.value}</h3>
+                        <div className='flex'>
+                          <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
+                            item.total
+                          )}`}</p>
+                          <p
+                            className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                              (item.total /
+                                totalByWallet[
+                                  totalByWallet.findIndex(
+                                    (item) => item.value === wallet?.[0]?.wallet
+                                  )
+                                ].total) *
+                                100 >
+                              50
+                                ? 'bg-red-500'
+                                : 'bg-green-500'
+                            }`}
+                          >
+                            {`${numberFormatter.format(
+                              (item.total /
+                                totalByWallet[
+                                  totalByWallet.findIndex(
+                                    (item) => item.value === wallet?.[0]?.wallet
+                                  )
+                                ].total) *
+                                100
+                            )}%`}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                  <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
-                    <h3>Subtotal</h3>
-                    {numberFormatterNoDecimals.format(
-                      totalByWallet[
-                        totalByWallet.findIndex(
-                          (item) => item.value === wallet?.[0]?.wallet
-                        )
-                      ].total
-                    )}
-                  </CardFooter>
-                </div>
-              ))}
+                    ))}
+                    <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
+                      <h3>
+                        Subtotal
+                        {
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <span className='ml-1 text-xs font-thin'>
+                                  {`(${wallet.length})`}
+                                </span>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Total of Items</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        }
+                      </h3>
+                      {numberFormatterNoDecimals.format(
+                        totalByWallet[
+                          totalByWallet.findIndex(
+                            (item) => item.value === wallet?.[0]?.wallet
+                          )
+                        ].total
+                      )}
+                    </CardFooter>
+                  </div>
+                );
+              })}
             </CardContent>
           </div>
         </div>
