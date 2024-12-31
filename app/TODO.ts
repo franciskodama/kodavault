@@ -1,36 +1,21 @@
-// TODO: WORKING ON:
-// Responsivity
-// Check if we can delete the classes in Add Asset and Update Asset and use the import from './lib/classes'
-// Altcoin Add Asset: after click on Category it has been activating the database
-// CronJob: https://console.cron-job.org/jobs/5201103
-// After CronJob Fix, return the commented code in the middleware f
-// Shortcut styles of the shortcuts
-// Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
-// Arrumar reload on Shortcut, etc.. pages
-
-// Add Assets: Cash in Exchanges don't need to have the option to choose will be always USD or BRL (it's the only option)
-// CardLongsAndShorts or Page for it?
-// Create a Page for the Elliott Waves Cheat Sheet
-
-// Create a Chrome extension (add and update assets): https://www.luckymedia.dev/blog/how-to-create-a-chrome-extension-with-react-typescript-tailwindcss-and-vite-in-2024 or https://github.com/vercel/next.js/tree/canary/examples/with-chrome-extension
-
-// TODO ---------------------------------------------------------------------------
 // TODO: NEXT:
-// How many assets are there? How many cryptos?
+// CronJob: https://console.cron-job.org/jobs/5201103
 // cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
 
-// TODO: DONE LAST LIST DEC/2024:
-// Filter by tag on the Asset Page
-// Check icon for the ones we make a big check like that (Reviewed and Unreviewed)
-// Account can also be the Accounts/Networks in Ledger
-// When filter no 0 - instead a message
-// Why do we have 2 Cryptos on the select on Asset Page?
-// Change the domain: trezo.app --> Check on vercel if it's already valid
-// Why we don't have the updated price for ETHX.B? It's correct in the spreadsheet
+// TODO: WORKING ON:
+// Responsivity
+// Altcoin Add Asset: after click on Category it has been activating the database
+// After CronJob Fix, return the commented code in the middleware f
+// Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
+// Arrumar reload on Shortcut, etc.. pages
+// Add Assets: Cash in Exchanges don't need to have the option to choose will be always USD or BRL (it's the only option)
+// CardLongsAndShorts or Page for it?
+// Create a Page for the Elliott Waves Cheat Sheet
+// Create a Chrome extension (add and update assets): https://www.luckymedia.dev/blog/how-to-create-a-chrome-extension-with-react-typescript-tailwindcss-and-vite-in-2024 or https://github.com/vercel/next.js/tree/canary/examples/with-chrome-extension
 
 // TODO ---------------------------------------------------------------------------
-
+// Shortcut styles of the shortcuts
 // BTC Dominance
 // Assets Forms: If chooses BTC we need to give the right category selected - For all the other coins too, but no hardcode (or api) info we show all the options
 // When I edit the CAD Cash in Wealthsimple Asset, it does not appear Wealthsimple as an option to choose from
@@ -90,6 +75,15 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Check if we can delete the classes in Add Asset and Update Asset and use the import from './lib/classes'
+// How many assets are there? How many cryptos?
+// Filter by tag on the Asset Page
+// Check icon for the ones we make a big check like that (Reviewed and Unreviewed)
+// Account can also be the Accounts/Networks in Ledger
+// When filter no 0 - instead a message
+// Why do we have 2 Cryptos on the select on Asset Page?
+// Change the domain: trezo.app --> Check on vercel if it's already valid
+// Why we don't have the updated price for ETHX.B? It's correct in the spreadsheet
 // Bug Tooltip was submitting the form without filling all the fields and clicking on Submit
 // Total Vault board: show what they have. It it's only one currency or not
 // Add Disable the other fields if the type was not chosen

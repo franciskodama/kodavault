@@ -20,7 +20,6 @@ import {
   getCategoryBySymbol,
   getCategoryTooltip,
   getCurrencies,
-  getExchanges,
   getSymbols,
   getTypes,
   getWallets,
@@ -102,12 +101,6 @@ export function AddAssetForm() {
       setValue('account', assetAccount[0]);
     }
   }, [assetAccount, setValue]);
-
-  // useEffect(() => {
-  //   if (assetExchange.length === 1) {
-  //     setValue('exchange', assetExchange[0]);
-  //   }
-  // }, [assetExchange, setValue]);
 
   useEffect(() => {
     if (altcoinsCategories.find((coin) => coin.symbol === symbolTyped)) {
