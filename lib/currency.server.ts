@@ -34,25 +34,28 @@ export const getCurrencies = async (): Promise<Currencies> => {
   }
 };
 
-// We are not using this API at the moment because of Cache problems, but it's here in case we need it
-// export const getCurrenciesFromApi = async () => {
-//   try {
-//     const response = await fetch(
-//       `https://api.freecurrencyapi.com/v1/latest?apikey=${process.env.NEXT_PUBLIC_FREECURRENCYAPI}`,
-//       {
-//         method: 'GET',
-//         headers: {
-//           'Cache-Control': 'no-cache',
-//           Pragma: 'no-cache',
-//           Expires: '0',
-//         },
-//       }
-//     ).then((res) => res.json());
-//     return response;
-//   } catch (error) {
-//     return { error };
-//   }
-// };
+// Using this  API only for BRL because Yahoo Finance stop working with the pair USDBRL
+export const getCurrenciesFromApi = async (): Promise<{
+  data: Record<string, number>;
+} | null> => {
+  try {
+    const data = await fetch(
+      `https://api.freecurrencyapi.com/v1/latest?apikey=${process.env.NEXT_PUBLIC_FREECURRENCYAPI}`,
+      {
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+          Expires: '0',
+        },
+      }
+    ).then((res) => res.json());
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
 
 // Just for getting the Currency API Status
 // export const currencyRatesApiStatus = async () => {

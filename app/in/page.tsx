@@ -1,8 +1,8 @@
 import { currentUser } from '@clerk/nextjs/server';
 
 import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
-import { getGoal, getNetWorthEvolution, getUids } from '@/lib/actions';
-import { getCurrencies } from '@/lib/currency.server';
+import { getGoal, getNetWorthEvolution } from '@/lib/actions';
+import { getCurrencies, getCurrenciesFromApi } from '@/lib/currency.server';
 import { Loading } from '@/components/Loading';
 import Dashboard from './dashboard/dashboard';
 
@@ -11,7 +11,6 @@ import {
   getAllTimeHighData,
   getGlobalData,
 } from '@/lib/crypto.server';
-import { fetchBtcPrice } from '@/context/signals';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -25,7 +24,12 @@ export default async function DashboardPage() {
   // const globalData = await getGlobalData();
   // console.log('---  🚀 ---> | globalData:', globalData);
 
-  // ==========================================
+  // BRL: ==========================================
+
+  const currencyRatesFromApi = await getCurrenciesFromApi();
+  const usdBrl = currencyRatesFromApi?.data.BRL || 0;
+
+  // USD and CAD =================================
 
   const currencyRates = await getCurrencies();
   const unpricedAssets = await fetchAssetsWithoutPrices(uid ? uid : '');
@@ -46,6 +50,7 @@ export default async function DashboardPage() {
         userName &&
         netWorthChartData && (
           <Dashboard
+            usdBrl={usdBrl}
             currencyRates={currencyRates}
             assets={assets}
             assetsByType={assetsByType}

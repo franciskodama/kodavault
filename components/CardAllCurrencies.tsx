@@ -1,7 +1,11 @@
 'use client';
 
 import { Asset, Currencies, totalArrayProps } from '@/lib/types';
-import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
+import {
+  currencyFormatter,
+  numberFormatter,
+  numberFormatterNoDecimals,
+} from '../lib/utils';
 import {
   Card,
   CardContent,
@@ -12,11 +16,13 @@ import {
 
 export const CardTotalAllCurrency = ({
   btcPrice,
+  usdBrl,
   currencyRates,
   assets,
   description = '',
 }: {
   btcPrice: number;
+  usdBrl: number;
   currencyRates: Currencies;
   assets: Asset[];
   description?: string;
@@ -38,7 +44,7 @@ export const CardTotalAllCurrency = ({
       },
       {
         currency: 'BRL',
-        value: total * currencyRates.data.BRL,
+        value: total * usdBrl,
         emoji: '🇧🇷',
       },
       {

@@ -19,6 +19,7 @@ import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
 import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
 export default function Dashboard({
+  usdBrl,
   currencyRates,
   assets,
   assetsByType,
@@ -28,6 +29,7 @@ export default function Dashboard({
   userName,
   goal,
 }: {
+  usdBrl: number;
   currencyRates: Currencies;
   assets: Asset[];
   assetsByType: AssetsByType;
@@ -73,8 +75,7 @@ export default function Dashboard({
                 >
                   <span>🇧🇷</span>
                 </a>
-                {currencyRates.data &&
-                  ` BRL: ${currencyFormatter(currencyRates.data.BRL)}`}
+                {currencyRates.data && ` BRL: ${currencyFormatter(usdBrl)}`}
               </div>
             </div>
             <div className='flex justify-end items-center gap-2 mr-8'>
@@ -164,6 +165,7 @@ export default function Dashboard({
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
             <div className='flex flex-col sm:basis-1/5'>
               <CardTotalAllCurrency
+                usdBrl={usdBrl}
                 btcPrice={btcPrice}
                 currencyRates={currencyRates}
                 assets={assets}
