@@ -24,14 +24,15 @@ export default async function DashboardPage() {
   // const globalData = await getGlobalData();
   // console.log('---  🚀 ---> | globalData:', globalData);
 
-  // BRL: ==========================================
+  // ==========================================
 
+  // BRL:
   const currencyRatesFromApi = await getCurrenciesFromApi();
   const usdBrl = currencyRatesFromApi?.data.BRL || 0;
 
-  // USD and CAD =================================
-
+  // USD + CAD
   const currencyRates = await getCurrencies();
+
   const unpricedAssets = await fetchAssetsWithoutPrices(uid ? uid : '');
   const { assets, assetsByType } = await fetchAssetsWithPrices(unpricedAssets);
 

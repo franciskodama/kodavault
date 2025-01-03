@@ -1,10 +1,11 @@
 import Assets from './assets';
 
 type PageProps = {
-  searchParams: { type?: string };
+  searchParams: Promise<{ type?: string }>;
 };
 
-export default function AssetsPage({ searchParams }: PageProps) {
+export default async function AssetsPage(props: PageProps) {
+  const searchParams = await props.searchParams;
   const typeFilterAsParam = searchParams.type || null;
 
   return (
