@@ -221,17 +221,15 @@ export function AddAssetForm() {
                 <ul className={classUl}>
                   {categoryOptions.map((categoryOption) => (
                     <li key={categoryOption}>
-                      <li key={categoryOption}>
-                        <CustomRadioWithTooltip
-                          value={categoryOption}
-                          id={categoryOption}
-                          register={register('category')}
-                          tooltipContent={
-                            getCategoryTooltip(categoryOption) || ''
-                          }
-                          labelClassName={classLabelRadio}
-                        />
-                      </li>
+                      <CustomRadioWithTooltip
+                        value={categoryOption}
+                        id={categoryOption}
+                        register={register('category')}
+                        tooltipContent={
+                          getCategoryTooltip(categoryOption) || ''
+                        }
+                        labelClassName={classLabelRadio}
+                      />
                     </li>
                   ))}
                 </ul>

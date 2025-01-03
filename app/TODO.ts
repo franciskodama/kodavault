@@ -4,7 +4,7 @@
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
 
 // TODO: WORKING ON:
-//Update NextJs and React versions: https://www.youtube.com/watch?v=fqabW3WRUbw&t=1s
+// Update NextJs and React versions: https://www.youtube.com/watch?v=fqabW3WRUbw&t=1s
 
 // Responsivity
 // Altcoin Add Asset: after click on Category it has been activating the database
