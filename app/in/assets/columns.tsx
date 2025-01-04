@@ -129,7 +129,7 @@ export const columns: ColumnDef<Asset>[] = [
         >
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>Sub-t</TooltipTrigger>
+              <TooltipTrigger>SubT</TooltipTrigger>
               <TooltipContent>
                 <p>Subtype</p>
               </TooltipContent>
@@ -224,28 +224,28 @@ export const columns: ColumnDef<Asset>[] = [
   //     );
   //   },
   // },
-  {
-    id: 'review',
-    cell: ({ row }) => (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <AssetReviewed asset={row.original} />
-          </TooltipTrigger>
-          <TooltipContent>
-            {row.original?.reviewed ? 'Reviewed' : 'Unreviewed'}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    ),
-  },
+  // {
+  //   id: 'review',
+  //   cell: ({ row }) => (
+  // <TooltipProvider>
+  //   <Tooltip>
+  //     <TooltipTrigger>
+  //       <AssetReviewed asset={row.original} />
+  //     </TooltipTrigger>
+  //     <TooltipContent>
+  //       {row.original?.reviewed ? 'Reviewed' : 'Unreviewed'}
+  //     </TooltipContent>
+  //   </Tooltip>
+  // </TooltipProvider>
+  //   ),
+  // },
   {
     id: 'actions',
     cell: ({ row }) => <AssetActionsCell asset={row.original} />,
   },
 ];
 
-const AssetReviewed: FC<{ asset: Asset }> = ({ asset }) => {
+const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
   const { refreshAssets } = useAssetsContext();
 
   const handleReviewedAsset = async (id: string, reviewed: boolean) => {
@@ -270,25 +270,6 @@ const AssetReviewed: FC<{ asset: Asset }> = ({ asset }) => {
     }
   };
 
-  return (
-    <>
-      {asset && (
-        <div className='flex items-center text-xl'>
-          {/* <Checkbox
-            checked={asset.reviewed}
-            onCheckedChange={() =>
-              handleReviewedAsset(asset.id, !asset.reviewed as boolean)
-            }
-          /> */}
-        </div>
-      )}
-    </>
-  );
-};
-
-const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
-  const { refreshAssets } = useAssetsContext();
-
   const handleDeleteAsset = async (id: string) => {
     try {
       await deleteAsset(id);
@@ -312,8 +293,15 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
     <>
       {asset && (
         <div className='flex items-center text-xl'>
+          <Checkbox
+            className='w-[30px] h-[30px] border border-slate-300 rounded-[2px]'
+            checked={asset.reviewed}
+            onCheckedChange={() =>
+              handleReviewedAsset(asset.id, !asset.reviewed as boolean)
+            }
+          />
           <Sheet>
-            <SheetTrigger className='ml-4 hover:text-base w-8 bg-white border border-slate-300 rounded-[2px] '>
+            <SheetTrigger className='ml-4 hover:text-base w-8 bg-white border border-slate-300 rounded-[2px]'>
               ✏️
             </SheetTrigger>
             <SheetContent className='max-h-screen overflow-y-scroll'>

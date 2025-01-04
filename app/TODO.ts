@@ -5,7 +5,7 @@
 
 // TODO: WORKING ON:
 // Update NextJs and React versions: https://www.youtube.com/watch?v=fqabW3WRUbw&t=1s
-
+// Sum of the Asset Page must be in another place. It's getting out of the Table
 // Responsivity
 // Altcoin Add Asset: after click on Category it has been activating the database
 // After CronJob Fix, return the commented code in the middleware f
