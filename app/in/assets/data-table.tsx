@@ -156,11 +156,6 @@ export function DataTable<TData, TValue>({
         label: item,
       }));
 
-    options.push({
-      value: 'No Filter',
-      label: 'No Filter',
-    });
-
     return options;
   };
 
@@ -268,9 +263,7 @@ export function DataTable<TData, TValue>({
                             );
                             table
                               .getColumn('wallet')
-                              ?.setFilterValue(
-                                currentValue === 'No Filter' ? '' : currentValue
-                              );
+                              ?.setFilterValue(currentValue);
                             setOpenWalletDropbox(false);
                           }}
                         >
@@ -327,9 +320,7 @@ export function DataTable<TData, TValue>({
                             );
                             table
                               .getColumn('currency')
-                              ?.setFilterValue(
-                                currentValue === 'No Filter' ? '' : currentValue
-                              );
+                              ?.setFilterValue(currentValue);
                             setOpenCurrencyDropbox(false);
                           }}
                         >
@@ -382,9 +373,7 @@ export function DataTable<TData, TValue>({
                             );
                             table
                               .getColumn('type')
-                              ?.setFilterValue(
-                                currentValue === 'No Filter' ? '' : currentValue
-                              );
+                              ?.setFilterValue(currentValue);
                             setOpenTypeDropbox(false);
                           }}
                         >
@@ -471,9 +460,9 @@ export function DataTable<TData, TValue>({
           ) : null}
         </AnimatePresence>
 
-        <div className='flex items-center'>
+        <div className='flex items-center px-4 mt-0 mb-8'>
           {!areThereRepeatedAssets && filterIsActive ? (
-            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 border-2  bg-accent rounded-[2px] text-left'>
+            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 bg-accent rounded-[2px] text-left'>
               <>
                 <div className='flex items-center gap-2 font-semibold'>
                   <p>Total Filtered:</p>
@@ -485,7 +474,7 @@ export function DataTable<TData, TValue>({
           ) : null}
 
           {areThereRepeatedAssets && (
-            <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 bg-accent rounded-[2px] text-left'>
+            <div className='flex items-center h-10 font-bold ml-4 px-4 bg-accent rounded-[2px] text-left'>
               <div className='flex items-center w-full'>
                 <p className='w-[6ch]'>Asset:</p>
                 {getRepeatedAssetTotal(
@@ -520,7 +509,7 @@ export function DataTable<TData, TValue>({
                   <Button
                     size='md'
                     variant={'outline'}
-                    className='w-[19.5ch] sm:w-12 h-10 sm:ml-4 border-2 border-slate-500'
+                    className='w-[19.5ch] sm:w-12 h-10 sm:ml-2 border-2 border-slate-500 bg-accent'
                     onClick={() => {
                       handleClickClearAll();
                     }}
