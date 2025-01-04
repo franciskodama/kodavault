@@ -414,74 +414,6 @@ export function DataTable<TData, TValue>({
               }}
               className='max-w-sm w-[20ch] ml-4'
             />
-
-            {!areThereRepeatedAssets && filterIsActive ? (
-              <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 border-2  bg-accent rounded-[2px] text-left'>
-                <>
-                  <div className='flex items-center gap-2 font-semibold'>
-                    <p>Total Filtered:</p>
-                    {`$ `}
-                    {thousandFormatter(totalFilteredAssets)}
-                  </div>
-                </>
-              </div>
-            ) : null}
-
-            {areThereRepeatedAssets && (
-              <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 bg-accent rounded-[2px] text-left'>
-                <div className='flex items-center w-full'>
-                  <p className='w-[6ch]'>Asset:</p>
-                  {getRepeatedAssetTotal(
-                    (table.getColumn('asset')?.getFilterValue() as string) ?? ''
-                  ).assetName.toUpperCase()}
-                </div>
-                <p className='mx-6'>|</p>
-                <div className='flex items-center w-full'>
-                  <p className='w-[9ch]'>Total Qty:</p>
-                  {thousandAndDecimalFormatter(
-                    getRepeatedAssetTotal(
-                      (table.getColumn('asset')?.getFilterValue() as string) ??
-                        ''
-                    ).totalQty
-                  )}
-                </div>
-                <p className='mx-6'>|</p>
-                <div className='flex items-center w-full'>
-                  <p className='w-[6ch]'>Total:</p>
-                  {thousandAndDecimalFormatter(
-                    getRepeatedAssetTotal(
-                      (table.getColumn('asset')?.getFilterValue() as string) ??
-                        ''
-                    ).total
-                  )}
-                </div>
-              </div>
-            )}
-
-            {clearFilterButton && (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Button
-                      size='md'
-                      variant={'outline'}
-                      className='w-[19.5ch] sm:w-12 h-10 sm:ml-4 border-2 border-slate-500'
-                      onClick={() => {
-                        handleClickClearAll();
-                      }}
-                    >
-                      <XIcon size={18} strokeWidth={2.4} />
-                      <span className='inline sm:hidden ml-2'>
-                        Clear All Filters
-                      </span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Clear All Filters</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            )}
           </div>
 
           {stocksNoTotal?.length > 0 && !openNotification ? (
@@ -538,6 +470,74 @@ export function DataTable<TData, TValue>({
             </motion.div>
           ) : null}
         </AnimatePresence>
+
+        <div className='flex items-center'>
+          {!areThereRepeatedAssets && filterIsActive ? (
+            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 border-2  bg-accent rounded-[2px] text-left'>
+              <>
+                <div className='flex items-center gap-2 font-semibold'>
+                  <p>Total Filtered:</p>
+                  {`$ `}
+                  {thousandFormatter(totalFilteredAssets)}
+                </div>
+              </>
+            </div>
+          ) : null}
+
+          {areThereRepeatedAssets && (
+            <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 bg-accent rounded-[2px] text-left'>
+              <div className='flex items-center w-full'>
+                <p className='w-[6ch]'>Asset:</p>
+                {getRepeatedAssetTotal(
+                  (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+                ).assetName.toUpperCase()}
+              </div>
+              <p className='mx-6'>|</p>
+              <div className='flex items-center w-full'>
+                <p className='w-[9ch]'>Total Qty:</p>
+                {thousandAndDecimalFormatter(
+                  getRepeatedAssetTotal(
+                    (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+                  ).totalQty
+                )}
+              </div>
+              <p className='mx-6'>|</p>
+              <div className='flex items-center w-full'>
+                <p className='w-[6ch]'>Total:</p>
+                {thousandAndDecimalFormatter(
+                  getRepeatedAssetTotal(
+                    (table.getColumn('asset')?.getFilterValue() as string) ?? ''
+                  ).total
+                )}
+              </div>
+            </div>
+          )}
+
+          {clearFilterButton && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    size='md'
+                    variant={'outline'}
+                    className='w-[19.5ch] sm:w-12 h-10 sm:ml-4 border-2 border-slate-500'
+                    onClick={() => {
+                      handleClickClearAll();
+                    }}
+                  >
+                    <XIcon size={18} strokeWidth={2.4} />
+                    <span className='inline sm:hidden ml-2'>
+                      Clear All Filters
+                    </span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Clear All Filters</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </div>
 
         {table.getRowModel().rows?.length ? (
           <Table>
