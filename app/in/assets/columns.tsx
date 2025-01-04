@@ -31,7 +31,6 @@ import {
 import { ArrowUpDown } from 'lucide-react';
 
 import { useAssetsContext } from '@/context/AssetsContext';
-import { Button } from '@/components/ui/button';
 import { tableHeaderClass } from '@/lib/classes';
 import { Asset } from '@/lib/types';
 import { deleteAsset, updateReviewedAsset } from '@/lib/actions';
@@ -46,14 +45,13 @@ export const columns: ColumnDef<Asset>[] = [
     accessorKey: 'wallet',
     header: ({ column }) => {
       return (
-        <Button
+        <div
           className={tableHeaderClass}
-          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Wallet
           <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
+        </div>
       );
     },
   },
@@ -61,14 +59,13 @@ export const columns: ColumnDef<Asset>[] = [
     accessorKey: 'account',
     header: ({ column }) => {
       return (
-        <Button
+        <div
           className={tableHeaderClass}
-          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Account
           <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
+        </div>
       );
     },
   },
@@ -76,14 +73,13 @@ export const columns: ColumnDef<Asset>[] = [
     accessorKey: 'asset',
     header: ({ column }) => {
       return (
-        <Button
+        <div
           className={tableHeaderClass}
-          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Asset
           <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
+        </div>
       );
     },
   },
@@ -99,14 +95,13 @@ export const columns: ColumnDef<Asset>[] = [
     accessorKey: 'total',
     header: ({ column }) => {
       return (
-        <Button
+        <div
           className={tableHeaderClass}
-          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Total
           <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
+        </div>
       );
     },
   },
@@ -114,14 +109,13 @@ export const columns: ColumnDef<Asset>[] = [
     accessorKey: 'type',
     header: ({ column }) => {
       return (
-        <Button
+        <div
           className={tableHeaderClass}
-          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Type
           <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
+        </div>
       );
     },
   },
@@ -129,9 +123,8 @@ export const columns: ColumnDef<Asset>[] = [
     accessorKey: 'subtype',
     header: ({ column }) => {
       return (
-        <Button
+        <div
           className={tableHeaderClass}
-          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           <TooltipProvider>
@@ -143,7 +136,7 @@ export const columns: ColumnDef<Asset>[] = [
             </Tooltip>
           </TooltipProvider>
           <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
+        </div>
       );
     },
   },
@@ -151,14 +144,13 @@ export const columns: ColumnDef<Asset>[] = [
     accessorKey: 'category',
     header: ({ column }) => {
       return (
-        <Button
+        <div
           className={tableHeaderClass}
-          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Category
           <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
+        </div>
       );
     },
   },
@@ -166,14 +158,13 @@ export const columns: ColumnDef<Asset>[] = [
     accessorKey: 'purpose',
     header: ({ column }) => {
       return (
-        <Button
+        <div
           className={tableHeaderClass}
-          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Purpose
           <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
+        </div>
       );
     },
   },
@@ -181,14 +172,13 @@ export const columns: ColumnDef<Asset>[] = [
     accessorKey: 'tag',
     header: ({ column }) => {
       return (
-        <Button
+        <div
           className={tableHeaderClass}
-          variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Tag
           <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
+        </div>
       );
     },
   },
@@ -196,9 +186,8 @@ export const columns: ColumnDef<Asset>[] = [
   //   accessorKey: 'exchange',
   //   header: ({ column }) => {
   //     return (
-  //       <Button
+  //       <div
   //         className={tableHeaderClass}
-  //         variant='ghost'
   //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
   //       >
   //         <TooltipProvider>
@@ -210,7 +199,7 @@ export const columns: ColumnDef<Asset>[] = [
   //           </Tooltip>
   //         </TooltipProvider>
   //         <ArrowUpDown className='ml-2 h-4 w-4' />
-  //       </Button>
+  //       </div>
   //     );
   //   },
   // },
@@ -218,9 +207,8 @@ export const columns: ColumnDef<Asset>[] = [
   //   accessorKey: 'currency',
   //   header: ({ column }) => {
   //     return (
-  //       <Button
+  //       <div
   //         className={tableHeaderClass}
-  //         variant='ghost'
   //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
   //       >
   //         <TooltipProvider>
@@ -232,7 +220,7 @@ export const columns: ColumnDef<Asset>[] = [
   //           </Tooltip>
   //         </TooltipProvider>
   //         <ArrowUpDown className='ml-2 h-4 w-4' />
-  //       </Button>
+  //       </div>
   //     );
   //   },
   // },
@@ -286,12 +274,12 @@ const AssetReviewed: FC<{ asset: Asset }> = ({ asset }) => {
     <>
       {asset && (
         <div className='flex items-center text-xl'>
-          <Checkbox
+          {/* <Checkbox
             checked={asset.reviewed}
             onCheckedChange={() =>
               handleReviewedAsset(asset.id, !asset.reviewed as boolean)
             }
-          />
+          /> */}
         </div>
       )}
     </>

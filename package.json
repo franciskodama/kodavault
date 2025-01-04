@@ -33,6 +33,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.1.2",
+    "@shadcn/ui": "^0.0.4",
     "@tanstack/react-table": "^8.10.7",
     "braces": "3.0.3",
     "class-variance-authority": "^0.7.0",
