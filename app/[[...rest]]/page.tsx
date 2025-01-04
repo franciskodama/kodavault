@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
-import { currentUser } from '@clerk/nextjs/server';
+import { auth } from '@clerk/nextjs/server';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SignInPage from '../sign-in/page';
 
 export default async function HomePage() {
-  const user = await currentUser();
+  const { userId } = await auth();
 
-  if (user) {
+  if (userId) {
     redirect(`/in`);
   }
 
@@ -18,7 +18,7 @@ export default async function HomePage() {
     <main className='flex flex-col'>
       <Header />
       <div>
-        {!user && (
+        {!userId && (
           <div className='flex w-full items-center justify-center my-8'>
             <div className='flex justify-center w-1/2'>
               <Image
