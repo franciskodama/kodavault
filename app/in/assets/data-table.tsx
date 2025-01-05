@@ -77,6 +77,9 @@ export function DataTable<TData, TValue>({
   const [openWalletDropbox, setOpenWalletDropbox] = useState(false);
   const [valueWalletDropbox, setValueWalletDropbox] = useState('');
 
+  const [openAccountDropbox, setOpenAccountDropbox] = useState(false);
+  const [valueAccountDropbox, setValueAccountDropbox] = useState('');
+
   const [openCurrencyDropbox, setOpenCurrencyDropbox] = useState(false);
   const [valueCurrencyDropbox, setValueCurrencyDropbox] = useState('');
 
@@ -141,6 +144,9 @@ export function DataTable<TData, TValue>({
   const walletsArray = Array.from(
     new Set(assets.map((asset) => asset?.wallet))
   );
+  const accountsArray = Array.from(
+    new Set(assets.map((asset) => asset?.account))
+  );
   const currencyArray = Array.from(
     new Set(assets.map((asset) => asset?.currency))
   );
@@ -160,6 +166,7 @@ export function DataTable<TData, TValue>({
   };
 
   const wallets = convertArrayToOptions(walletsArray);
+  const accounts = convertArrayToOptions(accountsArray);
   const currencies = convertArrayToOptions(currencyArray);
   const types = convertArrayToOptions(typeArray);
 
@@ -283,6 +290,65 @@ export function DataTable<TData, TValue>({
                 </Command>
               </PopoverContent>
             </Popover>
+
+            <Popover
+              open={openAccountDropbox}
+              onOpenChange={setOpenAccountDropbox}
+            >
+              <PopoverTrigger asChild>
+                <Button
+                  variant='outline'
+                  role='combobox'
+                  aria-expanded={openAccountDropbox}
+                  className='sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
+                >
+                  {valueAccountDropbox
+                    ? accounts.find(
+                        (wallet) => wallet.value === valueAccountDropbox
+                      )?.label
+                    : 'Filter by Account'}
+                  <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className='w-[23ch] p-0'>
+                <Command>
+                  <CommandList>
+                    <CommandEmpty>No account found.</CommandEmpty>
+                    <CommandGroup>
+                      {accounts.map((account) => (
+                        <CommandItem
+                          className='text-xs'
+                          key={account.value}
+                          value={account.value}
+                          onSelect={(currentValue) => {
+                            setValueAccountDropbox(
+                              currentValue === valueAccountDropbox
+                                ? ''
+                                : currentValue
+                            );
+                            table
+                              .getColumn('account')
+                              ?.setFilterValue(currentValue);
+                            setOpenAccountDropbox(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              'mr-2 h-4 w-4',
+                              valueAccountDropbox === account.value
+                                ? 'opacity-100'
+                                : 'opacity-0'
+                            )}
+                          />
+                          {account.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+
             <Popover
               open={openCurrencyDropbox}
               onOpenChange={setOpenCurrencyDropbox}
