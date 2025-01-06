@@ -163,7 +163,7 @@ export default function Dashboard({
             </div>
 
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
-            <div className='flex flex-col sm:basis-1/5'>
+            <div className='flex flex-col sm:basis-1/5 '>
               <CardTotalAllCurrency
                 usdBrl={usdBrl}
                 btcPrice={btcPrice}
@@ -172,9 +172,9 @@ export default function Dashboard({
                 description={'Total Vault in USD, CAD, BRL.'}
               />
 
-              <div className='mb-2'>
-                {/* <CardNextPurchases /> */}
-                {/* <CardAssetsOnTheRise /> */}
+              <div className='flex flex-col mb-2 gap-2'>
+                <CardNextPurchases />
+                <CardAssetsOnTheRise />
                 <CardCryptosForTrading assets={assets} />
                 <CardLongsAndShorts assets={assets} />
               </div>
