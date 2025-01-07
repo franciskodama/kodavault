@@ -4,9 +4,8 @@
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
 
 // TODO: WORKING ON:
-// Update NextJs and React versions: https://www.youtube.com/watch?v=fqabW3WRUbw&t=1s
-// Sum of the Asset Page must be in another place. It's getting out of the Table
 // Responsivity
+// Google Chart for the Crypto Page
 // Altcoin Add Asset: after click on Category it has been activating the database
 // After CronJob Fix, return the commented code in the middleware f
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
@@ -28,11 +27,10 @@
 // Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
 // Resistences and Supports?
 // Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
-
 // If we need to change auth(): https://www.youtube.com/shorts/x6hrvwNzj10
 
 // TODO: ERRORS:
-// NaN Alloication Goals, Offset column
+// NaN Allocation Goals, Offset column
 // On Cryptos Page file:      {assetsByType.Crypto.length > 0 ? (
 
 // TODO: PRIORITIES 1:
@@ -77,6 +75,8 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Sum of the Asset Page must be in another place. It's getting out of the Table
+// Update NextJs and React versions: https://www.youtube.com/watch?v=fqabW3WRUbw&t=1s
 // Check if we can delete the classes in Add Asset and Update Asset and use the import from './lib/classes'
 // How many assets are there? How many cryptos?
 // Filter by tag on the Asset Page

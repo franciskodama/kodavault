@@ -77,6 +77,9 @@ export function DataTable<TData, TValue>({
   const [openWalletDropbox, setOpenWalletDropbox] = useState(false);
   const [valueWalletDropbox, setValueWalletDropbox] = useState('');
 
+  const [openAccountDropbox, setOpenAccountDropbox] = useState(false);
+  const [valueAccountDropbox, setValueAccountDropbox] = useState('');
+
   const [openCurrencyDropbox, setOpenCurrencyDropbox] = useState(false);
   const [valueCurrencyDropbox, setValueCurrencyDropbox] = useState('');
 
@@ -141,6 +144,9 @@ export function DataTable<TData, TValue>({
   const walletsArray = Array.from(
     new Set(assets.map((asset) => asset?.wallet))
   );
+  const accountsArray = Array.from(
+    new Set(assets.map((asset) => asset?.account))
+  );
   const currencyArray = Array.from(
     new Set(assets.map((asset) => asset?.currency))
   );
@@ -156,15 +162,11 @@ export function DataTable<TData, TValue>({
         label: item,
       }));
 
-    options.push({
-      value: 'No Filter',
-      label: 'No Filter',
-    });
-
     return options;
   };
 
   const wallets = convertArrayToOptions(walletsArray);
+  const accounts = convertArrayToOptions(accountsArray);
   const currencies = convertArrayToOptions(currencyArray);
   const types = convertArrayToOptions(typeArray);
 
@@ -268,9 +270,7 @@ export function DataTable<TData, TValue>({
                             );
                             table
                               .getColumn('wallet')
-                              ?.setFilterValue(
-                                currentValue === 'No Filter' ? '' : currentValue
-                              );
+                              ?.setFilterValue(currentValue);
                             setOpenWalletDropbox(false);
                           }}
                         >
@@ -290,6 +290,65 @@ export function DataTable<TData, TValue>({
                 </Command>
               </PopoverContent>
             </Popover>
+
+            <Popover
+              open={openAccountDropbox}
+              onOpenChange={setOpenAccountDropbox}
+            >
+              <PopoverTrigger asChild>
+                <Button
+                  variant='outline'
+                  role='combobox'
+                  aria-expanded={openAccountDropbox}
+                  className='sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
+                >
+                  {valueAccountDropbox
+                    ? accounts.find(
+                        (wallet) => wallet.value === valueAccountDropbox
+                      )?.label
+                    : 'Filter by Account'}
+                  <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className='w-[23ch] p-0'>
+                <Command>
+                  <CommandList>
+                    <CommandEmpty>No account found.</CommandEmpty>
+                    <CommandGroup>
+                      {accounts.map((account) => (
+                        <CommandItem
+                          className='text-xs'
+                          key={account.value}
+                          value={account.value}
+                          onSelect={(currentValue) => {
+                            setValueAccountDropbox(
+                              currentValue === valueAccountDropbox
+                                ? ''
+                                : currentValue
+                            );
+                            table
+                              .getColumn('account')
+                              ?.setFilterValue(currentValue);
+                            setOpenAccountDropbox(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              'mr-2 h-4 w-4',
+                              valueAccountDropbox === account.value
+                                ? 'opacity-100'
+                                : 'opacity-0'
+                            )}
+                          />
+                          {account.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+
             <Popover
               open={openCurrencyDropbox}
               onOpenChange={setOpenCurrencyDropbox}
@@ -327,9 +386,7 @@ export function DataTable<TData, TValue>({
                             );
                             table
                               .getColumn('currency')
-                              ?.setFilterValue(
-                                currentValue === 'No Filter' ? '' : currentValue
-                              );
+                              ?.setFilterValue(currentValue);
                             setOpenCurrencyDropbox(false);
                           }}
                         >
@@ -382,9 +439,7 @@ export function DataTable<TData, TValue>({
                             );
                             table
                               .getColumn('type')
-                              ?.setFilterValue(
-                                currentValue === 'No Filter' ? '' : currentValue
-                              );
+                              ?.setFilterValue(currentValue);
                             setOpenTypeDropbox(false);
                           }}
                         >
@@ -412,7 +467,7 @@ export function DataTable<TData, TValue>({
                 table.getColumn('tag')?.setFilterValue(e.target.value);
                 setClearFilterButton(true);
               }}
-              className='max-w-sm w-[20ch] ml-4'
+              className='max-w-sm w-[20ch] sm:ml-4'
             />
           </div>
 
@@ -471,9 +526,9 @@ export function DataTable<TData, TValue>({
           ) : null}
         </AnimatePresence>
 
-        <div className='flex items-center'>
+        <div className='flex items-center px-4 mt-0 mb-8'>
           {!areThereRepeatedAssets && filterIsActive ? (
-            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 border-2  bg-accent rounded-[2px] text-left'>
+            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 bg-accent rounded-[2px] text-left'>
               <>
                 <div className='flex items-center gap-2 font-semibold'>
                   <p>Total Filtered:</p>
@@ -485,7 +540,7 @@ export function DataTable<TData, TValue>({
           ) : null}
 
           {areThereRepeatedAssets && (
-            <div className='flex items-center h-10 font-bold ml-4 px-4 border-2 bg-accent rounded-[2px] text-left'>
+            <div className='flex items-center h-10 font-bold ml-4 px-4 bg-accent rounded-[2px] text-left'>
               <div className='flex items-center w-full'>
                 <p className='w-[6ch]'>Asset:</p>
                 {getRepeatedAssetTotal(
@@ -517,19 +572,17 @@ export function DataTable<TData, TValue>({
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <Button
-                    size='md'
-                    variant={'outline'}
-                    className='w-[19.5ch] sm:w-12 h-10 sm:ml-4 border-2 border-slate-500'
+                  <div
+                    className='flex items-center justify-center w-[176px] sm:w-11 h-10 ml-4 sm:ml-2 border-2 border-slate-500 bg-accent'
                     onClick={() => {
                       handleClickClearAll();
                     }}
                   >
                     <XIcon size={18} strokeWidth={2.4} />
-                    <span className='inline sm:hidden ml-2'>
+                    <span className='inline sm:hidden ml-2 font-semibold'>
                       Clear All Filters
                     </span>
-                  </Button>
+                  </div>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Clear All Filters</p>
