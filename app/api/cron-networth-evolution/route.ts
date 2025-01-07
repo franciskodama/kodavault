@@ -1,11 +1,14 @@
 import { addNetWorthEvolution, getUids } from '@/lib/actions';
 import { fetchAssetsWithPrices } from '@/lib/assets';
 import { getAssets } from '@/lib/assets.server';
-import { getCurrencies } from '@/lib/currency.server';
+import { getCurrencies, getCurrenciesFromApi } from '@/lib/currency.server';
 import { AddNetWorthChartData, UnpricedAsset } from '@/lib/types';
 
 export async function GET() {
   const currencyRates = await getCurrencies();
+  const currencyRatesFromApi = await getCurrenciesFromApi();
+  const usdBrl = currencyRatesFromApi?.data.BRL || 0;
+
   const uids = await getUids();
 
   if (!Array.isArray(uids)) {
@@ -68,7 +71,7 @@ export async function GET() {
           uid,
           usd: total,
           cad: total * currencyRates.data.CAD,
-          brl: total * currencyRates.data.BRL,
+          brl: total * usdBrl,
           btc: total / btc.price,
         };
       } else {

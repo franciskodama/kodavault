@@ -5,6 +5,7 @@
 
 // TODO: WORKING ON:
 // Responsivity
+// Google Chart for the Crypto Page
 // Altcoin Add Asset: after click on Category it has been activating the database
 // After CronJob Fix, return the commented code in the middleware f
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
