@@ -13,32 +13,16 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Asset, TotalByWallet } from '@/lib/types';
-import {
-  numberFormatter,
-  numberFormatterNoDecimals,
-  thousandFormatter,
-} from '@/lib/utils';
-import {
-  Cell,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip as RechartsTooltip,
-} from 'recharts';
+import { numberFormatter, numberFormatterNoDecimals } from '@/lib/utils';
 
-type chartData = {
-  name: string;
-  value: number;
-};
+import Chart from 'react-google-charts';
 
 export default function CryptoByWallet({
   assets,
   totalByWallet,
-  chartData,
 }: {
   assets: Asset[];
   totalByWallet: TotalByWallet[];
-  chartData: chartData[];
 }) {
   const groupedByWallet = assets.reduce((acc: any, item: any) => {
     if (!item) return acc;
@@ -72,6 +56,31 @@ export default function CryptoByWallet({
 
   const walletsSortedByLength = sortWalletsByLength(sortedAssets);
 
+  let chartData = [];
+  chartData.push(['Wallet', 'Share']);
+  totalByWallet.map((item: TotalByWallet) =>
+    chartData.push([item.value, Math.floor(item.total)])
+  );
+
+  const options = {
+    is3D: true,
+    sliceVisibilityThreshold: 0.02,
+    legend: {
+      position: 'center',
+      alignment: 'center',
+    },
+    slices: {
+      2: { offset: 0.25 },
+      3: { offset: 0.25 },
+      4: { offset: 0.25 },
+    },
+    pieStartAngle: -110,
+    animation: {
+      duration: 1000,
+      easing: 'out',
+    },
+  };
+
   return (
     <>
       <Card className='flex-1 mb-2'>
@@ -96,61 +105,22 @@ export default function CryptoByWallet({
                     key={item.value}
                     className='border rounded-[2px] mb-2 p-2 grow'
                   >
-                    <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
+                    <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-2'>
                       {item.value.includes('Crypto') ? 'Crypto' : item.value}
                     </h3>
-                    <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
+                    <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 p-2'>
                       {numberFormatterNoDecimals.format(item.total)}
                     </CardFooter>
                   </div>
                 ))}
-
-              <div className='w-full p-2'>
-                {/* <ResponsiveContainer width='100%' height={300}>
-                  <PieChart width={800} height={800}>
-                    <Pie
-                      data={chartData}
-                      dataKey='value'
-                      nameKey='name'
-                      cx='50%'
-                      cy='50%'
-                      outerRadius={150}
-                      labelLine={false}
-                      legendType='circle'
-                    >
-                      {chartData.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={getColor(entry.name)}
-                        />
-                      ))}
-                    </Pie>
-                    <RechartsTooltip
-                      itemStyle={{
-                        backgroundColor: '#FFF',
-                        fontStyle: 'bold',
-                      }}
-                      wrapperStyle={{
-                        borderRadius: '2px',
-                      }}
-                      contentStyle={{
-                        height: '37px',
-                        fontSize: '12px',
-                        borderRadius: '2px',
-                        fontWeight: 'bold',
-                        backgroundColor: '#FFF',
-                      }}
-                      labelStyle={{
-                        color: 'blue',
-                        fontSize: '20px',
-                        fontWeight: 'bold',
-                      }}
-                      formatter={thousandFormatter}
-                      active={true}
-                      viewBox={{ x: 0, y: 0, width: 400, height: 400 }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer> */}
+              <div className='w-full'>
+                <Chart
+                  chartType='PieChart'
+                  data={chartData}
+                  options={options}
+                  width={'100%'}
+                  height={'300px'}
+                />
               </div>
             </CardContent>
           </div>

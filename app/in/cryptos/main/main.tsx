@@ -1,6 +1,6 @@
 import { CardAssetsBy } from '@/components/CardAssetsBy';
 import { CardTotal } from '@/components/CardTotal';
-import { Asset, TotalByWallet } from '@/lib/types';
+import { Asset } from '@/lib/types';
 import { getTotalByKey } from '@/lib/utils';
 import CryptoByWallet from './cryptos-by-wallet';
 import MessageInTable from '@/components/MessageInTable';
@@ -8,26 +8,13 @@ import MessageInTable from '@/components/MessageInTable';
 export default function Main({ assets }: { assets: Asset[] }) {
   const totalByWallet = getTotalByKey(assets, 'wallet');
 
-  const transformKeys = (
-    arr: TotalByWallet[]
-  ): { name: string; value: number }[] =>
-    arr.map((item) => ({
-      name: item.value,
-      value: Math.floor(item.total),
-    }));
-  const chartData = transformKeys(totalByWallet);
-
   return (
     <div className='flex flex-col w-full gap-2'>
       {assets.length > 0 ? (
         <>
           <div className='flex flex-col sm:flex-row gap-2 px-8 sm:px-0'>
             <div className='sm:w-1/2 gap-2'>
-              <CryptoByWallet
-                chartData={chartData}
-                assets={assets}
-                totalByWallet={totalByWallet}
-              />
+              <CryptoByWallet assets={assets} totalByWallet={totalByWallet} />
             </div>
             <div className='sm:w-1/5'>
               <CardTotal
