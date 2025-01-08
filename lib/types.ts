@@ -168,3 +168,5 @@ export type Goal = {
   created_at?: Date;
   goal?: number;
 };
+
+export type GoogleChartData = [[string, string], ...[string, number][]];
