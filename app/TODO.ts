@@ -5,9 +5,12 @@
 // cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
 
+// TODO: EASY:
+// Crypto / ATH Estimation: clear button for the filter
+// Crypto / Ranking of Cryptos getting info from the call for ATH
+
 // TODO: WORKING ON:
 // Responsivity
-// Google Chart for the Crypto Page
 // Altcoin Add Asset: after click on Category it has been activating the database
 // After CronJob Fix, return the commented code in the middleware f
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
@@ -77,6 +80,7 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Google Chart for the Crypto Page
 // Sum of the Asset Page must be in another place. It's getting out of the Table
 // Update NextJs and React versions: https://www.youtube.com/watch?v=fqabW3WRUbw&t=1s
 // Check if we can delete the classes in Add Asset and Update Asset and use the import from './lib/classes'

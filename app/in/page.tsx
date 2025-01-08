@@ -6,11 +6,7 @@ import { getCurrencies, getCurrenciesFromApi } from '@/lib/currency.server';
 import { Loading } from '@/components/Loading';
 import Dashboard from './dashboard/dashboard';
 
-import {
-  fetchQuotesForCryptos,
-  getAllTimeHighData,
-  getGlobalData,
-} from '@/lib/crypto.server';
+import { fetchQuotesForCryptos } from '@/lib/crypto.server';
 
 export default async function DashboardPage() {
   const user = await currentUser();
