@@ -74,7 +74,7 @@ export async function GET() {
       const btc = assets.find((item: any) => item.asset === 'BTC');
 
       let networthData: AddNetWorthChartData;
-      if (currencyRates.data && btc.price) {
+      if (currencyRates.data && btc.price && usdBrl) {
         networthData = {
           uid,
           usd: total,
