@@ -6,9 +6,10 @@ import MessageInTable from '@/components/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import PriceProjections from './price-projections';
 import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
+import Ranking from './ranking';
+import Projections from './projections';
 
 export type athImageData = {
   symbol: string;
@@ -41,9 +42,8 @@ export default function Cryptos({
                       Allocation Goals
                     </TabsTrigger>
                     <TabsTrigger value='ath'>ATH Estimation</TabsTrigger>
-                    {/* <TabsTrigger value='price-projections'>
-                      Price Projections
-                    </TabsTrigger> */}
+                    <TabsTrigger value='projections'>Projections</TabsTrigger>
+                    <TabsTrigger value='ranking'>Ranking</TabsTrigger>
                   </TabsList>
 
                   <TabsContent value='main' className='flex gap-2 mt-4'>
@@ -66,9 +66,12 @@ export default function Cryptos({
                       athImageData={athImageData}
                     />
                   </TabsContent>
-                  {/* <TabsContent value='price-projections' className='mt-4'>
-                    <PriceProjections assets={assetsByType.Crypto} />
-                  </TabsContent> */}
+                  <TabsContent value='projections' className='mt-4'>
+                    <Projections assets={assetsByType.Crypto} />
+                  </TabsContent>
+                  <TabsContent value='ranking' className='mt-4'>
+                    <Ranking assets={assetsByType.Crypto} />
+                  </TabsContent>
                 </Tabs>
               </div>
             </>

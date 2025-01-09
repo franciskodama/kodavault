@@ -8,7 +8,7 @@ import {
 } from '../../../../lib/utils';
 import { Loading } from '../../../../components/Loading';
 
-export default function PriceProjections({ assets }: { assets: Asset[] }) {
+export default function Ranking({ assets }: { assets: Asset[] }) {
   let cryptoAssetsWithAth: Asset[] = [];
   let sumQtyOfSameAssets: Asset[] = [];
   let athAssets: AssetReducedWithAth[] = [];
@@ -67,7 +67,7 @@ export default function PriceProjections({ assets }: { assets: Asset[] }) {
     <>
       {sortedAthAssets.length > 0 && (
         <div className='w-full'>
-          {/* <DataTable athAssets={sortedAthAssets} /> */}
+          <DataTable athAssets={sortedAthAssets} />
         </div>
       )}
     </>
