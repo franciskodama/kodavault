@@ -74,6 +74,18 @@ export type AssetReducedWithAth = {
   percentagePotential: number | string;
 };
 
+export type AssetWithProjection = {
+  asset: string;
+  logo?: string;
+  price: number | string;
+  qty: number | string;
+  currentTotal: number | string;
+  projection: number | string;
+  projectionTotal: number;
+  xPotential: number | string;
+  percentagePotential: number | string;
+};
+
 export type Currency = {
   [key: string]: number;
 };

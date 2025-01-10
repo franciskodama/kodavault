@@ -2,9 +2,7 @@
 
 import Main from './main/main';
 import { Loading } from '@/components/Loading';
-import MessageInTable from '@/components/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
-import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
@@ -23,6 +21,9 @@ export default function Cryptos({
   athImageData: athImageData[];
 }) {
   const { assetsByType, isLoading } = useAssetsContext();
+  const cryptoAssets = assetsByType.Crypto;
+
+  // Put the logic of the Ath Data and Image in the crypto assets so we can use it in the other components
 
   return (
     <>

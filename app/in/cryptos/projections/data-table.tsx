@@ -6,16 +6,17 @@ import {
   CardHeader,
   CardTitle,
 } from '../../../../components/ui/card';
-import { AssetReducedWithAth } from '../../../../lib/types';
+import {
+  AssetReducedWithAth,
+  AssetWithProjection,
+} from '../../../../lib/types';
 import {
   currencyFormatter,
   numberFormatterNoDecimals,
 } from '../../../../lib/utils';
+import ProjectionsTable from './projections-table';
 
-export const DataTable = ({}: // athAssets,
-{
-  // athAssets: AssetReducedWithAth[];
-}) => {
+export const DataTable = ({ assets }: { assets: AssetWithProjection[] }) => {
   // const athTotal = athAssets.reduce(
   //   (sum: number, item: AssetReducedWithAth) => {
   //     const currentAthTotalNumber = Number(item.athTotalNumber);
@@ -39,11 +40,13 @@ export const DataTable = ({}: // athAssets,
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {/* {athAssets.length > 0 ? ( */}
-              <div>{/* <EstimationTable athAssets={athAssets} /> */}</div>
-              {/* ) : (
+              {assets.length > 0 ? (
+                <div>
+                  <ProjectionsTable assets={assets} />
+                </div>
+              ) : (
                 <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
-              )} */}
+              )}
             </CardContent>
           </div>
           <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>

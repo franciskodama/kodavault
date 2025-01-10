@@ -31,9 +31,6 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
           await fetchAssetsWithPrices(unpricedAssets);
         setAssets(_assets);
         setAssetsByType(_assetsByType);
-        // -----------------------------------------
-        console.log('data refreshed');
-        // -----------------------------------------
       }
     } catch (error) {
       console.error('Error loading assets:', error);

@@ -3,8 +3,8 @@
 import { Asset } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '../../../../components/ui/button';
-import { ArrowUpDown } from 'lucide-react';
 import { tableHeaderClass } from '../../../../lib/classes';
+import { ArrowUpDown } from 'lucide-react';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -46,11 +46,11 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
-    accessorKey: 'price-projection',
+    accessorKey: 'projection',
     header: () => <div className={tableHeaderClass}>PP</div>,
   },
   {
-    accessorKey: 'total-by-price-projection',
+    accessorKey: 'totalProjection',
     header: ({ column }) => {
       return (
         <Button

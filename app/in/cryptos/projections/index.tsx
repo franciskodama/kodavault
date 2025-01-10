@@ -1,4 +1,8 @@
-import { Asset, AssetReducedWithAth } from '../../../../lib/types';
+import {
+  Asset,
+  AssetReducedWithAth,
+  AssetWithProjection,
+} from '../../../../lib/types';
 import { DataTable } from './data-table';
 import { hardcodedAthCoins } from '../../../../lib/data';
 import {
@@ -9,10 +13,9 @@ import {
 import { Loading } from '../../../../components/Loading';
 
 export default function Projections({ assets }: { assets: Asset[] }) {
-  let cryptoAssetsWithAth: Asset[] = [];
   let sumQtyOfSameAssets: Asset[] = [];
-  let athAssets: AssetReducedWithAth[] = [];
-  let sortedAthAssets: AssetReducedWithAth[] = [];
+  // let assetsWithProjections: AssetWithProjection[] = [];
+  // let sortedAssetsWithProjections: AssetWithProjection[] = [];
 
   if (!assets) {
     return <Loading />;
@@ -20,17 +23,7 @@ export default function Projections({ assets }: { assets: Asset[] }) {
 
   const onlyCryptoAssets = assets.filter((item: any) => item.type === 'Crypto');
 
-  cryptoAssetsWithAth = assets.map((item: any) => {
-    const existingAsset = hardcodedAthCoins.find(
-      (el: any) => el.symbol === item.asset
-    );
-    return {
-      ...item,
-      ath: existingAsset?.ath ? existingAsset.ath : 0,
-    };
-  });
-
-  sumQtyOfSameAssets = cryptoAssetsWithAth.reduce((acc: any, item: any) => {
+  sumQtyOfSameAssets = onlyCryptoAssets.reduce((acc: any, item: any) => {
     const existingAsset = acc.find((el: any) => el.asset === item.asset);
     if (existingAsset) {
       existingAsset.qty += item.qty;
@@ -41,15 +34,15 @@ export default function Projections({ assets }: { assets: Asset[] }) {
     return acc;
   }, []);
 
-  athAssets = sumQtyOfSameAssets.map((item: any) => {
+  const assetsWithProjections = sumQtyOfSameAssets.map((item: any) => {
     return {
       asset: item.asset,
+      // logo: item.logo,
       price: currencyFormatter(item.price),
       qty: numberFormatter.format(item.qty),
       currentTotal: currencyFormatter(item.qty * item.price),
-      ath: currencyFormatter(item.ath),
-      athTotalNumber: item.ath * item.qty,
-      athTotalCurrency: currencyFormatter(item.ath * item.qty),
+      projection: currencyFormatter(item.ath),
+      projectionTotal: currencyFormatter(item.ath * item.qty),
       xPotential: numberFormatter.format(item.ath / item.price),
       percentagePotential: numberFormatterNoDecimals.format(
         ((item.ath - item.price) / item.price) * 100
@@ -57,19 +50,21 @@ export default function Projections({ assets }: { assets: Asset[] }) {
     };
   });
 
-  sortedAthAssets = athAssets.sort(
-    (a: AssetReducedWithAth, b: AssetReducedWithAth) => {
+  const sortedAssetsWithProjections = assetsWithProjections.sort(
+    (a: any, b: any) => {
       return Number(b.xPotential) - Number(a.xPotential);
     }
+  );
+  console.log(
+    '---  🚀 ---> | sortedAssetsWithProjections:',
+    sortedAssetsWithProjections
   );
 
   return (
     <>
-      {sortedAthAssets.length > 0 && (
+      {sortedAssetsWithProjections.length > 0 && (
         <div className='w-full'>
-          <DataTable
-          // athAssets={sortedAthAssets}
-          />
+          {/* <DataTable assets={sortedAssetsWithProjections} /> */}
         </div>
       )}
     </>
