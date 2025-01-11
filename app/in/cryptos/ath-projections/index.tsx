@@ -3,11 +3,6 @@
 import { useEffect, useState } from 'react';
 
 import {
-  currencyFormatter,
-  numberFormatter,
-  numberFormatterNoDecimals,
-} from '../../../../lib/utils';
-import {
   Card,
   CardContent,
   CardDescription,
@@ -16,10 +11,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import AthTable from './ath-table';
-import { athImageData } from '../cryptos';
 import MessageInTable from '@/components/MessageInTable';
-import { Loading } from '../../../../components/Loading';
-import { Asset, AssetReducedWithAth } from '../../../../lib/types';
+import { currencyFormatter } from '@/lib/utils';
+import { AssetReducedWithAth } from '@/lib/types';
 
 export type athTotals = {
   athTotal: number;
@@ -27,11 +21,9 @@ export type athTotals = {
 };
 
 export default function AthProjections({
-  assets,
-  athImageData,
+  allCryptoData,
 }: {
-  assets: Asset[];
-  athImageData: athImageData[];
+  allCryptoData: AssetReducedWithAth[];
 }) {
   const [exclusions, setExclusions] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -63,68 +55,20 @@ export default function AthProjections({
     }
   }, [exclusions]);
 
-  let cryptoAssetsWithAth: Asset[] = [];
-  let sumQtyOfSameAssets: Asset[] = [];
-  let athAssets: AssetReducedWithAth[] = [];
-  let sortedAthAssets: AssetReducedWithAth[] = [];
-
-  if (!assets) {
-    return <Loading />;
-  }
-
-  cryptoAssetsWithAth = assets.map((item: any) => {
-    const existingAsset = athImageData.find(
-      (el: athImageData) => el.symbol === item.asset
-    );
-    return {
-      ...item,
-      ath: existingAsset?.ath ? existingAsset.ath : 0,
-      image: existingAsset?.image ? existingAsset.image : '',
-    };
-  });
-
-  sumQtyOfSameAssets = cryptoAssetsWithAth.reduce((acc: any, item: any) => {
-    const existingAsset = acc.find((el: any) => el.asset === item.asset);
-    if (existingAsset) {
-      existingAsset.qty += item.qty;
-      existingAsset.currentTotal += item.total;
-    } else {
-      acc.push(item);
-    }
-    return acc;
-  }, []);
-
-  athAssets = sumQtyOfSameAssets.map((item: any) => {
-    return {
-      asset: item.asset,
-      image: item.image,
-      price: currencyFormatter(item.price),
-      qty: numberFormatter.format(item.qty),
-      currentTotal: currencyFormatter(item.qty * item.price),
-      ath: currencyFormatter(item.ath),
-      athTotalNumber: item.ath * item.qty,
-      athTotalCurrency: currencyFormatter(item.ath * item.qty),
-      xPotential: numberFormatter.format(item.ath / item.price),
-      percentagePotential: numberFormatterNoDecimals.format(
-        ((item.ath - item.price) / item.price) * 100
-      ),
-    };
-  });
-
-  sortedAthAssets = athAssets.sort(
+  const sortedAthAssets: AssetReducedWithAth[] = allCryptoData?.sort(
     (a: AssetReducedWithAth, b: AssetReducedWithAth) => {
-      return Number(b.xPotential) - Number(a.xPotential);
+      return Number(b.athXPotential) - Number(a.athXPotential);
     }
   );
 
   const getTotal = (assets: AssetReducedWithAth[]) => {
-    return assets.reduce((sum: number, item: AssetReducedWithAth) => {
+    return assets?.reduce((sum: number, item: AssetReducedWithAth) => {
       const currentAthTotalNumber = Number(item.athTotalNumber);
       return sum + currentAthTotalNumber;
     }, 0);
   };
 
-  const exclusionsAssets = sortedAthAssets.filter((item: any) => {
+  const exclusionsAssets = sortedAthAssets?.filter((item: any) => {
     return exclusions.includes(item.asset);
   });
 
@@ -138,7 +82,7 @@ export default function AthProjections({
 
   return (
     <div className='flex flex-col w-full gap-2'>
-      {sortedAthAssets.length > 0 ? (
+      {sortedAthAssets?.length > 0 ? (
         <div className='w-full'>
           <Card>
             <div className='flex flex-col justify-between'>
@@ -192,13 +136,3 @@ export default function AthProjections({
     </div>
   );
 }
-
-// return (
-//   <div className='flex flex-col w-full gap-2'>
-//     {assets.length > 0 ? (
-//       <DataTable columns={columns} data={dataTable} sumGoals={sumGoals} />
-//     ) : (
-
-//     )}
-//   </div>
-// );

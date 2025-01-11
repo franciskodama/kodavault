@@ -70,8 +70,8 @@ export type AssetReducedWithAth = {
   ath: number | string;
   athTotalNumber: number;
   athTotalCurrency: string;
-  xPotential: number | string;
-  percentagePotential: number | string;
+  athXPotential: number | string;
+  athPercentagePotential: number | string;
 };
 
 export type AssetWithProjection = {
