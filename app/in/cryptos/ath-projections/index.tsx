@@ -13,7 +13,7 @@ import {
 import AthTable from './ath-table';
 import MessageInTable from '@/components/MessageInTable';
 import { currencyFormatter } from '@/lib/utils';
-import { AssetReducedWithAth } from '@/lib/types';
+import { AssetWithAth } from '@/lib/types';
 
 export type athTotals = {
   athTotal: number;
@@ -23,7 +23,7 @@ export type athTotals = {
 export default function AthProjections({
   allCryptoData,
 }: {
-  allCryptoData: AssetReducedWithAth[];
+  allCryptoData: AssetWithAth[];
 }) {
   const [exclusions, setExclusions] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -55,14 +55,14 @@ export default function AthProjections({
     }
   }, [exclusions]);
 
-  const sortedAthAssets: AssetReducedWithAth[] = allCryptoData?.sort(
-    (a: AssetReducedWithAth, b: AssetReducedWithAth) => {
+  const sortedAthAssets: AssetWithAth[] = allCryptoData?.sort(
+    (a: AssetWithAth, b: AssetWithAth) => {
       return Number(b.athXPotential) - Number(a.athXPotential);
     }
   );
 
-  const getTotal = (assets: AssetReducedWithAth[]) => {
-    return assets?.reduce((sum: number, item: AssetReducedWithAth) => {
+  const getTotal = (assets: AssetWithAth[]) => {
+    return assets?.reduce((sum: number, item: AssetWithAth) => {
       const currentAthTotalNumber = Number(item.athTotalNumber);
       return sum + currentAthTotalNumber;
     }, 0);

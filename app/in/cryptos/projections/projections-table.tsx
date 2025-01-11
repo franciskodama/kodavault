@@ -1,6 +1,6 @@
 import { columns } from './columns';
 import { DataTable } from './data-table';
-import { AssetReducedWithAth, AssetWithProjection } from '@/lib/types';
+import { AssetWithAth, AssetWithProjection } from '@/lib/types';
 
 export default function ProjectionsTable({
   assets,

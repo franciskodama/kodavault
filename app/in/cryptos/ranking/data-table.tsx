@@ -6,24 +6,17 @@ import {
   CardHeader,
   CardTitle,
 } from '../../../../components/ui/card';
-import { AssetReducedWithAth } from '../../../../lib/types';
+import { AssetWithAth } from '../../../../lib/types';
 import {
   currencyFormatter,
   numberFormatterNoDecimals,
 } from '../../../../lib/utils';
 
-export const DataTable = ({
-  athAssets,
-}: {
-  athAssets: AssetReducedWithAth[];
-}) => {
-  const athTotal = athAssets.reduce(
-    (sum: number, item: AssetReducedWithAth) => {
-      const currentAthTotalNumber = Number(item.athTotalNumber);
-      return sum + currentAthTotalNumber;
-    },
-    0
-  );
+export const DataTable = ({ athAssets }: { athAssets: AssetWithAth[] }) => {
+  const athTotal = athAssets.reduce((sum: number, item: AssetWithAth) => {
+    const currentAthTotalNumber = Number(item.athTotalNumber);
+    return sum + currentAthTotalNumber;
+  }, 0);
 
   return (
     <div>

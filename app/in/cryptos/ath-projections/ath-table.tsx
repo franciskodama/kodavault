@@ -1,7 +1,7 @@
 import { athTotals } from '.';
 import { columns } from './columns';
 import { DataTable } from './data-table';
-import { AssetReducedWithAth } from '@/lib/types';
+import { AssetWithAth } from '@/lib/types';
 
 export default function AthTable({
   athAssets,
@@ -9,7 +9,7 @@ export default function AthTable({
   totals,
   exclusions,
 }: {
-  athAssets: AssetReducedWithAth[];
+  athAssets: AssetWithAth[];
   setExclusions: React.Dispatch<React.SetStateAction<string[]>>;
   exclusions: string[];
   totals: athTotals;

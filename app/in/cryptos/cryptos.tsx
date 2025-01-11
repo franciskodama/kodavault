@@ -8,7 +8,7 @@ import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
 import Ranking from './ranking';
 import Projections from './projections';
-import { Asset, AssetReducedWithAth } from '@/lib/types';
+import { Asset, AssetWithAth } from '@/lib/types';
 import {
   currencyFormatter,
   numberFormatter,
@@ -57,33 +57,31 @@ export default function Cryptos({
     []
   );
 
-  const allCryptoData: AssetReducedWithAth[] = sumQtyOfSameAssets?.map(
-    (item: any) => {
-      return {
-        asset: item.asset,
-        image: item.image,
-        price: currencyFormatter(item.price),
-        qty: numberFormatter.format(item.qty),
-        currentTotal: currencyFormatter(item.qty * item.price),
-        ath: currencyFormatter(item.ath),
-        athTotalNumber: item.ath * item.qty,
-        athTotalCurrency: currencyFormatter(item.ath * item.qty),
-        athXPotential: numberFormatter.format(item.ath / item.price),
-        athPercentagePotential: numberFormatterNoDecimals.format(
-          ((item.ath - item.price) / item.price) * 100
-        ),
-        // projection: currencyFormatter(item.ath),
-        // projectionTotal: currencyFormatter(item.ath * item.qty),
-        // projectionXPotential: numberFormatter.format(item.ath / item.price),
-        // projectionPercentagePotential: numberFormatterNoDecimals.format(
-        //   ((item.ath - item.price) / item.price) * 100
-        // ),
-      };
-    }
-  );
+  const allCryptoData: AssetWithAth[] = sumQtyOfSameAssets?.map((item: any) => {
+    return {
+      asset: item.asset,
+      image: item.image,
+      price: currencyFormatter(item.price),
+      qty: numberFormatter.format(item.qty),
+      currentTotal: currencyFormatter(item.qty * item.price),
+      ath: currencyFormatter(item.ath),
+      athTotalNumber: item.ath * item.qty,
+      athTotalCurrency: currencyFormatter(item.ath * item.qty),
+      athXPotential: numberFormatter.format(item.ath / item.price),
+      athPercentagePotential: numberFormatterNoDecimals.format(
+        ((item.ath - item.price) / item.price) * 100
+      ),
+      // projection: currencyFormatter(item.ath),
+      // projectionTotal: currencyFormatter(item.ath * item.qty),
+      // projectionXPotential: numberFormatter.format(item.ath / item.price),
+      // projectionPercentagePotential: numberFormatterNoDecimals.format(
+      //   ((item.ath - item.price) / item.price) * 100
+      // ),
+    };
+  });
 
-  // const sortedAthAssets: AssetReducedWithAth[] = athAssets?.sort(
-  //   (a: AssetReducedWithAth, b: AssetReducedWithAth) => {
+  // const sortedAthAssets: AssetWithAth[] = athAssets?.sort(
+  //   (a: AssetWithAth, b: AssetWithAth) => {
   //     return Number(b.athXPotential) - Number(a.athXPotential);
   //   }
   // );

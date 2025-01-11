@@ -62,7 +62,7 @@ export type AssetForAth = {
   total?: number;
 };
 
-export type AssetReducedWithAth = {
+export type AssetWithAth = {
   asset: string;
   price: number | string;
   qty: number | string;

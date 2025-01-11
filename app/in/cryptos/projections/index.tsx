@@ -1,6 +1,6 @@
 import {
   Asset,
-  AssetReducedWithAth,
+  AssetWithAth,
   AssetWithProjection,
 } from '../../../../lib/types';
 import { DataTable } from './data-table';
