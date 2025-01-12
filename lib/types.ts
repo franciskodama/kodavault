@@ -26,16 +26,33 @@ export type UnpricedAsset = {
   reviewed?: boolean;
 };
 
+// Why do we have type, wallet and currency? Are they different from the wallet and currency in the UnpricedAsset type?
 export type Asset =
   | undefined
   | (UnpricedAsset & {
       price?: number;
       total?: number;
       ath?: number;
-      wallet?: string;
-      currency?: string;
-      type?: string;
+      // wallet?: string;
+      // currency?: string;
+      // type?: string;
     });
+
+export type AssetAllCryptoData = {
+  // asset: string;
+  // price: number | string;
+  // qty: number | string;
+  currentTotal: number | string;
+  ath: number | string;
+  athTotalNumber: number;
+  athTotalCurrency: string;
+  athXPotential: number | string;
+  athPercentagePotential: number | string;
+  //   projection: number | string;
+  //   projectionTotal: number;
+  //   projectionXPotential: number | string;
+  //   projectionPercentagePotential: number | string;
+};
 
 export type AssetsByType = {
   [key: string]: Asset[];
@@ -60,30 +77,6 @@ export type AssetForAth = {
   exchange: string;
   price?: number;
   total?: number;
-};
-
-export type AssetWithAth = {
-  asset: string;
-  price: number | string;
-  qty: number | string;
-  currentTotal: number | string;
-  ath: number | string;
-  athTotalNumber: number;
-  athTotalCurrency: string;
-  athXPotential: number | string;
-  athPercentagePotential: number | string;
-};
-
-export type AssetWithProjection = {
-  asset: string;
-  logo?: string;
-  price: number | string;
-  qty: number | string;
-  currentTotal: number | string;
-  projection: number | string;
-  projectionTotal: number;
-  xPotential: number | string;
-  percentagePotential: number | string;
 };
 
 export type Currency = {

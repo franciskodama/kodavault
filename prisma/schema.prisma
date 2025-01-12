@@ -116,13 +116,22 @@ model Asset {
 }
 
 model CoinGoal {
-  uid        String
+  id         String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   created_at DateTime                @default(now()) @db.Timestamptz(6)
+  uid        String
   coin       String                  @unique
   goal       Float                   @default(0)
   obs        String?
-  id         String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   priority   priority_enum_593899f8?
+}
+
+model Projection {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  uid        String   
+  asset      String
+  projection Float    @default(0)
+  obs        String?
 }
 
 model Shortcut {

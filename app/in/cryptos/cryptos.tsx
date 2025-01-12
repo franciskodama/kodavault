@@ -8,7 +8,7 @@ import AllocationGoals from './allocation-goals';
 import AthProjections from './ath-projections';
 import Ranking from './ranking';
 import Projections from './projections';
-import { Asset, AssetWithAth } from '@/lib/types';
+import { Asset, AssetAllCryptoData } from '@/lib/types';
 import {
   currencyFormatter,
   numberFormatter,
@@ -21,6 +21,14 @@ export type athImageData = {
   image?: string;
 };
 
+export type projectionsData = {
+  symbol: string;
+  projection: number;
+  projectionTotal: number;
+  projectionXPotential: number;
+  projectionPercentagePotential: number;
+};
+
 export default function Cryptos({
   athImageData,
 }: {
@@ -29,7 +37,6 @@ export default function Cryptos({
   const { assetsByType, isLoading } = useAssetsContext();
   const cryptoAssets = assetsByType.Crypto;
 
-  // Put the logic of the Ath Data and Image in the crypto assets so we can use it in the other components
   // ----------------------------------------
 
   const cryptoAssetsWithAth: Asset[] = cryptoAssets?.map((item: any) => {
@@ -42,6 +49,29 @@ export default function Cryptos({
       image: existingAsset?.image ? existingAsset.image : '',
     };
   });
+
+  // --------------- Ready to use when projections are available ---------------
+  // const cryptoAssetsWithAthAndProjections: Asset[] = cryptoAssetsWithAth?.map(
+  //   (item: any) => {
+  //     const existingAsset = projectionsData.find(
+  //       (el: projectionsData) => el.symbol === item.asset
+  //     );
+  //     return {
+  //       ...item,
+  //       projection: existingAsset?.projection ? existingAsset.projection : 0,
+  //       projectionTotal: existingAsset?.projectionTotal
+  //         ? existingAsset.projectionTotal
+  //         : 0,
+  //       projectionXPotential: existingAsset?.projectionXPotential
+  //         ? existingAsset.projectionXPotential
+  //         : 0,
+  //       projectionPercentagePotential:
+  //         existingAsset?.projectionPercentagePotential
+  //           ? existingAsset.projectionPercentagePotential
+  //           : 0,
+  //     };
+  //   }
+  // );
 
   const sumQtyOfSameAssets: Asset[] = cryptoAssetsWithAth?.reduce(
     (acc: any, item: any) => {
@@ -57,28 +87,30 @@ export default function Cryptos({
     []
   );
 
-  const allCryptoData: AssetWithAth[] = sumQtyOfSameAssets?.map((item: any) => {
-    return {
-      asset: item.asset,
-      image: item.image,
-      price: currencyFormatter(item.price),
-      qty: numberFormatter.format(item.qty),
-      currentTotal: currencyFormatter(item.qty * item.price),
-      ath: currencyFormatter(item.ath),
-      athTotalNumber: item.ath * item.qty,
-      athTotalCurrency: currencyFormatter(item.ath * item.qty),
-      athXPotential: numberFormatter.format(item.ath / item.price),
-      athPercentagePotential: numberFormatterNoDecimals.format(
-        ((item.ath - item.price) / item.price) * 100
-      ),
-      // projection: currencyFormatter(item.ath),
-      // projectionTotal: currencyFormatter(item.ath * item.qty),
-      // projectionXPotential: numberFormatter.format(item.ath / item.price),
-      // projectionPercentagePotential: numberFormatterNoDecimals.format(
-      //   ((item.ath - item.price) / item.price) * 100
-      // ),
-    };
-  });
+  const allCryptoData: AssetAllCryptoData[] = sumQtyOfSameAssets?.map(
+    (item: any) => {
+      return {
+        asset: item.asset,
+        image: item.image,
+        price: currencyFormatter(item.price),
+        qty: numberFormatter.format(item.qty),
+        currentTotal: currencyFormatter(item.qty * item.price),
+        ath: currencyFormatter(item.ath),
+        athTotalNumber: item.ath * item.qty,
+        athTotalCurrency: currencyFormatter(item.ath * item.qty),
+        athXPotential: numberFormatter.format(item.ath / item.price),
+        athPercentagePotential: numberFormatterNoDecimals.format(
+          ((item.ath - item.price) / item.price) * 100
+        ),
+        // projection: currencyFormatter(item.ath),
+        // projectionTotal: currencyFormatter(item.ath * item.qty),
+        // projectionXPotential: numberFormatter.format(item.ath / item.price),
+        // projectionPercentagePotential: numberFormatterNoDecimals.format(
+        //   ((item.ath - item.price) / item.price) * 100
+        // ),
+      };
+    }
+  );
 
   // const sortedAthAssets: AssetWithAth[] = athAssets?.sort(
   //   (a: AssetWithAth, b: AssetWithAth) => {
@@ -124,17 +156,13 @@ export default function Cryptos({
                   </TabsContent>
 
                   <TabsContent value='ath' className='mt-4'>
-                    <AthProjections
-                      allCryptoData={allCryptoData}
-                      // assets={assetsByType.Crypto}
-                      // athImageData={athImageData}
-                    />
+                    <AthProjections allCryptoData={allCryptoData} />
                   </TabsContent>
                   <TabsContent value='projections' className='mt-4'>
                     <Projections assets={assetsByType.Crypto} />
                   </TabsContent>
                   <TabsContent value='ranking' className='mt-4'>
-                    <Ranking assets={assetsByType.Crypto} />
+                    {/* <Ranking assets={assetsByType.Crypto} /> */}
                   </TabsContent>
                 </Tabs>
               </div>

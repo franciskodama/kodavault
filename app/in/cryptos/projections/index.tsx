@@ -1,8 +1,3 @@
-import {
-  Asset,
-  AssetWithAth,
-  AssetWithProjection,
-} from '../../../../lib/types';
 import { DataTable } from './data-table';
 import { hardcodedAthCoins } from '../../../../lib/data';
 import {
@@ -11,6 +6,7 @@ import {
   numberFormatterNoDecimals,
 } from '../../../../lib/utils';
 import { Loading } from '../../../../components/Loading';
+import { Asset } from '@/lib/types';
 
 export default function Projections({ assets }: { assets: Asset[] }) {
   let sumQtyOfSameAssets: Asset[] = [];
@@ -54,10 +50,6 @@ export default function Projections({ assets }: { assets: Asset[] }) {
     (a: any, b: any) => {
       return Number(b.xPotential) - Number(a.xPotential);
     }
-  );
-  console.log(
-    '---  🚀 ---> | sortedAssetsWithProjections:',
-    sortedAssetsWithProjections
   );
 
   return (
