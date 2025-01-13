@@ -9,7 +9,6 @@ export default async function CryptosPage() {
 
   const allTimeHighData = await getAllTimeHighData();
   const projections = await getProjections(uid ? uid : '');
-  console.log('---  🚀 ---> | projections:', projections);
 
   const athImageData = allTimeHighData.map(
     (crypto: { symbol: string; ath: number; image: string }) => ({

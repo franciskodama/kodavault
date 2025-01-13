@@ -26,16 +26,12 @@ export type UnpricedAsset = {
   reviewed?: boolean;
 };
 
-// Why do we have type, wallet and currency? Are they different from the wallet and currency in the UnpricedAsset type?
 export type Asset =
   | undefined
   | (UnpricedAsset & {
       price?: number;
       total?: number;
       ath?: number;
-      // wallet?: string;
-      // currency?: string;
-      // type?: string;
     });
 
 export type AssetAllCryptoData = {

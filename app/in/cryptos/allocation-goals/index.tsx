@@ -14,7 +14,6 @@ import {
 import { columns } from './columns';
 import { athImageData } from '../cryptos';
 import { getCryptoGoals } from '@/lib/actions';
-import { Loading } from '../../../../components/Loading';
 import MessageInTable from '@/components/MessageInTable';
 
 export type MergedArrayItem = {

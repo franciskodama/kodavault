@@ -194,7 +194,11 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
           {assetRow && <p className='w-full text-left'>{assetRow.obs}</p>}
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant='outline' size='sm' className='ml-4'>
+              <Button
+                variant='outline'
+                size='sm'
+                className='ml-4 text-xl hover:text-base w-8 h-8 bg-white border border-slate-300 rounded-[2px]'
+              >
                 ✏️
               </Button>
             </DialogTrigger>
