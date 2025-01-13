@@ -377,7 +377,7 @@ export async function addProjection(
   uid: string,
   asset: string,
   projection: number,
-  obs: string
+  obs?: string
 ) {
   try {
     await prisma.projection.create({
@@ -387,7 +387,7 @@ export async function addProjection(
         uid,
         asset,
         projection,
-        obs,
+        obs: obs ? obs : '',
       },
     });
     return true;
@@ -402,7 +402,7 @@ export async function updateProjection(
   uid: string,
   asset: string,
   projection: number,
-  obs: string
+  obs?: string
 ) {
   try {
     await prisma.projection.update({
@@ -415,6 +415,7 @@ export async function updateProjection(
         uid,
         asset,
         projection,
+        obs: obs ? obs : '',
       },
     });
     return true;
