@@ -48,7 +48,7 @@ export type CryptoWithAthAndProjections = {
   projectionTotal?: number;
   projectionXPotential?: number | string;
   projectionPercentagePotential?: number | string;
-  obs?: string;
+  source?: string;
 };
 
 export type AssetsByType = {

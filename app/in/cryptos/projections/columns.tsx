@@ -62,10 +62,7 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          <div className={tableHeaderClass}>
-            Total Projected
-            {/* <span className='text-xs font-medium'>{` (est.)`}</span> */}
-          </div>
+          <div className={tableHeaderClass}>Total Projected</div>
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
@@ -102,7 +99,7 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
-    accessorKey: 'obs',
-    header: () => <div className={tableHeaderClass}>Obs</div>,
+    accessorKey: 'source',
+    header: () => <div className={tableHeaderClass}>Source</div>,
   },
 ];
