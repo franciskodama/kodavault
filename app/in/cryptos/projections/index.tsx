@@ -38,7 +38,7 @@ export default function Projections({
               <div className='flex flex-col'>
                 <CardHeader>
                   <CardTitle className='capitalize flex items-center justify-between'>
-                    <span>Crypto Projections</span>s
+                    <span>Crypto Projections</span>
                     <span className='text-3xl'>🔮</span>
                   </CardTitle>
                   <CardDescription className='text-xs'>

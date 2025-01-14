@@ -23,6 +23,10 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
+    accessorKey: 'image',
+    header: () => <div className={tableHeaderClass}></div>,
+  },
+  {
     accessorKey: 'qty',
     header: () => <div className={tableHeaderClass}>Qty</div>,
   },
@@ -47,7 +51,7 @@ export const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: 'projection',
-    header: () => <div className={tableHeaderClass}>PP</div>,
+    header: () => <div className={tableHeaderClass}>Projection</div>,
   },
   {
     accessorKey: 'totalProjection',
@@ -59,8 +63,8 @@ export const columns: ColumnDef<Asset>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           <div className={tableHeaderClass}>
-            Total PP
-            <span className='text-xs font-medium'>{` (est.)`}</span>
+            Total Projected
+            {/* <span className='text-xs font-medium'>{` (est.)`}</span> */}
           </div>
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
@@ -68,7 +72,7 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
-    accessorKey: 'percentagePotential',
+    accessorKey: 'ProjectionPercentagePotential',
     header: ({ column }) => {
       return (
         <Button
@@ -83,7 +87,7 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
-    accessorKey: 'xPotential',
+    accessorKey: 'ProjectionXPotential',
     header: ({ column }) => {
       return (
         <Button
@@ -96,5 +100,9 @@ export const columns: ColumnDef<Asset>[] = [
         </Button>
       );
     },
+  },
+  {
+    accessorKey: 'obs',
+    header: () => <div className={tableHeaderClass}>Obs</div>,
   },
 ];
