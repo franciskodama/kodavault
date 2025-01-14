@@ -1,4 +1,4 @@
-import { Asset, AssetWithAth } from '../../../../lib/types';
+import { Asset, CryptoWithAthAndProjections } from '../../../../lib/types';
 import { DataTable } from './data-table';
 import { hardcodedAthCoins } from '../../../../lib/data';
 import {
@@ -11,8 +11,8 @@ import { Loading } from '../../../../components/Loading';
 export default function Ranking({ assets }: { assets: Asset[] }) {
   let cryptoAssetsWithAth: Asset[] = [];
   let sumQtyOfSameAssets: Asset[] = [];
-  let athAssets: AssetWithAth[] = [];
-  let sortedAthAssets: AssetWithAth[] = [];
+  let athAssets: CryptoWithAthAndProjections[] = [];
+  let sortedAthAssets: CryptoWithAthAndProjections[] = [];
 
   if (!assets) {
     return <Loading />;
@@ -58,7 +58,7 @@ export default function Ranking({ assets }: { assets: Asset[] }) {
   // });
 
   // sortedAthAssets = athAssets.sort(
-  //   (a: AssetWithAth, b: AssetWithAth) => {
+  //   (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
   //     return Number(b.xPotential) - Number(a.xPotential);
   //   }
   // );

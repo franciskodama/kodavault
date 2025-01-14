@@ -13,17 +13,17 @@ import {
 import AthTable from './ath-table';
 import MessageInTable from '@/components/MessageInTable';
 import { currencyFormatter } from '@/lib/utils';
-import { AssetWithAth } from '@/lib/types';
+import { CryptoWithAthAndProjections } from '@/lib/types';
 
 export type athTotals = {
   athTotal: number;
   athTotalExclusions: number;
 };
 
-export default function AthProjections({
-  allCryptoData,
+export default function Ath({
+  cryptoWithAthAndProjections,
 }: {
-  allCryptoData: AssetWithAth[];
+  cryptoWithAthAndProjections: CryptoWithAthAndProjections[];
 }) {
   const [exclusions, setExclusions] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -55,14 +55,15 @@ export default function AthProjections({
     }
   }, [exclusions]);
 
-  const sortedAthAssets: AssetWithAth[] = allCryptoData?.sort(
-    (a: AssetWithAth, b: AssetWithAth) => {
-      return Number(b.athXPotential) - Number(a.athXPotential);
-    }
-  );
+  const sortedAthAssets: CryptoWithAthAndProjections[] =
+    cryptoWithAthAndProjections?.sort(
+      (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
+        return Number(b.athXPotential) - Number(a.athXPotential);
+      }
+    );
 
-  const getTotal = (assets: AssetWithAth[]) => {
-    return assets?.reduce((sum: number, item: AssetWithAth) => {
+  const getTotal = (assets: CryptoWithAthAndProjections[]) => {
+    return assets?.reduce((sum: number, item: CryptoWithAthAndProjections) => {
       const currentAthTotalNumber = Number(item.athTotalNumber);
       return sum + currentAthTotalNumber;
     }, 0);

@@ -3,7 +3,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import {
   Asset,
-  AssetAllCryptoData,
+  CryptoWithAthAndProjections,
   TotalByWallet,
   UnpricedAsset,
 } from './types';

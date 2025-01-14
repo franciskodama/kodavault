@@ -1,64 +1,86 @@
-import { DataTable } from './data-table';
-import { hardcodedAthCoins } from '../../../../lib/data';
+import { Loading } from '@/components/Loading';
 import {
-  currencyFormatter,
-  numberFormatter,
-  numberFormatterNoDecimals,
-} from '../../../../lib/utils';
-import { Loading } from '../../../../components/Loading';
-import { Asset } from '@/lib/types';
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import MessageInTable from '@/components/MessageInTable';
+import { Asset, CryptoWithAthAndProjections } from '@/lib/types';
+import { currencyFormatter } from '@/lib/utils';
+import { DataTable } from './data-table';
+import { columns } from './columns';
 
-export default function Projections({ assets }: { assets: Asset[] }) {
-  let sumQtyOfSameAssets: Asset[] = [];
-  // let assetsWithProjections: AssetWithProjection[] = [];
-  // let sortedAssetsWithProjections: AssetWithProjection[] = [];
-
-  if (!assets) {
+export default function Projections({
+  cryptoWithAthAndProjections,
+}: {
+  cryptoWithAthAndProjections: CryptoWithAthAndProjections[];
+}) {
+  if (!cryptoWithAthAndProjections) {
     return <Loading />;
   }
 
-  const onlyCryptoAssets = assets.filter((item: any) => item.type === 'Crypto');
-
-  sumQtyOfSameAssets = onlyCryptoAssets.reduce((acc: any, item: any) => {
-    const existingAsset = acc.find((el: any) => el.asset === item.asset);
-    if (existingAsset) {
-      existingAsset.qty += item.qty;
-      existingAsset.currentTotal += item.total;
-    } else {
-      acc.push(item);
-    }
-    return acc;
-  }, []);
-
-  const assetsWithProjections = sumQtyOfSameAssets.map((item: any) => {
-    return {
-      asset: item.asset,
-      // logo: item.logo,
-      price: currencyFormatter(item.price),
-      qty: numberFormatter.format(item.qty),
-      currentTotal: currencyFormatter(item.qty * item.price),
-      projection: currencyFormatter(item.ath),
-      projectionTotal: currencyFormatter(item.ath * item.qty),
-      xPotential: numberFormatter.format(item.ath / item.price),
-      percentagePotential: numberFormatterNoDecimals.format(
-        ((item.ath - item.price) / item.price) * 100
-      ),
-    };
-  });
-
-  const sortedAssetsWithProjections = assetsWithProjections.sort(
-    (a: any, b: any) => {
-      return Number(b.xPotential) - Number(a.xPotential);
-    }
-  );
+  const sortedAssetsWithProjections: CryptoWithAthAndProjections[] =
+    cryptoWithAthAndProjections.sort(
+      (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
+        return Number(b.projectionXPotential) - Number(a.projectionXPotential);
+      }
+    );
 
   return (
-    <>
-      {sortedAssetsWithProjections.length > 0 && (
+    <div className='flex flex-col w-full gap-2'>
+      {sortedAssetsWithProjections?.length > 0 ? (
         <div className='w-full'>
-          {/* <DataTable assets={sortedAssetsWithProjections} /> */}
+          <Card>
+            <div className='flex flex-col justify-between'>
+              <div className='flex flex-col'>
+                <CardHeader>
+                  <CardTitle className='capitalize flex items-center justify-between'>
+                    <span>Crypto Projections</span>s
+                    <span className='text-3xl'>🔮</span>
+                  </CardTitle>
+                  <CardDescription className='text-xs'>
+                    Projections made by Analystis or your own
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {sortedAssetsWithProjections.length > 0 ? (
+                    <div>
+                      <DataTable
+                        columns={columns}
+                        data={sortedAssetsWithProjections}
+                        // totals={totals}
+                      />
+                    </div>
+                  ) : (
+                    <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
+                  )}
+                </CardContent>
+              </div>
+              <CardFooter className='flex m-1 py-2 px-10 justify-between text-sm text-slate-500 font-medium bg-slate-50'>
+                <h3>Total</h3>
+                {/* {currencyFormatter(athTotal)} */}
+              </CardFooter>
+            </div>
+          </Card>
         </div>
+      ) : (
+        <MessageInTable
+          image={'/looking-weird.webp'}
+          objectPosition={'50% 5%'}
+          alt={'I am broke'}
+          title={'Hey, the blockchain’s waiting for you!'}
+          subtitle={
+            'Start stacking those coins and get ready to explore the crypto universe! To the moon! 🚀'
+          }
+          buttonCopy={'Add a Crypto Asset'}
+          hasNoButton={false}
+          formTitle={'Add a new Asset'}
+          formSubtitle={'Add a New Asset and expand your investment portfolio.'}
+        />
       )}
-    </>
+    </div>
   );
 }

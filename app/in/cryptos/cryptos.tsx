@@ -5,10 +5,10 @@ import { Loading } from '@/components/Loading';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AllocationGoals from './allocation-goals';
-import AthProjections from './ath-projections';
+import Ath from './ath';
 import Ranking from './ranking';
 import Projections from './projections';
-import { Asset, AssetAllCryptoData } from '@/lib/types';
+import { Asset, CryptoWithAthAndProjections } from '@/lib/types';
 import {
   currencyFormatter,
   numberFormatter,
@@ -87,8 +87,8 @@ export default function Cryptos({
     []
   );
 
-  const allCryptoData: AssetAllCryptoData[] = sumQtyOfSameAssets?.map(
-    (item: any) => {
+  const cryptoWithAthAndProjections: CryptoWithAthAndProjections[] =
+    sumQtyOfSameAssets?.map((item: any) => {
       return {
         asset: item.asset,
         image: item.image,
@@ -109,16 +109,8 @@ export default function Cryptos({
         //   ((item.ath - item.price) / item.price) * 100
         // ),
       };
-    }
-  );
+    });
 
-  // const sortedAthAssets: AssetWithAth[] = athAssets?.sort(
-  //   (a: AssetWithAth, b: AssetWithAth) => {
-  //     return Number(b.athXPotential) - Number(a.athXPotential);
-  //   }
-  // );
-
-  // ----------------------------------------
   return (
     <>
       {isLoading ? (
@@ -156,10 +148,14 @@ export default function Cryptos({
                   </TabsContent>
 
                   <TabsContent value='ath' className='mt-4'>
-                    <AthProjections allCryptoData={allCryptoData} />
+                    <Ath
+                      cryptoWithAthAndProjections={cryptoWithAthAndProjections}
+                    />
                   </TabsContent>
                   <TabsContent value='projections' className='mt-4'>
-                    <Projections assets={assetsByType.Crypto} />
+                    <Projections
+                      cryptoWithAthAndProjections={cryptoWithAthAndProjections}
+                    />
                   </TabsContent>
                   <TabsContent value='ranking' className='mt-4'>
                     {/* <Ranking assets={assetsByType.Crypto} /> */}

@@ -34,20 +34,20 @@ export type Asset =
       ath?: number;
     });
 
-export type AssetAllCryptoData = {
-  // asset: string;
-  // price: number | string;
-  // qty: number | string;
+export type CryptoWithAthAndProjections = {
+  asset: string;
+  price: number | string;
+  qty: number | string;
   currentTotal: number | string;
   ath: number | string;
   athTotalNumber: number;
   athTotalCurrency: string;
   athXPotential: number | string;
   athPercentagePotential: number | string;
-  //   projection: number | string;
-  //   projectionTotal: number;
-  //   projectionXPotential: number | string;
-  //   projectionPercentagePotential: number | string;
+  projection?: number | string;
+  projectionTotal?: number;
+  projectionXPotential?: number | string;
+  projectionPercentagePotential?: number | string;
 };
 
 export type AssetsByType = {

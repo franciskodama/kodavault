@@ -1,57 +1,170 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '../../../../components/ui/card';
-import { AssetWithAth, AssetWithProjection } from '../../../../lib/types';
-import {
-  currencyFormatter,
-  numberFormatterNoDecimals,
-} from '../../../../lib/utils';
-import ProjectionsTable from './projections-table';
+'use client';
 
-export const DataTable = ({ assets }: { assets: AssetWithProjection[] }) => {
-  // const athTotal = athAssets.reduce(
-  //   (sum: number, item: AssetWithAth) => {
-  //     const currentAthTotalNumber = Number(item.athTotalNumber);
-  //     return sum + currentAthTotalNumber;
-  //   },
-  //   0
-  // );
+import { useState } from 'react';
+import Image from 'next/image';
+
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  getFilteredRowModel,
+  SortingState,
+  getSortedRowModel,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Input } from '@/components/ui/input';
+import { thousandFormatter } from '@/lib/utils';
+import { Checkbox } from '@/components/ui/checkbox';
+import MessageInTable from '@/components/MessageInTable';
+
+type DataTableProps<TData, TValue> = {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[] | any;
+  // totals: athTotals;
+};
+
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: // totals,
+DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  // const { athTotal, athTotalExclusions } = totals;
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      sorting,
+      columnFilters,
+    },
+  });
 
   return (
-    <div>
-      <Card>
-        <div className='flex flex-col justify-between'>
-          <div className='flex flex-col'>
-            <CardHeader>
-              <CardTitle className='capitalize flex items-center justify-between'>
-                <span>Price Projections</span>
-                <span className='text-3xl'>🚀</span>
-              </CardTitle>
-              <CardDescription className='text-xs'>
-                Where you see the Price Projection made by YouTubers and others
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {assets.length > 0 ? (
-                <div>
-                  <ProjectionsTable assets={assets} />
-                </div>
-              ) : (
-                <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
-              )}
-            </CardContent>
-          </div>
-          <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
-            <h3>Total</h3>
-            {/* {currencyFormatter(athTotal)} */}
-          </CardFooter>
-        </div>
-      </Card>
+    <div className='rounded-sm border border-slate-200'>
+      <div className='flex items-center justify-between px-12 py-4 mt-4'>
+        <Input
+          placeholder='Filter by Asset'
+          value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
+          onChange={(event) =>
+            table.getColumn('asset')?.setFilterValue(event.target.value)
+          }
+          className='max-w-sm w-[14ch]'
+        />
+      </div>
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && 'selected'}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell
+                    key={cell.id}
+                    className={`text-right text-xs text-slate-600 font-light ${
+                      cell.column.id === 'percentagePotential' &&
+                      'bg-slate-100 border'
+                    }`}
+                  >
+                    {cell.column.id !== 'image' && (
+                      <>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                        {cell.column.id === 'percentagePotential' &&
+                          cell.getValue() !== '∞' && (
+                            <span className='ml-1'>%</span>
+                          )}
+                      </>
+                    )}
+                    {cell.column.id === 'image' && (
+                      <Image
+                        src={
+                          cell.getValue()
+                            ? (cell.getValue() as string)
+                            : '/red-dot.webp'
+                        }
+                        width={30}
+                        height={30}
+                        alt='Logo of the coin'
+                        className='ml-2'
+                        style={{ width: 'auto', height: 'auto' }}
+                      />
+                    )}
+                    {/* {cell.column.id === 'exclusion' && (
+                      <Checkbox
+                        checked={
+                          exclusions.includes(row.getValue('asset'))
+                            ? true
+                            : false
+                        }
+                        className='mr-8'
+                        onCheckedChange={() =>
+                          handleCheckbox(row.getValue('asset') as string)
+                        }
+                      />
+                    )} */}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className='h-24 text-center'>
+                <MessageInTable
+                  image={'/no-assets-poor-boy.webp'}
+                  objectPosition={'center 100%'}
+                  alt={'Poor boy song by Queen'}
+                  title={`Let's make your financial playground pop! 🚀`}
+                  subtitle={'Spice it up by adding some assets!'}
+                  buttonCopy={'Add Your First Asset'}
+                  formTitle={'Add a new Asset'}
+                  formSubtitle={
+                    'Add a New Asset and expand your investment portfolio.'
+                  }
+                />
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
-};
+}
