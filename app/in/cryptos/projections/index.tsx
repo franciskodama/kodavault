@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import MessageInTable from '@/components/MessageInTable';
-import { Asset, CryptoWithAthAndProjections } from '@/lib/types';
+import { CryptoWithAthAndProjections } from '@/lib/types';
 import { currencyFormatter } from '@/lib/utils';
 import { DataTable } from './data-table';
 import { columns } from './columns';
