@@ -51,6 +51,14 @@ export type CryptoWithAthAndProjections = {
   source?: string;
 };
 
+export type CryptoProjection = {
+  id: string;
+  uid: string;
+  asset: number;
+  projection: number | undefined;
+  source?: string | null;
+};
+
 export type AssetsByType = {
   [key: string]: Asset[];
 };
