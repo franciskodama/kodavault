@@ -14,16 +14,16 @@ import { DataTable } from './data-table';
 import { columns } from './columns';
 
 export default function Projections({
-  cryptoWithAthAndProjections,
+  cryptosWithATHsAndProjections,
 }: {
-  cryptoWithAthAndProjections: CryptoWithAthAndProjections[];
+  cryptosWithATHsAndProjections: CryptoWithAthAndProjections[];
 }) {
-  if (!cryptoWithAthAndProjections) {
+  if (!cryptosWithATHsAndProjections) {
     return <Loading />;
   }
 
   const sortedAssetsWithProjections: CryptoWithAthAndProjections[] =
-    cryptoWithAthAndProjections.sort(
+    cryptosWithATHsAndProjections.sort(
       (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
         return Number(b.projectionXPotential) - Number(a.projectionXPotential);
       }

@@ -21,9 +21,9 @@ export type athTotals = {
 };
 
 export default function Ath({
-  cryptoWithAthAndProjections,
+  cryptosWithATHsAndProjections,
 }: {
-  cryptoWithAthAndProjections: CryptoWithAthAndProjections[];
+  cryptosWithATHsAndProjections: CryptoWithAthAndProjections[];
 }) {
   const [exclusions, setExclusions] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -56,7 +56,7 @@ export default function Ath({
   }, [exclusions]);
 
   const sortedAthAssets: CryptoWithAthAndProjections[] =
-    cryptoWithAthAndProjections?.sort(
+    cryptosWithATHsAndProjections?.sort(
       (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
         return Number(b.athXPotential) - Number(a.athXPotential);
       }
