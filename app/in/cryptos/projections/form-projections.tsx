@@ -2,26 +2,13 @@
 
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
-import { updateCoinShareGoal, updateProjection } from '@/lib/actions';
+import { updateProjection } from '@/lib/actions';
 import { useState } from 'react';
 import { Form, SubmitHandler, useForm } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { CryptoGoalAllocation, CryptoProjection } from '@/lib/types';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  FormControl,
-  FormField,
-  FormLabel,
-  FormItem,
-} from '@/components/ui/form';
+import { CryptoProjection } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
 export const FormProjections = ({
   assetRow,

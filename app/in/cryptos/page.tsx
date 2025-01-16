@@ -8,7 +8,7 @@ export default async function CryptosPage() {
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
   const allTimeHighData = await getAllTimeHighData();
-  const projections = await getProjections(uid ? uid : '');
+  const projectionsData = await getProjections(uid ? uid : '');
 
   const athImageData = allTimeHighData.map(
     (crypto: { symbol: string; ath: number; image: string }) => ({
@@ -20,7 +20,10 @@ export default async function CryptosPage() {
 
   return (
     <div className='mx-auto'>
-      <Cryptos athImageData={athImageData} />
+      <Cryptos
+        athImageData={athImageData}
+        projections={projectionsData ? projectionsData : []}
+      />
     </div>
   );
 }
