@@ -34,7 +34,11 @@ export const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: 'image',
-    header: () => <div className={tableHeaderClass}></div>,
+    header: () => (
+      <div className='flex justify-center'>
+        <div className={tableHeaderClass}>Icon</div>
+      </div>
+    ),
   },
   {
     accessorKey: 'qty',

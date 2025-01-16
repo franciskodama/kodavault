@@ -115,32 +115,21 @@ DataTableProps<TData, TValue>) {
                       </>
                     )}
                     {cell.column.id === 'image' && (
-                      <Image
-                        src={
-                          cell.getValue()
-                            ? (cell.getValue() as string)
-                            : '/red-dot.webp'
-                        }
-                        width={30}
-                        height={30}
-                        alt='Logo of the coin'
-                        className='ml-2'
-                        style={{ width: 'auto', height: 'auto' }}
-                      />
+                      <div className='flex justify-center'>
+                        <Image
+                          src={
+                            cell.getValue()
+                              ? (cell.getValue() as string)
+                              : '/red-dot.webp'
+                          }
+                          width={30}
+                          height={30}
+                          alt='Logo of the coin'
+                          className='ml-2'
+                          style={{ width: 'auto', height: 'auto' }}
+                        />
+                      </div>
                     )}
-                    {/* {cell.column.id === 'exclusion' && (
-                      <Checkbox
-                        checked={
-                          exclusions.includes(row.getValue('asset'))
-                            ? true
-                            : false
-                        }
-                        className='mr-8'
-                        onCheckedChange={() =>
-                          handleCheckbox(row.getValue('asset') as string)
-                        }
-                      />
-                    )} */}
                   </TableCell>
                 ))}
               </TableRow>

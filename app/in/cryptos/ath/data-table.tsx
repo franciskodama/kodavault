@@ -153,18 +153,20 @@ export function DataTable<TData, TValue>({
                       </>
                     )}
                     {cell.column.id === 'image' && (
-                      <Image
-                        src={
-                          cell.getValue()
-                            ? (cell.getValue() as string)
-                            : '/red-dot.webp'
-                        }
-                        width={30}
-                        height={30}
-                        alt='Logo of the coin'
-                        className='ml-2'
-                        style={{ width: 'auto', height: 'auto' }}
-                      />
+                      <div className='flex justify-center'>
+                        <Image
+                          src={
+                            cell.getValue()
+                              ? (cell.getValue() as string)
+                              : '/red-dot.webp'
+                          }
+                          width={30}
+                          height={30}
+                          alt='Logo of the coin'
+                          className='ml-2'
+                          style={{ width: 'auto', height: 'auto' }}
+                        />
+                      </div>
                     )}
                     {cell.column.id === 'exclusion' && (
                       <Checkbox
