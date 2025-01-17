@@ -22,11 +22,16 @@ export type AthImageData = {
 };
 
 export type ProjectionsData = {
-  symbol: string;
-  projection: number;
-  projectionTotal: number;
-  projectionXPotential: number;
-  projectionPercentagePotential: number;
+  id: string;
+  created_at: Date;
+  uid: string;
+  asset: string;
+  source: string | null;
+  // symbol: string;
+  projection?: number;
+  projectionTotal?: number;
+  projectionXPotential?: number;
+  projectionPercentagePotential?: number;
 };
 
 export default function Cryptos({
@@ -51,21 +56,21 @@ export default function Cryptos({
 
   const addedAthAndProjections: Asset[] = addedAth?.map((item: any) => {
     const existingAsset = projections.find(
-      (el: ProjectionsData) => el.symbol === item.asset
+      (el: ProjectionsData) => el.asset === item.asset
     );
+    // Check the formulas
     return {
       ...item,
       projection: existingAsset?.projection ? existingAsset.projection : 0,
-      projectionTotal: existingAsset?.projectionTotal
-        ? existingAsset.projectionTotal
+      projectionTotal: existingAsset?.projection
+        ? existingAsset.projection * item.qty
         : 0,
-      projectionXPotential: existingAsset?.projectionXPotential
-        ? existingAsset.projectionXPotential
+      projectionXPotential: existingAsset?.projection
+        ? existingAsset.projection / item.price
         : 0,
-      projectionPercentagePotential:
-        existingAsset?.projectionPercentagePotential
-          ? existingAsset.projectionPercentagePotential
-          : 0,
+      projectionPercentagePotential: existingAsset?.projection
+        ? existingAsset.projection - item.price / item.price
+        : 0,
     };
   });
 

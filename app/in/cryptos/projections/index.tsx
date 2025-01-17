@@ -29,6 +29,10 @@ export default function Projections({
       }
     );
 
+  console.log(
+    '---  🚀 ---> | sortedAssetsWithProjections:',
+    sortedAssetsWithProjections
+  );
   return (
     <div className='flex flex-col w-full gap-2'>
       {sortedAssetsWithProjections?.length > 0 ? (

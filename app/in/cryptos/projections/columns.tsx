@@ -11,10 +11,10 @@ import {
 
 import { Asset } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
-import { Button } from '../../../../components/ui/button';
-import { tableHeaderClass } from '../../../../lib/classes';
 import { ArrowUpDown } from 'lucide-react';
 import { FormProjections } from './form-projections';
+import { tableHeaderClass } from '@/lib/classes';
+import { Button } from '@/components/ui/button';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -63,10 +63,6 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: 'projection',
-  //   header: () => <div className={tableHeaderClass}>Projection</div>,
-  // },
   {
     accessorKey: 'projection',
     header: ({ column }) => {
@@ -81,39 +77,20 @@ export const columns: ColumnDef<Asset>[] = [
         </Button>
       );
     },
-    id: 'actionProjection',
-    cell: ({ row }) => {
-      const assetRow = row.original;
+    // id: 'actionProjection',
+    // cell: ({ row }) => {
+    //   const assetRow = row.original;
 
-      return (
-        <>
-          {assetRow && (
-            <div className='flex items-center'>
-              <p className='text-center w-[6ch]'>
-                {assetRow.projection ? assetRow.projection : 0}
-              </p>
-              {/* <p
-                className={`flex items-center justify-center uppercase font-bold h-6 w-[5ch] px-1 m-1 text-center rounded-[2px] ${
-                  assetRow.projection === 0
-                    ? 'border border-slate-300 bg-slate-300 text-white'
-                    : Number(assetRow.share.toString().split('.')[0]) <
-                      (assetRow.goal || 0)
-                    ? 'bg-white border-2 border-green-500 text-green-500'
-                    : 'bg-red-500 text-white'
-                }`}
-              >
-                {assetRow.goal === 0
-                  ? 'N/A'
-                  : Number(assetRow.share.toString().split('.')[0]) <
-                    (assetRow.goal || 0)
-                  ? 'buy'
-                  : 'sell'}
-              </p> */}
-            </div>
-          )}
-        </>
-      );
-    },
+    //   return (
+    //     <>
+    //       {assetRow && (
+    //         <div className='flex items-center'>
+    //           <p className='text-center w-[6ch]'>{assetRow.projection}</p>
+    //         </div>
+    //       )}
+    //     </>
+    //   );
+    // },
   },
   {
     accessorKey: 'totalProjection',
@@ -129,22 +106,20 @@ export const columns: ColumnDef<Asset>[] = [
         </Button>
       );
     },
-    id: 'actionTotalProjection',
-    cell: ({ row }) => {
-      const assetRow = row.original;
+    // id: 'actionTotalProjection',
+    // cell: ({ row }) => {
+    //   const assetRow = row.original;
 
-      return (
-        <>
-          {assetRow && (
-            <div className='flex items-center'>
-              <p className='text-center w-[6ch]'>
-                {assetRow.projectionTotal ? assetRow.projectionTotal : 0}
-              </p>
-            </div>
-          )}
-        </>
-      );
-    },
+    //   return (
+    //     <>
+    //       {assetRow && (
+    //         <div className='flex items-center'>
+    //           <p className='text-center w-[6ch]'>{assetRow.projectionTotal}</p>
+    //         </div>
+    //       )}
+    //     </>
+    //   );
+    // },
   },
   {
     accessorKey: 'ProjectionPercentagePotential',
@@ -160,24 +135,22 @@ export const columns: ColumnDef<Asset>[] = [
         </Button>
       );
     },
-    id: 'actionProjectionPercentagePotential',
-    cell: ({ row }) => {
-      const assetRow = row.original;
+    // id: 'actionProjectionPercentagePotential',
+    // cell: ({ row }) => {
+    //   const assetRow = row.original;
 
-      return (
-        <>
-          {assetRow && (
-            <div className='flex items-center'>
-              <p className='text-center w-[6ch]'>
-                {assetRow.projectionPercentagePotential
-                  ? assetRow.projectionPercentagePotential
-                  : 0}
-              </p>
-            </div>
-          )}
-        </>
-      );
-    },
+    //   return (
+    //     <>
+    //       {assetRow && (
+    //         <div className='flex items-center'>
+    //           <p className='text-center w-[6ch]'>
+    //             {assetRow.projectionPercentagePotential}
+    //           </p>
+    //         </div>
+    //       )}
+    //     </>
+    //   );
+    // },
   },
   {
     accessorKey: 'ProjectionXPotential',
@@ -193,24 +166,24 @@ export const columns: ColumnDef<Asset>[] = [
         </Button>
       );
     },
-    id: 'actionProjectionXPotential',
-    cell: ({ row }) => {
-      const assetRow = row.original;
+    // id: 'actionProjectionXPotential',
+    // cell: ({ row }) => {
+    //   const assetRow = row.original;
 
-      return (
-        <>
-          {assetRow && (
-            <div className='flex items-center'>
-              <p className='text-center w-[6ch]'>
-                {assetRow.projectionXPotential
-                  ? assetRow.projectionXPotential
-                  : 0}
-              </p>
-            </div>
-          )}
-        </>
-      );
-    },
+    //   return (
+    //     <>
+    //       {assetRow && (
+    //         <div className='flex items-center'>
+    //           <p className='text-center w-[6ch]'>
+    //             {assetRow.projectionXPotential
+    //               ? assetRow.projectionXPotential
+    //               : 0}
+    //           </p>
+    //         </div>
+    //       )}
+    //     </>
+    //   );
+    // },
   },
   {
     accessorKey: 'source',

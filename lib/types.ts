@@ -24,6 +24,9 @@ export type UnpricedAsset = {
   category?: category_enum_6c7fcd47;
   tag?: string;
   reviewed?: boolean;
+  // projection?: number;
+  // projectionTotal?: number;
+  // projectionPercentagePotential?: number;
 };
 
 export type Asset =
@@ -32,6 +35,7 @@ export type Asset =
       price?: number;
       total?: number;
       ath?: number;
+      image?: string;
     });
 
 export type CryptoWithAthAndProjections = {
