@@ -7,6 +7,7 @@ import {
   Inputs,
   ShortcutType,
   AddNetWorthChartData,
+  CryptoProjection,
 } from './types';
 import { revalidatePath } from 'next/cache';
 import { v4 } from 'uuid';
@@ -397,25 +398,28 @@ export async function addProjection(
   }
 }
 
-export async function updateProjection(
-  id: string,
-  uid: string,
-  asset: string,
-  projection: number,
-  source?: string
-) {
+export async function updateProjection(formData: CryptoProjection) {
+  const { uid, asset, projection, source } = formData;
+
   try {
-    await prisma.projection.update({
+    await prisma.projection.upsert({
       where: {
-        id,
+        uid_asset: {
+          uid,
+          asset,
+        },
       },
-      data: {
-        id,
+      create: {
+        id: v4(),
         created_at: new Date(),
         uid,
         asset,
         projection,
-        source: source ? source : '',
+        source: source ?? '',
+      },
+      update: {
+        projection,
+        source: source ?? '',
       },
     });
     return true;

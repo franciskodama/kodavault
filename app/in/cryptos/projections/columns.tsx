@@ -15,6 +15,8 @@ import { ArrowUpDown } from 'lucide-react';
 import { FormProjections } from './form-projections';
 import { tableHeaderClass } from '@/lib/classes';
 import { Button } from '@/components/ui/button';
+import { useUser } from '@clerk/nextjs';
+import { useUserContext } from '@clerk/shared/react/index';
 
 export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
   {
@@ -195,7 +197,6 @@ export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
     id: 'actionSource',
     cell: ({ row }) => {
       const assetRow = row.original;
-      console.log('---  🚀 ---> | assetRow:', assetRow);
 
       return (
         <div className='flex items-center'>

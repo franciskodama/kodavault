@@ -36,6 +36,8 @@ export type Asset =
     });
 
 export type CryptoWithAthAndProjections = {
+  id?: string;
+  uid?: string;
   asset: string;
   price: number | string;
   qty: number | string;
@@ -53,10 +55,10 @@ export type CryptoWithAthAndProjections = {
 };
 
 export type CryptoProjection = {
-  id: string;
+  id?: string;
   uid: string;
-  asset: number;
-  projection: number | undefined;
+  asset: string;
+  projection?: number;
   source?: string | null;
 };
 

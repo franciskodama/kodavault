@@ -24,7 +24,6 @@ import {
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { thousandFormatter } from '@/lib/utils';
-import { Checkbox } from '@/components/ui/checkbox';
 import MessageInTable from '@/components/MessageInTable';
 
 type DataTableProps<TData, TValue> = {

@@ -119,6 +119,8 @@ model Projection {
   asset      String
   projection Float    @default(0)
   source     String?
+  
+  @@unique([uid, asset], name: "uid_asset")
 }
 
 enum priority_enum_593899f8 {

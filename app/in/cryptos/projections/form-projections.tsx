@@ -6,7 +6,6 @@ import { updateProjection } from '@/lib/actions';
 import { useState } from 'react';
 import { Form, SubmitHandler, useForm } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
@@ -15,10 +14,10 @@ export const FormProjections = ({
 }: {
   assetRow: CryptoWithAthAndProjections;
 }) => {
+  // console.log('---  🚀 ---> | assetRow:', assetRow);
   const [data, setData] = useState<CryptoProjection>();
   const { toast } = useToast();
   const uid = useUser().user?.emailAddresses[0].emailAddress;
-  const form = useForm();
 
   const {
     setValue,
@@ -28,16 +27,15 @@ export const FormProjections = ({
     formState: { errors },
   } = useForm<CryptoProjection>({
     defaultValues: {
-      id: assetRow.id,
-      uid: assetRow.uid,
+      uid: uid,
       asset: assetRow.asset,
-      projection: assetRow.projection,
+      projection: Number(assetRow.projection),
       source: assetRow.source,
     },
   });
 
   const processForm: SubmitHandler<CryptoProjection> = async (data) => {
-    if (uid) {
+    if (!uid) {
       return console.log('User not logged in');
     }
 
@@ -71,7 +69,7 @@ export const FormProjections = ({
           <h3 className='bg-slate-800 px-4 py-2 text-white text-sm'>
             Asset:
             <span className='font-semibold ml-2 text-base'>
-              {assetRow.coin}
+              {assetRow.asset}
             </span>
           </h3>
 
@@ -85,8 +83,10 @@ export const FormProjections = ({
 
           <div className='grid grid-cols-3 items-center gap-4'>
             <Label className='text-left text-xs'>Source:</Label>
-            <Textarea className='col-span-3' {...register('source')} />
+            <Input className='col-span-3' {...register('source')} />
           </div>
+
+          {/* <Input className='col-span-3' {...register('asset')} /> */}
 
           <Button className='mt-8' type='submit'>
             Save Changes
