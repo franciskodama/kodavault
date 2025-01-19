@@ -9,14 +9,14 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { Asset } from '@/lib/types';
+import { Asset, CryptoWithAthAndProjections } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 import { FormProjections } from './form-projections';
 import { tableHeaderClass } from '@/lib/classes';
 import { Button } from '@/components/ui/button';
 
-export const columns: ColumnDef<Asset>[] = [
+export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
   {
     accessorKey: 'asset',
     header: ({ column }) => {
@@ -199,12 +199,7 @@ export const columns: ColumnDef<Asset>[] = [
 
       return (
         <div className='flex items-center'>
-          {assetRow && (
-            <p className='w-full text-left'>
-              Test Source
-              {/* {assetRow.source} */}
-            </p>
-          )}
+          {assetRow && <p className='w-full text-left'>{assetRow.source}</p>}
           <Dialog>
             <DialogTrigger asChild>
               <Button

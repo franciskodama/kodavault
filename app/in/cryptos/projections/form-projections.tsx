@@ -8,13 +8,13 @@ import { Form, SubmitHandler, useForm } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { CryptoProjection } from '@/lib/types';
+import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
 import { MergedArrayItem } from '../allocation-goals';
 export const FormProjections = ({
   assetRow,
 }: {
-  assetRow: MergedArrayItem;
+  assetRow: CryptoWithAthAndProjections;
 }) => {
   const [data, setData] = useState<CryptoProjection>();
   const { toast } = useToast();
