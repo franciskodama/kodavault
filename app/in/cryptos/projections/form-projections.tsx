@@ -10,7 +10,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
-import { MergedArrayItem } from '../allocation-goals';
 export const FormProjections = ({
   assetRow,
 }: {
@@ -38,7 +37,7 @@ export const FormProjections = ({
   });
 
   const processForm: SubmitHandler<CryptoProjection> = async (data) => {
-    if (!assetRow.uid) {
+    if (uid) {
       return console.log('User not logged in');
     }
 
@@ -46,14 +45,14 @@ export const FormProjections = ({
 
     if (result) {
       toast({
-        title: 'Goal Updated! 🎉',
-        description: 'Your new goal is already set.',
+        title: 'Projection Updated! 🎉',
+        description: 'Your new Projection is already set.',
         variant: 'success',
       });
     } else {
       toast({
         title: '👻 Boho! Error occurred!',
-        description: 'Your goal was NOT updated.',
+        description: 'Your Projection was NOT updated.',
         variant: 'destructive',
       });
     }
