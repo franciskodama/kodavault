@@ -33,6 +33,7 @@ export default function Projections({
     '---  🚀 ---> | sortedAssetsWithProjections:',
     sortedAssetsWithProjections
   );
+
   return (
     <div className='flex flex-col w-full gap-2'>
       {sortedAssetsWithProjections?.length > 0 ? (
@@ -50,17 +51,17 @@ export default function Projections({
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {sortedAssetsWithProjections.length > 0 ? (
-                    <div>
-                      <DataTable
-                        columns={columns}
-                        data={sortedAssetsWithProjections}
-                        // totals={totals}
-                      />
-                    </div>
-                  ) : (
+                  {/* {sortedAssetsWithProjections.length > 0 ? ( */}
+                  <div>
+                    <DataTable
+                      columns={columns}
+                      data={sortedAssetsWithProjections}
+                      // totals={totals}
+                    />
+                  </div>
+                  {/* ) : (
                     <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
-                  )}
+                  )} */}
                 </CardContent>
               </div>
               <CardFooter className='flex m-1 py-2 px-10 justify-between text-sm text-slate-500 font-medium bg-slate-50'>

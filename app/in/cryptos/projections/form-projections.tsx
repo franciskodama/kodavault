@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { CryptoProjection } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
+import { MergedArrayItem } from '../allocation-goals';
 export const FormProjections = ({
   assetRow,
 }: {

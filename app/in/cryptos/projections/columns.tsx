@@ -195,6 +195,7 @@ export const columns: ColumnDef<Asset>[] = [
     id: 'actionSource',
     cell: ({ row }) => {
       const assetRow = row.original;
+      console.log('---  🚀 ---> | assetRow:', assetRow);
 
       return (
         <div className='flex items-center'>
