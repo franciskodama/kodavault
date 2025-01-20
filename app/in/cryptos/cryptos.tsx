@@ -104,7 +104,7 @@ export default function Cryptos({
         athPercentagePotential: numberFormatterNoDecimals.format(
           ((item.ath - item.price) / item.price) * 100
         ),
-        projection: currencyFormatter(item.projection),
+        projection: item.projection,
         projectionTotal: currencyFormatter(item.projection * item.qty),
         projectionXPotential: numberFormatter.format(
           item.projection / item.price

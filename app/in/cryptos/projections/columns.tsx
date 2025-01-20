@@ -17,6 +17,7 @@ import { tableHeaderClass } from '@/lib/classes';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@clerk/nextjs';
 import { useUserContext } from '@clerk/shared/react/index';
+import { currencyFormatter } from '@/lib/utils';
 
 export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
   {
@@ -79,20 +80,22 @@ export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
         </Button>
       );
     },
-    // id: 'actionProjection',
-    // cell: ({ row }) => {
-    //   const assetRow = row.original;
+    id: 'actionProjection',
+    cell: ({ row }) => {
+      const assetRow = row.original;
 
-    //   return (
-    //     <>
-    //       {assetRow && (
-    //         <div className='flex items-center'>
-    //           <p className='text-center w-[6ch]'>{assetRow.projection}</p>
-    //         </div>
-    //       )}
-    //     </>
-    //   );
-    // },
+      return (
+        <>
+          {assetRow && (
+            <div className='flex items-center'>
+              <p className='text-right w-[6ch]'>
+                {currencyFormatter(Number(assetRow.projection))}
+              </p>
+            </div>
+          )}
+        </>
+      );
+    },
   },
   {
     accessorKey: 'totalProjection',

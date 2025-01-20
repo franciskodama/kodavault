@@ -28,7 +28,7 @@ export const FormProjections = ({
     defaultValues: {
       uid: email,
       asset: assetRow.asset,
-      projection: Number(assetRow.projection),
+      projection: assetRow.projection ? Number(assetRow.projection) : 0,
       source: assetRow.source,
     },
   });
@@ -68,10 +68,15 @@ export const FormProjections = ({
 
     reset();
     setData(data);
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 2000);
   };
+
+  // Tirar reload in this page, and all the others that have it
+  // Total projected
+  // Total Boost %
+  // Total Boost X
 
   return (
     <div>
@@ -94,13 +99,12 @@ export const FormProjections = ({
             <Input className='ml-2' {...register('source')} />
           </div>
 
-          <Button className='mt-8' type='submit' variant='outline'>
+          {/* Make this work */}
+          <Button className='mt-8' variant='outline'>
             Clear
           </Button>
 
-          <Button className='' type='submit'>
-            Save Changes
-          </Button>
+          <Button type='submit'>Save Changes</Button>
         </div>
       </form>
     </div>
