@@ -46,7 +46,6 @@ export default function Projections({
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {/* {sortedAssetsWithProjections.length > 0 ? ( */}
                   <div>
                     <DataTable
                       columns={columns}
@@ -54,9 +53,6 @@ export default function Projections({
                       // totals={totals}
                     />
                   </div>
-                  {/* ) : (
-                    <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
-                  )} */}
                 </CardContent>
               </div>
               <CardFooter className='flex m-1 py-2 px-10 justify-between text-sm text-slate-500 font-medium bg-slate-50'>

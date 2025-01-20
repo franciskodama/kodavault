@@ -211,7 +211,7 @@ export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
                 ✏️
               </Button>
             </DialogTrigger>
-            <DialogContent className='sm:max-w-[425px]'>
+            <DialogContent className='w-[22em]'>
               <DialogHeader>
                 <DialogTitle>Edit Asset Projection</DialogTitle>
                 <DialogDescription>Adjust your Projection!</DialogDescription>

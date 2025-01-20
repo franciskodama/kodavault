@@ -86,20 +86,19 @@ export const FormProjections = ({
 
           <div className='flex items-center '>
             <Label className='text-left text-xs w-1/3'>Projection</Label>
-            <Input className='w-1/4 text-center' {...register('projection')} />
-            {/* <p className='w-1/4 text-lg text-left ml-4'>%</p> */}
+            <Input className='ml-2' {...register('projection')} />
           </div>
 
-          {/* <div className='flex items-center gap-4'></div> */}
-
-          <div className='grid grid-cols-3 items-center gap-4'>
+          <div className='flex items-center gap-4'>
             <Label className='text-left text-xs'>Source:</Label>
-            <Input className='col-span-3' {...register('source')} />
+            <Input className='ml-2' {...register('source')} />
           </div>
 
-          {/* <Input className='col-span-3' {...register('asset')} /> */}
+          <Button className='mt-8' type='submit' variant='outline'>
+            Clear
+          </Button>
 
-          <Button className='mt-8' type='submit'>
+          <Button className='' type='submit'>
             Save Changes
           </Button>
         </div>
