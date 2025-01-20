@@ -14,20 +14,19 @@ export const FormProjections = ({
 }: {
   assetRow: CryptoWithAthAndProjections;
 }) => {
-  // console.log('---  🚀 ---> | assetRow:', assetRow);
   const [data, setData] = useState<CryptoProjection>();
   const { toast } = useToast();
-  const uid = useUser().user?.emailAddresses[0].emailAddress;
+  const { user } = useUser();
+  const email = user?.emailAddresses[0]?.emailAddress;
 
   const {
-    setValue,
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<CryptoProjection>({
     defaultValues: {
-      uid: uid,
+      uid: email,
       asset: assetRow.asset,
       projection: Number(assetRow.projection),
       source: assetRow.source,
@@ -35,11 +34,23 @@ export const FormProjections = ({
   });
 
   const processForm: SubmitHandler<CryptoProjection> = async (data) => {
-    if (!uid) {
-      return console.log('User not logged in');
+    if (!email) {
+      toast({
+        title: 'Error',
+        description: 'You must be logged in to update projections',
+        variant: 'destructive',
+      });
+      return;
     }
 
-    const result = await updateProjection(data);
+    const formData: CryptoProjection = {
+      uid: email,
+      asset: assetRow.asset,
+      projection: Number(data.projection),
+      source: data.source || '',
+    };
+
+    const result = await updateProjection(formData);
 
     if (result) {
       toast({

@@ -399,6 +399,16 @@ export async function addProjection(
 }
 
 export async function updateProjection(formData: CryptoProjection) {
+  if (
+    !formData ||
+    !formData.uid ||
+    !formData.asset ||
+    formData.projection === undefined
+  ) {
+    console.error('Invalid form data:', formData);
+    return false;
+  }
+
   const { uid, asset, projection, source } = formData;
 
   try {
