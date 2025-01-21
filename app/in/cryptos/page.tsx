@@ -7,7 +7,8 @@ export default async function CryptosPage() {
   const user = await currentUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-  const allTimeHighData = await getAllTimeHighData();
+  const allTimeHighData = (await getAllTimeHighData()) || [];
+  console.log('---  🚀 ---> | allTimeHighData:', allTimeHighData);
   const projectionsData = await getProjections(uid ? uid : '');
 
   const athImageData = allTimeHighData.map(
