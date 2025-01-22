@@ -58,20 +58,10 @@ export default function Cryptos({
     const existingAsset = projections.find(
       (el: ProjectionsData) => el.asset === item.asset
     );
-    // Check the formulas
     return {
       ...item,
       projection: existingAsset?.projection ? existingAsset.projection : 0,
       source: existingAsset?.source ? existingAsset.source : '',
-      // projectionTotal: existingAsset?.projection
-      //   ? existingAsset.projection * item.qty
-      //   : 0,
-      // projectionXPotential: existingAsset?.projection
-      //   ? existingAsset.projection / item.price
-      //   : 0,
-      // projectionPercentagePotential: existingAsset?.projection
-      //   ? existingAsset.projection - item.price / item.price
-      //   : 0,
     };
   });
 
@@ -105,7 +95,10 @@ export default function Cryptos({
           ((item.ath - item.price) / item.price) * 100
         ),
         projection: item.projection,
-        projectionTotal: currencyFormatter(item.projection * item.qty),
+        // Check the formulas
+
+        // projectionTotal: currencyFormatter(item.projection * item.qty),
+        projectionTotal: item.projection * item.qty,
         projectionXPotential: numberFormatter.format(
           item.projection / item.price
         ),
@@ -115,6 +108,11 @@ export default function Cryptos({
         source: item.source,
       };
     });
+
+  console.log(
+    '---  🚀 ---> | cryptosWithATHsAndProjections:',
+    cryptosWithATHsAndProjections
+  );
 
   return (
     <>

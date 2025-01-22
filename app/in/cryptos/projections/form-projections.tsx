@@ -68,9 +68,6 @@ export const FormProjections = ({
 
     reset();
     setData(data);
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 2000);
   };
 
   // Tirar reload in this page, and all the others that have it
