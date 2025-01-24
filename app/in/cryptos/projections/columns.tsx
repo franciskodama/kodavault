@@ -98,7 +98,7 @@ export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
     },
   },
   {
-    accessorKey: 'totalProjection',
+    accessorKey: 'projectionTotal',
     header: ({ column }) => {
       return (
         <Button
@@ -127,7 +127,7 @@ export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
     // },
   },
   {
-    accessorKey: 'ProjectionPercentagePotential',
+    accessorKey: 'projectionPercentagePotential',
     header: ({ column }) => {
       return (
         <Button
@@ -158,7 +158,7 @@ export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
     // },
   },
   {
-    accessorKey: 'ProjectionXPotential',
+    accessorKey: 'projectionXPotential',
     header: ({ column }) => {
       return (
         <Button

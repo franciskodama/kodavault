@@ -14,6 +14,8 @@ import AthTable from './ath-table';
 import MessageInTable from '@/components/MessageInTable';
 import { currencyFormatter } from '@/lib/utils';
 import { CryptoWithAthAndProjections } from '@/lib/types';
+import { DataTable } from './data-table';
+import { columns } from './columns';
 
 export type athTotals = {
   athTotal: number;
@@ -100,8 +102,9 @@ export default function Ath({
                 <CardContent>
                   {sortedAthAssets.length > 0 ? (
                     <div>
-                      <AthTable
-                        athAssets={sortedAthAssets}
+                      <DataTable
+                        columns={columns}
+                        data={sortedAthAssets}
                         setExclusions={setExclusions}
                         exclusions={exclusions}
                         totals={totals}

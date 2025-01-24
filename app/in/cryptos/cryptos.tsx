@@ -109,11 +109,6 @@ export default function Cryptos({
       };
     });
 
-  console.log(
-    '---  🚀 ---> | cryptosWithATHsAndProjections:',
-    cryptosWithATHsAndProjections
-  );
-
   return (
     <>
       {isLoading ? (
