@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import AthTable from './ath-table';
 import MessageInTable from '@/components/MessageInTable';
 import { currencyFormatter } from '@/lib/utils';
 import { CryptoWithAthAndProjections } from '@/lib/types';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import {
@@ -25,21 +25,33 @@ import {
 import { Input } from '@/components/ui/input';
 import { thousandFormatter } from '@/lib/utils';
 import MessageInTable from '@/components/MessageInTable';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { XIcon } from 'lucide-react';
 
-type DataTableProps<TData, TValue> = {
+interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
+  typeFilterAsParam?: string;
   // totals: athTotals;
-};
+}
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  typeFilterAsParam,
 }: // totals,
 DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   // const { athTotal, athTotalExclusions } = totals;
+
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [assetInFilter, setAssetInFilter] = useState('');
+  const [clearFilterButton, setClearFilterButton] = useState(false);
 
   const table = useReactTable({
     data,
@@ -54,6 +66,27 @@ DataTableProps<TData, TValue>) {
       columnFilters,
     },
   });
+  // console.log('---  🚀 ---> | typeFilterAsParam:', typeFilterAsParam);
+
+  useEffect(() => {
+    if (typeFilterAsParam) {
+      setAssetInFilter(typeFilterAsParam);
+      table.getColumn('asset')?.setFilterValue(typeFilterAsParam);
+    }
+  }, [typeFilterAsParam, table]);
+
+  useEffect(() => {
+    if (assetInFilter) {
+      setClearFilterButton(true);
+    }
+  }, [assetInFilter]);
+
+  const handleClickClearFilter = () => {
+    setAssetInFilter('');
+    setColumnFilters([]);
+    table.resetGlobalFilter();
+    setClearFilterButton(false);
+  };
 
   return (
     <div className='rounded-sm border border-slate-200'>
@@ -66,6 +99,30 @@ DataTableProps<TData, TValue>) {
           }
           className='max-w-sm w-[14ch]'
         />
+
+        {/* --------------------------------------------- */}
+        {clearFilterButton && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <div
+                  className='flex items-center justify-center w-[176px] sm:w-11 h-10 ml-4 sm:ml-2 border-2 border-slate-500 bg-accent'
+                  onClick={() => {
+                    handleClickClearFilter();
+                  }}
+                >
+                  <XIcon size={18} strokeWidth={2.4} />
+                  <span className='inline sm:hidden ml-2 font-semibold'>
+                    Clear All Filters
+                  </span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Clear All Filters</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
       </div>
       <Table>
         <TableHeader>
