@@ -97,8 +97,8 @@ export default function Cryptos({
         projection: item.projection,
         // Check the formulas
 
-        // projectionTotal: currencyFormatter(item.projection * item.qty),
-        projectionTotal: item.projection * item.qty,
+        projectionTotal: currencyFormatter(item.projection * item.qty),
+        // projectionTotal: item.projection * item.qty,
         projectionXPotential: numberFormatter.format(
           item.projection / item.price
         ),
