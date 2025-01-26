@@ -103,11 +103,6 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  // console.log(
-  //   '---  🚀 ---> | typeFilterAsParam from Asset:',
-  //   typeFilterAsParam
-  // );
-
   useEffect(() => {
     if (typeFilterAsParam) {
       setValueTypeDropbox(typeFilterAsParam);

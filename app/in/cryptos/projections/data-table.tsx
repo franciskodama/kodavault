@@ -51,7 +51,6 @@ DataTableProps<TData, TValue>) {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [assetInFilter, setAssetInFilter] = useState('');
-  const [clearFilterButton, setClearFilterButton] = useState(false);
 
   const table = useReactTable({
     data,
@@ -66,42 +65,35 @@ DataTableProps<TData, TValue>) {
       columnFilters,
     },
   });
-  // console.log('---  🚀 ---> | typeFilterAsParam:', typeFilterAsParam);
+
+  const inputFilterValue = table.getColumn('asset')?.getFilterValue() as string;
 
   useEffect(() => {
-    if (typeFilterAsParam) {
-      setAssetInFilter(typeFilterAsParam);
-      table.getColumn('asset')?.setFilterValue(typeFilterAsParam);
+    if (inputFilterValue) {
+      setAssetInFilter(inputFilterValue);
     }
-  }, [typeFilterAsParam, table]);
-
-  useEffect(() => {
-    if (assetInFilter) {
-      setClearFilterButton(true);
-    }
-  }, [assetInFilter]);
+  }, [inputFilterValue]);
 
   const handleClickClearFilter = () => {
     setAssetInFilter('');
     setColumnFilters([]);
     table.resetGlobalFilter();
-    setClearFilterButton(false);
   };
 
   return (
     <div className='rounded-sm border border-slate-200'>
-      <div className='flex items-center justify-between px-12 py-4 mt-4'>
+      <div className='flex items-center justify-left px-12 py-4 mt-4'>
         <Input
           placeholder='Filter by Asset'
-          value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('asset')?.setFilterValue(event.target.value)
-          }
+          value={assetInFilter}
+          onChange={(event) => {
+            table.getColumn('asset')?.setFilterValue(event.target.value);
+          }}
           className='max-w-sm w-[14ch]'
         />
 
         {/* --------------------------------------------- */}
-        {clearFilterButton && (
+        {inputFilterValue && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>

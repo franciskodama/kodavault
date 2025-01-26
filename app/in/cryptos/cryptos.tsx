@@ -27,7 +27,6 @@ export type ProjectionsData = {
   uid: string;
   asset: string;
   source: string | null;
-  // symbol: string;
   projection?: number;
   projectionTotal?: number;
   projectionXPotential?: number;
@@ -96,11 +95,9 @@ export default function Cryptos({
         ),
         projection: item.projection,
         // Check the formulas
-
         projectionTotal: currencyFormatter(item.projection * item.qty),
-        // projectionTotal: item.projection * item.qty,
         projectionXPotential: numberFormatter.format(
-          item.projection / item.price
+          item.projection / item.qty
         ),
         projectionPercentagePotential: numberFormatterNoDecimals.format(
           ((item.projection - item.price) / item.price) * 100
