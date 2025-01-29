@@ -220,7 +220,7 @@ export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
               </DialogHeader>
               <FormProjections
                 assetRow={assetRow}
-                onClose={() => setOpen(false)}
+                // onClose={() => setOpen(false)}
               />
             </DialogContent>
           </Dialog>

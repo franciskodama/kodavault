@@ -12,10 +12,10 @@ import { useUser } from '@clerk/nextjs';
 import { useAssetsContext } from '@/context/AssetsContext';
 export const FormProjections = ({
   assetRow,
-  onClose,
-}: {
+}: // onClose,
+{
   assetRow: CryptoWithAthAndProjections;
-  onClose: () => void;
+  // onClose: () => void;
 }) => {
   const { refreshAssets } = useAssetsContext();
   // const [data, setData] = useState<CryptoProjection>();
@@ -65,10 +65,11 @@ export const FormProjections = ({
           variant: 'success',
         });
         reset();
-        onClose();
+        // onClose();
 
         // Then refresh assets
         await refreshAssets();
+        // closeRef.current?.click();
       } else {
         toast({
           title: '👻 Boho! Error occurred!',
@@ -134,6 +135,7 @@ export const FormProjections = ({
           </Button>
 
           <Button
+            // ref={closeRef}
             type='submit'
             disabled={!uid || isSubmitting}
             className='flex-1'
