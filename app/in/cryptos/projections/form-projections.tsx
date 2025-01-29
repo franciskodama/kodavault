@@ -3,38 +3,43 @@
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { updateProjection } from '@/lib/actions';
-import { useState } from 'react';
-import { Form, SubmitHandler, useForm } from 'react-hook-form';
+import { useRef, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
+import { useAssetsContext } from '@/context/AssetsContext';
 export const FormProjections = ({
   assetRow,
+  onClose,
 }: {
   assetRow: CryptoWithAthAndProjections;
+  onClose: () => void;
 }) => {
-  const [data, setData] = useState<CryptoProjection>();
+  const { refreshAssets } = useAssetsContext();
+  // const [data, setData] = useState<CryptoProjection>();
   const { toast } = useToast();
   const { user } = useUser();
-  const email = user?.emailAddresses[0]?.emailAddress;
+  const uid = user?.emailAddresses[0]?.emailAddress;
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<CryptoProjection>({
     defaultValues: {
-      uid: email,
+      uid: uid || '',
       asset: assetRow.asset,
       projection: assetRow.projection ? Number(assetRow.projection) : 0,
-      source: assetRow.source,
+      source: assetRow.source || '',
     },
   });
 
-  const processForm: SubmitHandler<CryptoProjection> = async (data) => {
-    if (!email) {
+  const processForm = async (formData: CryptoProjection) => {
+    if (!uid) {
       toast({
         title: 'Error',
         description: 'You must be logged in to update projections',
@@ -43,37 +48,52 @@ export const FormProjections = ({
       return;
     }
 
-    const formData: CryptoProjection = {
-      uid: email,
+    const data: CryptoProjection = {
+      uid,
       asset: assetRow.asset,
-      projection: Number(data.projection),
-      source: data.source || '',
+      projection: Number(formData.projection),
+      source: formData.source || '',
     };
 
-    const result = await updateProjection(formData);
+    try {
+      const result = await updateProjection({ data });
 
-    if (result) {
+      if (result) {
+        toast({
+          title: 'Projection Updated! 🎉',
+          description: 'Your new Projection is already set.',
+          variant: 'success',
+        });
+        reset();
+        onClose();
+
+        // Then refresh assets
+        await refreshAssets();
+      } else {
+        toast({
+          title: '👻 Boho! Error occurred!',
+          description: 'Your Projection was NOT updated.',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Error updating projection:', error);
       toast({
-        title: 'Projection Updated! 🎉',
-        description: 'Your new Projection is already set.',
-        variant: 'success',
-      });
-    } else {
-      toast({
-        title: '👻 Boho! Error occurred!',
-        description: 'Your Projection was NOT updated.',
+        title: 'Error',
+        description: 'Failed to update projection. Please try again.',
         variant: 'destructive',
       });
     }
-
-    reset();
-    setData(data);
   };
 
-  // Tirar reload in this page, and all the others that have it
-  // Total projected
-  // Total Boost %
-  // Total Boost X
+  const handleClear = () => {
+    reset({
+      uid: uid || '',
+      asset: assetRow.asset,
+      projection: 0,
+      source: '',
+    });
+  };
 
   return (
     <div>
@@ -88,7 +108,15 @@ export const FormProjections = ({
 
           <div className='flex items-center '>
             <Label className='text-left text-xs w-1/3'>Projection</Label>
-            <Input className='ml-2' {...register('projection')} />
+            <Input
+              className='ml-2'
+              type='number'
+              step='any'
+              {...register('projection', {
+                required: true,
+                valueAsNumber: true,
+              })}
+            />
           </div>
 
           <div className='flex items-center gap-4'>
@@ -96,12 +124,22 @@ export const FormProjections = ({
             <Input className='ml-2' {...register('source')} />
           </div>
 
-          {/* Make this work */}
-          <Button className='mt-8' variant='outline'>
+          <Button
+            type='button'
+            className='mt-8'
+            variant='outline'
+            onClick={handleClear}
+          >
             Clear
           </Button>
 
-          <Button type='submit'>Save Changes</Button>
+          <Button
+            type='submit'
+            disabled={!uid || isSubmitting}
+            className='flex-1'
+          >
+            {isSubmitting ? 'Saving...' : 'Save Changes'}
+          </Button>
         </div>
       </form>
     </div>

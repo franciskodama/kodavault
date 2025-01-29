@@ -36,7 +36,6 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
   const { toast } = useToast();
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
-
   const closeRef = useRef<HTMLButtonElement>(null);
 
   const {

@@ -92,7 +92,6 @@ DataTableProps<TData, TValue>) {
           className='max-w-sm w-[14ch]'
         />
 
-        {/* --------------------------------------------- */}
         {inputFilterValue && (
           <TooltipProvider>
             <Tooltip>

@@ -9,15 +9,14 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { Asset, CryptoWithAthAndProjections } from '@/lib/types';
+import { CryptoWithAthAndProjections } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 import { FormProjections } from './form-projections';
 import { tableHeaderClass } from '@/lib/classes';
 import { Button } from '@/components/ui/button';
-import { useUser } from '@clerk/nextjs';
-import { useUserContext } from '@clerk/shared/react/index';
 import { currencyFormatter } from '@/lib/utils';
+import { useState } from 'react';
 
 export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
   {
@@ -219,7 +218,10 @@ export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
                 <DialogTitle>Edit Asset Projection</DialogTitle>
                 <DialogDescription>Adjust your Projection!</DialogDescription>
               </DialogHeader>
-              <FormProjections assetRow={assetRow} />
+              <FormProjections
+                assetRow={assetRow}
+                onClose={() => setOpen(false)}
+              />
             </DialogContent>
           </Dialog>
         </div>
