@@ -202,30 +202,39 @@ export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
 
       return (
         <div className='flex items-center'>
-          {assetRow && <p className='w-full text-left'>{assetRow.source}</p>}
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                variant='outline'
-                size='sm'
-                className='ml-4 text-xl hover:text-base w-8 h-8 bg-white border border-slate-300 rounded-[2px]'
-              >
-                ✏️
-              </Button>
-            </DialogTrigger>
-            <DialogContent className='w-[22em]'>
-              <DialogHeader>
-                <DialogTitle>Edit Asset Projection</DialogTitle>
-                <DialogDescription>Adjust your Projection!</DialogDescription>
-              </DialogHeader>
-              <FormProjections
-                assetRow={assetRow}
-                // onClose={() => setOpen(false)}
-              />
-            </DialogContent>
-          </Dialog>
+          <p className='w-full text-left'>{assetRow.source}</p>
+          <EditProjection assetRow={assetRow} />
         </div>
       );
     },
   },
 ];
+
+function EditProjection({
+  assetRow,
+}: {
+  assetRow: CryptoWithAthAndProjections;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          variant='outline'
+          size='sm'
+          className='ml-4 text-xl hover:text-base w-8 h-8 bg-white border border-slate-300 rounded-[2px]'
+        >
+          ✏️
+        </Button>
+      </DialogTrigger>
+      <DialogContent className='w-[22em]'>
+        <DialogHeader>
+          <DialogTitle>Edit Asset Projection</DialogTitle>
+          <DialogDescription>Adjust your Projection!</DialogDescription>
+        </DialogHeader>
+        <FormProjections assetRow={assetRow} onClose={() => setOpen(false)} />
+      </DialogContent>
+    </Dialog>
+  );
+}
