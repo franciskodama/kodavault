@@ -3,13 +3,13 @@
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { updateProjection } from '@/lib/actions';
-import { useRef, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
 import { useAssetsContext } from '@/context/AssetsContext';
+
 export const FormProjections = ({
   assetRow,
   onClose,
@@ -18,22 +18,20 @@ export const FormProjections = ({
   onClose: () => void;
 }) => {
   const { refreshAssets } = useAssetsContext();
-  // const [data, setData] = useState<CryptoProjection>();
   const { toast } = useToast();
   const { user } = useUser();
   const uid = user?.emailAddresses[0]?.emailAddress;
-  const closeRef = useRef<HTMLButtonElement>(null);
 
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<CryptoProjection>({
     defaultValues: {
       uid: uid || '',
       asset: assetRow.asset,
-      projection: assetRow.projection ? Number(assetRow.projection) : 0,
+      projection: assetRow.projection ? Number(assetRow.projection) : undefined,
       source: assetRow.source || '',
     },
   });
@@ -64,12 +62,12 @@ export const FormProjections = ({
           description: 'Your new Projection is already set.',
           variant: 'success',
         });
-        reset();
-        onClose();
 
-        // Then refresh assets
+        setValue('projection', undefined, { shouldValidate: true });
+        setValue('source', '', { shouldValidate: true });
+
+        onClose();
         await refreshAssets();
-        // closeRef.current?.click();
       } else {
         toast({
           title: '👻 Boho! Error occurred!',
@@ -88,12 +86,8 @@ export const FormProjections = ({
   };
 
   const handleClear = () => {
-    reset({
-      uid: uid || '',
-      asset: assetRow.asset,
-      projection: 0,
-      source: '',
-    });
+    setValue('projection', undefined, { shouldValidate: false });
+    setValue('source', '', { shouldValidate: false });
   };
 
   return (
@@ -107,41 +101,48 @@ export const FormProjections = ({
             </span>
           </h3>
 
-          <div className='flex items-center '>
-            <Label className='text-left text-xs w-1/3'>Projection</Label>
-            <Input
-              className='ml-2'
-              type='number'
-              step='any'
-              {...register('projection', {
-                required: true,
-                valueAsNumber: true,
-              })}
-            />
+          <div className='flex items-center'>
+            <Label className='text-left text-xs w-1/3'>Projection:</Label>
+            <div className='ml-2'>
+              <Input
+                type='number'
+                step='any'
+                {...register('projection', {
+                  required: 'Projection is required',
+                  valueAsNumber: true,
+                })}
+              />
+              {errors.projection && (
+                <p className='flex items-center justify-center text-xs text-white bg-red-500 py-1'>
+                  {errors.projection.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <div className='flex items-center gap-4'>
             <Label className='text-left text-xs'>Source:</Label>
-            <Input className='ml-2' {...register('source')} />
+            <Input className='ml-3' {...register('source')} />
           </div>
 
-          <Button
-            type='button'
-            className='mt-8'
-            variant='outline'
-            onClick={handleClear}
-          >
-            Clear
-          </Button>
+          <div className='flex gap-4 mt-8'>
+            <Button
+              type='button'
+              variant='outline'
+              onClick={handleClear}
+              className='flex-1'
+            >
+              Clear
+            </Button>
 
-          <Button
-            // ref={closeRef}
-            type='submit'
-            disabled={!uid || isSubmitting}
-            className='flex-1'
-          >
-            {isSubmitting ? 'Saving...' : 'Save Changes'}
-          </Button>
+            <Button
+              type='submit'
+              disabled={!uid || isSubmitting}
+              className='flex-1'
+            >
+              {isSubmitting ? 'Saving...' : 'Save Changes'}
+            </Button>
+          </div>
         </div>
       </form>
     </div>

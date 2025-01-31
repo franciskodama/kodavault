@@ -59,7 +59,7 @@ export type CryptoProjection = {
   uid: string;
   asset: string;
   projection?: number;
-  source?: string | null;
+  source?: string;
 };
 
 export type AssetsByType = {

@@ -218,12 +218,13 @@ function EditProjection({
   const [open, setOpen] = useState(false);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           variant='outline'
           size='sm'
           className='ml-4 text-xl hover:text-base w-8 h-8 bg-white border border-slate-300 rounded-[2px]'
+          onClick={() => setOpen(true)}
         >
           ✏️
         </Button>
