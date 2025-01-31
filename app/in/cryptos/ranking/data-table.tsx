@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '../../../../components/ui/card';
-import { AssetReducedWithAth } from '../../../../lib/types';
+import { CryptoWithAthAndProjections } from '../../../../lib/types';
 import {
   currencyFormatter,
   numberFormatterNoDecimals,
@@ -15,10 +15,10 @@ import {
 export const DataTable = ({
   athAssets,
 }: {
-  athAssets: AssetReducedWithAth[];
+  athAssets: CryptoWithAthAndProjections[];
 }) => {
   const athTotal = athAssets.reduce(
-    (sum: number, item: AssetReducedWithAth) => {
+    (sum: number, item: CryptoWithAthAndProjections) => {
       const currentAthTotalNumber = Number(item.athTotalNumber);
       return sum + currentAthTotalNumber;
     },

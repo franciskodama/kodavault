@@ -32,10 +32,35 @@ export type Asset =
       price?: number;
       total?: number;
       ath?: number;
-      wallet?: string;
-      currency?: string;
-      type?: string;
+      image?: string;
     });
+
+export type CryptoWithAthAndProjections = {
+  id?: string;
+  uid?: string;
+  asset: string;
+  price: number | string;
+  qty: number | string;
+  currentTotal: number | string;
+  ath: number | string;
+  athTotalNumber: number;
+  athTotalCurrency: string;
+  athXPotential: number | string;
+  athPercentagePotential: number | string;
+  projection?: number | string;
+  projectionTotal?: number | string;
+  projectionXPotential?: number | string;
+  projectionPercentagePotential?: number | string;
+  source?: string;
+};
+
+export type CryptoProjection = {
+  id?: string;
+  uid: string;
+  asset: string;
+  projection?: number;
+  source?: string;
+};
 
 export type AssetsByType = {
   [key: string]: Asset[];
@@ -60,18 +85,6 @@ export type AssetForAth = {
   exchange: string;
   price?: number;
   total?: number;
-};
-
-export type AssetReducedWithAth = {
-  asset: string;
-  price: number | string;
-  qty: number | string;
-  currentTotal: number | string;
-  ath: number | string;
-  athTotalNumber: number;
-  athTotalCurrency: string;
-  xPotential: number | string;
-  percentagePotential: number | string;
 };
 
 export type Currency = {

@@ -1,8 +1,14 @@
-import { getAllTimeHighData } from '@/lib/crypto.server';
 import Cryptos from './cryptos';
+import { getAllTimeHighData } from '@/lib/crypto.server';
+import { getProjections } from '@/lib/actions';
+import { currentUser } from '@clerk/nextjs/server';
 
 export default async function CryptosPage() {
-  const allTimeHighData = await getAllTimeHighData();
+  const user = await currentUser();
+  const uid = user?.emailAddresses?.[0]?.emailAddress;
+
+  const allTimeHighData = (await getAllTimeHighData()) || [];
+  const projectionsData = await getProjections(uid ? uid : '');
 
   const athImageData = allTimeHighData.map(
     (crypto: { symbol: string; ath: number; image: string }) => ({
@@ -14,7 +20,10 @@ export default async function CryptosPage() {
 
   return (
     <div className='mx-auto'>
-      <Cryptos athImageData={athImageData} />
+      <Cryptos
+        athImageData={athImageData}
+        projections={projectionsData ? projectionsData : []}
+      />
     </div>
   );
 }

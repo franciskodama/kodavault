@@ -86,7 +86,6 @@ export function DataTable<TData, TValue>({
   const [openTypeDropbox, setOpenTypeDropbox] = useState(false);
   const [valueTypeDropbox, setValueTypeDropbox] = useState('');
 
-  const [clearFilterButton, setClearFilterButton] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
 
   const table = useReactTable({
@@ -112,7 +111,6 @@ export function DataTable<TData, TValue>({
 
   useEffect(() => {
     if (valueWalletDropbox || valueCurrencyDropbox || valueTypeDropbox) {
-      setClearFilterButton(true);
     }
   }, [valueWalletDropbox, valueCurrencyDropbox, valueTypeDropbox]);
 
@@ -176,7 +174,6 @@ export function DataTable<TData, TValue>({
     setValueTypeDropbox('');
     setColumnFilters([]);
     table.resetGlobalFilter();
-    setClearFilterButton(false);
   };
 
   const stocksNoTotal = assetsByType?.Stock?.filter(
@@ -228,7 +225,6 @@ export function DataTable<TData, TValue>({
               }
               onChange={(e) => {
                 table.getColumn('asset')?.setFilterValue(e.target.value);
-                setClearFilterButton(true);
               }}
               className='max-w-sm w-[20ch]'
             />
@@ -465,7 +461,6 @@ export function DataTable<TData, TValue>({
               value={(table.getColumn('tag')?.getFilterValue() as string) ?? ''}
               onChange={(e) => {
                 table.getColumn('tag')?.setFilterValue(e.target.value);
-                setClearFilterButton(true);
               }}
               className='max-w-sm w-[20ch] sm:ml-4'
             />
@@ -568,7 +563,7 @@ export function DataTable<TData, TValue>({
             </div>
           )}
 
-          {clearFilterButton && (
+          {inputFilterValue && (
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>

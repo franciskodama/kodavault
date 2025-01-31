@@ -18,32 +18,6 @@ model Category {
   Event     Event[]
 }
 
-model Day {
-  did         String    @id(map: "Day_pkey1") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  date        DateTime  @db.Date
-  city        String?
-  state       String?
-  country     String?
-  weather     String?
-  moon        String?
-  temperature Int?      @default(0)
-  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
-  updatedAt   DateTime? @default(now()) @db.Timestamptz(6)
-  uid         String
-  User        User      @relation(fields: [uid], references: [uid], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model DayEvent {
-  id        String   @id(map: "DayEvents_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  dayId     String
-  eventId   Int
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
-  updatedAt DateTime @default(now()) @db.Timestamptz(6)
-  value     String?
-  uid       String
-  User      User     @relation(fields: [uid], references: [uid], onDelete: NoAction, onUpdate: NoAction, map: "DayEvents_uid_fkey")
-}
-
 model Event {
   eid       String    @id(map: "Events_pkey") @default("eid-")
   icon      String?
@@ -67,8 +41,6 @@ model User {
   uid          String?       @unique
   createdAt    DateTime      @default(now()) @db.Timestamptz(6)
   updatedAt    DateTime?     @default(now()) @db.Timestamptz(6)
-  Day          Day[]
-  DayEvent     DayEvent[]
   UserSettings UserSettings?
 }
 
@@ -81,20 +53,6 @@ model UserSettings {
   view        Boolean   @default(true)
   id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   User        User      @relation(fields: [uid], references: [uid], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model applicant_tracking_system {
-  id               BigInt  @id
-  applicant_name   String?
-  email            String?
-  linkedin_url     String?
-  phone_number     String?
-  resume           String?
-  job_position     String?
-  application_date String?
-  status           String?
-  notes            String?
-  photo            String?
 }
 
 model Asset {
@@ -152,6 +110,17 @@ model Goal {
   uid        String   @unique
   created_at DateTime @default(now()) @db.Timestamptz(6)
   goal       Int?     @default(0)
+}
+
+model Projection {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  uid        String
+  asset      String
+  projection Float    @default(0)
+  source     String?
+  
+  @@unique([uid, asset], name: "uid_asset")
 }
 
 enum priority_enum_593899f8 {

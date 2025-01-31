@@ -1,4 +1,10 @@
 // TODO: NEXT:
+// Form add and update Asset: if it's a platform, select automatically the -- Not Needed -- option for account
+// Assets Page: Review must be fast, so perhaps it should use local storage
+// Assets Page: Review deselect all in once with a single button (confirmation before delete all reviews status check)
+// Assets Page: Show how many types of asset it has in the user's filter (so que can check the number of assets in the platform when reviewing)
+
+// Crypto Projection Form: Clear is submiting
 // CronJob: https://console.cron-job.org/jobs/5201103 + https://www.youtube.com/shorts/d9olvU5bbQ4
 // CronJob: with header with authentication Bearer Secret
 // CronJob: errror for account fk.ca check logs on Vercel

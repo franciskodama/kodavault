@@ -2,26 +2,109 @@
 
 import Main from './main/main';
 import { Loading } from '@/components/Loading';
-import MessageInTable from '@/components/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
-import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import PriceProjections from './price-projections';
 import AllocationGoals from './allocation-goals';
-import AthProjections from './ath-projections';
+import Ath from './ath';
+import Ranking from './ranking';
+import Projections from './projections';
+import { Asset, CryptoWithAthAndProjections } from '@/lib/types';
+import {
+  currencyFormatter,
+  numberFormatter,
+  numberFormatterNoDecimals,
+} from '@/lib/utils';
 
-export type athImageData = {
+export type AthImageData = {
   symbol: string;
   ath: number;
   image?: string;
 };
 
+export type ProjectionsData = {
+  id: string;
+  created_at: Date;
+  uid: string;
+  asset: string;
+  source: string | null;
+  projection?: number;
+  projectionTotal?: number;
+  projectionXPotential?: number;
+  projectionPercentagePotential?: number;
+};
+
 export default function Cryptos({
   athImageData,
+  projections,
 }: {
-  athImageData: athImageData[];
+  athImageData: AthImageData[];
+  projections: ProjectionsData[];
 }) {
   const { assetsByType, isLoading } = useAssetsContext();
+
+  const addedAth: Asset[] = assetsByType.Crypto?.map((item: any) => {
+    const existingAsset = athImageData.find(
+      (el: AthImageData) => el.symbol === item.asset
+    );
+    return {
+      ...item,
+      ath: existingAsset?.ath ? existingAsset.ath : 0,
+      image: existingAsset?.image ? existingAsset.image : '',
+    };
+  });
+
+  const addedAthAndProjections: Asset[] = addedAth?.map((item: any) => {
+    const existingAsset = projections.find(
+      (el: ProjectionsData) => el.asset === item.asset
+    );
+    return {
+      ...item,
+      projection: existingAsset?.projection ? existingAsset.projection : 0,
+      source: existingAsset?.source ? existingAsset.source : '',
+    };
+  });
+
+  const sumQtyOfSameAssets: Asset[] = addedAthAndProjections?.reduce(
+    (acc: any, item: any) => {
+      const existingAsset = acc.find((el: any) => el.asset === item.asset);
+      if (existingAsset) {
+        existingAsset.qty += item.qty;
+        existingAsset.currentTotal += item.total;
+      } else {
+        acc.push(item);
+      }
+      return acc;
+    },
+    []
+  );
+
+  const cryptosWithATHsAndProjections: CryptoWithAthAndProjections[] =
+    sumQtyOfSameAssets?.map((item: any) => {
+      return {
+        asset: item.asset,
+        image: item.image,
+        price: currencyFormatter(item.price),
+        qty: numberFormatter.format(item.qty),
+        currentTotal: currencyFormatter(item.qty * item.price),
+        ath: currencyFormatter(item.ath),
+        athTotalNumber: item.ath * item.qty,
+        athTotalCurrency: currencyFormatter(item.ath * item.qty),
+        athXPotential: numberFormatter.format(item.ath / item.price),
+        athPercentagePotential: numberFormatterNoDecimals.format(
+          ((item.ath - item.price) / item.price) * 100
+        ),
+        projection: item.projection,
+        // Check the formulas
+        projectionTotal: currencyFormatter(item.projection * item.qty),
+        projectionXPotential: numberFormatter.format(
+          item.projection / item.qty
+        ),
+        projectionPercentagePotential: numberFormatterNoDecimals.format(
+          ((item.projection - item.price) / item.price) * 100
+        ),
+        source: item.source,
+      };
+    });
 
   return (
     <>
@@ -41,9 +124,8 @@ export default function Cryptos({
                       Allocation Goals
                     </TabsTrigger>
                     <TabsTrigger value='ath'>ATH Estimation</TabsTrigger>
-                    {/* <TabsTrigger value='price-projections'>
-                      Price Projections
-                    </TabsTrigger> */}
+                    <TabsTrigger value='projections'>Projections</TabsTrigger>
+                    <TabsTrigger value='ranking'>Ranking</TabsTrigger>
                   </TabsList>
 
                   <TabsContent value='main' className='flex gap-2 mt-4'>
@@ -61,14 +143,22 @@ export default function Cryptos({
                   </TabsContent>
 
                   <TabsContent value='ath' className='mt-4'>
-                    <AthProjections
-                      assets={assetsByType.Crypto}
-                      athImageData={athImageData}
+                    <Ath
+                      cryptosWithATHsAndProjections={
+                        cryptosWithATHsAndProjections
+                      }
                     />
                   </TabsContent>
-                  {/* <TabsContent value='price-projections' className='mt-4'>
-                    <PriceProjections assets={assetsByType.Crypto} />
-                  </TabsContent> */}
+                  <TabsContent value='projections' className='mt-4'>
+                    <Projections
+                      cryptosWithATHsAndProjections={
+                        cryptosWithATHsAndProjections
+                      }
+                    />
+                  </TabsContent>
+                  <TabsContent value='ranking' className='mt-4'>
+                    {/* <Ranking assets={assetsByType.Crypto} /> */}
+                  </TabsContent>
                 </Tabs>
               </div>
             </>

@@ -3,7 +3,7 @@
 import { Asset } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '../../../../components/ui/button';
-import { ArrowUpDown, XIcon } from 'lucide-react';
+import { ArrowUpDown } from 'lucide-react';
 import { tableHeaderClass } from '../../../../lib/classes';
 
 export const columns: ColumnDef<Asset>[] = [
@@ -24,7 +24,11 @@ export const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: 'image',
-    header: () => <div className={tableHeaderClass}></div>,
+    header: () => (
+      <div className='flex justify-center'>
+        <div className={tableHeaderClass}>Icon</div>
+      </div>
+    ),
   },
   {
     accessorKey: 'qty',
@@ -72,7 +76,7 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
-    accessorKey: 'percentagePotential',
+    accessorKey: 'athPercentagePotential',
     header: ({ column }) => {
       return (
         <Button
@@ -87,7 +91,7 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
-    accessorKey: 'xPotential',
+    accessorKey: 'athXPotential',
     header: ({ column }) => {
       return (
         <Button

@@ -1,4 +1,4 @@
-import { Asset, AssetReducedWithAth } from '../../../../lib/types';
+import { Asset, CryptoWithAthAndProjections } from '../../../../lib/types';
 import { DataTable } from './data-table';
 import { hardcodedAthCoins } from '../../../../lib/data';
 import {
@@ -8,11 +8,11 @@ import {
 } from '../../../../lib/utils';
 import { Loading } from '../../../../components/Loading';
 
-export default function PriceProjections({ assets }: { assets: Asset[] }) {
+export default function Ranking({ assets }: { assets: Asset[] }) {
   let cryptoAssetsWithAth: Asset[] = [];
   let sumQtyOfSameAssets: Asset[] = [];
-  let athAssets: AssetReducedWithAth[] = [];
-  let sortedAthAssets: AssetReducedWithAth[] = [];
+  let athAssets: CryptoWithAthAndProjections[] = [];
+  let sortedAthAssets: CryptoWithAthAndProjections[] = [];
 
   if (!assets) {
     return <Loading />;
@@ -58,7 +58,7 @@ export default function PriceProjections({ assets }: { assets: Asset[] }) {
   // });
 
   // sortedAthAssets = athAssets.sort(
-  //   (a: AssetReducedWithAth, b: AssetReducedWithAth) => {
+  //   (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
   //     return Number(b.xPotential) - Number(a.xPotential);
   //   }
   // );
@@ -67,7 +67,7 @@ export default function PriceProjections({ assets }: { assets: Asset[] }) {
     <>
       {sortedAthAssets.length > 0 && (
         <div className='w-full'>
-          {/* <DataTable athAssets={sortedAthAssets} /> */}
+          <DataTable athAssets={sortedAthAssets} />
         </div>
       )}
     </>

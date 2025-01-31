@@ -43,6 +43,7 @@ export function AddAssetForm() {
   const { toast } = useToast();
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   const {
     register,
@@ -52,8 +53,6 @@ export function AddAssetForm() {
     setValue,
     formState: { errors },
   } = useForm<Inputs>({});
-
-  const closeRef = useRef<HTMLButtonElement>(null);
 
   const symbolTyped = watch('asset');
   const assetSubtype = watch('subtype');

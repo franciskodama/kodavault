@@ -7,6 +7,7 @@ import {
   Inputs,
   ShortcutType,
   AddNetWorthChartData,
+  CryptoProjection,
 } from './types';
 import { revalidatePath } from 'next/cache';
 import { v4 } from 'uuid';
@@ -99,6 +100,21 @@ export async function updateAsset(formData: Inputs) {
   }
 }
 
+export async function deleteAsset(id: string) {
+  try {
+    await prisma.asset.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath('/in/assets');
+  } catch (error) {
+    console.log(error);
+    throw new Error('🚨 Failed to delete asset');
+  }
+}
+
 export async function updateReviewedAsset(id: string, reviewed: boolean) {
   try {
     await prisma.asset.update({
@@ -114,21 +130,6 @@ export async function updateReviewedAsset(id: string, reviewed: boolean) {
   } catch (error) {
     console.error('Failed to update asset review status:', error);
     return false;
-  }
-}
-
-export async function deleteAsset(id: string) {
-  try {
-    await prisma.asset.delete({
-      where: {
-        id,
-      },
-    });
-
-    revalidatePath('/in/assets');
-  } catch (error) {
-    console.log(error);
-    throw new Error('🚨 Failed to delete asset');
   }
 }
 
@@ -372,3 +373,72 @@ export async function updateGoal(uid: string, goal: number) {
     return false;
   }
 }
+
+export async function addProjection(
+  uid: string,
+  asset: string,
+  projection: number,
+  source?: string
+) {
+  try {
+    await prisma.projection.create({
+      data: {
+        id: v4(),
+        created_at: new Date(),
+        uid,
+        asset,
+        projection,
+        source: source ? source : '',
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log('Error in adding Projection:', error);
+    return false;
+  }
+}
+
+export async function updateProjection({ data }: { data: CryptoProjection }) {
+  const { uid, asset, projection, source } = data;
+
+  try {
+    await prisma.projection.upsert({
+      where: {
+        uid_asset: {
+          uid,
+          asset,
+        },
+      },
+      create: {
+        id: v4(),
+        created_at: new Date(),
+        uid,
+        asset,
+        projection,
+        source: source ?? '',
+      },
+      update: {
+        projection,
+        source: source ?? '',
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export const getProjections = async (uid: string) => {
+  try {
+    const projections = await prisma.projection.findMany({
+      where: {
+        uid,
+      },
+    });
+    return projections;
+  } catch (error) {
+    console.error('Error fetching prjections:', error);
+    return [];
+  }
+};
