@@ -10,11 +10,10 @@ import Template from './in/template';
 // See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 // export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
 // export const cairoPlay = Cairo_Play({ subsets: ['latin'], display: 'swap' });
-
 // export const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
-  title: 'Koda Vault',
+  title: 'Trezo.App',
   description: 'Assets Analysis for Right Decisions',
 };
 
