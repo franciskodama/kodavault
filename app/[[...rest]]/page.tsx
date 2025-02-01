@@ -25,7 +25,7 @@ export default async function HomePage() {
                 src='/money-pool.gif'
                 width={1000}
                 height={800}
-                alt='Logo Koda Vault'
+                alt='Money Pool'
                 priority={true}
                 className='rounded-md object-cover'
               />
