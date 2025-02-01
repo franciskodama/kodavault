@@ -654,11 +654,11 @@ export function DataTable<TData, TValue>({
           </div>
         )}
       </div>
-      {/* <div className='flex justify-center items-center gap-12 text-xs font-semibold font-muted bg-muted p-3 border'>
+      <div className='flex justify-center items-center gap-12 text-xs font-semibold font-muted bg-muted p-3 border'>
         <p>Cryptos: {assetsByType.Crypto.length}</p>
         <p>Stocks: {assetsByType.Stock.length}</p>
         <p>Cash: {assetsByType.Cash.length}</p>
-      </div> */}
+      </div>
     </>
   );
 }

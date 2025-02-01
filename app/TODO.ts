@@ -1,4 +1,5 @@
 // TODO: NEXT:
+// Review in Assets Page must be local storage to be faster (instead of a call to the database)
 // Form add and update Asset: if it's a platform, select automatically the -- Not Needed -- option for account
 // Assets Page: Review must be fast, so perhaps it should use local storage
 // Assets Page: Review deselect all in once with a single button (confirmation before delete all reviews status check)

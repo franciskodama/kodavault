@@ -28,7 +28,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, Trash2 } from 'lucide-react';
 
 import { useAssetsContext } from '@/context/AssetsContext';
 import { tableHeaderClass } from '@/lib/classes';
@@ -39,6 +39,8 @@ import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useReviewedAssets } from './reviewed-context';
+import { Button } from '@/components/ui/button';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -182,91 +184,70 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: 'exchange',
-  //   header: ({ column }) => {
-  //     return (
-  //       <div
-  //         className={tableHeaderClass}
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-  //       >
-  //         <TooltipProvider>
-  //           <Tooltip>
-  //             <TooltipTrigger>FX</TooltipTrigger>
-  //             <TooltipContent>
-  //               <p>Foreign Exchange</p>
-  //             </TooltipContent>
-  //           </Tooltip>
-  //         </TooltipProvider>
-  //         <ArrowUpDown className='ml-2 h-4 w-4' />
-  //       </div>
-  //     );
-  //   },
-  // },
-  // {
-  //   accessorKey: 'currency',
-  //   header: ({ column }) => {
-  //     return (
-  //       <div
-  //         className={tableHeaderClass}
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-  //       >
-  //         <TooltipProvider>
-  //           <Tooltip>
-  //             <TooltipTrigger>$</TooltipTrigger>
-  //             <TooltipContent>
-  //               <p>Currency</p>
-  //             </TooltipContent>
-  //           </Tooltip>
-  //         </TooltipProvider>
-  //         <ArrowUpDown className='ml-2 h-4 w-4' />
-  //       </div>
-  //     );
-  //   },
-  // },
-  // {
-  //   id: 'review',
-  //   cell: ({ row }) => (
-  // <TooltipProvider>
-  //   <Tooltip>
-  //     <TooltipTrigger>
-  //       <AssetReviewed asset={row.original} />
-  //     </TooltipTrigger>
-  //     <TooltipContent>
-  //       {row.original?.reviewed ? 'Reviewed' : 'Unreviewed'}
-  //     </TooltipContent>
-  //   </Tooltip>
-  // </TooltipProvider>
-  //   ),
-  // },
+
   {
     id: 'actions',
+    header: ({ column }) => {
+      return (
+        <div>
+          <ClearReviewedButton />
+        </div>
+      );
+    },
     cell: ({ row }) => <AssetActionsCell asset={row.original} />,
   },
 ];
+export const ClearReviewedButton: React.FC = () => {
+  const { reviewedAssets, clearAllReviewed } = useReviewedAssets();
+
+  if (reviewedAssets.length === 0) {
+    return null;
+  }
+
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant='destructive'
+          size='sm'
+          className='flex items-center gap-2 py-4'
+        >
+          <Trash2 className='h-4 w-4' />
+          Reviews ({reviewedAssets.length})
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This will remove all {reviewedAssets.length} review marks from your
+            assets. This action cannot be undone.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={clearAllReviewed}
+            className='bg-red-600 hover:bg-red-700'
+          >
+            Clear All
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
 
 const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
   const { refreshAssets } = useAssetsContext();
+  const { addReviewedAsset, removeReviewedAsset, isAssetReviewed } =
+    useReviewedAssets();
 
-  const handleReviewedAsset = async (id: string, reviewed: boolean) => {
-    try {
-      await updateReviewedAsset(id as string, reviewed as boolean);
-      await refreshAssets();
-      toast({
-        title: `${asset?.asset}: ${reviewed ? 'Reviewed' : 'Unreviewed'}  ${
-          reviewed ? ' ✅' : '🚫'
-        }`,
-        description: `The Asset ${asset?.asset} has been successfully updated!`,
-        variant: reviewed ? 'success' : 'default',
-      });
-    } catch (error) {
-      console.error('Error updating reviewed status of asset:', error);
-      toast({
-        title: 'Error Updating Asset! 🚨',
-        description:
-          'Something went wrong while updating the Review Status. Try again!',
-        variant: 'destructive',
-      });
+  const handleReviewToggle = (checked: boolean, assetId: string) => {
+    if (checked) {
+      addReviewedAsset(assetId);
+    } else {
+      removeReviewedAsset(assetId);
     }
   };
 
@@ -274,6 +255,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
     try {
       await deleteAsset(id);
       await refreshAssets();
+      removeReviewedAsset(id);
       toast({
         title: 'Asset gone! 💀',
         description: `The Asset ${asset?.asset} has been successfully deleted from ${asset?.wallet}.`,
@@ -295,9 +277,9 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
         <div className='flex items-center text-xl'>
           <Checkbox
             className='w-[30px] h-[30px] border border-slate-300 rounded-[2px]'
-            checked={asset.reviewed}
-            onCheckedChange={() =>
-              handleReviewedAsset(asset.id, !asset.reviewed as boolean)
+            checked={isAssetReviewed(asset.id)}
+            onCheckedChange={(checked) =>
+              handleReviewToggle(checked as boolean, asset.id)
             }
           />
           <Sheet>
@@ -394,3 +376,29 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
     </>
   );
 };
+// ------------------ If we want to save reviewed status in the database ------------------
+
+// const handleReviewedAsset = async (id: string, reviewed: boolean) => {
+//   try {
+//     await updateReviewedAsset(id as string, reviewed as boolean);
+//     await refreshAssets();
+//     toast({
+//       title: `${asset?.asset}: ${reviewed ? 'Reviewed' : 'Unreviewed'}  ${
+//         reviewed ? ' ✅' : '🚫'
+//       }`,
+//       description: `The Asset ${asset?.asset} has been successfully updated!`,
+//       variant: reviewed ? 'success' : 'default',
+//     });
+//   } catch (error) {
+//     console.error('Error updating reviewed status of asset:', error);
+//     toast({
+//       title: 'Error Updating Asset! 🚨',
+//       description:
+//         'Something went wrong while updating the Review Status. Try again!',
+//       variant: 'destructive',
+//     });
+//   }
+// };
+// onCheckedChange={() => handleReviewedAsset(asset.id, !asset.reviewed as boolean)}
+
+// --------------------------------------------------------------------------------------
