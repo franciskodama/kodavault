@@ -655,7 +655,7 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      <div className='flex justify-center items-center gap-12 text-xs font-light text-white bg-slate-500 p-3 border'>
+      <div className='flex justify-center items-center gap-12 text-xs font-light text-white bg-slate-600 p-3 border'>
         <p>
           Cryptos
           <span className='font-semibold text-sm'>
