@@ -21,25 +21,30 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Card, CardContent } from '@/components/ui/card';
-// import { menuItems } from '@/lib/menu';
 import { HeartHandshake, PocketKnife, Shield, Terminal, X } from 'lucide-react';
 import { AlertDialogCancel } from '@radix-ui/react-alert-dialog';
 
+const menuItems = [
+  { label: 'Dashboard', href: '/in/dashboard' },
+  { label: 'Cryptos', href: '/in/cryptos' },
+  { label: 'Stocks', href: '/in/stocks' },
+  { label: 'Assets', href: '/in/assets' },
+  { label: 'Shortcuts', href: '/in/shortcut' },
+  { label: 'Goals', href: '/in/goals' },
+];
+
 export default function Footer() {
   return (
-    <Card className='px-4 py-4 bg-primary text-white text-sm w-full'>
+    <Card className='px-4 py-4 bg-slate-600 text-white text-sm w-full mb-4'>
       <CardContent className='flex flex-col sm:flex-row gap-12 items-start justify-between p-4'>
         <div className='flex flex-col sm:w-1/5 gap-2'>
           <div className='flex items-center gap-2 mb-2'>
-            <Terminal size={16} color='red' />
-            <h4 className='font-semibold text-red-500 uppercase'>
+            <Terminal size={16} color='#ecc94b' />
+            <h4 className='font-semibold text-yellow-500 uppercase'>
               Behind the Code
             </h4>
           </div>
-          <p className='pr-4 max-w-80'>
-            {/* Designed to simplify your journey, inspire growth, and help you
-            achieve more. Your go-to companion for a mindful and productive
-            life. */}
+          <p className='pr-4 max-w-80 text-xs'>
             This app was originally created to simplify my life, achieve more,
             and practice my skills as a software developer. Now, it’s here to
             help you do the same. One feature at a time. Enjoy!
@@ -48,23 +53,25 @@ export default function Footer() {
 
         <div className='flex flex-col w-full sm:w-2/5 gap-2'>
           <div className='flex items-center gap-2 mb-2'>
-            <PocketKnife size={18} color='red' />
-            <h4 className='font-semibold text-red-500 uppercase'>Features</h4>
+            <PocketKnife size={18} color='#ecc94b' />
+            <h4 className='font-semibold text-yellow-500 uppercase'>
+              Features
+            </h4>
           </div>
           <div className='flex flex-wrap content-start leading-6 gap-1'>
-            {/* {menuItems.map((item) => (
+            {menuItems.map((item) => (
               <Link key={item.label} href={item.href}>
-                <p className="text-white text-left w-[20ch] underline-offset-4 hover:underline">
+                <p className='text-white text-left w-[20ch] underline-offset-4 hover:underline'>
                   {item.label}
                 </p>
               </Link>
-            ))} */}
+            ))}
           </div>
         </div>
 
         <div className='flex justify-end sm:w-1/5'>
           <Image
-            src={'/logo/trezo-logo.png'}
+            src={'/logo/trezo-logo-white-yellow.png'}
             width={36}
             height={36}
             alt='Trezo.App Logo'
@@ -88,7 +95,7 @@ export default function Footer() {
                 </AlertDialogTitle>
                 <AlertDialogDescription className='p-4 text-base text-primary text-left'>
                   Welcome to{' '}
-                  <span className='font-bold text-red-500'>HandyFor.Me</span>!
+                  <span className='font-bold text-green-500'>Trezo.App</span>!
                   These Terms of Service (“Terms”) govern your access to and use
                   of our website, mobile application, and services
                   (collectively, the “Service”). By using our Service, you agree
@@ -103,7 +110,7 @@ export default function Footer() {
                   </h2>
                   <p className='text-gray-700'>
                     Welcome to{' '}
-                    <span className='font-bold text-red-500'>HandyFor.Me</span>!
+                    <span className='font-bold text-green-500'>Trezo.App</span>!
                     This app is designed to simplify life, foster growth, and
                     enhance decision-making. By using our app, you agree to
                     comply with these Terms. If you do not agree, please
@@ -130,41 +137,42 @@ export default function Footer() {
                     3. Features and Functionality
                   </h2>
                   <p className='text-gray-700 mb-4'>
-                    <span className='font-bold text-red-500'>HandyFor.Me</span>{' '}
+                    <span className='font-bold text-green-500'>Trezo.App</span>{' '}
                     includes the following features:
                   </p>
                   <ul className='flex flex-col gap-4 list-disc list-inside text-gray-700'>
                     <li>
                       <span className='font-semibold'>Dashboard:</span>{' '}
-                      Centralized summary of user data such as Bucket List,
-                      Vision Board, and Shortcuts.
+                      Centralized summary of user assets such as Stocks,
+                      Cryptos, and Cash.
+                    </li>
+
+                    <li>
+                      <span className='font-semibold'>Cryptos:</span> Lorem
+                      ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                      nec purus lacinia, feugiat ipsum vulputate, faucibus
+                      libero.
                     </li>
                     <li>
-                      <span className='font-semibold'>Bucket List:</span>{' '}
-                      Organize and track goals categorized by themes like
-                      Adventure, Learning, and more.
+                      <span className='font-semibold'>Stocks:</span> Lorem ipsum
+                      dolor sit amet, consectetur adipiscing elit. Etiam nec
+                      purus lacinia, feugiat ipsum vulputate, faucibus libero.
                     </li>
                     <li>
-                      <span className='font-semibold'>Vision Board:</span>{' '}
-                      Visualize goals with inspiring images and motivational
-                      content.
+                      <span className='font-semibold'>Assets:</span> Lorem ipsum
+                      dolor sit amet, consectetur adipiscing elit. Etiam nec
+                      purus lacinia, feugiat ipsum vulputate, faucibus libero.
                     </li>
                     <li>
-                      <span className='font-semibold'>Random Questions:</span>{' '}
-                      Fun, thought-provoking questions to spark conversation or
-                      reflection.
+                      <span className='font-semibold'>Assets Page:</span> Lorem
+                      ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                      nec purus lacinia, feugiat ipsum vulputate, faucibus
+                      libero.
                     </li>
                     <li>
-                      <span className='font-semibold'>Stoic Support:</span>{' '}
-                      Tools to handle life challenges using Stoic principles.
-                    </li>
-                    <li>
-                      <span className='font-semibold'>Letter Leap:</span>{' '}
-                      Creative English language practice.
-                    </li>
-                    <li>
-                      <span className='font-semibold'>Decision Helper:</span> A
-                      structured tool for helping making choices.
+                      <span className='font-semibold'>Goals:</span> Lorem ipsum
+                      dolor sit amet, consectetur adipiscing elit. Etiam nec
+                      purus lacinia, feugiat ipsum vulputate, faucibus libero.
                     </li>
                   </ul>
                 </section>
@@ -261,7 +269,7 @@ export default function Footer() {
                 </AlertDialogTitle>
                 <AlertDialogDescription className='p-4 text-base text-primary text-left'>
                   Welcome to{' '}
-                  <span className='font-bold text-red-500'>HandyFor.Me</span>!
+                  <span className='font-bold text-green-500'>Trezo.App</span>!
                   Your privacy is important to us. This Privacy Policy explains
                   how we collect, use, and protect your information while you
                   use our app.
@@ -396,7 +404,7 @@ export default function Footer() {
         </div>
 
         <div className='flex flex-col gap-1'>
-          <p>HandyFor.Me - 2024</p>
+          <p>Trezo.App - 2025</p>
           <p>© All rights reserved.</p>
         </div>
       </div>
