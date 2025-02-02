@@ -35,7 +35,7 @@ const menuItems = [
 
 export default function Footer() {
   return (
-    <Card className='px-4 py-4 bg-slate-600 text-white text-sm w-full mb-4'>
+    <Card className='px-4 py-4 bg-slate-600 text-white text-sm w-full my-4'>
       <CardContent className='flex flex-col sm:flex-row gap-12 items-start justify-between p-4'>
         <div className='flex flex-col sm:w-1/5 gap-2'>
           <div className='flex items-center gap-2 mb-2'>

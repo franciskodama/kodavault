@@ -654,10 +654,29 @@ export function DataTable<TData, TValue>({
           </div>
         )}
       </div>
-      <div className='flex justify-center items-center gap-12 text-xs font-semibold font-muted bg-muted p-3 border'>
-        <p>Cryptos: {assetsByType.Crypto.length}</p>
-        <p>Stocks: {assetsByType.Stock.length}</p>
-        <p>Cash: {assetsByType.Cash.length}</p>
+
+      <div className='flex justify-center items-center gap-12 text-xs font-light text-white bg-slate-500 p-3 border'>
+        <p>
+          Cryptos
+          <span className='font-semibold text-sm'>
+            {` ${assetsByType.Crypto.length} `}
+          </span>
+          <span className='font-light text-xs'> units</span>
+        </p>
+        <p>
+          Stocks
+          <span className='font-semibold text-sm'>
+            {` ${assetsByType.Stock.length} `}
+          </span>
+          <span className='font-light text-xs'> units</span>
+        </p>
+        <p>
+          Cash
+          <span className='font-semibold text-sm'>
+            {` ${assetsByType.Cash.length} `}
+          </span>
+          <span className='font-light text-xs'> units</span>
+        </p>
       </div>
     </>
   );
