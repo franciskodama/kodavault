@@ -320,9 +320,7 @@ export function AddAssetForm() {
               <div>
                 <input
                   className='hidden peer'
-                  type='radio'
-                  value={cryptoAccounts[0]}
-                  id={cryptoAccounts[0]}
+                  value={'-'}
                   {...register('account')}
                 />
               </div>

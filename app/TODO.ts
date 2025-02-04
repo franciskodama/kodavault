@@ -1,5 +1,6 @@
 // TODO: NEXT:
-// Form add and update Asset: if it's a platform, select automatically the -- Not Needed -- option for account
+// Asset Gone Britney Spears Pop up is with 2 erros about h3 and p
+// Form add and update Asset: if it's a platform, select automatically the '-' option for account
 // Assets Page: Review must be fast, so perhaps it should use local storage
 // Assets Page: Review deselect all in once with a single button (confirmation before delete all reviews status check)
 // Assets Page: Show how many types of asset it has in the user's filter (so que can check the number of assets in the platform when reviewing)
