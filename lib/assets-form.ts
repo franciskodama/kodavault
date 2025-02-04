@@ -443,8 +443,9 @@ export const getCurrencies = (subtype: string) => {
   }
 };
 
-const cryptoAccounts = [
-  '- Not Needed -',
+export const cryptoWallets = ['Ledger', 'Trezor', 'Metamask'];
+
+export const cryptoAccounts = [
   'Solana',
   'Cardano',
   'Tron',
