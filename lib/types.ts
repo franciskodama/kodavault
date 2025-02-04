@@ -60,6 +60,7 @@ export type CryptoProjection = {
   asset: string;
   projection?: number;
   source?: string;
+  note?: string;
 };
 
 export type AssetsByType = {

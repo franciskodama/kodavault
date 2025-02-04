@@ -1,4 +1,5 @@
 // TODO: NEXT:
+// Include Note on Projections
 // Asset Gone Britney Spears Pop up is with 2 erros about h3 and p
 // Form add and update Asset: if it's a platform, select automatically the '-' option for account
 // Assets Page: Review must be fast, so perhaps it should use local storage
