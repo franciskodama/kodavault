@@ -119,7 +119,8 @@ model Projection {
   asset      String
   projection Float    @default(0)
   source     String?
-  
+  note       String?
+
   @@unique([uid, asset], name: "uid_asset")
 }
 

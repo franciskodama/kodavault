@@ -14,6 +14,8 @@ import { category_enum_6c7fcd47 } from '@prisma/client';
 import {
   altcoinsCategories,
   categoryOptions,
+  cryptoAccounts,
+  cryptoWallets,
   fixedSymbolsArr,
   getAccounts,
   getCategories,
@@ -291,7 +293,7 @@ export function AddAssetForm() {
               </div>
             )}
 
-            {assetAccount.length > 1 && (
+            {cryptoWallets.includes(watch('wallet')) ? (
               <div className={classDiv}>
                 <h3 className={classTitle}>Account</h3>
                 <ul className={classUl}>
@@ -313,6 +315,14 @@ export function AddAssetForm() {
                     </li>
                   ))}
                 </ul>
+              </div>
+            ) : (
+              <div>
+                <input
+                  className='hidden peer'
+                  value={'-'}
+                  {...register('account')}
+                />
               </div>
             )}
             {/* 
