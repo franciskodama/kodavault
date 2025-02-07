@@ -1,5 +1,5 @@
 // TODO: NEXT:
-// Include Note on Projections
+// Error: 2 items with the same key on Crypto Page
 // Asset Gone Britney Spears Pop up is with 2 erros about h3 and p
 // Form add and update Asset: if it's a platform, select automatically the '-' option for account
 // Assets Page: Review must be fast, so perhaps it should use local storage
@@ -88,6 +88,7 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Include Note on Projections
 // Review in Assets Page must be local storage to be faster (instead of a call to the database)
 // Google Chart for the Crypto Page
 // Sum of the Asset Page must be in another place. It's getting out of the Table
