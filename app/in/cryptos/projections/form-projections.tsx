@@ -88,8 +88,9 @@ export const FormProjections = ({
   };
 
   const handleClear = () => {
-    setValue('projection', undefined, { shouldValidate: false });
+    setValue('projection', 0, { shouldValidate: false });
     setValue('source', '', { shouldValidate: false });
+    setValue('note', '', { shouldValidate: false });
   };
 
   return (
