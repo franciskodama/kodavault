@@ -33,6 +33,7 @@ export const FormProjections = ({
       asset: assetRow.asset,
       projection: assetRow.projection ? Number(assetRow.projection) : undefined,
       source: assetRow.source || '',
+      note: assetRow.note || '',
     },
   });
 
@@ -51,6 +52,7 @@ export const FormProjections = ({
       asset: assetRow.asset,
       projection: Number(formData.projection),
       source: formData.source || '',
+      note: formData.note || '',
     };
 
     try {
