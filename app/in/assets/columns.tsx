@@ -326,15 +326,15 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
 
                   <div className='flex py-4 px-16 justify-between border-[6px] border-primary text-base text-primary'>
                     <div className='flex flex-col'>
-                      <h3 className='text-sm'>Asset:</h3>
+                      <div className='text-sm'>Asset:</div>
                       <span className='font-bold'>{asset.asset}</span>
                     </div>
                     <div className='flex flex-col'>
-                      <h3 className='text-sm'> Wallet:</h3>
+                      <div className='text-sm'> Wallet:</div>
                       <span className='font-bold'>{asset.wallet}</span>
                     </div>
                     <div className='flex flex-col'>
-                      <h3 className='text-sm'> Qty:</h3>
+                      <div className='text-sm'> Qty:</div>
                       <span className='font-bold'>{asset.qty}</span>
                     </div>
                   </div>
