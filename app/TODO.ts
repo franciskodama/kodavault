@@ -1,17 +1,11 @@
 // TODO: NEXT:
-// Error: 2 items with the same key on Crypto Page
-// Asset Gone Britney Spears Pop up is with 2 erros about h3 and p
-// Form add and update Asset: if it's a platform, select automatically the '-' option for account
-// Assets Page: Review must be fast, so perhaps it should use local storage
-// Assets Page: Review deselect all in once with a single button (confirmation before delete all reviews status check)
-// Assets Page: Show how many types of asset it has in the user's filter (so que can check the number of assets in the platform when reviewing)
-
-// Crypto Projection Form: Clear is submiting
 // CronJob: https://console.cron-job.org/jobs/5201103 + https://www.youtube.com/shorts/d9olvU5bbQ4
 // CronJob: with header with authentication Bearer Secret
 // CronJob: errror for account fk.ca check logs on Vercel
 // cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
+
+// TODO: DONE ---------------------------------------------------------------------------
 
 // TODO: EASY:
 // Crypto / ATH Estimation: clear button for the filter
@@ -88,6 +82,13 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Assets Page: Review deselect all in once with a single button (confirmation before delete all reviews status check)
+// Assets Page: Review must be fast, so perhaps it should use local storage
+// Assets Page: Show how many types of asset it has in the user's filter (so que can check the number of assets in the platform when reviewing)
+// Form add and update Asset: if it's a platform, select automatically the '-' option for account
+// Error: 2 items with the same key on Crypto Page
+// Crypto Projection Form: Clear is submiting
+// Asset Gone Britney Spears Pop up is with 2 erros about h3 and p
 // Include Note on Projections
 // Review in Assets Page must be local storage to be faster (instead of a call to the database)
 // Google Chart for the Crypto Page
