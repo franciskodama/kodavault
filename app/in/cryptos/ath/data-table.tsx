@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import {
@@ -22,11 +22,18 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { athTotals } from '.';
 import { Input } from '@/components/ui/input';
 import { thousandFormatter } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
 import MessageInTable from '@/components/MessageInTable';
+import { XIcon } from 'lucide-react';
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
@@ -45,6 +52,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [assetInFilter, setAssetInFilter] = useState('');
   const { athTotal, athTotalExclusions } = totals;
 
   const table = useReactTable({
@@ -61,6 +69,14 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  const inputFilterValue = table.getColumn('asset')?.getFilterValue() as string;
+
+  useEffect(() => {
+    if (inputFilterValue) {
+      setAssetInFilter(inputFilterValue);
+    }
+  }, [inputFilterValue]);
+
   const handleCheckbox = (asset: string) => {
     setExclusions((prev) => {
       if (prev.includes(asset)) {
@@ -71,9 +87,15 @@ export function DataTable<TData, TValue>({
     });
   };
 
+  const handleClickClearFilter = () => {
+    setAssetInFilter('');
+    setColumnFilters([]);
+    table.resetGlobalFilter();
+  };
+
   return (
     <div className='rounded-sm border border-slate-200'>
-      <div className='flex items-center justify-between px-12 py-4 mt-4'>
+      <div className='flex items-center justify-left px-12 py-4 mt-4'>
         <Input
           placeholder='Filter by Asset'
           value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
@@ -82,6 +104,30 @@ export function DataTable<TData, TValue>({
           }
           className='max-w-sm w-[14ch]'
         />
+
+        {inputFilterValue && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <div
+                  className='flex items-center justify-center w-[176px] sm:w-11 h-10 ml-4 sm:ml-2 border-2 border-slate-500 bg-accent'
+                  onClick={() => {
+                    handleClickClearFilter();
+                  }}
+                >
+                  <XIcon size={18} strokeWidth={2.4} />
+                  <span className='inline sm:hidden ml-2 font-semibold'>
+                    Clear All Filters
+                  </span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Clear All Filters</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+
         {athTotalExclusions ? (
           <div className='flex items-center h-10 font-normal ml-4 px-4 border-2 border-slate-500 bg-accent rounded-[2px] text-left'>
             <>

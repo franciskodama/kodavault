@@ -23,7 +23,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
-import { thousandFormatter } from '@/lib/utils';
 import MessageInTable from '@/components/MessageInTable';
 import {
   Tooltip,
@@ -43,7 +42,6 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  typeFilterAsParam,
 }: // totals,
 DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
