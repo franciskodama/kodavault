@@ -102,7 +102,7 @@ DataTableProps<TData, TValue>) {
                 >
                   <XIcon size={18} strokeWidth={2.4} />
                   <span className='inline sm:hidden ml-2 font-semibold'>
-                    Clear All Filters
+                    Clear Field
                   </span>
                 </div>
               </TooltipTrigger>

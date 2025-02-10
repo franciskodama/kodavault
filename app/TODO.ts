@@ -6,9 +6,9 @@
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
 
 // TODO: DONE ---------------------------------------------------------------------------
+// Crypto / ATH Estimation: clear button for the filter
 
 // TODO: EASY:
-// Crypto / ATH Estimation: clear button for the filter
 // Crypto / Ranking of Cryptos getting info from the call for ATH
 
 // TODO: WORKING ON:
