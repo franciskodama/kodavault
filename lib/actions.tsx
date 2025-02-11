@@ -399,7 +399,7 @@ export async function addProjection(
 }
 
 export async function updateProjection({ data }: { data: CryptoProjection }) {
-  const { uid, asset, projection, source } = data;
+  const { uid, asset, projection, source, note } = data;
 
   try {
     await prisma.projection.upsert({
@@ -416,10 +416,12 @@ export async function updateProjection({ data }: { data: CryptoProjection }) {
         asset,
         projection,
         source: source ?? '',
+        note: note ?? '',
       },
       update: {
         projection,
         source: source ?? '',
+        note: note ?? '',
       },
     });
     return true;
