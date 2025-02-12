@@ -190,6 +190,14 @@ export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
     // },
   },
   {
+    accessorKey: 'note',
+    header: () => (
+      <div className='flex justify-center'>
+        <div className={tableHeaderClass}>Note</div>
+      </div>
+    ),
+  },
+  {
     accessorKey: 'source',
     header: () => (
       <div className={`px-0 font-semibold text-slate-800 text-left w-[20em]`}>

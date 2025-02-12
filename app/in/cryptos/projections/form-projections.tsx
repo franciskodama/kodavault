@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
 import { useAssetsContext } from '@/context/AssetsContext';
+import { Textarea } from '@/components/ui/textarea';
 
 export const FormProjections = ({
   assetRow,
@@ -130,7 +131,7 @@ export const FormProjections = ({
 
           <div className='flex items-center gap-4'>
             <Label className='text-left text-xs w-1/2'>Note:</Label>
-            <Input {...register('note')} />
+            <Textarea {...register('note')} />
           </div>
 
           <div className='flex gap-4 mt-8'>
