@@ -52,6 +52,7 @@ export type CryptoWithAthAndProjections = {
   projectionXPotential?: number | string;
   projectionPercentagePotential?: number | string;
   source?: string;
+  note?: string;
 };
 
 export type CryptoProjection = {

@@ -23,7 +23,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
-import { thousandFormatter } from '@/lib/utils';
 import MessageInTable from '@/components/MessageInTable';
 import {
   Tooltip,
@@ -43,7 +42,6 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  typeFilterAsParam,
 }: // totals,
 DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -104,7 +102,7 @@ DataTableProps<TData, TValue>) {
                 >
                   <XIcon size={18} strokeWidth={2.4} />
                   <span className='inline sm:hidden ml-2 font-semibold'>
-                    Clear All Filters
+                    Clear Field
                   </span>
                 </div>
               </TooltipTrigger>

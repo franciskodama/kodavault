@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
 import { useAssetsContext } from '@/context/AssetsContext';
+import { Textarea } from '@/components/ui/textarea';
 
 export const FormProjections = ({
   assetRow,
@@ -33,6 +34,7 @@ export const FormProjections = ({
       asset: assetRow.asset,
       projection: assetRow.projection ? Number(assetRow.projection) : undefined,
       source: assetRow.source || '',
+      note: assetRow.note || '',
     },
   });
 
@@ -51,6 +53,7 @@ export const FormProjections = ({
       asset: assetRow.asset,
       projection: Number(formData.projection),
       source: formData.source || '',
+      note: formData.note || '',
     };
 
     try {
@@ -86,15 +89,16 @@ export const FormProjections = ({
   };
 
   const handleClear = () => {
-    setValue('projection', undefined, { shouldValidate: false });
+    setValue('projection', 0, { shouldValidate: false });
     setValue('source', '', { shouldValidate: false });
+    setValue('note', '', { shouldValidate: false });
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit(processForm)} className='flex items-center'>
         <div className='grid gap-4 py-4'>
-          <h3 className='bg-slate-800 px-4 py-2 text-white text-sm'>
+          <h3 className='bg-slate-800 px-4 py-2 text-white text-sm mb-8'>
             Asset:
             <span className='font-semibold ml-2 text-base'>
               {assetRow.asset}
@@ -102,8 +106,8 @@ export const FormProjections = ({
           </h3>
 
           <div className='flex items-center'>
-            <Label className='text-left text-xs w-1/3'>Projection:</Label>
-            <div className='ml-2'>
+            <Label className='text-left text-xs w-1/2'>Projection:</Label>
+            <div>
               <Input
                 type='number'
                 step='any'
@@ -121,8 +125,13 @@ export const FormProjections = ({
           </div>
 
           <div className='flex items-center gap-4'>
-            <Label className='text-left text-xs'>Source:</Label>
-            <Input className='ml-3' {...register('source')} />
+            <Label className='text-left text-xs w-1/2'>Source:</Label>
+            <Input {...register('source')} />
+          </div>
+
+          <div className='flex items-center gap-4'>
+            <Label className='text-left text-xs w-1/2'>Note:</Label>
+            <Textarea {...register('note')} />
           </div>
 
           <div className='flex gap-4 mt-8'>

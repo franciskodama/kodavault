@@ -27,6 +27,7 @@ export type ProjectionsData = {
   uid: string;
   asset: string;
   source: string | null;
+  note: string | null;
   projection?: number;
   projectionTotal?: number;
   projectionXPotential?: number;
@@ -61,6 +62,7 @@ export default function Cryptos({
       ...item,
       projection: existingAsset?.projection ? existingAsset.projection : 0,
       source: existingAsset?.source ? existingAsset.source : '',
+      note: existingAsset?.note ? existingAsset.note : '',
     };
   });
 
@@ -103,6 +105,7 @@ export default function Cryptos({
           ((item.projection - item.price) / item.price) * 100
         ),
         source: item.source,
+        note: item.note,
       };
     });
 
