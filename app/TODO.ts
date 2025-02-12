@@ -7,6 +7,7 @@
 
 // TODO: DONE ---------------------------------------------------------------------------
 // Crypto / ATH Estimation: clear button for the filter
+// Projections needs to have notes and the notes must be shown on the table
 
 // TODO: EASY:
 // Crypto / Ranking of Cryptos getting info from the call for ATH
