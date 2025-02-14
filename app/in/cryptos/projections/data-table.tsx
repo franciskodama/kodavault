@@ -36,12 +36,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
   typeFilterAsParam?: string;
+  onSubmit: (data: TData[]) => void;
   // totals: athTotals;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onSubmit,
 }: // totals,
 DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);

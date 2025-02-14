@@ -1,3 +1,5 @@
+'use-client';
+
 import { Loading } from '@/components/Loading';
 import {
   Card,
@@ -11,12 +13,15 @@ import MessageInTable from '@/components/MessageInTable';
 import { CryptoWithAthAndProjections } from '@/lib/types';
 import { DataTable } from './data-table';
 import { columns } from './columns';
+import { useState } from 'react';
 
 export default function Projections({
   cryptosWithATHsAndProjections,
 }: {
   cryptosWithATHsAndProjections: CryptoWithAthAndProjections[];
 }) {
+  const [tableData, setTableData] = useState(cryptosWithATHsAndProjections);
+
   if (!cryptosWithATHsAndProjections) {
     return <Loading />;
   }
@@ -27,6 +32,10 @@ export default function Projections({
         return Number(b.projectionXPotential) - Number(a.projectionXPotential);
       }
     );
+
+  const handleFormSubmit = (updatedData: CryptoWithAthAndProjections[]) => {
+    setTableData(updatedData);
+  };
 
   return (
     <div className='flex flex-col w-full gap-2'>
@@ -49,6 +58,7 @@ export default function Projections({
                     <DataTable
                       columns={columns}
                       data={sortedAssetsWithProjections}
+                      onSubmit={handleFormSubmit}
                       // totals={totals}
                     />
                   </div>
