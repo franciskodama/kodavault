@@ -37,7 +37,6 @@ interface DataTableProps<TData, TValue> {
   data: TData[] | any;
   typeFilterAsParam?: string;
   setTableData: React.Dispatch<React.SetStateAction<TData[]>>;
-  // onSubmit: (data: TData[]) => void;
   // totals: athTotals;
 }
 
@@ -45,9 +44,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   setTableData,
-}: // onSubmit,
-
-// totals,
+}: // totals,
 DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   // const { athTotal, athTotalExclusions } = totals;

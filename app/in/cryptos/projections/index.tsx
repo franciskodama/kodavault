@@ -37,13 +37,9 @@ export default function Projections({
     return <Loading />;
   }
 
-  // const handleFormSubmit = (updatedData: CryptoWithAthAndProjections[]) => {
-  //   setTableData(updatedData);
-  // };
-
   return (
     <div className='flex flex-col w-full gap-2'>
-      {sortedAssetsWithProjections?.length > 0 ? (
+      {tableData.length > 0 ? (
         <div className='w-full'>
           <Card>
             <div className='flex flex-col justify-between'>
@@ -63,7 +59,6 @@ export default function Projections({
                       columns={columns}
                       data={tableData}
                       setTableData={setTableData}
-                      // onSubmit={handleFormSubmit}
                       // totals={totals}
                     />
                   </div>
