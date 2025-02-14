@@ -12,8 +12,8 @@ import {
 import MessageInTable from '@/components/MessageInTable';
 import { CryptoWithAthAndProjections } from '@/lib/types';
 import { DataTable } from './data-table';
-import { columns } from './columns';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { getColumns } from './columns';
 
 export default function Projections({
   cryptosWithATHsAndProjections,
@@ -32,6 +32,8 @@ export default function Projections({
   useEffect(() => {
     setTableData(sortedAssetsWithProjections);
   }, [sortedAssetsWithProjections]);
+
+  const columns = useMemo(() => getColumns(setTableData), [setTableData]);
 
   if (!cryptosWithATHsAndProjections) {
     return <Loading />;
