@@ -13,7 +13,7 @@ import MessageInTable from '@/components/MessageInTable';
 import { CryptoWithAthAndProjections } from '@/lib/types';
 import { DataTable } from './data-table';
 import { columns } from './columns';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Projections({
   cryptosWithATHsAndProjections,
@@ -22,10 +22,6 @@ export default function Projections({
 }) {
   const [tableData, setTableData] = useState(cryptosWithATHsAndProjections);
 
-  if (!cryptosWithATHsAndProjections) {
-    return <Loading />;
-  }
-
   const sortedAssetsWithProjections: CryptoWithAthAndProjections[] =
     cryptosWithATHsAndProjections.sort(
       (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
@@ -33,9 +29,17 @@ export default function Projections({
       }
     );
 
-  const handleFormSubmit = (updatedData: CryptoWithAthAndProjections[]) => {
-    setTableData(updatedData);
-  };
+  useEffect(() => {
+    setTableData(sortedAssetsWithProjections);
+  }, [sortedAssetsWithProjections]);
+
+  if (!cryptosWithATHsAndProjections) {
+    return <Loading />;
+  }
+
+  // const handleFormSubmit = (updatedData: CryptoWithAthAndProjections[]) => {
+  //   setTableData(updatedData);
+  // };
 
   return (
     <div className='flex flex-col w-full gap-2'>
@@ -57,8 +61,9 @@ export default function Projections({
                   <div>
                     <DataTable
                       columns={columns}
-                      data={sortedAssetsWithProjections}
-                      onSubmit={handleFormSubmit}
+                      data={tableData}
+                      setTableData={setTableData}
+                      // onSubmit={handleFormSubmit}
                       // totals={totals}
                     />
                   </div>
