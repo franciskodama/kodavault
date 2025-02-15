@@ -36,14 +36,12 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
   typeFilterAsParam?: string;
-  setTableData: React.Dispatch<React.SetStateAction<TData[]>>;
   // totals: athTotals;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  setTableData,
 }: // totals,
 DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);

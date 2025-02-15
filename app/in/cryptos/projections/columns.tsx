@@ -168,7 +168,7 @@ export function getColumns(
         return (
           <div className='flex items-center'>
             <p className='w-full text-left'>{assetRow.source}</p>
-            <EditProjection assetRow={assetRow} />
+            <EditProjection assetRow={assetRow} setTableData={setTableData} />
           </div>
         );
       },
@@ -178,8 +178,12 @@ export function getColumns(
 
 function EditProjection({
   assetRow,
+  setTableData,
 }: {
   assetRow: CryptoWithAthAndProjections;
+  setTableData: React.Dispatch<
+    React.SetStateAction<CryptoWithAthAndProjections[]>
+  >;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -200,7 +204,11 @@ function EditProjection({
           <DialogTitle>Edit Asset Projection</DialogTitle>
           <DialogDescription>Adjust your Projection!</DialogDescription>
         </DialogHeader>
-        <FormProjections assetRow={assetRow} onClose={() => setOpen(false)} />
+        <FormProjections
+          assetRow={assetRow}
+          onClose={() => setOpen(false)}
+          setTableData={setTableData}
+        />
       </DialogContent>
     </Dialog>
   );

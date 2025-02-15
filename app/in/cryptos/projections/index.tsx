@@ -60,7 +60,7 @@ export default function Projections({
                     <DataTable
                       columns={columns}
                       data={tableData}
-                      setTableData={setTableData}
+                      // setTableData={setTableData}
                       // totals={totals}
                     />
                   </div>
