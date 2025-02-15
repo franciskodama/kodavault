@@ -1,3 +1,5 @@
+'use-client';
+
 import { Loading } from '@/components/Loading';
 import {
   Card,
@@ -10,16 +12,15 @@ import {
 import MessageInTable from '@/components/MessageInTable';
 import { CryptoWithAthAndProjections } from '@/lib/types';
 import { DataTable } from './data-table';
-import { columns } from './columns';
+import { useEffect, useMemo, useState } from 'react';
+import { getColumns } from './columns';
 
 export default function Projections({
   cryptosWithATHsAndProjections,
 }: {
   cryptosWithATHsAndProjections: CryptoWithAthAndProjections[];
 }) {
-  if (!cryptosWithATHsAndProjections) {
-    return <Loading />;
-  }
+  const [tableData, setTableData] = useState(cryptosWithATHsAndProjections);
 
   const sortedAssetsWithProjections: CryptoWithAthAndProjections[] =
     cryptosWithATHsAndProjections.sort(
@@ -28,9 +29,19 @@ export default function Projections({
       }
     );
 
+  useEffect(() => {
+    setTableData(sortedAssetsWithProjections);
+  }, [sortedAssetsWithProjections]);
+
+  const columns = useMemo(() => getColumns(setTableData), [setTableData]);
+
+  if (!cryptosWithATHsAndProjections) {
+    return <Loading />;
+  }
+
   return (
     <div className='flex flex-col w-full gap-2'>
-      {sortedAssetsWithProjections?.length > 0 ? (
+      {tableData.length > 0 ? (
         <div className='w-full'>
           <Card>
             <div className='flex flex-col justify-between'>
@@ -48,7 +59,8 @@ export default function Projections({
                   <div>
                     <DataTable
                       columns={columns}
-                      data={sortedAssetsWithProjections}
+                      data={tableData}
+                      // setTableData={setTableData}
                       // totals={totals}
                     />
                   </div>

@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog';
 
 import { CryptoWithAthAndProjections } from '@/lib/types';
-import { ColumnDef } from '@tanstack/react-table';
+import { Column, Row } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 import { FormProjections } from './form-projections';
 import { tableHeaderClass } from '@/lib/classes';
@@ -18,210 +18,172 @@ import { Button } from '@/components/ui/button';
 import { currencyFormatter } from '@/lib/utils';
 import { useState } from 'react';
 
-export const columns: ColumnDef<CryptoWithAthAndProjections>[] = [
-  {
-    accessorKey: 'asset',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Asset
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
+export function getColumns(
+  setTableData: React.Dispatch<
+    React.SetStateAction<CryptoWithAthAndProjections[]>
+  >
+) {
+  return [
+    {
+      accessorKey: 'asset',
+      header: ({ column }: { column: Column<any, any> }) => {
+        return (
+          <Button
+            className={tableHeaderClass}
+            variant='ghost'
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Asset
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          </Button>
+        );
+      },
     },
-  },
-  {
-    accessorKey: 'image',
-    header: () => (
-      <div className='flex justify-center'>
-        <div className={tableHeaderClass}>Icon</div>
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'qty',
-    header: () => <div className={tableHeaderClass}>Qty</div>,
-  },
-  {
-    accessorKey: 'price',
-    header: () => <div className={tableHeaderClass}>Price</div>,
-  },
-  {
-    accessorKey: 'currentTotal',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Total
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: 'projection',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Projection
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-    id: 'actionProjection',
-    cell: ({ row }) => {
-      const assetRow = row.original;
-
-      return (
-        <>
-          {assetRow && (
-            <div className='flex items-center'>
-              <p className='text-right w-[6ch]'>
-                {currencyFormatter(Number(assetRow.projection))}
-              </p>
-            </div>
-          )}
-        </>
-      );
-    },
-  },
-  {
-    accessorKey: 'projectionTotal',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          <div className={tableHeaderClass}>Total Projected</div>
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-    // id: 'actionTotalProjection',
-    // cell: ({ row }) => {
-    //   const assetRow = row.original;
-
-    //   return (
-    //     <>
-    //       {assetRow && (
-    //         <div className='flex items-center'>
-    //           <p className='text-center w-[6ch]'>{assetRow.projectionTotal}</p>
-    //         </div>
-    //       )}
-    //     </>
-    //   );
-    // },
-  },
-  {
-    accessorKey: 'projectionPercentagePotential',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Boost (%)
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-    // id: 'actionProjectionPercentagePotential',
-    // cell: ({ row }) => {
-    //   const assetRow = row.original;
-
-    //   return (
-    //     <>
-    //       {assetRow && (
-    //         <div className='flex items-center'>
-    //           <p className='text-center w-[6ch]'>
-    //             {assetRow.projectionPercentagePotential}
-    //           </p>
-    //         </div>
-    //       )}
-    //     </>
-    //   );
-    // },
-  },
-  {
-    accessorKey: 'projectionXPotential',
-    header: ({ column }) => {
-      return (
-        <Button
-          className={tableHeaderClass}
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Boost (x)
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-    // id: 'actionProjectionXPotential',
-    // cell: ({ row }) => {
-    //   const assetRow = row.original;
-
-    //   return (
-    //     <>
-    //       {assetRow && (
-    //         <div className='flex items-center'>
-    //           <p className='text-center w-[6ch]'>
-    //             {assetRow.projectionXPotential
-    //               ? assetRow.projectionXPotential
-    //               : 0}
-    //           </p>
-    //         </div>
-    //       )}
-    //     </>
-    //   );
-    // },
-  },
-  {
-    accessorKey: 'note',
-    header: () => (
-      <div className='flex justify-center'>
-        <div className={tableHeaderClass}>Note</div>
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'source',
-    header: () => (
-      <div className={`px-0 font-semibold text-slate-800 text-left w-[20em]`}>
-        Source
-      </div>
-    ),
-    id: 'actionSource',
-    cell: ({ row }) => {
-      const assetRow = row.original;
-
-      return (
-        <div className='flex items-center'>
-          <p className='w-full text-left'>{assetRow.source}</p>
-          <EditProjection assetRow={assetRow} />
+    {
+      accessorKey: 'image',
+      header: () => (
+        <div className='flex justify-center'>
+          <div className={tableHeaderClass}>Icon</div>
         </div>
-      );
+      ),
     },
-  },
-];
+    {
+      accessorKey: 'qty',
+      header: () => <div className={tableHeaderClass}>Qty</div>,
+    },
+    {
+      accessorKey: 'price',
+      header: () => <div className={tableHeaderClass}>Price</div>,
+    },
+    {
+      accessorKey: 'currentTotal',
+      header: ({ column }: { column: Column<any, any> }) => {
+        return (
+          <Button
+            className={tableHeaderClass}
+            variant='ghost'
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Total
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          </Button>
+        );
+      },
+    },
+    {
+      accessorKey: 'projection',
+      header: ({ column }: { column: Column<any, any> }) => {
+        return (
+          <Button
+            className={tableHeaderClass}
+            variant='ghost'
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Projection
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          </Button>
+        );
+      },
+      id: 'actionProjection',
+      cell: ({ row }: { row: Row<any> }) => {
+        const assetRow = row.original;
+
+        return (
+          <>
+            {assetRow && (
+              <div className='flex items-center'>
+                <p className='text-right w-[6ch]'>
+                  {currencyFormatter(Number(assetRow.projection))}
+                </p>
+              </div>
+            )}
+          </>
+        );
+      },
+    },
+    {
+      accessorKey: 'projectionTotal',
+      header: ({ column }: { column: Column<any, any> }) => {
+        return (
+          <Button
+            className={tableHeaderClass}
+            variant='ghost'
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            <div className={tableHeaderClass}>Total Projected</div>
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          </Button>
+        );
+      },
+    },
+    {
+      accessorKey: 'projectionPercentagePotential',
+      header: ({ column }: { column: Column<any, any> }) => {
+        return (
+          <Button
+            className={tableHeaderClass}
+            variant='ghost'
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Boost (%)
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          </Button>
+        );
+      },
+    },
+    {
+      accessorKey: 'projectionXPotential',
+      header: ({ column }: { column: Column<any, any> }) => {
+        return (
+          <Button
+            className={tableHeaderClass}
+            variant='ghost'
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Boost (x)
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          </Button>
+        );
+      },
+    },
+    {
+      accessorKey: 'note',
+      header: () => (
+        <div className='flex justify-center'>
+          <div className={tableHeaderClass}>Note</div>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'source',
+      header: () => (
+        <div className={`px-0 font-semibold text-slate-800 text-left w-[20em]`}>
+          Source
+        </div>
+      ),
+      id: 'actionSource',
+      cell: ({ row }: { row: Row<any> }) => {
+        const assetRow = row.original;
+
+        return (
+          <div className='flex items-center'>
+            <p className='w-full text-left'>{assetRow.source}</p>
+            <EditProjection assetRow={assetRow} setTableData={setTableData} />
+          </div>
+        );
+      },
+    },
+  ];
+}
 
 function EditProjection({
   assetRow,
+  setTableData,
 }: {
   assetRow: CryptoWithAthAndProjections;
+  setTableData: React.Dispatch<
+    React.SetStateAction<CryptoWithAthAndProjections[]>
+  >;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -242,7 +204,11 @@ function EditProjection({
           <DialogTitle>Edit Asset Projection</DialogTitle>
           <DialogDescription>Adjust your Projection!</DialogDescription>
         </DialogHeader>
-        <FormProjections assetRow={assetRow} onClose={() => setOpen(false)} />
+        <FormProjections
+          assetRow={assetRow}
+          onClose={() => setOpen(false)}
+          setTableData={setTableData}
+        />
       </DialogContent>
     </Dialog>
   );

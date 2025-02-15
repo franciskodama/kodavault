@@ -28,7 +28,6 @@ export const ReviewedAssetsProvider = ({
 }) => {
   const [reviewedAssets, setReviewedAssets] = useState<string[]>([]);
 
-  // Load from localStorage on mount
   useEffect(() => {
     try {
       const stored = localStorage.getItem('reviewed-assets');
@@ -41,7 +40,6 @@ export const ReviewedAssetsProvider = ({
     }
   }, []);
 
-  // Save to localStorage whenever the array changes
   useEffect(() => {
     try {
       localStorage.setItem('reviewed-assets', JSON.stringify(reviewedAssets));

@@ -14,9 +14,13 @@ import { Textarea } from '@/components/ui/textarea';
 export const FormProjections = ({
   assetRow,
   onClose,
+  setTableData,
 }: {
   assetRow: CryptoWithAthAndProjections;
   onClose: () => void;
+  setTableData: React.Dispatch<
+    React.SetStateAction<CryptoWithAthAndProjections[]>
+  >;
 }) => {
   const { refreshAssets } = useAssetsContext();
   const { toast } = useToast();
@@ -68,7 +72,18 @@ export const FormProjections = ({
 
         setValue('projection', undefined, { shouldValidate: true });
         setValue('source', '', { shouldValidate: true });
-
+        setTableData((prev) =>
+          prev.map((item) =>
+            item.asset === assetRow.asset
+              ? {
+                  ...item,
+                  projection: data.projection,
+                  source: data.source,
+                  note: data.note,
+                }
+              : item
+          )
+        );
         onClose();
         await refreshAssets();
       } else {
