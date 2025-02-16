@@ -1,8 +1,14 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react';
 import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
 import { Asset, AssetsByType } from '@/lib/types';
 
@@ -23,7 +29,8 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
 
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
-  const refreshAssets = async () => {
+
+  const refreshAssets = useCallback(async () => {
     try {
       if (uid) {
         const unpricedAssets = await fetchAssetsWithoutPrices(uid);
@@ -37,7 +44,7 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [uid]);
 
   useEffect(() => {
     if (uid) {
@@ -48,12 +55,15 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
       setAssetsByType({});
       setIsLoading(false);
     }
-  }, [uid]);
+  }, [uid, refreshAssets]);
+
+  const contextValue = useMemo(
+    () => ({ isLoading, assets, setAssets, assetsByType, refreshAssets }),
+    [isLoading, assets, assetsByType, refreshAssets]
+  );
 
   return (
-    <AssetsContext.Provider
-      value={{ isLoading, assets, setAssets, assetsByType, refreshAssets }}
-    >
+    <AssetsContext.Provider value={contextValue}>
       <div>{children}</div>
     </AssetsContext.Provider>
   );
@@ -61,9 +71,8 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
 
 export function useAssetsContext() {
   const context = useContext(AssetsContext);
-
   if (!context) {
-    throw new Error('useAssets must be used within a AssetsProvider');
+    throw new Error('useAssets must be used within an AssetsProvider');
   }
   return context;
 }

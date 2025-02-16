@@ -26,39 +26,31 @@ export const fetchAssetsWithPrices = async (
 
   const [cryptoAssetsWithPrice, cashAssetsWithPrice, stockAssetsWithPrice] =
     await Promise.all([
-      assetsGroupedByType.Crypto &&
-        includePriceToCryptoAssets(assetsGroupedByType.Crypto),
-      assetsGroupedByType.Cash &&
-        includePriceToCashAssets(assetsGroupedByType.Cash),
-      assetsGroupedByType.Stock &&
-        includePriceToStockAssets(assetsGroupedByType.Stock),
+      assetsGroupedByType.Crypto
+        ? includePriceToCryptoAssets(assetsGroupedByType.Crypto)
+        : Promise.resolve([]),
+      assetsGroupedByType.Cash
+        ? includePriceToCashAssets(assetsGroupedByType.Cash)
+        : Promise.resolve([]),
+      assetsGroupedByType.Stock
+        ? includePriceToStockAssets(assetsGroupedByType.Stock)
+        : Promise.resolve([]),
     ]);
 
-  const cryptoAssets =
-    (cryptoAssetsWithPrice &&
-      includeNewKeyForCardTitle(cryptoAssetsWithPrice, 'crypto')) ||
-    [];
-  const stocksAssets =
-    (stockAssetsWithPrice &&
-      includeNewKeyForCardTitle(stockAssetsWithPrice, 'stock')) ||
-    [];
-  const cashAssets =
-    (cashAssetsWithPrice &&
-      includeNewKeyForCardTitle(cashAssetsWithPrice, 'cash')) ||
-    [];
+  const cryptoAssets = includeNewKeyForCardTitle(
+    cryptoAssetsWithPrice,
+    'crypto'
+  );
+  const stocksAssets = includeNewKeyForCardTitle(stockAssetsWithPrice, 'stock');
+  const cashAssets = includeNewKeyForCardTitle(cashAssetsWithPrice, 'cash');
 
   const assets = [...cryptoAssets, ...stocksAssets, ...cashAssets];
 
   const assetsByType = {
-    Crypto: cryptoAssets || [],
-    Stock: stocksAssets || [],
-    Cash: cashAssets || [],
+    Crypto: cryptoAssets,
+    Stock: stocksAssets,
+    Cash: cashAssets,
   };
 
-  const result = {
-    assets,
-    assetsByType,
-  };
-
-  return result;
+  return { assets, assetsByType };
 };
