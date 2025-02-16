@@ -318,24 +318,24 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
                   </div>
                 </AlertDialogTitle>
                 <AlertDialogDescription className='flex flex-col'>
-                  <span className='text-base text-center text-slate-600 mb-4'>
+                  <div className='text-base text-center text-slate-600 mb-4'>
                     Prepare for turbulence! 🌪️
                     <br />
                     You are about to delete the Asset below:
-                  </span>
+                  </div>
 
                   <div className='flex py-4 px-16 justify-between border-[6px] border-primary text-base text-primary'>
                     <div className='flex flex-col'>
                       <div className='text-sm'>Asset:</div>
-                      <span className='font-bold'>{asset.asset}</span>
+                      <div className='font-bold'>{asset.asset}</div>
                     </div>
                     <div className='flex flex-col'>
                       <div className='text-sm'> Wallet:</div>
-                      <span className='font-bold'>{asset.wallet}</span>
+                      <div className='font-bold'>{asset.wallet}</div>
                     </div>
                     <div className='flex flex-col'>
                       <div className='text-sm'> Qty:</div>
-                      <span className='font-bold'>{asset.qty}</span>
+                      <div className='font-bold'>{asset.qty}</div>
                     </div>
                   </div>
 
