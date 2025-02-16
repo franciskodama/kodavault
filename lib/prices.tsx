@@ -29,9 +29,16 @@ export const includePriceToCryptoAssets = async (
 
   const quotes = await fetchQuotesForCryptos(symbols);
 
+  const quoteLookup: { [symbol: string]: any } = {};
+  for (const symbol in quotes.data) {
+    if (Array.isArray(quotes.data[symbol]) && quotes.data[symbol].length > 0) {
+      quoteLookup[symbol] = quotes.data[symbol][0];
+    }
+  }
+
   const transformedAssets = cryptoAssetsArray.map((item: UnpricedAsset) => {
-    const foundAsset = getFirstObject(quotes.data, item.asset);
-    const quote = !foundAsset ? 0 : foundAsset.quote.USD.price;
+    const foundAsset = quoteLookup[item.asset] || null;
+    const quote = foundAsset?.quote?.USD?.price ?? 0;
     const total = quote * item.qty;
 
     const formattedPrice =
@@ -79,11 +86,8 @@ export const includePriceToStockAssets = async (
   const currencyRates = await getCurrencies();
   let symbolAndExchange: string[] = [];
 
-  stockAssetsArray.map(async (item: UnpricedAsset) => {
-    symbolAndExchange.push(
-      // `${item.asset}${item.exchange === null ? '' : `.${item.exchange}`}`
-      item.asset
-    );
+  stockAssetsArray.forEach((item: UnpricedAsset) => {
+    symbolAndExchange.push(item.asset);
   });
   const symbolsToMakeACall = symbolAndExchange.toString();
   const symbolsToCheckResultFromTheCall = symbolsToMakeACall.split(',');

@@ -1,4 +1,6 @@
+import React, { Suspense } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
 import {
   Asset,
@@ -11,13 +13,16 @@ import { CardTotal } from '@/components/CardTotal';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import { GoalGaugeCard } from './charts/goal-gauge-card';
-import NetWorthChart from './charts/net-worth';
-import MessageInTable from '@/components/MessageInTable';
 import NotificationsPanel from './notifications/notifications-panel';
 import Welcome from './welcome';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
 import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
+
+const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
+  loading: () => <div>Loading chart...</div>,
+});
+
 export default function Dashboard({
   usdBrl,
   currencyRates,
@@ -42,7 +47,7 @@ export default function Dashboard({
   const cash = assets.filter((asset) => asset?.type === 'Cash');
 
   return (
-    <>
+    <Suspense fallback={<SkeletonDashboard />}>
       {assets.length && assetsByType ? (
         <div className='flex flex-col gap-2 px-8 sm:p-0'>
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
@@ -86,10 +91,13 @@ export default function Dashboard({
               <div>{`< 50%`}</div>
             </div>
           </div>
-          {/* <div className='h-[5em] border-2'>
+          {/* <div
+            id='coincodex-widget-container'
+            className='border-2 overflow-visible z-10 h-full w-full'
+          >
             <Script
               src='https://widget.coincodex.com/include.js?type=4&ticker=top10&period=1D&textColor=000000&borderColor=dddddd&backgroundColor=ffffff&hoverColor=transparent&currency=USD&range=1D'
-              strategy='lazyOnload'
+              strategy='afterInteractive'
             />
           </div> */}
           {/* -------- 1st Row Cards --------------------------------------------------------------------------------------- */}
@@ -103,7 +111,6 @@ export default function Dashboard({
                     description={`Assets' Location Breakdown`}
                     assets={assets}
                     customKey={'wallet'}
-                    // height={'h-[508px]'}
                   />
                 </div>
                 <div className='flex flex-wrap sm:w-2/4 gap-2'>
@@ -190,34 +197,6 @@ export default function Dashboard({
                 />
               </div>
 
-              {/* <div className='h-[5em] border-2 border-red-500'>
-                <Script
-                  strategy='lazyOnload'
-                  strategy='afterInteractive'
-                  src='https://widget.coincodex.com/include.js?type=1&ticker=bitfinex-bitcoin-dominance-perps&history_days=30&chartLineColor=1f79e1&chartFillColor=e8f1fc&textColor1=1e2e42&textColor2=617283&linkColor=4a90e2&borderColor=dddddd&backgroundColor=ffffff'
-                />
-                https://coinmarketcap.com/widget/price-marquee/
-                <Script
-                  strategy='lazyOnload'
-                  type='text/javascript'
-                  src='https://files.coinmarketcap.com/static/widget/coinMarquee.js'
-                ></Script>
-                <div
-                  id='coinmarketcap-widget-marquee'
-                  coins='1,1027,825'
-                  currency='USD'
-                  theme='light'
-                  transparent='true'
-                  show-symbol-logo='true'
-                ></div>
-                <Script src='https://widgets.coingecko.com/gecko-coin-price-marquee-widget.js'></Script>
-                <gecko-coin-price-marquee-widget
-                  locale='en'
-                  outlined='true'
-                  coin-ids=''
-                  initial-currency='usd'
-                ></gecko-coin-price-marquee-widget>
-              </div> */}
               {uid === process.env.NEXT_PUBLIC_HER_UID && (
                 <div className='rounded-sm border shadow-sm mb-2'>
                   <div className='flex justify-between pl-4 pr-4 mt-6'>
@@ -245,6 +224,19 @@ export default function Dashboard({
           <Welcome userName={userName} />
         </>
       )}
-    </>
+    </Suspense>
+  );
+}
+
+function SkeletonDashboard() {
+  return (
+    <div className='p-8'>
+      <div className='animate-pulse space-y-4'>
+        <div className='h-8 bg-gray-300 rounded w-1/2'></div>
+        <div className='h-6 bg-gray-300 rounded w-full'></div>
+        <div className='h-6 bg-gray-300 rounded w-full'></div>
+        <div className='h-6 bg-gray-300 rounded w-full'></div>
+      </div>
+    </div>
   );
 }

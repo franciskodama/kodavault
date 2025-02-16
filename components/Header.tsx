@@ -5,6 +5,7 @@ import { UserButton, useUser } from '@clerk/nextjs';
 
 import NavMenu from './NavMenu';
 import Link from 'next/link';
+import { AspectRatio } from './ui/aspect-ratio';
 
 export default function Header() {
   const { user } = useUser();
