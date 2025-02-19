@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   ColumnDef,
@@ -9,6 +9,8 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from '@tanstack/react-table';
 import {
   Table,
@@ -34,16 +36,36 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [assetInFilter, setAssetInFilter] = useState('');
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   });
+
+  const inputFilterValue = table.getColumn('asset')?.getFilterValue() as string;
+
+  useEffect(() => {
+    if (inputFilterValue) {
+      setAssetInFilter(inputFilterValue);
+    }
+  }, [inputFilterValue]);
+
+  const handleClickClearFilter = () => {
+    setAssetInFilter('');
+    setColumnFilters([]);
+    table.resetGlobalFilter();
+  };
 
   return (
     <div className='rounded-sm border border-slate-200  bg-white'>
