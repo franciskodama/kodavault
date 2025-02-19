@@ -79,7 +79,7 @@ DataTableProps<TData, TValue>) {
   };
 
   return (
-    <div className='rounded-sm border border-slate-200'>
+    <div className='rounded-sm border border-slate-200 bg-white'>
       <div className='flex items-center justify-left px-12 py-4 mt-4'>
         <Input
           placeholder='Filter by Asset'

@@ -43,7 +43,6 @@ export function DataTable<TData, TValue>({
   sumGoals,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [assetInFilter, setAssetInFilter] = useState('');
 
@@ -61,7 +60,7 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const inputFilterValue = table.getColumn('asset')?.getFilterValue() as string;
+  const inputFilterValue = table.getColumn('coin')?.getFilterValue() as string;
 
   useEffect(() => {
     if (inputFilterValue) {
@@ -82,7 +81,7 @@ export function DataTable<TData, TValue>({
           placeholder='Filter by Asset'
           value={assetInFilter}
           onChange={(event) => {
-            table.getColumn('asset')?.setFilterValue(event.target.value);
+            table.getColumn('coin')?.setFilterValue(event.target.value);
           }}
           className='max-w-sm w-[14ch]'
         />

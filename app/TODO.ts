@@ -4,12 +4,13 @@
 // CronJob: errror for account fk.ca check logs on Vercel
 // cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
+// Projections: total of the table
 
 // TODO: DONE ---------------------------------------------------------------------------
+// Allocation Goals: Add field for search by Asset and a button to clear field
 
 // TODO: EASY:
 // Crypto: Ranking of Cryptos getting info from the call for ATH
-// Allocation Goals: Add field for search by Asset and a button to clear field
 
 // TODO: WORKING ON:
 // Responsivity
