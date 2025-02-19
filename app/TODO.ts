@@ -6,11 +6,9 @@
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
 
 // TODO: DONE ---------------------------------------------------------------------------
-// Crypto / ATH Estimation: clear button for the filter
-// Projections needs to have notes and the notes must be shown on the table
 
 // TODO: EASY:
-// Crypto / Ranking of Cryptos getting info from the call for ATH
+// Crypto: Ranking of Cryptos getting info from the call for ATH
 // Allocation Goals: Add field for search by Asset and a button to clear field
 
 // TODO: WORKING ON:
@@ -84,6 +82,10 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Crypto / ATH Estimation: clear button for the filter
+// Projections needs to have notes and the notes must be shown on the table
+// Projections: fix formulas
+// Projections: fix state so the table update after a new projection
 // Assets Page: Review deselect all in once with a single button (confirmation before delete all reviews status check)
 // Assets Page: Review must be fast, so perhaps it should use local storage
 // Assets Page: Show how many types of asset it has in the user's filter (so que can check the number of assets in the platform when reviewing)
