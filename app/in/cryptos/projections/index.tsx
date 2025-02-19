@@ -49,7 +49,7 @@ export default function Projections({
                 <CardHeader>
                   <CardTitle className='capitalize flex items-center justify-between'>
                     <span>Crypto Projections</span>
-                    <span className='text-3xl'>🔮</span>
+                    <span className='text-3xl mr-4'>🔮</span>
                   </CardTitle>
                   <CardDescription className='text-xs'>
                     Projections made by Analystis or your own
