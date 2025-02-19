@@ -92,7 +92,7 @@ export default function Ath({
                 <CardHeader>
                   <CardTitle className='capitalize flex items-center justify-between'>
                     <span>Crypto ATH Estimation</span>
-                    <span className='text-3xl'>🏅</span>
+                    <span className='text-3xl mr-4'>⛰️</span>
                   </CardTitle>
                   <CardDescription className='text-xs'>
                     All-Time High Estimation

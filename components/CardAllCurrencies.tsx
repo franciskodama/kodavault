@@ -51,6 +51,7 @@ export const CardTotalAllCurrency = ({
         currency: 'BTC',
         value: total / btcPrice,
         emoji: '🥇',
+        // emoji: '₿',
       },
     ];
   }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   ColumnDef,
@@ -9,6 +9,8 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from '@tanstack/react-table';
 import {
   Table,
@@ -18,8 +20,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import MessageInTable from '@/components/MessageInTable';
 import Image from 'next/image';
+import { Input } from '@/components/ui/input';
+import { XIcon } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -33,6 +43,8 @@ export function DataTable<TData, TValue>({
   sumGoals,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [assetInFilter, setAssetInFilter] = useState('');
 
   const table = useReactTable({
     data,
@@ -40,13 +52,63 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   });
 
+  const inputFilterValue = table.getColumn('coin')?.getFilterValue() as string;
+
+  useEffect(() => {
+    if (inputFilterValue) {
+      setAssetInFilter(inputFilterValue);
+    }
+  }, [inputFilterValue]);
+
+  const handleClickClearFilter = () => {
+    setAssetInFilter('');
+    setColumnFilters([]);
+    table.resetGlobalFilter();
+  };
+
   return (
-    <div className='rounded-sm border border-slate-200  bg-white'>
+    <div className='rounded-sm border border-slate-200'>
+      <div className='flex items-center justify-left px-12 py-4 mt-4'>
+        <Input
+          placeholder='Filter by Asset'
+          value={assetInFilter}
+          onChange={(event) => {
+            table.getColumn('coin')?.setFilterValue(event.target.value);
+          }}
+          className='max-w-sm w-[14ch]'
+        />
+
+        {inputFilterValue && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <div
+                  className='flex items-center justify-center w-[176px] sm:w-11 h-10 ml-4 sm:ml-2 border-2 border-slate-500 bg-accent'
+                  onClick={() => {
+                    handleClickClearFilter();
+                  }}
+                >
+                  <XIcon size={18} strokeWidth={2.4} />
+                  <span className='inline sm:hidden ml-2 font-semibold'>
+                    Clear Field
+                  </span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Clear All Filters</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+      </div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

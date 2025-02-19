@@ -3,6 +3,14 @@ import { useEffect, useState } from 'react';
 import { v4 } from 'uuid';
 import { useUser } from '@clerk/nextjs';
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { DataTable } from './data-table';
 import { Asset, CryptoGoals } from '../../../../lib/types';
 import {
@@ -174,7 +182,33 @@ export default function AllocationGoals({
   return (
     <div className='flex flex-col w-full gap-2'>
       {assets.length > 0 ? (
-        <DataTable columns={columns} data={dataTable} sumGoals={sumGoals} />
+        <div className='w-full'>
+          <Card>
+            <div className='flex flex-col justify-between'>
+              <div className='flex flex-col'>
+                <CardHeader>
+                  <CardTitle className='capitalize flex items-center justify-between'>
+                    <span>Allocation Goals by Coin</span>
+                    <span className='text-3xl mr-4'>🥅</span>
+                  </CardTitle>
+                  <CardDescription className='text-xs'>
+                    Set the percentage of your portfolio you want to allocate to
+                    each coin.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div>
+                    <DataTable
+                      columns={columns}
+                      data={dataTable}
+                      sumGoals={sumGoals}
+                    />
+                  </div>
+                </CardContent>
+              </div>
+            </div>
+          </Card>
+        </div>
       ) : (
         <MessageInTable
           image={'/looking-weird.webp'}
