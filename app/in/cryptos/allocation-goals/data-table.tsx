@@ -20,8 +20,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import MessageInTable from '@/components/MessageInTable';
 import Image from 'next/image';
+import { Input } from '@/components/ui/input';
+import { XIcon } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -68,7 +76,40 @@ export function DataTable<TData, TValue>({
   };
 
   return (
-    <div className='rounded-sm border border-slate-200  bg-white'>
+    <div className='rounded-sm border border-slate-200'>
+      <div className='flex items-center justify-left px-12 py-4 mt-4'>
+        <Input
+          placeholder='Filter by Asset'
+          value={assetInFilter}
+          onChange={(event) => {
+            table.getColumn('asset')?.setFilterValue(event.target.value);
+          }}
+          className='max-w-sm w-[14ch]'
+        />
+
+        {inputFilterValue && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <div
+                  className='flex items-center justify-center w-[176px] sm:w-11 h-10 ml-4 sm:ml-2 border-2 border-slate-500 bg-accent'
+                  onClick={() => {
+                    handleClickClearFilter();
+                  }}
+                >
+                  <XIcon size={18} strokeWidth={2.4} />
+                  <span className='inline sm:hidden ml-2 font-semibold'>
+                    Clear Field
+                  </span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Clear All Filters</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+      </div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
