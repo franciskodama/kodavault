@@ -15,6 +15,7 @@ import { currencyFormatter } from '@/lib/utils';
 import { CryptoWithAthAndProjections } from '@/lib/types';
 import { DataTable } from './data-table';
 import { AllCryptosData } from '../cryptos';
+import { columns } from './columns';
 
 export type athTotals = {
   athTotal: number;

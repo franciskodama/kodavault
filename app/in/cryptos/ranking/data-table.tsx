@@ -59,7 +59,9 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const inputFilterValue = table.getColumn('asset')?.getFilterValue() as string;
+  const inputFilterValue = table
+    .getColumn('symbol')
+    ?.getFilterValue() as string;
 
   useEffect(() => {
     if (inputFilterValue) {
@@ -78,9 +80,9 @@ export function DataTable<TData, TValue>({
       <div className='flex items-center justify-left px-12 py-4 mt-4'>
         <Input
           placeholder='Filter by Asset'
-          value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
+          value={(table.getColumn('symbol')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('asset')?.setFilterValue(event.target.value)
+            table.getColumn('symbol')?.setFilterValue(event.target.value)
           }
           className='max-w-sm w-[14ch]'
         />
@@ -132,15 +134,12 @@ export function DataTable<TData, TValue>({
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && 'selected'}
+                // data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className={`text-right text-xs text-slate-600 font-light ${
-                      cell.column.id === 'percentagePotential' &&
-                      'bg-slate-100 border'
-                    }`}
+                    className='text-right text-xs text-slate-600 font-light'
                   >
                     {cell.column.id !== 'image' && (
                       <>
@@ -148,7 +147,7 @@ export function DataTable<TData, TValue>({
                           cell.column.columnDef.cell,
                           cell.getContext()
                         )}
-                        {cell.column.id === 'percentagePotential' &&
+                        {cell.column.id === '24h_change' &&
                           cell.getValue() !== '∞' && (
                             <span className='ml-1'>%</span>
                           )}

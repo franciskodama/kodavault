@@ -7,7 +7,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -18,7 +17,7 @@ import {
   numberFormatter,
   numberFormatterNoDecimals,
   thousandFormatter,
-} from '../../../../lib/utils';
+} from '@/lib/utils';
 import { columns } from './columns';
 import { getCryptoGoals } from '@/lib/actions';
 import MessageInTable from '@/components/MessageInTable';
