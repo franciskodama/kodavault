@@ -1,6 +1,7 @@
-'use-client';
+'use client';
 
-import { Loading } from '@/components/Loading';
+import { useEffect, useState } from 'react';
+
 import {
   Card,
   CardContent,
@@ -10,55 +11,51 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import MessageInTable from '@/components/MessageInTable';
+import { currencyFormatter } from '@/lib/utils';
 import { CryptoWithAthAndProjections } from '@/lib/types';
 import { DataTable } from './data-table';
-import { useEffect, useMemo, useState } from 'react';
-import { getColumns } from './columns';
+import { AllCryptosData } from '../cryptos';
+
+export type athTotals = {
+  athTotal: number;
+  athTotalExclusions: number;
+};
 
 export default function Ranking({
-  cryptosWithATHsAndProjections,
+  allCryptosData,
 }: {
-  cryptosWithATHsAndProjections: CryptoWithAthAndProjections[];
+  allCryptosData: AllCryptosData[];
 }) {
-  const [tableData, setTableData] = useState(cryptosWithATHsAndProjections);
-
-  const sortedAssetsWithProjections: CryptoWithAthAndProjections[] =
-    cryptosWithATHsAndProjections.sort(
-      (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
-        return Number(b.projectionXPotential) - Number(a.projectionXPotential);
-      }
-    );
-
-  useEffect(() => {
-    setTableData(sortedAssetsWithProjections);
-  }, [sortedAssetsWithProjections]);
-
-  const columns = useMemo(() => getColumns(setTableData), [setTableData]);
-
-  if (!cryptosWithATHsAndProjections) {
-    return <Loading />;
-  }
+  const sortedRanking: AllCryptosData[] = allCryptosData?.sort(
+    (a: AllCryptosData, b: AllCryptosData) => {
+      return Number(b.market_cap_rank) - Number(a.market_cap_rank);
+    }
+  );
 
   return (
     <div className='flex flex-col w-full gap-2'>
-      {tableData.length > 0 ? (
+      {sortedRanking?.length > 0 ? (
         <div className='w-full'>
           <Card>
             <div className='flex flex-col justify-between'>
               <div className='flex flex-col'>
                 <CardHeader>
                   <CardTitle className='capitalize flex items-center justify-between'>
-                    <span>Crypto Ranking</span>
-                    <span className='text-3xl mr-4'>🏆</span>
+                    <span>Crypto ATH Estimation</span>
+                    <span className='text-3xl mr-4'>⛰️</span>
                   </CardTitle>
                   <CardDescription className='text-xs'>
-                    Ranking of all crypto assets
+                    All-Time High Estimation
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div>
-                    <DataTable columns={columns} data={tableData} />
-                  </div>
+                  {sortedRanking.length > 0 ? (
+                    <div>
+                      <DataTable data={sortedRanking} columns={columns} />
+                    </div>
+                  ) : (
+                    <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
+                  )}
                 </CardContent>
               </div>
             </div>

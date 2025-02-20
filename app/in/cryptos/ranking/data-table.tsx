@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-
+import { XIcon } from 'lucide-react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -22,28 +22,26 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Input } from '@/components/ui/input';
-import MessageInTable from '@/components/MessageInTable';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { XIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import MessageInTable from '@/components/MessageInTable';
+import { athTotals } from '.';
 
-interface DataTableProps<TData, TValue> {
+type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
-  typeFilterAsParam?: string;
-}
+};
 
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [assetInFilter, setAssetInFilter] = useState('');
 
@@ -80,10 +78,10 @@ export function DataTable<TData, TValue>({
       <div className='flex items-center justify-left px-12 py-4 mt-4'>
         <Input
           placeholder='Filter by Asset'
-          value={assetInFilter}
-          onChange={(event) => {
-            table.getColumn('asset')?.setFilterValue(event.target.value);
-          }}
+          value={(table.getColumn('asset')?.getFilterValue() as string) ?? ''}
+          onChange={(event) =>
+            table.getColumn('asset')?.setFilterValue(event.target.value)
+          }
           className='max-w-sm w-[14ch]'
         />
 
