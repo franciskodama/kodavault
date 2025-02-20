@@ -159,7 +159,11 @@ export default function Cryptos({
                     />
                   </TabsContent>
                   <TabsContent value='ranking' className='mt-4'>
-                    {/* <Ranking assets={assetsByType.Crypto} /> */}
+                    <Ranking
+                      cryptosWithATHsAndProjections={
+                        cryptosWithATHsAndProjections
+                      }
+                    />
                   </TabsContent>
                 </Tabs>
               </div>
