@@ -22,7 +22,7 @@ import {
 import { columns } from './columns';
 import { getCryptoGoals } from '@/lib/actions';
 import MessageInTable from '@/components/MessageInTable';
-import { AthImageData } from '../cryptos';
+import { AllCryptosData, AthImageData } from '../cryptos';
 
 export type MergedArrayItem = {
   id: string;
@@ -41,10 +41,10 @@ type TotalByCoin = { value: string; total: number };
 
 export default function AllocationGoals({
   assets,
-  athImageData,
+  allCryptosData,
 }: {
   assets: Asset[];
-  athImageData: AthImageData[];
+  allCryptosData: AllCryptosData[];
 }) {
   const [cryptoGoals, setCryptoGoals] = useState<CryptoGoals[]>([]);
   const [totalByCoin, setTotalByCoin] = useState<TotalByCoin[]>([]);
@@ -124,7 +124,7 @@ export default function AllocationGoals({
     const mergedArray: MergedArrayItem[] = [];
 
     const getImageUrl = (value: string) => {
-      const existingAsset = athImageData.find(
+      const existingAsset = allCryptosData.find(
         (el: AthImageData) => el.symbol === value
       );
       return existingAsset?.image ? existingAsset.image : '';
