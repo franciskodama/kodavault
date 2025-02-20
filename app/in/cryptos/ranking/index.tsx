@@ -1,18 +1,11 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import MessageInTable from '@/components/MessageInTable';
-import { currencyFormatter } from '@/lib/utils';
-import { CryptoWithAthAndProjections } from '@/lib/types';
 import { DataTable } from './data-table';
 import { AllCryptosData } from '../cryptos';
 import { columns } from './columns';
@@ -29,7 +22,7 @@ export default function Ranking({
 }) {
   const sortedRanking: AllCryptosData[] = allCryptosData?.sort(
     (a: AllCryptosData, b: AllCryptosData) => {
-      return Number(b.market_cap_rank) - Number(a.market_cap_rank);
+      return Number(a.market_cap_rank) - Number(b.market_cap_rank);
     }
   );
 
@@ -42,11 +35,11 @@ export default function Ranking({
               <div className='flex flex-col'>
                 <CardHeader>
                   <CardTitle className='capitalize flex items-center justify-between'>
-                    <span>Crypto ATH Estimation</span>
-                    <span className='text-3xl mr-4'>⛰️</span>
+                    <span>Crypto Ranking</span>
+                    <span className='text-3xl mr-4'>🏆</span>
                   </CardTitle>
                   <CardDescription className='text-xs'>
-                    All-Time High Estimation
+                    Check the ranking of the most popular cryptocurrencies
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

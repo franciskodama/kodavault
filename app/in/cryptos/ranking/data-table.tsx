@@ -75,6 +75,10 @@ export function DataTable<TData, TValue>({
     table.resetGlobalFilter();
   };
 
+  //  Format numbers in the table
+  // What happened with the volume data (same key for all cryptos?)
+  // Do we need max_supply?
+
   return (
     <div className='rounded-sm border border-slate-200'>
       <div className='flex items-center justify-left px-12 py-4 mt-4'>
@@ -134,7 +138,7 @@ export function DataTable<TData, TValue>({
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                // data-state={row.getIsSelected() && 'selected'}
+                data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
