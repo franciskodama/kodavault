@@ -10,11 +10,6 @@ import { DataTable } from './data-table';
 import { AllCryptosData } from '../cryptos';
 import { columns } from './columns';
 
-export type athTotals = {
-  athTotal: number;
-  athTotalExclusions: number;
-};
-
 export default function Ranking({
   allCryptosData,
 }: {

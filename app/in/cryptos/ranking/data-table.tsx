@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { XIcon } from 'lucide-react';
 import {
   ColumnDef,
@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/tooltip';
 import { Input } from '@/components/ui/input';
 import MessageInTable from '@/components/MessageInTable';
-import { athTotals } from '.';
+import { currencyFormatter, thousandAndDecimalFormatter } from '@/lib/utils';
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
@@ -145,16 +145,15 @@ export function DataTable<TData, TValue>({
                     key={cell.id}
                     className='text-right text-xs text-slate-600 font-light'
                   >
+                    {cell.column.id === 'market_cap_rank' ||
+                      (cell.column.id === 'symbol' && <>{cell.getValue()}</>)}
+
                     {cell.column.id !== 'image' && (
                       <>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
+                        {thousandAndDecimalFormatter(Number(cell.getValue()))}
+                        {cell.column.id === 'price_change_percentage_24h' && (
+                          <span className='ml-1'>%</span>
                         )}
-                        {cell.column.id === '24h_change' &&
-                          cell.getValue() !== '∞' && (
-                            <span className='ml-1'>%</span>
-                          )}
                       </>
                     )}
                     {cell.column.id === 'image' && (
@@ -200,3 +199,25 @@ export function DataTable<TData, TValue>({
     </div>
   );
 }
+
+const getCellFormatter = (columnId: string) => {
+  switch (columnId) {
+    case '':
+    case 'market_cap':
+      return (value: number) => {
+        return currencyFormatter(value);
+      };
+    default:
+      return (value: number) => {
+        return thousandAndDecimalFormatter(value);
+      };
+  }
+};
+
+const numbers = [
+  'price',
+  'market_cap',
+  'total_volume',
+  'circulating_supply',
+  'max_supply',
+];
