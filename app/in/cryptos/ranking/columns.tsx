@@ -123,19 +123,4 @@ export const columns: ColumnDef<AllCryptosData>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: 'max_supply',
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         className={tableHeaderClass}
-  //         variant='ghost'
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-  //       >
-  //         Max Supply
-  //         <ArrowUpDown className='ml-2 h-4 w-4' />
-  //       </Button>
-  //     );
-  //   },
-  // },
 ];
