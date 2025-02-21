@@ -93,21 +93,6 @@ export const columns: ColumnDef<AllCryptosData>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: 'total_volume',
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         className={tableHeaderClass}
-  //         variant='ghost'
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-  //       >
-  //         Volume
-  //         <ArrowUpDown className='ml-2 h-4 w-4' />
-  //       </Button>
-  //     );
-  //   },
-  // },
   {
     accessorKey: 'total_volume',
     header: ({ column }) => {

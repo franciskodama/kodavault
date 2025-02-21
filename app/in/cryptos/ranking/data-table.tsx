@@ -79,6 +79,15 @@ export function DataTable<TData, TValue>({
   // What happened with the volume data (same key for all cryptos?)
   // Do we need max_supply?
 
+  const numberColumns = [
+    'current_price',
+    'market_cap',
+    'price_change_percentage_24h',
+    'total_volume',
+    'circulating_supply',
+    'max_supply',
+  ];
+
   return (
     <div className='rounded-sm border border-slate-200'>
       <div className='flex items-center justify-left px-12 py-4 mt-4'>
@@ -146,9 +155,10 @@ export function DataTable<TData, TValue>({
                     className='text-right text-xs text-slate-600 font-light'
                   >
                     {cell.column.id === 'market_cap_rank' ||
-                      (cell.column.id === 'symbol' && <>{cell.getValue()}</>)}
-
-                    {cell.column.id !== 'image' && (
+                    cell.column.id === 'symbol' ? (
+                      <>{cell.getValue()}</>
+                    ) : null}
+                    {numberColumns.includes(cell.column.id) && (
                       <>
                         {thousandAndDecimalFormatter(Number(cell.getValue()))}
                         {cell.column.id === 'price_change_percentage_24h' && (
@@ -213,11 +223,3 @@ const getCellFormatter = (columnId: string) => {
       };
   }
 };
-
-const numbers = [
-  'price',
-  'market_cap',
-  'total_volume',
-  'circulating_supply',
-  'max_supply',
-];
