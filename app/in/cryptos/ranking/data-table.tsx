@@ -79,13 +79,11 @@ export function DataTable<TData, TValue>({
     table.resetGlobalFilter();
   };
 
-  //  Format numbers in the table
   // What happened with the volume data (same key for all cryptos?)
   // Do we need max_supply?
 
   const numberColumnsNoDecimals = [
     'market_cap',
-
     'total_volume',
     'circulating_supply',
     'max_supply',
@@ -188,6 +186,11 @@ export function DataTable<TData, TValue>({
                         {thousandFormatter(Number(cell.getValue()))}
                         {cell.column.id === 'price_change_percentage_24h' && (
                           <span className='ml-1'>%</span>
+                        )}
+                        {cell.column.id === 'circulating_supply' && (
+                          <span className='ml-1'>
+                            {(cell.row.original as any).symbol}
+                          </span>
                         )}
                       </>
                     )}
