@@ -1,14 +1,15 @@
 'use client';
 
-import { Asset } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
-import { Button } from '../../../../components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
-import { tableHeaderClass } from '../../../../lib/classes';
 
-export const columns: ColumnDef<Asset>[] = [
+import { Button } from '@/components/ui/button';
+import { tableHeaderClass } from '@/lib/classes';
+import { AllCryptosData } from '../cryptos';
+
+export const columns: ColumnDef<AllCryptosData>[] = [
   {
-    accessorKey: 'asset',
+    accessorKey: 'market_cap_rank',
     header: ({ column }) => {
       return (
         <Button
@@ -16,22 +17,14 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Asset
+          #
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
   },
   {
-    accessorKey: 'qty',
-    header: () => <div className={tableHeaderClass}>Qty</div>,
-  },
-  {
-    accessorKey: 'price',
-    header: () => <div className={tableHeaderClass}>Price</div>,
-  },
-  {
-    accessorKey: 'currentTotal',
+    accessorKey: 'symbol',
     header: ({ column }) => {
       return (
         <Button
@@ -39,18 +32,23 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Total
+          Coin
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
   },
   {
-    accessorKey: 'price-projection',
-    header: () => <div className={tableHeaderClass}>PP</div>,
+    accessorKey: 'image',
+    header: () => (
+      <div className='flex justify-center'>
+        <div className={tableHeaderClass}>Icon</div>
+      </div>
+    ),
   },
+
   {
-    accessorKey: 'total-by-price-projection',
+    accessorKey: 'current_price',
     header: ({ column }) => {
       return (
         <Button
@@ -58,17 +56,30 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          <div className={tableHeaderClass}>
-            Total PP
-            <span className='text-xs font-medium'>{` (est.)`}</span>
-          </div>
+          Price
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+  },
+
+  {
+    accessorKey: 'market_cap',
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Market Cap
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
   },
   {
-    accessorKey: 'percentagePotential',
+    accessorKey: 'price_change_percentage_24h',
     header: ({ column }) => {
       return (
         <Button
@@ -76,14 +87,14 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Boost (%)
+          24h %
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
   },
   {
-    accessorKey: 'xPotential',
+    accessorKey: 'total_volume',
     header: ({ column }) => {
       return (
         <Button
@@ -91,7 +102,22 @@ export const columns: ColumnDef<Asset>[] = [
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Boost (x)
+          Volume
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: 'circulating_supply',
+    header: ({ column }) => {
+      return (
+        <Button
+          className={tableHeaderClass}
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Circ. Supply
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );

@@ -15,10 +15,17 @@ import {
   numberFormatterNoDecimals,
 } from '@/lib/utils';
 
-export type AthImageData = {
+export type AllCryptosData = {
   symbol: string;
   ath: number;
   image?: string;
+  market_cap_rank: number;
+  current_price: number;
+  market_cap: number;
+  price_change_percentage_24h: number;
+  total_volume: number;
+  circulating_supply: number;
+  max_supply: number;
 };
 
 export type ProjectionsData = {
@@ -35,17 +42,17 @@ export type ProjectionsData = {
 };
 
 export default function Cryptos({
-  athImageData,
+  allCryptosData,
   projections,
 }: {
-  athImageData: AthImageData[];
+  allCryptosData: AllCryptosData[];
   projections: ProjectionsData[];
 }) {
   const { assetsByType, isLoading } = useAssetsContext();
 
   const addedAth: Asset[] = assetsByType.Crypto?.map((item: any) => {
-    const existingAsset = athImageData.find(
-      (el: AthImageData) => el.symbol === item.asset
+    const existingAsset = allCryptosData.find(
+      (el: AllCryptosData) => el.symbol === item.asset
     );
     return {
       ...item,
@@ -140,7 +147,7 @@ export default function Cryptos({
                   >
                     <AllocationGoals
                       assets={assetsByType.Crypto}
-                      athImageData={athImageData}
+                      allCryptosData={allCryptosData}
                     />
                   </TabsContent>
 
@@ -159,7 +166,7 @@ export default function Cryptos({
                     />
                   </TabsContent>
                   <TabsContent value='ranking' className='mt-4'>
-                    {/* <Ranking assets={assetsByType.Crypto} /> */}
+                    <Ranking allCryptosData={allCryptosData} />
                   </TabsContent>
                 </Tabs>
               </div>

@@ -1,75 +1,70 @@
-import { Asset, CryptoWithAthAndProjections } from '../../../../lib/types';
-import { DataTable } from './data-table';
-import { hardcodedAthCoins } from '../../../../lib/data';
 import {
-  currencyFormatter,
-  numberFormatter,
-  numberFormatterNoDecimals,
-} from '../../../../lib/utils';
-import { Loading } from '../../../../components/Loading';
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import MessageInTable from '@/components/MessageInTable';
+import { DataTable } from './data-table';
+import { AllCryptosData } from '../cryptos';
+import { columns } from './columns';
 
-export default function Ranking({ assets }: { assets: Asset[] }) {
-  let cryptoAssetsWithAth: Asset[] = [];
-  let sumQtyOfSameAssets: Asset[] = [];
-  let athAssets: CryptoWithAthAndProjections[] = [];
-  let sortedAthAssets: CryptoWithAthAndProjections[] = [];
-
-  if (!assets) {
-    return <Loading />;
-  }
-
-  // const onlyCryptoAssets = assets.filter((item: any) => item.type === 'Crypto');
-
-  // cryptoAssetsWithAth = assets.map((item: any) => {
-  //   const existingAsset = hardcodedAthCoins.find(
-  //     (el: any) => el.symbol === item.asset
-  //   );
-  //   return {
-  //     ...item,
-  //     ath: existingAsset?.ath ? existingAsset.ath : 0,
-  //   };
-  // });
-
-  // sumQtyOfSameAssets = cryptoAssetsWithAth.reduce((acc: any, item: any) => {
-  //   const existingAsset = acc.find((el: any) => el.asset === item.asset);
-  //   if (existingAsset) {
-  //     existingAsset.qty += item.qty;
-  //     existingAsset.currentTotal += item.total;
-  //   } else {
-  //     acc.push(item);
-  //   }
-  //   return acc;
-  // }, []);
-
-  // athAssets = sumQtyOfSameAssets.map((item: any) => {
-  //   return {
-  //     asset: item.asset,
-  //     price: currencyFormatter(item.price),
-  //     qty: numberFormatter.format(item.qty),
-  //     currentTotal: currencyFormatter(item.qty * item.price),
-  //     ath: currencyFormatter(item.ath),
-  //     athTotalNumber: item.ath * item.qty,
-  //     athTotalCurrency: currencyFormatter(item.ath * item.qty),
-  //     xPotential: numberFormatter.format(item.ath / item.price),
-  //     percentagePotential: numberFormatterNoDecimals.format(
-  //       ((item.ath - item.price) / item.price) * 100
-  //     ),
-  //   };
-  // });
-
-  // sortedAthAssets = athAssets.sort(
-  //   (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
-  //     return Number(b.xPotential) - Number(a.xPotential);
-  //   }
-  // );
+export default function Ranking({
+  allCryptosData,
+}: {
+  allCryptosData: AllCryptosData[];
+}) {
+  const sortedRanking: AllCryptosData[] = allCryptosData?.sort(
+    (a: AllCryptosData, b: AllCryptosData) => {
+      return Number(a.market_cap_rank) - Number(b.market_cap_rank);
+    }
+  );
 
   return (
-    <>
-      {sortedAthAssets.length > 0 && (
+    <div className='flex flex-col w-full gap-2'>
+      {sortedRanking?.length > 0 ? (
         <div className='w-full'>
-          <DataTable athAssets={sortedAthAssets} />
+          <Card>
+            <div className='flex flex-col justify-between'>
+              <div className='flex flex-col'>
+                <CardHeader>
+                  <CardTitle className='capitalize flex items-center justify-between'>
+                    <span>Crypto Ranking</span>
+                    <span className='text-3xl mr-4'>🏆</span>
+                  </CardTitle>
+                  <CardDescription className='text-xs'>
+                    Check the ranking of the most popular cryptocurrencies
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {sortedRanking.length > 0 ? (
+                    <div>
+                      <DataTable data={sortedRanking} columns={columns} />
+                    </div>
+                  ) : (
+                    <div className='my-32'>🙅🏻‍♀️ Not loaded yet</div>
+                  )}
+                </CardContent>
+              </div>
+            </div>
+          </Card>
         </div>
+      ) : (
+        <MessageInTable
+          image={'/looking-weird.webp'}
+          objectPosition={'50% 5%'}
+          alt={'I am broke'}
+          title={'Hey, the blockchain’s waiting for you!'}
+          subtitle={
+            'Start stacking those coins and get ready to explore the crypto universe! To the moon! 🚀'
+          }
+          buttonCopy={'Add a Crypto Asset'}
+          hasNoButton={false}
+          formTitle={'Add a new Asset'}
+          formSubtitle={'Add a New Asset and expand your investment portfolio.'}
+        />
       )}
-    </>
+    </div>
   );
 }
