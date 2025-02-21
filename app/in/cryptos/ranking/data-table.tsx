@@ -30,7 +30,11 @@ import {
 } from '@/components/ui/tooltip';
 import { Input } from '@/components/ui/input';
 import MessageInTable from '@/components/MessageInTable';
-import { currencyFormatter, thousandAndDecimalFormatter } from '@/lib/utils';
+import {
+  currencyFormatter,
+  thousandAndDecimalFormatter,
+  thousandFormatter,
+} from '@/lib/utils';
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
@@ -79,10 +83,9 @@ export function DataTable<TData, TValue>({
   // What happened with the volume data (same key for all cryptos?)
   // Do we need max_supply?
 
-  const numberColumns = [
-    'current_price',
+  const numberColumnsNoDecimals = [
     'market_cap',
-    'price_change_percentage_24h',
+
     'total_volume',
     'circulating_supply',
     'max_supply',
@@ -158,14 +161,6 @@ export function DataTable<TData, TValue>({
                     cell.column.id === 'symbol' ? (
                       <>{cell.getValue()}</>
                     ) : null}
-                    {numberColumns.includes(cell.column.id) && (
-                      <>
-                        {thousandAndDecimalFormatter(Number(cell.getValue()))}
-                        {cell.column.id === 'price_change_percentage_24h' && (
-                          <span className='ml-1'>%</span>
-                        )}
-                      </>
-                    )}
                     {cell.column.id === 'image' && (
                       <div className='flex justify-center'>
                         <Image
@@ -181,6 +176,20 @@ export function DataTable<TData, TValue>({
                           style={{ width: 'auto', height: 'auto' }}
                         />
                       </div>
+                    )}
+                    {cell.column.id === 'current_price' ||
+                    cell.column.id === 'price_change_percentage_24h' ? (
+                      <>
+                        {thousandAndDecimalFormatter(Number(cell.getValue()))}
+                      </>
+                    ) : null}
+                    {numberColumnsNoDecimals.includes(cell.column.id) && (
+                      <>
+                        {thousandFormatter(Number(cell.getValue()))}
+                        {cell.column.id === 'price_change_percentage_24h' && (
+                          <span className='ml-1'>%</span>
+                        )}
+                      </>
                     )}
                   </TableCell>
                 ))}
@@ -209,17 +218,3 @@ export function DataTable<TData, TValue>({
     </div>
   );
 }
-
-const getCellFormatter = (columnId: string) => {
-  switch (columnId) {
-    case '':
-    case 'market_cap':
-      return (value: number) => {
-        return currencyFormatter(value);
-      };
-    default:
-      return (value: number) => {
-        return thousandAndDecimalFormatter(value);
-      };
-  }
-};
