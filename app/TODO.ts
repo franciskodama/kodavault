@@ -1,4 +1,6 @@
 // TODO: NEXT:
+// Altcoin Add Asset: after click on Category it has been activating the database
+
 // CronJob: https://console.cron-job.org/jobs/5201103 + https://www.youtube.com/shorts/d9olvU5bbQ4
 // CronJob: with header with authentication Bearer Secret
 // CronJob: errror for account fk.ca check logs on Vercel
@@ -8,13 +10,12 @@
 
 // TODO: DONE ---------------------------------------------------------------------------
 // Allocation Goals: Add field for search by Asset and a button to clear field
+// Crypto: Ranking of Cryptos getting info from the call for ATH
 
 // TODO: EASY:
-// Crypto: Ranking of Cryptos getting info from the call for ATH
 
 // TODO: WORKING ON:
 // Responsivity
-// Altcoin Add Asset: after click on Category it has been activating the database
 // After CronJob Fix, return the commented code in the middleware f
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
 // Arrumar reload on Shortcut, etc.. pages
