@@ -1,5 +1,7 @@
 // TODO: NEXT:
-// Altcoin Add Asset: after click on Category it has been activating the database
+// Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
+// Arrumar reload on Shortcut, etc.. pages
+// Create a Page for the Elliott Waves Cheat Sheet
 
 // CronJob: https://console.cron-job.org/jobs/5201103 + https://www.youtube.com/shorts/d9olvU5bbQ4
 // CronJob: with header with authentication Bearer Secret
@@ -11,17 +13,15 @@
 // TODO: DONE ---------------------------------------------------------------------------
 // Allocation Goals: Add field for search by Asset and a button to clear field
 // Crypto: Ranking of Cryptos getting info from the call for ATH
+// Altcoin Add Asset: after click on Category it has been activating the database
 
 // TODO: EASY:
 
 // TODO: WORKING ON:
 // Responsivity
 // After CronJob Fix, return the commented code in the middleware f
-// Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
-// Arrumar reload on Shortcut, etc.. pages
 // Add Assets: Cash in Exchanges don't need to have the option to choose will be always USD or BRL (it's the only option)
 // CardLongsAndShorts or Page for it?
-// Create a Page for the Elliott Waves Cheat Sheet
 // Create a Chrome extension (add and update assets): https://www.luckymedia.dev/blog/how-to-create-a-chrome-extension-with-react-typescript-tailwindcss-and-vite-in-2024 or https://github.com/vercel/next.js/tree/canary/examples/with-chrome-extension
 
 // TODO ---------------------------------------------------------------------------
