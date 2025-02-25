@@ -36,7 +36,7 @@
 // Next purchases: app see what is missing to complete the goal and show on card next purchases (crypto page and dashboard + alerts "you need to buy these bad boys!")
 // Resistences and Supports?
 // Not using yet for now, but let's create a page to rank the coins (See Crypto.server file)
-// If we need to change auth(): https://www.youtube.com/shorts/x6hrvwNzj10
+// If we need to change auth(): https://www.youtube.com/shorts/x6hrvwNzj10s
 
 // TODO: ERRORS:
 // NaN Allocation Goals, Offset column
