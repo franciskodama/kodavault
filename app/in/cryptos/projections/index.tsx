@@ -42,13 +42,12 @@ export default function Projections({
 
   const getTotal = (assets: CryptoWithAthAndProjections[]) => {
     return assets?.reduce((sum: number, item: CryptoWithAthAndProjections) => {
-      const currentTotalNumber = Number(item.projectionTotal);
+      const currentTotalNumber = Number(item.projectionTotalNumber);
       return sum + currentTotalNumber;
     }, 0);
   };
 
   const projectionsTotal = getTotal(sortedAssetsWithProjections);
-  console.log('---  🚀 ---> | projectionsTotal:', projectionsTotal);
 
   return (
     <div className='flex flex-col w-full gap-2'>

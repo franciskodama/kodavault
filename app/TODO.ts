@@ -1,4 +1,7 @@
 // TODO: NEXT:
+// Projections: What is the -100 on Boost %?
+// Britney Spears Pop up: Continue with error div descendent of p
+
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
 // Arrumar reload on Shortcut, etc.. pages
 // Create a Page for the Elliott Waves Cheat Sheet
@@ -8,12 +11,12 @@
 // CronJob: errror for account fk.ca check logs on Vercel
 // cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
-// Projections: total of the table
 
 // TODO: DONE ---------------------------------------------------------------------------
 // Allocation Goals: Add field for search by Asset and a button to clear field
 // Crypto: Ranking of Cryptos getting info from the call for ATH
 // Altcoin Add Asset: after click on Category it has been activating the database
+// Projections: total of the table
 
 // TODO: EASY:
 
