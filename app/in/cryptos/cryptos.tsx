@@ -103,7 +103,9 @@ export default function Cryptos({
           ((item.ath - item.price) / item.price) * 100
         ),
         projection: item.projection,
-        projectionTotal: currencyFormatter(item.projection * item.qty),
+        projectionTotal: item.projection
+          ? currencyFormatter(item.projection * item.qty)
+          : currencyFormatter(item.price * item.qty),
         projectionXPotential: numberFormatter.format(
           (item.projection * item.qty) / (item.price * item.qty)
         ),

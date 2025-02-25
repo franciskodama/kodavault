@@ -14,6 +14,7 @@ import { CryptoWithAthAndProjections } from '@/lib/types';
 import { DataTable } from './data-table';
 import { useEffect, useMemo, useState } from 'react';
 import { getColumns } from './columns';
+import { currencyFormatter } from '@/lib/utils';
 
 export default function Projections({
   cryptosWithATHsAndProjections,
@@ -39,6 +40,16 @@ export default function Projections({
     return <Loading />;
   }
 
+  const getTotal = (assets: CryptoWithAthAndProjections[]) => {
+    return assets?.reduce((sum: number, item: CryptoWithAthAndProjections) => {
+      const currentTotalNumber = Number(item.projectionTotal);
+      return sum + currentTotalNumber;
+    }, 0);
+  };
+
+  const projectionsTotal = getTotal(sortedAssetsWithProjections);
+  console.log('---  🚀 ---> | projectionsTotal:', projectionsTotal);
+
   return (
     <div className='flex flex-col w-full gap-2'>
       {tableData.length > 0 ? (
@@ -57,18 +68,13 @@ export default function Projections({
                 </CardHeader>
                 <CardContent>
                   <div>
-                    <DataTable
-                      columns={columns}
-                      data={tableData}
-                      // setTableData={setTableData}
-                      // totals={totals}
-                    />
+                    <DataTable columns={columns} data={tableData} />
                   </div>
                 </CardContent>
               </div>
               <CardFooter className='flex m-1 py-2 px-10 justify-between text-sm text-slate-500 font-medium bg-slate-50'>
                 <h3>Total</h3>
-                {/* {currencyFormatter(athTotal)} */}
+                {currencyFormatter(projectionsTotal)}
               </CardFooter>
             </div>
           </Card>

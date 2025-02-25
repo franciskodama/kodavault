@@ -36,16 +36,13 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
   typeFilterAsParam?: string;
-  // totals: athTotals;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-}: // totals,
-DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  // const { athTotal, athTotalExclusions } = totals;
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [assetInFilter, setAssetInFilter] = useState('');
