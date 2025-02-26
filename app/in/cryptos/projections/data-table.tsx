@@ -150,7 +150,7 @@ export function DataTable<TData, TValue>({
                           cell.column.columnDef.cell,
                           cell.getContext()
                         )}
-                        {cell.column.id === 'percentagePotential' &&
+                        {cell.column.id === 'projectionPercentagePotential' &&
                           cell.getValue() !== '∞' && (
                             <span className='ml-1'>%</span>
                           )}

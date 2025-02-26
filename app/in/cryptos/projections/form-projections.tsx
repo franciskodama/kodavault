@@ -10,6 +10,7 @@ import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { Textarea } from '@/components/ui/textarea';
+import { numberFormatterNoDecimals } from '@/lib/utils';
 
 export const FormProjections = ({
   assetRow,
@@ -41,6 +42,7 @@ export const FormProjections = ({
       note: assetRow.note || '',
     },
   });
+  console.log('---  🚀 ---> | assetRow:', assetRow);
 
   const processForm = async (formData: CryptoProjection) => {
     if (!uid) {
@@ -80,6 +82,19 @@ export const FormProjections = ({
                   projection: data.projection,
                   source: data.source,
                   note: data.note,
+                  projectionTotalNumber: item.projection
+                    ? data.projection * item.qty
+                    : item.price * item.qty,
+                  projectionXPotential: numberFormatter.format(
+                    (data.projection * item.qty) / (item.price * item.qty)
+                  ),
+                  projectionPercentagePotential: data.projection
+                    ? numberFormatterNoDecimals.format(
+                        ((data.projection - Number(assetRow.price)) /
+                          Number(assetRow.price)) *
+                          100
+                      )
+                    : 0,
                 }
               : item
           )
