@@ -80,7 +80,7 @@ export const getTotalByKey = (assets: any[], key: string): TotalByWallet[] => {
   const groupedData: { [key: string]: number } = {};
 
   assets.reduce((acc, item) => {
-    if (!item) return acc; // Skip undefined assets
+    if (!item) return acc;
 
     const keyValue = item[key] as unknown as string;
 

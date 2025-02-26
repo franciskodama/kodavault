@@ -51,7 +51,7 @@ type Params = {
   page: number;
   sparkline: boolean;
 };
-export const getAllTimeHighData = async () => {
+export const getCryptosData = async () => {
   const url = 'https://api.coingecko.com/api/v3/coins/markets';
   const apiKeyCoinGecko = process.env.NEXT_PUBLIC_COINGECKO_KEY;
   const options = {
