@@ -1,12 +1,7 @@
 // ---------------------------------------------------------------------------
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import {
-  Asset,
-  CryptoWithAthAndProjections,
-  TotalByWallet,
-  UnpricedAsset,
-} from './types';
+import { Asset, TotalByWallet } from './types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -67,11 +62,17 @@ export const isNotEmptyArray = (value: []) => {
 
 // ---------------------------------------------------------------------------
 
-export const includeNewKeyForCardTitle = (array: any, newkey: string) =>
-  array.map((item: any) => ({
+export const includeNewKeyForCardTitle = (array: any[], newKey: string) => {
+  if (!Array.isArray(array)) {
+    console.error('Expected an array but received:', array);
+    return [];
+  }
+
+  return array.map((item: any) => ({
     ...item,
-    [newkey]: item.asset,
+    [newKey]: item.asset,
   }));
+};
 
 // ---------------------------------------------------------------------------
 
