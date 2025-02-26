@@ -112,9 +112,11 @@ export default function Cryptos({
         projectionXPotential: numberFormatter.format(
           (item.projection * item.qty) / (item.price * item.qty)
         ),
-        projectionPercentagePotential: numberFormatterNoDecimals.format(
-          ((item.projection - item.price) / item.price) * 100
-        ),
+        projectionPercentagePotential: item.projection
+          ? numberFormatterNoDecimals.format(
+              ((item.projection - item.price) / item.price) * 100
+            )
+          : 0,
         source: item.source,
         note: item.note,
       };
