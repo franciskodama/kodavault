@@ -140,8 +140,7 @@ export function DataTable<TData, TValue>({
                   <TableCell
                     key={cell.id}
                     className={`text-right text-xs text-slate-600 font-light ${
-                      cell.column.id === 'percentagePotential' &&
-                      'bg-slate-100 border'
+                      cell.column.id === 'projectionTotal' && 'bg-accent border'
                     }`}
                   >
                     {cell.column.id !== 'image' && (

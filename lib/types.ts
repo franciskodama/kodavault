@@ -40,7 +40,9 @@ export type CryptoWithAthAndProjections = {
   uid?: string;
   asset: string;
   price: number | string;
+  priceNumber: number;
   qty: number | string;
+  qtyNumber: number;
   currentTotal: number | string;
   ath: number | string;
   athTotalNumber: number;
