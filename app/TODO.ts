@@ -1,5 +1,4 @@
 // TODO: NEXT:
-// Projections: state doesnt work for projection, and others % and X. Why? Memo?
 
 // Britney Spears Pop up: Continue with error div descendent of p
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
@@ -18,6 +17,7 @@
 // Altcoin Add Asset: after click on Category it has been activating the database
 // Projections: total of the table
 // Projections: What is the -100 on Boost %?
+// Projections: state doesnt work for projection, and others % and X. Why? Memo?
 
 // TODO: EASY:
 

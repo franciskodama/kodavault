@@ -85,22 +85,22 @@ export const FormProjections = ({
                   projection: data.projection,
                   source: data.source,
                   note: data.note,
-                  // projectionTotal: data.projection
-                  //   ? currencyFormatter(data.projection * item.qtyNumber)
-                  //   : currencyFormatter(item.priceNumber * item.qtyNumber),
-                  // projectionXPotential: data.projection
-                  //   ? numberFormatter.format(
-                  //       (data.projection * item.qtyNumber) /
-                  //         (item.priceNumber * item.qtyNumber)
-                  //     )
-                  //   : 0,
-                  // projectionPercentagePotential: data.projection
-                  //   ? numberFormatterNoDecimals.format(
-                  //       ((data.projection - assetRow.priceNumber) /
-                  //         assetRow.priceNumber) *
-                  //         100
-                  //     )
-                  //   : 0,
+                  projectionTotal: data.projection
+                    ? currencyFormatter(data.projection * item.qtyNumber)
+                    : currencyFormatter(item.priceNumber * item.qtyNumber),
+                  projectionXPotential: data.projection
+                    ? numberFormatter.format(
+                        (data.projection * item.qtyNumber) /
+                          (item.priceNumber * item.qtyNumber)
+                      )
+                    : 0,
+                  projectionPercentagePotential: data.projection
+                    ? numberFormatterNoDecimals.format(
+                        ((data.projection - assetRow.priceNumber) /
+                          assetRow.priceNumber) *
+                          100
+                      )
+                    : 0,
                 }
               : item
           )

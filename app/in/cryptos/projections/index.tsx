@@ -32,7 +32,7 @@ export default function Projections({
 
   useEffect(() => {
     setTableData(sortedAssetsWithProjections);
-  }, [sortedAssetsWithProjections]);
+  }, []);
 
   const columns = useMemo(() => getColumns(setTableData), [setTableData]);
 
