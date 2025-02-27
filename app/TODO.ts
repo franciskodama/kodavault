@@ -1,6 +1,4 @@
 // TODO: NEXT:
-
-// Britney Spears Pop up: Continue with error div descendent of p
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
 // Arrumar reload on Shortcut, etc.. pages
 // Create a Page for the Elliott Waves Cheat Sheet
@@ -18,6 +16,7 @@
 // Projections: total of the table
 // Projections: What is the -100 on Boost %?
 // Projections: state doesnt work for projection, and others % and X. Why? Memo?
+// Britney Spears Pop up: Continue with error div descendent of p
 
 // TODO: EASY:
 

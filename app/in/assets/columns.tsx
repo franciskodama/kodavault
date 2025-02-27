@@ -317,13 +317,8 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
                     </AspectRatio>
                   </div>
                 </AlertDialogTitle>
-                <AlertDialogDescription className='flex flex-col'>
-                  <div className='text-base text-center text-slate-600 mb-4'>
-                    Prepare for turbulence! 🌪️
-                    <br />
-                    You are about to delete the Asset below:
-                  </div>
-
+                <AlertDialogDescription className='flex flex-col text-base text-center text-slate-600 mb-4 gap-4'>
+                  You are about to delete the Asset below:
                   <div className='flex py-4 px-16 justify-between border-[6px] border-primary text-base text-primary'>
                     <div className='flex flex-col'>
                       <div className='text-sm'>Asset:</div>
@@ -338,7 +333,6 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
                       <div className='font-bold'>{asset.qty}</div>
                     </div>
                   </div>
-
                   <span className='text-primary text-center my-4 font-bold text-base'>
                     <span className='font-bold'>
                       This is the point of no return. <br />

@@ -132,12 +132,9 @@ export function ShortcutInteractions({
                                         </AspectRatio>
                                       </div>
                                     </AlertDialogTitle>
-                                    <AlertDialogDescription className='flex flex-col'>
-                                      <span className='text-base text-center text-slate-600 mb-4'>
-                                        You are about to delete the Shortcut
-                                        below:
-                                      </span>
-
+                                    <AlertDialogDescription className='flex flex-col text-base text-center text-slate-600 gap-4'>
+                                      You are about to delete the Shortcut
+                                      below:
                                       <div className='flex mb-6 py-4 px-8 justify-between border-[6px] border-primary text-base text-primary'>
                                         <div className='flex flex-col w-1/2'>
                                           <h3 className='text-xs'>Shortcut:</h3>
