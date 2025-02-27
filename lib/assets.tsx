@@ -6,7 +6,7 @@ import {
   includePriceToCryptoAssets,
   includePriceToStockAssets,
 } from './prices';
-import { Asset, UnpricedAsset } from './types';
+import { UnpricedAsset } from './types';
 import { groupAssetsBySomething, includeNewKeyForCardTitle } from './utils';
 
 export const fetchAssetsWithoutPrices = async (userEmail: string) => {
@@ -41,8 +41,12 @@ export const fetchAssetsWithPrices = async (
     cryptoAssetsWithPrice,
     'crypto'
   );
-  const stocksAssets = includeNewKeyForCardTitle(stockAssetsWithPrice, 'stock');
-  const cashAssets = includeNewKeyForCardTitle(cashAssetsWithPrice, 'cash');
+  const stocksAssets = stockAssetsWithPrice
+    ? includeNewKeyForCardTitle(stockAssetsWithPrice, 'stock')
+    : [];
+  const cashAssets = cashAssetsWithPrice
+    ? includeNewKeyForCardTitle(cashAssetsWithPrice, 'cash')
+    : [];
 
   const assets = [...cryptoAssets, ...stocksAssets, ...cashAssets];
 

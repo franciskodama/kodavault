@@ -1,5 +1,5 @@
 import Cryptos, { AllCryptosData } from './cryptos';
-import { getAllTimeHighData } from '@/lib/crypto.server';
+import { getCryptosData } from '@/lib/crypto.server';
 import { getProjections } from '@/lib/actions';
 import { currentUser } from '@clerk/nextjs/server';
 
@@ -7,10 +7,10 @@ export default async function CryptosPage() {
   const user = await currentUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-  const allTimeHighData = (await getAllTimeHighData()) || [];
+  const cryptosData = (await getCryptosData()) || [];
   const projectionsData = await getProjections(uid ? uid : '');
 
-  const allCryptosData = allTimeHighData.map((crypto: AllCryptosData) => ({
+  const allCryptosData = cryptosData.map((crypto: AllCryptosData) => ({
     symbol: crypto.symbol.toUpperCase(),
     image: crypto.image,
     ath: crypto.ath,

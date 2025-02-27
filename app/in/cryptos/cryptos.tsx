@@ -93,7 +93,9 @@ export default function Cryptos({
         asset: item.asset,
         image: item.image,
         price: currencyFormatter(item.price),
+        priceNumber: item.price,
         qty: numberFormatter.format(item.qty),
+        qtyNumber: item.qty,
         currentTotal: currencyFormatter(item.qty * item.price),
         ath: currencyFormatter(item.ath),
         athTotalNumber: item.ath * item.qty,
@@ -103,13 +105,20 @@ export default function Cryptos({
           ((item.ath - item.price) / item.price) * 100
         ),
         projection: item.projection,
-        projectionTotal: currencyFormatter(item.projection * item.qty),
+        projectionTotal: item.projection
+          ? currencyFormatter(item.projection * item.qty)
+          : currencyFormatter(item.price * item.qty),
+        projectionTotalNumber: item.projection
+          ? item.projection * item.qty
+          : item.price * item.qty,
         projectionXPotential: numberFormatter.format(
           (item.projection * item.qty) / (item.price * item.qty)
         ),
-        projectionPercentagePotential: numberFormatterNoDecimals.format(
-          ((item.projection - item.price) / item.price) * 100
-        ),
+        projectionPercentagePotential: item.projection
+          ? numberFormatterNoDecimals.format(
+              ((item.projection - item.price) / item.price) * 100
+            )
+          : 0,
         source: item.source,
         note: item.note,
       };

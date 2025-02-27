@@ -182,8 +182,8 @@ export function DataTable<TData, TValue>({
                   <TableCell
                     key={cell.id}
                     className={`text-right text-xs text-slate-600 font-light ${
-                      cell.column.id === 'percentagePotential' &&
-                      'bg-slate-100 border'
+                      cell.column.id === 'athTotalCurrency' &&
+                      'bg-accent border'
                     }`}
                   >
                     {cell.column.id !== 'image' && (
@@ -192,7 +192,7 @@ export function DataTable<TData, TValue>({
                           cell.column.columnDef.cell,
                           cell.getContext()
                         )}
-                        {cell.column.id === 'percentagePotential' &&
+                        {cell.column.id === 'athPercentagePotential' &&
                           cell.getValue() !== '∞' && (
                             <span className='ml-1'>%</span>
                           )}

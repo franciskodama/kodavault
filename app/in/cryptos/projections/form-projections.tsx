@@ -10,6 +10,11 @@ import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { Textarea } from '@/components/ui/textarea';
+import {
+  currencyFormatter,
+  numberFormatter,
+  numberFormatterNoDecimals,
+} from '@/lib/utils';
 
 export const FormProjections = ({
   assetRow,
@@ -80,6 +85,22 @@ export const FormProjections = ({
                   projection: data.projection,
                   source: data.source,
                   note: data.note,
+                  projectionTotal: data.projection
+                    ? currencyFormatter(data.projection * item.qtyNumber)
+                    : currencyFormatter(item.priceNumber * item.qtyNumber),
+                  projectionXPotential: data.projection
+                    ? numberFormatter.format(
+                        (data.projection * item.qtyNumber) /
+                          (item.priceNumber * item.qtyNumber)
+                      )
+                    : 0,
+                  projectionPercentagePotential: data.projection
+                    ? numberFormatterNoDecimals.format(
+                        ((data.projection - assetRow.priceNumber) /
+                          assetRow.priceNumber) *
+                          100
+                      )
+                    : 0,
                 }
               : item
           )

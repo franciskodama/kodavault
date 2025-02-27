@@ -36,16 +36,13 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
   typeFilterAsParam?: string;
-  // totals: athTotals;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-}: // totals,
-DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  // const { athTotal, athTotalExclusions } = totals;
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [assetInFilter, setAssetInFilter] = useState('');
@@ -143,8 +140,7 @@ DataTableProps<TData, TValue>) {
                   <TableCell
                     key={cell.id}
                     className={`text-right text-xs text-slate-600 font-light ${
-                      cell.column.id === 'percentagePotential' &&
-                      'bg-slate-100 border'
+                      cell.column.id === 'projectionTotal' && 'bg-accent border'
                     }`}
                   >
                     {cell.column.id !== 'image' && (
@@ -153,7 +149,7 @@ DataTableProps<TData, TValue>) {
                           cell.column.columnDef.cell,
                           cell.getContext()
                         )}
-                        {cell.column.id === 'percentagePotential' &&
+                        {cell.column.id === 'projectionPercentagePotential' &&
                           cell.getValue() !== '∞' && (
                             <span className='ml-1'>%</span>
                           )}
