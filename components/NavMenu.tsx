@@ -14,6 +14,12 @@ import {
 import { AddAssetForm } from './AddAssetForm';
 import { Button } from './ui/button';
 
+type MenuItem = {
+  label: string;
+  href: string;
+  pathname: string;
+};
+
 export default function NavMenu() {
   const pathname = usePathname();
 
@@ -21,7 +27,7 @@ export default function NavMenu() {
     <>
       <hr className='my-4' />
       <ul className='flex items-center text-sm gap-2'>
-        {menuItems.map((item) => (
+        {menuItems.map((item: MenuItem) => (
           <Link href={item.href} key={item.href}>
             <li>
               <Button
@@ -46,7 +52,6 @@ export default function NavMenu() {
                   Add a New Asset and expand your investment portfolio.
                 </SheetDescription>
               </SheetHeader>
-
               <AddAssetForm />
             </SheetContent>
           </Sheet>
@@ -62,5 +67,6 @@ const menuItems = [
   { label: 'Stocks', href: '/in/stocks', pathname: '/in/stocks' },
   { label: 'Assets', href: '/in/assets', pathname: '/in/assets' },
   { label: 'Shortcut', href: '/in/shortcut', pathname: '/in/shortcut' },
+  { label: 'Elliott', href: '/in/elliott', pathname: '/in/elliott' },
   { label: 'Goal', href: '/in/retirement', pathname: '/in/retirement' },
 ];
