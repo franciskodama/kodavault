@@ -1,5 +1,8 @@
 // TODO: NEXT:
 // Create a Page for the Elliott Waves Cheat Sheet
+// Elliott: https://www.elliottwave.com/ as ref
+// Elliott: Buttons to filter the table by the wave
+
 // Refactoring Nav Menu to be mapped with the pages
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
 // Arrumar reload on Shortcut, etc.. pages
