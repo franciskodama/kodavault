@@ -5,6 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import MarkdownTable from './table-markdown';
+import HtmlTable from './table-html';
 
 export default function Elliott() {
   return (
@@ -23,7 +25,7 @@ export default function Elliott() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div>Content</div>
+                <HtmlTable />
               </CardContent>
             </div>
           </div>
