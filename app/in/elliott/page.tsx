@@ -25,6 +25,26 @@ export default function Elliott() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                <div>
+                  <ul>
+                    Key Takeaways
+                    <li>
+                      Be flexible in your Elliott Wave analysis. Market
+                      conditions can change rapidly.
+                    </li>
+                    <li>
+                      Do not rely solely on wave counts. Use multiple technical
+                      indicators for confirmation.
+                    </li>
+                    <li>
+                      Consider the larger timeframe trend to provide context.
+                    </li>
+                    <li>
+                      Remember that Elliott wave analysis is a probabilistic
+                      method, and not a guaranteed predictor of market movement.
+                    </li>
+                  </ul>
+                </div>
                 <HtmlTable />
               </CardContent>
             </div>
