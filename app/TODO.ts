@@ -1,7 +1,11 @@
 // TODO: NEXT:
+// Create a Page for the Elliott Waves Cheat Sheet
+// Elliott: https://www.elliottwave.com/ as ref
+// Elliott: Buttons to filter the table by the wave
+
+// Refactoring Nav Menu to be mapped with the pages
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
 // Arrumar reload on Shortcut, etc.. pages
-// Create a Page for the Elliott Waves Cheat Sheet
 
 // CronJob: https://console.cron-job.org/jobs/5201103 + https://www.youtube.com/shorts/d9olvU5bbQ4
 // CronJob: with header with authentication Bearer Secret
@@ -10,13 +14,6 @@
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
 
 // TODO: DONE ---------------------------------------------------------------------------
-// Allocation Goals: Add field for search by Asset and a button to clear field
-// Crypto: Ranking of Cryptos getting info from the call for ATH
-// Altcoin Add Asset: after click on Category it has been activating the database
-// Projections: total of the table
-// Projections: What is the -100 on Boost %?
-// Projections: state doesnt work for projection, and others % and X. Why? Memo?
-// Britney Spears Pop up: Continue with error div descendent of p
 
 // TODO: EASY:
 
@@ -87,6 +84,13 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Allocation Goals: Add field for search by Asset and a button to clear field
+// Crypto: Ranking of Cryptos getting info from the call for ATH
+// Altcoin Add Asset: after click on Category it has been activating the database
+// Projections: total of the table
+// Projections: What is the -100 on Boost %?
+// Projections: state doesnt work for projection, and others % and X. Why? Memo?
+// Britney Spears Pop up: Continue with error div descendent of p
 // Crypto / ATH Estimation: clear button for the filter
 // Projections needs to have notes and the notes must be shown on the table
 // Projections: fix formulas

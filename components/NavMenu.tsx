@@ -14,6 +14,12 @@ import {
 import { AddAssetForm } from './AddAssetForm';
 import { Button } from './ui/button';
 
+type MenuItem = {
+  label: string;
+  href: string;
+  pathname: string;
+};
+
 export default function NavMenu() {
   const pathname = usePathname();
 
@@ -21,71 +27,18 @@ export default function NavMenu() {
     <>
       <hr className='my-4' />
       <ul className='flex items-center text-sm gap-2'>
-        <Link href='/in/dashboard'>
-          <li>
-            <Button
-              variant={pathname === '/in' ? 'default' : 'ghost'}
-              size='md'
-            >
-              Dashboard
-            </Button>
-          </li>
-        </Link>
-
-        <Link href='/in/cryptos'>
-          <li>
-            <Button
-              variant={pathname === '/in/cryptos' ? 'default' : 'ghost'}
-              size='md'
-            >
-              Cryptos
-            </Button>
-          </li>
-        </Link>
-
-        <Link href='/in/stocks'>
-          <li>
-            <Button
-              variant={pathname === '/in/stocks' ? 'default' : 'ghost'}
-              size='md'
-            >
-              Stocks
-            </Button>
-          </li>
-        </Link>
-
-        <Link href='/in/assets'>
-          <li>
-            <Button
-              variant={pathname === '/in/assets' ? 'default' : 'ghost'}
-              size='md'
-            >
-              Assets
-            </Button>
-          </li>
-        </Link>
-
-        <Link href='/in/shortcut'>
-          <li>
-            <Button
-              variant={pathname === '/in/shortcut' ? 'default' : 'ghost'}
-              size='md'
-            >
-              Shortcut
-            </Button>
-          </li>
-        </Link>
-
-        <Link href='/in/retirement'>
-          <li>
-            <Button
-              variant={pathname === '/in/retirement' ? 'default' : 'ghost'}
-              size='md'
-            >
-              Goal
-            </Button>
-          </li>
-        </Link>
+        {menuItems.map((item: MenuItem) => (
+          <Link href={item.href} key={item.href}>
+            <li>
+              <Button
+                variant={pathname === item.pathname ? 'default' : 'ghost'}
+                size='md'
+              >
+                {item.label}
+              </Button>
+            </li>
+          </Link>
+        ))}
 
         <li>
           <Sheet>
@@ -99,7 +52,6 @@ export default function NavMenu() {
                   Add a New Asset and expand your investment portfolio.
                 </SheetDescription>
               </SheetHeader>
-
               <AddAssetForm />
             </SheetContent>
           </Sheet>
@@ -108,3 +60,13 @@ export default function NavMenu() {
     </>
   );
 }
+
+const menuItems = [
+  { label: 'Dashboard', href: '/in/dashboard', pathname: '/in' },
+  { label: 'Cryptos', href: '/in/cryptos', pathname: '/in/cryptos' },
+  { label: 'Stocks', href: '/in/stocks', pathname: '/in/stocks' },
+  { label: 'Assets', href: '/in/assets', pathname: '/in/assets' },
+  { label: 'Elliott', href: '/in/elliott', pathname: '/in/elliott' },
+  { label: 'Shortcut', href: '/in/shortcut', pathname: '/in/shortcut' },
+  { label: 'Goal', href: '/in/retirement', pathname: '/in/retirement' },
+];
