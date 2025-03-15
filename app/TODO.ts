@@ -3,9 +3,8 @@
 // Elliott: https://www.elliottwave.com/ as ref
 // Elliott: Buttons to filter the table by the wave
 
-// Refactoring Nav Menu to be mapped with the pages
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
-// Arrumar reload on Shortcut, etc.. pages
+// Fix reload on Shortcut, etc.. pages
 
 // CronJob: https://console.cron-job.org/jobs/5201103 + https://www.youtube.com/shorts/d9olvU5bbQ4
 // CronJob: with header with authentication Bearer Secret
@@ -84,6 +83,7 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// Refactoring Nav Menu to be mapped with the pages
 // Allocation Goals: Add field for search by Asset and a button to clear field
 // Crypto: Ranking of Cryptos getting info from the call for ATH
 // Altcoin Add Asset: after click on Category it has been activating the database
