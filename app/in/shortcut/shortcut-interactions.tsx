@@ -74,7 +74,7 @@ export function ShortcutInteractions({
                       <AccordionContent>
                         <ul className='mb-[-0.8em]'>
                           <li className='flex flex-col sm:flex-row justify-between items-center w-full border-b rounded-[2px] border-slate-200 p-2 pl-12'>
-                            <div className='flex'>
+                            <div className='flex items-center'>
                               <Link href={shortcut.url} target='_blank'>
                                 <p className='text-sm font-semibold capitalize w-[18ch]'>
                                   {shortcut.name}
@@ -87,9 +87,9 @@ export function ShortcutInteractions({
                               >
                                 {shortcut.from}
                               </div>
-                              <p className='flex items-center ml-4 h-[4ch] text-xs'>
-                                {shortcut.description}
-                              </p>
+                              <div className='flex items-center ml-4 h-[4ch] text-xs'>
+                                <p>{shortcut.description}</p>
+                              </div>
                             </div>
 
                             <div className='flex items-center text-xl'>
