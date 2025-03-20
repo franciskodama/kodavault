@@ -178,14 +178,6 @@ export default function Dashboard({
                 assets={assets}
                 description={'Total Vault in USD, CAD, BRL.'}
               />
-
-              <div className='flex flex-col mb-2 gap-2'>
-                <CardNextPurchases />
-                <CardAssetsOnTheRise />
-                <CardCryptosForTrading assets={assets} />
-                <CardLongsAndShorts assets={assets} />
-              </div>
-
               <div className='rounded-sm border shadow-sm mb-2'>
                 <Image
                   src='https://alternative.me/crypto/fear-and-greed-index.png'
@@ -195,6 +187,12 @@ export default function Dashboard({
                   style={{ width: 'auto', height: 'auto' }}
                   priority
                 />
+              </div>
+              <div className='flex flex-col mb-2 gap-2'>
+                <CardNextPurchases />
+                <CardAssetsOnTheRise />
+                <CardCryptosForTrading assets={assets} />
+                <CardLongsAndShorts assets={assets} />
               </div>
 
               {uid === process.env.NEXT_PUBLIC_HER_UID && (

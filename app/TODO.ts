@@ -1,4 +1,7 @@
 // TODO: NEXT:
+// Change the Auth to NextAuth?
+// Clerk has passkey?
+
 // Create a Page for the Elliott Waves Cheat Sheet
 // Elliott: https://www.elliottwave.com/ as ref
 // Elliott: Buttons to filter the table by the wave
