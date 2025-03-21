@@ -15,10 +15,6 @@
 // cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
 // The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
 
-// TODO: DONE ---------------------------------------------------------------------------
-
-// TODO: EASY:
-
 // TODO: WORKING ON:
 // Responsivity
 // After CronJob Fix, return the commented code in the middleware f
