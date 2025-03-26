@@ -2,18 +2,18 @@
 // Change the Auth to NextAuth?
 // Clerk has passkey?
 
+// CronJob: https://console.cron-job.org/jobs/5201103 + https://www.youtube.com/shorts/d9olvU5bbQ4
+// CronJob: with header with authentication Bearer Secret
+// CronJob: errror for account fk.ca check logs on Vercel
+// cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
+// The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
+
 // Create a Page for the Elliott Waves Cheat Sheet
 // Elliott: https://www.elliottwave.com/ as ref
 // Elliott: Buttons to filter the table by the wave
 
 // Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
 // Fix reload on Shortcut, etc.. pages
-
-// CronJob: https://console.cron-job.org/jobs/5201103 + https://www.youtube.com/shorts/d9olvU5bbQ4
-// CronJob: with header with authentication Bearer Secret
-// CronJob: errror for account fk.ca check logs on Vercel
-// cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
-// The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
 
 // TODO: WORKING ON:
 // Responsivity
