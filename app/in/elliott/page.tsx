@@ -26,8 +26,10 @@ export default function Elliott() {
               </CardHeader>
               <CardContent>
                 <div>
-                  <ul>
-                    Key Takeaways
+                  <ul className='my-8'>
+                    <div className='text-sm font-semibold mb-2'>
+                      🎗️ Key Takeaways
+                    </div>
                     <li>
                       Be flexible in your Elliott Wave analysis. Market
                       conditions can change rapidly.
