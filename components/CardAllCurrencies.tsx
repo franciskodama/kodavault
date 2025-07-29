@@ -1,11 +1,7 @@
 'use client';
 
 import { Asset, Currencies, totalArrayProps } from '@/lib/types';
-import {
-  currencyFormatter,
-  numberFormatter,
-  numberFormatterNoDecimals,
-} from '../lib/utils';
+import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
 import {
   Card,
   CardContent,
@@ -29,6 +25,13 @@ export const CardTotalAllCurrency = ({
 }) => {
   const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
 
+  //-----------------------------
+  console.log('---  🚀 ---> | asset example:', assets[0]);
+  // console.log('---  🚀 ---> | assets:', assets);
+  console.log('---  🚀 ---> | total:', total);
+
+  //-----------------------------
+
   let totalArray: totalArrayProps[] = [];
   if (currencyRates.data && btcPrice) {
     totalArray = [
@@ -51,7 +54,6 @@ export const CardTotalAllCurrency = ({
         currency: 'BTC',
         value: total / btcPrice,
         emoji: '🥇',
-        // emoji: '₿',
       },
     ];
   }
