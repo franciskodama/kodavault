@@ -2,7 +2,6 @@
 
 import prisma from './prisma';
 import {
-  netWorthChartData,
   CryptoGoalAllocation,
   Inputs,
   ShortcutType,
