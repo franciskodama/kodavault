@@ -73,7 +73,7 @@ export const CardTotalAllCurrency = ({
               {totalArray &&
                 totalArray.map((item: totalArrayProps) => (
                   <div
-                    key={item.value}
+                    key={item.currency}
                     className='flex items-center justify-between px-4 bg-slate-500 rounded-[2px] text-white'
                   >
                     <h3 className=' text-lg font-extralight'>
