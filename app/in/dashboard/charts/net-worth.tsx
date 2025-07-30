@@ -24,52 +24,53 @@ export default function NetWorthChart({
 }: {
   netWorthChartData: netWorthChartData[];
 }) {
-  const sortedNetWorthChartData = netWorthChartData.sort((a, b) => {
-    return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-  });
+  const sortedNetWorthChartData = netWorthChartData
+    ? netWorthChartData.sort((a, b) => {
+        return (
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        );
+      })
+    : [];
 
   const formattedData: HeaderAndRowsChartData = [
     ['', 'USD', 'CAD', 'BRL', 'BTC'],
-    ...(sortedNetWorthChartData.map((item) => [
-      transformDateToYearMonthDay(item.created_at),
-      +item.usd.toFixed(0),
-      +item.cad.toFixed(0),
-      +item.brl.toFixed(0),
-      +item.btc.toFixed(0) * 10000,
-    ]) as RowChartData[]),
+    ...sortedNetWorthChartData.map((item) => {
+      const date = transformDateToYearMonthDay(item.created_at);
+
+      const usd =
+        typeof item.usd === 'number' && !isNaN(item.usd)
+          ? +item.usd.toFixed(0)
+          : 0;
+      const cad =
+        typeof item.cad === 'number' && !isNaN(item.cad)
+          ? +item.cad.toFixed(0)
+          : 0;
+      const brl =
+        typeof item.brl === 'number' && !isNaN(item.brl)
+          ? +item.brl.toFixed(0)
+          : 0;
+      const btc =
+        typeof item.btc === 'number' && !isNaN(item.btc)
+          ? +item.btc.toFixed(0) * 10000
+          : 0;
+
+      return [date, usd, cad, brl, btc] as RowChartData;
+    }),
   ];
 
   const options = {
-    // Works
-    chart: {
-      // title: 'Average Temperatures and Daylight in Iceland Throughout the Year',
-      // subtitle: 'in millions of dollars (USD)',
-    },
+    chart: {},
     colors: ['#0011ff', '#ff0000', '#0ed922', '#d5db2d'],
     height: 400,
-    // width: 900,
     legend: { position: 'left' },
-    // chartArea: { left: 50, top: 50, right: 50, bottom: 50 },
-
-    // Doesn't Works
-    // animation: {
-    //   startup: true,
-    //   easing: 'linear',
-    //   duration: 1500,
-    // },
-    // curveType: 'function',
-    // is3D: true,
-    // backgroundColor: '#10d541',
     legendToggle: true,
     series: [
-      // { color: '#D9544C' },
       {
         // Gives each series an axis name that matches the Y-axis below.
         // 0: { axis: 'Temps' },
         // 1: { axis: 'Daylight' },
       },
     ],
-    // hAxis?: { [otherOptionKey: string]: any; minValue?: any; maxValue?: any; ticks?: GoogleChartTicks; title?: string; viewWindow?: { ...; }; }; vAxis?: { ...; };
     hAxis: {
       viewWindow: {
         max: 10000,
@@ -86,7 +87,6 @@ export default function NetWorthChart({
       title: '$',
     },
     axes: {
-      // Adds labels to each axis; they don't have to match the axis names.
       y: {
         Temps: { label: '$' },
         Daylight: { label: 'Days' },
@@ -122,39 +122,12 @@ export default function NetWorthChart({
                     options={options}
                     loader={<Loading />}
                     chartPackages={['corechart', 'controls']}
-                    // chartWrapperParams={{ view: { columns: [0, 3] } }}
-                    // controls={[
-                    //   {
-                    //     controlEvents: [
-                    //       {
-                    //         eventName: 'statechange',
-                    //         callback: ({ chartWrapper, controlWrapper }) => {
-                    //           console.log(
-                    //             'State changed to',
-                    //             controlWrapper?.getState()
-                    //           );
-                    //         },
-                    //       },
-                    //     ],
-                    //     controlType: 'CategoryFilter',
-                    //     options: {
-                    //       filterColumnIndex: 1,
-                    //       ui: {
-                    //         labelStacking: 'vertical',
-                    //         label: 'Currency Selection:',
-                    //         allowTyping: false,
-                    //         allowMultiple: false,
-                    //       },
-                    //     },
-                    //   },
-                    // ]}
                   />
                 </div>
               ) : (
                 <div className='w-full p-8 border-2 flex'>
                   <div className='flex justify-center items-center w-1/2'>
                     <div className='flex flex-col w-2/3 gap-4 p-4'>
-                      {/* <Hourglass size={24} /> */}
                       <BarChartHorizontalIcon size={24} />
                       <h3 className='text-lg font-semibold'>
                         No data to chart… yet!

@@ -26,11 +26,11 @@ export const CardTotalAllCurrency = ({
   const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
 
   //-----------------------------
-  console.log('---  🚀 ---> | asset item:', assets[0]?.asset);
-  console.log('---  🚀 ---> | asset price:', assets[0]?.price);
-  console.log('---  🚀 ---> | asset total:', assets[0]?.total);
+  // console.log('---  🚀 ---> | asset item:', assets[0]?.asset);
+  // console.log('---  🚀 ---> | asset price:', assets[0]?.price);
+  // console.log('---  🚀 ---> | asset total:', assets[0]?.total);
   // console.log('---  🚀 ---> | assets:', assets);
-  console.log('---  🚀 ---> | total:', total);
+  // console.log('---  🚀 ---> | total:', total);
 
   //-----------------------------
 
