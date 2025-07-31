@@ -24,6 +24,8 @@ export default function NetWorthChart({
 }: {
   netWorthChartData: netWorthChartData[];
 }) {
+  // console.log('Chart data before mapping:', netWorthChartData);
+
   const sortedNetWorthChartData = netWorthChartData
     ? netWorthChartData.sort((a, b) => {
         return (
@@ -57,6 +59,20 @@ export default function NetWorthChart({
       return [date, usd, cad, brl, btc] as RowChartData;
     }),
   ];
+
+  formattedData.forEach((row, i) => {
+    row.forEach((val, j) => {
+      if (typeof val === 'number' && isNaN(val)) {
+        console.warn(`NaN found at row ${i}, column ${j}`);
+      }
+      if (val === undefined || val === null) {
+        console.warn(`Undefined/null at row ${i}, column ${j}`);
+      }
+      console.log('analysed and everything is fine!');
+    });
+  });
+
+  // console.log('Formatted chart data:', formattedData);
 
   const options = {
     chart: {},
