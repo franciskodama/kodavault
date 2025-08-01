@@ -18,9 +18,8 @@ export default function Header() {
           src='/logo/trezo-logo-green.png'
           alt='Trezo.App Logo'
           width={75}
-          height={40.133}
+          height={40}
           priority
-          style={{ width: 'auto', height: 'auto' }}
         />
       </Link>
       <div className='flex items-center'>
