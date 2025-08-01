@@ -20,6 +20,7 @@ export default function Header() {
           width={75}
           height={40.133}
           priority
+          style={{ width: 'auto', height: 'auto' }}
         />
       </Link>
       <div className='flex items-center'>
