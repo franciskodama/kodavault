@@ -45,13 +45,21 @@ export const includePriceToCryptoAssets = async (
       quote === 0
         ? 0
         : Math.floor(quote) > 99
-        ? Number(quote.toFixed(2))
-        : Number(quote.toFixed(4));
+        ? Number(
+            typeof quote === 'number' && !isNaN(quote) ? quote.toFixed(2) : 0
+          )
+        : Number(
+            typeof quote === 'number' && !isNaN(quote) ? quote.toFixed(4) : 0
+          );
 
     const formattedTotal =
       Math.floor(total) > 99
-        ? Number(total.toFixed(2))
-        : Number(total.toFixed(4));
+        ? Number(
+            typeof total === 'number' && !isNaN(total) ? total.toFixed(2) : 0
+          )
+        : Number(
+            typeof total === 'number' && !isNaN(total) ? total.toFixed(4) : 0
+          );
 
     return {
       ...item,

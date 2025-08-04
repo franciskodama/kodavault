@@ -14,7 +14,7 @@ export default function Main({ assets }: { assets: Asset[] }) {
         <>
           <div className='flex flex-col sm:flex-row gap-2 px-8 sm:px-0'>
             <div className='sm:w-1/2 gap-2'>
-              <CryptoByWallet assets={assets} totalByWallet={totalByWallet} />
+              {/* <CryptoByWallet assets={assets} totalByWallet={totalByWallet} /> */}
             </div>
             <div className='sm:w-1/5'>
               <CardTotal

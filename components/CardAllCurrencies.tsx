@@ -1,11 +1,7 @@
 'use client';
 
 import { Asset, Currencies, totalArrayProps } from '@/lib/types';
-import {
-  currencyFormatter,
-  numberFormatter,
-  numberFormatterNoDecimals,
-} from '../lib/utils';
+import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
 import {
   Card,
   CardContent,
@@ -27,7 +23,16 @@ export const CardTotalAllCurrency = ({
   assets: Asset[];
   description?: string;
 }) => {
-  const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
+  const total = assets.reduce((sum: number, item: any) => {
+    const value = Number(item.total);
+    isNaN(value) &&
+      console.log(
+        '🚨🚨🚨 Warning: Invalid value for asset 🚨🚨🚨 (Card All Currencies)',
+        item.asset,
+        value
+      );
+    return sum + (isNaN(value) ? 0 : value);
+  }, 0);
 
   let totalArray: totalArrayProps[] = [];
   if (currencyRates.data && btcPrice) {
@@ -51,7 +56,6 @@ export const CardTotalAllCurrency = ({
         currency: 'BTC',
         value: total / btcPrice,
         emoji: '🥇',
-        // emoji: '₿',
       },
     ];
   }
@@ -73,7 +77,7 @@ export const CardTotalAllCurrency = ({
               {totalArray &&
                 totalArray.map((item: totalArrayProps) => (
                   <div
-                    key={item.value}
+                    key={item.currency}
                     className='flex items-center justify-between px-4 bg-slate-500 rounded-[2px] text-white'
                   >
                     <h3 className=' text-lg font-extralight'>

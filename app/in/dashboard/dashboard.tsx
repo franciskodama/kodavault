@@ -137,13 +137,13 @@ export default function Dashboard({
                       // height={'h-[250px]'}
                     />
                   </div>
-                  <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
+                  {/* <GoalGaugeCard assets={assets} goal={goal} uid={uid} /> */}
                 </div>
                 <NotificationsPanel cash={cash} />
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
-                <NetWorthChart netWorthChartData={netWorthChartData} />
+                {/* <NetWorthChart netWorthChartData={netWorthChartData} /> */}
               </div>
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
