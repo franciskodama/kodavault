@@ -23,16 +23,16 @@ export const CardTotalAllCurrency = ({
   assets: Asset[];
   description?: string;
 }) => {
-  const total = assets.reduce((sum: number, item: any) => sum + item.total, 0);
-
-  //-----------------------------
-  // console.log('---  🚀 ---> | asset item:', assets[0]?.asset);
-  // console.log('---  🚀 ---> | asset price:', assets[0]?.price);
-  // console.log('---  🚀 ---> | asset total:', assets[0]?.total);
-  // console.log('---  🚀 ---> | assets:', assets);
-  console.log('---  🚀 ---> | total:', total);
-
-  //-----------------------------
+  const total = assets.reduce((sum: number, item: any) => {
+    const value = Number(item.total);
+    isNaN(value) &&
+      console.log(
+        '🚨🚨🚨 Warning: Invalid value for asset 🚨🚨🚨 (Card All Currencies)',
+        item.asset,
+        value
+      );
+    return sum + (isNaN(value) ? 0 : value);
+  }, 0);
 
   let totalArray: totalArrayProps[] = [];
   if (currencyRates.data && btcPrice) {
