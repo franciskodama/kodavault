@@ -4430,6 +4430,11 @@ react-style-singleton@^2.2.1:
     invariant "^2.2.4"
     tslib "^2.0.0"
 
+react-ts-tradingview-widgets@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/react-ts-tradingview-widgets/-/react-ts-tradingview-widgets-1.2.8.tgz#a1a8b5ce1eac9969a7c7a92789c8f796ed47ebf9"
+  integrity sha512-ozJwn+0x+Kp2DcqoB9LTDWQHyv3JCdfShb8ooHo+ZB9xjKAXW0irD/gK1deWv4oaAnTxmzKLfmr1QNfAhv+MJw==
+
 react@19.0.0:
   version "19.0.0"
   resolved "https://registry.yarnpkg.com/react/-/react-19.0.0.tgz#6e1969251b9f108870aa4bff37a0ce9ddfaaabdd"
