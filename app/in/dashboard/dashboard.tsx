@@ -12,6 +12,7 @@ import { currencyFormatter } from '@/lib/utils';
 import { CardTotal } from '@/components/CardTotal';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
+import { createChart } from 'lightweight-charts';
 import { GoalGaugeCard } from './charts/goal-gauge-card';
 import NotificationsPanel from './notifications/notifications-panel';
 import Welcome from './welcome';
@@ -46,6 +47,7 @@ export default function Dashboard({
 }) {
   const cash = assets.filter((asset) => asset?.type === 'Cash');
 
+  console.log('---  🚀 ---> | netWorthChartData:', netWorthChartData);
   return (
     <Suspense fallback={<SkeletonDashboard />}>
       {assets.length && assetsByType ? (
@@ -143,7 +145,7 @@ export default function Dashboard({
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
-                {/* <NetWorthChart netWorthChartData={netWorthChartData} /> */}
+                <NetWorthChart netWorthChartData={netWorthChartData} />
               </div>
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}

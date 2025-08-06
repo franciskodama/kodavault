@@ -1,6 +1,7 @@
 'use client';
 
 import { Chart } from 'react-google-charts';
+import React, { useEffect, useRef } from 'react';
 import {
   Card,
   CardContent,
@@ -12,6 +13,7 @@ import { netWorthChartData } from '@/lib/types';
 import { Loading } from '@/components/Loading';
 import Image from 'next/image';
 import { BarChartHorizontalIcon, Hourglass } from 'lucide-react';
+import { LineSeries, createChart, ColorType } from 'lightweight-charts';
 
 // https://www.react-google-charts.com/examples/line-chart
 
@@ -25,6 +27,32 @@ export default function NetWorthChart({
   netWorthChartData: netWorthChartData[];
 }) {
   // console.log('Chart data before mapping:', netWorthChartData);
+
+  // const chartOptions = {
+  //   layout: {
+  //     textColor: 'black',
+  //     background: { type: 'solid', color: 'white' },
+  //   },
+  // };
+  // const chart = createChart(document.getElementById('container'), chartOptions);
+  // const lineSeries = chart.addSeries(LineSeries, { color: '#2962FF' });
+
+  // const data = [
+  //   { value: 0, time: 1642425322 },
+  //   { value: 8, time: 1642511722 },
+  //   { value: 10, time: 1642598122 },
+  //   { value: 20, time: 1642684522 },
+  //   { value: 3, time: 1642770922 },
+  //   { value: 43, time: 1642857322 },
+  //   { value: 41, time: 1642943722 },
+  //   { value: 43, time: 1643030122 },
+  //   { value: 56, time: 1643116522 },
+  //   { value: 46, time: 1643202922 },
+  // ];
+
+  // lineSeries.setData(data);
+
+  // chart.timeScale().fitContent();
 
   const sortedNetWorthChartData = netWorthChartData
     ? netWorthChartData.sort((a, b) => {

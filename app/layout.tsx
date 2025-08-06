@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   description: 'Assets Analysis for Right Decisions',
 };
 
+// TradingView Lightweight Charts™
+// Copyright (с) 2025 TradingView, Inc. https://www.tradingview.com/
+
 export default function RootLayout({
   children,
 }: {
