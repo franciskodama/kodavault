@@ -28,31 +28,51 @@ export default function NetWorthChart({
 }) {
   // console.log('Chart data before mapping:', netWorthChartData);
 
-  // const chartOptions = {
-  //   layout: {
-  //     textColor: 'black',
-  //     background: { type: 'solid', color: 'white' },
-  //   },
-  // };
-  // const chart = createChart(document.getElementById('container'), chartOptions);
-  // const lineSeries = chart.addSeries(LineSeries, { color: '#2962FF' });
 
-  // const data = [
-  //   { value: 0, time: 1642425322 },
-  //   { value: 8, time: 1642511722 },
-  //   { value: 10, time: 1642598122 },
-  //   { value: 20, time: 1642684522 },
-  //   { value: 3, time: 1642770922 },
-  //   { value: 43, time: 1642857322 },
-  //   { value: 41, time: 1642943722 },
-  //   { value: 43, time: 1643030122 },
-  //   { value: 56, time: 1643116522 },
-  //   { value: 46, time: 1643202922 },
-  // ];
+export const ChartComponent = props => {
+    const {
+        data,
+        colors: {
+            backgroundColor = 'white',
+            lineColor = '#2962FF',
+            textColor = 'black',
+            areaTopColor = '#2962FF',
+            areaBottomColor = 'rgba(41, 98, 255, 0.28)',
+        } = {},
+    } = props;
 
-  // lineSeries.setData(data);
+    const chartContainerRef = useRef(null);
 
-  // chart.timeScale().fitContent();
+    useEffect(
+        () => {
+            const handleResize = () => {
+                chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+            };
+
+            const chart = createChart(chartContainerRef.current, {
+                layout: {
+                    background: { type: ColorType.Solid, color: backgroundColor },
+                    textColor,
+                },
+                width: chartContainerRef.current.clientWidth,
+                height: 300,
+            });
+            chart.timeScale().fitContent();
+
+            const newSeries = chart.addSeries(AreaSeries, { lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
+            newSeries.setData(data);
+
+            window.addEventListener('resize', handleResize);
+
+            return () => {
+                window.removeEventListener('resize', handleResize);
+
+                chart.remove();
+            };
+        },
+        [data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor]
+    );
+
 
   const sortedNetWorthChartData = netWorthChartData
     ? netWorthChartData.sort((a, b) => {
@@ -158,7 +178,10 @@ export default function NetWorthChart({
             <CardContent className='w-full'>
               {formattedData.length > 1 ? (
                 <div className='w-full p-8'>
-                  <Chart
+               <div
+            ref={chartContainerRef}
+        />
+                  {/* <Chart
                     chartType='Line'
                     width='100%'
                     height='100%'
@@ -166,7 +189,7 @@ export default function NetWorthChart({
                     options={options}
                     loader={<Loading />}
                     chartPackages={['corechart', 'controls']}
-                  />
+                  /> */}
                 </div>
               ) : (
                 <div className='w-full p-8 border-2 flex'>
@@ -203,6 +226,20 @@ export default function NetWorthChart({
     </>
   );
 }
+
+
+const initialData = [
+    { time: '2018-12-22', value: 32.51 },
+    { time: '2018-12-23', value: 31.11 },
+    { time: '2018-12-24', value: 27.02 },
+    { time: '2018-12-25', value: 27.32 },
+    { time: '2018-12-26', value: 25.17 },
+    { time: '2018-12-27', value: 28.89 },
+    { time: '2018-12-28', value: 25.46 },
+    { time: '2018-12-29', value: 23.92 },
+    { time: '2018-12-30', value: 22.68 },
+    { time: '2018-12-31', value: 22.67 },
+];
 
 const transformDateToYearMonthDay = (date: Date | string): Date => {
   if (typeof date === 'string') {

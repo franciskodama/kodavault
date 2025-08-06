@@ -145,7 +145,11 @@ export default function Dashboard({
               </div>
               {/* <Transactions /> */}
               <div className='flex'>
-                <NetWorthChart netWorthChartData={netWorthChartData} />
+                <NetWorthChart
+                  {...props}
+                  data={initialData}
+                  netWorthChartData={netWorthChartData}
+                />
               </div>
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
