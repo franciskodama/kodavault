@@ -82,6 +82,7 @@
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
 // TODO: DONE =======================================================================================
+// NaN in Card All Currency: code more resilient and warning if we get a NaN
 // Refactoring Nav Menu to be mapped with the pages
 // Allocation Goals: Add field for search by Asset and a button to clear field
 // Crypto: Ranking of Cryptos getting info from the call for ATH
