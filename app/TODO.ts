@@ -1,4 +1,10 @@
 // TODO: NEXT:
+
+// Clean Filter after filter by Wallet
+// Clean Filter after filter by Account
+// Clean Filter after filter by Currency
+// Clean Filter after filter by Type
+
 // Change the Auth to NextAuth?
 // Clerk has passkey?
 

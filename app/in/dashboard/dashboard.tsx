@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets';
 
 import {
   Asset,
@@ -22,6 +23,14 @@ import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
 });
+
+import dynamic from 'next/dynamic';
+const SymbolOverviewNoSSR = dynamic(
+  () => import('react-ts-tradingview-widgets').then((w) => w.SymbolOverview),
+  {
+    ssr: false,
+  }
+);
 
 export default function Dashboard({
   usdBrl,
@@ -144,6 +153,10 @@ export default function Dashboard({
               {/* <Transactions /> */}
               <div className='flex'>
                 {/* <NetWorthChart netWorthChartData={netWorthChartData} /> */}
+                <AdvancedRealTimeChart
+                  theme='dark'
+                  autosize
+                ></AdvancedRealTimeChart>
               </div>
 
               {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
