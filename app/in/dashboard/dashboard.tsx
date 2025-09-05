@@ -24,13 +24,13 @@ const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
 });
 
-import dynamic from 'next/dynamic';
-const SymbolOverviewNoSSR = dynamic(
-  () => import('react-ts-tradingview-widgets').then((w) => w.SymbolOverview),
-  {
-    ssr: false,
-  }
-);
+// import dynamic from 'next/dynamic';
+// const SymbolOverviewNoSSR = dynamic(
+//   () => import('react-ts-tradingview-widgets').then((w) => w.SymbolOverview),
+//   {
+//     ssr: false,
+//   }
+// );
 
 export default function Dashboard({
   usdBrl,
