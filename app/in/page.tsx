@@ -22,12 +22,16 @@ export default async function DashboardPage() {
 
   // ==========================================
 
-  // BRL:
-  const currencyRatesFromApi = await getCurrenciesFromApi();
-  const usdBrl = currencyRatesFromApi?.data.BRL || 0;
-
-  // USD + CAD
+  // USD + CAD + BRL
   const currencyRates = await getCurrencies();
+
+  // ==========================================
+  // Only BRL: Just in case if we need it (Google Finance API stoped working because of Brazilian Laws).
+  // const currencyRatesFromApi = await getCurrenciesFromApi();
+  // const usdBrl = currencyRatesFromApi?.data.BRL || 0;
+  // ==========================================
+
+  const usdBrl = currencyRates.data?.BRL || 0;
 
   const unpricedAssets = await fetchAssetsWithoutPrices(uid ? uid : '');
   const { assets, assetsByType } = await fetchAssetsWithPrices(unpricedAssets);
