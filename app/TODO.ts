@@ -16,6 +16,9 @@
 // Fix reload on Shortcut, etc.. pages
 
 // TODO: WORKING ON:
+// Fix currency bug
+// Update NextJs, React and Dependencies
+
 // Responsivity
 // After CronJob Fix, return the commented code in the middleware f
 // Add Assets: Cash in Exchanges don't need to have the option to choose will be always USD or BRL (it's the only option)
