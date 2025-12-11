@@ -22,12 +22,15 @@ export default async function DashboardPage() {
 
   // ==========================================
 
+  // ============ IN CASE WE NEED IN THE FUTURE ============
   // BRL:
-  const currencyRatesFromApi = await getCurrenciesFromApi();
-  const usdBrl = currencyRatesFromApi?.data.BRL || 0;
+  // const currencyRatesFromApi = await getCurrenciesFromApi();
+  // const usdBrl = currencyRatesFromApi?.data.BRL || 0;
+  // ==========================================
 
-  // USD + CAD
+  // USD + CAD + BRL
   const currencyRates = await getCurrencies();
+  const usdBrl = currencyRates.data?.BRL || 0;
 
   const unpricedAssets = await fetchAssetsWithoutPrices(uid ? uid : '');
   const { assets, assetsByType } = await fetchAssetsWithPrices(unpricedAssets);
