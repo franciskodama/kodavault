@@ -4,13 +4,13 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { neobrutalism } from '@clerk/themes';
 
 import './../components/ui/globals.css';
-import { Gabarito, Cairo_Play, Inter } from 'next/font/google';
+import { Outfit, Inter } from 'next/font/google';
 import Template from './in/template';
 
-// See font optimization with Tailwind -->  https://nextjs.org/docs/app/building-your-application/optimizing/fonts
-// export const gabarito = Gabarito({ subsets: ['latin'], display: 'swap' });
-// export const cairoPlay = Cairo_Play({ subsets: ['latin'], display: 'swap' });
-// export const inter = Inter({ subsets: ['latin'], display: 'swap' });
+const outfit = Outfit({ subsets: ['latin'], display: 'swap' });
+
+// this is a good option as well:
+const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Trezo.App',
@@ -44,11 +44,8 @@ export default function RootLayout({
         },
       }}
     >
-      <html lang='en'>
-        <body
-          // className={`${inter.className} bg-[#FAFAFB] text-xs text-slate-600`}
-          className='bg-[#FAFAFB] text-xs text-slate-600'
-        >
+      <html lang='en' className={outfit.className}>
+        <body className='bg-[#FAFAFB] text-xs text-slate-600'>
           <div className='max-w-[1400px] mx-auto'>
             {/* <Template key={routeParam}> */}
             {children}
