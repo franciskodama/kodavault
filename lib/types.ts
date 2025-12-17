@@ -188,3 +188,7 @@ export type Goal = {
 };
 
 export type GoogleChartData = [[string, string], ...[string, number][]];
+
+export type keyAssets = {
+  value: string;
+};

@@ -14,19 +14,35 @@ import {
   getTotalByKey,
   numberFormatter,
 } from '../lib/utils';
-import { Asset } from '../lib/types';
+import { Asset, keyAssets } from '../lib/types';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
-import { CircleDashedIcon, PackagePlusIcon, PencilIcon } from 'lucide-react';
+import {
+  CircleDashedIcon,
+  PackagePlusIcon,
+  PencilIcon,
+  Trash2Icon,
+} from 'lucide-react';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export const CardKeyAssets = () => {
-  const keyAssets = ['BTC', 'ETH', 'MATIC', 'IVVB11'];
-
   const router = useRouter();
 
+  const keyAssets: string[] = ['BTC', 'ETH', 'MATIC', 'IVVB11'];
+
   const handleClick = () => {
-    // router.push('/in/assets?type=Cash');
-    // Open form
+    router.push('/in/assets?type=Cash');
   };
 
   return (
@@ -66,26 +82,76 @@ export const CardKeyAssets = () => {
           </CardContent>
         </div>
         <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
-          {/* <h3>Total</h3>
-          {numberFormatterNoDecimals.format(
-            totalArray.reduce((sum: number, item) => sum + item.total, 0)
-          )} */}
-          <Button size='md' onClick={handleClick}>
-            <PencilIcon size={16} className='mr-2' />
-            {keyAssets.length > 3 ? (
-              <p>
-                Edit List
-                {/* ({keyAssets.length}) */}
-              </p>
-            ) : (
-              <p>
-                <PackagePlusIcon size={16} className='mr-2' />
-                Add Asset
-              </p>
-            )}
-          </Button>
+          <DialogEditAssetsList
+            keyAssets={keyAssets}
+            handleClick={handleClick}
+          />
         </CardFooter>
       </div>
     </Card>
   );
 };
+
+export function DialogEditAssetsList({
+  keyAssets,
+}: // handleClick,
+{
+  keyAssets: keyAssets[];
+  // handleClick: () => void[];
+}) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        {/* <Button variant='outline'>Share</Button> */}
+        <Button
+          size='md'
+          // onClick={handleClick}
+        >
+          <PencilIcon size={16} className='mr-2' />
+          {keyAssets.length > 3 ? (
+            <p>
+              Edit List
+              {/* ({keyAssets.length}) */}
+            </p>
+          ) : (
+            <p>
+              <PackagePlusIcon size={16} className='mr-2' />
+              Add Asset
+            </p>
+          )}
+        </Button>
+      </DialogTrigger>
+      <DialogContent className='sm:max-w-md'>
+        <DialogHeader>
+          <DialogTitle>Crucial Assets List</DialogTitle>
+          <DialogDescription>Delete or Add a Crucial Asset</DialogDescription>
+        </DialogHeader>
+        <div className='flex items-center gap-2'>
+          <div className='flex flex-wrap py-2'>
+            {keyAssets.map((item: any) => (
+              <div
+                key={item}
+                className='flex items-center w-26 my-1 mr-4 p-3 border'
+              >
+                <h3 className='w-[6ch] mr-2 font-semibold'>{item}</h3>
+                <Trash2Icon size={16} className='mr-2' />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Label htmlFor='link' className='sr-only'>
+            Link
+          </Label>
+          <Input id='link' className='w-[12ch]' />
+          <DialogClose asChild>
+            <Button type='button'>Add</Button>
+          </DialogClose>
+        </div>
+        {/* <DialogFooter className='sm:justify-start'>
+         
+        </DialogFooter> */}
+      </DialogContent>
+    </Dialog>
+  );
+}
