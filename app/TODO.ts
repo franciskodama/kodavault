@@ -16,9 +16,6 @@
 // Fix reload on Shortcut, etc.. pages
 
 // TODO: WORKING ON:
-// Fix currency bug
-// Update NextJs, React and Dependencies
-
 // Responsivity
 // After CronJob Fix, return the commented code in the middleware f
 // Add Assets: Cash in Exchanges don't need to have the option to choose will be always USD or BRL (it's the only option)
@@ -84,6 +81,9 @@
 // think about other alerts
 // Card with link of Data Analysis to check on the daily basis (Obdisian)
 
+// TODO: DONE AFTER COMEBACK 14/12/2025 =======================================================================================
+// Fix currency bug
+// Update NextJs, React and Dependencies
 // TODO: DONE =======================================================================================
 // NaN in Card All Currency: code more resilient and warning if we get a NaN
 // Refactoring Nav Menu to be mapped with the pages
