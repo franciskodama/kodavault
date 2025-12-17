@@ -81,7 +81,7 @@ export const CardKeyAssets = () => {
             ))}
           </CardContent>
         </div>
-        <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
+        <CardFooter className='flex justify-between text-sm text-slate-500 font-medium m-1 p-2'>
           <DialogEditAssetsList
             keyAssets={keyAssets}
             handleClick={handleClick}
