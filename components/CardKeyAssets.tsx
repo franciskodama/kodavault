@@ -14,7 +14,7 @@ import {
   getTotalByKey,
   numberFormatter,
 } from '../lib/utils';
-import { Asset, keyAssets } from '../lib/types';
+import { Asset, KeyAssets } from '../lib/types';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import {
@@ -82,7 +82,7 @@ export const CardKeyAssets = () => {
           </CardContent>
         </div>
         <CardFooter className='flex justify-between text-sm text-slate-500 font-medium m-1 p-2'>
-          <DialogEditAssetsList
+          <DialogEditKeyAssets
             keyAssets={keyAssets}
             handleClick={handleClick}
           />
@@ -92,11 +92,11 @@ export const CardKeyAssets = () => {
   );
 };
 
-export function DialogEditAssetsList({
+export function DialogEditKeyAssets({
   keyAssets,
 }: // handleClick,
 {
-  keyAssets: keyAssets[];
+  keyAssets: KeyAssets[];
   // handleClick: () => void[];
 }) {
   return (

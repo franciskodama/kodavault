@@ -7,6 +7,7 @@ import {
   ShortcutType,
   AddNetWorthChartData,
   CryptoProjection,
+  KeyAssets,
 } from './types';
 import { revalidatePath } from 'next/cache';
 import { v4 } from 'uuid';
@@ -443,3 +444,84 @@ export const getProjections = async (uid: string) => {
     return [];
   }
 };
+
+//=============================
+
+export const getKeyAssets = async (uid: string) => {
+  try {
+    const crucialAssetsList = await prisma.keyAssets.findMany({
+      where: {
+        uid,
+      },
+    });
+    return crucialAssetsList;
+  } catch (error) {
+    return { error };
+  }
+};
+
+export async function addKeyAsset(formData: KeyAssets) {
+  const { asset } = formData;
+
+  try {
+    await prisma.shortcut.create({
+      data: {
+        id: v4(),
+        created_at: new Date(),
+        name,
+        uid,
+        url,
+        description,
+        category,
+        from,
+        color,
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export async function updateKeyAssets(formData: KeyAssets) {
+  const { asset } = formData;
+
+  try {
+    await prisma.keyAssets.update({
+      where: {
+        id,
+      },
+      data: {
+        id,
+        created_at: new Date(),
+        name,
+        uid,
+        url,
+        description,
+        category,
+        from,
+        color,
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export async function deleteKeyAsset(id: string) {
+  try {
+    await prisma.keyAssets.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath('/in/shortcut');
+  } catch (error) {
+    console.log(error);
+    throw new Error('🚨 Failed to delete Shortcut');
+  }
+}
