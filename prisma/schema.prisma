@@ -70,6 +70,8 @@ model Asset {
   category   category_enum_6c7fcd47? @default(Unknown)
   tag        String?
   reviewed   Boolean                 @default(false)
+
+  @@index([uid])
 }
 
 model CoinGoal {
@@ -92,6 +94,8 @@ model Shortcut {
   category    category_enum_f421eb4b? @default(Miscellaneous)
   from        String
   color       color_enum_bd2ecc46?    @default(Gray)
+
+  @@index([uid])
 }
 
 model NetWorthEvolution {
@@ -102,6 +106,8 @@ model NetWorthEvolution {
   btc        Float    @default(0)
   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uid        String?
+
+  @@index([uid])
 }
 
 model Goal {
@@ -123,11 +129,14 @@ model Projection {
   @@unique([uid, asset], name: "uid_asset")
 }
 
-model KeyAssets {
+model KeyAsset {
   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  uid        String   @unique
+  uid        String   
   created_at DateTime @default(now()) @db.Timestamptz(6)
-  assets     String
+  asset      String
+
+  @@unique([uid, asset], name: "uid_asset")
+  @@index([uid])
 }
 
 enum priority_enum_593899f8 {

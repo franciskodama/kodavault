@@ -1,5 +1,6 @@
 'use server';
 
+import { KeyAsset } from '@prisma/client';
 import prisma from './prisma';
 import {
   CryptoGoalAllocation,
@@ -445,83 +446,47 @@ export const getProjections = async (uid: string) => {
   }
 };
 
-//=============================
-
 export const getKeyAssets = async (uid: string) => {
   try {
-    const crucialAssetsList = await prisma.keyAssets.findMany({
+    const keyAssetsList = await prisma.keyAsset.findMany({
       where: {
         uid,
       },
     });
-    return crucialAssetsList;
+    return keyAssetsList;
   } catch (error) {
     return { error };
   }
 };
 
-export async function addKeyAsset(formData: KeyAssets) {
-  const { asset } = formData;
+export async function addKeyAsset(formData: KeyAsset) {
+  const { id, uid, asset, created_at } = formData;
 
   try {
-    await prisma.shortcut.create({
+    await prisma.keyAsset.create({
       data: {
         id: v4(),
-        created_at: new Date(),
-        name,
         uid,
-        url,
-        description,
-        category,
-        from,
-        color,
+        asset,
+        created_at: new Date(),
       },
     });
     return true;
   } catch (error) {
     console.log(error);
-    return false;
-  }
-}
-
-export async function updateKeyAssets(formData: KeyAssets) {
-  const { asset } = formData;
-
-  try {
-    await prisma.keyAssets.update({
-      where: {
-        id,
-      },
-      data: {
-        id,
-        created_at: new Date(),
-        name,
-        uid,
-        url,
-        description,
-        category,
-        from,
-        color,
-      },
-    });
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
+    throw new Error('🚨 Failed to create Key Asset');
   }
 }
 
 export async function deleteKeyAsset(id: string) {
   try {
-    await prisma.keyAssets.delete({
+    await prisma.keyAsset.delete({
       where: {
         id,
       },
     });
-
-    revalidatePath('/in/shortcut');
   } catch (error) {
     console.log(error);
-    throw new Error('🚨 Failed to delete Shortcut');
+    throw new Error('🚨 Failed to delete Key Asset');
   }
 }
