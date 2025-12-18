@@ -14,15 +14,9 @@ import {
   getTotalByKey,
   numberFormatter,
 } from '../lib/utils';
-import { Asset, KeyAssets } from '../lib/types';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
-import {
-  CircleDashedIcon,
-  PackagePlusIcon,
-  PencilIcon,
-  Trash2Icon,
-} from 'lucide-react';
+import { PackagePlusIcon, PencilIcon, Trash2Icon } from 'lucide-react';
 import {
   Dialog,
   DialogClose,
@@ -35,11 +29,12 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { KeyAsset } from '@prisma/client';
 
-export const CardKeyAssets = () => {
+export const CardKeyAssets = ({ keyAssets }: { keyAssets: KeyAsset[] }) => {
   const router = useRouter();
 
-  const keyAssets: string[] = ['BTC', 'ETH', 'MATIC', 'IVVB11'];
+  console.log('---  🚀 ---> | keyAssets from CardKeyAssets:', keyAssets);
 
   const handleClick = () => {
     router.push('/in/assets?type=Cash');
@@ -51,7 +46,7 @@ export const CardKeyAssets = () => {
         <div className='flex flex-col'>
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
-              <span>{`Crucial Assets`}</span>
+              <span>{`Key Assets`}</span>
               <span className='text-3xl'>🔑</span>
             </CardTitle>
             <CardDescription className='text-xs'>
@@ -59,15 +54,16 @@ export const CardKeyAssets = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {keyAssets.map((item: string) => (
-              <div key={item} className='flex justify-between'>
-                <h3>{item}</h3>
-                <div className='flex'>
-                  <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
-                    // item.price
-                    10
-                  )}`}</p>
-                  {/* <p
+            {keyAssets.length > 0 ? (
+              keyAssets.map((item: KeyAsset) => (
+                <div key={item.asset} className='flex justify-between'>
+                  <h3>{item.asset}</h3>
+                  <div className='flex'>
+                    TEST
+                    {/* <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
+                      10
+                    )}`}</p> */}
+                    {/* <p
                     className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
                       (item.total / total) * 100 > 50
                         ? 'bg-red-500'
@@ -76,16 +72,21 @@ export const CardKeyAssets = () => {
                   >{`${numberFormatter.format(
                     (item.total / total) * 100
                   )}%`}</p> */}
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className='flex justify-between'>
+                <h3>No Key Assets Yet</h3>
               </div>
-            ))}
+            )}
           </CardContent>
         </div>
         <CardFooter className='flex justify-between text-sm text-slate-500 font-medium m-1 p-2'>
-          <DialogEditKeyAssets
+          {/* <DialogEditKeyAssets
             keyAssets={keyAssets}
             handleClick={handleClick}
-          />
+          /> */}
         </CardFooter>
       </div>
     </Card>
@@ -96,7 +97,7 @@ export function DialogEditKeyAssets({
   keyAssets,
 }: // handleClick,
 {
-  keyAssets: KeyAssets[];
+  keyAssets: KeyAsset[];
   // handleClick: () => void[];
 }) {
   return (

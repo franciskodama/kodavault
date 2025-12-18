@@ -1,19 +1,19 @@
 'use server';
 
-import { KeyAsset } from '@prisma/client';
+import { v4 } from 'uuid';
 import prisma from './prisma';
+import { KeyAsset, Projection, Shortcut } from '@prisma/client';
 import {
+  AddNetWorthChartData,
+  Asset,
   CryptoGoalAllocation,
   Inputs,
-  ShortcutType,
-  AddNetWorthChartData,
-  CryptoProjection,
-  KeyAssets,
+  UnpricedAsset,
 } from './types';
-import { revalidatePath } from 'next/cache';
-import { v4 } from 'uuid';
 
-export async function addAsset(formData: Inputs) {
+import { revalidatePath } from 'next/cache';
+
+export async function addAsset(formData: UnpricedAsset) {
   const {
     asset,
     qty,
@@ -204,7 +204,7 @@ export const getShortcuts = async (uid: string) => {
   }
 };
 
-export async function addShortcut(formData: ShortcutType) {
+export async function addShortcut(formData: Shortcut) {
   const { name, uid, url, description, category, from, color } = formData;
 
   try {
@@ -228,7 +228,7 @@ export async function addShortcut(formData: ShortcutType) {
   }
 }
 
-export async function updateShortcut(formData: ShortcutType) {
+export async function updateShortcut(formData: Shortcut) {
   const { id, name, uid, url, description, category, from, color } = formData;
 
   try {
@@ -399,7 +399,7 @@ export async function addProjection(
   }
 }
 
-export async function updateProjection({ data }: { data: CryptoProjection }) {
+export async function updateProjection({ data }: { data: Projection }) {
   const { uid, asset, projection, source, note } = data;
 
   try {
@@ -446,21 +446,22 @@ export const getProjections = async (uid: string) => {
   }
 };
 
+// ------------------------------------
+
 export const getKeyAssets = async (uid: string) => {
   try {
-    const keyAssetsList = await prisma.keyAsset.findMany({
-      where: {
-        uid,
-      },
+    const keyAssets = await prisma.keyAsset.findMany({
+      where: { uid },
     });
-    return keyAssetsList;
+    return keyAssets;
   } catch (error) {
-    return { error };
+    console.error('🚨 Error fetching key assets:', error);
+    return [];
   }
 };
 
 export async function addKeyAsset(formData: KeyAsset) {
-  const { id, uid, asset, created_at } = formData;
+  const { uid, asset } = formData;
 
   try {
     await prisma.keyAsset.create({
@@ -473,8 +474,7 @@ export async function addKeyAsset(formData: KeyAsset) {
     });
     return true;
   } catch (error) {
-    console.log(error);
-    throw new Error('🚨 Failed to create Key Asset');
+    console.error('🚨 Failed to create Key Asset:', error);
   }
 }
 
@@ -486,7 +486,6 @@ export async function deleteKeyAsset(id: string) {
       },
     });
   } catch (error) {
-    console.log(error);
-    throw new Error('🚨 Failed to delete Key Asset');
+    console.error('🚨 Failed to delete Key Asset:', error);
   }
 }
