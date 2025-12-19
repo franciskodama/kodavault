@@ -485,6 +485,7 @@ export async function deleteKeyAsset(id: string) {
         id,
       },
     });
+    return true;
   } catch (error) {
     console.error('🚨 Failed to delete Key Asset:', error);
   }

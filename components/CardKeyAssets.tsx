@@ -34,26 +34,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { KeyAsset } from '@prisma/client';
 import { useUser } from '@clerk/nextjs';
-import { Inputs } from '@/lib/types';
+import { Inputs, KeyAssetsPriced } from '@/lib/types';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { addKeyAsset } from '@/lib/actions';
+import { addKeyAsset, deleteKeyAsset } from '@/lib/actions';
 import { toast } from './ui/use-toast';
 import { useRef, useState } from 'react';
 
-export const CardKeyAssets = ({ keyAssets }: { keyAssets: KeyAsset[] }) => {
-  const router = useRouter();
+type formData = {
+  asset: string;
+};
 
-  console.log('---  🚀 ---> | keyAssets from CardKeyAssets:', keyAssets);
-
-  const handleClick = () => {
-    // router.push('/in/assets?type=Cash');
-    console.log('Click');
-  };
-
+export const CardKeyAssets = ({
+  keyAssetsPriced,
+}: {
+  keyAssetsPriced: KeyAssetsPriced[];
+}) => {
   return (
     <Card className='flex-1'>
       <div className='flex flex-col justify-between h-full'>
@@ -68,25 +64,21 @@ export const CardKeyAssets = ({ keyAssets }: { keyAssets: KeyAsset[] }) => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {keyAssets.length > 0 ? (
-              keyAssets.map((item: KeyAsset) => (
-                <div key={item.asset} className='flex justify-between'>
+            <div className='grid grid-cols-3 mb-2 font-semibold text-center'>
+              <h3 className='text-left'>Asset</h3>
+              <h3>Price</h3>
+              <h3 className='text-right'>Total</h3>
+            </div>
+            {keyAssetsPriced.length > 0 ? (
+              keyAssetsPriced.map((item: KeyAssetsPriced) => (
+                <div key={item.id} className='grid grid-cols-3 gap-4 mb-1'>
                   <h3>{item.asset}</h3>
-                  <div className='flex'>
-                    TEST
-                    {/* <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
-                      10
-                    )}`}</p> */}
-                    {/* <p
-                    className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
-                      (item.total / total) * 100 > 50
-                        ? 'bg-red-500'
-                        : 'bg-green-500'
-                    }`}
-                  >{`${numberFormatter.format(
-                    (item.total / total) * 100
-                  )}%`}</p> */}
-                  </div>
+                  <p className='text-right mr-4'>
+                    ${numberFormatterNoDecimals.format(item.price)}
+                  </p>
+                  <p className='text-right'>
+                    ${numberFormatter.format(item.total)}
+                  </p>
                 </div>
               ))
             ) : (
@@ -97,28 +89,18 @@ export const CardKeyAssets = ({ keyAssets }: { keyAssets: KeyAsset[] }) => {
           </CardContent>
         </div>
         <CardFooter className='flex justify-between text-sm text-slate-500 font-medium m-1 p-2'>
-          <DialogEditKeyAssets
-            keyAssets={keyAssets}
-            handleClick={handleClick}
-          />
+          <DialogEditKeyAssets keyAssetsPriced={keyAssetsPriced} />
         </CardFooter>
       </div>
     </Card>
   );
 };
 
-type formData = {
-  asset: string;
-};
-
 export function DialogEditKeyAssets({
-  keyAssets,
-  handleClick,
+  keyAssetsPriced,
 }: {
-  keyAssets: KeyAsset[];
-  handleClick: () => void;
+  keyAssetsPriced: KeyAssetsPriced[];
 }) {
-  // const closeRef = useRef<HTMLButtonElement>(null);
   const [data, setData] = useState<string>('');
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
@@ -133,16 +115,15 @@ export function DialogEditKeyAssets({
   } = useForm<Inputs>({});
 
   const processForm: SubmitHandler<formData> = async (data) => {
-    console.log('---  🚀 ---> | data:', data);
     if (!uid) {
       return console.log('User not logged in');
     }
 
     const result = await addKeyAsset({
       ...data,
+      asset: data.asset.toUpperCase(),
       uid: uid,
     });
-    console.log('---  🚀 ---> | result:', result);
 
     if (result) {
       toast({
@@ -150,8 +131,6 @@ export function DialogEditKeyAssets({
         description: 'Your new Key Asset is already available.',
         variant: 'success',
       });
-      // await refreshAssets();
-      // closeRef.current?.click();
     } else {
       toast({
         title: '👻 Boho! Error occurred!',
@@ -164,14 +143,32 @@ export function DialogEditKeyAssets({
     // setData(data);
   };
 
+  const handleClickDelete = async (id: string) => {
+    const result = await deleteKeyAsset(id);
+    if (result) {
+      toast({
+        title: 'Key Asset deleted! 🎉',
+        description: 'Your Key Asset was deleted.',
+        variant: 'success',
+      });
+    } else {
+      toast({
+        title: '👻 Boho! Error occurred!',
+        description: 'Your Key Asset was NOT deleted.',
+        variant: 'destructive',
+      });
+    }
+    // reset();
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size='md' onClick={handleClick}>
-          {keyAssets.length > 0 ? (
+        <Button size='md'>
+          {keyAssetsPriced.length > 0 ? (
             <div className='flex items-center'>
               <PencilIcon size={16} className='mr-2' />
-              <p>Edit List ({keyAssets.length})</p>
+              <p>Edit List ({keyAssetsPriced.length})</p>
             </div>
           ) : (
             <div className='flex items-center'>
@@ -183,50 +180,50 @@ export function DialogEditKeyAssets({
       </DialogTrigger>
       <DialogContent className='sm:max-w-md'>
         <DialogHeader>
-          <DialogTitle>Crucial Assets List</DialogTitle>
+          <DialogTitle>Key Assets List</DialogTitle>
           <DialogDescription>Add or Delete a Key Asset</DialogDescription>
         </DialogHeader>
         <div className='flex items-center gap-2'>
-          <div className='flex flex-wrap py-2'>
-            {keyAssets.map((item: any) => (
-              <div
-                key={item}
-                className='flex items-center w-26 my-1 mr-4 p-3 border'
-              >
-                <h3 className='w-[6ch] mr-2 font-semibold'>{item}</h3>
-                <Trash2Icon size={16} className='mr-2' />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className='flex items-center gap-2'>
-          {/* <Label htmlFor='link' className='sr-only'>
-            Link
-          </Label> */}
           <form onSubmit={handleSubmit(processForm)} className='py-8'>
-            {/* <Input id='link' className='w-[12ch]' /> */}
-            <div>
-              {/* <label htmlFor='asset'> */}
-              {/* Asset */}
-              {/* </label> */}
+            <div className='flex items-center'>
               <input
-                // className='w-[12ch]'
-                className={classInput}
+                className='border border-slate-200 h-10 p-2 rounded-xs w-full mr-2'
                 placeholder='Asset Symbol'
                 {...register('asset', { required: "Asset can't be empty" })}
               />
               {errors.asset?.message && (
                 <p className={classError}>{errors.asset.message}</p>
               )}
-            </div>
-            <DialogClose asChild>
               <Button type='submit'>Add</Button>
-            </DialogClose>
+            </div>
           </form>
         </div>
-        {/* <DialogFooter className='sm:justify-start'>
-         
-        </DialogFooter> */}
+        <div className='flex items-center gap-2'>
+          <div className='flex flex-wrap py-2'>
+            {keyAssetsPriced.map((item: KeyAssetsPriced) => (
+              <div
+                key={item.id}
+                className='flex items-center 2-full my-1 p-2 border mr-4'
+              >
+                <h3 className='w-[4ch] m-2 font-semibold'>{item.asset}</h3>
+                <Button
+                  size='sm'
+                  variant='ghost'
+                  onClick={() => {
+                    handleClickDelete(item.id);
+                  }}
+                >
+                  <Trash2Icon size={16} className='mr-2' />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant='ghost'>Im done!</Button>
+          </DialogClose>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

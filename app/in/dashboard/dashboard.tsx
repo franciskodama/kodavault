@@ -6,6 +6,7 @@ import {
   Asset,
   AssetsByType,
   Currencies,
+  KeyAssetsPriced,
   netWorthChartData,
 } from '@/lib/types';
 import { currencyFormatter } from '@/lib/utils';
@@ -20,7 +21,6 @@ import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
 import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
 import Script from 'next/script';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
-import { KeyAsset } from '@prisma/client';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
@@ -36,7 +36,7 @@ export default function Dashboard({
   uid,
   userName,
   goal,
-  keyAssets,
+  keyAssetsPriced,
 }: {
   usdBrl: number;
   currencyRates: Currencies;
@@ -47,7 +47,7 @@ export default function Dashboard({
   uid: string;
   userName: string;
   goal: number;
-  keyAssets: KeyAsset[];
+  keyAssetsPriced: KeyAssetsPriced[];
 }) {
   const cash = assets.filter((asset) => asset?.type === 'Cash');
 
@@ -110,7 +110,7 @@ export default function Dashboard({
             <div className='flex flex-col sm:basis-4/5 gap-2'>
               <div className='flex flex-wrap gap-2'>
                 {/* ----------------------------------------- */}
-                <CardKeyAssets keyAssets={keyAssets} />
+                <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
                 {/* ----------------------------------------- */}
                 <div className='sm:w-1/4 w-full'>
                   <CardTotal

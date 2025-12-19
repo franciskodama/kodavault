@@ -8,6 +8,7 @@ import Dashboard from './dashboard/dashboard';
 
 import { fetchQuotesForCryptos } from '@/lib/crypto.server';
 import { KeyAsset } from '@prisma/client';
+import { KeyAssetsPriced } from '@/lib/types';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -41,10 +42,17 @@ export default async function DashboardPage() {
 
   const netWorthChartData = await getNetWorthEvolution(uid ? uid : '');
   const goal = await getGoal(uid ? uid : '');
-  const keyAssets: KeyAsset[] = await getKeyAssets(
-    uid ? uid : 'fk@fkodama.com'
-  );
-  // const keyAssets: KeyAsset[] = [];
+  const keyAsset: KeyAsset[] = await getKeyAssets(uid ? uid : '');
+
+  const keyAssetsPriced: KeyAssetsPriced[] = keyAsset.map((keyAsset) => {
+    const assetFound = assets.find((item) => item?.asset === keyAsset.asset);
+
+    return {
+      ...keyAsset,
+      price: assetFound?.price ?? 0,
+      total: assetFound?.total ?? 0,
+    };
+  });
 
   return (
     <>
@@ -64,7 +72,7 @@ export default async function DashboardPage() {
             uid={uid}
             userName={userName}
             goal={goal[0]?.goal ? goal[0].goal : 0}
-            keyAssets={keyAssets}
+            keyAssetsPriced={keyAssetsPriced}
           />
         )
       ) : (
