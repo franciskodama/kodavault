@@ -460,13 +460,17 @@ export const getKeyAssets = async (uid: string) => {
   }
 };
 
-export async function addKeyAsset(formData: { uid: string; asset: string }) {
-  const { uid, asset } = formData;
+export async function addKeyAsset(formData: {
+  uid: string;
+  asset: string;
+  id: string;
+}) {
+  const { uid, asset, id } = formData;
 
   try {
     await prisma.keyAsset.create({
       data: {
-        id: v4(),
+        id,
         uid,
         asset,
         created_at: new Date(),

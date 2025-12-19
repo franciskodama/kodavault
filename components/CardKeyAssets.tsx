@@ -28,6 +28,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { addKeyAsset, deleteKeyAsset } from '@/lib/actions';
 import { toast } from './ui/use-toast';
 import { useState } from 'react';
+import { v4 } from 'uuid';
 
 type formData = {
   asset: string;
@@ -38,6 +39,9 @@ export const CardKeyAssets = ({
 }: {
   keyAssetsPriced: KeyAssetsPriced[];
 }) => {
+  const [keyAssetsState, setKeyAssetsState] =
+    useState<KeyAssetsPriced[]>(keyAssetsPriced);
+
   return (
     <Card className='flex-1'>
       <div className='flex flex-col justify-between h-full'>
@@ -57,8 +61,8 @@ export const CardKeyAssets = ({
               <h3>Price</h3>
               <h3 className='text-right'>Total</h3>
             </div>
-            {keyAssetsPriced.length > 0 ? (
-              keyAssetsPriced.map((item: KeyAssetsPriced) => (
+            {keyAssetsState.length > 0 ? (
+              keyAssetsState.map((item: KeyAssetsPriced) => (
                 <div key={item.id} className='grid grid-cols-3 gap-4 mb-1'>
                   <h3>{item.asset}</h3>
                   <p className='text-right mr-4'>
@@ -77,7 +81,10 @@ export const CardKeyAssets = ({
           </CardContent>
         </div>
         <CardFooter className='flex justify-between text-sm text-slate-500 font-medium m-1 p-2'>
-          <DialogEditKeyAssets keyAssetsPriced={keyAssetsPriced} />
+          <DialogEditKeyAssets
+            keyAssetsState={keyAssetsState}
+            setKeyAssetsState={setKeyAssetsState}
+          />
         </CardFooter>
       </div>
     </Card>
@@ -85,11 +92,12 @@ export const CardKeyAssets = ({
 };
 
 export function DialogEditKeyAssets({
-  keyAssetsPriced,
+  keyAssetsState,
+  setKeyAssetsState,
 }: {
-  keyAssetsPriced: KeyAssetsPriced[];
+  keyAssetsState: KeyAssetsPriced[];
+  setKeyAssetsState: (data: KeyAssetsPriced[]) => void;
 }) {
-  const [data, setData] = useState<string>('');
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
@@ -107,11 +115,25 @@ export function DialogEditKeyAssets({
       return console.log('User not logged in');
     }
 
+    const idKeyAsset = v4();
+
     const result = await addKeyAsset({
       ...data,
       asset: data.asset.toUpperCase(),
       uid: uid,
+      id: idKeyAsset,
     });
+
+    setKeyAssetsState([
+      ...keyAssetsState,
+      {
+        asset: data.asset.toUpperCase(),
+        uid: uid,
+        id: idKeyAsset,
+        price: 0,
+        total: 0,
+      },
+    ]);
 
     if (result) {
       toast({
@@ -128,7 +150,6 @@ export function DialogEditKeyAssets({
     }
 
     // reset();
-    // setData(data);
   };
 
   const handleClickDelete = async (id: string) => {
@@ -153,10 +174,10 @@ export function DialogEditKeyAssets({
     <Dialog>
       <DialogTrigger asChild>
         <Button size='md'>
-          {keyAssetsPriced.length > 0 ? (
+          {keyAssetsState.length > 0 ? (
             <div className='flex items-center'>
               <PencilIcon size={16} className='mr-2' />
-              <p>Edit List ({keyAssetsPriced.length})</p>
+              <p>Edit List ({keyAssetsState.length})</p>
             </div>
           ) : (
             <div className='flex items-center'>
@@ -188,7 +209,7 @@ export function DialogEditKeyAssets({
         </div>
         <div className='flex items-center gap-2'>
           <div className='flex flex-wrap py-2'>
-            {keyAssetsPriced.map((item: KeyAssetsPriced) => (
+            {keyAssetsState.map((item: KeyAssetsPriced) => (
               <div
                 key={item.id}
                 className='flex items-center 2-full my-1 p-2 border mr-4'
@@ -198,7 +219,7 @@ export function DialogEditKeyAssets({
                   size='sm'
                   variant='ghost'
                   onClick={() => {
-                    handleClickDelete(item.id);
+                    handleClickDelete(item.id?.toString() ?? '');
                   }}
                 >
                   <Trash2Icon size={16} className='mr-2' />
