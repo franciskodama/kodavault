@@ -37,7 +37,8 @@ export const CardKeyAssets = ({ keyAssets }: { keyAssets: KeyAsset[] }) => {
   console.log('---  🚀 ---> | keyAssets from CardKeyAssets:', keyAssets);
 
   const handleClick = () => {
-    router.push('/in/assets?type=Cash');
+    // router.push('/in/assets?type=Cash');
+    console.log('Click');
   };
 
   return (
@@ -83,10 +84,10 @@ export const CardKeyAssets = ({ keyAssets }: { keyAssets: KeyAsset[] }) => {
           </CardContent>
         </div>
         <CardFooter className='flex justify-between text-sm text-slate-500 font-medium m-1 p-2'>
-          {/* <DialogEditKeyAssets
+          <DialogEditKeyAssets
             keyAssets={keyAssets}
             handleClick={handleClick}
-          /> */}
+          />
         </CardFooter>
       </div>
     </Card>
@@ -95,30 +96,25 @@ export const CardKeyAssets = ({ keyAssets }: { keyAssets: KeyAsset[] }) => {
 
 export function DialogEditKeyAssets({
   keyAssets,
-}: // handleClick,
-{
+  handleClick,
+}: {
   keyAssets: KeyAsset[];
-  // handleClick: () => void[];
+  handleClick: () => void;
 }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {/* <Button variant='outline'>Share</Button> */}
-        <Button
-          size='md'
-          // onClick={handleClick}
-        >
-          <PencilIcon size={16} className='mr-2' />
-          {keyAssets.length > 3 ? (
-            <p>
-              Edit List
-              {/* ({keyAssets.length}) */}
-            </p>
+        <Button size='md' onClick={handleClick}>
+          {keyAssets.length > 0 ? (
+            <div className='flex items-center'>
+              <PencilIcon size={16} className='mr-2' />
+              <p>Edit List ({keyAssets.length})</p>
+            </div>
           ) : (
-            <p>
+            <div className='flex items-center'>
               <PackagePlusIcon size={16} className='mr-2' />
-              Add Asset
-            </p>
+              <p>Add Asset</p>
+            </div>
           )}
         </Button>
       </DialogTrigger>
