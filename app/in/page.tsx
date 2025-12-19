@@ -2,7 +2,7 @@ import { currentUser } from '@clerk/nextjs/server';
 
 import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
 import { getGoal, getKeyAssets, getNetWorthEvolution } from '@/lib/actions';
-import { getCurrencies, getCurrenciesFromApi } from '@/lib/currency.server';
+import { getCurrencies } from '@/lib/currency.server';
 import { Loading } from '@/components/Loading';
 import Dashboard from './dashboard/dashboard';
 
@@ -46,7 +46,6 @@ export default async function DashboardPage() {
 
   const keyAssetsPriced: KeyAssetsPriced[] = keyAsset.map((keyAsset) => {
     const assetFound = assets.find((item) => item?.asset === keyAsset.asset);
-
     return {
       ...keyAsset,
       price: assetFound?.price ?? 0,

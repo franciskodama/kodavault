@@ -19,7 +19,6 @@ import Welcome from './welcome';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
 import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
-import Script from 'next/script';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {

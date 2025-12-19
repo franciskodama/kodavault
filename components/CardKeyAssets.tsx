@@ -8,20 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
-import {
-  classDiv,
-  classError,
-  classInput,
-  classLabelRadio,
-  classTitle,
-  classUl,
-} from '@/lib/classes';
-import {
-  numberFormatterNoDecimals,
-  getTotalByKey,
-  numberFormatter,
-} from '../lib/utils';
-import { useRouter } from 'next/navigation';
+import { classError } from '@/lib/classes';
+import { numberFormatterNoDecimals, numberFormatter } from '../lib/utils';
 import { Button } from './ui/button';
 import { PackagePlusIcon, PencilIcon, Trash2Icon } from 'lucide-react';
 import {
@@ -39,7 +27,7 @@ import { Inputs, KeyAssetsPriced } from '@/lib/types';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { addKeyAsset, deleteKeyAsset } from '@/lib/actions';
 import { toast } from './ui/use-toast';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 type formData = {
   asset: string;
