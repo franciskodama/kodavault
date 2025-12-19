@@ -13,7 +13,7 @@ import {
 
 import { revalidatePath } from 'next/cache';
 
-export async function addAsset(formData: UnpricedAsset) {
+export async function addAsset(formData: Inputs) {
   const {
     asset,
     qty,
@@ -460,7 +460,7 @@ export const getKeyAssets = async (uid: string) => {
   }
 };
 
-export async function addKeyAsset(formData: KeyAsset) {
+export async function addKeyAsset(formData: { uid: string; asset: string }) {
   const { uid, asset } = formData;
 
   try {

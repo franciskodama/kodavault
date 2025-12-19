@@ -8,7 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
-
+import {
+  classDiv,
+  classError,
+  classInput,
+  classLabelRadio,
+  classTitle,
+  classUl,
+} from '@/lib/classes';
 import {
   numberFormatterNoDecimals,
   getTotalByKey,
@@ -30,6 +37,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { KeyAsset } from '@prisma/client';
+import { useUser } from '@clerk/nextjs';
+import { Inputs } from '@/lib/types';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { addKeyAsset } from '@/lib/actions';
+import { toast } from './ui/use-toast';
+import { useRef, useState } from 'react';
 
 export const CardKeyAssets = ({ keyAssets }: { keyAssets: KeyAsset[] }) => {
   const router = useRouter();
@@ -94,6 +107,10 @@ export const CardKeyAssets = ({ keyAssets }: { keyAssets: KeyAsset[] }) => {
   );
 };
 
+type formData = {
+  asset: string;
+};
+
 export function DialogEditKeyAssets({
   keyAssets,
   handleClick,
@@ -101,6 +118,52 @@ export function DialogEditKeyAssets({
   keyAssets: KeyAsset[];
   handleClick: () => void;
 }) {
+  // const closeRef = useRef<HTMLButtonElement>(null);
+  const [data, setData] = useState<string>('');
+  const { user } = useUser();
+  const uid = user?.emailAddresses?.[0]?.emailAddress;
+
+  const {
+    register,
+    watch,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<Inputs>({});
+
+  const processForm: SubmitHandler<formData> = async (data) => {
+    console.log('---  🚀 ---> | data:', data);
+    if (!uid) {
+      return console.log('User not logged in');
+    }
+
+    const result = await addKeyAsset({
+      ...data,
+      uid: uid,
+    });
+    console.log('---  🚀 ---> | result:', result);
+
+    if (result) {
+      toast({
+        title: 'Key Asset added! 🎉',
+        description: 'Your new Key Asset is already available.',
+        variant: 'success',
+      });
+      // await refreshAssets();
+      // closeRef.current?.click();
+    } else {
+      toast({
+        title: '👻 Boho! Error occurred!',
+        description: 'Your Key Asset was NOT added.',
+        variant: 'destructive',
+      });
+    }
+
+    // reset();
+    // setData(data);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -121,7 +184,7 @@ export function DialogEditKeyAssets({
       <DialogContent className='sm:max-w-md'>
         <DialogHeader>
           <DialogTitle>Crucial Assets List</DialogTitle>
-          <DialogDescription>Delete or Add a Crucial Asset</DialogDescription>
+          <DialogDescription>Add or Delete a Key Asset</DialogDescription>
         </DialogHeader>
         <div className='flex items-center gap-2'>
           <div className='flex flex-wrap py-2'>
@@ -137,13 +200,29 @@ export function DialogEditKeyAssets({
           </div>
         </div>
         <div className='flex items-center gap-2'>
-          <Label htmlFor='link' className='sr-only'>
+          {/* <Label htmlFor='link' className='sr-only'>
             Link
-          </Label>
-          <Input id='link' className='w-[12ch]' />
-          <DialogClose asChild>
-            <Button type='button'>Add</Button>
-          </DialogClose>
+          </Label> */}
+          <form onSubmit={handleSubmit(processForm)} className='py-8'>
+            {/* <Input id='link' className='w-[12ch]' /> */}
+            <div>
+              {/* <label htmlFor='asset'> */}
+              {/* Asset */}
+              {/* </label> */}
+              <input
+                // className='w-[12ch]'
+                className={classInput}
+                placeholder='Asset Symbol'
+                {...register('asset', { required: "Asset can't be empty" })}
+              />
+              {errors.asset?.message && (
+                <p className={classError}>{errors.asset.message}</p>
+              )}
+            </div>
+            <DialogClose asChild>
+              <Button type='submit'>Add</Button>
+            </DialogClose>
+          </form>
         </div>
         {/* <DialogFooter className='sm:justify-start'>
          
