@@ -2,13 +2,12 @@
 
 import { v4 } from 'uuid';
 import prisma from './prisma';
-import { KeyAsset, Projection, Shortcut } from '@prisma/client';
 import {
   AddNetWorthChartData,
-  Asset,
   CryptoGoalAllocation,
+  CryptoProjection,
   Inputs,
-  UnpricedAsset,
+  ShortcutType,
 } from './types';
 
 import { revalidatePath } from 'next/cache';
@@ -212,7 +211,7 @@ export const getShortcuts = async (uid: string) => {
   }
 };
 
-export async function addShortcut(formData: Shortcut) {
+export async function addShortcut(formData: ShortcutType) {
   const { name, uid, url, description, category, from, color } = formData;
 
   try {
@@ -236,7 +235,7 @@ export async function addShortcut(formData: Shortcut) {
   }
 }
 
-export async function updateShortcut(formData: Shortcut) {
+export async function updateShortcut(formData: ShortcutType) {
   const { id, name, uid, url, description, category, from, color } = formData;
 
   try {
@@ -415,7 +414,7 @@ export async function addProjection(
   }
 }
 
-export async function updateProjection({ data }: { data: Projection }) {
+export async function updateProjection({ data }: { data: CryptoProjection }) {
   const { uid, asset, projection, source, note } = data;
 
   try {
