@@ -13,6 +13,8 @@ import {
 
 import { revalidatePath } from 'next/cache';
 
+// ------------------------------------
+
 export async function addAsset(formData: Inputs) {
   const {
     asset,
@@ -116,6 +118,8 @@ export async function deleteAsset(id: string) {
   }
 }
 
+// ------------------------------------
+
 export async function updateReviewedAsset(id: string, reviewed: boolean) {
   try {
     await prisma.asset.update({
@@ -133,6 +137,8 @@ export async function updateReviewedAsset(id: string, reviewed: boolean) {
     return false;
   }
 }
+
+// ------------------------------------
 
 export const getCryptoGoals = async (uid: string) => {
   try {
@@ -190,6 +196,8 @@ export async function updateCoinShareGoal(formData: CryptoGoalAllocation) {
     return false;
   }
 }
+
+// ------------------------------------
 
 export const getShortcuts = async (uid: string) => {
   try {
@@ -270,6 +278,8 @@ export async function deleteShortcut(id: string) {
   }
 }
 
+// ------------------------------------
+
 export async function addNetWorthEvolution(
   addNetWorthChartData: AddNetWorthChartData
 ) {
@@ -308,6 +318,8 @@ export const getNetWorthEvolution = async (uid: string) => {
   }
 };
 
+// ------------------------------------
+
 export const getUids = async () => {
   try {
     const assets = await prisma.asset.findMany();
@@ -324,6 +336,8 @@ export const getUids = async () => {
     return { error };
   }
 };
+
+// ------------------------------------
 
 export async function addGoal(uid: string, goal: number) {
   try {
@@ -374,6 +388,8 @@ export async function updateGoal(uid: string, goal: number) {
     return false;
   }
 }
+
+// ------------------------------------
 
 export async function addProjection(
   uid: string,
@@ -494,3 +510,5 @@ export async function deleteKeyAsset(id: string) {
     console.error('🚨 Failed to delete Key Asset:', error);
   }
 }
+
+// ------------------------------------

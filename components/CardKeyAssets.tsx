@@ -25,10 +25,11 @@ import {
 import { useUser } from '@clerk/nextjs';
 import { Inputs, KeyAssetsPriced } from '@/lib/types';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { addKeyAsset, deleteKeyAsset } from '@/lib/actions';
+import { addKeyAsset, deleteKeyAsset, getKeyAssets } from '@/lib/actions';
 import { toast } from './ui/use-toast';
 import { useState } from 'react';
 import { v4 } from 'uuid';
+import { useAssetsContext } from '@/context/AssetsContext';
 
 type formData = {
   asset: string;
@@ -63,10 +64,10 @@ export const CardKeyAssets = ({
             </div>
             {keyAssetsState.length > 0 ? (
               keyAssetsState.map((item: KeyAssetsPriced) => (
-                <div key={item.id} className='grid grid-cols-3 gap-4 mb-1'>
+                <div key={item.id} className='grid grid-cols-3 mb-1'>
                   <h3>{item.asset}</h3>
                   <p className='text-right mr-4'>
-                    ${numberFormatterNoDecimals.format(item.price)}
+                    ${numberFormatter.format(item.price)}
                   </p>
                   <p className='text-right'>
                     ${numberFormatter.format(item.total)}
@@ -80,11 +81,17 @@ export const CardKeyAssets = ({
             )}
           </CardContent>
         </div>
-        <CardFooter className='flex justify-between text-sm text-slate-500 font-medium m-1 p-2'>
+        <CardFooter className='grid grid-cols-2 gap-1 text-sm text-slate-500 font-medium m-0 p-0'>
           <DialogEditKeyAssets
             keyAssetsState={keyAssetsState}
             setKeyAssetsState={setKeyAssetsState}
           />
+          <div className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
+            <h3>Total</h3>
+            {numberFormatterNoDecimals.format(
+              keyAssetsState.reduce((sum: number, item) => sum + item.total, 0)
+            )}
+          </div>
         </CardFooter>
       </div>
     </Card>
@@ -100,6 +107,7 @@ export function DialogEditKeyAssets({
 }) {
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const { assets } = useAssetsContext();
 
   const {
     register,
@@ -124,14 +132,18 @@ export function DialogEditKeyAssets({
       id: idKeyAsset,
     });
 
+    const assetTyped = assets.find(
+      (item: any) => item.asset === data.asset.toUpperCase()
+    );
+
     setKeyAssetsState([
       ...keyAssetsState,
       {
         asset: data.asset.toUpperCase(),
         uid: uid,
         id: idKeyAsset,
-        price: 0,
-        total: 0,
+        price: assetTyped?.price || 0,
+        total: assetTyped?.total || 0,
       },
     ]);
 
@@ -148,12 +160,15 @@ export function DialogEditKeyAssets({
         variant: 'destructive',
       });
     }
-
-    // reset();
   };
 
   const handleClickDelete = async (id: string) => {
     const result = await deleteKeyAsset(id);
+
+    setKeyAssetsState(
+      keyAssetsState.filter((item: KeyAssetsPriced) => item.id !== id)
+    );
+
     if (result) {
       toast({
         title: 'Key Asset deleted! 🎉',
@@ -167,17 +182,21 @@ export function DialogEditKeyAssets({
         variant: 'destructive',
       });
     }
-    // reset();
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size='md'>
+        <Button size='md' className='ml-3'>
           {keyAssetsState.length > 0 ? (
             <div className='flex items-center'>
               <PencilIcon size={16} className='mr-2' />
-              <p>Edit List ({keyAssetsState.length})</p>
+              <p>
+                Edit List{' '}
+                <span className='text-xs font-light ml-1'>
+                  ({keyAssetsState.length})
+                </span>
+              </p>
             </div>
           ) : (
             <div className='flex items-center'>
