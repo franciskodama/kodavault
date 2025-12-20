@@ -1,15 +1,18 @@
 'use server';
 
+import { v4 } from 'uuid';
 import prisma from './prisma';
 import {
+  AddNetWorthChartData,
   CryptoGoalAllocation,
+  CryptoProjection,
   Inputs,
   ShortcutType,
-  AddNetWorthChartData,
-  CryptoProjection,
 } from './types';
+
 import { revalidatePath } from 'next/cache';
-import { v4 } from 'uuid';
+
+// ------------------------------------
 
 export async function addAsset(formData: Inputs) {
   const {
@@ -114,6 +117,8 @@ export async function deleteAsset(id: string) {
   }
 }
 
+// ------------------------------------
+
 export async function updateReviewedAsset(id: string, reviewed: boolean) {
   try {
     await prisma.asset.update({
@@ -131,6 +136,8 @@ export async function updateReviewedAsset(id: string, reviewed: boolean) {
     return false;
   }
 }
+
+// ------------------------------------
 
 export const getCryptoGoals = async (uid: string) => {
   try {
@@ -188,6 +195,8 @@ export async function updateCoinShareGoal(formData: CryptoGoalAllocation) {
     return false;
   }
 }
+
+// ------------------------------------
 
 export const getShortcuts = async (uid: string) => {
   try {
@@ -268,6 +277,8 @@ export async function deleteShortcut(id: string) {
   }
 }
 
+// ------------------------------------
+
 export async function addNetWorthEvolution(
   addNetWorthChartData: AddNetWorthChartData
 ) {
@@ -306,6 +317,8 @@ export const getNetWorthEvolution = async (uid: string) => {
   }
 };
 
+// ------------------------------------
+
 export const getUids = async () => {
   try {
     const assets = await prisma.asset.findMany();
@@ -322,6 +335,8 @@ export const getUids = async () => {
     return { error };
   }
 };
+
+// ------------------------------------
 
 export async function addGoal(uid: string, goal: number) {
   try {
@@ -372,6 +387,8 @@ export async function updateGoal(uid: string, goal: number) {
     return false;
   }
 }
+
+// ------------------------------------
 
 export async function addProjection(
   uid: string,
@@ -443,3 +460,54 @@ export const getProjections = async (uid: string) => {
     return [];
   }
 };
+
+// ------------------------------------
+
+export const getKeyAssets = async (uid: string) => {
+  try {
+    const keyAssets = await prisma.keyAsset.findMany({
+      where: { uid },
+    });
+    return keyAssets;
+  } catch (error) {
+    console.error('🚨 Error fetching key assets:', error);
+    return [];
+  }
+};
+
+export async function addKeyAsset(formData: {
+  uid: string;
+  asset: string;
+  id: string;
+}) {
+  const { uid, asset, id } = formData;
+
+  try {
+    await prisma.keyAsset.create({
+      data: {
+        id,
+        uid,
+        asset,
+        created_at: new Date(),
+      },
+    });
+    return true;
+  } catch (error) {
+    console.error('🚨 Failed to create Key Asset:', error);
+  }
+}
+
+export async function deleteKeyAsset(id: string) {
+  try {
+    await prisma.keyAsset.delete({
+      where: {
+        id,
+      },
+    });
+    return true;
+  } catch (error) {
+    console.error('🚨 Failed to delete Key Asset:', error);
+  }
+}
+
+// ------------------------------------

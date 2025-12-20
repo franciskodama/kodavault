@@ -6,6 +6,7 @@ import {
   Asset,
   AssetsByType,
   Currencies,
+  KeyAssetsPriced,
   netWorthChartData,
 } from '@/lib/types';
 import { currencyFormatter } from '@/lib/utils';
@@ -18,6 +19,7 @@ import Welcome from './welcome';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
 import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
+import { CardKeyAssets } from '@/components/CardKeyAssets';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
@@ -33,6 +35,7 @@ export default function Dashboard({
   uid,
   userName,
   goal,
+  keyAssetsPriced,
 }: {
   usdBrl: number;
   currencyRates: Currencies;
@@ -43,6 +46,7 @@ export default function Dashboard({
   uid: string;
   userName: string;
   goal: number;
+  keyAssetsPriced: KeyAssetsPriced[];
 }) {
   const cash = assets.filter((asset) => asset?.type === 'Cash');
 
@@ -93,7 +97,7 @@ export default function Dashboard({
           </div>
           {/* <div
             id='coincodex-widget-container'
-            className='border-2 overflow-visible z-10 h-full w-full'
+            className='border-2 overflow-visible z-10 h-12 w-full'
           >
             <Script
               src='https://widget.coincodex.com/include.js?type=4&ticker=top10&period=1D&textColor=000000&borderColor=dddddd&backgroundColor=ffffff&hoverColor=transparent&currency=USD&range=1D'
@@ -104,7 +108,9 @@ export default function Dashboard({
           <div className='flex flex-col sm:flex-row gap-2'>
             <div className='flex flex-col sm:basis-4/5 gap-2'>
               <div className='flex flex-wrap gap-2'>
-                {/* <CardKeyAssets /> */}
+                {/* ----------------------------------------- */}
+                <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
+                {/* ----------------------------------------- */}
                 <div className='sm:w-1/4 w-full'>
                   <CardTotal
                     emoji={'🧺'}
