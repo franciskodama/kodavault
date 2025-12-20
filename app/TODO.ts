@@ -16,6 +16,11 @@
 // Fix reload on Shortcut, etc.. pages
 
 // TODO: WORKING ON:
+// Wealthsimple is not showing the type of account
+// Add Asset Symbol must save it in capital letters
+// Asset Page Bell must be in impact color to see it and even shake it
+// How to Add HOOD-T ETF? https://ca.finance.yahoo.com/quote/HOOD.TO/
+
 // Responsivity
 // After CronJob Fix, return the commented code in the middleware f
 // Add Assets: Cash in Exchanges don't need to have the option to choose will be always USD or BRL (it's the only option)
