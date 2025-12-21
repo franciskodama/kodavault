@@ -22,6 +22,7 @@
 // How to Add HOOD-T ETF? https://ca.finance.yahoo.com/quote/HOOD.TO/
 // Total by TAG is appearing the null value
 // Create more Notifications cards, other than Cash
+// After clicked on Go to Assets from the Notification Card about Cash, there is no reset button after filtering the Cash assets
 
 // Responsivity
 // After CronJob Fix, return the commented code in the middleware f

@@ -26,10 +26,10 @@ export default function StocksNoSymbol({
     }
 
     const subject = encodeURIComponent(
-      '[KODAVAULT] Francis, a Friendly Reminder: Time to Update Your Assets List!'
+      '[TREZO.APP] Product Manager, a Friendly Reminder: Time to Update Your Assets List!'
     );
     const body = encodeURIComponent(`
-      Hey Francis, 👋
+      Hey Product Manager, 👋
       
       Looks like these assets are missing their prices in the app:
       ${symbols.map((symbol) => `- ${symbol}`).join('\n')}
@@ -93,7 +93,7 @@ export default function StocksNoSymbol({
             <div>
               <p className='font-bold text-lg mb-2'>Why?</p>
               <p className='text-xs w-[30ch]'>
-                Well, Francis is still pinching pennies and hasn’t paid for that
+                Well, we are still pinching pennies and hasn’t paid for that
                 fancy API to fetch the stock prices automatically!
               </p>
             </div>
@@ -108,18 +108,18 @@ export default function StocksNoSymbol({
 
           <div className='flex flex-col mr-20'>
             <p className='text-primary text-xs w-[35ch] mb-4'>
-              As his friend, give him a quick nudge to add
+              As our friend, give him a quick nudge to add
               {stocksNoTotal?.length > 1 ? ' these' : ' this'} Asset
               {stocksNoTotal?.length > 1 ? 's' : null} to the spreadsheet.
               <br />
-              {`Help Francis Out. :)`}
+              {`Help us Out! :)`}
             </p>
             <Button
               variant={'outline'}
               className='flex items-center border-2 border-primary capitalize'
               onClick={handleClickMessageButton}
             >
-              Inform Francis now!
+              Inform us now!
               <MessageCircle className='ml-2' size={24} strokeWidth={1.8} />
             </Button>
           </div>
