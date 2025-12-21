@@ -1,21 +1,8 @@
-// TODO: NEXT:
-// Change the Auth to NextAuth?
-// Clerk has passkey?
-
-// CronJob: https://console.cron-job.org/jobs/5201103 + https://www.youtube.com/shorts/d9olvU5bbQ4
-// CronJob: with header with authentication Bearer Secret
-// CronJob: errror for account fk.ca check logs on Vercel
-// cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
-// The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
-
-// Create a Page for the Elliott Waves Cheat Sheet
-// Elliott: https://www.elliottwave.com/ as ref
-// Elliott: Buttons to filter the table by the wave
-
-// Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
-// Fix reload on Shortcut, etc.. pages
-
 // TODO: WORKING ON:
+
+// TODO: NEXT:
+// Tag Card can be a long one in the first row (last one) of the Dashboard (so it can fit more assets), delete duplicated CardTotal total by Wallet, and put something else below the Goal Card
+// No Cash Available Card when there is no cash (alerting that is always good to have some cash available for oportunities)
 // coincodex script is not working
 // what put in the place of the duplicated CardTotal total by Wallet?
 // Goal Progress Card must have the numeric format (points, commas, etc..)
@@ -26,12 +13,23 @@
 // Total by TAG is appearing the null value
 // Create more Notifications cards, other than Cash
 // After clicked on Go to Assets from the Notification Card about Cash, there is no reset button after filtering the Cash assets
-
 // Responsivity
 // After CronJob Fix, return the commented code in the middleware f
 // Add Assets: Cash in Exchanges don't need to have the option to choose will be always USD or BRL (it's the only option)
 // CardLongsAndShorts or Page for it?
 // Create a Chrome extension (add and update assets): https://www.luckymedia.dev/blog/how-to-create-a-chrome-extension-with-react-typescript-tailwindcss-and-vite-in-2024 or https://github.com/vercel/next.js/tree/canary/examples/with-chrome-extension
+// Change the Auth to NextAuth?
+// Clerk has passkey?
+// CronJob: https://console.cron-job.org/jobs/5201103 + https://www.youtube.com/shorts/d9olvU5bbQ4
+// CronJob: with header with authentication Bearer Secret
+// CronJob: errror for account fk.ca check logs on Vercel
+// cryptoAccounts can be inputed by the user on a settings page (check other datas that can be inputed like this instead of hardcode)
+// The sum for the Tag SOL Net on the TAG TOTAL CARD is not working
+// Create a Page for the Elliott Waves Cheat Sheet
+// Elliott: https://www.elliottwave.com/ as ref
+// Elliott: Buttons to filter the table by the wave
+// Export to CSV: https://www.youtube.com/watch?v=Zz_mP5gAnxc
+// Fix reload on Shortcut, etc.. pages
 
 // TODO ---------------------------------------------------------------------------
 // Shortcut styles of the shortcuts
@@ -95,6 +93,13 @@
 // TODO: DONE AFTER COMEBACK 14/12/2025 =======================================================================================
 // Fix currency bug
 // Update NextJs, React and Dependencies
+// Cards new Order + Grid instead of Flex
+// Same hight for Cards on the Right and the others
+// Notification Card with BG Color
+// Change My name to Product Manager
+// Back with the Charts
+// New Font Style
+
 // TODO: DONE =======================================================================================
 // NaN in Card All Currency: code more resilient and warning if we get a NaN
 // Refactoring Nav Menu to be mapped with the pages
