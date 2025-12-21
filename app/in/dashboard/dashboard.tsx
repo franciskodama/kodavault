@@ -110,11 +110,8 @@ export default function Dashboard({
             <div className='flex flex-col sm:basis-4/5 gap-2'>
               {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
               <div className='grid grid-cols-4 gap-2'>
-                {/* ----------------------------------------- */}
                 <NotificationsPanel cash={cash} />
-                {/* ----------------------------------------- */}
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
-                {/* ----------------------------------------- */}
                 <div className='flex flex-col gap-2'>
                   <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
                   <TagCard />
@@ -176,14 +173,12 @@ export default function Dashboard({
                   />
                 </div>
               </div>
-              {/* <Transactions /> */}
-
               {/* -------- Chart  --------------------------------------------------------------------------------------- */}
               <div className='flex'>
                 <NetWorthChart netWorthChartData={netWorthChartData} />
               </div>
+              {/* <Transactions /> */}
             </div>
-
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
             <div className='flex flex-col sm:basis-1/5 '>
               <CardTotalAllCurrency
@@ -203,11 +198,11 @@ export default function Dashboard({
                   priority
                 />
               </div>
-              <div className='flex flex-col mb-2 gap-2'>
-                <CardNextPurchases />
-                <CardAssetsOnTheRise />
+              <div className='flex flex-col gap-2 h-full'>
                 <CardCryptosForTrading assets={assets} />
-                <CardLongsAndShorts assets={assets} />
+                <CardAssetsOnTheRise />
+                <CardNextPurchases />
+                {/* <CardLongsAndShorts assets={assets} /> */}
               </div>
 
               {uid === process.env.NEXT_PUBLIC_HER_UID && (

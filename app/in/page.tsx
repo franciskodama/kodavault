@@ -22,13 +22,12 @@ export default async function DashboardPage() {
   // const globalData = await getGlobalData();
   // console.log('---  🚀 ---> | globalData:', globalData);
 
-  // ==========================================
-
-  // ============ IN CASE WE NEED IN THE FUTURE ============
+  // ====== IN CASE WE NEED IN THE FUTURE ======
   // BRL:
   // const currencyRatesFromApi = await getCurrenciesFromApi();
   // const usdBrl = currencyRatesFromApi?.data.BRL || 0;
-  // ==========================================
+
+  // ---------------------------------------------------------------
 
   // USD + CAD + BRL
   const currencyRates = await getCurrencies();

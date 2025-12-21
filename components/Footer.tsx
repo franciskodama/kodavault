@@ -1,12 +1,3 @@
-// export default function Footer() {
-//   return (
-//     <div className='flex items-center justify-between m-4 p-4 my-8 text-sm text-slate-500'>
-//       <p>Trezo.App, 2025</p>
-//       <p>© All rights reserved.</p>
-//     </div>
-//   );
-// }
-
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -231,7 +222,6 @@ export default function Footer() {
                     8. Limitation of Liability
                   </h2>
                   <p className='text-gray-700'>
-                    {/* The app is provided "as-is" without warranties. The owner is */}
                     not liable for damages resulting from its use.
                   </p>
                 </section>
@@ -328,17 +318,10 @@ export default function Footer() {
                     following cases:
                   </p>
                   <ul className='flex flex-col gap-4 list-disc list-inside text-gray-700'>
-                    {/* <li>
-                      With service providers assisting in app functionality
-                      (e.g., hosting or analytics).
-                    </li> */}
                     <li className='mt-2'>
                       To comply with legal obligations or protect against misuse
                       of the app.
                     </li>
-                    {/* <li>
-                      In the event of a merger, acquisition, or asset sale.
-                    </li> */}
                   </ul>
                 </section>
 
@@ -404,7 +387,7 @@ export default function Footer() {
         </div>
 
         <div className='flex flex-col gap-1'>
-          <p>Trezo.App - 2025</p>
+          <p>Trezo.App - 2026</p>
           <p>© All rights reserved.</p>
         </div>
       </div>

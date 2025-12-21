@@ -16,6 +16,9 @@
 // Fix reload on Shortcut, etc.. pages
 
 // TODO: WORKING ON:
+// coincodex script is not working
+// what put in the place of the duplicated CardTotal total by Wallet?
+// Goal Progress Card must have the numeric format (points, commas, etc..)
 // Wealthsimple is not showing the type of account
 // Add Asset Symbol must save it in capital letters
 // Asset Page Bell must be in impact color to see it and even shake it
