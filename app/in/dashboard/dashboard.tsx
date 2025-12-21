@@ -20,6 +20,8 @@ import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
 import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
+import Transactions from './transactions/transactions';
+import TagCard from './notifications/tag-card';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
@@ -104,22 +106,32 @@ export default function Dashboard({
               strategy='afterInteractive'
             />
           </div> */}
-          {/* -------- 1st Row Cards --------------------------------------------------------------------------------------- */}
           <div className='flex flex-col sm:flex-row gap-2'>
             <div className='flex flex-col sm:basis-4/5 gap-2'>
-              <div className='flex flex-wrap gap-2'>
-                {/* ----------------------------------------- */}
+              {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
+              <div className='grid grid-cols-4 gap-2'>
+                <NotificationsPanel cash={cash} />
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
-                {/* ----------------------------------------- */}
-                <div className='sm:w-1/4 w-full'>
-                  <CardTotal
-                    emoji={'🧺'}
-                    description={`Assets' Location Breakdown`}
-                    assets={assets}
-                    customKey={'wallet'}
-                  />
+                <div className='flex flex-col gap-2'>
+                  <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
+                  <TagCard />
                 </div>
-                <div className='flex flex-wrap sm:w-2/4 gap-2'>
+                <CardTotal
+                  emoji={'🧺'}
+                  description={`Assets' Location Breakdown`}
+                  assets={assets}
+                  customKey={'wallet'}
+                />
+              </div>
+              {/* -------- 2nd Row --------------------------------------------------------------------------------------- */}
+              <div className='grid grid-cols-4 gap-2'>
+                <div className='flex flex-col gap-2'>
+                  <CardTotal
+                    emoji={'🤑'}
+                    description={'Total value grouped by currency'}
+                    assets={assetsByType.Cash}
+                    customKey={'cash'}
+                  />
                   <CardTotal
                     emoji={'💵'}
                     description={`Assets' Origin Breakdown`}
@@ -127,54 +139,46 @@ export default function Dashboard({
                     customKey={'currency'}
                     height={'h-[250px]'}
                   />
-                  <CardTotal
-                    emoji={'💰'}
-                    description={'Total value grouped by type'}
-                    assets={assets}
-                    customKey={'type'}
-                    height={'h-[250px]'}
-                  />
-                  <div className='sm:w-1/2 w-full'>
-                    <CardTotal
-                      emoji={'🤑'}
-                      description={'Total value grouped by currency'}
-                      assets={assetsByType.Cash}
-                      customKey={'cash'}
-                      // height={'h-[250px]'}
-                    />
-                  </div>
-                  {/* <GoalGaugeCard assets={assets} goal={goal} uid={uid} /> */}
                 </div>
-                <NotificationsPanel cash={cash} />
-              </div>
-              {/* <Transactions /> */}
-              <div className='flex'>
-                <NetWorthChart netWorthChartData={netWorthChartData} />
-              </div>
-
-              {/* -------- 1st Row - After Chart --------------------------------------------------------------------------------------- */}
-              <div className='flex flex-wrap gap-2'>
+                {/* =========================== CHANGE THIS. ITS DUPLICATED =============================== */}
                 <CardTotal
                   emoji={'🧺'}
-                  description={'Total value grouped by wallet'}
+                  description={`Assets' Location Breakdown`}
                   assets={assets}
                   customKey={'wallet'}
                 />
-                <CardTotal
-                  emoji={'🗂️'}
-                  description={'Total value grouped by subtype'}
-                  assets={assets}
-                  customKey={'subtype'}
-                />
+                {/* =========================== CHANGE THIS. ITS DUPLICATED =============================== */}
+                {/* ----------------------------------------- */}
                 <CardTotal
                   emoji={'🏷️'}
                   description={'Total value grouped by tag'}
                   assets={assets}
                   customKey={'tag'}
                 />
+                {/* ----------------------------------------- */}
+                <div className='flex flex-col gap-2'>
+                  <CardTotal
+                    emoji={'💰'}
+                    description={'Total value grouped by type'}
+                    assets={assets}
+                    customKey={'type'}
+                    height={'h-full'}
+                  />
+                  <CardTotal
+                    emoji={'🗂️'}
+                    description={'Total value grouped by subtype'}
+                    assets={assets}
+                    customKey={'subtype'}
+                    height={'h-full'}
+                  />
+                </div>
               </div>
+              {/* -------- Chart  --------------------------------------------------------------------------------------- */}
+              <div className='flex'>
+                <NetWorthChart netWorthChartData={netWorthChartData} />
+              </div>
+              {/* <Transactions /> */}
             </div>
-
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
             <div className='flex flex-col sm:basis-1/5 '>
               <CardTotalAllCurrency
@@ -194,11 +198,11 @@ export default function Dashboard({
                   priority
                 />
               </div>
-              <div className='flex flex-col mb-2 gap-2'>
-                <CardNextPurchases />
-                <CardAssetsOnTheRise />
+              <div className='flex flex-col gap-2 h-full'>
                 <CardCryptosForTrading assets={assets} />
-                <CardLongsAndShorts assets={assets} />
+                <CardAssetsOnTheRise />
+                <CardNextPurchases />
+                {/* <CardLongsAndShorts assets={assets} /> */}
               </div>
 
               {uid === process.env.NEXT_PUBLIC_HER_UID && (

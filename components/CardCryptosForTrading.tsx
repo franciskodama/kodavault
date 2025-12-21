@@ -33,7 +33,7 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
   return (
     <Card className='w-full'>
       {tradingAssets && (
-        <div className='flex flex-col justify-between h-full'>
+        <div className='flex flex-col justify-between'>
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
