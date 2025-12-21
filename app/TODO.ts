@@ -20,6 +20,8 @@
 // Add Asset Symbol must save it in capital letters
 // Asset Page Bell must be in impact color to see it and even shake it
 // How to Add HOOD-T ETF? https://ca.finance.yahoo.com/quote/HOOD.TO/
+// Total by TAG is appearing the null value
+// Create more Notifications cards, other than Cash
 
 // Responsivity
 // After CronJob Fix, return the commented code in the middleware f

@@ -111,10 +111,8 @@ export function DialogEditKeyAssets({
 
   const {
     register,
-    watch,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm<Inputs>({});
 
@@ -160,6 +158,7 @@ export function DialogEditKeyAssets({
         variant: 'destructive',
       });
     }
+    reset();
   };
 
   const handleClickDelete = async (id: string) => {
