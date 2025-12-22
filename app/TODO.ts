@@ -1,6 +1,7 @@
 // TODO: WORKING ON:
 
 // TODO: NEXT:
+// Tag card needs to clean assets after you delete what's in the field. Clear button can be a solution and a good idea.
 // Tag Card can be a long one in the first row (last one) of the Dashboard (so it can fit more assets), delete duplicated CardTotal total by Wallet, and put something else below the Goal Card
 // No Cash Available Card when there is no cash (alerting that is always good to have some cash available for oportunities)
 // coincodex script is not working
