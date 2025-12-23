@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, XIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import {
@@ -21,6 +21,7 @@ import {
 import { Asset } from '@/lib/types';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export default function TagCard() {
   const [tagInput, setTagInput] = useState<string>('');
@@ -50,9 +51,14 @@ export default function TagCard() {
     window.localStorage.setItem('tag', value);
   };
 
+  const handleClear = () => {
+    setTagInput('');
+    window.localStorage.removeItem('tag');
+  };
+
   return (
     <>
-      <Card className='h-[250px]'>
+      <Card className='h-full'>
         <div className='flex flex-col justify-between h-full'>
           <div className='flex flex-col'>
             <CardHeader>
@@ -65,6 +71,9 @@ export default function TagCard() {
                     value={tagInput}
                     onChange={(e) => handleChange(e.target.value)}
                   />
+                  <Button onClick={() => handleClear()} variant='outline'>
+                    <XIcon />
+                  </Button>
                 </div>
                 <span className='text-2xl'>🏷️</span>
               </CardTitle>

@@ -24,7 +24,6 @@ import Transactions from './transactions/transactions';
 import TagCard from './notifications/tag-card';
 import { CoinCodexWidget } from './coin-codex-widget';
 
-
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
 });
@@ -53,8 +52,6 @@ export default function Dashboard({
   keyAssetsPriced: KeyAssetsPriced[];
 }) {
   const cash = assets.filter((asset) => asset?.type === 'Cash');
-
-
 
   return (
     <Suspense fallback={<SkeletonDashboard />}>
@@ -111,14 +108,15 @@ export default function Dashboard({
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
                 <div className='flex flex-col gap-2'>
                   <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
-                  <TagCard />
+
+                  <CardTotal
+                    emoji={'🤑'}
+                    description={'Total value grouped by currency'}
+                    assets={assetsByType.Cash}
+                    customKey={'cash'}
+                  />
                 </div>
-                <CardTotal
-                  emoji={'🧺'}
-                  description={`Assets' Location Breakdown`}
-                  assets={assets}
-                  customKey={'wallet'}
-                />
+                <TagCard />
               </div>
               {/* -------- 2nd Row --------------------------------------------------------------------------------------- */}
               <div className='grid grid-cols-4 gap-2'>
