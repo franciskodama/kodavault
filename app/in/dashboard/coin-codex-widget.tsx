@@ -11,11 +11,11 @@ export const CoinCodexWidget = () => {
     const baseUrl = 'https://widget.coincodex.com/';
     const queryParams = new URLSearchParams({
       type: '4',
-      ticker: 'top10',
+      ticker: 'top20', // top10, top20, top50
       period: '1D',
       textColor: '000000',
       borderColor: 'dddddd',
-      backgroundColor: 'ffffff',
+      backgroundColor: 'fafafb',
       hoverColor: 'transparent',
       currency: 'USD',
       range: '1D',

@@ -59,11 +59,11 @@ export default function Dashboard({
   return (
     <Suspense fallback={<SkeletonDashboard />}>
       {assets.length && assetsByType ? (
-        <div className='flex flex-col gap-2 px-8 sm:p-0'>
+        <div className='flex flex-col gap-1 px-8 sm:p-0'>
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
           <div className='flex flex-col sm:flex-row justify-end items-center'>
             <div className='flex items-center mr-8'>
-              <div className='mr-4'>
+              {/* <div className='mr-4'>
                 <a
                   target='_blank'
                   href='https://ca.finance.yahoo.com/quote/BTC-USD?p=BTC-USD'
@@ -71,7 +71,7 @@ export default function Dashboard({
                   <span>🪙</span>
                 </a>
                 {btcPrice && ` BTC/USD: ${currencyFormatter(btcPrice)}`}
-              </div>
+              </div> */}
               <div>
                 <a
                   target='_blank'
@@ -101,7 +101,7 @@ export default function Dashboard({
               <div>{`< 50%`}</div>
             </div>
           </div>
-          {/* <CoinCodexWidget /> */}
+          <CoinCodexWidget />
 
           <div className='flex flex-col sm:flex-row gap-2'>
             <div className='flex flex-col sm:basis-4/5 gap-2'>
