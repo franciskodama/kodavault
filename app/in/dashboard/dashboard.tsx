@@ -22,6 +22,8 @@ import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
 import Transactions from './transactions/transactions';
 import TagCard from './notifications/tag-card';
+import { CoinCodexWidget } from './coin-codex-widget';
+
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
@@ -51,6 +53,8 @@ export default function Dashboard({
   keyAssetsPriced: KeyAssetsPriced[];
 }) {
   const cash = assets.filter((asset) => asset?.type === 'Cash');
+
+
 
   return (
     <Suspense fallback={<SkeletonDashboard />}>
@@ -97,15 +101,8 @@ export default function Dashboard({
               <div>{`< 50%`}</div>
             </div>
           </div>
-          {/* <div
-            id='coincodex-widget-container'
-            className='border-2 overflow-visible z-10 h-12 w-full'
-          >
-            <Script
-              src='https://widget.coincodex.com/include.js?type=4&ticker=top10&period=1D&textColor=000000&borderColor=dddddd&backgroundColor=ffffff&hoverColor=transparent&currency=USD&range=1D'
-              strategy='afterInteractive'
-            />
-          </div> */}
+          {/* <CoinCodexWidget /> */}
+
           <div className='flex flex-col sm:flex-row gap-2'>
             <div className='flex flex-col sm:basis-4/5 gap-2'>
               {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
