@@ -71,8 +71,12 @@ export default function TagCard() {
                     value={tagInput}
                     onChange={(e) => handleChange(e.target.value)}
                   />
-                  <Button onClick={() => handleClear()} variant='outline'>
-                    <XIcon />
+                  <Button
+                    onClick={() => handleClear()}
+                    variant='outline'
+                    className='h-8 rounded-[2px] px-1'
+                  >
+                    <XIcon size={16} className='text-slate-300' />
                   </Button>
                 </div>
                 <span className='text-2xl'>🏷️</span>
