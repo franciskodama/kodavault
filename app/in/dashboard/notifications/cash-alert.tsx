@@ -13,11 +13,11 @@ import {
 } from '@/components/ui/card';
 import { Asset } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { getFirstThreeAssets, thousandFormatter } from '@/lib/utils';
+import { getLimitedNumberOfAssets, thousandFormatter } from '@/lib/utils';
 
 export default function CashAlert({ cash }: { cash: Asset[] }) {
   const router = useRouter();
-  const firstThreeAssets = getFirstThreeAssets(cash);
+  const firstThreeAssets = getLimitedNumberOfAssets(cash, 3);
 
   const handleClick = () => {
     router.push('/in/assets?type=Cash');

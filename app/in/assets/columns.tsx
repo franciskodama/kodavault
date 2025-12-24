@@ -302,43 +302,45 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle className='text-center text-2xl my-4'>
-                  Are you fucking sure?
-                  <br />
-                  <div className='w-[450px] mt-8 mx-auto'>
-                    <AspectRatio ratio={16 / 16} className='bg-white'>
-                      <Image
-                        src='/are-you-sure.gif'
-                        alt='Britney in doubt'
-                        fill
-                        className='object-cover rounded-full border-[8px] border-primary'
-                        objectPosition='center 25%'
-                      />
-                    </AspectRatio>
+                <AlertDialogTitle asChild className='text-center text-2xl my-4'>
+                  <div>
+                    Are you fucking sure?
+                    <br />
+                    <div className='w-[450px] mt-8 mx-auto'>
+                      <AspectRatio ratio={16 / 16} className='bg-white'>
+                        <Image
+                          src='/are-you-sure.gif'
+                          alt='Britney in doubt'
+                          fill
+                          className='object-cover rounded-full border-[8px] border-primary'
+                          objectPosition='center 25%'
+                        />
+                      </AspectRatio>
+                    </div>
                   </div>
                 </AlertDialogTitle>
-                <AlertDialogDescription className='flex flex-col text-base text-center text-slate-600 mb-4 gap-4'>
-                  You are about to delete the Asset below:
-                  <div className='flex py-4 px-16 justify-between border-[6px] border-primary text-base text-primary'>
-                    <div className='flex flex-col'>
-                      <div className='text-sm'>Asset:</div>
-                      <div className='font-bold'>{asset.asset}</div>
+                <AlertDialogDescription asChild>
+                  <div className='flex flex-col text-base text-center text-slate-600 mb-4 gap-4'>
+                    You are about to delete the Asset below:
+                    <div className='flex py-4 px-16 justify-between border-[6px] border-primary text-base text-primary'>
+                      <div className='flex flex-col'>
+                        <div className='text-sm'>Asset:</div>
+                        <div className='font-bold'>{asset.asset}</div>
+                      </div>
+                      <div className='flex flex-col'>
+                        <div className='text-sm'> Wallet:</div>
+                        <div className='font-bold'>{asset.wallet}</div>
+                      </div>
+                      <div className='flex flex-col'>
+                        <div className='text-sm'> Qty:</div>
+                        <div className='font-bold'>{asset.qty}</div>
+                      </div>
                     </div>
-                    <div className='flex flex-col'>
-                      <div className='text-sm'> Wallet:</div>
-                      <div className='font-bold'>{asset.wallet}</div>
-                    </div>
-                    <div className='flex flex-col'>
-                      <div className='text-sm'> Qty:</div>
-                      <div className='font-bold'>{asset.qty}</div>
-                    </div>
-                  </div>
-                  <span className='text-primary text-center my-4 font-bold text-base'>
-                    <span className='font-bold'>
+                    <span className='text-primary text-center my-4 font-bold text-base'>
                       This is the point of no return. <br />
+                      Once done, there is no going back! 💣
                     </span>
-                    {`Once done, there's no going back! 💣`}
-                  </span>
+                  </div>
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>

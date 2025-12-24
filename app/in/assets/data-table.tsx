@@ -102,6 +102,8 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  const MotionButton = motion(Button);
+
   useEffect(() => {
     if (typeFilterAsParam) {
       setValueTypeDropbox(typeFilterAsParam);
@@ -470,22 +472,17 @@ export function DataTable<TData, TValue>({
             <>
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger>
-                    <motion.button
+                  <TooltipTrigger asChild>
+                    <MotionButton
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
+                      size='md'
+                      variant={'outline'}
+                      className='h-10 ml-4 border-2 border-slate-500 rounded-full'
+                      onClick={() => setOpenNotification(true)}
                     >
-                      <Button
-                        size='md'
-                        variant={'outline'}
-                        className='h-10 ml-4 border-2 border-slate-500 rounded-full'
-                        onClick={() => {
-                          setOpenNotification(true);
-                        }}
-                      >
-                        <BellRing className='h-4 w-4' />
-                      </Button>
-                    </motion.button>
+                      <BellRing className='h-4 w-4' />
+                    </MotionButton>
                   </TooltipTrigger>
                   <TooltipContent>
                     <div className='flex items-center'>
