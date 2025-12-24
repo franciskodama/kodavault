@@ -98,7 +98,7 @@ export default function Dashboard({
               <div>{`< 50%`}</div>
             </div>
           </div>
-          <CoinCodexWidget />
+          {/* <CoinCodexWidget /> */}
 
           <div className='flex flex-col sm:flex-row gap-2'>
             <div className='flex flex-col sm:basis-4/5 gap-2'>

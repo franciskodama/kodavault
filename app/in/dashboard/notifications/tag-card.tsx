@@ -42,8 +42,6 @@ export default function TagCard() {
     arr.sort((a: Asset, b: Asset) => b!.total! - a!.total!);
 
   const sortedTaggedAssets = sortedArray(taggedAssets);
-
-  const firstThreeAssets = getFirstThreeAssets(sortedTaggedAssets);
   const totalArray = getTotalByKey(taggedAssets, 'tag');
 
   const handleChange = (value: string) => {
@@ -76,7 +74,7 @@ export default function TagCard() {
                     variant='outline'
                     className='h-8 rounded-[2px] px-1'
                   >
-                    <XIcon size={16} className='text-slate-300' />
+                    <XIcon size={16} className='text-slate-300' />X
                   </Button>
                 </div>
                 <span className='text-2xl'>🏷️</span>
@@ -113,7 +111,7 @@ export default function TagCard() {
                     }}
                   >
                     <h3 className='mb-2'>{`Here’s a look at your top performers:`}</h3>
-                    {firstThreeAssets.map((asset) => {
+                    {sortedTaggedAssets.map((asset) => {
                       return (
                         <div key={asset?.id} className='my-[4px] relative'>
                           <div className='flex w-full'>
