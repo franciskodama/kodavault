@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import {
-  getFirstThreeAssets,
+  getLimitedNumberOfAssets,
   getTotalByKey,
   numberFormatterNoDecimals,
   thousandFormatter,
@@ -43,6 +43,9 @@ export default function TagCard() {
 
   const sortedTaggedAssets = sortedArray(taggedAssets);
   const totalArray = getTotalByKey(taggedAssets, 'tag');
+
+  // If we need it in the future we can use this function / What's the limit (15)?
+  // const limitedTaggedAssets = getLimitedNumberOfAssets(sortedTaggedAssets, 15);
 
   const handleChange = (value: string) => {
     setTagInput(value);
@@ -74,7 +77,7 @@ export default function TagCard() {
                     variant='outline'
                     className='h-8 rounded-[2px] px-1'
                   >
-                    <XIcon size={16} className='text-slate-300' />X
+                    <XIcon size={16} className='text-slate-300' />
                   </Button>
                 </div>
                 <span className='text-2xl'>🏷️</span>
@@ -131,9 +134,9 @@ export default function TagCard() {
                       );
                     })}
                   </motion.div>
-                  {sortedTaggedAssets.length > 3 && (
+                  {/* {sortedTaggedAssets.length > 3 && (
                     <p className='absolute bottom-1'>...</p>
-                  )}
+                  )} */}
                 </>
               )}
             </CardContent>

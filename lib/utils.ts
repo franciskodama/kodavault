@@ -124,14 +124,15 @@ export const groupAssetsBySomething = (assets: Asset[], something: string) => {
 
 // ---------------------------------------------------------------------------
 
-export const getFirstThreeAssets = (assets: Asset[]) => {
-  const firstThreeAssets = [];
-  if (assets.length > 3) {
-    firstThreeAssets.push(...assets.slice(0, 3));
+// This fucntion was created for the Tag Card, but we are not using it anymore
+export const getLimitedNumberOfAssets = (assets: Asset[], limit: number) => {
+  const someAssets = [];
+  if (assets.length > limit) {
+    someAssets.push(...assets.slice(0, limit));
   } else {
-    firstThreeAssets.push(...assets);
+    someAssets.push(...assets);
   }
-  return firstThreeAssets;
+  return someAssets;
 };
 
 // ---------------------------------------------------------------------------
