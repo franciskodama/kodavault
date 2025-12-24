@@ -110,15 +110,16 @@ export function AddAssetForm() {
     }
   }, [symbolTyped, setValue]);
 
-  const processForm: SubmitHandler<Inputs> = async (data) => {
+  const processForm: SubmitHandler<Inputs> = async (formData) => {
     if (!uid) {
       return console.log('User not logged in');
     }
 
     const result = await addAsset({
-      ...data,
+      ...formData,
       uid: uid,
       type: assetType ? assetType : '',
+      tag: formData.tag?.trim() === '' ? '-' : formData.tag,
     });
 
     if (result) {
@@ -138,7 +139,7 @@ export function AddAssetForm() {
     }
 
     reset();
-    setData(data);
+    setData(formData);
   };
 
   return (
