@@ -7,7 +7,7 @@ export const CoinCodexWidget = () => {
 
   useEffect(() => {
     const t = Math.round(Date.now() / (10 * 60 * 1000));
-    
+
     const baseUrl = 'https://widget.coincodex.com/';
     const queryParams = new URLSearchParams({
       type: '4',
@@ -20,7 +20,7 @@ export const CoinCodexWidget = () => {
       currency: 'USD',
       range: '1D',
       iniframe: 'true',
-      t: t.toString()
+      t: t.toString(),
     });
 
     setSrc(`${baseUrl}?${queryParams.toString()}`);
@@ -29,16 +29,18 @@ export const CoinCodexWidget = () => {
   if (!src) return null;
 
   return (
-    <div
-      id='coincodex-widget-container'
-    >
+    <div id='coincodex-widget-container'>
       <iframe
         src={src}
-        width="140%" 
-        height="35px"
-        scrolling="no"
-        style={{ border: 'none', transform: 'scale(0.7)', transformOrigin: 'top left' }}
-        title="CoinCodex Widget"
+        width='142%'
+        height='32px'
+        scrolling='no'
+        style={{
+          border: 'none',
+          transform: 'scale(0.7)',
+          transformOrigin: 'center left',
+        }}
+        title='CoinCodex Widget'
       />
     </div>
   );

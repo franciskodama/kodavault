@@ -74,9 +74,9 @@ export default function TagCard() {
                   <Button
                     onClick={() => handleClear()}
                     variant='outline'
-                    className='h-8 rounded-[2px] px-1'
+                    className='h-8 rounded-[2px] px-1 border-slate-500 border-2'
                   >
-                    <XIcon size={16} className='text-slate-300' />
+                    <XIcon size={16} strokeWidth={2} />
                   </Button>
                 </div>
                 <span className='text-2xl'>🏷️</span>

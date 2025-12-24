@@ -9,20 +9,21 @@ import {
   KeyAssetsPriced,
   netWorthChartData,
 } from '@/lib/types';
+
+import Welcome from './welcome';
+import TagCard from './tag-card';
+import NotificationsPanel from './notifications/notifications-panel';
+import { CoinCodexWidget } from './coin-codex-widget';
 import { currencyFormatter } from '@/lib/utils';
 import { CardTotal } from '@/components/CardTotal';
 import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
 import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
 import { GoalGaugeCard } from './charts/goal-gauge-card';
-import NotificationsPanel from './notifications/notifications-panel';
-import Welcome from './welcome';
 import { CardNextPurchases } from '@/components/CardNextPurchases';
 import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
-import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
 import { CardKeyAssets } from '@/components/CardKeyAssets';
+import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
 import Transactions from './transactions/transactions';
-import TagCard from './notifications/tag-card';
-import { CoinCodexWidget } from './coin-codex-widget';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
@@ -51,16 +52,14 @@ export default function Dashboard({
   goal: number;
   keyAssetsPriced: KeyAssetsPriced[];
 }) {
-  const cash = assets.filter((asset) => asset?.type === 'Cash');
-
   return (
     <Suspense fallback={<SkeletonDashboard />}>
       {assets.length && assetsByType ? (
         <div className='flex flex-col gap-1 px-8 sm:p-0'>
           {/* -------- Legend --------------------------------------------------------------------------------------- */}
-          <div className='flex flex-col sm:flex-row justify-end items-center'>
+          <div className='flex flex-col sm:flex-row justify-end items-center mb-2'>
             <div className='flex items-center mr-8'>
-              {/* <div className='mr-4'>
+              <div className='mr-4'>
                 <a
                   target='_blank'
                   href='https://ca.finance.yahoo.com/quote/BTC-USD?p=BTC-USD'
@@ -68,7 +67,7 @@ export default function Dashboard({
                   <span>🪙</span>
                 </a>
                 {btcPrice && ` BTC/USD: ${currencyFormatter(btcPrice)}`}
-              </div> */}
+              </div>
               <div>
                 <a
                   target='_blank'
@@ -90,7 +89,7 @@ export default function Dashboard({
                 {currencyRates.data && ` BRL: ${currencyFormatter(usdBrl)}`}
               </div>
             </div>
-            <div className='flex justify-end items-center gap-2 mr-8'>
+            <div className='flex justify-end items-center gap-2 mr-6'>
               <p>Legend:</p>
               <div className='h-[10px] w-4 bg-green-500' />
               <div>{`> 50%,`}</div>
@@ -98,13 +97,12 @@ export default function Dashboard({
               <div>{`< 50%`}</div>
             </div>
           </div>
-          <CoinCodexWidget />
 
+          {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
           <div className='flex flex-col sm:flex-row gap-2'>
             <div className='flex flex-col sm:basis-4/5 gap-2'>
-              {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
               <div className='grid grid-cols-4 gap-2'>
-                <NotificationsPanel cash={cash} />
+                <NotificationsPanel assets={assets} />
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
                 <div className='flex flex-col gap-2'>
                   <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
@@ -167,6 +165,7 @@ export default function Dashboard({
                   />
                 </div>
               </div>
+              <CoinCodexWidget />
               {/* -------- Chart  --------------------------------------------------------------------------------------- */}
               <div className='flex'>
                 <NetWorthChart netWorthChartData={netWorthChartData} />

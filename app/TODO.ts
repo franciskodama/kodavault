@@ -1,13 +1,12 @@
 // TODO: WORKING ON:
 
 // TODO: NEXT:
-// Tag card needs to clean assets after you delete what's in the field. Clear button can be a solution and a good idea.
-// Tag Card can be a long one in the first row (last one) of the Dashboard (so it can fit more assets), delete duplicated CardTotal total by Wallet, and put something else below the Goal Card
+// Wealthsimple is not showing the type of account TFSA or FHSA when you want to Add an Asset
 // No Cash Available Card when there is no cash (alerting that is always good to have some cash available for oportunities)
-// coincodex script is not working
+// Create system for creating Banking Accounts, Exchanges, etc
+
 // what put in the place of the duplicated CardTotal total by Wallet?
-// Goal Progress Card must have the numeric format (points, commas, etc..)
-// Wealthsimple is not showing the type of account
+
 // Add Asset Symbol must save it in capital letters
 // Asset Page Bell must be in impact color to see it and even shake it
 // How to Add HOOD-T ETF? https://ca.finance.yahoo.com/quote/HOOD.TO/
@@ -100,6 +99,12 @@
 // Change My name to Product Manager
 // Back with the Charts
 // New Font Style
+// Tag card needs to clean assets after you delete what's in the field. Clear button can be a solution and a good idea.
+// Tag Card can be a long one in the first row (last one) of the Dashboard (so it can fit more assets), delete duplicated CardTotal total by Wallet, and put something else below the Goal Card
+// Goal Progress Card must have the numeric format (points, commas, etc..)
+// Coincodex script is not working + Styles
+// Gauge Input clear button
+// Notification: Cash Available Card --> what's the % opf the Cash Available against the Net Worth?
 
 // TODO: DONE =======================================================================================
 // NaN in Card All Currency: code more resilient and warning if we get a NaN
