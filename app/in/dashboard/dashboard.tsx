@@ -52,8 +52,6 @@ export default function Dashboard({
   goal: number;
   keyAssetsPriced: KeyAssetsPriced[];
 }) {
-  const cash = assets.filter((asset) => asset?.type === 'Cash');
-
   return (
     <Suspense fallback={<SkeletonDashboard />}>
       {assets.length && assetsByType ? (
@@ -104,7 +102,7 @@ export default function Dashboard({
           <div className='flex flex-col sm:flex-row gap-2'>
             <div className='flex flex-col sm:basis-4/5 gap-2'>
               <div className='grid grid-cols-4 gap-2'>
-                <NotificationsPanel cash={cash} />
+                <NotificationsPanel assets={assets} />
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
                 <div className='flex flex-col gap-2'>
                   <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
