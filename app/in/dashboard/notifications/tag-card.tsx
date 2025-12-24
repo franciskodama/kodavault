@@ -13,7 +13,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import {
-  getLimitedNumberOfAssets,
   getTotalByKey,
   numberFormatterNoDecimals,
   thousandFormatter,

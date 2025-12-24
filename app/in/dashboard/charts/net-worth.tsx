@@ -24,8 +24,6 @@ export default function NetWorthChart({
 }: {
   netWorthChartData: netWorthChartData[];
 }) {
-  // console.log('Chart data before mapping:', netWorthChartData);
-
   const sortedNetWorthChartData = netWorthChartData
     ? netWorthChartData.sort((a, b) => {
         return (
@@ -68,11 +66,8 @@ export default function NetWorthChart({
       if (val === undefined || val === null) {
         console.warn(`Undefined/null at row ${i}, column ${j}`);
       }
-      console.log('analysed and everything is fine!');
     });
   });
-
-  // console.log('Formatted chart data:', formattedData);
 
   const options = {
     chart: {},

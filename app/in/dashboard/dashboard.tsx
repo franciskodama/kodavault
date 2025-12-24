@@ -98,7 +98,7 @@ export default function Dashboard({
               <div>{`< 50%`}</div>
             </div>
           </div>
-          {/* <CoinCodexWidget /> */}
+          <CoinCodexWidget />
 
           <div className='flex flex-col sm:flex-row gap-2'>
             <div className='flex flex-col sm:basis-4/5 gap-2'>
@@ -108,13 +108,14 @@ export default function Dashboard({
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
                 <div className='flex flex-col gap-2'>
                   <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
-
+                  {/* =========================== CHANGE THIS. ITS DUPLICATED =============================== */}
                   <CardTotal
-                    emoji={'🤑'}
-                    description={'Total value grouped by currency'}
+                    emoji={'𝗫'}
+                    description={'TEST'}
                     assets={assetsByType.Cash}
-                    customKey={'cash'}
+                    customKey={'TEST'}
                   />
+                  {/* =========================== CHANGE THIS. ITS DUPLICATED =============================== */}
                 </div>
                 <TagCard />
               </div>
@@ -135,14 +136,12 @@ export default function Dashboard({
                     height={'h-[250px]'}
                   />
                 </div>
-                {/* =========================== CHANGE THIS. ITS DUPLICATED =============================== */}
                 <CardTotal
                   emoji={'🧺'}
                   description={`Assets' Location Breakdown`}
                   assets={assets}
                   customKey={'wallet'}
                 />
-                {/* =========================== CHANGE THIS. ITS DUPLICATED =============================== */}
                 {/* ----------------------------------------- */}
                 <CardTotal
                   emoji={'🏷️'}

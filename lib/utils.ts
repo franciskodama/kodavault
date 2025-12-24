@@ -124,7 +124,6 @@ export const groupAssetsBySomething = (assets: Asset[], something: string) => {
 
 // ---------------------------------------------------------------------------
 
-// This fucntion was created for the Tag Card, but we are not using it anymore
 export const getLimitedNumberOfAssets = (assets: Asset[], limit: number) => {
   const someAssets = [];
   if (assets.length > limit) {
