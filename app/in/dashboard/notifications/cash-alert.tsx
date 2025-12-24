@@ -68,6 +68,22 @@ export default function CashAlert({ cash }: { cash: Asset[] }) {
                 <p>Go to Assets</p>
               )}
             </Button>
+            <div>
+              <p className='text-xs'>Total:</p>
+              <p className='font-bold'>
+                {thousandFormatter(
+                  cash.reduce((sum: number, item: any) => sum + item.total, 0)
+                )}
+              </p>
+            </div>
+            <div>
+              <p className='text-xs'>%:</p>
+              <p className='font-bold'>
+                {thousandFormatter(
+                  cash.reduce((sum: number, item: any) => sum + item.total, 0)
+                )}
+              </p>
+            </div>
           </CardFooter>
         </div>
       </Card>

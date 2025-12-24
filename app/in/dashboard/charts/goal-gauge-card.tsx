@@ -14,6 +14,8 @@ import { Asset } from '@/lib/types';
 import { Button } from '../../../../components/ui/button';
 import { addGoal, updateGoal } from '@/lib/actions';
 import { GoalGauge } from '@/app/in/dashboard/charts/goal-gauge';
+import { thousandFormatter } from '@/lib/utils';
+import { XIcon } from 'lucide-react';
 
 export const GoalGaugeCard = ({
   assets,
@@ -43,6 +45,10 @@ export const GoalGaugeCard = ({
     if (success) {
       setUpdated(true);
     }
+  };
+
+  const handleClear = () => {
+    setGoalInput(0);
   };
 
   useEffect(() => {
@@ -77,35 +83,46 @@ export const GoalGaugeCard = ({
               <div className='flex flex-col items-center w-full gap-2'>
                 <h3 className='font-bold text-xs'>Current Goal</h3>
                 <Input
-                  // placeholder={numberFormatterNoDecimals.format(goalInput)}
-                  className='h-8 w-[10ch] text-center text-slate-400 placeholder:text-xs placeholder:text-center placeholder:text-slate-200'
-                  value={goalInput}
-                  onChange={(e) => setGoalInput(Number(e.target.value))}
+                  className='h-8 w-[13ch] text-center text-slate-400 placeholder:text-xs placeholder:text-center placeholder:text-slate-200'
+                  value={goalInput === 0 ? '' : thousandFormatter(goalInput)}
+                  onChange={(e) => {
+                    const rawValue = e.target.value.replace(/\D/g, '');
+                    setGoalInput(Number(rawValue));
+                  }}
                 />
-                {goalInput === 0 ? (
+                <div className='flex gap-2'>
+                  {goalInput === 0 ? (
+                    <Button
+                      size='md'
+                      variant={'outline'}
+                      className='w-[9ch] border-2 border-slate-500'
+                      onClick={() => {
+                        handleSubmitAdd();
+                      }}
+                    >
+                      {updated ? <p>{`Added! ✓`}</p> : <p>Add Goal</p>}
+                    </Button>
+                  ) : (
+                    <Button
+                      size='md'
+                      variant={'outline'}
+                      className='w-[9ch] border-2 border-slate-500'
+                      onClick={() => {
+                        handleSubmitUpdate();
+                      }}
+                    >
+                      {!updated && <p>{`Update`}</p>}
+                      {updated && <p>{`Updated ✓`}</p>}
+                    </Button>
+                  )}
                   <Button
-                    size='md'
-                    variant={'outline'}
-                    className='w-[10ch] border-2 border-slate-500'
-                    onClick={() => {
-                      handleSubmitAdd();
-                    }}
+                    onClick={() => handleClear()}
+                    variant='outline'
+                    className='h-8 rounded-[2px] px-1 border-2 border-slate-500'
                   >
-                    {updated ? <p>{`Added! ✓`}</p> : <p>Add Goal</p>}
+                    <XIcon size={16} strokeWidth={2} />
                   </Button>
-                ) : (
-                  <Button
-                    size='md'
-                    variant={'outline'}
-                    className='w-[10ch] border-2 border-slate-500'
-                    onClick={() => {
-                      handleSubmitUpdate();
-                    }}
-                  >
-                    Update
-                    {updated && <p>{`d ✓`}</p>}
-                  </Button>
-                )}
+                </div>
               </div>
             </div>
           </CardContent>
