@@ -80,22 +80,27 @@ export default function CashAlert({
                 <p>Go to Assets</p>
               )}
             </Button>
-            <div className='flex gap-4 text-[12px] items-end'>
-              <div>
-                <p>Total:</p>
-                <p>
-                  {thousandFormatter(
-                    cash.reduce((sum: number, item: any) => sum + item.total, 0)
-                  )}
-                </p>
+            {cash.length > 0 && (
+              <div className='flex gap-4 text-[12px] items-end'>
+                <div>
+                  <p>Total:</p>
+                  <p>
+                    {thousandFormatter(
+                      cash.reduce(
+                        (sum: number, item: any) => sum + item.total,
+                        0
+                      )
+                    )}
+                  </p>
+                </div>
+                <div>
+                  <PieChartIcon size={16} className='mr-2' />
+                  <p>{`${numberFormatter.format(
+                    (totalCash / totalNetWorth) * 100
+                  )}%`}</p>
+                </div>
               </div>
-              <div>
-                <PieChartIcon size={16} className='mr-2' />
-                <p>{`${numberFormatter.format(
-                  (totalCash / totalNetWorth) * 100
-                )}%`}</p>
-              </div>
-            </div>
+            )}
           </CardFooter>
         </div>
       </Card>

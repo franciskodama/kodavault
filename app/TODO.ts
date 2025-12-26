@@ -5,6 +5,7 @@
 // No Cash Available Card when there is no cash (alerting that is always good to have some cash available for oportunities)
 // Create system for creating Banking Accounts, Exchanges, etc
 // what put in the place of the duplicated CardTotal total by Wallet?
+// More gap between the lines on key assets card
 
 // Add Asset Symbol must save it in capital letters
 // Asset Page Bell must be in impact color to see it and even shake it
@@ -104,6 +105,7 @@
 // Coincodex script is not working + Styles
 // Gauge Input clear button
 // Notification: Cash Available Card --> what's the total in Cash and % of the Cash Available against the Net Worth?
+// Notification: Cash Available Card --> Don't show total and % if there is no cash available
 
 // TODO: DONE =======================================================================================
 // NaN in Card All Currency: code more resilient and warning if we get a NaN
