@@ -121,7 +121,7 @@ export const getWallets = (subtype: string) => {
     case 'Stock-USD':
       return ['Wealthsimple', 'ClearXP'];
     case 'Stock-CAD':
-      return ['Wealthsimple', 'Tangerine', 'Scotiabank'];
+      return ['Wealthsimple'];
     case 'Stock-BRL':
       return ['ClearXP', 'XP'];
     case 'Cash-USD':
@@ -445,6 +445,8 @@ export const getCurrencies = (subtype: string) => {
 
 export const cryptoWallets = ['Ledger', 'Trezor', 'Metamask'];
 
+export const assetAccount = ['TFSA', 'FHSA', 'Checking', 'Savings'];
+
 export const cryptoAccounts = [
   'Solana',
   'Cardano',
@@ -472,13 +474,13 @@ export const getAccounts = (subtype: string) => {
     case 'Altcoin':
       return cryptoAccounts.sort();
     case 'Stock-USD':
-      return ['Investment', 'TFSA', 'FHSA'];
+      return ['TFSA', 'FHSA'];
     case 'Stock-CAD':
       return ['TFSA', 'FHSA'];
     case 'Stock-BRL':
       return ['Investment'];
     case 'Cash-USD':
-      return ['Investment'];
+      return ['Checking', 'Investment'];
     case 'Cash-CAD':
       return ['Checking', 'TFSA', 'FHSA'];
     case 'Cash-BRL':
