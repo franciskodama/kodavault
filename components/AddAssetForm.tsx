@@ -119,7 +119,7 @@ export function AddAssetForm() {
       ...formData,
       uid: uid,
       type: assetType ? assetType : '',
-      tag: formData.tag?.trim() === '' ? '-' : formData.tag,
+      tag: formData.tag?.trim() === '' ? 'No Tag' : formData.tag,
     });
 
     if (result) {
