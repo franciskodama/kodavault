@@ -64,7 +64,7 @@ export const CardKeyAssets = ({
             </div>
             {keyAssetsState.length > 0 ? (
               keyAssetsState.map((item: KeyAssetsPriced) => (
-                <div key={item.id} className='grid grid-cols-3 mb-1'>
+                <div key={item.id} className='grid grid-cols-3 mb-2'>
                   <h3>{item.asset}</h3>
                   <p className='text-right mr-4'>
                     ${numberFormatter.format(item.price)}
