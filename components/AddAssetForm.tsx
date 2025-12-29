@@ -221,28 +221,30 @@ export function AddAssetForm() {
             <div className={classDiv}>
               {assetWallet.includes(watch('wallet')) ||
               cryptoWallets.includes(watch('wallet')) ? (
-                <ul className={classUl}>
+                <div>
                   <h3 className={classTitle}>Account</h3>
-                  {assetAccount.map((accountOption) => (
-                    <li key={accountOption}>
-                      <input
-                        className='hidden peer'
-                        type='radio'
-                        value={accountOption}
-                        id={accountOption}
-                        {...register('account', {
-                          required: 'Please select an account',
-                        })}
-                      />
-                      <label
-                        className={classLabelRadio}
-                        htmlFor={accountOption}
-                      >
-                        <span>{accountOption}</span>
-                      </label>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className={classUl}>
+                    {assetAccount.map((accountOption) => (
+                      <li key={accountOption}>
+                        <input
+                          className='hidden peer'
+                          type='radio'
+                          value={accountOption}
+                          id={accountOption}
+                          {...register('account', {
+                            required: 'Please select an account',
+                          })}
+                        />
+                        <label
+                          className={classLabelRadio}
+                          htmlFor={accountOption}
+                        >
+                          <span>{accountOption}</span>
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ) : (
                 <div>
                   <input
