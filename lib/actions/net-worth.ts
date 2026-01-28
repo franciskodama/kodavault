@@ -23,7 +23,7 @@ export async function addNetWorthEvolution(
     });
     return true;
   } catch (error) {
-    console.log('Error in addNetWorthEvolution:', error);
+    console.error('Error in addNetWorthEvolution:', error);
     return false;
   }
 }

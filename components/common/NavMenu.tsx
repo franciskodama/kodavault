@@ -10,9 +10,9 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from './ui/sheet';
-import { AddAssetForm } from './AddAssetForm';
-import { Button } from './ui/button';
+} from '@/components/ui/sheet';
+import { AddAssetForm } from '@/components/forms/AddAssetForm';
+import { Button } from '@/components/ui/button';
 
 type MenuItem = {
   label: string;

@@ -7,14 +7,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../components/ui/card';
+} from '@/components/ui/card';
 import {
   numberFormatterNoDecimals,
   getTotalByKey,
   numberFormatter,
   getQtyOfAssets,
-} from '../lib/utils';
-import { Asset } from '../lib/types';
+} from '@/lib/utils';
+import { Asset } from '@/lib/types';
 import {
   Sheet,
   SheetContent,
@@ -22,14 +22,14 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from './ui/sheet';
+} from '@/components/ui/sheet';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { AddAssetForm } from './AddAssetForm';
+import { AddAssetForm } from '@/components/forms/AddAssetForm';
 import { Gem } from 'lucide-react';
 
 export const CardTotal = ({

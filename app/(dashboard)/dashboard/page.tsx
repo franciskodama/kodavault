@@ -3,7 +3,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
 import { getGoal, getKeyAssets, getNetWorthEvolution } from '@/lib/actions';
 import { getCurrencies } from '@/lib/currency.server';
-import { Loading } from '@/components/Loading';
+import { Loading } from '@/components/common/Loading';
 import Dashboard from './dashboard';
 
 import { fetchQuotesForCryptos } from '@/lib/crypto.server';
@@ -15,19 +15,7 @@ export default async function DashboardPage() {
   const uid = user?.emailAddresses?.[0]?.emailAddress;
   const userName = user?.firstName;
 
-  // =============== FOR TESTING ===============
-  // const quotes = await fetchQuotesForCryptos('BTC');
-  // console.log('---  🚀 ---> | quotes:', quotes.data['BTC'][0].tags);
-
-  // const globalData = await getGlobalData();
-  // console.log('---  🚀 ---> | globalData:', globalData);
-
-  // ====== IN CASE WE NEED IN THE FUTURE ======
-  // BRL:
-  // const currencyRatesFromApi = await getCurrenciesFromApi();
-  // const usdBrl = currencyRatesFromApi?.data.BRL || 0;
-
-  // ---------------------------------------------------------------
+  // USD + CAD + BRL
 
   // USD + CAD + BRL
   const currencyRates = await getCurrencies();

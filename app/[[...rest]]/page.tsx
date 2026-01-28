@@ -3,8 +3,8 @@ import { redirect } from 'next/navigation';
 
 import { auth } from '@clerk/nextjs/server';
 
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
 import SignInPage from '../sign-in/page';
 
 export default async function HomePage() {

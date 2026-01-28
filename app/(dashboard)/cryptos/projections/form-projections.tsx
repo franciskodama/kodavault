@@ -10,22 +10,13 @@ import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
 import { useUser } from '@clerk/nextjs';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  currencyFormatter,
-  numberFormatter,
-  numberFormatterNoDecimals,
-} from '@/lib/utils';
 
 export const FormProjections = ({
   assetRow,
   onClose,
-  setTableData,
 }: {
   assetRow: CryptoWithAthAndProjections;
   onClose: () => void;
-  setTableData: React.Dispatch<
-    React.SetStateAction<CryptoWithAthAndProjections[]>
-  >;
 }) => {
   const { refreshAssets } = useAssetsContext();
   const { toast } = useToast();
@@ -77,34 +68,7 @@ export const FormProjections = ({
 
         setValue('projection', undefined, { shouldValidate: true });
         setValue('source', '', { shouldValidate: true });
-        setTableData((prev) =>
-          prev.map((item) =>
-            item.asset === assetRow.asset
-              ? {
-                  ...item,
-                  projection: data.projection,
-                  source: data.source,
-                  note: data.note,
-                  projectionTotal: data.projection
-                    ? currencyFormatter(data.projection * item.qtyNumber)
-                    : currencyFormatter(item.priceNumber * item.qtyNumber),
-                  projectionXPotential: data.projection
-                    ? numberFormatter.format(
-                        (data.projection * item.qtyNumber) /
-                          (item.priceNumber * item.qtyNumber)
-                      )
-                    : 0,
-                  projectionPercentagePotential: data.projection
-                    ? numberFormatterNoDecimals.format(
-                        ((data.projection - assetRow.priceNumber) /
-                          assetRow.priceNumber) *
-                          100
-                      )
-                    : 0,
-                }
-              : item
-          )
-        );
+
         onClose();
         await refreshAssets();
       } else {

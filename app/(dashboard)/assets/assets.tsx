@@ -1,6 +1,6 @@
 'use client';
 
-import { Loading } from '@/components/Loading';
+import { Loading } from '@/components/common/Loading';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { thousandAndDecimalFormatter, thousandFormatter } from '@/lib/utils';

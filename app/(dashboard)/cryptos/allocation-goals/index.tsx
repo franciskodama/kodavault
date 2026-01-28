@@ -20,7 +20,7 @@ import {
 } from '@/lib/utils';
 import { columns } from './columns';
 import { getCryptoGoals } from '@/lib/actions';
-import MessageInTable from '@/components/MessageInTable';
+import MessageInTable from '@/components/common/MessageInTable';
 import { AllCryptosData } from '../cryptos';
 
 export type MergedArrayItem = {

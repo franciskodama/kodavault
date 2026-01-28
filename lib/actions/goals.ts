@@ -15,7 +15,7 @@ export async function addGoal(uid: string, goal: number) {
     });
     return true;
   } catch (error) {
-    console.log('Error in addGoal:', error);
+    console.error('Error in addGoal:', error);
     return false;
   }
 }
@@ -48,7 +48,7 @@ export async function updateGoal(uid: string, goal: number) {
     });
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 }

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { AspectRatio } from './ui/aspect-ratio';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 import {
   Sheet,
   SheetContent,
@@ -7,8 +7,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from './ui/sheet';
-import { AddAssetForm } from './AddAssetForm';
+} from '@/components/ui/sheet';
+import { AddAssetForm } from '@/components/forms/AddAssetForm';
 
 export type MessageInTable = {
   image: string;

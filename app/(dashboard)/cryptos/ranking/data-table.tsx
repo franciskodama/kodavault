@@ -29,7 +29,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { Input } from '@/components/ui/input';
-import MessageInTable from '@/components/MessageInTable';
+import MessageInTable from '@/components/common/MessageInTable';
 import {
   currencyFormatter,
   thousandAndDecimalFormatter,

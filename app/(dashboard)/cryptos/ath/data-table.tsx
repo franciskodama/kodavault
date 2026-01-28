@@ -32,7 +32,7 @@ import { athTotals } from '.';
 import { Input } from '@/components/ui/input';
 import { thousandFormatter } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
-import MessageInTable from '@/components/MessageInTable';
+import MessageInTable from '@/components/common/MessageInTable';
 import { XIcon } from 'lucide-react';
 
 type DataTableProps<TData, TValue> = {

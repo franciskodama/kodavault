@@ -1,7 +1,7 @@
 'use client';
 
 import Main from './main/main';
-import { Loading } from '@/components/Loading';
+import { Loading } from '@/components/common/Loading';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AllocationGoals from './allocation-goals';
@@ -14,6 +14,7 @@ import {
   numberFormatter,
   numberFormatterNoDecimals,
 } from '@/lib/utils';
+import { useMemo } from 'react';
 
 export type AllCryptosData = {
   symbol: string;
@@ -50,79 +51,82 @@ export default function Cryptos({
 }) {
   const { assetsByType, isLoading } = useAssetsContext();
 
-  const addedAth: Asset[] = assetsByType.Crypto?.map((item: any) => {
-    const existingAsset = allCryptosData.find(
-      (el: AllCryptosData) => el.symbol === item.asset
-    );
-    return {
-      ...item,
-      ath: existingAsset?.ath ? existingAsset.ath : 0,
-      image: existingAsset?.image ? existingAsset.image : '',
-    };
-  });
-
-  const addedAthAndProjections: Asset[] = addedAth?.map((item: any) => {
-    const existingAsset = projections.find(
-      (el: ProjectionsData) => el.asset === item.asset
-    );
-    return {
-      ...item,
-      projection: existingAsset?.projection ? existingAsset.projection : 0,
-      source: existingAsset?.source ? existingAsset.source : '',
-      note: existingAsset?.note ? existingAsset.note : '',
-    };
-  });
-
-  const sumQtyOfSameAssets: Asset[] = addedAthAndProjections?.reduce(
-    (acc: any, item: any) => {
-      const existingAsset = acc.find((el: any) => el.asset === item.asset);
-      if (existingAsset) {
-        existingAsset.qty += item.qty;
-        existingAsset.currentTotal += item.total;
-      } else {
-        acc.push(item);
-      }
-      return acc;
-    },
-    []
-  );
-
   const cryptosWithATHsAndProjections: CryptoWithAthAndProjections[] =
-    sumQtyOfSameAssets?.map((item: any) => {
-      return {
-        asset: item.asset,
-        image: item.image,
-        price: currencyFormatter(item.price),
-        priceNumber: item.price,
-        qty: numberFormatter.format(item.qty),
-        qtyNumber: item.qty,
-        currentTotal: currencyFormatter(item.qty * item.price),
-        ath: currencyFormatter(item.ath),
-        athTotalNumber: item.ath * item.qty,
-        athTotalCurrency: currencyFormatter(item.ath * item.qty),
-        athXPotential: numberFormatter.format(item.ath / item.price),
-        athPercentagePotential: numberFormatterNoDecimals.format(
-          ((item.ath - item.price) / item.price) * 100
-        ),
-        projection: item.projection,
-        projectionTotal: item.projection
-          ? currencyFormatter(item.projection * item.qty)
-          : currencyFormatter(item.price * item.qty),
-        projectionTotalNumber: item.projection
-          ? item.projection * item.qty
-          : item.price * item.qty,
-        projectionXPotential: numberFormatter.format(
-          (item.projection * item.qty) / (item.price * item.qty)
-        ),
-        projectionPercentagePotential: item.projection
-          ? numberFormatterNoDecimals.format(
-              ((item.projection - item.price) / item.price) * 100
-            )
-          : 0,
-        source: item.source,
-        note: item.note,
-      };
-    });
+    useMemo(() => {
+      const addedAth: Asset[] =
+        assetsByType.Crypto?.map((item: any) => {
+          const existingAsset = allCryptosData.find(
+            (el: AllCryptosData) => el.symbol === item.asset
+          );
+          return {
+            ...item,
+            ath: existingAsset?.ath ? existingAsset.ath : 0,
+            image: existingAsset?.image ? existingAsset.image : '',
+          };
+        }) || [];
+
+      const addedAthAndProjections: Asset[] = addedAth?.map((item: any) => {
+        const existingAsset = projections.find(
+          (el: ProjectionsData) => el.asset === item.asset
+        );
+        return {
+          ...item,
+          projection: existingAsset?.projection ? existingAsset.projection : 0,
+          source: existingAsset?.source ? existingAsset.source : '',
+          note: existingAsset?.note ? existingAsset.note : '',
+        };
+      });
+
+      const sumQtyOfSameAssets: Asset[] = addedAthAndProjections?.reduce(
+        (acc: any, item: any) => {
+          const existingAsset = acc.find((el: any) => el.asset === item.asset);
+          if (existingAsset) {
+            existingAsset.qty += item.qty;
+            existingAsset.currentTotal += item.total;
+          } else {
+            acc.push(item);
+          }
+          return acc;
+        },
+        []
+      );
+
+      return sumQtyOfSameAssets?.map((item: any) => {
+        return {
+          asset: item.asset,
+          image: item.image,
+          price: currencyFormatter(item.price),
+          priceNumber: item.price,
+          qty: numberFormatter.format(item.qty),
+          qtyNumber: item.qty,
+          currentTotal: currencyFormatter(item.qty * item.price),
+          ath: currencyFormatter(item.ath),
+          athTotalNumber: item.ath * item.qty,
+          athTotalCurrency: currencyFormatter(item.ath * item.qty),
+          athXPotential: numberFormatter.format(item.ath / item.price),
+          athPercentagePotential: numberFormatterNoDecimals.format(
+            ((item.ath - item.price) / item.price) * 100
+          ),
+          projection: item.projection,
+          projectionTotal: item.projection
+            ? currencyFormatter(item.projection * item.qty)
+            : currencyFormatter(item.price * item.qty),
+          projectionTotalNumber: item.projection
+            ? item.projection * item.qty
+            : item.price * item.qty,
+          projectionXPotential: numberFormatter.format(
+            (item.projection * item.qty) / (item.price * item.qty)
+          ),
+          projectionPercentagePotential: item.projection
+            ? numberFormatterNoDecimals.format(
+                ((item.projection - item.price) / item.price) * 100
+              )
+            : 0,
+          source: item.source,
+          note: item.note,
+        };
+      });
+    }, [assetsByType.Crypto, allCryptosData, projections]);
 
   return (
     <>

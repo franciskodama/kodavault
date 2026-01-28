@@ -15,14 +15,14 @@ import TagCard from './tag-card';
 import NotificationsPanel from './notifications/notifications-panel';
 import { CoinCodexWidget } from './coin-codex-widget';
 import { currencyFormatter } from '@/lib/utils';
-import { CardTotal } from '@/components/CardTotal';
-import { CardTotalAllCurrency } from '@/components/CardAllCurrencies';
-import { CardCryptosForTrading } from '@/components/CardCryptosForTrading';
+import { CardTotal } from '@/components/dashboard/CardTotal';
+import { CardTotalAllCurrency } from '@/components/dashboard/CardAllCurrencies';
+import { CardCryptosForTrading } from '@/components/dashboard/CardCryptosForTrading';
 import { GoalGaugeCard } from './charts/goal-gauge-card';
-import { CardNextPurchases } from '@/components/CardNextPurchases';
-import { CardAssetsOnTheRise } from '@/components/CardAssetsOnTheRise';
-import { CardKeyAssets } from '@/components/CardKeyAssets';
-import { CardLongsAndShorts } from '@/components/CardLongsAndShorts';
+import { CardNextPurchases } from '@/components/dashboard/CardNextPurchases';
+import { CardAssetsOnTheRise } from '@/components/dashboard/CardAssetsOnTheRise';
+import { CardKeyAssets } from '@/components/dashboard/CardKeyAssets';
+import { CardLongsAndShorts } from '@/components/dashboard/CardLongsAndShorts';
 import Transactions from './transactions/transactions';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {

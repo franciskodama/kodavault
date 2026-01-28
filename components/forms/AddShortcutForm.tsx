@@ -5,9 +5,9 @@ import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler, Form } from 'react-hook-form';
 
 import { addShortcut } from '@/lib/actions';
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
 import { ShortcutType } from '@/lib/types';
-import { useToast } from './ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import {
   Command,
   CommandGroup,

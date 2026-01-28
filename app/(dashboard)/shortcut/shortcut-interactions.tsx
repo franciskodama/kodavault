@@ -31,7 +31,7 @@ import {
 } from '@/components/ui/sheet';
 import { toast } from '@/components/ui/use-toast';
 
-import { UpdateShortcutForm } from '@/components/UpdateShortcutForm';
+import { UpdateShortcutForm } from '@/components/forms/UpdateShortcutForm';
 import { ShortcutType } from '@/lib/types';
 import { deleteShortcut } from '@/lib/actions';
 import { getColor } from './shortcut';

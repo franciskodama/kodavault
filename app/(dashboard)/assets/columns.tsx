@@ -34,7 +34,7 @@ import { useAssetsContext } from '@/context/AssetsContext';
 import { tableHeaderClass } from '@/lib/classes';
 import { Asset } from '@/lib/types';
 import { deleteAsset, updateReviewedAsset } from '@/lib/actions';
-import { UpdateAssetForm } from '@/components/UpdateAssetForm';
+import { UpdateAssetForm } from '@/components/forms/UpdateAssetForm';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';

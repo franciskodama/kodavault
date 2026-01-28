@@ -42,14 +42,14 @@ import {
 } from '@/components/ui/tooltip';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import MessageInTable from '@/components/MessageInTable';
+import MessageInTable from '@/components/common/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
 import {
   cn,
   thousandAndDecimalFormatter,
   thousandFormatter,
 } from '@/lib/utils';
-import { Loading } from '@/components/Loading';
+import { Loading } from '@/components/common/Loading';
 import StocksNoSymbol from './stocks-no-symbol';
 import { Asset, AssetsByType, UnpricedAsset } from '@/lib/types';
 
@@ -172,6 +172,7 @@ export function DataTable<TData, TValue>({
 
   const handleClickClearAll = () => {
     setValueWalletDropbox('');
+    setValueAccountDropbox('');
     setValueCurrencyDropbox('');
     setValueTypeDropbox('');
     setColumnFilters([]);
@@ -198,6 +199,15 @@ export function DataTable<TData, TValue>({
 
   const filterIsActive = data.length !== filteredAssets.length;
   const inputFilterValue = table.getColumn('asset')?.getFilterValue() as string;
+  const tagFilterValue = table.getColumn('tag')?.getFilterValue() as string;
+
+  const isAnyFilterActive =
+    !!inputFilterValue ||
+    !!tagFilterValue ||
+    !!valueWalletDropbox ||
+    !!valueAccountDropbox ||
+    !!valueCurrencyDropbox ||
+    !!valueTypeDropbox;
 
   if (data.length < 1)
     return (
@@ -560,7 +570,7 @@ export function DataTable<TData, TValue>({
             </div>
           )}
 
-          {inputFilterValue && (
+          {isAnyFilterActive && (
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>

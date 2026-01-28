@@ -1,9 +1,9 @@
-import { CardAssetsBy } from '@/components/CardAssetsBy';
-import { CardTotal } from '@/components/CardTotal';
+import { CardAssetsBy } from '@/components/dashboard/CardAssetsBy';
+import { CardTotal } from '@/components/dashboard/CardTotal';
 import { Asset } from '@/lib/types';
 import { getTotalByKey } from '@/lib/utils';
 import CryptoByWallet from './cryptos-by-wallet';
-import MessageInTable from '@/components/MessageInTable';
+import MessageInTable from '@/components/common/MessageInTable';
 
 export default function Main({ assets }: { assets: Asset[] }) {
   const totalByWallet = getTotalByKey(assets, 'wallet');

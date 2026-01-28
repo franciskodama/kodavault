@@ -6,9 +6,9 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { Asset, Inputs } from '@/lib/types';
 import { updateAsset } from '@/lib/actions';
-import { Button } from './ui/button';
-import { SheetClose } from './ui/sheet';
-import { useToast } from './ui/use-toast';
+import { Button } from '@/components/ui/button';
+import { SheetClose } from '@/components/ui/sheet';
+import { useToast } from '@/components/ui/use-toast';
 
 import {
   getAccounts,

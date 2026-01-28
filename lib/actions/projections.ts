@@ -3,6 +3,7 @@
 import { v4 } from 'uuid';
 import prisma from '@/lib/prisma';
 import { CryptoProjection } from '@/lib/types';
+import { revalidatePath } from 'next/cache';
 
 export async function addProjection(
   uid: string,
@@ -23,7 +24,7 @@ export async function addProjection(
     });
     return true;
   } catch (error) {
-    console.log('Error in adding Projection:', error);
+    console.error('Error in adding Projection:', error);
     return false;
   }
 }
@@ -54,9 +55,10 @@ export async function updateProjection({ data }: { data: CryptoProjection }) {
         note: note ?? '',
       },
     });
+    revalidatePath('/cryptos');
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 }

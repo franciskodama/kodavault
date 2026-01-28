@@ -56,7 +56,7 @@ export async function updateCoinShareGoal(formData: CryptoGoalAllocation) {
 
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 }

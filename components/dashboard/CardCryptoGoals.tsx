@@ -5,14 +5,14 @@
 //   CardFooter,
 //   CardHeader,
 //   CardTitle,
-// } from '../components/ui/card';
+// } from '@/components/ui/card';
 
 // import {
 //   numberFormatterNoDecimals,
 //   getTotalByKey,
 //   numberFormatter,
-// } from '../lib/utils';
-// import { Asset } from '../lib/types';
+// } from '@/lib/utils';
+// import { Asset } from '@/lib/types';
 // import { useUser } from '@clerk/nextjs';
 // import { useEffect, useState } from 'react';
 // import { getCryptoGoals } from '@/lib/actions';

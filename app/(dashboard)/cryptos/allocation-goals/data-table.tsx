@@ -26,7 +26,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import MessageInTable from '@/components/MessageInTable';
+import MessageInTable from '@/components/common/MessageInTable';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { XIcon } from 'lucide-react';

@@ -7,10 +7,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from './ui/card';
+} from '@/components/ui/card';
 import { classError } from '@/lib/classes';
-import { numberFormatterNoDecimals, numberFormatter } from '../lib/utils';
-import { Button } from './ui/button';
+import { numberFormatterNoDecimals, numberFormatter } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import { PackagePlusIcon, PencilIcon, Trash2Icon } from 'lucide-react';
 import {
   Dialog,
@@ -26,7 +26,7 @@ import { useUser } from '@clerk/nextjs';
 import { Inputs, KeyAssetsPriced } from '@/lib/types';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { addKeyAsset, deleteKeyAsset, getKeyAssets } from '@/lib/actions';
-import { toast } from './ui/use-toast';
+import { toast } from '@/components/ui/use-toast';
 import { useState } from 'react';
 import { v4 } from 'uuid';
 import { useAssetsContext } from '@/context/AssetsContext';

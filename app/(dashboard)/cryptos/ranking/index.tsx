@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import MessageInTable from '@/components/MessageInTable';
+import MessageInTable from '@/components/common/MessageInTable';
 import { DataTable } from './data-table';
 import { AllCryptosData } from '../cryptos';
 import { columns } from './columns';

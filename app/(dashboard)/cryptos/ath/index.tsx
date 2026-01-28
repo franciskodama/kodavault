@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import MessageInTable from '@/components/MessageInTable';
+import MessageInTable from '@/components/common/MessageInTable';
 import { currencyFormatter } from '@/lib/utils';
 import { CryptoWithAthAndProjections } from '@/lib/types';
 import { DataTable } from './data-table';

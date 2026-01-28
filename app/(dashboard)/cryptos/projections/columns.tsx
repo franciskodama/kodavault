@@ -18,11 +18,7 @@ import { Button } from '@/components/ui/button';
 import { currencyFormatter } from '@/lib/utils';
 import { useState } from 'react';
 
-export function getColumns(
-  setTableData: React.Dispatch<
-    React.SetStateAction<CryptoWithAthAndProjections[]>
-  >
-) {
+export function getColumns() {
   return [
     {
       accessorKey: 'asset',
@@ -168,7 +164,7 @@ export function getColumns(
         return (
           <div className='flex items-center'>
             <p className='w-full text-left'>{assetRow.source}</p>
-            <EditProjection assetRow={assetRow} setTableData={setTableData} />
+            <EditProjection assetRow={assetRow} />
           </div>
         );
       },
@@ -178,12 +174,8 @@ export function getColumns(
 
 function EditProjection({
   assetRow,
-  setTableData,
 }: {
   assetRow: CryptoWithAthAndProjections;
-  setTableData: React.Dispatch<
-    React.SetStateAction<CryptoWithAthAndProjections[]>
-  >;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -204,11 +196,7 @@ function EditProjection({
           <DialogTitle>Edit Asset Projection</DialogTitle>
           <DialogDescription>Adjust your Projection!</DialogDescription>
         </DialogHeader>
-        <FormProjections
-          assetRow={assetRow}
-          onClose={() => setOpen(false)}
-          setTableData={setTableData}
-        />
+        <FormProjections assetRow={assetRow} onClose={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

@@ -37,7 +37,7 @@ export async function addShortcut(formData: ShortcutType) {
     });
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 }
@@ -64,7 +64,7 @@ export async function updateShortcut(formData: ShortcutType) {
     });
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 }
@@ -79,7 +79,7 @@ export async function deleteShortcut(id: string) {
 
     revalidatePath('/shortcut');
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error('🚨 Failed to delete Shortcut');
   }
 }

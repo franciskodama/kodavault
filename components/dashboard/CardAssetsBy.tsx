@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from './ui/card';
+} from '@/components/ui/card';
 import {
   Tooltip,
   TooltipContent,
@@ -18,8 +18,8 @@ import {
   getTotalByKey,
   numberFormatter,
   getQtyOfAssets,
-} from '../lib/utils';
-import { Asset } from '../lib/types';
+} from '@/lib/utils';
+import { Asset } from '@/lib/types';
 
 export const CardAssetsBy = ({
   assetType,

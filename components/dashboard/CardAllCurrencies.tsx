@@ -1,14 +1,14 @@
 'use client';
 
 import { Asset, Currencies, totalArrayProps } from '@/lib/types';
-import { numberFormatter, numberFormatterNoDecimals } from '../lib/utils';
+import { numberFormatter, numberFormatterNoDecimals } from '@/lib/utils';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '../components/ui/card';
+} from '@/components/ui/card';
 
 export const CardTotalAllCurrency = ({
   btcPrice,

@@ -42,7 +42,7 @@ export async function addAsset(formData: Inputs) {
     });
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 }
@@ -88,7 +88,7 @@ export async function updateAsset(formData: Inputs) {
     });
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 }
@@ -103,7 +103,7 @@ export async function deleteAsset(id: string) {
 
     revalidatePath('/assets');
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error('🚨 Failed to delete asset');
   }
 }

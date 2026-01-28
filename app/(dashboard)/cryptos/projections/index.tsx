@@ -1,6 +1,6 @@
-'use-client';
+'use client';
 
-import { Loading } from '@/components/Loading';
+import { Loading } from '@/components/common/Loading';
 import {
   Card,
   CardContent,
@@ -9,10 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import MessageInTable from '@/components/MessageInTable';
+import MessageInTable from '@/components/common/MessageInTable';
 import { CryptoWithAthAndProjections } from '@/lib/types';
 import { DataTable } from './data-table';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { getColumns } from './columns';
 import { currencyFormatter } from '@/lib/utils';
 
@@ -21,20 +21,19 @@ export default function Projections({
 }: {
   cryptosWithATHsAndProjections: CryptoWithAthAndProjections[];
 }) {
-  const [tableData, setTableData] = useState(cryptosWithATHsAndProjections);
+  const sortedAssetsWithProjections: CryptoWithAthAndProjections[] = useMemo(
+    () =>
+      [...cryptosWithATHsAndProjections].sort(
+        (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
+          return (
+            Number(b.projectionXPotential) - Number(a.projectionXPotential)
+          );
+        }
+      ),
+    [cryptosWithATHsAndProjections]
+  );
 
-  const sortedAssetsWithProjections: CryptoWithAthAndProjections[] =
-    cryptosWithATHsAndProjections.sort(
-      (a: CryptoWithAthAndProjections, b: CryptoWithAthAndProjections) => {
-        return Number(b.projectionXPotential) - Number(a.projectionXPotential);
-      }
-    );
-
-  useEffect(() => {
-    setTableData(sortedAssetsWithProjections);
-  }, [sortedAssetsWithProjections]);
-
-  const columns = useMemo(() => getColumns(setTableData), [setTableData]);
+  const columns = useMemo(() => getColumns(), []);
 
   if (!cryptosWithATHsAndProjections) {
     return <Loading />;
@@ -51,7 +50,7 @@ export default function Projections({
 
   return (
     <div className='flex flex-col w-full gap-2'>
-      {tableData.length > 0 ? (
+      {sortedAssetsWithProjections.length > 0 ? (
         <div className='w-full'>
           <Card>
             <div className='flex flex-col justify-between'>
@@ -67,7 +66,10 @@ export default function Projections({
                 </CardHeader>
                 <CardContent>
                   <div>
-                    <DataTable columns={columns} data={tableData} />
+                    <DataTable
+                      columns={columns}
+                      data={sortedAssetsWithProjections}
+                    />
                   </div>
                 </CardContent>
               </div>

@@ -1,4 +1,4 @@
-import { AddAssetForm } from '@/components/AddAssetForm';
+import { AddAssetForm } from '@/components/forms/AddAssetForm';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import {
   Sheet,

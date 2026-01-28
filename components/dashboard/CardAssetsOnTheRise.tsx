@@ -5,26 +5,26 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../components/ui/card';
+} from '@/components/ui/card';
 import {
   numberFormatterNoDecimals,
   getTotalByKey,
   numberFormatter,
-} from '../lib/utils';
+} from '@/lib/utils';
 
-export const CardNextPurchases = () => {
+export const CardAssetsOnTheRise = () => {
   const total = nextPurchases.reduce(
     (sum: number, item) => sum + item.total,
     0
   );
 
   return (
-    <Card className='w-full h-full'>
+    <Card className='w-full'>
       <div className='flex flex-col justify-between h-full'>
         <div className='flex flex-col'>
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
-              <span>Next Purchases</span>
+              <span>Assets on the Rise</span>
               <span className='text-3xl'>🔥</span>
             </CardTitle>
             <CardDescription className='text-xs'>
@@ -55,9 +55,7 @@ export const CardNextPurchases = () => {
         </div>
         <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
           <h3>Total</h3>
-          {numberFormatterNoDecimals.format(
-            nextPurchases.reduce((sum: number, item) => sum + item.total, 0)
-          )}
+          {numberFormatterNoDecimals.format(total)}
         </CardFooter>
       </div>
     </Card>

@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { netWorthChartData } from '@/lib/types';
-import { Loading } from '@/components/Loading';
+import { Loading } from '@/components/common/Loading';
 import Image from 'next/image';
 import { BarChartHorizontalIcon, Hourglass } from 'lucide-react';
 

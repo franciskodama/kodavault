@@ -5,9 +5,9 @@ import { useUser } from '@clerk/nextjs';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { Inputs } from '@/lib/types';
-import { Button } from './ui/button';
-import { SheetClose } from './ui/sheet';
-import { useToast } from './ui/use-toast';
+import { Button } from '@/components/ui/button';
+import { SheetClose } from '@/components/ui/sheet';
+import { useToast } from '@/components/ui/use-toast';
 import { addAsset } from '@/lib/actions';
 import { category_enum_6c7fcd47 } from '@prisma/client';
 
@@ -97,13 +97,6 @@ export function AddAssetForm() {
   }, [assetCurrency, setValue]);
 
   useEffect(() => {
-    if (assetAccount.length === 1) {
-      setValue('account', assetAccount[0]);
-      console.log('---  🚀 ---> | assetAccount:', assetAccount);
-    }
-  }, [assetAccount, setValue]);
-
-  useEffect(() => {
     if (altcoinsCategories.find((coin) => coin.symbol === symbolTyped)) {
       const relatedCategory = getCategoryBySymbol(symbolTyped);
       setValue('category', relatedCategory as category_enum_6c7fcd47);
@@ -112,7 +105,7 @@ export function AddAssetForm() {
 
   const processForm: SubmitHandler<Inputs> = async (formData) => {
     if (!uid) {
-      return console.log('User not logged in');
+      return;
     }
 
     const result = await addAsset({
@@ -259,7 +252,8 @@ export function AddAssetForm() {
               )}
             </div> */}
 
-            {assetWallet.includes(watch('wallet')) ? (
+            {assetWallet.includes(watch('wallet')) ||
+            watch('wallet') === 'Wealthsimple' ? (
               <div className={classDiv}>
                 <h3 className={classTitle}>Account</h3>
                 <ul className={classUl}>

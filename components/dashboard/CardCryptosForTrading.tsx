@@ -5,12 +5,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from './ui/card';
-import { numberFormatterNoDecimals, numberFormatter } from '../lib/utils';
+} from '@/components/ui/card';
+import { numberFormatterNoDecimals, numberFormatter } from '@/lib/utils';
 import { Asset } from '@/lib/types';
 import { v4 } from 'uuid';
 
-export const CardLongsAndShorts = ({ assets }: { assets: Asset[] }) => {
+export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
   const assetsForTrading = assets.reduce<Record<string, Asset[]>>(
     (groupedAssets, asset) => {
       if (!asset) return groupedAssets;
@@ -33,12 +33,12 @@ export const CardLongsAndShorts = ({ assets }: { assets: Asset[] }) => {
   return (
     <Card className='w-full'>
       {tradingAssets && (
-        <div className='flex flex-col justify-between h-full'>
+        <div className='flex flex-col justify-between'>
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
-                <span>Longs and Shorts</span>
-                <span className='text-3xl'>↕️</span>
+                <span>Cryptos for Trading</span>
+                <span className='text-3xl'>🛒</span>
               </CardTitle>
               <CardDescription className='text-xs'>
                 {`Longs and Shorts on these bad boys!`}

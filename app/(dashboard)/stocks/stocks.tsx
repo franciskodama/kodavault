@@ -1,10 +1,10 @@
 'use client';
 
-import { Loading } from '@/components/Loading';
-import { CardTotal } from '@/components/CardTotal';
-import { CardAssetsBy } from '@/components/CardAssetsBy';
+import { Loading } from '@/components/common/Loading';
+import { CardTotal } from '@/components/dashboard/CardTotal';
+import { CardAssetsBy } from '@/components/dashboard/CardAssetsBy';
 import { useAssetsContext } from '@/context/AssetsContext';
-import MessageInTable from '@/components/MessageInTable';
+import MessageInTable from '@/components/common/MessageInTable';
 
 export default function Stocks() {
   const { assets, isLoading } = useAssetsContext();
