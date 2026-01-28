@@ -1,11 +1,11 @@
 // TODO: WORKING ON:
 
 // TODO: NEXT:
-// What if we have more assets than the size of the key card? Let's count how many fits there and then we solve this.
-// Wealthsimple is not showing the type of account TFSA or FHSA when you want to Add an Asset
+// [IN OBSERVATION] What if we have more assets than the size of the key card? Let's count how many fits there and then we solve this.
+// [IN OBSERVATION] Wealthsimple is not showing the type of account TFSA or FHSA when you want to Add an Asset
 // No Cash Available Card when there is no cash (alerting that is always good to have some cash available for oportunities)
-// Create system for creating Banking Accounts, Exchanges, etc
-// what put in the place of the duplicated CardTotal total by Wallet?
+// Create system for creating Banking Accounts, Exchanges, etc. 🚨 Is it even worth the effort?
+// what put in the place of the duplicated CardTotal total by TEST?
 // More gap between the lines on key assets card
 
 // Add Asset Symbol must save it in capital letters

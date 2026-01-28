@@ -121,7 +121,7 @@ export const getWallets = (subtype: string) => {
     case 'Stock-USD':
       return ['Wealthsimple', 'ClearXP'];
     case 'Stock-CAD':
-      return ['Wealthsimple'];
+      return ['Wealthsimple', 'Questrade'];
     case 'Stock-BRL':
       return ['ClearXP', 'XP'];
     case 'Cash-USD':
@@ -447,32 +447,33 @@ export const cryptoWallets = ['Ledger', 'Trezor', 'Metamask'];
 
 export const assetAccount = ['TFSA', 'FHSA', 'Checking', 'Savings'];
 
-export const cryptoAccounts = [
-  'Solana',
-  'Cardano',
-  'Tron',
-  'Near',
-  'Polkadot',
-  'Stacks',
-  'Dogecoin',
-  'Ethereum',
-  'ICP',
-  'Filecoin',
-  'Astar',
-  'Ton',
-  'Binance BSC',
-  'Bitcoin/Segwit',
-  'Polygon',
-];
+// export const cryptoAccounts = [
+//   'Solana',
+//   'Cardano',
+//   'Tron',
+//   'Near',
+//   'Polkadot',
+//   'Stacks',
+//   'Dogecoin',
+//   'Ethereum',
+//   'ICP',
+//   'Filecoin',
+//   'Astar',
+//   'Ton',
+//   'Binance BSC',
+//   'Bitcoin/Segwit',
+//   'Polygon',
+// ];
 
 export const getAccounts = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
       return ['Bitcoin/Segwit'];
     case 'ETH':
-      return cryptoAccounts.sort();
+      // return cryptoAccounts.sort();
+      return ['N/A'];
     case 'Altcoin':
-      return cryptoAccounts.sort();
+      return ['N/A'];
     case 'Stock-USD':
       return ['TFSA', 'FHSA'];
     case 'Stock-CAD':

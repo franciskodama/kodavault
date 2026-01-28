@@ -218,7 +218,7 @@ export function AddAssetForm() {
             </div>
 
             {/* --- CONSOLIDATED ACCOUNT SECTION --- */}
-            <div className={classDiv}>
+            {/* <div className={classDiv}>
               {assetWallet.includes(watch('wallet')) ||
               cryptoWallets.includes(watch('wallet')) ? (
                 <div>
@@ -257,9 +257,9 @@ export function AddAssetForm() {
               {errors.account && (
                 <p className={classError}>{errors.account.message}</p>
               )}
-            </div>
+            </div> */}
 
-            {/* {assetWallet.includes(watch('wallet')) ? (
+            {assetWallet.includes(watch('wallet')) ? (
               <div className={classDiv}>
                 <h3 className={classTitle}>Account</h3>
                 <ul className={classUl}>
@@ -292,7 +292,7 @@ export function AddAssetForm() {
               </div>
             )}
 
-            {cryptoWallets.includes(watch('wallet')) ? (
+            {/* {cryptoWallets.includes(watch('wallet')) ? (
               <div className={classDiv}>
                 <h3 className={classTitle}>Account</h3>
                 <ul className={classUl}>
