@@ -51,7 +51,11 @@ export const FormAllocationGoal = ({
 
   const processForm: SubmitHandler<CryptoGoalAllocation> = async (data) => {
     if (!assetRow.uid) {
-      return console.log('User not logged in');
+      return toast({
+        title: 'Authentication Error',
+        description: 'You must be logged in to update goals.',
+        variant: 'destructive',
+      });
     }
 
     const result = await updateCoinShareGoal(data);

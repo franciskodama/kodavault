@@ -16,12 +16,12 @@ import { HeartHandshake, PocketKnife, Shield, Terminal, X } from 'lucide-react';
 import { AlertDialogCancel } from '@radix-ui/react-alert-dialog';
 
 const menuItems = [
-  { label: 'Dashboard', href: '/in/dashboard' },
-  { label: 'Cryptos', href: '/in/cryptos' },
-  { label: 'Stocks', href: '/in/stocks' },
-  { label: 'Assets', href: '/in/assets' },
-  { label: 'Shortcuts', href: '/in/shortcut' },
-  { label: 'Goals', href: '/in/goals' },
+  { label: 'Dashboard', href: '/dashboard' },
+  { label: 'Cryptos', href: '/cryptos' },
+  { label: 'Stocks', href: '/stocks' },
+  { label: 'Assets', href: '/assets' },
+  { label: 'Shortcuts', href: '/shortcut' },
+  { label: 'Goals', href: '/goals' },
 ];
 
 export default function Footer() {

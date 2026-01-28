@@ -62,11 +62,11 @@ export default function NavMenu() {
 }
 
 const menuItems = [
-  { label: 'Dashboard', href: '/in/dashboard', pathname: '/in' },
-  { label: 'Cryptos', href: '/in/cryptos', pathname: '/in/cryptos' },
-  { label: 'Stocks', href: '/in/stocks', pathname: '/in/stocks' },
-  { label: 'Assets', href: '/in/assets', pathname: '/in/assets' },
-  { label: 'Elliott', href: '/in/elliott', pathname: '/in/elliott' },
-  { label: 'Shortcut', href: '/in/shortcut', pathname: '/in/shortcut' },
-  { label: 'Goal', href: '/in/retirement', pathname: '/in/retirement' },
+  { label: 'Dashboard', href: '/dashboard', pathname: '/dashboard' },
+  { label: 'Cryptos', href: '/cryptos', pathname: '/cryptos' },
+  { label: 'Stocks', href: '/stocks', pathname: '/stocks' },
+  { label: 'Assets', href: '/assets', pathname: '/assets' },
+  { label: 'Elliott', href: '/elliott', pathname: '/elliott' },
+  { label: 'Shortcut', href: '/shortcut', pathname: '/shortcut' },
+  { label: 'Goal', href: '/retirement', pathname: '/retirement' },
 ];

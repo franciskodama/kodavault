@@ -140,7 +140,7 @@ export default function AllocationGoals({
         share: `${numberFormatter.format((total / tableTotal) * 100)} %`,
         goal: goalData ? goalData.goal : 0,
         offset: thousandFormatter(
-          Number(goalData && tableTotal * (goalData.goal / 100) - total)
+          Number(tableTotal * ((goalData?.goal || 0) / 100) - total)
         ),
         priority: goalData ? goalData.priority : null,
         obs: goalData ? goalData.obs : null,

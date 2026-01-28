@@ -173,7 +173,7 @@ export function ShortcutInteractions({
                                       onClick={() => {
                                         if (shortcut) {
                                           handleDeleteShortcut(shortcut.id);
-                                          console.log('DELETED WAS CLICKED');
+
                                           toast({
                                             title: 'Shortcut gone! 💀',
                                             description: `The Shortcut ${shortcut.name} has been successfully deleted!`,

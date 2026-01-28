@@ -5,7 +5,6 @@ import { neobrutalism } from '@clerk/themes';
 
 import './../components/ui/globals.css';
 import { Outfit, Inter } from 'next/font/google';
-import Template from './in/template';
 
 const outfit = Outfit({ subsets: ['latin'], display: 'swap' });
 

@@ -4,7 +4,7 @@ import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
 import { getGoal, getKeyAssets, getNetWorthEvolution } from '@/lib/actions';
 import { getCurrencies } from '@/lib/currency.server';
 import { Loading } from '@/components/Loading';
-import Dashboard from './dashboard/dashboard';
+import Dashboard from './dashboard';
 
 import { fetchQuotesForCryptos } from '@/lib/crypto.server';
 import { KeyAsset } from '@prisma/client';

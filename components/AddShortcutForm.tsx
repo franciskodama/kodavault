@@ -21,7 +21,11 @@ import {
 } from '@/components/ui/popover';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { allCategories, allColors, getColor } from '@/app/in/shortcut/shortcut';
+import {
+  allCategories,
+  allColors,
+  getColor,
+} from '@/app/(dashboard)/shortcut/shortcut';
 import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
 import { classError } from '@/lib/classes';
 

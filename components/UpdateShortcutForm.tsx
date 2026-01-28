@@ -10,7 +10,11 @@ import { updateShortcut } from '@/lib/actions';
 import { Button } from './ui/button';
 import { SheetClose } from './ui/sheet';
 import { useToast } from './ui/use-toast';
-import { allCategories, allColors, getColor } from '@/app/in/shortcut/shortcut';
+import {
+  allCategories,
+  allColors,
+  getColor,
+} from '@/app/(dashboard)/shortcut/shortcut';
 import { classError } from '@/lib/classes';
 
 export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {

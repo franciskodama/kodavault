@@ -32,7 +32,7 @@ export default function CashAlert({
   const firstFiveAssets = getLimitedNumberOfAssets(cash, 5);
 
   const handleClick = () => {
-    router.push('/in/assets?type=Cash');
+    router.push('/assets?type=Cash');
   };
 
   return (

@@ -17,7 +17,7 @@ export default function NoNotifications() {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push('/in/retirement');
+    router.push('/retirement');
   };
 
   return (

@@ -47,7 +47,7 @@
 // If we need to change auth(): https://www.youtube.com/shorts/x6hrvwNzj10s
 
 // TODO: ERRORS:
-// NaN Allocation Goals, Offset column
+
 // On Cryptos Page file:      {assetsByType.Crypto.length > 0 ? (
 
 // TODO: PRIORITIES 1:

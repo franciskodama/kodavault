@@ -13,7 +13,7 @@ import { Input } from '../../../../components/ui/input';
 import { Asset } from '@/lib/types';
 import { Button } from '../../../../components/ui/button';
 import { addGoal, updateGoal } from '@/lib/actions';
-import { GoalGauge } from '@/app/in/dashboard/charts/goal-gauge';
+import { GoalGauge } from '@/app/(dashboard)/dashboard/charts/goal-gauge';
 import { thousandFormatter } from '@/lib/utils';
 import { XIcon } from 'lucide-react';
 
