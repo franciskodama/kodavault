@@ -14,7 +14,6 @@ import { category_enum_6c7fcd47 } from '@prisma/client';
 import {
   altcoinsCategories,
   categoryOptions,
-  cryptoAccounts,
   cryptoWallets,
   fixedSymbolsArr,
   getAccounts,
@@ -100,6 +99,7 @@ export function AddAssetForm() {
   useEffect(() => {
     if (assetAccount.length === 1) {
       setValue('account', assetAccount[0]);
+      console.log('---  🚀 ---> | assetAccount:', assetAccount);
     }
   }, [assetAccount, setValue]);
 
@@ -217,6 +217,115 @@ export function AddAssetForm() {
               </ul>
             </div>
 
+            {/* --- CONSOLIDATED ACCOUNT SECTION --- */}
+            {/* <div className={classDiv}>
+              {assetWallet.includes(watch('wallet')) ||
+              cryptoWallets.includes(watch('wallet')) ? (
+                <div>
+                  <h3 className={classTitle}>Account</h3>
+                  <ul className={classUl}>
+                    {assetAccount.map((accountOption) => (
+                      <li key={accountOption}>
+                        <input
+                          className='hidden peer'
+                          type='radio'
+                          value={accountOption}
+                          id={accountOption}
+                          {...register('account', {
+                            required: 'Please select an account',
+                          })}
+                        />
+                        <label
+                          className={classLabelRadio}
+                          htmlFor={accountOption}
+                        >
+                          <span>{accountOption}</span>
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <div>
+                  <input
+                    className='hidden peer'
+                    value={'-'}
+                    {...register('account')}
+                  />
+                </div>
+              )}
+              {errors.account && (
+                <p className={classError}>{errors.account.message}</p>
+              )}
+            </div> */}
+
+            {assetWallet.includes(watch('wallet')) ? (
+              <div className={classDiv}>
+                <h3 className={classTitle}>Account</h3>
+                <ul className={classUl}>
+                  {assetAccount.map((accountOption) => (
+                    <li key={accountOption}>
+                      <input
+                        className='hidden peer'
+                        type='radio'
+                        value={accountOption}
+                        id={accountOption}
+                        {...register('account')}
+                      />
+                      <label
+                        className={classLabelRadio}
+                        htmlFor={accountOption}
+                      >
+                        <span>{accountOption}</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div>
+                <input
+                  className='hidden peer'
+                  value={'-'}
+                  {...register('account')}
+                />
+              </div>
+            )}
+
+            {/* {cryptoWallets.includes(watch('wallet')) ? (
+              <div className={classDiv}>
+                <h3 className={classTitle}>Account</h3>
+                <ul className={classUl}>
+                  {assetAccount.map((accountOption) => (
+                    <li key={accountOption}>
+                      <input
+                        className='hidden peer'
+                        type='radio'
+                        value={accountOption}
+                        id={accountOption}
+                        {...register('account')}
+                      />
+                      <label
+                        className={classLabelRadio}
+                        htmlFor={accountOption}
+                      >
+                        <span>{accountOption}</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div>
+                <input
+                  className='hidden peer'
+                  value={'-'}
+                  {...register('account')}
+                />
+              </div>
+            )} */}
+
+            {/* ------------------------- */}
             {assetCategory.length > 1 && (
               <div className={classDiv}>
                 <h3 className={classTitle}>Category</h3>
@@ -294,38 +403,6 @@ export function AddAssetForm() {
               </div>
             )}
 
-            {cryptoWallets.includes(watch('wallet')) ? (
-              <div className={classDiv}>
-                <h3 className={classTitle}>Account</h3>
-                <ul className={classUl}>
-                  {assetAccount.map((accountOption) => (
-                    <li key={accountOption}>
-                      <input
-                        className='hidden peer'
-                        type='radio'
-                        value={accountOption}
-                        id={accountOption}
-                        {...register('account')}
-                      />
-                      <label
-                        className={classLabelRadio}
-                        htmlFor={accountOption}
-                      >
-                        <span>{accountOption}</span>
-                      </label>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
-              <div>
-                <input
-                  className='hidden peer'
-                  value={'-'}
-                  {...register('account')}
-                />
-              </div>
-            )}
             {/* 
           We don't need this for now (until we don't pay for an API to get the data
           Today we get in from Google Sheet - Google Finance formula)
