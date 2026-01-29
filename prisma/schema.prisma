@@ -47,6 +47,7 @@ model UserSettings {
   uid         String    @unique
   periodStart DateTime? @db.Date
   period      String?
+  monthlyBurn Float?    @default(4000)
   createdAt   DateTime  @default(now()) @db.Timestamptz(6)
   updatedAt   DateTime  @default(now()) @db.Timestamptz(6)
   view        Boolean   @default(true)
