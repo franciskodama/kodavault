@@ -14,6 +14,9 @@ const inter = Inter({ subsets: ['latin'], display: 'swap' });
 export const metadata: Metadata = {
   title: 'Trezo.App',
   description: 'Assets Analysis for Right Decisions',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
