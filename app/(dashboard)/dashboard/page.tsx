@@ -16,8 +16,6 @@ export default async function DashboardPage() {
   const userName = user?.firstName;
 
   // USD + CAD + BRL
-
-  // USD + CAD + BRL
   const currencyRates = await getCurrencies();
   const usdBrl = currencyRates.data?.BRL || 0;
 
