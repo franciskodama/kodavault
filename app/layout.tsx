@@ -5,7 +5,6 @@ import { neobrutalism } from '@clerk/themes';
 
 import './../components/ui/globals.css';
 import { Outfit, Inter } from 'next/font/google';
-import Template from './in/template';
 
 const outfit = Outfit({ subsets: ['latin'], display: 'swap' });
 
@@ -15,6 +14,9 @@ const inter = Inter({ subsets: ['latin'], display: 'swap' });
 export const metadata: Metadata = {
   title: 'Trezo.App',
   description: 'Assets Analysis for Right Decisions',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
