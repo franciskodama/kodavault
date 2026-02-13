@@ -11,6 +11,8 @@ import { Asset } from '@/lib/types';
 import { useMemo } from 'react';
 import { Progress } from '@/components/ui/progress';
 
+import Image from 'next/image';
+
 // We need the market data type here
 type AllCryptosData = {
   symbol: string;
@@ -103,10 +105,12 @@ export const CardAthDrawdown = ({
             <div className='flex justify-between items-center text-sm'>
               <div className='flex items-center gap-2 font-medium'>
                 {item.image && (
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.symbol}
-                    className='w-5 h-5 rounded-full'
+                    width={20}
+                    height={20}
+                    className='rounded-full'
                   />
                 )}
                 <span>{item.symbol.toUpperCase()}</span>

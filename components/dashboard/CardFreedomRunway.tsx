@@ -58,7 +58,6 @@ export const CardFreedomRunway = ({
 
   const runway = useMemo(() => {
     if (monthlyBurn <= 0) return 0;
-    // Years of runway = Total / (Monthly * 12)
     return netWorth / (monthlyBurn * 12);
   }, [netWorth, monthlyBurn]);
 
@@ -74,11 +73,6 @@ export const CardFreedomRunway = ({
 
   return (
     <Card className='h-full relative overflow-hidden'>
-      {/* Background decoration */}
-      <div className='absolute -right-4 -bottom-4 opacity-5 text-slate-800 pointer-events-none'>
-        <Plane size={120} />
-      </div>
-
       <CardHeader>
         <CardTitle className='flex items-center justify-between'>
           <span>Freedom Runway</span>
@@ -98,7 +92,7 @@ export const CardFreedomRunway = ({
           </p>
         </div>
 
-        <div className='space-y-4 bg-slate-50 p-4 rounded-md border border-slate-100'>
+        <div className='space-y-4 bg-slate-50 p-4 rounded-xs border border-slate-100'>
           <div className='flex justify-between items-center text-sm'>
             <Label htmlFor='burn-rate' className='text-slate-600 font-semibold'>
               Monthly Burn Rate
