@@ -74,7 +74,7 @@ export async function GET() {
       const btc = assets.find((item: any) => item.asset === 'BTC');
 
       let networthData: AddNetWorthChartData;
-      if (currencyRates.data && btc.price && usdBrl) {
+      if (currencyRates.data && btc?.price && usdBrl) {
         networthData = {
           uid,
           usd: total,
@@ -83,12 +83,14 @@ export async function GET() {
           btc: total / btc.price,
         };
       } else {
+        // Fallback if we can't get all rates or BTC price
+        // We still try to save what we have, or default to 0
         networthData = {
           uid: uid,
-          usd: 0,
-          cad: 0,
-          brl: 0,
-          btc: 0,
+          usd: currencyRates.data ? total : 0,
+          cad: currencyRates.data ? total * currencyRates.data.CAD : 0,
+          brl: usdBrl ? total * usdBrl : 0,
+          btc: 0, // Cannot calculate BTC value without price
         };
       }
 

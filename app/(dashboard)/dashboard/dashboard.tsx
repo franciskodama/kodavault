@@ -23,7 +23,10 @@ import { CardNextPurchases } from '@/components/dashboard/CardNextPurchases';
 import { CardAssetsOnTheRise } from '@/components/dashboard/CardAssetsOnTheRise';
 import { CardKeyAssets } from '@/components/dashboard/CardKeyAssets';
 import { CardLongsAndShorts } from '@/components/dashboard/CardLongsAndShorts';
+import { CardAllocation } from '@/components/dashboard/CardAllocation';
 import Transactions from './transactions/transactions';
+import { CardAthDrawdown } from '@/components/dashboard/CardAthDrawdown';
+import { CardFreedomRunway } from '@/components/dashboard/CardFreedomRunway';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
@@ -40,6 +43,8 @@ export default function Dashboard({
   userName,
   goal,
   keyAssetsPriced,
+  allCryptos,
+  monthlyBurn,
 }: {
   usdBrl: number;
   currencyRates: Currencies;
@@ -51,7 +56,12 @@ export default function Dashboard({
   userName: string;
   goal: number;
   keyAssetsPriced: KeyAssetsPriced[];
+  monthlyBurn: number;
+  allCryptos: any;
 }) {
+  const netWorthTotal =
+    assets.reduce((sum, item) => sum + (item?.total || 0), 0) || 0;
+
   return (
     <Suspense fallback={<SkeletonDashboard />}>
       {assets.length && assetsByType ? (
@@ -106,14 +116,6 @@ export default function Dashboard({
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
                 <div className='flex flex-col gap-2'>
                   <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
-                  {/* =========================== CHANGE THIS. ITS DUPLICATED =============================== */}
-                  <CardTotal
-                    emoji={'𝗫'}
-                    description={'TEST'}
-                    assets={assetsByType.Cash}
-                    customKey={'TEST'}
-                  />
-                  {/* =========================== CHANGE THIS. ITS DUPLICATED =============================== */}
                 </div>
                 <TagCard />
               </div>
@@ -126,13 +128,7 @@ export default function Dashboard({
                     assets={assetsByType.Cash}
                     customKey={'cash'}
                   />
-                  <CardTotal
-                    emoji={'💵'}
-                    description={`Assets' Origin Breakdown`}
-                    assets={assets}
-                    customKey={'currency'}
-                    height={'h-[250px]'}
-                  />
+                  <CardAllocation assets={assets} />
                 </div>
                 <CardTotal
                   emoji={'🧺'}
@@ -170,6 +166,14 @@ export default function Dashboard({
               <div className='flex'>
                 <NetWorthChart netWorthChartData={netWorthChartData} />
               </div>
+
+              {/* -------- 3rd Row (Action Cards) ----------------------------------------------------------------------- */}
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
+                <CardCryptosForTrading assets={assets} />
+                <CardAssetsOnTheRise />
+                <CardNextPurchases />
+              </div>
+
               {/* <Transactions /> */}
             </div>
             {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
@@ -192,9 +196,15 @@ export default function Dashboard({
                 />
               </div>
               <div className='flex flex-col gap-2 h-full'>
-                <CardCryptosForTrading assets={assets} />
-                <CardAssetsOnTheRise />
-                <CardNextPurchases />
+                <CardFreedomRunway
+                  netWorth={netWorthTotal}
+                  monthlyBurn={monthlyBurn}
+                  uid={uid}
+                />
+                <CardAthDrawdown
+                  userAssets={assets}
+                  allCryptosData={allCryptos}
+                />
                 {/* <CardLongsAndShorts assets={assets} /> */}
               </div>
 
