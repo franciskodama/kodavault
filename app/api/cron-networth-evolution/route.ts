@@ -1,4 +1,3 @@
-import type { NextRequest } from 'next/server';
 import { addNetWorthEvolution, getUids } from '@/lib/actions';
 import { fetchAssetsWithPrices } from '@/lib/assets';
 import { getAssets } from '@/lib/assets.server';
@@ -6,14 +5,6 @@ import { getCurrencies, getCurrenciesFromApi } from '@/lib/currency.server';
 import { AddNetWorthChartData, UnpricedAsset } from '@/lib/types';
 
 export async function GET() {
-  // https://vercel.com/docs/cron-jobs/manage-cron-jobs
-  // const authHeader = request.headers.get('authorization');
-  // if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-  //   return new Response('Unauthorized', {
-  //     status: 401,
-  //   });
-  // }
-
   const currencyRates = await getCurrencies();
   const currencyRatesFromApi = await getCurrenciesFromApi();
   const usdBrl = currencyRatesFromApi?.data.BRL || 0;
