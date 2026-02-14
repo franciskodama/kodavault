@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+
 import {
   Tooltip,
   TooltipContent,
@@ -151,7 +153,7 @@ export default function CryptoByWallet({
                       {wallet?.[0]?.wallet}
                     </h3>
                     {wallet.map((item: any) => (
-                      <div key={item.total} className='flex justify-between'>
+                      <div key={v4()} className='flex justify-between'>
                         <h3>{item.asset}</h3>
                         <h3>{item.value}</h3>
                         <div className='flex'>
