@@ -197,3 +197,20 @@ export type KeyAssetsPriced = {
   price: number;
   total: number;
 };
+
+export type FredReleaseDate = {
+  release_id: number;
+  release_name: string;
+  date: string;
+};
+
+export type FredReleasesResponse = {
+  realtime_start: string;
+  realtime_end: string;
+  order_by: string;
+  sort_order: string;
+  count: number;
+  offset: number;
+  limit: number;
+  release_dates: FredReleaseDate[];
+};

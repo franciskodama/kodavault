@@ -69,4 +69,5 @@ const menuItems = [
   { label: 'Elliott', href: '/elliott', pathname: '/elliott' },
   { label: 'Shortcut', href: '/shortcut', pathname: '/shortcut' },
   { label: 'Goal', href: '/retirement', pathname: '/retirement' },
+  { label: 'Calendar', href: '/calendar', pathname: '/calendar' },
 ];
