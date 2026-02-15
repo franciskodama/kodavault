@@ -27,16 +27,23 @@ export function CardFredEvents() {
           '/api/economic-calendar?filter=high_impact'
         );
 
-        // Filter and clean events for this week
-        const filtered = response.data.filter((event) => {
-          if (!event.date) return false;
-          const parts = event.date.split('-');
-          if (parts.length < 3) return false;
-          const isoDate = `${parts[2]}-${parts[0]}-${parts[1]}`;
-          return isThisWeek(isoDate);
-        });
-
-        setEvents(filtered);
+        // Ensure response.data is an array before filtering
+        if (response.data && Array.isArray(response.data)) {
+          const filtered = response.data.filter((event) => {
+            if (!event.date) return false;
+            const parts = event.date.split('-');
+            if (parts.length < 3) return false;
+            const isoDate = `${parts[2]}-${parts[0]}-${parts[1]}`;
+            return isThisWeek(isoDate);
+          });
+          setEvents(filtered);
+        } else {
+          console.error(
+            'Economic data received is not an array:',
+            response.data
+          );
+          setEvents([]);
+        }
       } catch (error) {
         console.error('Error fetching economic data:', error);
       } finally {

@@ -22,7 +22,15 @@ export default function CalendarPage() {
             ? '/api/economic-calendar?filter=high_impact'
             : '/api/economic-calendar';
         const response = await axios.get<EconomicCalendarResponse>(url);
-        setData(response.data);
+        if (response.data && Array.isArray(response.data)) {
+          setData(response.data);
+        } else {
+          console.error(
+            'Economic data received is not an array:',
+            response.data
+          );
+          setData([]);
+        }
       } catch (error) {
         console.error('Error fetching economic data:', error);
       } finally {

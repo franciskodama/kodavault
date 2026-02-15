@@ -89,6 +89,9 @@ export async function GET(request: Request) {
 
       return NextResponse.json(applyFilter(formattedEvents, filter));
     }
+
+    // If we reach here, response.data was not an array (e.g. Rate Limited HTML)
+    throw new Error('Response data is not an array');
   } catch (error: any) {
     console.warn(
       'ForexFactory Feed error (using fallback or empty):',
