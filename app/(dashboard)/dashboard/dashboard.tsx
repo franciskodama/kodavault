@@ -27,6 +27,7 @@ import { CardAllocation } from '@/components/dashboard/CardAllocation';
 import Transactions from './transactions/transactions';
 import { CardAthDrawdown } from '@/components/dashboard/CardAthDrawdown';
 import { CardFreedomRunway } from '@/components/dashboard/CardFreedomRunway';
+import { CardFredEvents } from '@/components/dashboard/CardFredEvents';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
@@ -116,6 +117,7 @@ export default function Dashboard({
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
                 <div className='flex flex-col gap-2'>
                   <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
+                  <CardFredEvents />
                 </div>
                 <TagCard />
               </div>

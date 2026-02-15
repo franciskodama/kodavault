@@ -197,3 +197,17 @@ export type KeyAssetsPriced = {
   price: number;
   total: number;
 };
+
+export type EconomicCalendarEvent = {
+  title: string;
+  country: string;
+  date: string;
+  time: string;
+  impact: string;
+  forecast: string;
+  previous: string;
+  actual: string;
+  unit?: string;
+};
+
+export type EconomicCalendarResponse = EconomicCalendarEvent[];

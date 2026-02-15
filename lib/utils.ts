@@ -55,6 +55,19 @@ export const dateFormatter = (dateString: any) => {
   return `${day}/${month}/${year}`;
 };
 
+export const dateWithDayFormatter = (dateString: string) => {
+  const date = new Date(dateString);
+  const dayName = date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    timeZone: 'UTC',
+  });
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const year = String(date.getUTCFullYear()).slice(-2);
+
+  return `${dayName}, ${day}/${month}/${year}`;
+};
+
 // ---------------------------------------------------------------------------
 export const isNotEmptyArray = (value: []) => {
   return Array.isArray(value) && value.length > 0;
@@ -135,3 +148,26 @@ export const getLimitedNumberOfAssets = (assets: Asset[], limit: number) => {
 };
 
 // ---------------------------------------------------------------------------
+
+export const isThisWeek = (dateStr: string) => {
+  // Ensure dateStr is parsed as UTC midnight if it's YYYY-MM-DD
+  const date = new Date(dateStr);
+  const today = new Date();
+
+  // Get current date in UTC to align with the parsed date
+  const todayUTC = new Date(
+    Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
+  );
+
+  // Get start of current week (Sunday) in UTC
+  const startOfWeek = new Date(todayUTC);
+  startOfWeek.setUTCDate(todayUTC.getUTCDate() - todayUTC.getUTCDay());
+  startOfWeek.setUTCHours(0, 0, 0, 0);
+
+  // Get end of current week (Saturday) in UTC
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setUTCDate(startOfWeek.getUTCDate() + 6);
+  endOfWeek.setUTCHours(23, 59, 59, 999);
+
+  return date >= startOfWeek && date <= endOfWeek;
+};
