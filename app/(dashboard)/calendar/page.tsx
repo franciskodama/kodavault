@@ -1,120 +1,179 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-
 import axios from 'axios';
-import { FredReleaseDate, FredReleasesResponse } from '@/lib/types';
+import { EconomicCalendarEvent, EconomicCalendarResponse } from '@/lib/types';
 import { Loading } from '@/components/common/Loading';
-import { dateFormatter, isThisWeek, cn } from '@/lib/utils';
+import { dateWithDayFormatter, isThisWeek, cn } from '@/lib/utils';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 export default function CalendarPage() {
-  const [data, setData] = useState<FredReleaseDate[]>([]);
+  const [data, setData] = useState<EconomicCalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState<'all' | 'high_impact'>('high_impact');
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get<FredReleasesResponse>('/api/fred');
-        setData(response.data.release_dates);
+        const url =
+          filter === 'high_impact'
+            ? '/api/economic-calendar?filter=high_impact'
+            : '/api/economic-calendar';
+        const response = await axios.get<EconomicCalendarResponse>(url);
+        setData(response.data);
       } catch (error) {
-        console.error('Error fetching FRED data:', error);
+        console.error('Error fetching economic data:', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [filter]);
 
   if (loading) return <Loading />;
 
   // Group by date
   const groupedData = data.reduce((acc, current) => {
-    if (!acc[current.date]) {
-      acc[current.date] = [];
+    if (!current.date) return acc;
+
+    // Ensure we handle MM-DD-YYYY correctly for the dateKey
+    let dateKey = current.date;
+    if (current.date.includes('-')) {
+      const parts = current.date.split('-');
+      if (parts.length === 3) {
+        // MM-DD-YYYY -> YYYY-MM-DD
+        dateKey = `${parts[2]}-${parts[0]}-${parts[1]}`;
+      }
     }
-    acc[current.date].push(current);
+
+    if (!acc[dateKey]) {
+      acc[dateKey] = [];
+    }
+    acc[dateKey].push(current);
     return acc;
-  }, {} as Record<string, FredReleaseDate[]>);
+  }, {} as Record<string, EconomicCalendarEvent[]>);
 
   const sortedDates = Object.keys(groupedData).sort((a, b) =>
-    b.localeCompare(a)
+    a.localeCompare(b)
   );
 
   return (
-    <div className='p-8 max-w-5xl mx-auto min-h-[75vh]'>
-      <div className='flex flex-col gap-2 mb-10'>
-        <h1 className='text-3xl font-bold tracking-tight text-slate-800 flex items-center gap-3'>
-          <span className='p-2 bg-accent rounded-lg shadow-sm text-2xl'>
-            📅
-          </span>
-          Economic Calendar
-        </h1>
-        <p className='text-slate-500 font-medium'>
-          Tracking major US Federal Reserve data releases and economic
-          indicators.
-        </p>
+    <div className='flex flex-col gap-1 px-8 sm:p-0 min-h-[75vh]'>
+      <div className='flex flex-col sm:flex-row justify-between items-center mb-4'>
+        <div className='flex items-center gap-2'>
+          <span className='text-3xl'>📅</span>
+          <h1 className='text-xl font-bold ml-2 uppercase tracking-tighter'>
+            Economic Calendar
+          </h1>
+        </div>
+
+        <div className='flex items-center gap-4 mt-4 sm:mt-0'>
+          <div className='flex p-0.5 bg-white rounded-[2px] border shadow-sm'>
+            <Button
+              variant={filter === 'high_impact' ? 'default' : 'ghost'}
+              size='sm'
+              className='text-[10px] h-6 font-bold'
+              onClick={() => setFilter('high_impact')}
+            >
+              HIGH IMPACT
+            </Button>
+            <Button
+              variant={filter === 'all' ? 'default' : 'ghost'}
+              size='sm'
+              className='text-[10px] h-6 font-bold'
+              onClick={() => setFilter('all')}
+            >
+              ALL RELEASES
+            </Button>
+          </div>
+          <p className='hidden sm:block text-[10px] text-slate-400 uppercase font-bold tracking-widest'>
+            FREE FEED (EST)
+          </p>
+        </div>
       </div>
 
       {data.length === 0 ? (
-        <div className='flex flex-col items-center justify-center py-20 bg-white border-2 border-dashed rounded-xl border-slate-200'>
+        <Card className='flex flex-col items-center justify-center py-20'>
           <p className='text-slate-400 font-medium italic'>
-            No economic data releases found at this time.
+            No high-impact releases found for the current period.
           </p>
-        </div>
+          {filter === 'high_impact' && (
+            <Button
+              variant='link'
+              onClick={() => setFilter('all')}
+              className='mt-2'
+            >
+              View all releases
+            </Button>
+          )}
+        </Card>
       ) : (
-        <div className='space-y-8 pb-10'>
+        <div className='flex flex-col gap-4 pb-10'>
           {sortedDates.map((date) => (
-            <div key={date} className='group'>
-              <div className='flex items-center gap-4 mb-3'>
-                <div className='h-[1px] flex-grow bg-slate-100 group-hover:bg-accent transition-colors' />
-                <h2 className='text-sm font-bold text-slate-400 bg-white px-3 py-1 rounded-full border border-slate-100 shadow-sm'>
-                  {dateFormatter(date)}
-                </h2>
-                <div className='h-[1px] flex-grow bg-slate-100 group-hover:bg-accent transition-colors' />
-              </div>
-
-              <div className='bg-white border rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow'>
+            <Card key={date} className='overflow-hidden'>
+              <CardHeader className='bg-slate-50 py-2 px-4 border-b flex flex-row items-center justify-between space-y-0'>
+                <CardTitle className='text-[10px] uppercase font-bold flex items-center gap-2 tracking-wider text-slate-500'>
+                  {dateWithDayFormatter(date)}
+                </CardTitle>
+                {isThisWeek(date) && (
+                  <span className='text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-[2px] font-bold'>
+                    THIS WEEK
+                  </span>
+                )}
+              </CardHeader>
+              <CardContent className='p-0'>
                 <table className='w-full text-left font-light'>
-                  <thead className='bg-slate-50 border-b'>
-                    <tr className='text-[10px] uppercase tracking-wider font-bold text-slate-500'>
-                      <th className='px-6 py-3 w-24'>Code</th>
-                      <th className='px-6 py-3'>Release Event</th>
-                      <th className='px-6 py-3 text-right'>Status</th>
+                  <thead className='bg-slate-50/50 border-b'>
+                    <tr className='text-[9px] uppercase font-bold text-slate-400'>
+                      <th className='px-4 py-2 w-24'>Time</th>
+                      <th className='px-4 py-2'>Event</th>
+                      <th className='px-4 py-2 text-right'>Actual</th>
+                      <th className='px-4 py-2 text-right'>Forecast</th>
+                      <th className='px-4 py-2 text-right'>Previous</th>
                     </tr>
                   </thead>
-                  <tbody className='divide-y divide-slate-50'>
-                    {groupedData[date].map((release) => (
-                      <tr
-                        key={`${release.release_id}-${release.date}`}
-                        className='hover:bg-slate-50/80 transition-colors group/row'
-                      >
-                        <td className='px-6 py-4 text-xs font-mono text-slate-400'>
-                          #{release.release_id}
-                        </td>
-                        <td className='px-6 py-4 font-semibold text-slate-700'>
-                          {release.release_name}
-                        </td>
-                        <td className='px-6 py-4 text-right'>
-                          <span
+                  <tbody className='divide-y'>
+                    {groupedData[date].map((release, idx) => {
+                      return (
+                        <tr
+                          key={`${release.title}-${idx}`}
+                          className='hover:bg-slate-50/50 transition-colors'
+                        >
+                          <td className='px-4 py-2 text-[10px] font-bold text-slate-400 w-24'>
+                            {release.time || 'All Day'}
+                          </td>
+                          <td className='px-4 py-2 font-semibold text-xs'>
+                            {release.title}
+                          </td>
+                          <td
                             className={cn(
-                              'text-[10px] font-bold px-2 py-1 rounded-full',
-                              isThisWeek(release.date)
-                                ? 'bg-green-100 text-green-700'
-                                : 'bg-slate-100 text-slate-500'
+                              'px-4 py-2 text-right font-bold text-xs',
+                              release.actual && release.forecast
+                                ? parseFloat(release.actual) >=
+                                  parseFloat(release.forecast)
+                                  ? 'text-green-600'
+                                  : 'text-red-600'
+                                : 'text-slate-600'
                             )}
                           >
-                            {isThisWeek(release.date)
-                              ? 'THIS WEEK'
-                              : 'SCHEDULED'}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
+                            {release.actual || '-'}
+                          </td>
+                          <td className='px-4 py-2 text-right text-xs text-slate-500 font-medium'>
+                            {release.forecast || '-'}
+                          </td>
+                          <td className='px-4 py-2 text-right text-xs text-slate-500 font-medium'>
+                            {release.previous || '-'}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       )}

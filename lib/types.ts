@@ -198,19 +198,16 @@ export type KeyAssetsPriced = {
   total: number;
 };
 
-export type FredReleaseDate = {
-  release_id: number;
-  release_name: string;
+export type EconomicCalendarEvent = {
+  title: string;
+  country: string;
   date: string;
+  time: string;
+  impact: string;
+  forecast: string;
+  previous: string;
+  actual: string;
+  unit?: string;
 };
 
-export type FredReleasesResponse = {
-  realtime_start: string;
-  realtime_end: string;
-  order_by: string;
-  sort_order: string;
-  count: number;
-  offset: number;
-  limit: number;
-  release_dates: FredReleaseDate[];
-};
+export type EconomicCalendarResponse = EconomicCalendarEvent[];
