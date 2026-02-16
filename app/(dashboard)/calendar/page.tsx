@@ -79,7 +79,7 @@ export default function CalendarPage() {
         </div>
 
         <div className='flex items-center gap-4 mt-4 sm:mt-0'>
-          <div className='flex p-0.5 bg-white rounded-[2px] border shadow-sm'>
+          <div className='flex p-0.5 bg-white rounded-xl border shadow-sm'>
             <Button
               variant={filter === 'high_impact' ? 'default' : 'ghost'}
               size='sm'
@@ -127,7 +127,7 @@ export default function CalendarPage() {
                   {dateWithDayFormatter(date)}
                 </CardTitle>
                 {isThisWeek(date) && (
-                  <span className='text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-[2px] font-bold'>
+                  <span className='text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-xl font-bold'>
                     THIS WEEK
                   </span>
                 )}

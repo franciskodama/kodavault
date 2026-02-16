@@ -30,19 +30,19 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { AddAssetForm } from '@/components/forms/AddAssetForm';
-import { Gem } from 'lucide-react';
+import { Gem, LucideIcon } from 'lucide-react';
 
 export const CardTotal = ({
   assets,
   customKey,
-  emoji = '',
+  Icon,
   description = '',
   height = '',
   showQty,
 }: {
   assets: Asset[];
   customKey: string;
-  emoji?: string;
+  Icon?: LucideIcon;
   description?: string;
   height?: string;
   showQty?: boolean;
@@ -52,42 +52,51 @@ export const CardTotal = ({
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
   return (
-    <Card className={`w-full sm:flex-1 ${height ? height : 'h-full'}`}>
+    <Card
+      className={`w-full sm:flex-1 border-none shadow-sm ${
+        height ? height : 'h-full'
+      }`}
+    >
       <div className='flex flex-col justify-between h-full'>
         <div className='flex flex-col'>
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
-              <span>{`Total By ${customKey}`}</span>
-              <span className='text-3xl'>
-                {sortedArray.length < 1 ? '🤷🏻‍♂️' : emoji}
-              </span>
+              <span className='font-semibold tracking-tight text-slate-900'>{`By ${customKey}`}</span>
+              {Icon && <Icon size={24} className='text-slate-400' />}
             </CardTitle>
-            <CardDescription className='text-xs'>{description}</CardDescription>
+            <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
+              {description}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {sortedArray.length < 1 ? (
-              <>
-                <h3 className='text-sm font-bold my-1 capitalize'>
+              <div className='flex flex-col gap-2 py-4'>
+                <h3 className='text-sm font-bold text-slate-900 capitalize'>
                   {customKey}
                   <span className='lowercase'>{`, where'd you go?`}</span>
                 </h3>
-                <p className='mb-[1px]'>{`Curious about your ${customKey} total?`}</p>
-                <p>{`Let's fill in the blanks!`}</p>
-              </>
+                <p className='text-xs text-slate-500'>{`Curious about your ${customKey} total?`}</p>
+                <p className='text-xs text-slate-500'>{`Let's fill in the blanks!`}</p>
+              </div>
             ) : (
-              <>
+              <div className='flex flex-col gap-3'>
                 {sortedArray.map((item) => (
-                  <div key={item.value} className='flex justify-between'>
-                    <h3>{item.value}</h3>
-                    <div className='flex'>
-                      <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
+                  <div
+                    key={item.value}
+                    className='flex justify-between items-center group'
+                  >
+                    <h3 className='text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors'>
+                      {item.value}
+                    </h3>
+                    <div className='flex items-center gap-2'>
+                      <p className='text-sm font-semibold text-slate-900 tracking-tight'>{`${numberFormatterNoDecimals.format(
                         item.total
                       )}`}</p>
                       <p
-                        className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                        className={`text-[10px] font-semibold w-[50px] py-1 text-center rounded-lg transition-all ${
                           (item.total / total) * 100 > 50
-                            ? 'bg-red-500'
-                            : 'bg-green-500'
+                            ? 'bg-red-50 text-red-600'
+                            : 'bg-green-50 text-green-600'
                         }`}
                       >{`${numberFormatter.format(
                         (item.total / total) * 100
@@ -95,22 +104,21 @@ export const CardTotal = ({
                     </div>
                   </div>
                 ))}
-              </>
+              </div>
             )}
           </CardContent>
         </div>
         <CardFooter
-          className={`flex justify-between text-sm text-slate-500 font-medium m-1 p-2 ${
-            sortedArray.length > 0 && 'bg-slate-50'
+          className={`flex justify-between items-center px-6 py-4 border-t border-slate-50 ${
+            sortedArray.length > 0 && 'bg-slate-50/50'
           }`}
         >
           {sortedArray.length < 1 ? (
             <>
               <Sheet>
-                <SheetTrigger className='inline-flex text-sm font-medium items-center h-8 rounded-[2px] px-3 bg-primary text-primary-foreground hover:bg-primary/90'>
-                  <Gem size={16} className='mr-2' />
-                  Add an Asset +
-                  <span className='ml-1 capitalize'>{customKey}</span>
+                <SheetTrigger className='inline-flex text-xs font-semibold uppercase tracking-widest items-center h-10 rounded-xl px-4 bg-slate-900 text-white hover:bg-slate-800 transition-all'>
+                  <Gem size={14} className='mr-2' />
+                  Add {customKey}
                 </SheetTrigger>
                 <SheetContent className='max-h-screen overflow-y-scroll'>
                   <SheetHeader>
@@ -125,26 +133,28 @@ export const CardTotal = ({
             </>
           ) : (
             <>
-              <h3>
+              <h3 className='text-xs font-semibold uppercase tracking-widest text-slate-400'>
                 Total
                 {showQty && (
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <span className='ml-1 text-xs font-thin'>
+                        <span className='ml-1 text-[10px] font-bold'>
                           ({getQtyOfAssets(assets)})
                         </span>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>Total of Items</p>
+                        <p>Total items in category</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                 )}
               </h3>
-              {numberFormatterNoDecimals.format(
-                totalArray.reduce((sum: number, item) => sum + item.total, 0)
-              )}
+              <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
+                {numberFormatterNoDecimals.format(
+                  totalArray.reduce((sum: number, item) => sum + item.total, 0)
+                )}
+              </span>
             </>
           )}
         </CardFooter>

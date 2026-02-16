@@ -42,7 +42,7 @@ export default function NavMenu() {
 
         <li>
           <Sheet>
-            <SheetTrigger className='ml-12 border-2 border-slate-500 h-8 px-4 rounded-[2px] font-medium'>
+            <SheetTrigger className='ml-12 border-2 border-slate-500 h-8 px-4 rounded-xl font-medium'>
               + Asset
             </SheetTrigger>
             <SheetContent className='max-h-screen overflow-y-scroll'>

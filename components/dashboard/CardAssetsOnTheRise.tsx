@@ -12,6 +12,8 @@ import {
   numberFormatter,
 } from '@/lib/utils';
 
+import { TrendingUp } from 'lucide-react';
+
 export const CardAssetsOnTheRise = () => {
   const total = nextPurchases.reduce(
     (sum: number, item) => sum + item.total,
@@ -19,43 +21,54 @@ export const CardAssetsOnTheRise = () => {
   );
 
   return (
-    <Card className='w-full'>
-      <div className='flex flex-col justify-between h-full'>
+    <Card className='w-full border-none shadow-sm'>
+      <div className='flex flex-col h-full'>
         <div className='flex flex-col'>
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
-              <span>Assets on the Rise</span>
-              <span className='text-3xl'>🔥</span>
+              <span className='font-semibold tracking-tight text-slate-900'>
+                Assets on the Rise
+              </span>
+              <TrendingUp size={24} className='text-slate-400' />
             </CardTitle>
-            <CardDescription className='text-xs'>
-              {`Let's bet on these bad boys!`}
+            <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
+              Momentum plays worth watching
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className='flex flex-col gap-4'>
             {nextPurchases.map((item) => (
-              <div key={item.asset} className='flex justify-between'>
-                <h3>{item.asset}</h3>
-                <div className='flex'>
-                  <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
+              <div
+                key={item.asset}
+                className='flex items-center justify-between group'
+              >
+                <h3 className='text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors uppercase'>
+                  {item.asset}
+                </h3>
+                <div className='flex items-center gap-3'>
+                  <p className='text-sm font-semibold text-slate-900 tracking-tight'>{`${numberFormatterNoDecimals.format(
                     item.total
                   )}`}</p>
-                  <p
-                    className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                  <span
+                    className={`text-[10px] font-semibold w-[6ch] py-1 text-center rounded-md ${
                       (item.total / total) * 100 > 50
-                        ? 'bg-red-500'
-                        : 'bg-green-500'
+                        ? 'bg-rose-50 text-rose-600'
+                        : 'bg-emerald-50 text-emerald-600'
                     }`}
                   >{`${numberFormatter.format(
                     (item.total / total) * 100
-                  )}%`}</p>
+                  )}%`}</span>
                 </div>
               </div>
             ))}
           </CardContent>
         </div>
-        <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
-          <h3>Total</h3>
-          {numberFormatterNoDecimals.format(total)}
+        <CardFooter className='flex items-center justify-between p-6 pt-0 border-t border-slate-50 mt-auto'>
+          <span className='text-[10px] font-semibold uppercase tracking-widest text-slate-400'>
+            Total
+          </span>
+          <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
+            {numberFormatterNoDecimals.format(total)}
+          </span>
         </CardFooter>
       </div>
     </Card>

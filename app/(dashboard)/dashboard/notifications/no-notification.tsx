@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { PiggyBank } from 'lucide-react';
+import { PiggyBank, Bell } from 'lucide-react';
 
 import {
   Card,
@@ -22,28 +22,33 @@ export default function NoNotifications() {
 
   return (
     <>
-      <Card className='h-[250px]'>
-        <div className='flex flex-col justify-between h-full'>
-          <div className='flex flex-col'>
+      <Card className='h-[250px] border-none shadow-sm'>
+        <div className='flex flex-col h-full'>
+          <div className='flex flex-col flex-1'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
-                <span>Notification Desert</span>
-                <span className='text-3xl'>📭</span>
+                <span className='font-semibold tracking-tight text-slate-900'>
+                  Notification Hub
+                </span>
+                <Bell size={24} className='text-slate-400' />
               </CardTitle>
-              <CardDescription className='text-xs'>
+              <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
                 Your inbox is blissfully empty.
               </CardDescription>
             </CardHeader>
-            <CardContent className='relative'>
-              <h3 className='text-sm font-bold my-1'>Quiet inbox?</h3>
-              <p className='pr-2'>
-                Enjoy seeing how close you are to your Retirement Goal.
+            <CardContent>
+              <h3 className='text-sm font-bold text-slate-700 mb-2'>
+                Quiet moment?
+              </h3>
+              <p className='text-xs text-slate-500 leading-relaxed'>
+                Everything looks solid. Why not check how close you are to your
+                Retirement Goal?
               </p>
             </CardContent>
           </div>
-          <CardFooter className='flex justify-between text-sm text-slate-500 font-medium mx-1 px-2 pb-3'>
-            <Button size='md' onClick={handleClick}>
-              <PiggyBank size={16} className='mr-2' />
+          <CardFooter className='p-6 pt-0'>
+            <Button size='sm' onClick={handleClick} className='w-full'>
+              <PiggyBank size={14} className='mr-2' />
               Find your Goal
             </Button>
           </CardFooter>

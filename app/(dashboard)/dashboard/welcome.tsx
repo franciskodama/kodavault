@@ -27,7 +27,7 @@ export default function Welcome({ userName }: { userName: string }) {
           </AspectRatio>
         </div>
       ))}
-      <div className='absolute shadow-2xl drop-shadow-2xl top-32 -left-50 z-20 w-6/10 sm:h-2/5 mx-10 px-10 sm:px-20 py-10 bg-white rounded-xs'>
+      <div className='absolute shadow-2xl drop-shadow-2xl top-32 -left-50 z-20 w-6/10 sm:h-2/5 mx-10 px-10 sm:px-20 py-10 bg-white rounded-xl'>
         <div className='flex flex-col w-full items-center justify-center mx-auto'>
           <p className='text-2xl font-semibold mb-4 text-center'>
             👋 Welcome aboard, {userName}!
@@ -43,7 +43,7 @@ export default function Welcome({ userName }: { userName: string }) {
             together!
           </p>
           <Sheet>
-            <SheetTrigger className='border-2 border-slate-500 h-10 px-4 rounded-[2px] font-semibold my-4 text-sm capitalize'>
+            <SheetTrigger className='border-2 border-slate-900 h-10 px-6 rounded-xl font-semibold my-4 text-sm capitalize hover:bg-slate-900 hover:text-white transition-all'>
               Add your first asset
             </SheetTrigger>
             <SheetContent className='max-h-screen overflow-y-scroll'>

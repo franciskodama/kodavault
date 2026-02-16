@@ -38,7 +38,7 @@ export default function Transactions() {
                   <td>0.35</td>
                   <td>40.000</td>
                   <td>15.12.2023</td>
-                  <td className='text-white bg-red-500 rounded-[2px] w-[8em]'>
+                  <td className='text-white bg-red-500 rounded-xl w-[8em]'>
                     Too much
                   </td>
                 </tr>
@@ -47,7 +47,7 @@ export default function Transactions() {
                   <td>0.35</td>
                   <td>40.000</td>
                   <td>15.12.2023</td>
-                  <td className='text-slate-500 bg-yellow-500 rounded-[2px] w-[8em]'>
+                  <td className='text-slate-500 bg-yellow-500 rounded-xl w-[8em]'>
                     Too less
                   </td>
                 </tr>
@@ -56,7 +56,7 @@ export default function Transactions() {
                   <td>0.35</td>
                   <td>40.000</td>
                   <td>15.12.2023</td>
-                  <td className='text-white bg-blue-500 rounded-[2px] w-[8em]'>
+                  <td className='text-white bg-blue-500 rounded-xl w-[8em]'>
                     Perfect
                   </td>
                 </tr>
@@ -71,7 +71,7 @@ export default function Transactions() {
                     item.total
                   )}`}</p>
                   <p
-                    className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                    className={`text-white w-[8ch] px-1 m-1 text-center rounded-xl ${
                       (item.total / total) * 100 > 50
                         ? 'bg-red-500'
                         : 'bg-green-500'

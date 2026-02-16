@@ -530,7 +530,7 @@ export function DataTable<TData, TValue>({
 
         <div className='flex items-center px-4 mt-0 mb-8'>
           {!areThereRepeatedAssets && filterIsActive ? (
-            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 bg-accent rounded-[2px] text-left'>
+            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 bg-accent rounded-xl text-left'>
               <>
                 <div className='flex items-center gap-2 font-semibold'>
                   <p>Total Filtered:</p>
@@ -542,7 +542,7 @@ export function DataTable<TData, TValue>({
           ) : null}
 
           {areThereRepeatedAssets && (
-            <div className='flex items-center h-10 font-bold ml-4 px-4 bg-accent rounded-[2px] text-left'>
+            <div className='flex items-center h-10 font-bold ml-4 px-4 bg-accent rounded-xl text-left'>
               <div className='flex items-center w-full'>
                 <p className='w-[6ch]'>Asset:</p>
                 {getRepeatedAssetTotal(

@@ -55,7 +55,7 @@ export function AddShortcutForm() {
   } = useForm<ShortcutType>({});
 
   const classLi = 'flex flex-col w-full sm:w-auto';
-  const classInput = 'border border-slate-200 h-10 p-2 rounded-xs';
+  const classInput = 'border border-slate-200 h-10 p-2 rounded-xl';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
     if (!uid) {

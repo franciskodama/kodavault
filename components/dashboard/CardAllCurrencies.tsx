@@ -10,6 +10,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
+import { Activity } from 'lucide-react';
+
 export const CardTotalAllCurrency = ({
   btcPrice,
   usdBrl,
@@ -61,36 +63,39 @@ export const CardTotalAllCurrency = ({
   }
 
   return (
-    <Card className='bg-slate-600 mb-2'>
-      <div className='flex flex-col justify-between'>
+    <Card className='mb-2 overflow-hidden border-none shadow-none bg-transparent'>
+      <div className='flex flex-col'>
         <div className='flex flex-col'>
-          <CardHeader>
-            <CardTitle className='capitalize flex justify-between text-white mb-3'>
-              <span>Total Vault</span>
+          <CardHeader className='px-0'>
+            <CardTitle className='text-3xl font-semibold text-slate-900 tracking-tighter flex items-center justify-between'>
+              <span>Consolidated Balance</span>
+              <Activity size={32} className='text-slate-400' />
             </CardTitle>
-            <CardDescription className='text-white text-xs'>
+            <CardDescription className='text-slate-400 font-bold uppercase tracking-widest text-[10px]'>
               {description}
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className='flex flex-col gap-2 '>
+          <CardContent className='px-0'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
               {totalArray &&
                 totalArray.map((item: totalArrayProps) => (
                   <div
                     key={item.currency}
-                    className='flex items-center justify-between px-4 bg-slate-500 rounded-[2px] text-white'
+                    className='flex items-center justify-between p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 group'
                   >
-                    <h3 className=' text-lg font-extralight'>
-                      {item.currency}
-                    </h3>
-                    <div className='flex items-center'>
-                      <p className='w-[8ch] text-right mr-4'>{`${
-                        item.currency === 'BTC'
+                    <div className='flex flex-col'>
+                      <span className='text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1'>
+                        {item.currency}
+                      </span>
+                      <h3 className='text-2xl font-semibold text-slate-900 tracking-tighter'>
+                        {item.currency === 'BTC'
                           ? numberFormatter.format(item.value)
-                          : numberFormatterNoDecimals.format(item.value)
-                      }`}</p>
-                      <span className='text-5xl'>{item.emoji}</span>
+                          : numberFormatterNoDecimals.format(item.value)}
+                      </h3>
                     </div>
+                    <span className='text-4xl group-hover:scale-110 transition-transform duration-500'>
+                      {item.emoji}
+                    </span>
                   </div>
                 ))}
             </div>

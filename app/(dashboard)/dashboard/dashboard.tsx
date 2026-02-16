@@ -1,3 +1,5 @@
+'use client';
+
 import React, { Suspense } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -28,6 +30,17 @@ import Transactions from './transactions/transactions';
 import { CardAthDrawdown } from '@/components/dashboard/CardAthDrawdown';
 import { CardFreedomRunway } from '@/components/dashboard/CardFreedomRunway';
 import { CardFredEvents } from '@/components/dashboard/CardFredEvents';
+import {
+  Wallet,
+  Landmark,
+  Coins,
+  Tag,
+  PieChart,
+  Activity,
+  ArrowUpRight,
+  TrendingDown,
+  ShoppingBag,
+} from 'lucide-react';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
@@ -66,176 +79,148 @@ export default function Dashboard({
   return (
     <Suspense fallback={<SkeletonDashboard />}>
       {assets.length && assetsByType ? (
-        <div className='flex flex-col gap-1 px-8 sm:p-0'>
-          {/* -------- Legend --------------------------------------------------------------------------------------- */}
-          <div className='flex flex-col sm:flex-row justify-end items-center mb-2'>
-            <div className='flex items-center mr-8'>
-              <div className='mr-4'>
-                <a
-                  target='_blank'
-                  href='https://ca.finance.yahoo.com/quote/BTC-USD?p=BTC-USD'
-                >
-                  <span>🪙</span>
-                </a>
-                {btcPrice && ` BTC/USD: ${currencyFormatter(btcPrice)}`}
-              </div>
-              <div>
-                <a
-                  target='_blank'
-                  href='https://ca.finance.yahoo.com/quote/USDCAD=X/'
-                >
-                  <span>🇨🇦</span>
-                </a>
-
-                {currencyRates.data &&
-                  ` CAD: ${currencyFormatter(currencyRates.data.CAD)}`}
-              </div>
-              <div className='ml-4'>
-                <a
-                  target='_blank'
-                  href='https://ca.finance.yahoo.com/quote/USDBRL=X/'
-                >
-                  <span>🇧🇷</span>
-                </a>
-                {currencyRates.data && ` BRL: ${currencyFormatter(usdBrl)}`}
-              </div>
-            </div>
-            <div className='flex justify-end items-center gap-2 mr-6'>
-              <p>Legend:</p>
-              <div className='h-[10px] w-4 bg-green-500' />
-              <div>{`> 50%,`}</div>
-              <div className='h-[10px] w-4 bg-red-500' />
-              <div>{`< 50%`}</div>
-            </div>
-          </div>
-
-          {/* -------- 1st Row --------------------------------------------------------------------------------------- */}
-          <div className='flex flex-col sm:flex-row gap-2'>
-            <div className='flex flex-col sm:basis-4/5 gap-2'>
-              <div className='grid grid-cols-4 gap-2'>
-                <NotificationsPanel assets={assets} />
-                <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
-                <div className='flex flex-col gap-2'>
-                  <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
-                  <CardFredEvents />
-                </div>
-                <TagCard />
-              </div>
-              {/* -------- 2nd Row --------------------------------------------------------------------------------------- */}
-              <div className='grid grid-cols-4 gap-2'>
-                <div className='flex flex-col gap-2'>
-                  <CardTotal
-                    emoji={'🤑'}
-                    description={'Total value grouped by currency'}
-                    assets={assetsByType.Cash}
-                    customKey={'cash'}
-                  />
-                  <CardAllocation assets={assets} />
-                </div>
-                <CardTotal
-                  emoji={'🧺'}
-                  description={`Assets' Location Breakdown`}
-                  assets={assets}
-                  customKey={'wallet'}
-                />
-                {/* ----------------------------------------- */}
-                <CardTotal
-                  emoji={'🏷️'}
-                  description={'Total value grouped by tag'}
-                  assets={assets}
-                  customKey={'tag'}
-                />
-                {/* ----------------------------------------- */}
-                <div className='flex flex-col gap-2'>
-                  <CardTotal
-                    emoji={'💰'}
-                    description={'Total value grouped by type'}
-                    assets={assets}
-                    customKey={'type'}
-                    height={'h-full'}
-                  />
-                  <CardTotal
-                    emoji={'🗂️'}
-                    description={'Total value grouped by subtype'}
-                    assets={assets}
-                    customKey={'subtype'}
-                    height={'h-full'}
-                  />
-                </div>
-              </div>
-              <CoinCodexWidget />
-              {/* -------- Chart  --------------------------------------------------------------------------------------- */}
-              <div className='flex'>
-                <NetWorthChart netWorthChartData={netWorthChartData} />
-              </div>
-
-              {/* -------- 3rd Row (Action Cards) ----------------------------------------------------------------------- */}
-              <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
-                <CardCryptosForTrading assets={assets} />
-                <CardAssetsOnTheRise />
-                <CardNextPurchases />
-              </div>
-
-              {/* <Transactions /> */}
-            </div>
-            {/* -------- Right Panel  --------------------------------------------------------------------------------------- */}
-            <div className='flex flex-col sm:basis-1/5 '>
+        <div className='flex flex-col gap-10 px-8 sm:px-12 pb-20'>
+          {/* -------- 1st Row: Hero Overview ------------------------------------------------------------------ */}
+          <div className='flex flex-col lg:flex-row gap-8 items-start'>
+            <div className='flex flex-col lg:basis-3/4 gap-8 w-full'>
+              {/* Total Balance Summary */}
               <CardTotalAllCurrency
                 usdBrl={usdBrl}
                 btcPrice={btcPrice}
                 currencyRates={currencyRates}
                 assets={assets}
-                description={'Total Vault in USD, CAD, BRL.'}
+                description={'Total consolidated vault across all currencies'}
               />
-              <div className='rounded-sm border shadow-sm mb-2'>
+
+              {/* Performance Chart */}
+              <div className='w-full'>
+                <NetWorthChart netWorthChartData={netWorthChartData} />
+              </div>
+
+              {/* Primary Success Metrics */}
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+                <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
+                <CardAllocation assets={assets} />
+                <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
+              </div>
+            </div>
+
+            {/* Right Column: Daily Market Context & Notifications */}
+            <div className='flex flex-col lg:basis-1/4 gap-8 w-full'>
+              {/* Market Sentiment */}
+              <div className='bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden p-6'>
+                <h3 className='text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-6'>
+                  Market Sentiment
+                </h3>
                 <Image
                   src='https://alternative.me/crypto/fear-and-greed-index.png'
                   alt='Latest Crypto Fear & Greed Index'
                   width={300}
                   height={300}
-                  style={{ width: 'auto', height: 'auto' }}
+                  className='w-full h-auto rounded-xl grayscale hover:grayscale-0 transition-all duration-700 hover:scale-105'
                   priority
                 />
               </div>
-              <div className='flex flex-col gap-2 h-full'>
+
+              <NotificationsPanel assets={assets} />
+
+              <div className='flex flex-col gap-4'>
                 <CardFreedomRunway
                   netWorth={netWorthTotal}
                   monthlyBurn={monthlyBurn}
                   uid={uid}
                 />
+                <CardFredEvents />
                 <CardAthDrawdown
                   userAssets={assets}
                   allCryptosData={allCryptos}
                 />
-                {/* <CardLongsAndShorts assets={assets} /> */}
               </div>
 
               {uid === process.env.NEXT_PUBLIC_HER_UID && (
-                <div className='rounded-sm border shadow-sm mb-2'>
-                  <div className='flex justify-between pl-4 pr-4 mt-6'>
-                    <span className='font-semibold text-xl'>
-                      Millionaire of the Year!
-                    </span>
-                    <span className='text-3xl'>🤑</span>
+                <div className='rounded-2xl border border-slate-100 bg-white shadow-sm overflow-hidden group'>
+                  <div className='p-6'>
+                    <div className='flex justify-between items-start'>
+                      <div>
+                        <h3 className='font-semibold text-xl text-slate-900 tracking-tight'>
+                          Millionaire of the Year
+                        </h3>
+                        <p className='text-xs text-slate-400 font-bold uppercase tracking-widest mt-1'>
+                          Swimming in Money! 💰
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <span className='text-xs ml-4 text-slate-400'>
-                    Swimming in Money, Yo!
-                  </span>
                   <Image
                     src='/mari.png'
-                    alt='Latest Crypto Fear & Greed Index'
+                    alt='Special Recognition'
                     width={300}
                     height={100}
+                    className='w-full object-cover group-hover:scale-110 transition-transform duration-700'
                   />
                 </div>
               )}
             </div>
           </div>
+
+          {/* -------- 2nd Row: Categorized Asset Deep-Dive ------------------------------------------------------------------------- */}
+          <div className='flex flex-col gap-8'>
+            <div className='flex items-center gap-4'>
+              <h2 className='text-2xl font-semibold text-slate-900 tracking-tighter'>
+                Portfolio Structure
+              </h2>
+              <div className='h-[1px] flex-1 bg-slate-100' />
+            </div>
+
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+              <CardTotal
+                Icon={Wallet}
+                description={'Liquid Assets'}
+                assets={assetsByType.Cash}
+                customKey={'cash'}
+              />
+              <CardTotal
+                Icon={Landmark}
+                description={`Vault Locations`}
+                assets={assets}
+                customKey={'wallet'}
+              />
+              <CardTotal
+                Icon={Coins}
+                description={'Asset Taxonomy'}
+                assets={assets}
+                customKey={'type'}
+              />
+              <CardTotal
+                Icon={Tag}
+                description={'Personal Tags'}
+                assets={assets}
+                customKey={'tag'}
+              />
+            </div>
+          </div>
+
+          {/* -------- 3rd Row: Market Hub ------------------------------------------------------------------------------------------ */}
+          <div className='flex flex-col gap-8'>
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+              <div className='lg:col-span-2'>
+                <CoinCodexWidget />
+              </div>
+              <div className='flex flex-col gap-8'>
+                <CardAssetsOnTheRise />
+                <CardNextPurchases />
+              </div>
+            </div>
+          </div>
+
+          {/* -------- Strategy & Actions -------------------------------------------------------------------------------------------- */}
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+            <CardCryptosForTrading assets={assets} />
+            <TagCard />
+          </div>
         </div>
       ) : (
-        <>
-          <Welcome userName={userName} />
-        </>
+        <Welcome userName={userName} />
       )}
     </Suspense>
   );

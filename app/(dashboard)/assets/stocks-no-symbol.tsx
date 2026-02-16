@@ -81,7 +81,7 @@ export default function StocksNoSymbol({
               {stocksNoTotal?.map((stock) => (
                 <p
                   key={stock?.asset}
-                  className='text-primary text-base text-center w-[5ch] border border-primary rounded-[2px] px-1 mr-2'
+                  className='text-primary text-base text-center w-[5ch] border border-primary rounded-xl px-1 mr-2'
                 >
                   {stock?.asset}
                 </p>

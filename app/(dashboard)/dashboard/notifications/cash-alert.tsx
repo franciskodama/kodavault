@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { SirenIcon, PieChartIcon } from 'lucide-react';
+import { AlarmClock, PieChart, Wallet, SirenIcon } from 'lucide-react';
 
 import {
   Card,
@@ -37,67 +37,92 @@ export default function CashAlert({
 
   return (
     <>
-      <Card className='h-[250px]'>
-        <div className='flex flex-col justify-between h-full bg-accent border-4 border-white'>
+      <Card className='h-[250px] border-none shadow-sm overflow-hidden'>
+        <div className='flex flex-col justify-between h-full'>
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
-                <span>Cash Available</span>
-                <span className='text-3xl'>🚨</span>
+                <span className='font-semibold tracking-tight text-slate-900'>
+                  Cash Available
+                </span>
+                <AlarmClock size={24} className='text-slate-400' />
               </CardTitle>
-              <CardDescription className='text-xs text-slate-800'>
+              <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
                 Time to put your money to work!
               </CardDescription>
             </CardHeader>
             <CardContent className='relative'>
-              {firstFiveAssets.map((asset) => {
-                return (
-                  <div key={asset?.id} className='my-[4px] relative'>
-                    <div className='flex w-full'>
-                      <div className='flex w-3/5'>
-                        <p className='text-[10px]'>Account:</p>
-                        <p className='ml-1 font-bold'>{asset?.wallet}</p>
-                      </div>
-                      <div className='flex w-2/5'>
-                        <p className='text-[10px]'>Total:</p>
-                        <p className='ml-1 font-bold'>
-                          {asset?.total && thousandFormatter(asset?.total)}
-                        </p>
-                      </div>
+              <div className='flex flex-col gap-2'>
+                {firstFiveAssets.map((asset) => (
+                  <div
+                    key={asset?.id}
+                    className='flex items-center justify-between group'
+                  >
+                    <div className='flex items-center gap-2'>
+                      <span className='text-[10px] font-bold text-slate-400 uppercase tracking-widest'>
+                        Account
+                      </span>
+                      <p className='text-xs font-bold text-slate-600 group-hover:text-slate-900 transition-colors'>
+                        {asset?.wallet}
+                      </p>
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-[10px] font-bold text-slate-400 uppercase tracking-widest'>
+                        Total
+                      </span>
+                      <p className='text-sm font-semibold text-slate-900 tracking-tight'>
+                        {asset?.total && thousandFormatter(asset?.total)}
+                      </p>
                     </div>
                   </div>
-                );
-              })}
-              {cash.length > 3 && <p className='absolute bottom-1'>...</p>}
+                ))}
+              </div>
+              {cash.length > 5 && (
+                <p className='text-[10px] text-slate-400 mt-2 italic'>
+                  + {cash.length - 5} more accounts
+                </p>
+              )}
             </CardContent>
           </div>
-          <CardFooter className='flex justify-between text-sm font-medium mx-1 px-2 pb-2'>
-            <Button size='md' onClick={handleClick}>
-              <SirenIcon size={16} className='mr-2' />
-              {cash.length > 3 ? (
-                <p>See all ({cash.length})</p>
+          <CardFooter className='flex justify-between items-center p-6 pt-0 border-t border-slate-50 mt-auto bg-slate-50/30'>
+            <Button
+              size='sm'
+              onClick={handleClick}
+              variant='secondary'
+              className='h-8 text-[10px] font-semibold uppercase tracking-widest'
+            >
+              <Wallet size={14} className='mr-2' />
+              {cash.length > 5 ? (
+                <span>See all ({cash.length})</span>
               ) : (
-                <p>Go to Assets</p>
+                <span>Go to Assets</span>
               )}
             </Button>
             {cash.length > 0 && (
-              <div className='flex gap-4 text-[12px] items-end'>
-                <div>
-                  <p>Total:</p>
-                  <p>
+              <div className='flex flex-col items-end gap-0'>
+                <div className='flex items-center gap-2'>
+                  <span className='text-[10px] font-bold text-slate-400 uppercase tracking-widest'>
+                    Portfolio Share
+                  </span>
+                  <div className='flex items-center gap-1 bg-rose-50 px-2 py-0.5 rounded-full'>
+                    <PieChart size={10} className='text-rose-600' />
+                    <span className='text-[10px] font-semibold text-rose-600'>{`${numberFormatter.format(
+                      (totalCash / totalNetWorth) * 100
+                    )}%`}</span>
+                  </div>
+                </div>
+                <div className='flex items-center gap-2 mt-1'>
+                  <span className='text-[10px] font-semibold text-slate-400 uppercase tracking-widest'>
+                    Total
+                  </span>
+                  <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
                     {thousandFormatter(
                       cash.reduce(
                         (sum: number, item: any) => sum + item.total,
                         0
                       )
                     )}
-                  </p>
-                </div>
-                <div>
-                  <PieChartIcon size={16} className='mr-2' />
-                  <p>{`${numberFormatter.format(
-                    (totalCash / totalNetWorth) * 100
-                  )}%`}</p>
+                  </span>
                 </div>
               </div>
             )}

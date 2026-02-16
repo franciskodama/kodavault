@@ -10,6 +10,8 @@ import { numberFormatterNoDecimals, numberFormatter } from '@/lib/utils';
 import { Asset } from '@/lib/types';
 import { v4 } from 'uuid';
 
+import { Activity } from 'lucide-react';
+
 export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
   const assetsForTrading = assets.reduce<Record<string, Asset[]>>(
     (groupedAssets, asset) => {
@@ -31,45 +33,60 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
     tradingAssets.reduce((sum: number, item: any) => sum + item.total, 0);
 
   return (
-    <Card className='w-full'>
+    <Card className='w-full border-none shadow-sm'>
       {tradingAssets && (
-        <div className='flex flex-col justify-between'>
+        <div className='flex flex-col h-full'>
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
-                <span>Cryptos for Trading</span>
-                <span className='text-3xl'>🛒</span>
+                <span className='font-semibold tracking-tight text-slate-900'>
+                  Cryptos for Trading
+                </span>
+                <Activity size={24} className='text-slate-400' />
               </CardTitle>
-              <CardDescription className='text-xs'>
-                {`Longs and Shorts on these bad boys!`}
+              <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
+                Active management of trading positions
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className='flex flex-col gap-4'>
               {tradingAssets.map((item: any) => (
-                <div key={v4()} className='flex justify-between'>
-                  <h3 className='w-[8ch]'>{item?.asset}</h3>
-                  <p>{item?.wallet}</p>
-                  <div className='flex'>
-                    <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
+                <div
+                  key={v4()}
+                  className='flex items-center justify-between group'
+                >
+                  <div className='flex flex-col'>
+                    <h3 className='text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors uppercase'>
+                      {item?.asset}
+                    </h3>
+                    <span className='text-[10px] text-slate-400 font-medium'>
+                      {item?.wallet}
+                    </span>
+                  </div>
+                  <div className='flex items-center gap-3'>
+                    <p className='text-sm font-semibold text-slate-900 tracking-tight'>{`${numberFormatterNoDecimals.format(
                       item.total
                     )}`}</p>
-                    <p
-                      className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                    <span
+                      className={`text-[10px] font-semibold w-[6ch] py-1 text-center rounded-md ${
                         (item.total / total) * 100 > 50
-                          ? 'bg-red-500'
-                          : 'bg-green-500'
+                          ? 'bg-rose-50 text-rose-600'
+                          : 'bg-emerald-50 text-emerald-600'
                       }`}
                     >{`${numberFormatter.format(
                       (item.total / total) * 100
-                    )}%`}</p>
+                    )}%`}</span>
                   </div>
                 </div>
               ))}
             </CardContent>
           </div>
-          <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
-            <h3>Total</h3>
-            {numberFormatterNoDecimals.format(total)}
+          <CardFooter className='flex items-center justify-between p-6 pt-0 border-t border-slate-50 mt-auto'>
+            <span className='text-[10px] font-semibold uppercase tracking-widest text-slate-400'>
+              Total
+            </span>
+            <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
+              {numberFormatterNoDecimals.format(total)}
+            </span>
           </CardFooter>
         </div>
       )}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { AlertTriangle, XIcon } from 'lucide-react';
+import { AlertTriangle, XIcon, Tag } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import {
@@ -58,30 +58,35 @@ export default function TagCard() {
 
   return (
     <>
-      <Card className='h-full'>
-        <div className='flex flex-col justify-between h-full'>
+      <Card className='h-full border-none shadow-sm'>
+        <div className='flex flex-col h-full'>
           <div className='flex flex-col'>
             <CardHeader>
               <CardTitle className='capitalize flex items-center justify-between'>
-                <div className='flex items-center gap-2'>
-                  <span>{`Tag`}</span>
-                  <Input
-                    className='h-8 pl-1 w-[8ch] text-left text-xl font-semibold'
-                    placeholder={tagInput}
-                    value={tagInput}
-                    onChange={(e) => handleChange(e.target.value)}
-                  />
-                  <Button
-                    onClick={() => handleClear()}
-                    variant='outline'
-                    className='h-8 rounded-[2px] px-1 border-slate-500 border-2'
-                  >
-                    <XIcon size={16} strokeWidth={2} />
-                  </Button>
+                <div className='flex items-center gap-3'>
+                  <span className='font-semibold tracking-tight text-slate-900'>
+                    Tag Explorer
+                  </span>
+                  <div className='flex items-center gap-2'>
+                    <Input
+                      className='h-8 pl-1 w-[10ch] text-left text-sm font-bold bg-slate-50 border-slate-100'
+                      placeholder='Tag...'
+                      value={tagInput}
+                      onChange={(e) => handleChange(e.target.value)}
+                    />
+                    <Button
+                      onClick={() => handleClear()}
+                      variant='secondary'
+                      size='icon'
+                      className='h-8 w-8'
+                    >
+                      <XIcon size={12} />
+                    </Button>
+                  </div>
                 </div>
-                <span className='text-2xl'>🏷️</span>
+                <Tag size={24} className='text-slate-400' />
               </CardTitle>
-              <CardDescription className='text-xs'>
+              <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
                 Assets categorized under this tag
               </CardDescription>
             </CardHeader>
@@ -140,11 +145,15 @@ export default function TagCard() {
               )}
             </CardContent>
           </div>
-          <CardFooter className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
-            <h3>Total</h3>
-            {numberFormatterNoDecimals.format(
-              totalArray.reduce((sum: number, item) => sum + item.total, 0)
-            )}
+          <CardFooter className='flex items-center justify-between p-6 pt-0 border-t border-slate-50 mt-auto'>
+            <span className='text-[10px] font-semibold uppercase tracking-widest text-slate-400'>
+              Total Portfolio
+            </span>
+            <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
+              {numberFormatterNoDecimals.format(
+                totalArray.reduce((sum: number, item) => sum + item.total, 0)
+              )}
+            </span>
           </CardFooter>
         </div>
       </Card>

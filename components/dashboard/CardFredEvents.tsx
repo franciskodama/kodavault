@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/card';
 import { EconomicCalendarEvent, EconomicCalendarResponse } from '@/lib/types';
 import { isThisWeek, dateWithDayFormatter } from '@/lib/utils';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function CardFredEvents() {
@@ -58,22 +58,24 @@ export function CardFredEvents() {
   const hasMore = events.length > 5;
 
   return (
-    <Card className='h-full flex flex-col uppercase tracking-tighter'>
+    <Card className='h-full flex flex-col border-none shadow-sm'>
       <CardHeader>
         <CardTitle className='flex items-center justify-between'>
-          <span className='font-black text-xl'>Economic Dates</span>
-          <span className='text-2xl'>📅</span>
+          <span className='font-semibold tracking-tight text-slate-900'>
+            Economic Dates
+          </span>
+          <Calendar size={24} className='text-slate-400' />
         </CardTitle>
-        <CardDescription className='text-xs font-bold'>
+        <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
           High impact releases (EST)
         </CardDescription>
       </CardHeader>
-      <CardContent className='flex-grow px-4'>
+      <CardContent className='flex-grow px-6'>
         {loading ? (
-          <div className='animate-pulse space-y-2'>
-            <div className='h-4 bg-slate-200 rounded w-full'></div>
-            <div className='h-4 bg-slate-200 rounded w-3/4'></div>
-            <div className='h-4 bg-slate-200 rounded w-5/6'></div>
+          <div className='animate-pulse space-y-4'>
+            <div className='h-4 bg-slate-100 rounded w-full' />
+            <div className='h-4 bg-slate-100 rounded w-3/4' />
+            <div className='h-4 bg-slate-100 rounded w-5/6' />
           </div>
         ) : events.length === 0 ? (
           <p className='text-slate-400 italic text-xs'>
@@ -88,30 +90,30 @@ export function CardFredEvents() {
               return (
                 <div
                   key={`${event.title}-${idx}`}
-                  className='flex flex-col gap-0 border-l-2 border-accent pl-3'
+                  className='flex flex-col gap-1 border-l-2 border-accent pl-4'
                 >
-                  <div className='flex justify-between items-center mb-0.5'>
-                    <span className='text-[10px] font-black text-slate-400'>
+                  <div className='flex justify-between items-center'>
+                    <span className='text-[10px] font-semibold text-slate-400 uppercase tracking-widest'>
                       {dateWithDayFormatter(isoDate).split(',')[0]}
                     </span>
-                    <span className='text-[10px] font-black text-slate-500'>
+                    <span className='text-[10px] font-bold text-slate-500'>
                       {event.time}
                     </span>
                   </div>
-                  <span className='text-[11px] font-black leading-tight line-clamp-2 mb-1'>
+                  <span className='text-xs font-bold text-slate-700 leading-snug line-clamp-2'>
                     {event.title}
                   </span>
                   {(event.actual || event.forecast) && (
-                    <div className='flex gap-2 text-[9px] font-black text-slate-400'>
-                      {event.actual && <span>ACT: {event.actual}</span>}
-                      {event.forecast && <span>EST: {event.forecast}</span>}
+                    <div className='flex gap-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest'>
+                      {event.actual && <span>Act: {event.actual}</span>}
+                      {event.forecast && <span>Est: {event.forecast}</span>}
                     </div>
                   )}
                 </div>
               );
             })}
             {hasMore && (
-              <p className='text-[10px] text-slate-400 text-center font-black'>
+              <p className='text-[10px] text-slate-400 text-center font-bold uppercase tracking-widest mt-4'>
                 + {events.length - 5} more events
               </p>
             )}
@@ -119,14 +121,14 @@ export function CardFredEvents() {
         )}
       </CardContent>
 
-      <CardFooter className='p-2 bg-slate-50 mt-auto'>
+      <CardFooter className='p-4 border-t border-slate-50 mt-auto'>
         <Link href='/calendar' className='w-full'>
           <Button
-            variant='ghost'
+            variant='secondary'
             size='sm'
-            className='w-full justify-between text-xs font-black'
+            className='w-full justify-between text-[10px] font-semibold uppercase tracking-widest'
           >
-            SEE MORE
+            See more
             <ChevronRight size={14} />
           </Button>
         </Link>

@@ -11,7 +11,7 @@ import {
 import { classError } from '@/lib/classes';
 import { numberFormatterNoDecimals, numberFormatter } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { PackagePlusIcon, PencilIcon, Trash2Icon } from 'lucide-react';
+import { PackagePlusIcon, PencilIcon, Trash2Icon, Key } from 'lucide-react';
 import {
   Dialog,
   DialogClose,
@@ -44,53 +44,71 @@ export const CardKeyAssets = ({
     useState<KeyAssetsPriced[]>(keyAssetsPriced);
 
   return (
-    <Card className='flex-1'>
-      <div className='flex flex-col justify-between h-full'>
+    <Card className='flex-1 border-none shadow-sm'>
+      <div className='flex flex-col h-full'>
         <div className='flex flex-col'>
           <CardHeader>
             <CardTitle className='capitalize flex items-center justify-between'>
-              <span>{`Key Assets`}</span>
-              <span className='text-3xl'>🔑</span>
+              <span className='font-semibold tracking-tight text-slate-900'>
+                Key Assets
+              </span>
+              <Key size={24} className='text-slate-400' />
             </CardTitle>
-            <CardDescription className='text-xs'>
+            <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
               Assets to keep an eye on!
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className='grid grid-cols-3 mb-2 font-semibold text-center'>
+            <div className='grid grid-cols-3 mb-4 text-[10px] font-bold uppercase tracking-widest text-slate-400'>
               <h3 className='text-left'>Asset</h3>
-              <h3>Price</h3>
+              <h3 className='text-center'>Price</h3>
               <h3 className='text-right'>Total</h3>
             </div>
             {keyAssetsState.length > 0 ? (
-              keyAssetsState.map((item: KeyAssetsPriced) => (
-                <div key={item.id} className='grid grid-cols-3 mb-2'>
-                  <h3>{item.asset}</h3>
-                  <p className='text-right mr-4'>
-                    ${numberFormatter.format(item.price)}
-                  </p>
-                  <p className='text-right'>
-                    ${numberFormatter.format(item.total)}
-                  </p>
-                </div>
-              ))
+              <div className='flex flex-col gap-3'>
+                {keyAssetsState.map((item: KeyAssetsPriced) => (
+                  <div
+                    key={item.id}
+                    className='grid grid-cols-3 items-center group'
+                  >
+                    <h3 className='text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors uppercase'>
+                      {item.asset}
+                    </h3>
+                    <p className='text-sm font-semibold text-slate-900 tracking-tight text-center'>
+                      ${numberFormatter.format(item.price)}
+                    </p>
+                    <p className='text-sm font-semibold text-slate-900 tracking-tight text-right'>
+                      ${numberFormatter.format(item.total)}
+                    </p>
+                  </div>
+                ))}
+              </div>
             ) : (
-              <div className='flex justify-between'>
-                <h3>No Key Assets Yet</h3>
+              <div className='flex justify-center py-6'>
+                <h3 className='text-xs font-bold text-slate-400'>
+                  No Key Assets Yet
+                </h3>
               </div>
             )}
           </CardContent>
         </div>
-        <CardFooter className='grid grid-cols-2 gap-1 text-sm text-slate-500 font-medium m-0 p-0'>
+        <CardFooter className='flex items-center justify-between p-6 pt-0 border-t border-slate-50 mt-auto'>
           <DialogEditKeyAssets
             keyAssetsState={keyAssetsState}
             setKeyAssetsState={setKeyAssetsState}
           />
-          <div className='flex justify-between text-sm text-slate-500 font-medium bg-slate-50 m-1 p-2'>
-            <h3>Total</h3>
-            {numberFormatterNoDecimals.format(
-              keyAssetsState.reduce((sum: number, item) => sum + item.total, 0)
-            )}
+          <div className='flex flex-col items-end'>
+            <span className='text-[10px] font-semibold uppercase tracking-widest text-slate-400'>
+              Total
+            </span>
+            <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
+              {numberFormatterNoDecimals.format(
+                keyAssetsState.reduce(
+                  (sum: number, item) => sum + item.total,
+                  0
+                )
+              )}
+            </span>
           </div>
         </CardFooter>
       </div>
@@ -214,7 +232,7 @@ export function DialogEditKeyAssets({
           <form onSubmit={handleSubmit(processForm)} className='py-8'>
             <div className='flex items-center'>
               <input
-                className='border border-slate-200 h-10 p-2 rounded-xs w-full mr-2'
+                className='border border-slate-200 h-10 p-2 rounded-xl w-full mr-2'
                 placeholder='Asset Symbol'
                 {...register('asset', { required: "Asset can't be empty" })}
               />

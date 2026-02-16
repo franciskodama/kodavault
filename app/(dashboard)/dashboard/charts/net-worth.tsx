@@ -90,10 +90,9 @@ export default function NetWorthChart({
         <CardHeader>
           <CardTitle className='capitalize flex items-center justify-between'>
             <span>{`Net Worth Evolution`}</span>
-            <span className='text-3xl'>📈</span>
           </CardTitle>
           <CardDescription className='text-xs'>
-            {`Track the progression of your net worth over time.`}
+            {/* {`Track the progression of your net worth over time.`} */}
           </CardDescription>
         </CardHeader>
         <CardContent className='w-full p-8 border-2 flex'>
@@ -105,7 +104,7 @@ export default function NetWorthChart({
                 You’ve just created your account, and we need some time to
                 gather the data for your net worth.
               </p>
-              <p className='rounded-[2px] py-2 px-4 mt-2 bg-primary text-white text-md font-semibold'>
+              <p className='rounded-xl py-2 px-4 mt-2 bg-primary text-white text-md font-semibold'>
                 Hang tight. Soon we’ll craft a masterpiece of your financial
                 journey!
               </p>

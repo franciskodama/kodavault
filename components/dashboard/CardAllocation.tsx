@@ -20,6 +20,8 @@ const COLORS = {
   Other: '#94a3b8', // Slate
 };
 
+import { PieChart } from 'lucide-react';
+
 export const CardAllocation = ({ assets }: { assets: Asset[] }) => {
   const data = useMemo(() => {
     if (!assets || assets.length === 0) return [];
@@ -52,13 +54,15 @@ export const CardAllocation = ({ assets }: { assets: Asset[] }) => {
   }, [assets]);
 
   return (
-    <Card className='w-full h-[400px]'>
+    <Card className='w-full h-[400px] border-none shadow-sm'>
       <CardHeader>
         <CardTitle className='flex items-center justify-between'>
-          <span>Allocation by Currency</span>
-          <span className='text-3xl'>🪙</span>
+          <span className='font-semibold tracking-tight text-slate-900'>
+            Allocation by Currency
+          </span>
+          <PieChart size={24} className='text-slate-400' />
         </CardTitle>
-        <CardDescription>
+        <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
           Your total risk exposure split by currency.
         </CardDescription>
       </CardHeader>
