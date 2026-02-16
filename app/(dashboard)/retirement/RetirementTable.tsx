@@ -9,7 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { retirementData } from '@/lib/data';
+import {
+  retirementData,
+  inflationMultiplier,
+  annualInflationData,
+} from '@/lib/data';
 import { RetirementData } from '@/lib/types';
 import { currencyFormatter, cn } from '@/lib/utils';
 import {
@@ -19,6 +23,7 @@ import {
   ShieldCheck,
   TrendingUp,
   Star,
+  Info,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
@@ -28,6 +33,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface RetirementTableProps {
   netWorthTotal: number;
@@ -43,15 +54,19 @@ const CONTINENT_COLORS: Record<string, string> = {
   'Europe/Asia': 'bg-cyan-500',
 };
 
+interface TableItem extends RetirementData {
+  updatedCost: number;
+}
+
 export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [continentFilter, setContinentFilter] = useState<string>('all');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [sortConfig, setSortConfig] = useState<{
-    key: keyof RetirementData | 'protection';
+    key: keyof TableItem | 'protection';
     direction: 'asc' | 'desc';
-  }>({ key: 'cost', direction: 'asc' });
+  }>({ key: 'updatedCost', direction: 'asc' });
 
   // Load favorites from local storage
   useEffect(() => {
@@ -65,7 +80,6 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
     }
   }, []);
 
-  // Save favorites to local storage
   const toggleFavorite = (country: string) => {
     const newFavorites = favorites.includes(country)
       ? favorites.filter((f) => f !== country)
@@ -80,7 +94,7 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
     return Array.from(set).sort();
   }, []);
 
-  const handleSort = (key: keyof RetirementData | 'protection') => {
+  const handleSort = (key: keyof TableItem | 'protection') => {
     setSortConfig((prev) => ({
       key,
       direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
@@ -88,7 +102,12 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
   };
 
   const filteredAndSortedData = useMemo(() => {
-    return retirementData
+    const items: TableItem[] = retirementData.map((item) => ({
+      ...item,
+      updatedCost: item.cost * inflationMultiplier,
+    }));
+
+    return items
       .filter((item) => {
         const matchesSearch = item.country
           .toLowerCase()
@@ -102,13 +121,19 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
       })
       .sort((a, b) => {
         if (sortConfig.key === 'protection') {
-          const aProt = (netWorthTotal / a.cost) * 100;
-          const bProt = (netWorthTotal / b.cost) * 100;
+          const aProt = (netWorthTotal / a.updatedCost) * 100;
+          const bProt = (netWorthTotal / b.updatedCost) * 100;
           return sortConfig.direction === 'asc' ? aProt - bProt : bProt - aProt;
         }
 
-        const aValue = a[sortConfig.key as keyof RetirementData];
-        const bValue = b[sortConfig.key as keyof RetirementData];
+        if (sortConfig.key === 'updatedCost') {
+          return sortConfig.direction === 'asc'
+            ? a.updatedCost - b.updatedCost
+            : b.updatedCost - a.updatedCost;
+        }
+
+        const aValue = a[sortConfig.key];
+        const bValue = b[sortConfig.key];
 
         if (typeof aValue === 'string' && typeof bValue === 'string') {
           return sortConfig.direction === 'asc'
@@ -225,10 +250,27 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
                 </TableHead>
                 <TableHead
                   className='text-right cursor-pointer font-black uppercase tracking-tighter text-slate-900 group'
-                  onClick={() => handleSort('cost')}
+                  onClick={() => handleSort('updatedCost')}
                 >
                   <div className='flex items-center justify-end gap-2'>
                     Retirement Cost
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Info className='w-3 h-3 text-slate-400 cursor-help' />
+                        </TooltipTrigger>
+                        <TooltipContent className='w-64 p-3 bg-white border shadow-xl'>
+                          <p className='text-[10px] font-bold uppercase leading-relaxed text-slate-600'>
+                            Original 2022 data adjusted for US inflation:
+                            <br />
+                            <span className='text-red-500'>
+                              +{((inflationMultiplier - 1) * 100).toFixed(1)}%
+                              total increase
+                            </span>
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                     <ArrowUpDown className='w-4 h-4 transition-colors group-hover:text-accent' />
                   </div>
                 </TableHead>
@@ -245,7 +287,7 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
             </TableHeader>
             <TableBody>
               {filteredAndSortedData.map((item, index) => {
-                const protection = (netWorthTotal / item.cost) * 100;
+                const protection = (netWorthTotal / item.updatedCost) * 100;
                 const isFunded = protection >= 100;
                 const isFavorite = favorites.includes(item.country);
 
@@ -275,8 +317,13 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
                         />
                       </button>
                     </TableCell>
-                    <TableCell className='font-black text-sm uppercase whitespace-nowrap text-slate-800'>
-                      {item.country}
+                    <TableCell className='font-black text-sm uppercase whitespace-nowrap text-slate-800 border-r border-slate-50'>
+                      <div className='flex items-center gap-3'>
+                        <span className='text-3xl filter drop-shadow-sm select-none grayscale-[0.2] transition-all group-hover:grayscale-0'>
+                          {item.flag}
+                        </span>
+                        <span className='tracking-tighter'>{item.country}</span>
+                      </div>
                     </TableCell>
                     <TableCell>
                       <div className='flex items-center gap-2'>
@@ -292,18 +339,23 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
                       </div>
                     </TableCell>
                     <TableCell className='text-right'>
-                      <span
-                        className={cn(
-                          'text-sm font-black tracking-tighter',
-                          item.cost > 500000
-                            ? 'text-red-500'
-                            : item.cost < 250000
-                            ? 'text-green-600'
-                            : 'text-slate-900'
-                        )}
-                      >
-                        {currencyFormatter(item.cost)}
-                      </span>
+                      <div className='flex flex-col items-end'>
+                        <span
+                          className={cn(
+                            'text-sm font-black tracking-tighter',
+                            item.updatedCost > 500000
+                              ? 'text-red-500'
+                              : item.updatedCost < 250000
+                              ? 'text-green-600'
+                              : 'text-slate-900'
+                          )}
+                        >
+                          {currencyFormatter(item.updatedCost)}
+                        </span>
+                        <span className='text-[9px] font-bold text-slate-400 uppercase tracking-tighter'>
+                          (Was {currencyFormatter(item.cost)})
+                        </span>
+                      </div>
                     </TableCell>
                     <TableCell className='text-right pr-6'>
                       <div className='flex flex-col items-end gap-1'>
@@ -359,17 +411,25 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
       <div className='bg-slate-50 border border-slate-100 rounded-xl p-6 mt-8'>
         <h3 className='text-xs font-black uppercase tracking-widest text-[#bd554c] mb-3 flex items-center gap-2'>
           <div className='w-4 h-[2px] bg-[#bd554c]' />
-          Methodology
+          Methodology & Inflation Update
         </h3>
         <p className='text-[10px] leading-relaxed text-slate-500 font-bold uppercase tracking-tight text-justify'>
           We calculated the cost for an American to comfortably retire in every
           country between the average age of retirement (61 years) and life
-          expectancy (76.15 years) using Numbeo&apos;s cost of living data. For
-          each country, we calculated the average value from all of its cities.
-          We excluded countries where the only city with entries was the
-          capital, inflating cost-of-living prices compared to countries with a
-          wide spread of data, excluding countries where a capital city has
-          overinflated prices.
+          expectancy (76.15 years) using Numbeo&apos;s cost of living data.
+          <span className='block mt-2 text-slate-600 italic'>
+            Note: The original study was released in 2022. To provide accurate
+            modern estimates, we have applied a cumulative US Inflation
+            multiplier of
+            <span className='text-[#bd554c] font-black'>
+              {' '}
+              {((inflationMultiplier - 1) * 100).toFixed(1)}%{' '}
+            </span>
+            based on actual US CPI data (2022: {annualInflationData[2022] * 100}
+            %, 2023: {annualInflationData[2023] * 100}%, 2024:{' '}
+            {annualInflationData[2024] * 100}%, 2025:{' '}
+            {annualInflationData[2025] * 100}%).
+          </span>
         </p>
       </div>
 
