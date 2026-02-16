@@ -4,12 +4,10 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { neobrutalism } from '@clerk/themes';
 
 import './../components/ui/globals.css';
-import { Outfit, Inter } from 'next/font/google';
+import { Outfit, Manrope } from 'next/font/google';
 
 const outfit = Outfit({ subsets: ['latin'], display: 'swap' });
-
-// this is a good option as well:
-const inter = Inter({ subsets: ['latin'], display: 'swap' });
+const manrope = Manrope({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Trezo.App',
@@ -47,12 +45,8 @@ export default function RootLayout({
       }}
     >
       <html lang='en' className={outfit.className}>
-        <body className='bg-[#FAFAFB] text-xs text-slate-600'>
-          <div className='max-w-[1400px] mx-auto'>
-            {/* <Template key={routeParam}> */}
-            {children}
-            {/* </Template> */}
-          </div>
+        <body className='bg-[#FAFAFB] text-sm text-slate-600'>
+          <div className='max-w-[1400px] mx-auto'>{children}</div>
         </body>
       </html>
     </ClerkProvider>
