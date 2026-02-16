@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+
 import {
   Card,
   CardContent,
@@ -7,17 +9,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-
-import {
   numberFormatterNoDecimals,
   getTotalByKey,
   numberFormatter,
-  getQtyOfAssets,
 } from '@/lib/utils';
 import { Asset } from '@/lib/types';
 
@@ -34,11 +28,9 @@ export const CardAssetsBy = ({
   emoji?: string;
   description?: string;
 }) => {
-  // Main Card "Total By Asset"
   const totalArray = getTotalByKey(assets, customKey);
   const total = totalArray.reduce((sum: number, item) => sum + item.total, 0);
 
-  // Other Cards
   const groupedByCustomKey = assets.reduce((acc: any, item: any) => {
     const value = item[customKey];
 
@@ -85,7 +77,7 @@ export const CardAssetsBy = ({
                   {key}
                 </h3>
                 {sortedArray(groupedByCustomKey[key]).map((item: any) => (
-                  <div key={item.total} className='flex justify-between'>
+                  <div key={v4()} className='flex justify-between'>
                     <h3>{item.asset}</h3>
                     <h3>{item.value}</h3>
                     <div className='flex'>
