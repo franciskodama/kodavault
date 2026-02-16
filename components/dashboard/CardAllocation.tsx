@@ -62,9 +62,6 @@ export const CardAllocation = ({ assets }: { assets: Asset[] }) => {
           </span>
           <PieChart size={24} className='text-slate-400' />
         </CardTitle>
-        <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-          Your total risk exposure split by currency.
-        </CardDescription>
       </CardHeader>
       <CardContent className='h-[300px] w-full'>
         {data.length > 0 ? (

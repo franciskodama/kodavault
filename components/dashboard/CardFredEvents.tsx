@@ -66,9 +66,6 @@ export function CardFredEvents() {
           </span>
           <Calendar size={24} className='text-slate-400' />
         </CardTitle>
-        <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-          High impact releases (EST)
-        </CardDescription>
       </CardHeader>
       <CardContent className='flex-grow px-6'>
         {loading ? (

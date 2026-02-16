@@ -86,9 +86,6 @@ export default function TagCard() {
                 </div>
                 <Tag size={24} className='text-slate-400' />
               </CardTitle>
-              <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-                Assets categorized under this tag
-              </CardDescription>
             </CardHeader>
             <CardContent className='relative'>
               {sortedTaggedAssets.length < 1 ? (

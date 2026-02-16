@@ -64,9 +64,6 @@ export const CardTotal = ({
               <span className='font-semibold tracking-tight text-slate-900'>{`By ${customKey}`}</span>
               {Icon && <Icon size={24} className='text-slate-400' />}
             </CardTitle>
-            <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-              {description}
-            </CardDescription>
           </CardHeader>
           <CardContent>
             {sortedArray.length < 1 ? (

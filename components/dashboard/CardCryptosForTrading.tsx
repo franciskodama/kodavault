@@ -44,9 +44,6 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
                 </span>
                 <Activity size={24} className='text-slate-400' />
               </CardTitle>
-              <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-                Active management of trading positions
-              </CardDescription>
             </CardHeader>
             <CardContent className='flex flex-col gap-4'>
               {tradingAssets.map((item: any) => (

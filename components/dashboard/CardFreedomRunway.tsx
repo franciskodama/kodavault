@@ -80,9 +80,6 @@ export const CardFreedomRunway = ({
           </span>
           <Plane size={24} className='text-slate-400' />
         </CardTitle>
-        <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-          How long you can live without working.
-        </CardDescription>
       </CardHeader>
       <CardContent className='flex flex-col gap-6 relative z-10'>
         <div className='text-center space-y-2 mt-2'>

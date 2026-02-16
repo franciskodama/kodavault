@@ -81,9 +81,6 @@ export const CardAthDrawdown = ({
             </span>
             <Percent size={24} className='text-slate-400' />
           </CardTitle>
-          <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-            Top assets trading below All-Time High
-          </CardDescription>
         </CardHeader>
         <CardContent className='flex items-center justify-center h-[200px] text-slate-400 text-sm italic'>
           No drawdown data available.

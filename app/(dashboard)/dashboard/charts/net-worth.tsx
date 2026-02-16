@@ -91,9 +91,6 @@ export default function NetWorthChart({
           <CardTitle className='capitalize flex items-center justify-between'>
             <span>{`Net Worth Evolution`}</span>
           </CardTitle>
-          <CardDescription className='text-xs'>
-            {/* {`Track the progression of your net worth over time.`} */}
-          </CardDescription>
         </CardHeader>
         <CardContent className='w-full p-8 border-2 flex'>
           <div className='flex justify-center items-center w-1/2'>

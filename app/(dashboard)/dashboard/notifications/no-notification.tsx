@@ -32,9 +32,6 @@ export default function NoNotifications() {
                 </span>
                 <Bell size={24} className='text-slate-400' />
               </CardTitle>
-              <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-                Your inbox is blissfully empty.
-              </CardDescription>
             </CardHeader>
             <CardContent>
               <h3 className='text-sm font-bold text-slate-700 mb-2'>

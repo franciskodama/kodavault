@@ -71,9 +71,6 @@ export const CardTotalAllCurrency = ({
               <span>Consolidated Balance</span>
               <Activity size={32} className='text-slate-400' />
             </CardTitle>
-            <CardDescription className='text-slate-400 font-bold uppercase tracking-widest text-[10px]'>
-              {description}
-            </CardDescription>
           </CardHeader>
           <CardContent className='px-0'>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>

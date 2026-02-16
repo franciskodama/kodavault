@@ -54,9 +54,6 @@ export const CardKeyAssets = ({
               </span>
               <Key size={24} className='text-slate-400' />
             </CardTitle>
-            <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-              Assets to keep an eye on!
-            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className='grid grid-cols-3 mb-4 text-[10px] font-bold uppercase tracking-widest text-slate-400'>

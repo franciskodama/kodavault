@@ -31,9 +31,6 @@ export const CardNextPurchases = () => {
               </span>
               <ShoppingBag size={24} className='text-slate-400' />
             </CardTitle>
-            <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-              Plan your next portfolio moves
-            </CardDescription>
           </CardHeader>
           <CardContent className='flex flex-col gap-4'>
             {nextPurchases.map((item) => (

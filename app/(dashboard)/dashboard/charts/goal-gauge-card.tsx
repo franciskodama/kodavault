@@ -71,9 +71,6 @@ export const GoalGaugeCard = ({
             </span>
             <Flag size={24} className='text-slate-400' />
           </CardTitle>
-          <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-            Getting closer to the sweet spot!
-          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className='flex items-center'>
