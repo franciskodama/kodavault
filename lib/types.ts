@@ -197,3 +197,10 @@ export type KeyAssetsPriced = {
   price: number;
   total: number;
 };
+
+
+export type RetirementData = {
+  country: string;
+  cost: number;
+  continent: string;
+};
