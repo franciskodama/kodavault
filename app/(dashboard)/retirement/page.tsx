@@ -1,27 +1,38 @@
 import { currentUser } from '@clerk/nextjs/server';
-import Image from 'next/image';
+import { RetirementTable } from '@/app/(dashboard)/retirement/RetirementTable';
+import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
 
 export default async function Retirement() {
   const user = await currentUser();
+  const uid = user?.emailAddresses?.[0]?.emailAddress;
+
+  const unpricedAssets = await fetchAssetsWithoutPrices(uid ? uid : '');
+  const { assets } = await fetchAssetsWithPrices(unpricedAssets);
+  const netWorthTotal =
+    assets.reduce((sum, item) => sum + (item?.total || 0), 0) || 0;
 
   return (
-    <>
-      <div className='bg-[#a6cae2] flex flex-col items-center w-full text-center mx-auto mb-12 px-8'>
-        {user && (
-          <h1 className='uppercase font-extrabold w-full text-[#bd554c] text-2xl bg-white drop-shadow-[7px_7px_rgba(130,173,205,1)] py-2 px-4 my-8'>
-            {`${user.firstName}, choose your Goal, work for it, and believe in it!`}{' '}
-            <span className='ml-2'>🚩</span>
-          </h1>
-        )}
-
-        <Image
-          src='/cost-retirement.png'
-          width={1400}
-          height={800}
-          alt='Study of the Retirement Cost Around the World'
-          className='rounded-md object-cover'
-        />
+    <div className='flex flex-col items-center w-full mx-auto pb-20'>
+      <div className='w-full py-12 px-8 flex flex-col items-center justify-center relative overflow-hidden mb-8'>
+        <div className='max-w-4xl w-full text-center relative z-10'>
+          <div className='flex flex-col items-center justify-center space-y-2'>
+            <h1 className='text-3xl md:text-5xl font-serif font-black text-slate-800 tracking-tighter'>
+              Comfortably Retire
+            </h1>
+            <div className='flex items-center gap-3'>
+              <div className='h-[1.5px] w-8 bg-[#bd554c] opacity-50' />
+              <h2 className='text-sm md:text-base font-black text-slate-500 uppercase tracking-[0.3em]'>
+                In Every Country
+              </h2>
+              <div className='h-[1.5px] w-8 bg-[#bd554c] opacity-50' />
+            </div>
+          </div>
+        </div>
       </div>
-    </>
+
+      <div className='w-full px-8'>
+        <RetirementTable netWorthTotal={netWorthTotal} />
+      </div>
+    </div>
   );
 }
