@@ -10,7 +10,6 @@ import {
 } from '../../../../components/ui/card';
 import { Input } from '../../../../components/ui/input';
 import { Asset } from '@/lib/types';
-import { Button } from '../../../../components/ui/button';
 import { addGoal, updateGoal } from '@/lib/actions';
 import { Progress } from '@/components/ui/progress';
 import { thousandFormatter, numberFormatterNoDecimals } from '@/lib/utils';
@@ -96,7 +95,7 @@ export const GoalGaugeCard = ({
                   <div className='flex items-center gap-1'>
                     <Input
                       autoFocus
-                      className='h-6 w-[12ch] text-[10px] text-center font-bold bg-slate-50 border-slate-200 rounded-md focus-visible:ring-1'
+                      className='h-6 w-[15ch] text-[10px] text-center font-bold bg-slate-50 border-slate-200 rounded-md focus-visible:ring-1'
                       value={
                         goalInput === 0 ? '' : thousandFormatter(goalInput)
                       }
@@ -124,15 +123,15 @@ export const GoalGaugeCard = ({
                   </div>
                 ) : (
                   <div className='flex items-center gap-2 group'>
-                    <span className='text-[10px] font-medium text-slate-400 uppercase tracking-widest'>
-                      Goal: ${numberFormatterNoDecimals.format(goalInput)}
-                    </span>
                     <button
                       onClick={() => setIsEditing(true)}
                       className='opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-slate-900'
                     >
                       <Pencil size={12} />
                     </button>
+                    <span className='text-[10px] font-medium text-slate-400 uppercase tracking-widest'>
+                      Goal: ${numberFormatterNoDecimals.format(goalInput)}
+                    </span>
                   </div>
                 )}
               </div>
