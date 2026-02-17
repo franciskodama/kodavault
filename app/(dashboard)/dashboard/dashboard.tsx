@@ -79,10 +79,10 @@ export default function Dashboard({
   return (
     <Suspense fallback={<SkeletonDashboard />}>
       {assets.length && assetsByType ? (
-        <div className='flex flex-col gap-10 px-8 sm:px-12 pb-20'>
+        <div className='flex flex-col'>
           {/* -------- 1st Row: Hero Overview ------------------------------------------------------------------ */}
-          <div className='flex flex-col lg:flex-row gap-8 items-start'>
-            <div className='flex flex-col lg:basis-3/4 gap-8 w-full'>
+          <div className='flex flex-col lg:flex-row gap-8 items-start border-2'>
+            <div className='flex flex-col lg:basis-3/4 w-full gap-8'>
               {/* Total Balance Summary */}
               <CardTotalAllCurrency
                 usdBrl={usdBrl}

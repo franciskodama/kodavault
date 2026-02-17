@@ -67,9 +67,8 @@ export const CardTotalAllCurrency = ({
       <div className='flex flex-col'>
         <div className='flex flex-col'>
           <CardHeader className='px-0'>
-            <CardTitle className='text-3xl font-semibold text-slate-900 tracking-tighter flex items-center justify-between'>
+            <CardTitle className='text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 flex items-center justify-between'>
               <span>Consolidated Balance</span>
-              <Activity size={32} className='text-slate-400' />
             </CardTitle>
           </CardHeader>
           <CardContent className='px-0'>
