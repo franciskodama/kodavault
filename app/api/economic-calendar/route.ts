@@ -1,23 +1,16 @@
 import { NextResponse } from 'next/server';
-import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 
-// File-based cache to survive restarts and multiple refreshes
-const CACHE_FILE = path.join(
-  process.cwd(),
-  'app/api/economic-calendar/cache.json'
-);
-const CACHE_DURATION = 60 * 60 * 1000; // 1 hour (as requested by the feed provider)
+// Use /tmp for caching to avoid permission issues in production and restart loops in dev
+const CACHE_FILE = path.join('/tmp', 'trezo-economic-cache.json');
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const filter = searchParams.get('filter'); // 'high_impact' or 'all'
+  const filter = searchParams.get('filter');
 
-  // 1. Try to read from file cache
-  let cachedData: any[] = [];
-  let isCacheValid = false;
-
+  // 1. Try to read from cache
   try {
     if (fs.existsSync(CACHE_FILE)) {
       const stats = fs.statSync(CACHE_FILE);
@@ -25,47 +18,43 @@ export async function GET(request: Request) {
 
       if (now - stats.mtimeMs < CACHE_DURATION) {
         const fileContent = fs.readFileSync(CACHE_FILE, 'utf-8');
-        cachedData = JSON.parse(fileContent);
-        isCacheValid = true;
+        const cachedData = JSON.parse(fileContent);
+        return NextResponse.json(applyFilter(cachedData, filter));
       }
     }
   } catch (e) {
-    console.error('Error reading cache file:', e);
-  }
-
-  if (isCacheValid) {
-    return NextResponse.json(applyFilter(cachedData, filter));
+    console.error('Error reading cache:', e);
   }
 
   try {
-    // 2. Try to fetch new data (JSON endpoint is usually more permissive)
-    const response = await axios.get(
+    // 2. Fetch fresh data
+    const response = await fetch(
       'https://nfs.faireconomy.media/ff_calendar_thisweek.json',
       {
         headers: {
           'User-Agent':
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
         },
-        timeout: 10000,
+        next: { revalidate: 3600 }, // Also use Next.js built-in fetch cache
       }
     );
 
-    if (response.data && Array.isArray(response.data)) {
-      const formattedEvents = response.data.map((e: any) => {
-        const eventDate = new Date(e.date);
+    if (!response.ok) throw new Error(`Feed responded with ${response.status}`);
 
-        // Format to MM-DD-YYYY
+    const rawData = await response.json();
+
+    if (rawData && Array.isArray(rawData)) {
+      const formattedEvents = rawData.map((e: any) => {
+        const eventDate = new Date(e.date);
         const month = String(eventDate.getMonth() + 1).padStart(2, '0');
         const day = String(eventDate.getDate()).padStart(2, '0');
         const year = eventDate.getFullYear();
         const dateStr = `${month}-${day}-${year}`;
 
-        // Format time to h:mma
         let hours = eventDate.getHours();
         const minutes = String(eventDate.getMinutes()).padStart(2, '0');
         const ampm = hours >= 12 ? 'pm' : 'am';
-        hours = hours % 12;
-        hours = hours ? hours : 12;
+        hours = hours % 12 || 12;
         const timeStr = `${hours}:${minutes}${ampm}`;
 
         return {
@@ -80,35 +69,30 @@ export async function GET(request: Request) {
         };
       });
 
-      // Write to cache file
+      // Write to cache
       try {
         fs.writeFileSync(CACHE_FILE, JSON.stringify(formattedEvents));
       } catch (e) {
-        console.error('Error writing cache file:', e);
+        console.error('Error writing cache:', e);
       }
 
       return NextResponse.json(applyFilter(formattedEvents, filter));
     }
 
-    // If we reach here, response.data was not an array (e.g. Rate Limited HTML)
     throw new Error('Response data is not an array');
   } catch (error: any) {
-    console.warn(
-      'ForexFactory Feed error (using fallback or empty):',
-      error.message
-    );
+    console.warn('ForexFactory Feed error:', error.message);
 
-    // 3. Fallback: If cache exists but is expired, use it anyway
-    if (fs.existsSync(CACHE_FILE)) {
-      try {
+    // Fallback to existing cache even if expired
+    try {
+      if (fs.existsSync(CACHE_FILE)) {
         const fileContent = fs.readFileSync(CACHE_FILE, 'utf-8');
         const expiredData = JSON.parse(fileContent);
         return NextResponse.json(applyFilter(expiredData, filter));
-      } catch (e) {}
-    }
+      }
+    } catch (e) {}
 
-    // 4. Final Fallback: Return some mock data for local testing if absolutely blocked
-    // This allows the user to see the UI changes they made even if the feed is down
+    // Final fallback to mock data
     const mockData = generateMockData();
     return NextResponse.json(applyFilter(mockData, filter));
   }
@@ -153,16 +137,6 @@ function generateMockData() {
       impact: 'high',
       forecast: '0.4%',
       previous: '0.6%',
-      actual: '',
-    },
-    {
-      title: 'Empire State Manufacturing Index',
-      country: 'USD',
-      date: format(new Date(today.getTime() + 86400000)),
-      time: '8:30am',
-      impact: 'high',
-      forecast: '-4.0',
-      previous: '-11.9',
       actual: '',
     },
   ];

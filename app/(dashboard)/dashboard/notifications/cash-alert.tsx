@@ -1,12 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { AlarmClock, PieChart, Wallet, SirenIcon } from 'lucide-react';
+import { AlarmClock, PieChart, Wallet } from 'lucide-react';
 
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -56,18 +55,18 @@ export default function CashAlert({
                     className='flex items-center justify-between group'
                   >
                     <div className='flex items-center gap-2'>
-                      <span className='text-[10px] font-bold text-slate-400 uppercase tracking-widest'>
+                      <span className='text-[10px] font-medium text-slate-400 uppercase tracking-widest'>
                         Account
                       </span>
-                      <p className='text-xs font-bold text-slate-600 group-hover:text-slate-900 transition-colors'>
+                      <p className='text-xs font-medium text-slate-600 group-hover:text-slate-900 transition-colors'>
                         {asset?.wallet}
                       </p>
                     </div>
                     <div className='flex items-center gap-2'>
-                      <span className='text-[10px] font-bold text-slate-400 uppercase tracking-widest'>
+                      <span className='text-[10px] font-medium text-slate-400 uppercase tracking-widest'>
                         Total
                       </span>
-                      <p className='text-sm font-semibold text-slate-900 tracking-tight'>
+                      <p className='text-sm font-medium text-slate-900 tracking-tight'>
                         {asset?.total && thousandFormatter(asset?.total)}
                       </p>
                     </div>
@@ -81,25 +80,12 @@ export default function CashAlert({
               )}
             </CardContent>
           </div>
-          <CardFooter className='flex justify-between items-center p-6 pt-0 border-t border-slate-50 mt-auto bg-slate-50/30'>
-            <Button
-              size='sm'
-              onClick={handleClick}
-              variant='secondary'
-              className='h-8 text-[10px] font-semibold uppercase tracking-widest'
-            >
-              <Wallet size={14} className='mr-2' />
-              {cash.length > 5 ? (
-                <span>See all ({cash.length})</span>
-              ) : (
-                <span>Go to Assets</span>
-              )}
-            </Button>
+          <CardFooter className='flex justify-between items-end p-6 pt-0 border-t border-slate-50 mt-auto bg-slate-50/30'>
             {cash.length > 0 && (
               <div className='flex flex-col items-end gap-0'>
                 <div className='flex items-center gap-2'>
                   <span className='text-[10px] font-bold text-slate-400 uppercase tracking-widest'>
-                    Portfolio Share
+                    Share
                   </span>
                   <div className='flex items-center gap-1 bg-rose-50 px-2 py-0.5 rounded-full'>
                     <PieChart size={10} className='text-rose-600' />
@@ -123,6 +109,19 @@ export default function CashAlert({
                 </div>
               </div>
             )}
+            <Button
+              size='sm'
+              onClick={handleClick}
+              variant='secondary'
+              className='h-8 text-[10px] font-semibold uppercase tracking-widest'
+            >
+              <Wallet size={14} className='mr-2' />
+              {cash.length > 5 ? (
+                <span>See all ({cash.length})</span>
+              ) : (
+                <span>Go to Assets</span>
+              )}
+            </Button>
           </CardFooter>
         </div>
       </Card>

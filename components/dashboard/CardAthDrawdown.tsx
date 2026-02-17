@@ -122,7 +122,7 @@ export const CardAthDrawdown = ({
                 <span className='text-xs text-slate-500'>
                   ${item.price.toLocaleString()} / ${item.ath.toLocaleString()}
                 </span>
-                <span className='font-bold text-green-600'>
+                <span className='font-medium text-green-600'>
                   -{item.drawdown.toFixed(1)}%
                 </span>
               </div>

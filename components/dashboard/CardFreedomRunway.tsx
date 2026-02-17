@@ -93,7 +93,7 @@ export const CardFreedomRunway = ({
 
         <div className='space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-100'>
           <div className='flex justify-between items-center text-sm'>
-            <Label htmlFor='burn-rate' className='text-slate-600 font-semibold'>
+            <Label htmlFor='burn-rate' className='text-slate-600 font-medium'>
               Monthly Burn Rate
             </Label>
             <div className='flex items-center gap-2'>

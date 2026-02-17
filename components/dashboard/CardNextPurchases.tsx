@@ -38,11 +38,11 @@ export const CardNextPurchases = () => {
                 key={item.asset}
                 className='flex items-center justify-between group'
               >
-                <h3 className='text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors uppercase'>
+                <h3 className='text-sm font-medium text-slate-600 group-hover:text-slate-900 transition-colors uppercase'>
                   {item.asset}
                 </h3>
                 <div className='flex items-center gap-3'>
-                  <p className='text-sm font-semibold text-slate-900 tracking-tight'>{`${numberFormatterNoDecimals.format(
+                  <p className='text-sm font-medium text-slate-900 tracking-tight'>{`${numberFormatterNoDecimals.format(
                     item.total
                   )}`}</p>
                   <span

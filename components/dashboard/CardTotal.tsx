@@ -82,11 +82,11 @@ export const CardTotal = ({
                     key={item.value}
                     className='flex justify-between items-center group'
                   >
-                    <h3 className='text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors'>
+                    <h3 className='text-sm font-medium text-slate-600 group-hover:text-slate-900 transition-colors'>
                       {item.value}
                     </h3>
                     <div className='flex items-center gap-2'>
-                      <p className='text-sm font-semibold text-slate-900 tracking-tight'>{`${numberFormatterNoDecimals.format(
+                      <p className='text-sm font-medium text-slate-900 tracking-tight'>{`${numberFormatterNoDecimals.format(
                         item.total
                       )}`}</p>
                       <p
@@ -136,7 +136,7 @@ export const CardTotal = ({
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <span className='ml-1 text-[10px] font-bold'>
+                        <span className='ml-1 text-[10px] font-medium'>
                           ({getQtyOfAssets(assets)})
                         </span>
                       </TooltipTrigger>

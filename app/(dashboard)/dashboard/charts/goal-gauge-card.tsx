@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '../../../../components/ui/card';
@@ -13,9 +12,9 @@ import { Input } from '../../../../components/ui/input';
 import { Asset } from '@/lib/types';
 import { Button } from '../../../../components/ui/button';
 import { addGoal, updateGoal } from '@/lib/actions';
-import { GoalGauge } from '@/app/(dashboard)/dashboard/charts/goal-gauge';
-import { thousandFormatter } from '@/lib/utils';
-import { XIcon, Flag } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { thousandFormatter, numberFormatterNoDecimals } from '@/lib/utils';
+import { XIcon, Target, Pencil, Check } from 'lucide-react';
 
 export const GoalGaugeCard = ({
   assets,
@@ -27,28 +26,31 @@ export const GoalGaugeCard = ({
   uid: string;
 }) => {
   const [goalInput, setGoalInput] = useState<number>(goal);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [updated, setUpdated] = useState<boolean>(false);
 
   const totalSoFar = Math.round(
     assets.reduce((sum: number, item: any) => sum + item.total, 0)
   );
 
-  const handleSubmitAdd = async () => {
-    const success = await addGoal(uid, goalInput);
+  const percentage = goalInput > 0 ? (totalSoFar / goalInput) * 100 : 0;
+  const displayPercentage = Math.min(percentage, 100).toFixed(1);
+
+  const handleSave = async () => {
+    const success =
+      goal === 0
+        ? await addGoal(uid, goalInput)
+        : await updateGoal(uid, goalInput);
+
     if (success) {
       setUpdated(true);
+      setIsEditing(false);
     }
   };
 
-  const handleSubmitUpdate = async () => {
-    const success = await updateGoal(uid, goalInput);
-    if (success) {
-      setUpdated(true);
-    }
-  };
-
-  const handleClear = () => {
-    setGoalInput(0);
+  const handleCancel = () => {
+    setGoalInput(goal);
+    setIsEditing(false);
   };
 
   useEffect(() => {
@@ -62,67 +64,86 @@ export const GoalGaugeCard = ({
   }, [updated]);
 
   return (
-    <Card className='flex-1 h-[250px] w-full border-none shadow-sm'>
+    <Card className='flex-1 h-[250px] w-full border-none shadow-sm overflow-hidden'>
       <div className='flex flex-col h-full'>
         <CardHeader>
           <CardTitle className='capitalize flex items-center justify-between'>
             <span className='font-semibold tracking-tight text-slate-900'>
               Goal Progress
             </span>
-            <Flag size={24} className='text-slate-400' />
+            <Target size={24} className='text-slate-400' />
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className='flex items-center'>
-            <div className='w-full flex pr-6'>
-              <GoalGauge totalSoFar={totalSoFar} goal={goalInput} />
-            </div>
+        <CardContent className='flex flex-col gap-6'>
+          <div className='text-center space-y-1'>
+            <h3 className='text-4xl font-extrabold text-primary tracking-tighter'>
+              {displayPercentage}%
+            </h3>
+            <p className='text-[10px] font-medium text-slate-400 uppercase tracking-widest'>
+              Of Your Target
+            </p>
+          </div>
 
-            <div className='flex flex-col items-center w-full gap-3'>
-              <h3 className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
-                Current Goal
-              </h3>
-              <Input
-                className='h-10 w-[14ch] text-center font-semibold text-slate-900 placeholder:text-slate-200'
-                value={goalInput === 0 ? '' : thousandFormatter(goalInput)}
-                onChange={(e) => {
-                  const rawValue = e.target.value.replace(/\D/g, '');
-                  setGoalInput(Number(rawValue));
-                }}
-              />
-              <div className='flex gap-2'>
-                {goalInput === 0 ? (
-                  <Button
-                    size='sm'
-                    className='w-[10ch]'
-                    onClick={() => {
-                      handleSubmitAdd();
-                    }}
-                  >
-                    {updated ? 'Added! ✓' : 'Add Goal'}
-                  </Button>
+          <div className='space-y-2'>
+            <Progress value={percentage} className='h-2 bg-slate-100' />
+            <div className='flex justify-between items-center h-4'>
+              <span className='text-[10px] font-medium text-slate-400 uppercase tracking-widest'>
+                ${numberFormatterNoDecimals.format(totalSoFar)}
+              </span>
+
+              <div className='flex items-center gap-2'>
+                {isEditing ? (
+                  <div className='flex items-center gap-1'>
+                    <Input
+                      autoFocus
+                      className='h-6 w-[12ch] text-[10px] text-center font-bold bg-slate-50 border-slate-200 rounded-md focus-visible:ring-1'
+                      value={
+                        goalInput === 0 ? '' : thousandFormatter(goalInput)
+                      }
+                      onChange={(e) => {
+                        const rawValue = e.target.value.replace(/\D/g, '');
+                        setGoalInput(Number(rawValue));
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleSave();
+                        if (e.key === 'Escape') handleCancel();
+                      }}
+                    />
+                    <button
+                      onClick={handleSave}
+                      className='text-emerald-500 hover:text-emerald-700 transition-colors'
+                    >
+                      <Check size={14} strokeWidth={3} />
+                    </button>
+                    <button
+                      onClick={handleCancel}
+                      className='text-slate-400 hover:text-slate-600 transition-colors'
+                    >
+                      <XIcon size={14} strokeWidth={3} />
+                    </button>
+                  </div>
                 ) : (
-                  <Button
-                    size='sm'
-                    className='w-[10ch]'
-                    onClick={() => {
-                      handleSubmitUpdate();
-                    }}
-                  >
-                    {!updated ? 'Update' : 'Updated ✓'}
-                  </Button>
+                  <div className='flex items-center gap-2 group'>
+                    <span className='text-[10px] font-medium text-slate-400 uppercase tracking-widest'>
+                      Goal: ${numberFormatterNoDecimals.format(goalInput)}
+                    </span>
+                    <button
+                      onClick={() => setIsEditing(true)}
+                      className='opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-slate-900'
+                    >
+                      <Pencil size={12} />
+                    </button>
+                  </div>
                 )}
-                <Button
-                  onClick={() => handleClear()}
-                  variant='secondary'
-                  size='icon'
-                  className='h-8 w-8'
-                >
-                  <XIcon size={14} strokeWidth={3} />
-                </Button>
               </div>
             </div>
           </div>
+
+          {updated && (
+            <p className='text-[10px] text-emerald-600 font-bold text-center uppercase tracking-widest animate-pulse'>
+              Saved Successfully!
+            </p>
+          )}
         </CardContent>
       </div>
     </Card>

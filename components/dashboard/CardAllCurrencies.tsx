@@ -81,7 +81,7 @@ export const CardTotalAllCurrency = ({
                     className='flex items-center justify-between p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 group'
                   >
                     <div className='flex flex-col'>
-                      <span className='text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1'>
+                      <span className='text-[10px] font-medium text-slate-400 uppercase tracking-widest mb-1'>
                         {item.currency}
                       </span>
                       <h3 className='text-2xl font-semibold text-slate-900 tracking-tighter'>

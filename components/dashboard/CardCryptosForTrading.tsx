@@ -52,7 +52,7 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
                   className='flex items-center justify-between group'
                 >
                   <div className='flex flex-col'>
-                    <h3 className='text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors uppercase'>
+                    <h3 className='text-sm font-medium text-slate-600 group-hover:text-slate-900 transition-colors uppercase'>
                       {item?.asset}
                     </h3>
                     <span className='text-[10px] text-slate-400 font-medium'>
@@ -60,7 +60,7 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
                     </span>
                   </div>
                   <div className='flex items-center gap-3'>
-                    <p className='text-sm font-semibold text-slate-900 tracking-tight'>{`${numberFormatterNoDecimals.format(
+                    <p className='text-sm font-medium text-slate-900 tracking-tight'>{`${numberFormatterNoDecimals.format(
                       item.total
                     )}`}</p>
                     <span

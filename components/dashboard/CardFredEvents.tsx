@@ -93,15 +93,15 @@ export function CardFredEvents() {
                     <span className='text-[10px] font-semibold text-slate-400 uppercase tracking-widest'>
                       {dateWithDayFormatter(isoDate).split(',')[0]}
                     </span>
-                    <span className='text-[10px] font-bold text-slate-500'>
+                    <span className='text-[10px] font-medium text-slate-500'>
                       {event.time}
                     </span>
                   </div>
-                  <span className='text-xs font-bold text-slate-700 leading-snug line-clamp-2'>
+                  <span className='text-xs font-medium text-slate-700 leading-snug line-clamp-2'>
                     {event.title}
                   </span>
                   {(event.actual || event.forecast) && (
-                    <div className='flex gap-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest'>
+                    <div className='flex gap-2 text-[9px] font-medium text-slate-400 uppercase tracking-widest'>
                       {event.actual && <span>Act: {event.actual}</span>}
                       {event.forecast && <span>Est: {event.forecast}</span>}
                     </div>
@@ -110,7 +110,7 @@ export function CardFredEvents() {
               );
             })}
             {hasMore && (
-              <p className='text-[10px] text-slate-400 text-center font-bold uppercase tracking-widest mt-4'>
+              <p className='text-[10px] text-slate-400 text-center font-medium uppercase tracking-widest mt-4'>
                 + {events.length - 5} more events
               </p>
             )}

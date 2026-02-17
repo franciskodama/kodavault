@@ -121,11 +121,11 @@ export default function TagCard() {
                           <div className='flex w-full'>
                             <div className='flex w-3/5'>
                               <p className='text-[10px]'>Asset:</p>
-                              <p className='ml-1 font-bold'>{asset?.asset}</p>
+                              <p className='ml-1 font-medium'>{asset?.asset}</p>
                             </div>
                             <div className='flex w-2/5'>
                               <p className='text-[10px]'>Total:</p>
-                              <p className='ml-1 font-bold'>
+                              <p className='ml-1 font-medium'>
                                 {asset?.total &&
                                   thousandFormatter(asset?.total)}
                               </p>

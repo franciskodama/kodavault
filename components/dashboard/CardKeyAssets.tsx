@@ -56,7 +56,7 @@ export const CardKeyAssets = ({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className='grid grid-cols-3 mb-4 text-[10px] font-bold uppercase tracking-widest text-slate-400'>
+            <div className='grid grid-cols-3 mb-4 text-[10px] font-medium uppercase tracking-widest text-slate-400'>
               <h3 className='text-left'>Asset</h3>
               <h3 className='text-center'>Price</h3>
               <h3 className='text-right'>Total</h3>
@@ -68,13 +68,13 @@ export const CardKeyAssets = ({
                     key={item.id}
                     className='grid grid-cols-3 items-center group'
                   >
-                    <h3 className='text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors uppercase'>
+                    <h3 className='text-sm font-medium text-slate-600 group-hover:text-slate-900 transition-colors uppercase'>
                       {item.asset}
                     </h3>
-                    <p className='text-sm font-semibold text-slate-900 tracking-tight text-center'>
+                    <p className='text-sm text-slate-900 text-center'>
                       ${numberFormatter.format(item.price)}
                     </p>
-                    <p className='text-sm font-semibold text-slate-900 tracking-tight text-right'>
+                    <p className='text-sm text-slate-900 text-right'>
                       ${numberFormatter.format(item.total)}
                     </p>
                   </div>
