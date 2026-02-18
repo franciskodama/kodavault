@@ -2,20 +2,15 @@
 
 import { useEffect, useState } from 'react';
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '../../../../components/ui/card';
-import { Input } from '../../../../components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Input } from '../ui/input';
 import { Asset } from '@/lib/types';
 import { addGoal, updateGoal } from '@/lib/actions';
 import { Progress } from '@/components/ui/progress';
 import { thousandFormatter, numberFormatterNoDecimals } from '@/lib/utils';
 import { XIcon, Target, Pencil, Check } from 'lucide-react';
 
-export const GoalGaugeCard = ({
+export const CardProgressGoal = ({
   assets,
   goal,
   uid,
@@ -63,7 +58,7 @@ export const GoalGaugeCard = ({
   }, [updated]);
 
   return (
-    <Card className='flex-1 h-[250px] w-full border-none shadow-sm overflow-hidden'>
+    <Card className='flex-1 h-full w-full border-none shadow-sm overflow-hidden'>
       <div className='flex flex-col h-full'>
         <CardHeader>
           <CardTitle className='capitalize flex items-center justify-between'>
@@ -73,9 +68,9 @@ export const GoalGaugeCard = ({
             <Target size={24} className='text-slate-400' />
           </CardTitle>
         </CardHeader>
-        <CardContent className='flex flex-col gap-6'>
+        <CardContent className='flex flex-col gap-6 justify-center h-full'>
           <div className='text-center space-y-1'>
-            <h3 className='text-4xl font-extrabold text-primary tracking-tighter'>
+            <h3 className='text-6xl font-extrabold text-primary tracking-tighter'>
               {displayPercentage}%
             </h3>
             <p className='text-[10px] font-medium text-slate-400 uppercase tracking-widest'>
@@ -83,7 +78,7 @@ export const GoalGaugeCard = ({
             </p>
           </div>
 
-          <div className='space-y-2'>
+          <div className='space-y-2 mt-8'>
             <Progress value={percentage} className='h-2 bg-slate-100' />
             <div className='flex justify-between items-center h-4'>
               <span className='text-[10px] font-medium text-slate-400 uppercase tracking-widest'>

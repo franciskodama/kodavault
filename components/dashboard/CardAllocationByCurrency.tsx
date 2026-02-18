@@ -1,17 +1,11 @@
 'use client';
 
-import { ResponsivePie } from '@nivo/pie';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from '@/components/ui/card';
-import { Asset } from '@/lib/types';
 import { useMemo } from 'react';
+import { ResponsivePie } from '@nivo/pie';
+import { PieChart } from 'lucide-react';
+import { Asset } from '@/lib/types';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-// Using a custom color palette that matches your "premium" aesthetic
 const COLORS = {
   USD: '#2563eb', // Blue
   CAD: '#dc2626', // Red
@@ -20,13 +14,10 @@ const COLORS = {
   Other: '#94a3b8', // Slate
 };
 
-import { PieChart } from 'lucide-react';
-
-export const CardAllocation = ({ assets }: { assets: Asset[] }) => {
+export const CardAllocationByCurrency = ({ assets }: { assets: Asset[] }) => {
   const data = useMemo(() => {
     if (!assets || assets.length === 0) return [];
 
-    // Aggregate by Currency
     const currencyTotals: Record<string, number> = {};
     let totalPortfolioValue = 0;
 
@@ -54,7 +45,7 @@ export const CardAllocation = ({ assets }: { assets: Asset[] }) => {
   }, [assets]);
 
   return (
-    <Card className='w-full h-[400px] border-none shadow-sm'>
+    <Card className='w-full h-full border-none shadow-sm'>
       <CardHeader>
         <CardTitle className='flex items-center justify-between'>
           <span className='font-semibold tracking-tight text-slate-900'>
@@ -63,7 +54,7 @@ export const CardAllocation = ({ assets }: { assets: Asset[] }) => {
           <PieChart size={24} className='text-slate-400' />
         </CardTitle>
       </CardHeader>
-      <CardContent className='h-[300px] w-full'>
+      <CardContent className='h-[270px] w-full'>
         {data.length > 0 ? (
           <ResponsivePie
             data={data}

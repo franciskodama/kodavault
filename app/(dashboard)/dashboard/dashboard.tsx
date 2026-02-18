@@ -16,31 +16,20 @@ import Welcome from './welcome';
 import TagCard from './tag-card';
 import NotificationsPanel from './notifications/notifications-panel';
 import { CoinCodexWidget } from './coin-codex-widget';
-import { currencyFormatter } from '@/lib/utils';
 import { CardTotal } from '@/components/dashboard/CardTotal';
 import { CardTotalAllCurrency } from '@/components/dashboard/CardAllCurrencies';
 import { CardCryptosForTrading } from '@/components/dashboard/CardCryptosForTrading';
-import { GoalGaugeCard } from './charts/goal-gauge-card';
 import { CardNextPurchases } from '@/components/dashboard/CardNextPurchases';
 import { CardAssetsOnTheRise } from '@/components/dashboard/CardAssetsOnTheRise';
 import { CardKeyAssets } from '@/components/dashboard/CardKeyAssets';
 import { CardLongsAndShorts } from '@/components/dashboard/CardLongsAndShorts';
-import { CardAllocation } from '@/components/dashboard/CardAllocation';
+import { CardAllocationByCurrency } from '@/components/dashboard/CardAllocationByCurrency';
 import Transactions from './transactions/transactions';
 import { CardAthDrawdown } from '@/components/dashboard/CardAthDrawdown';
 import { CardFreedomRunway } from '@/components/dashboard/CardFreedomRunway';
 import { CardFredEvents } from '@/components/dashboard/CardFredEvents';
-import {
-  Wallet,
-  Landmark,
-  Coins,
-  Tag,
-  PieChart,
-  Activity,
-  ArrowUpRight,
-  TrendingDown,
-  ShoppingBag,
-} from 'lucide-react';
+import { Wallet, Landmark, Coins, Tag } from 'lucide-react';
+import { CardProgressGoal } from '@/components/dashboard/CardProgressGoal';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
@@ -83,7 +72,6 @@ export default function Dashboard({
           {/* -------- 1st Row: Hero Overview ------------------------------------------------------------------ */}
           <div className='flex flex-col lg:flex-row gap-8 items-start border-2'>
             <div className='flex flex-col lg:basis-3/4 w-full gap-8'>
-              {/* Total Balance Summary */}
               <CardTotalAllCurrency
                 usdBrl={usdBrl}
                 btcPrice={btcPrice}
@@ -99,9 +87,13 @@ export default function Dashboard({
 
               {/* Primary Success Metrics */}
               <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                <GoalGaugeCard assets={assets} goal={goal} uid={uid} />
-                <CardAllocation assets={assets} />
-                <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
+                <CardProgressGoal assets={assets} goal={goal} uid={uid} />
+                <CardAllocationByCurrency assets={assets} />
+                <CardFreedomRunway
+                  netWorth={netWorthTotal}
+                  monthlyBurn={monthlyBurn}
+                  uid={uid}
+                />
               </div>
             </div>
 
@@ -123,13 +115,9 @@ export default function Dashboard({
               </div>
 
               <NotificationsPanel assets={assets} />
+              <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
 
               <div className='flex flex-col gap-4'>
-                <CardFreedomRunway
-                  netWorth={netWorthTotal}
-                  monthlyBurn={monthlyBurn}
-                  uid={uid}
-                />
                 <CardFredEvents />
                 <CardAthDrawdown
                   userAssets={assets}
