@@ -36,7 +36,7 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
     tradingAssets.reduce((sum: number, item: any) => sum + item.total, 0);
 
   const handleClick = () => {
-    router.push('/assets?type=Trade');
+    router.push('/assets?purpose=Trade');
   };
 
   return (

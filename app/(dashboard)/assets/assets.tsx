@@ -8,8 +8,10 @@ import { useAssetsContext } from '@/context/AssetsContext';
 
 export default function Assets({
   typeFilterAsParam,
+  purposeFilterAsParam,
 }: {
   typeFilterAsParam: string;
+  purposeFilterAsParam: string;
 }) {
   const { assets, isLoading } = useAssetsContext();
   const compareByWallet = (a: any, b: any) => {
@@ -39,6 +41,9 @@ export default function Assets({
           columns={columns}
           data={formatatedNumbersAssets}
           typeFilterAsParam={typeFilterAsParam ? typeFilterAsParam : ''}
+          purposeFilterAsParam={
+            purposeFilterAsParam ? purposeFilterAsParam : ''
+          }
         />
       )}
     </div>

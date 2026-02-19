@@ -1,8 +1,10 @@
 'use client';
 
 import { FC } from 'react';
-
+import Image from 'next/image';
+import { ArrowUpDown, Trash2, Pencil } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,19 +30,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ArrowUpDown, Trash2, Pencil } from 'lucide-react';
-
-import { useAssetsContext } from '@/context/AssetsContext';
-import { tableHeaderClass } from '@/lib/classes';
-import { Asset } from '@/lib/types';
-import { deleteAsset, updateReviewedAsset } from '@/lib/actions';
 import { UpdateAssetForm } from '@/components/forms/UpdateAssetForm';
-import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useReviewedAssets } from './reviewed-context';
 import { Button } from '@/components/ui/button';
+
+import { Asset } from '@/lib/types';
+import { tableHeaderClass } from '@/lib/classes';
+import { useAssetsContext } from '@/context/AssetsContext';
+import { deleteAsset } from '@/lib/actions';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -168,6 +168,9 @@ export const columns: ColumnDef<Asset>[] = [
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </div>
       );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
     },
   },
   {
@@ -372,29 +375,3 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
     </>
   );
 };
-// ------------------ If we want to save reviewed status in the database ------------------
-
-// const handleReviewedAsset = async (id: string, reviewed: boolean) => {
-//   try {
-//     await updateReviewedAsset(id as string, reviewed as boolean);
-//     await refreshAssets();
-//     toast({
-//       title: `${asset?.asset}: ${reviewed ? 'Reviewed' : 'Unreviewed'}  ${
-//         reviewed ? ' ✅' : '🚫'
-//       }`,
-//       description: `The Asset ${asset?.asset} has been successfully updated!`,
-//       variant: reviewed ? 'success' : 'default',
-//     });
-//   } catch (error) {
-//     console.error('Error updating reviewed status of asset:', error);
-//     toast({
-//       title: 'Error Updating Asset! 🚨',
-//       description:
-//         'Something went wrong while updating the Review Status. Try again!',
-//       variant: 'destructive',
-//     });
-//   }
-// };
-// onCheckedChange={() => handleReviewedAsset(asset.id, !asset.reviewed as boolean)}
-
-// --------------------------------------------------------------------------------------

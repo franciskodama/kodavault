@@ -42,6 +42,8 @@ import {
 } from '@/components/ui/tooltip';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import MessageInTable from '@/components/common/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
 import {
@@ -57,6 +59,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
   typeFilterAsParam?: string;
+  purposeFilterAsParam?: string;
 }
 
 type OptionType = {
@@ -68,6 +71,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   typeFilterAsParam,
+  purposeFilterAsParam,
 }: DataTableProps<TData, TValue>) {
   const { assets, assetsByType, isLoading } = useAssetsContext();
 
@@ -86,8 +90,10 @@ export function DataTable<TData, TValue>({
   const [openTypeDropbox, setOpenTypeDropbox] = useState(false);
   const [valueTypeDropbox, setValueTypeDropbox] = useState('');
 
-  const [openPurposeDropbox, setOpenPurposeDropbox] = useState(false);
-  const [valuePurposeDropbox, setValuePurposeDropbox] = useState('');
+  const [filterPurpose, setFilterPurpose] = useState<string[]>([
+    'Trade',
+    'Investment',
+  ]);
 
   const [openNotification, setOpenNotification] = useState(false);
 
@@ -115,9 +121,21 @@ export function DataTable<TData, TValue>({
   }, [typeFilterAsParam, table]);
 
   useEffect(() => {
+    if (purposeFilterAsParam) {
+      const purposes = purposeFilterAsParam.split(',');
+      setFilterPurpose(purposes);
+      table.getColumn('purpose')?.setFilterValue(purposes);
+    }
+  }, [purposeFilterAsParam, table]);
+
+  useEffect(() => {
     if (valueWalletDropbox || valueCurrencyDropbox || valueTypeDropbox) {
     }
   }, [valueWalletDropbox, valueCurrencyDropbox, valueTypeDropbox]);
+
+  useEffect(() => {
+    table.getColumn('purpose')?.setFilterValue(filterPurpose);
+  }, [filterPurpose, table]);
 
   const getRepeatedAssetTotal = (assetName: string) => {
     const repeatedAssetRows = assets.filter(
@@ -154,9 +172,6 @@ export function DataTable<TData, TValue>({
     new Set(assets.map((asset) => asset?.currency))
   );
   const typeArray = Array.from(new Set(assets.map((asset) => asset?.type)));
-  const purposeArray = Array.from(
-    new Set(assets.map((asset) => asset?.purpose))
-  );
 
   const convertArrayToOptions = <T extends string | undefined>(
     array: T[]
@@ -175,14 +190,13 @@ export function DataTable<TData, TValue>({
   const accounts = convertArrayToOptions(accountsArray);
   const currencies = convertArrayToOptions(currencyArray);
   const types = convertArrayToOptions(typeArray);
-  const purposes = convertArrayToOptions(purposeArray);
 
   const handleClickClearAll = () => {
     setValueWalletDropbox('');
     setValueAccountDropbox('');
     setValueCurrencyDropbox('');
     setValueTypeDropbox('');
-    setValuePurposeDropbox('');
+    setFilterPurpose(['Trade', 'Investment']);
     setColumnFilters([]);
     table.resetGlobalFilter();
   };
@@ -215,7 +229,8 @@ export function DataTable<TData, TValue>({
     !!valueWalletDropbox ||
     !!valueAccountDropbox ||
     !!valueCurrencyDropbox ||
-    !!valueTypeDropbox;
+    !!valueTypeDropbox ||
+    filterPurpose.length !== 2;
 
   if (data.length < 1)
     return (
@@ -237,7 +252,7 @@ export function DataTable<TData, TValue>({
     <>
       <div className='rounded-t-sm border border-slate-200 mx-4 sm:mx-0'>
         <div className='flex justify-between items-center px-8 py-4'>
-          <div className='flex flex-col sm:flex-row items-center gap-2'>
+          <div className='flex flex-col sm:flex-row items-center gap-1'>
             <Input
               placeholder='Filter by Asset'
               value={
@@ -484,6 +499,53 @@ export function DataTable<TData, TValue>({
               }}
               className='max-w-sm w-[20ch] sm:ml-4'
             />
+
+            <div className='flex flex-col  sm:ml-4'>
+              <div className='flex items-center gap-2'>
+                <Checkbox
+                  id='trade'
+                  className='border-slate-300'
+                  checked={filterPurpose.includes('Trade')}
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      setFilterPurpose([...filterPurpose, 'Trade']);
+                    } else {
+                      setFilterPurpose(
+                        filterPurpose.filter((p) => p !== 'Trade')
+                      );
+                    }
+                  }}
+                />
+                <Label
+                  htmlFor='trade'
+                  className='text-[10px] uppercase font-bold text-slate-400 tracking-widest cursor-pointer'
+                >
+                  Trade
+                </Label>
+              </div>
+              <div className='flex items-center gap-2'>
+                <Checkbox
+                  id='investment'
+                  className='border-slate-300'
+                  checked={filterPurpose.includes('Investment')}
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      setFilterPurpose([...filterPurpose, 'Investment']);
+                    } else {
+                      setFilterPurpose(
+                        filterPurpose.filter((p) => p !== 'Investment')
+                      );
+                    }
+                  }}
+                />
+                <Label
+                  htmlFor='investment'
+                  className='text-[10px] uppercase font-bold text-slate-400 tracking-widest cursor-pointer'
+                >
+                  Investment
+                </Label>
+              </div>
+            </div>
           </div>
 
           {stocksNoTotal?.length > 0 && !openNotification ? (
@@ -583,7 +645,7 @@ export function DataTable<TData, TValue>({
               <Tooltip>
                 <TooltipTrigger>
                   <div
-                    className='flex items-center justify-center w-[176px] sm:w-11 h-10 ml-4 sm:ml-2 border-2 border-slate-500 bg-accent'
+                    className='flex items-center justify-center w-[176px] sm:w-11 h-10 ml-4 sm:ml-2 bg-accent rounded-xl'
                     onClick={() => {
                       handleClickClearAll();
                     }}

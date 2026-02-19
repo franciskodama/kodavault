@@ -3,12 +3,13 @@ import Assets from './assets';
 import { ReviewedAssetsProvider } from './reviewed-context';
 
 type PageProps = {
-  searchParams: Promise<{ type?: string }>;
+  searchParams: Promise<{ type?: string; purpose?: string }>;
 };
 
 export default async function AssetsPage(props: PageProps) {
   const searchParams = await props.searchParams;
   const typeFilterAsParam = searchParams.type || null;
+  const purposeFilterAsParam = searchParams.purpose || null;
 
   return (
     <div className='mx-auto bg-white'>
@@ -16,6 +17,9 @@ export default async function AssetsPage(props: PageProps) {
         <ReviewedAssetsProvider>
           <Assets
             typeFilterAsParam={typeFilterAsParam ? typeFilterAsParam : ''}
+            purposeFilterAsParam={
+              purposeFilterAsParam ? purposeFilterAsParam : ''
+            }
           />
         </ReviewedAssetsProvider>
       </Suspense>
