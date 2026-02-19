@@ -19,8 +19,6 @@ import { CoinCodexWidget } from './coin-codex-widget';
 import { CardTotal } from '@/components/dashboard/CardTotal';
 import { CardTotalAllCurrency } from '@/components/dashboard/CardAllCurrencies';
 import { CardCryptosForTrading } from '@/components/dashboard/CardCryptosForTrading';
-import { CardNextPurchases } from '@/components/dashboard/CardNextPurchases';
-import { CardAssetsOnTheRise } from '@/components/dashboard/CardAssetsOnTheRise';
 import { CardKeyAssets } from '@/components/dashboard/CardKeyAssets';
 import { CardLongsAndShorts } from '@/components/dashboard/CardLongsAndShorts';
 import { CardAllocationByCurrency } from '@/components/dashboard/CardAllocationByCurrency';
@@ -72,8 +70,8 @@ export default function Dashboard({
           <div className='mb-4'>
             <NotificationsPanel assets={assets} />
           </div>
-          {/* -------- Consolidated Balance ------------------------------------------------------------------ */}
 
+          {/* Consolidated Balance */}
           <div className='flex flex-col lg:flex-row gap-8 items-start'>
             <div className='flex flex-col lg:basis-3/4 w-full gap-4'>
               <CardTotalAllCurrency
@@ -84,13 +82,12 @@ export default function Dashboard({
                 description={'Total consolidated vault across all currencies'}
               />
 
-              {/* Performance Chart */}
+              {/* Chart */}
               <div className='w-full'>
                 <NetWorthChart netWorthChartData={netWorthChartData} />
               </div>
 
               {/* Primary Success Metrics */}
-
               <h2 className='mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 '>
                 Success Metrics
               </h2>
@@ -103,17 +100,19 @@ export default function Dashboard({
                 />
                 <CardAllocationByCurrency assets={assets} />
               </div>
+
+              {/* Strategy & Actions */}
               <h2 className='mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 '>
-                Key Assets
+                Strategy & Actions
               </h2>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
-                <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
-                <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
+                <TagCard />
+                <CardCryptosForTrading assets={assets} />
               </div>
             </div>
 
-            {/* Right Column: Daily Market Context & Notifications */}
+            {/* RIGHT COLUMN: Daily Market Context */}
             <div className='flex flex-col lg:basis-1/4 gap-8 w-full'>
               {/* Market Sentiment */}
               <div className='bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden p-6'>
@@ -130,6 +129,7 @@ export default function Dashboard({
                 />
               </div>
 
+              {/* News */}
               <CardFredEvents />
               <CardAthDrawdown
                 userAssets={assets}
@@ -202,18 +202,6 @@ export default function Dashboard({
                 customKey={'tag'}
               />
             </div>
-          </div>
-
-          {/* -------- WIP -------------------------------------------------------------------------------------------- */}
-          <div className='flex flex-col gap-8'>
-            <CardAssetsOnTheRise />
-            <CardNextPurchases />
-          </div>
-
-          {/* -------- Strategy & Actions -------------------------------------------------------------------------------------------- */}
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-            <CardCryptosForTrading assets={assets} />
-            <TagCard />
           </div>
         </div>
       ) : (

@@ -67,27 +67,11 @@ export default function TagCard() {
                   <span className='font-semibold tracking-tight text-slate-900'>
                     Tag Explorer
                   </span>
-                  <div className='flex items-center gap-2'>
-                    <Input
-                      className='h-8 pl-1 w-[10ch] text-left text-sm font-bold bg-slate-50 border-slate-100'
-                      placeholder='Tag...'
-                      value={tagInput}
-                      onChange={(e) => handleChange(e.target.value)}
-                    />
-                    <Button
-                      onClick={() => handleClear()}
-                      variant='secondary'
-                      size='icon'
-                      className='h-8 w-8'
-                    >
-                      <XIcon size={12} />
-                    </Button>
-                  </div>
                 </div>
                 <Tag size={24} className='text-slate-400' />
               </CardTitle>
             </CardHeader>
-            <CardContent className='relative'>
+            <CardContent className='flex flex-col justify-between'>
               {sortedTaggedAssets.length < 1 ? (
                 <>
                   <h3 className='text-sm font-bold my-1'>
@@ -114,32 +98,42 @@ export default function TagCard() {
                       transition: { duration: 0.2 },
                     }}
                   >
-                    <h3 className='mb-2'>{`Here’s a look at your top performers:`}</h3>
+                    <div className='grid grid-cols-2 mb-4 text-[10px] font-medium uppercase tracking-widest text-slate-400'>
+                      <h3 className='text-left'>Asset</h3>
+                      <h3 className='text-right'>Total</h3>
+                    </div>
+
                     {sortedTaggedAssets.map((asset) => {
                       return (
-                        <div key={asset?.id} className='my-[4px] relative'>
-                          <div className='flex w-full'>
-                            <div className='flex w-3/5'>
-                              <p className='text-[10px]'>Asset:</p>
-                              <p className='ml-1 font-medium'>{asset?.asset}</p>
-                            </div>
-                            <div className='flex w-2/5'>
-                              <p className='text-[10px]'>Total:</p>
-                              <p className='ml-1 font-medium'>
-                                {asset?.total &&
-                                  thousandFormatter(asset?.total)}
-                              </p>
-                            </div>
+                        <div key={asset?.id} className='my-2 relative'>
+                          <div className='flex justify-between'>
+                            <p className='ml-1 font-medium'>{asset?.asset}</p>
+                            <p className='ml-1 font-medium'>
+                              {asset?.total && thousandFormatter(asset?.total)}
+                            </p>
                           </div>
                         </div>
                       );
                     })}
                   </motion.div>
-                  {/* {sortedTaggedAssets.length > 3 && (
-                    <p className='absolute bottom-1'>...</p>
-                  )} */}
                 </>
               )}
+              <div className='flex items-center gap-2'>
+                <Input
+                  className='h-8 pl-1 w-[10ch] text-left text-sm font-bold bg-slate-50 border-slate-100'
+                  placeholder='Tag...'
+                  value={tagInput}
+                  onChange={(e) => handleChange(e.target.value)}
+                />
+                <Button
+                  onClick={() => handleClear()}
+                  variant='secondary'
+                  size='icon'
+                  className='h-8 w-8'
+                >
+                  <XIcon size={12} />
+                </Button>
+              </div>
             </CardContent>
           </div>
           <CardFooter className='flex items-center justify-between p-6 pt-0 border-t border-slate-50 mt-auto'>
