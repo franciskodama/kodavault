@@ -69,11 +69,10 @@ export default function Dashboard({
     <Suspense fallback={<SkeletonDashboard />}>
       {assets.length && assetsByType ? (
         <div className='flex flex-col'>
-          {/* Notification Card */}
-          <div className='mb-8'>
+          <div className='mb-4'>
             <NotificationsPanel assets={assets} />
           </div>
-          {/* -------- 1st Row: Hero Overview ------------------------------------------------------------------ */}
+          {/* -------- Consolidated Balance ------------------------------------------------------------------ */}
 
           <div className='flex flex-col lg:flex-row gap-8 items-start'>
             <div className='flex flex-col lg:basis-3/4 w-full gap-4'>
