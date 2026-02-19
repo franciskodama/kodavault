@@ -9,7 +9,7 @@ import { numberFormatterNoDecimals, numberFormatter } from '@/lib/utils';
 import { Asset } from '@/lib/types';
 import { v4 } from 'uuid';
 
-import { Activity } from 'lucide-react';
+import { Activity, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
 
@@ -90,9 +90,13 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
                 onClick={() => handleClick()}
                 variant='secondary'
                 size='sm'
-                className='w-full justify-between text-[10px] font-semibold uppercase tracking-widest'
+                className='self-end px-4 rounded-xl text-[10px] uppercase tracking-widest group/btn transition-all'
               >
-                Go to Trade
+                <span> Tradable Assets</span>
+                <ArrowRight
+                  size={14}
+                  className='ml-2 group-hover/btn:translate-x-1 transition-transform'
+                />
               </Button>
             </div>
             <div className='flex flex-col items-end'>

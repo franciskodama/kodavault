@@ -86,6 +86,9 @@ export function DataTable<TData, TValue>({
   const [openTypeDropbox, setOpenTypeDropbox] = useState(false);
   const [valueTypeDropbox, setValueTypeDropbox] = useState('');
 
+  const [openPurposeDropbox, setOpenPurposeDropbox] = useState(false);
+  const [valuePurposeDropbox, setValuePurposeDropbox] = useState('');
+
   const [openNotification, setOpenNotification] = useState(false);
 
   const table = useReactTable({
@@ -151,6 +154,9 @@ export function DataTable<TData, TValue>({
     new Set(assets.map((asset) => asset?.currency))
   );
   const typeArray = Array.from(new Set(assets.map((asset) => asset?.type)));
+  const purposeArray = Array.from(
+    new Set(assets.map((asset) => asset?.purpose))
+  );
 
   const convertArrayToOptions = <T extends string | undefined>(
     array: T[]
@@ -169,12 +175,14 @@ export function DataTable<TData, TValue>({
   const accounts = convertArrayToOptions(accountsArray);
   const currencies = convertArrayToOptions(currencyArray);
   const types = convertArrayToOptions(typeArray);
+  const purposes = convertArrayToOptions(purposeArray);
 
   const handleClickClearAll = () => {
     setValueWalletDropbox('');
     setValueAccountDropbox('');
     setValueCurrencyDropbox('');
     setValueTypeDropbox('');
+    setValuePurposeDropbox('');
     setColumnFilters([]);
     table.resetGlobalFilter();
   };
@@ -227,7 +235,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className='rounded-sm border border-slate-200 mx-4 sm:mx-0'>
+      <div className='rounded-t-sm border border-slate-200 mx-4 sm:mx-0'>
         <div className='flex justify-between items-center px-8 py-4'>
           <div className='flex flex-col sm:flex-row items-center gap-2'>
             <Input
@@ -662,7 +670,7 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      <div className='flex justify-center items-center gap-12 text-xs font-light text-white bg-slate-600 p-3 border'>
+      <div className='flex justify-center items-center gap-12 text-xs font-light text-white bg-slate-600 rounded-b-sm p-3 border'>
         <p>
           Cryptos
           <span className='font-semibold text-sm'>

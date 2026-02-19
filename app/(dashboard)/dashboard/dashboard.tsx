@@ -163,12 +163,12 @@ export default function Dashboard({
             </div>
           </div>
 
-          {/* -------- Lettering Row: Market Hub ------------------------------------------------------------------------------------------ */}
+          {/* Lettering Row: Market Hub */}
           <div className='my-4'>
             <CoinCodexWidget />
           </div>
 
-          {/* -------- Portfolio Structure Row: Categorized Asset Deep-Dive ------------------------------------------------------------------------- */}
+          {/* Portfolio Structure Row: Categorized Asset Deep-Dive */}
           <div className='flex flex-col'>
             <div className='flex items-center gap-4'>
               <h2 className='my-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 '>

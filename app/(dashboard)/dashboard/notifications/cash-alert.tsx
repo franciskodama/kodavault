@@ -74,16 +74,13 @@ export default function CashAlert({
             )}
           </div>
 
-          {/* Summary + CTA */}
+          {/* Summary */}
           <div className='flex items-center gap-6 shrink-0 border-t md:border-t-0 md:border-l border-slate-300 pt-4 md:pt-0 md:px-12'>
             <div className='flex flex-col items-end'>
               <div className='flex items-center gap-2 mb-1'>
-                <span className='text-[9px] font-bold text-slate-400 uppercase tracking-widest'>
-                  Impact
-                </span>
-                <div className='flex items-center gap-1 bg-rose-100 px-2 py-0.5 rounded-full'>
-                  <PieChart size={10} className='text-rose-700' />
-                  <span className='text-[10px] font-bold text-rose-700 truncate'>
+                <div className='flex items-center justify-center gap-1 w-[4.5em] bg-slate-400 px-2 py-0.5 rounded-full'>
+                  <PieChart size={10} className='text-white' />
+                  <span className='text-[10px] font-bold text-white truncate'>
                     {((totalCash / totalNetWorth) * 100).toFixed(1)}%
                   </span>
                 </div>
@@ -97,11 +94,11 @@ export default function CashAlert({
                 </span>
               </div>
             </div>
-
+            {/* CTA */}
             <Button
               onClick={handleClick}
-              size='md'
-              className='bg-slate-900 hover:bg-black text-white px-6 rounded-xl text-[10px] font-bold uppercase tracking-widest group/btn transition-all'
+              size='sm'
+              className='self-end px-6 rounded-xl text-[10px] uppercase tracking-widest group/btn transition-all'
             >
               <span>Assets</span>
               <ArrowRight

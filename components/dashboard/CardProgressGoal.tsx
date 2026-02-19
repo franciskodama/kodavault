@@ -70,7 +70,7 @@ export const CardProgressGoal = ({
         </CardHeader>
         <CardContent className='flex flex-col gap-6 justify-center h-full'>
           <div className='text-center space-y-1'>
-            <h3 className='text-6xl font-extrabold text-primary tracking-tighter'>
+            <h3 className='text-4xl font-extrabold text-primary tracking-tighter'>
               {displayPercentage}%
             </h3>
             <p className='text-[10px] font-medium text-slate-400 uppercase tracking-widest'>
