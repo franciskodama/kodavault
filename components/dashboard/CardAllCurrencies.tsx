@@ -63,7 +63,7 @@ export const CardTotalAllCurrency = ({
   }
 
   return (
-    <Card className='overflow-hidden border-none shadow-none bg-transparent'>
+    <Card className='overflow-hidden border-none shadow-none hover:shadow-none bg-transparent'>
       <div className='flex flex-col'>
         <div className='flex flex-col'>
           <CardHeader className='px-0'>

@@ -136,7 +136,7 @@ export default function Dashboard({
                 userAssets={assets}
                 allCryptosData={allCryptos}
               />
-              <Transactions />
+              {/* <Transactions /> */}
               {/* {uid === process.env.NEXT_PUBLIC_HER_UID && (
                 <div className='rounded-2xl border border-slate-100 bg-white shadow-sm overflow-hidden group'>
                   <div className='p-6'>
@@ -174,16 +174,9 @@ export default function Dashboard({
               <h2 className='my-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 '>
                 Portfolio Structure
               </h2>
-              <div className='h-[1px] flex-1 bg-slate-100' />
             </div>
 
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
-              <CardTotal
-                Icon={Wallet}
-                description={'Liquid Assets'}
-                assets={assetsByType.Cash}
-                customKey={'cash'}
-              />
               <CardTotal
                 Icon={Landmark}
                 description={`Vault Locations`}
@@ -196,6 +189,13 @@ export default function Dashboard({
                 assets={assets}
                 customKey={'type'}
               />
+              <CardTotal
+                Icon={Wallet}
+                description={'Liquid Assets'}
+                assets={assetsByType.Cash}
+                customKey={'cash'}
+              />
+
               <CardTotal
                 Icon={Tag}
                 description={'Personal Tags'}
