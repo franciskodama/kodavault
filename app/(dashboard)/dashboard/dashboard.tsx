@@ -70,7 +70,7 @@ export default function Dashboard({
       {assets.length && assetsByType ? (
         <div className='flex flex-col'>
           {/* -------- 1st Row: Hero Overview ------------------------------------------------------------------ */}
-          <div className='flex flex-col lg:flex-row gap-8 items-start border-2'>
+          <div className='flex flex-col lg:flex-row gap-8 items-start'>
             <div className='flex flex-col lg:basis-3/4 w-full gap-8'>
               <CardTotalAllCurrency
                 usdBrl={usdBrl}
@@ -95,6 +95,11 @@ export default function Dashboard({
                   uid={uid}
                 />
               </div>
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+                <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
+                <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
+                <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
+              </div>
             </div>
 
             {/* Right Column: Daily Market Context & Notifications */}
@@ -115,7 +120,6 @@ export default function Dashboard({
               </div>
 
               <NotificationsPanel assets={assets} />
-              <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
 
               <div className='flex flex-col gap-4'>
                 <CardFredEvents />
@@ -125,7 +129,7 @@ export default function Dashboard({
                 />
               </div>
 
-              {uid === process.env.NEXT_PUBLIC_HER_UID && (
+              {/* {uid === process.env.NEXT_PUBLIC_HER_UID && (
                 <div className='rounded-2xl border border-slate-100 bg-white shadow-sm overflow-hidden group'>
                   <div className='p-6'>
                     <div className='flex justify-between items-start'>
@@ -147,12 +151,12 @@ export default function Dashboard({
                     className='w-full object-cover group-hover:scale-110 transition-transform duration-700'
                   />
                 </div>
-              )}
+              )} */}
             </div>
           </div>
 
-          {/* -------- 2nd Row: Categorized Asset Deep-Dive ------------------------------------------------------------------------- */}
-          <div className='flex flex-col gap-8'>
+          {/* -------- Portfolio Structure Row: Categorized Asset Deep-Dive ------------------------------------------------------------------------- */}
+          <div className='flex flex-col gap-8 mt-8'>
             <div className='flex items-center gap-4'>
               <h2 className='text-2xl font-semibold text-slate-900 tracking-tighter'>
                 Portfolio Structure
@@ -188,17 +192,15 @@ export default function Dashboard({
             </div>
           </div>
 
-          {/* -------- 3rd Row: Market Hub ------------------------------------------------------------------------------------------ */}
+          {/* -------- Lettering Row: Market Hub ------------------------------------------------------------------------------------------ */}
+          <div className='lg:col-span-2'>
+            <CoinCodexWidget />
+          </div>
+
+          {/* -------- WIP -------------------------------------------------------------------------------------------- */}
           <div className='flex flex-col gap-8'>
-            <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-              <div className='lg:col-span-2'>
-                <CoinCodexWidget />
-              </div>
-              <div className='flex flex-col gap-8'>
-                <CardAssetsOnTheRise />
-                <CardNextPurchases />
-              </div>
-            </div>
+            <CardAssetsOnTheRise />
+            <CardNextPurchases />
           </div>
 
           {/* -------- Strategy & Actions -------------------------------------------------------------------------------------------- */}

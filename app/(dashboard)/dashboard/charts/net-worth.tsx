@@ -125,11 +125,10 @@ export default function NetWorthChart({
       <CardHeader>
         <div className='flex flex-col md:flex-row justify-between items-start md:items-center'>
           <div>
-            <CardTitle className='capitalize flex items-center gap-2'>
-              <span>{`Net Worth Evolution`}</span>
-              <span className='text-3xl'>📈</span>
+            <CardTitle className='font-semibold tracking-tight text-slate-900'>
+              Net Worth Evolution
             </CardTitle>
-            <CardDescription className='text-xs'>
+            <CardDescription className='text-sm mt-2'>
               {`Track the progression of your net worth over time.`}
             </CardDescription>
           </div>
@@ -204,7 +203,7 @@ export default function NetWorthChart({
                     }).format(value)
                   }
                   label={{
-                    value: 'Fiat',
+                    // value: 'Fiat',
                     angle: -90,
                     position: 'insideLeft',
                   }}
