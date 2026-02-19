@@ -18,7 +18,6 @@ export default function Main({ assets }: { assets: Asset[] }) {
             </div>
             <div className='sm:w-1/5'>
               <CardTotal
-                emoji={'🪙'}
                 description={'Total value grouped by Coins'}
                 assets={assets}
                 customKey={'crypto'}
