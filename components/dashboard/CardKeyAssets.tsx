@@ -1,17 +1,19 @@
 'use client';
 
+import { useState } from 'react';
+import { useUser } from '@clerk/nextjs';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { PackagePlusIcon, PencilIcon, Trash2Icon, Key } from 'lucide-react';
+import { v4 } from 'uuid';
+
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { classError } from '@/lib/classes';
-import { numberFormatterNoDecimals, numberFormatter } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { PackagePlusIcon, PencilIcon, Trash2Icon, Key } from 'lucide-react';
 import {
   Dialog,
   DialogClose,
@@ -22,14 +24,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { useUser } from '@clerk/nextjs';
-import { Inputs, KeyAssetsPriced } from '@/lib/types';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { addKeyAsset, deleteKeyAsset, getKeyAssets } from '@/lib/actions';
 import { toast } from '@/components/ui/use-toast';
-import { useState } from 'react';
-import { v4 } from 'uuid';
+
+import { classError } from '@/lib/classes';
+import { Inputs, KeyAssetsPriced } from '@/lib/types';
+import { addKeyAsset, deleteKeyAsset } from '@/lib/actions';
 import { useAssetsContext } from '@/context/AssetsContext';
+import { numberFormatterNoDecimals, numberFormatter } from '@/lib/utils';
 
 type formData = {
   asset: string;
@@ -90,10 +91,12 @@ export const CardKeyAssets = ({
           </CardContent>
         </div>
         <CardFooter className='flex items-center justify-between p-6 pt-0 border-t border-slate-50 mt-auto'>
-          <DialogEditKeyAssets
-            keyAssetsState={keyAssetsState}
-            setKeyAssetsState={setKeyAssetsState}
-          />
+          <div className='self-end'>
+            <DialogEditKeyAssets
+              keyAssetsState={keyAssetsState}
+              setKeyAssetsState={setKeyAssetsState}
+            />
+          </div>
           <div className='flex flex-col items-end'>
             <span className='text-[10px] font-semibold uppercase tracking-widest text-slate-400'>
               Total
@@ -201,7 +204,11 @@ export function DialogEditKeyAssets({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size='md' className='ml-3'>
+        <Button
+          variant='secondary'
+          size='sm'
+          className='w-full justify-between text-[10px] font-semibold uppercase tracking-widest'
+        >
           {keyAssetsState.length > 0 ? (
             <div className='flex items-center'>
               <PencilIcon size={16} className='mr-2' />

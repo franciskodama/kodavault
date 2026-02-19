@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { AlarmClock, PieChart, X, ArrowRight, Plus, Coins } from 'lucide-react';
+
+import { PieChart, X, ArrowRight, Plus, Coins } from 'lucide-react';
 
 import { Asset } from '@/lib/types';
 import { Button } from '@/components/ui/button';

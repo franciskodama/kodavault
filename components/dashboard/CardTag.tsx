@@ -22,7 +22,7 @@ import { useAssetsContext } from '@/context/AssetsContext';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-export default function TagCard() {
+export default function CardTag() {
   const [tagInput, setTagInput] = useState<string>('');
   const { assets } = useAssetsContext();
 
@@ -71,7 +71,7 @@ export default function TagCard() {
                 <Tag size={24} className='text-slate-400' />
               </CardTitle>
             </CardHeader>
-            <CardContent className='flex flex-col justify-between'>
+            <CardContent className='flex flex-col'>
               {sortedTaggedAssets.length < 1 ? (
                 <>
                   <h3 className='text-sm font-bold my-1'>
@@ -81,7 +81,7 @@ export default function TagCard() {
                     Add a tag to uncover the total amount you’ve invested in
                     assets linked to it!
                   </p>
-                  <div className='flex items-center gap-2 mt-2'>
+                  <div className='flex items-center gap-2 my-2'>
                     <AlertTriangle size={14} />
                     <p> Case sensitive.</p>
                   </div>
@@ -118,7 +118,11 @@ export default function TagCard() {
                   </motion.div>
                 </>
               )}
-              <div className='flex items-center gap-2'>
+            </CardContent>
+          </div>
+          <CardFooter className='flex items-center justify-between p-6 pt-0 border-t border-slate-50 mt-auto'>
+            <div className='self-end'>
+              <div className='flex gap-2'>
                 <Input
                   className='h-8 pl-1 w-[10ch] text-left text-sm font-bold bg-slate-50 border-slate-100'
                   placeholder='Tag...'
@@ -128,23 +132,23 @@ export default function TagCard() {
                 <Button
                   onClick={() => handleClear()}
                   variant='secondary'
-                  size='icon'
-                  className='h-8 w-8'
+                  size='sm'
+                  className='w-full justify-between text-[10px] font-semibold uppercase tracking-widest'
                 >
-                  <XIcon size={12} />
+                  <XIcon size={12} strokeWidth={3} />
                 </Button>
               </div>
-            </CardContent>
-          </div>
-          <CardFooter className='flex items-center justify-between p-6 pt-0 border-t border-slate-50 mt-auto'>
-            <span className='text-[10px] font-semibold uppercase tracking-widest text-slate-400'>
-              Total Portfolio
-            </span>
-            <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
-              {numberFormatterNoDecimals.format(
-                totalArray.reduce((sum: number, item) => sum + item.total, 0)
-              )}
-            </span>
+            </div>
+            <div className='flex flex-col items-end'>
+              <span className='text-[10px] font-semibold uppercase tracking-widest text-slate-400'>
+                Total
+              </span>
+              <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
+                {numberFormatterNoDecimals.format(
+                  totalArray.reduce((sum: number, item) => sum + item.total, 0)
+                )}
+              </span>
+            </div>
           </CardFooter>
         </div>
       </Card>

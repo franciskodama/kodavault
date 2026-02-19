@@ -4,6 +4,9 @@ import React, { Suspense } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
+import { Wallet, Landmark, Coins, Tag } from 'lucide-react';
+import { CoinCodexWidget } from './coin-codex-widget';
+
 import {
   Asset,
   AssetsByType,
@@ -13,21 +16,19 @@ import {
 } from '@/lib/types';
 
 import Welcome from './welcome';
-import TagCard from './tag-card';
 import NotificationsPanel from './notifications/notifications-panel';
-import { CoinCodexWidget } from './coin-codex-widget';
 import { CardTotal } from '@/components/dashboard/CardTotal';
 import { CardTotalAllCurrency } from '@/components/dashboard/CardAllCurrencies';
 import { CardCryptosForTrading } from '@/components/dashboard/CardCryptosForTrading';
 import { CardKeyAssets } from '@/components/dashboard/CardKeyAssets';
-import { CardLongsAndShorts } from '@/components/dashboard/CardLongsAndShorts';
 import { CardAllocationByCurrency } from '@/components/dashboard/CardAllocationByCurrency';
-import Transactions from './transactions/transactions';
 import { CardAthDrawdown } from '@/components/dashboard/CardAthDrawdown';
 import { CardFreedomRunway } from '@/components/dashboard/CardFreedomRunway';
 import { CardFredEvents } from '@/components/dashboard/CardFredEvents';
-import { Wallet, Landmark, Coins, Tag } from 'lucide-react';
 import { CardProgressGoal } from '@/components/dashboard/CardProgressGoal';
+import CardTag from '@/components/dashboard/CardTag';
+import Transactions from './transactions/transactions';
+import { CardLongsAndShorts } from '@/components/dashboard/CardLongsAndShorts';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   loading: () => <div>Loading chart...</div>,
@@ -107,7 +108,7 @@ export default function Dashboard({
               </h2>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
-                <TagCard />
+                <CardTag />
                 <CardCryptosForTrading assets={assets} />
               </div>
             </div>
@@ -135,7 +136,7 @@ export default function Dashboard({
                 userAssets={assets}
                 allCryptosData={allCryptos}
               />
-
+              <Transactions />
               {/* {uid === process.env.NEXT_PUBLIC_HER_UID && (
                 <div className='rounded-2xl border border-slate-100 bg-white shadow-sm overflow-hidden group'>
                   <div className='p-6'>

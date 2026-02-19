@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -11,8 +10,12 @@ import { Asset } from '@/lib/types';
 import { v4 } from 'uuid';
 
 import { Activity } from 'lucide-react';
+import { Button } from '../ui/button';
+import { useRouter } from 'next/navigation';
 
 export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
+  const router = useRouter();
+
   const assetsForTrading = assets.reduce<Record<string, Asset[]>>(
     (groupedAssets, asset) => {
       if (!asset) return groupedAssets;
@@ -31,6 +34,10 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
   const total =
     tradingAssets &&
     tradingAssets.reduce((sum: number, item: any) => sum + item.total, 0);
+
+  const handleClick = () => {
+    router.push('/assets?type=Trade');
+  };
 
   return (
     <Card className='w-full border-none shadow-sm'>
@@ -78,12 +85,24 @@ export const CardCryptosForTrading = ({ assets }: { assets: Asset[] }) => {
             </CardContent>
           </div>
           <CardFooter className='flex items-center justify-between p-6 pt-0 border-t border-slate-50 mt-auto'>
-            <span className='text-[10px] font-semibold uppercase tracking-widest text-slate-400'>
-              Total
-            </span>
-            <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
-              {numberFormatterNoDecimals.format(total)}
-            </span>
+            <div className='self-end'>
+              <Button
+                onClick={() => handleClick()}
+                variant='secondary'
+                size='sm'
+                className='w-full justify-between text-[10px] font-semibold uppercase tracking-widest'
+              >
+                Go to Trade
+              </Button>
+            </div>
+            <div className='flex flex-col items-end'>
+              <span className='text-[10px] font-semibold uppercase tracking-widest text-slate-400'>
+                Total
+              </span>
+              <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
+                {numberFormatterNoDecimals.format(total)}
+              </span>
+            </div>
           </CardFooter>
         </div>
       )}
