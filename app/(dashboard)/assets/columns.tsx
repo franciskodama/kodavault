@@ -58,6 +58,20 @@ export const columns: ColumnDef<Asset>[] = [
     },
   },
   {
+    accessorKey: 'currency',
+    header: ({ column }) => {
+      return (
+        <div
+          className={tableHeaderClass}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Currency
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: 'account',
     header: ({ column }) => {
       return (

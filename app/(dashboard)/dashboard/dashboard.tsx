@@ -164,12 +164,12 @@ export default function Dashboard({
           </div>
 
           {/* Lettering Row: Market Hub */}
-          <div className='my-4'>
+          {/* <div className='mt-4'>
             <CoinCodexWidget />
-          </div>
+          </div> */}
 
           {/* Portfolio Structure Row: Categorized Asset Deep-Dive */}
-          <div className='flex flex-col'>
+          <div className='flex flex-col mt-4'>
             <div className='flex items-center gap-4'>
               <h2 className='my-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 '>
                 Portfolio Structure
