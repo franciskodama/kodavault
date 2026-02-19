@@ -227,7 +227,7 @@ export function DialogEditKeyAssets({
           )}
         </Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-md'>
+      <DialogContent className='md:max-w-lg'>
         <DialogHeader>
           <DialogTitle>Key Assets List</DialogTitle>
           <DialogDescription>Add or Delete a Key Asset</DialogDescription>
@@ -247,14 +247,14 @@ export function DialogEditKeyAssets({
             </div>
           </form>
         </div>
-        <div className='flex items-center gap-2'>
-          <div className='flex flex-wrap py-2'>
+        <div className='flex items-center justify-center'>
+          <div className='grid grid-cols-3 gap-4 w-full'>
             {keyAssetsState.map((item: KeyAssetsPriced) => (
               <div
                 key={item.id}
-                className='flex items-center 2-full my-1 p-2 border mr-4'
+                className='flex items-center justify-center p-2 border'
               >
-                <h3 className='w-[4ch] m-2 font-semibold'>{item.asset}</h3>
+                <h3 className='w-[6ch] m-2 font-semibold'>{item.asset}</h3>
                 <Button
                   size='sm'
                   variant='ghost'
