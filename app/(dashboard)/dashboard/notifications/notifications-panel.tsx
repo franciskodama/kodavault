@@ -24,9 +24,6 @@ export default function NotificationsPanel({ assets }: { assets: Asset[] }) {
         )}
         {cash.length < 1 && <NoNotifications />}
       </div>
-      <div>
-        <NoNotifications />
-      </div>
     </div>
   );
 }

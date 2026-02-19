@@ -89,7 +89,7 @@ export default function NetWorthChart({
       <Card className='w-full'>
         <CardHeader>
           <CardTitle className='capitalize flex items-center justify-between'>
-            <span>{`Net Worth Evolution`}</span>
+            Net Worth Evolution
           </CardTitle>
         </CardHeader>
         <CardContent className='w-full p-8 border-2 flex'>
@@ -129,10 +129,10 @@ export default function NetWorthChart({
               Net Worth Evolution
             </CardTitle>
             <CardDescription className='text-sm mt-2'>
-              {`Track the progression of your net worth over time.`}
+              Track the progression of your net worth over time.
             </CardDescription>
           </div>
-          <div className='flex items-center gap-4 mt-4 md:mt-0 flex-wrap'>
+          <div className='flex items-center gap-4 mt-4 mr-8 md:mt-0 flex-wrap'>
             <div className='flex items-center space-x-2'>
               <Checkbox
                 id='usd'
@@ -177,7 +177,7 @@ export default function NetWorthChart({
         </div>
       </CardHeader>
       <CardContent className='pl-0'>
-        <div className='h-[400px] w-full'>
+        <div className='h-[350px] w-full'>
           <ResponsiveContainer width='100%' height='100%'>
             <LineChart
               data={chartData}
@@ -254,7 +254,7 @@ export default function NetWorthChart({
                   yAxisId='right'
                   type='monotone'
                   dataKey='BTC'
-                  stroke='#eab308' // Yellow/Gold
+                  stroke='#eab308' // Gold
                 />
               )}
             </LineChart>

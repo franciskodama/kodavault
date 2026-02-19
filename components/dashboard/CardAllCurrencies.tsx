@@ -63,16 +63,16 @@ export const CardTotalAllCurrency = ({
   }
 
   return (
-    <Card className='mb-2 overflow-hidden border-none shadow-none bg-transparent'>
+    <Card className='overflow-hidden border-none shadow-none bg-transparent'>
       <div className='flex flex-col'>
         <div className='flex flex-col'>
           <CardHeader className='px-0'>
-            <CardTitle className='text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 flex items-center justify-between'>
+            <CardTitle className='text-[10px] -mb-2 font-bold uppercase tracking-[0.2em] text-slate-400 flex items-center justify-between'>
               <span>Consolidated Balance</span>
             </CardTitle>
           </CardHeader>
           <CardContent className='px-0'>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
               {totalArray &&
                 totalArray.map((item: totalArrayProps) => (
                   <div
@@ -83,7 +83,7 @@ export const CardTotalAllCurrency = ({
                       <span className='text-[10px] font-medium text-slate-400 uppercase tracking-widest mb-1'>
                         {item.currency}
                       </span>
-                      <h3 className='text-2xl font-semibold text-slate-900 tracking-tighter'>
+                      <h3 className='text-2xl font-semibold text-slate-900 tracking-tight'>
                         {item.currency === 'BTC'
                           ? numberFormatter.format(item.value)
                           : numberFormatterNoDecimals.format(item.value)}

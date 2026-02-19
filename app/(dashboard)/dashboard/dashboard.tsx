@@ -69,9 +69,14 @@ export default function Dashboard({
     <Suspense fallback={<SkeletonDashboard />}>
       {assets.length && assetsByType ? (
         <div className='flex flex-col'>
+          {/* Notification Card */}
+          <div className='mb-8'>
+            <NotificationsPanel assets={assets} />
+          </div>
           {/* -------- 1st Row: Hero Overview ------------------------------------------------------------------ */}
+
           <div className='flex flex-col lg:flex-row gap-8 items-start'>
-            <div className='flex flex-col lg:basis-3/4 w-full gap-8'>
+            <div className='flex flex-col lg:basis-3/4 w-full gap-4'>
               <CardTotalAllCurrency
                 usdBrl={usdBrl}
                 btcPrice={btcPrice}
@@ -86,15 +91,22 @@ export default function Dashboard({
               </div>
 
               {/* Primary Success Metrics */}
+
+              <h2 className='mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 '>
+                Success Metrics
+              </h2>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                 <CardProgressGoal assets={assets} goal={goal} uid={uid} />
-                <CardAllocationByCurrency assets={assets} />
                 <CardFreedomRunway
                   netWorth={netWorthTotal}
                   monthlyBurn={monthlyBurn}
                   uid={uid}
                 />
+                <CardAllocationByCurrency assets={assets} />
               </div>
+              <h2 className='mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 '>
+                Key Assets
+              </h2>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
@@ -119,15 +131,11 @@ export default function Dashboard({
                 />
               </div>
 
-              <NotificationsPanel assets={assets} />
-
-              <div className='flex flex-col gap-4'>
-                <CardFredEvents />
-                <CardAthDrawdown
-                  userAssets={assets}
-                  allCryptosData={allCryptos}
-                />
-              </div>
+              <CardFredEvents />
+              <CardAthDrawdown
+                userAssets={assets}
+                allCryptosData={allCryptos}
+              />
 
               {/* {uid === process.env.NEXT_PUBLIC_HER_UID && (
                 <div className='rounded-2xl border border-slate-100 bg-white shadow-sm overflow-hidden group'>
@@ -155,10 +163,15 @@ export default function Dashboard({
             </div>
           </div>
 
+          {/* -------- Lettering Row: Market Hub ------------------------------------------------------------------------------------------ */}
+          <div className='my-4'>
+            <CoinCodexWidget />
+          </div>
+
           {/* -------- Portfolio Structure Row: Categorized Asset Deep-Dive ------------------------------------------------------------------------- */}
-          <div className='flex flex-col gap-8 mt-8'>
+          <div className='flex flex-col'>
             <div className='flex items-center gap-4'>
-              <h2 className='text-2xl font-semibold text-slate-900 tracking-tighter'>
+              <h2 className='my-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 '>
                 Portfolio Structure
               </h2>
               <div className='h-[1px] flex-1 bg-slate-100' />
@@ -190,11 +203,6 @@ export default function Dashboard({
                 customKey={'tag'}
               />
             </div>
-          </div>
-
-          {/* -------- Lettering Row: Market Hub ------------------------------------------------------------------------------------------ */}
-          <div className='lg:col-span-2'>
-            <CoinCodexWidget />
           </div>
 
           {/* -------- WIP -------------------------------------------------------------------------------------------- */}

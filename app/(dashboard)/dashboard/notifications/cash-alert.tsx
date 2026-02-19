@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { AlarmClock, PieChart, Wallet } from 'lucide-react';
+import { AlarmClock, PieChart, Wallet, X, XIcon } from 'lucide-react';
 
 import {
   Card,
@@ -36,7 +36,7 @@ export default function CashAlert({
 
   return (
     <>
-      <Card className='h-[250px] border-none shadow-sm overflow-hidden'>
+      <Card className='border-none shadow-sm overflow-hidden bg-accent/50'>
         <div className='flex flex-col justify-between h-full'>
           <div className='flex flex-col'>
             <CardHeader>
@@ -44,11 +44,17 @@ export default function CashAlert({
                 <span className='font-semibold tracking-tight text-slate-900'>
                   Cash Available
                 </span>
-                <AlarmClock size={24} className='text-slate-400' />
+                <Button variant='ghost' size='sm'>
+                  <XIcon
+                    size={24}
+                    strokeWidth={1.4}
+                    className='text-slate-900'
+                  />
+                </Button>
               </CardTitle>
             </CardHeader>
-            <CardContent className='relative'>
-              <div className='flex flex-col gap-2'>
+            <CardContent className='relative flex justify-between border'>
+              <div className='flex flex-col gap-2 w-[25ch]'>
                 {firstFiveAssets.map((asset) => (
                   <div
                     key={asset?.id}
@@ -78,51 +84,53 @@ export default function CashAlert({
                   + {cash.length - 5} more accounts
                 </p>
               )}
+
+              {/* TOTAL */}
+              <div className='flex flex-col gap-8 w-[25ch] border'>
+                {cash.length > 0 && (
+                  <div className='flex flex-col gap-2'>
+                    <div className='flex items-center gap-2 mt-1'>
+                      <span className='text-[10px] font-semibold text-slate-400 uppercase tracking-widest'>
+                        Total
+                      </span>
+                      <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
+                        {thousandFormatter(
+                          cash.reduce(
+                            (sum: number, item: any) => sum + item.total,
+                            0
+                          )
+                        )}
+                      </span>
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-[10px] font-bold text-slate-400 uppercase tracking-widest'>
+                        Share
+                      </span>
+                      <div className='flex items-center gap-1 bg-rose-50 px-2 py-0.5 rounded-full'>
+                        <PieChart size={10} className='text-rose-600' />
+                        <span className='text-[10px] font-semibold text-rose-600'>{`${numberFormatter.format(
+                          (totalCash / totalNetWorth) * 100
+                        )}%`}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <Button
+                  size='sm'
+                  onClick={handleClick}
+                  variant='secondary'
+                  className='h-8 text-[10px] font-semibold uppercase tracking-widest'
+                >
+                  <Wallet size={14} className='mr-2' />
+                  {cash.length > 5 ? (
+                    <span>See all ({cash.length})</span>
+                  ) : (
+                    <span>Go to Assets</span>
+                  )}
+                </Button>
+              </div>
             </CardContent>
           </div>
-          <CardFooter className='flex justify-between items-end p-6 pt-0 border-t border-slate-50 mt-auto bg-slate-50/30'>
-            {cash.length > 0 && (
-              <div className='flex flex-col items-end gap-0'>
-                <div className='flex items-center gap-2'>
-                  <span className='text-[10px] font-bold text-slate-400 uppercase tracking-widest'>
-                    Share
-                  </span>
-                  <div className='flex items-center gap-1 bg-rose-50 px-2 py-0.5 rounded-full'>
-                    <PieChart size={10} className='text-rose-600' />
-                    <span className='text-[10px] font-semibold text-rose-600'>{`${numberFormatter.format(
-                      (totalCash / totalNetWorth) * 100
-                    )}%`}</span>
-                  </div>
-                </div>
-                <div className='flex items-center gap-2 mt-1'>
-                  <span className='text-[10px] font-semibold text-slate-400 uppercase tracking-widest'>
-                    Total
-                  </span>
-                  <span className='text-lg font-semibold text-slate-900 tracking-tighter'>
-                    {thousandFormatter(
-                      cash.reduce(
-                        (sum: number, item: any) => sum + item.total,
-                        0
-                      )
-                    )}
-                  </span>
-                </div>
-              </div>
-            )}
-            <Button
-              size='sm'
-              onClick={handleClick}
-              variant='secondary'
-              className='h-8 text-[10px] font-semibold uppercase tracking-widest'
-            >
-              <Wallet size={14} className='mr-2' />
-              {cash.length > 5 ? (
-                <span>See all ({cash.length})</span>
-              ) : (
-                <span>Go to Assets</span>
-              )}
-            </Button>
-          </CardFooter>
         </div>
       </Card>
     </>
