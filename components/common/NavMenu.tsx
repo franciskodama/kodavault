@@ -33,7 +33,6 @@ export default function NavMenu() {
               <Button
                 variant={pathname === item.pathname ? 'default' : 'ghost'}
                 size='md'
-                // className='text-sm'
               >
                 {item.label}
               </Button>
