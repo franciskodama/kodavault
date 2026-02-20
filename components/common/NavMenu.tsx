@@ -26,7 +26,7 @@ export default function NavMenu() {
   return (
     <>
       <hr className='my-4' />
-      <ul className='flex items-center text-sm gap-2'>
+      <ul className='flex items-center gap-2'>
         {menuItems.map((item: MenuItem) => (
           <Link href={item.href} key={item.href}>
             <li>
@@ -42,7 +42,7 @@ export default function NavMenu() {
 
         <li>
           <Sheet>
-            <SheetTrigger className='ml-12 border-2 border-slate-500 h-8 px-4 rounded-[2px] font-medium'>
+            <SheetTrigger className='text-sm font-bold ml-10 border-2 border-slate-500 h-10 px-4 rounded-xl'>
               + Asset
             </SheetTrigger>
             <SheetContent className='max-h-screen overflow-y-scroll'>

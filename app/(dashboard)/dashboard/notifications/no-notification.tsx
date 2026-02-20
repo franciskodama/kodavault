@@ -1,16 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { PiggyBank } from 'lucide-react';
+import { PiggyBank, Bell, CheckCircle2 } from 'lucide-react';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 export default function NoNotifications() {
@@ -21,34 +13,36 @@ export default function NoNotifications() {
   };
 
   return (
-    <>
-      <Card className='h-[250px]'>
-        <div className='flex flex-col justify-between h-full'>
-          <div className='flex flex-col'>
-            <CardHeader>
-              <CardTitle className='capitalize flex items-center justify-between'>
-                <span>Notification Desert</span>
-                <span className='text-3xl'>📭</span>
-              </CardTitle>
-              <CardDescription className='text-xs'>
-                Your inbox is blissfully empty.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className='relative'>
-              <h3 className='text-sm font-bold my-1'>Quiet inbox?</h3>
-              <p className='pr-2'>
-                Enjoy seeing how close you are to your Retirement Goal.
-              </p>
-            </CardContent>
+    <div className='relative group'>
+      <div className='absolute inset-0 bg-slate-50/50 rounded-2xl -z-10 border border-slate-100' />
+      <div className='flex flex-col md:flex-row items-center justify-between gap-4 p-4'>
+        <div className='flex items-center gap-4'>
+          <div className='flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 text-slate-400'>
+            <Bell size={20} />
           </div>
-          <CardFooter className='flex justify-between text-sm text-slate-500 font-medium mx-1 px-2 pb-3'>
-            <Button size='md' onClick={handleClick}>
-              <PiggyBank size={16} className='mr-2' />
-              Find your Goal
-            </Button>
-          </CardFooter>
+          <div>
+            <div className='flex items-center gap-2'>
+              <h3 className='text-sm font-bold text-slate-700'>
+                Notification Hub
+              </h3>
+              <CheckCircle2 size={14} className='text-emerald-500' />
+            </div>
+            <p className='text-xs text-slate-500'>
+              Everything looks solid. You have no urgent alerts at the moment.
+            </p>
+          </div>
         </div>
-      </Card>
-    </>
+
+        <Button
+          variant='ghost'
+          size='sm'
+          onClick={handleClick}
+          className='text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-slate-900 border border-slate-100'
+        >
+          <PiggyBank size={14} className='mr-2' />
+          Check Retirement Goal
+        </Button>
+      </div>
+    </div>
   );
 }

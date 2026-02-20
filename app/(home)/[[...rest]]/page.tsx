@@ -5,7 +5,7 @@ import { auth } from '@clerk/nextjs/server';
 
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
-import SignInPage from '../sign-in/page';
+import SignInPage from '@/app/sign-in/page';
 
 export default async function HomePage() {
   const { userId } = await auth();

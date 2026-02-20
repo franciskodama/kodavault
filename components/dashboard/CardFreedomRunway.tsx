@@ -72,15 +72,14 @@ export const CardFreedomRunway = ({
   const isFire = (monthlyBurn * 12) / netWorth < 0.04;
 
   return (
-    <Card className='h-full relative overflow-hidden'>
+    <Card className='h-full relative overflow-hidden border-none shadow-sm'>
       <CardHeader>
         <CardTitle className='flex items-center justify-between'>
-          <span>Freedom Runway</span>
-          <span className='text-3xl'>🛫</span>
+          <span className='font-semibold tracking-tight text-slate-900'>
+            Freedom Runway
+          </span>
+          <Plane size={24} className='text-slate-400' />
         </CardTitle>
-        <CardDescription>
-          How long you can live without working.
-        </CardDescription>
       </CardHeader>
       <CardContent className='flex flex-col gap-6 relative z-10'>
         <div className='text-center space-y-2 mt-2'>
@@ -92,9 +91,9 @@ export const CardFreedomRunway = ({
           </p>
         </div>
 
-        <div className='space-y-4 bg-slate-50 p-4 rounded-xs border border-slate-100'>
+        <div className='space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-100'>
           <div className='flex justify-between items-center text-sm'>
-            <Label htmlFor='burn-rate' className='text-slate-600 font-semibold'>
+            <Label htmlFor='burn-rate' className='text-slate-600 font-medium'>
               Monthly Burn Rate
             </Label>
             <div className='flex items-center gap-2'>

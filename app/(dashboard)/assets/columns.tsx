@@ -1,8 +1,10 @@
 'use client';
 
 import { FC } from 'react';
-
+import Image from 'next/image';
+import { ArrowUpDown, Trash2, Pencil } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,19 +30,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ArrowUpDown, Trash2 } from 'lucide-react';
-
-import { useAssetsContext } from '@/context/AssetsContext';
-import { tableHeaderClass } from '@/lib/classes';
-import { Asset } from '@/lib/types';
-import { deleteAsset, updateReviewedAsset } from '@/lib/actions';
 import { UpdateAssetForm } from '@/components/forms/UpdateAssetForm';
-import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useReviewedAssets } from './reviewed-context';
 import { Button } from '@/components/ui/button';
+
+import { Asset } from '@/lib/types';
+import { tableHeaderClass } from '@/lib/classes';
+import { useAssetsContext } from '@/context/AssetsContext';
+import { deleteAsset } from '@/lib/actions';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -52,6 +52,20 @@ export const columns: ColumnDef<Asset>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Wallet
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: 'currency',
+    header: ({ column }) => {
+      return (
+        <div
+          className={tableHeaderClass}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Currency
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </div>
       );
@@ -169,6 +183,9 @@ export const columns: ColumnDef<Asset>[] = [
         </div>
       );
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: 'tag',
@@ -276,15 +293,15 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
       {asset && (
         <div className='flex items-center text-xl'>
           <Checkbox
-            className='w-[30px] h-[30px] border border-slate-300 rounded-[2px]'
+            className='w-[30px] h-[30px] border border-slate-300 rounded-md transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
             checked={isAssetReviewed(asset.id)}
             onCheckedChange={(checked) =>
               handleReviewToggle(checked as boolean, asset.id)
             }
           />
           <Sheet>
-            <SheetTrigger className='ml-4 hover:text-base w-8 bg-white border border-slate-300 rounded-[2px]'>
-              ✏️
+            <SheetTrigger className='ml-4 h-8 w-8 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-primary/30 text-slate-400 hover:text-primary transition-all flex items-center justify-center shadow-sm'>
+              <Pencil size={14} />
             </SheetTrigger>
             <SheetContent className='max-h-screen overflow-y-scroll'>
               <SheetHeader>
@@ -297,8 +314,8 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
             </SheetContent>
           </Sheet>
           <AlertDialog>
-            <AlertDialogTrigger className='ml-4 hover:text-base w-8 border border-slate-300 bg-white rounded-[2px]'>
-              💀
+            <AlertDialogTrigger className='ml-4 h-8 w-8 border border-slate-200 bg-white rounded-xl hover:bg-slate-50 hover:border-red-200 text-slate-400 hover:text-red-500 transition-all flex items-center justify-center shadow-sm'>
+              <Trash2 size={14} />
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
@@ -372,29 +389,3 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
     </>
   );
 };
-// ------------------ If we want to save reviewed status in the database ------------------
-
-// const handleReviewedAsset = async (id: string, reviewed: boolean) => {
-//   try {
-//     await updateReviewedAsset(id as string, reviewed as boolean);
-//     await refreshAssets();
-//     toast({
-//       title: `${asset?.asset}: ${reviewed ? 'Reviewed' : 'Unreviewed'}  ${
-//         reviewed ? ' ✅' : '🚫'
-//       }`,
-//       description: `The Asset ${asset?.asset} has been successfully updated!`,
-//       variant: reviewed ? 'success' : 'default',
-//     });
-//   } catch (error) {
-//     console.error('Error updating reviewed status of asset:', error);
-//     toast({
-//       title: 'Error Updating Asset! 🚨',
-//       description:
-//         'Something went wrong while updating the Review Status. Try again!',
-//       variant: 'destructive',
-//     });
-//   }
-// };
-// onCheckedChange={() => handleReviewedAsset(asset.id, !asset.reviewed as boolean)}
-
-// --------------------------------------------------------------------------------------

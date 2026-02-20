@@ -40,7 +40,7 @@ export default function MessageInTable({
           <Image
             src={image}
             alt={alt}
-            className='object-cover rounded-sm border-primary'
+            className='object-cover rounded-2xl border border-slate-100'
             priority
             fill
             sizes='(max-width: 500px) 100vw'
@@ -54,7 +54,7 @@ export default function MessageInTable({
 
         {!hasNoButton && (
           <Sheet>
-            <SheetTrigger className='border-2 border-slate-500 h-10 px-4 rounded-[2px] font-semibold my-4 text-sm '>
+            <SheetTrigger className='border-2 border-slate-900 h-10 px-4 rounded-xl font-semibold my-4 text-sm hover:bg-slate-900 hover:text-white transition-all'>
               {buttonCopy}
             </SheetTrigger>
             <SheetContent className='max-h-screen overflow-y-scroll'>

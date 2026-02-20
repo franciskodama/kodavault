@@ -105,7 +105,7 @@ export default function CryptoByWallet({
                 .map((item: TotalByWallet) => (
                   <div
                     key={item.value}
-                    className='border rounded-[2px] mb-2 p-2 grow'
+                    className='border rounded-xl mb-2 p-2 grow'
                   >
                     <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-2'>
                       {item.value.includes('Crypto') ? 'Crypto' : item.value}
@@ -147,7 +147,7 @@ export default function CryptoByWallet({
                 return (
                   <div
                     key={wallet?.[0]?.wallet}
-                    className='border rounded-[2px] mb-2 p-2 grow'
+                    className='border rounded-xl mb-2 p-2 grow'
                   >
                     <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
                       {wallet?.[0]?.wallet}
@@ -161,7 +161,7 @@ export default function CryptoByWallet({
                             item.total
                           )}`}</p>
                           <p
-                            className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+                            className={`text-white w-[8ch] px-1 m-1 text-center rounded-xl ${
                               (item.total /
                                 totalByWallet[
                                   totalByWallet.findIndex(

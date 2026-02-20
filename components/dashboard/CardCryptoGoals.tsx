@@ -136,7 +136,7 @@
 //                         item.total
 //                       )}`}</p>
 //                       <p
-//                         className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+//                         className={`text-white w-[8ch] px-1 m-1 text-center rounded-xl ${
 //                           (item.total / total) * 100 > 50
 //                             ? 'bg-red-500'
 //                             : 'bg-green-500'
@@ -146,7 +146,7 @@
 //                       )}%`}</p>
 
 //                       <p
-//                         className={`text-white w-[8ch] px-1 m-1 text-center rounded-[2px] ${
+//                         className={`text-white w-[8ch] px-1 m-1 text-center rounded-xl ${
 //                           item.goal === 0
 //                             ? 'bg-blue-500'
 //                             : (item.total / total) * 100 > item.goal

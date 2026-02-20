@@ -35,7 +35,7 @@ export default function Footer() {
               Behind the Code
             </h4>
           </div>
-          <p className='pr-4 max-w-80 text-xs'>
+          <p className='pr-4 max-w-80 text-sm font-light'>
             This app was originally created to simplify my life, achieve more,
             and practice my skills as a software developer. Now, it’s here to
             help you do the same. One feature at a time. Enjoy!

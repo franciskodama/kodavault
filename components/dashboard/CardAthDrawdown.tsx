@@ -21,6 +21,8 @@ type AllCryptosData = {
   image?: string;
 };
 
+import { Percent } from 'lucide-react';
+
 export const CardAthDrawdown = ({
   userAssets,
   allCryptosData,
@@ -71,15 +73,14 @@ export const CardAthDrawdown = ({
 
   if (!opportunities.length) {
     return (
-      <Card className='h-full'>
+      <Card className='h-full border-none shadow-sm'>
         <CardHeader>
           <CardTitle className='flex items-center justify-between'>
-            <span>Discount Radar</span>
-            <span className='text-3xl'>🏷️</span>
+            <span className='font-semibold tracking-tight text-slate-900'>
+              Discount Radar
+            </span>
+            <Percent size={24} className='text-slate-400' />
           </CardTitle>
-          <CardDescription>
-            Top assets trading below All-Time High
-          </CardDescription>
         </CardHeader>
         <CardContent className='flex items-center justify-center h-[200px] text-slate-400 text-sm italic'>
           No drawdown data available.
@@ -89,17 +90,19 @@ export const CardAthDrawdown = ({
   }
 
   return (
-    <Card className='h-full'>
+    <Card className='h-full border-none shadow-sm'>
       <CardHeader>
         <CardTitle className='flex items-center justify-between'>
-          <span>Discount Radar</span>
-          <span className='text-3xl'>🏷️</span>
+          <span className='font-semibold tracking-tight text-slate-900'>
+            Discount Radar
+          </span>
+          <Percent size={24} className='text-slate-400' />
         </CardTitle>
-        <CardDescription>
+        <CardDescription className='text-[10px] font-bold uppercase tracking-widest text-slate-400'>
           Biggest potential upside to reclaim ATH.
         </CardDescription>
       </CardHeader>
-      <CardContent className='flex flex-col gap-4'>
+      <CardContent className='flex flex-col gap-5'>
         {opportunities.map((item) => (
           <div key={item.symbol} className='space-y-1'>
             <div className='flex justify-between items-center text-sm'>
@@ -119,7 +122,7 @@ export const CardAthDrawdown = ({
                 <span className='text-xs text-slate-500'>
                   ${item.price.toLocaleString()} / ${item.ath.toLocaleString()}
                 </span>
-                <span className='font-bold text-green-600'>
+                <span className='font-medium text-green-600'>
                   -{item.drawdown.toFixed(1)}%
                 </span>
               </div>

@@ -26,7 +26,7 @@ export default function NoAssets() {
           <Image
             src='/no-assets-travolta.gif'
             alt='John Travolta looking at around inside a wallet'
-            className='object-cover rounded-sm border-primary'
+            className='object-cover rounded-2xl border border-slate-100'
             objectPosition='center 100%'
             fill
           />
@@ -38,7 +38,7 @@ export default function NoAssets() {
       <p className='text-base my-2'>{`Let's make your financial playground pop! 🚀`}</p>
 
       <Sheet>
-        <SheetTrigger className='border-2 border-slate-500 h-10 px-4 rounded-[2px] font-semibold my-4 text-sm '>
+        <SheetTrigger className='border-2 border-slate-900 h-10 px-4 rounded-xl font-semibold my-4 text-sm hover:bg-slate-900 hover:text-white transition-all'>
           Add Your First Asset
         </SheetTrigger>
         <SheetContent className='max-h-screen overflow-y-scroll'>

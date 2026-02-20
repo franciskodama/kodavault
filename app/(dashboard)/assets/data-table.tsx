@@ -42,6 +42,8 @@ import {
 } from '@/components/ui/tooltip';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import MessageInTable from '@/components/common/MessageInTable';
 import { useAssetsContext } from '@/context/AssetsContext';
 import {
@@ -57,6 +59,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | any;
   typeFilterAsParam?: string;
+  purposeFilterAsParam?: string;
 }
 
 type OptionType = {
@@ -68,6 +71,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   typeFilterAsParam,
+  purposeFilterAsParam,
 }: DataTableProps<TData, TValue>) {
   const { assets, assetsByType, isLoading } = useAssetsContext();
 
@@ -85,6 +89,11 @@ export function DataTable<TData, TValue>({
 
   const [openTypeDropbox, setOpenTypeDropbox] = useState(false);
   const [valueTypeDropbox, setValueTypeDropbox] = useState('');
+
+  const [filterPurpose, setFilterPurpose] = useState<string[]>([
+    'Trade',
+    'Investment',
+  ]);
 
   const [openNotification, setOpenNotification] = useState(false);
 
@@ -112,9 +121,21 @@ export function DataTable<TData, TValue>({
   }, [typeFilterAsParam, table]);
 
   useEffect(() => {
+    if (purposeFilterAsParam) {
+      const purposes = purposeFilterAsParam.split(',');
+      setFilterPurpose(purposes);
+      table.getColumn('purpose')?.setFilterValue(purposes);
+    }
+  }, [purposeFilterAsParam, table]);
+
+  useEffect(() => {
     if (valueWalletDropbox || valueCurrencyDropbox || valueTypeDropbox) {
     }
   }, [valueWalletDropbox, valueCurrencyDropbox, valueTypeDropbox]);
+
+  useEffect(() => {
+    table.getColumn('purpose')?.setFilterValue(filterPurpose);
+  }, [filterPurpose, table]);
 
   const getRepeatedAssetTotal = (assetName: string) => {
     const repeatedAssetRows = assets.filter(
@@ -175,6 +196,7 @@ export function DataTable<TData, TValue>({
     setValueAccountDropbox('');
     setValueCurrencyDropbox('');
     setValueTypeDropbox('');
+    setFilterPurpose(['Trade', 'Investment']);
     setColumnFilters([]);
     table.resetGlobalFilter();
   };
@@ -207,7 +229,8 @@ export function DataTable<TData, TValue>({
     !!valueWalletDropbox ||
     !!valueAccountDropbox ||
     !!valueCurrencyDropbox ||
-    !!valueTypeDropbox;
+    !!valueTypeDropbox ||
+    filterPurpose.length !== 2;
 
   if (data.length < 1)
     return (
@@ -227,9 +250,9 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className='rounded-sm border border-slate-200 mx-4 sm:mx-0'>
+      <div className='rounded-t-sm border border-slate-200 mx-4 sm:mx-0'>
         <div className='flex justify-between items-center px-8 py-4'>
-          <div className='flex flex-col sm:flex-row items-center gap-2'>
+          <div className='flex flex-col sm:flex-row items-center gap-1'>
             <Input
               placeholder='Filter by Asset'
               value={
@@ -476,6 +499,53 @@ export function DataTable<TData, TValue>({
               }}
               className='max-w-sm w-[20ch] sm:ml-4'
             />
+
+            <div className='flex flex-col  sm:ml-4'>
+              <div className='flex items-center gap-2'>
+                <Checkbox
+                  id='trade'
+                  className='border-slate-300'
+                  checked={filterPurpose.includes('Trade')}
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      setFilterPurpose([...filterPurpose, 'Trade']);
+                    } else {
+                      setFilterPurpose(
+                        filterPurpose.filter((p) => p !== 'Trade')
+                      );
+                    }
+                  }}
+                />
+                <Label
+                  htmlFor='trade'
+                  className='text-[10px] uppercase font-bold text-slate-400 tracking-widest cursor-pointer'
+                >
+                  Trade
+                </Label>
+              </div>
+              <div className='flex items-center gap-2'>
+                <Checkbox
+                  id='investment'
+                  className='border-slate-300'
+                  checked={filterPurpose.includes('Investment')}
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      setFilterPurpose([...filterPurpose, 'Investment']);
+                    } else {
+                      setFilterPurpose(
+                        filterPurpose.filter((p) => p !== 'Investment')
+                      );
+                    }
+                  }}
+                />
+                <Label
+                  htmlFor='investment'
+                  className='text-[10px] uppercase font-bold text-slate-400 tracking-widest cursor-pointer'
+                >
+                  Investment
+                </Label>
+              </div>
+            </div>
           </div>
 
           {stocksNoTotal?.length > 0 && !openNotification ? (
@@ -530,7 +600,7 @@ export function DataTable<TData, TValue>({
 
         <div className='flex items-center px-4 mt-0 mb-8'>
           {!areThereRepeatedAssets && filterIsActive ? (
-            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 bg-accent rounded-[2px] text-left'>
+            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 bg-accent rounded-xl text-left'>
               <>
                 <div className='flex items-center gap-2 font-semibold'>
                   <p>Total Filtered:</p>
@@ -542,7 +612,7 @@ export function DataTable<TData, TValue>({
           ) : null}
 
           {areThereRepeatedAssets && (
-            <div className='flex items-center h-10 font-bold ml-4 px-4 bg-accent rounded-[2px] text-left'>
+            <div className='flex items-center h-10 font-bold ml-4 px-4 bg-accent rounded-xl text-left'>
               <div className='flex items-center w-full'>
                 <p className='w-[6ch]'>Asset:</p>
                 {getRepeatedAssetTotal(
@@ -575,7 +645,7 @@ export function DataTable<TData, TValue>({
               <Tooltip>
                 <TooltipTrigger>
                   <div
-                    className='flex items-center justify-center w-[176px] sm:w-11 h-10 ml-4 sm:ml-2 border-2 border-slate-500 bg-accent'
+                    className='flex items-center justify-center w-[176px] sm:w-11 h-10 ml-4 sm:ml-2 bg-accent rounded-xl'
                     onClick={() => {
                       handleClickClearAll();
                     }}
@@ -662,7 +732,7 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      <div className='flex justify-center items-center gap-12 text-xs font-light text-white bg-slate-600 p-3 border'>
+      <div className='flex justify-center items-center gap-12 text-xs font-light text-white bg-slate-600 rounded-b-sm p-3 border'>
         <p>
           Cryptos
           <span className='font-semibold text-sm'>

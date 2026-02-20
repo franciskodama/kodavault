@@ -24,12 +24,12 @@ export default async function ShortcutPage() {
       <div className='w-full py-12 px-8 flex flex-col items-center justify-center relative overflow-hidden mb-8'>
         <div className='max-w-4xl w-full text-center relative z-10'>
           <div className='flex flex-col items-center justify-center space-y-2'>
-            <h1 className='text-3xl md:text-5xl font-serif font-black text-slate-800 tracking-tighter'>
+            <h1 className='text-3xl md:text-5xl font-serif font-semibold text-slate-800 tracking-tighter'>
               Treasure Chest
             </h1>
             <div className='flex items-center gap-3'>
               <div className='h-[1.5px] w-8 bg-[#bd554c] opacity-50' />
-              <h2 className='text-sm md:text-base font-black text-slate-500 uppercase tracking-[0.3em]'>
+              <h2 className='text-sm md:text-base font-semibold text-slate-500 uppercase tracking-[0.3em]'>
                 Your Personal Shortcut Hub
               </h2>
               <div className='h-[1.5px] w-8 bg-[#bd554c] opacity-50' />

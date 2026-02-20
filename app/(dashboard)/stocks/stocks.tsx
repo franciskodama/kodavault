@@ -21,7 +21,6 @@ export default function Stocks() {
           {stockAssets.length > 0 ? (
             <div className='flex flex-wrap gap-2 px-8 sm:px-0'>
               <CardTotal
-                emoji={'🔖'}
                 description={'Total value grouped by Stocks'}
                 assets={stockAssets}
                 customKey={'stock'}

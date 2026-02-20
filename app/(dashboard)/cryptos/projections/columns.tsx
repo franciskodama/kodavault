@@ -11,7 +11,7 @@ import {
 
 import { CryptoWithAthAndProjections } from '@/lib/types';
 import { Column, Row } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, Pencil } from 'lucide-react';
 import { FormProjections } from './form-projections';
 import { tableHeaderClass } from '@/lib/classes';
 import { Button } from '@/components/ui/button';
@@ -185,10 +185,10 @@ function EditProjection({
         <Button
           variant='outline'
           size='sm'
-          className='ml-4 text-xl hover:text-base w-8 h-8 bg-white border border-slate-300 rounded-[2px]'
+          className='ml-4 h-8 w-8 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-primary/30 text-slate-400 hover:text-primary transition-all flex items-center justify-center shadow-sm p-0'
           onClick={() => setOpen(true)}
         >
-          ✏️
+          <Pencil size={14} />
         </Button>
       </DialogTrigger>
       <DialogContent className='w-[22em]'>

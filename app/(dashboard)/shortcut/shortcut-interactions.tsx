@@ -28,6 +28,7 @@ import { toast } from '@/components/ui/use-toast';
 import { UpdateShortcutForm } from '@/components/forms/UpdateShortcutForm';
 import { ShortcutType } from '@/lib/types';
 import { deleteShortcut } from '@/lib/actions';
+import { Pencil, Trash2 } from 'lucide-react';
 import { getColor } from './shortcut';
 
 type shortcutByCategory = {
@@ -71,7 +72,7 @@ export function ShortcutInteractions({
                       <h3 className='text-lg font-bold text-slate-800 capitalize leading-tight tracking-tight'>
                         {key}
                       </h3>
-                      <p className='text-[10px] text-slate-400 uppercase font-black tracking-[0.15em]'>
+                      <p className='text-[10px] text-slate-400 uppercase font-semibold tracking-[0.15em]'>
                         {shortcutsCount}{' '}
                         {shortcutsCount === 1 ? 'Direct Link' : 'Direct Links'}
                       </p>
@@ -117,8 +118,8 @@ export function ShortcutInteractions({
                       <div className='flex items-center gap-1.5 opacity-0 group-hover/item:opacity-100 transition-all transform translate-x-2 group-hover/item:translate-x-0 ml-2'>
                         <Sheet>
                           <SheetTrigger asChild>
-                            <button className='p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 text-slate-400 hover:text-primary shadow-sm transition-all duration-200'>
-                              <span className='text-xs'>✏️</span>
+                            <button className='p-2 hover:bg-white rounded-xl border border-transparent hover:border-slate-200 text-slate-400 hover:text-primary shadow-sm transition-all duration-200'>
+                              <Pencil size={14} />
                             </button>
                           </SheetTrigger>
                           <SheetContent className='max-h-screen overflow-y-scroll'>
@@ -134,13 +135,13 @@ export function ShortcutInteractions({
 
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <button className='p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 text-slate-400 hover:text-red-500 shadow-sm transition-all duration-200'>
-                              <span className='text-xs'>💀</span>
+                            <button className='p-2 hover:bg-white rounded-xl border border-transparent hover:border-slate-200 text-slate-400 hover:text-red-500 shadow-sm transition-all duration-200'>
+                              <Trash2 size={14} />
                             </button>
                           </AlertDialogTrigger>
                           <AlertDialogContent className='border-4 border-primary rounded-3xl'>
                             <AlertDialogHeader>
-                              <AlertDialogTitle className='text-center text-3xl font-black text-primary my-4 tracking-tighter uppercase'>
+                              <AlertDialogTitle className='text-center text-3xl font-semibold text-primary my-4 tracking-tighter uppercase'>
                                 Are you f... sure?
                                 <br />
                                 <div className='w-full max-w-[320px] mt-8 mx-auto'>
@@ -162,16 +163,16 @@ export function ShortcutInteractions({
                                 You are about to delete the Shortcut below:
                                 <div className='flex mb-6 py-5 px-8 justify-between border-2 border-dashed border-primary/30 bg-primary/5 rounded-2xl text-primary text-left'>
                                   <div className='flex flex-col w-1/2'>
-                                    <h3 className='text-[10px] uppercase font-black text-slate-400 tracking-widest'>
+                                    <h3 className='text-[10px] uppercase font-semibold text-slate-400 tracking-widest'>
                                       Shortcut
                                     </h3>
-                                    <span className='font-black text-xl'>
+                                    <span className='font-semibold text-xl'>
                                       {shortcut.name}
                                     </span>
                                   </div>
 
                                   <div className='flex flex-col w-1/2'>
-                                    <h3 className='text-[10px] uppercase font-black text-slate-400 tracking-widest'>
+                                    <h3 className='text-[10px] uppercase font-semibold text-slate-400 tracking-widest'>
                                       Source
                                     </h3>
                                     <span className='font-bold text-lg'>

@@ -127,7 +127,7 @@ export function DataTable<TData, TValue>({
                         <div
                           className={`${
                             sumGoals > 100 &&
-                            'bg-red-500 text-white py-1 px-1 rounded-[2px]'
+                            'bg-red-500 text-white py-1 px-1 rounded-xl'
                           } text-center text-xs font-base text-primary`}
                         >
                           ({sumGoals} %)

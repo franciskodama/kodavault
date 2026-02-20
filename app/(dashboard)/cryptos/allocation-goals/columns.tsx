@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, Pencil } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { tableHeaderClass } from '@/lib/classes';
@@ -94,7 +94,7 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
             <div className='flex items-center'>
               <p className='text-center w-[6ch]'>{`${assetRow.goal} %`}</p>
               <p
-                className={`flex items-center justify-center uppercase font-bold h-6 w-[5ch] px-1 m-1 text-center rounded-[2px] ${
+                className={`flex items-center justify-center uppercase font-bold h-6 w-[5ch] px-1 m-1 text-center rounded-xl ${
                   assetRow.goal === 0
                     ? 'border border-slate-300 bg-slate-300 text-white'
                     : Number(assetRow.share.toString().split('.')[0]) <
@@ -155,7 +155,7 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
           {assetRow && (
             <div className='flex items-center'>
               <div
-                className={`font-bold flex items-center justify-center uppercase text-white h-6 w-[8ch] px-1 m-1 text-center rounded-[2px] 
+                className={`font-bold flex items-center justify-center uppercase text-white h-6 w-[8ch] px-1 m-1 text-center rounded-xl 
                 ${
                   assetRow.priority === null
                     ? 'border border-slate-300 bg-white'
@@ -201,9 +201,9 @@ export const columns: ColumnDef<MergedArrayItem>[] = [
               <Button
                 variant='outline'
                 size='sm'
-                className='ml-4 text-xl hover:text-base w-8 h-8 bg-white border border-slate-300 rounded-[2px]'
+                className='ml-4 h-8 w-8 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-primary/30 text-slate-400 hover:text-primary transition-all flex items-center justify-center shadow-sm p-0'
               >
-                ✏️
+                <Pencil size={14} />
               </Button>
             </DialogTrigger>
             <DialogContent className='sm:max-w-[425px]'>
