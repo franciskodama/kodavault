@@ -321,7 +321,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
               <AlertDialogHeader>
                 <AlertDialogTitle asChild className='text-center text-2xl my-4'>
                   <div>
-                    Are you fucking sure?
+                    Are you sure?
                     <br />
                     <div className='w-[450px] mt-8 mx-auto'>
                       <AspectRatio ratio={16 / 16} className='bg-white'>
@@ -329,7 +329,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
                           src='/are-you-sure.gif'
                           alt='Britney in doubt'
                           fill
-                          className='object-cover rounded-full border-[8px] border-primary'
+                          className='object-cover rounded-full border-[4px] border-primary'
                           objectPosition='center 25%'
                         />
                       </AspectRatio>
@@ -339,7 +339,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
                 <AlertDialogDescription asChild>
                   <div className='flex flex-col text-base text-center text-slate-600 mb-4 gap-4'>
                     You are about to delete the Asset below:
-                    <div className='flex py-4 px-16 justify-between border-[6px] border-primary text-base text-primary'>
+                    <div className='flex py-4 px-16 justify-between border-[4px] rounded-lg border-primary text-base text-primary'>
                       <div className='flex flex-col'>
                         <div className='text-sm'>Asset:</div>
                         <div className='font-bold'>{asset.asset}</div>

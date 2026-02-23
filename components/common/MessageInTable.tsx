@@ -10,11 +10,14 @@ import {
 } from '@/components/ui/sheet';
 import { AddAssetForm } from '@/components/forms/AddAssetForm';
 
-export type MessageInTable = {
+import { LucideIcon } from 'lucide-react';
+
+export type MessageInTableProps = {
   image: string;
   objectPosition: string;
   alt: string;
   title: string;
+  icon?: LucideIcon;
   subtitle: string;
   buttonCopy: string;
   hasNoButton?: boolean;
@@ -27,12 +30,13 @@ export default function MessageInTable({
   objectPosition,
   alt,
   title,
+  icon: Icon,
   subtitle,
   buttonCopy,
   hasNoButton,
   formTitle,
   formSubtitle,
-}: MessageInTable) {
+}: MessageInTableProps) {
   return (
     <div className='flex flex-col sm:flex-row items-center justify-around px-8 sm:px-0'>
       <div className='w-full sm:w-[450px] mx-auto my-8'>
@@ -49,7 +53,10 @@ export default function MessageInTable({
         </AspectRatio>
       </div>
       <div className='flex flex-col sm:w-[450px] mx-auto'>
-        <p className='text-2xl font-semibold'>{title}</p>
+        <div className='flex items-center gap-2'>
+          <p className='text-2xl font-semibold'>{title}</p>
+          {Icon && <Icon className='h-6 w-6' />}
+        </div>
         <p className='text-base my-2'>{subtitle}</p>
 
         {!hasNoButton && (
