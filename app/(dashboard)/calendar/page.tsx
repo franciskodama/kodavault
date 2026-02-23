@@ -98,7 +98,7 @@ export default function CalendarPage() {
             </Button>
           </div>
           <p className='hidden sm:block text-[10px] text-slate-400 uppercase font-bold tracking-widest'>
-            FREE FEED (EST)
+            (EST)
           </p>
         </div>
       </div>
@@ -132,31 +132,29 @@ export default function CalendarPage() {
                   </span>
                 )}
               </CardHeader>
-              <CardContent className='p-0'>
-                <table className='w-full text-left font-light'>
-                  <thead className='bg-slate-50/50 border-b'>
-                    <tr className='text-[9px] uppercase font-bold text-slate-400'>
-                      <th className='px-4 py-2 w-24'>Time</th>
-                      <th className='px-4 py-2'>Event</th>
-                      <th className='px-4 py-2 text-right'>Actual</th>
-                      <th className='px-4 py-2 text-right'>Forecast</th>
-                      <th className='px-4 py-2 text-right'>Previous</th>
-                    </tr>
-                  </thead>
-                  <tbody className='divide-y'>
+              <CardContent className='p-0 overflow-x-auto'>
+                <div className='min-w-[600px]'>
+                  <div className='grid grid-cols-[100px_1fr_80px_80px_80px] bg-slate-50/50 border-b text-[9px] uppercase font-bold text-slate-400'>
+                    <div className='px-4 py-2'>Time</div>
+                    <div className='px-4 py-2'>Event</div>
+                    <div className='px-4 py-2 text-right'>Actual</div>
+                    <div className='px-4 py-2 text-right'>Forecast</div>
+                    <div className='px-4 py-2 text-right'>Previous</div>
+                  </div>
+                  <div className='divide-y flex flex-col'>
                     {groupedData[date].map((release, idx) => {
                       return (
-                        <tr
+                        <div
                           key={`${release.title}-${idx}`}
-                          className='hover:bg-slate-50/50 transition-colors'
+                          className='grid grid-cols-[100px_1fr_80px_80px_80px] hover:bg-slate-50/50 transition-colors items-center'
                         >
-                          <td className='px-4 py-2 text-[10px] font-bold text-slate-400 w-24'>
+                          <div className='px-4 py-2 text-[10px] font-bold text-slate-400'>
                             {release.time || 'All Day'}
-                          </td>
-                          <td className='px-4 py-2 font-semibold text-xs'>
+                          </div>
+                          <div className='px-4 py-2 font-semibold text-xs'>
                             {release.title}
-                          </td>
-                          <td
+                          </div>
+                          <div
                             className={cn(
                               'px-4 py-2 text-right font-bold text-xs',
                               release.actual && release.forecast
@@ -168,18 +166,18 @@ export default function CalendarPage() {
                             )}
                           >
                             {release.actual || '-'}
-                          </td>
-                          <td className='px-4 py-2 text-right text-xs text-slate-500 font-medium'>
+                          </div>
+                          <div className='px-4 py-2 text-right text-xs text-slate-500 font-medium'>
                             {release.forecast || '-'}
-                          </td>
-                          <td className='px-4 py-2 text-right text-xs text-slate-500 font-medium'>
+                          </div>
+                          <div className='px-4 py-2 text-right text-xs text-slate-500 font-medium'>
                             {release.previous || '-'}
-                          </td>
-                        </tr>
+                          </div>
+                        </div>
                       );
                     })}
-                  </tbody>
-                </table>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ))}
