@@ -17,7 +17,7 @@ export function CustomRadioWithTooltip({
   const [showTooltip, setShowTooltip] = useState(false);
 
   return (
-    <div className='relative inline-block'>
+    <div className='relative'>
       <input
         className='hidden peer'
         type='radio'
