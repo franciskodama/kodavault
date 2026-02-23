@@ -70,16 +70,21 @@ export default function CalendarPage() {
 
   return (
     <div className='flex flex-col gap-1 px-8 sm:p-0 min-h-[75vh]'>
-      <div className='flex flex-col sm:flex-row justify-between items-center mb-4'>
-        <div className='flex items-center gap-2'>
-          <span className='text-3xl'>📅</span>
-          <h1 className='text-xl font-bold ml-2 uppercase tracking-tighter'>
-            Economic Calendar
-          </h1>
+      <div className='flex flex-col sm:flex-row justify-between items-end mb-10 px-4 sm:px-0'>
+        <div className='flex items-center gap-4 mt-8'>
+          <div className='w-1 h-10 bg-[#22C55E] rounded-lg' />
+          <div className='flex flex-col'>
+            <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 leading-none mb-1'>
+              Market Hub
+            </p>
+            <h1 className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
+              Economic Calendar
+            </h1>
+          </div>
         </div>
 
         <div className='flex items-center gap-4 mt-4 sm:mt-0'>
-          <div className='flex p-0.5 bg-white rounded-xl border shadow-sm'>
+          <div className='flex p-0.5 bg-white rounded-lg border shadow-sm'>
             <Button
               variant={filter === 'high_impact' ? 'default' : 'ghost'}
               size='sm'
@@ -127,7 +132,7 @@ export default function CalendarPage() {
                   {dateWithDayFormatter(date)}
                 </CardTitle>
                 {isThisWeek(date) && (
-                  <span className='text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-xl font-bold'>
+                  <span className='text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-lg font-bold'>
                     THIS WEEK
                   </span>
                 )}

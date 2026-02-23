@@ -20,22 +20,15 @@ export default async function ShortcutPage() {
   }
 
   return (
-    <div className='flex flex-col items-center w-full mx-auto pb-20'>
-      <div className='w-full py-12 px-8 flex flex-col items-center justify-center relative overflow-hidden mb-8'>
-        <div className='max-w-4xl w-full text-center relative z-10'>
-          <div className='flex flex-col items-center justify-center space-y-2'>
-            <h1 className='text-3xl md:text-5xl font-serif font-semibold text-slate-800 tracking-tighter'>
-              Treasure Chest
-            </h1>
-            <div className='flex items-center gap-3'>
-              <div className='h-[1.5px] w-8 bg-[#bd554c] opacity-50' />
-              <h2 className='text-sm md:text-base font-semibold text-slate-500 uppercase tracking-[0.3em]'>
-                Your Personal Shortcut Hub
-              </h2>
-              <div className='h-[1.5px] w-8 bg-[#bd554c] opacity-50' />
-            </div>
-          </div>
-        </div>
+    <div className='flex flex-col w-full mx-auto pb-20 px-8'>
+      <div className='flex flex-col items-center justify-center mt-12 mb-12'>
+        <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
+          Personal Hub
+        </p>
+        <h1 className='text-3xl font-bold text-slate-900 tracking-tight leading-none'>
+          Treasure Chest
+        </h1>
+        <div className='w-12 h-1.5 bg-[#22C55E] rounded-full mt-6 shadow-sm shadow-green-100' />
       </div>
 
       <div className='w-full px-8'>
