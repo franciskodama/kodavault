@@ -2,10 +2,10 @@ import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 import { auth } from '@clerk/nextjs/server';
+import { SignIn } from '@clerk/nextjs';
 
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
-import SignInPage from '@/app/sign-in/page';
 
 export default async function HomePage() {
   const { userId } = await auth();
@@ -31,7 +31,7 @@ export default async function HomePage() {
               />
             </div>
             <div className='flex justify-center w-1/2'>
-              <SignInPage />
+              <SignIn forceRedirectUrl='/dashboard' />
             </div>
           </div>
         )}
