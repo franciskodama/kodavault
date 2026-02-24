@@ -12,6 +12,7 @@ import { addAsset } from '@/lib/actions';
 import { category_enum_6c7fcd47 } from '@prisma/client';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 import {
   altcoinsCategories,
@@ -163,34 +164,36 @@ export function AddAssetForm() {
 
         {assetSubtype && (
           <div className='flex flex-col'>
-            {assetSymbol && fixedSymbolsArr.includes(assetSymbol) ? null : (
-              <div className={classDiv}>
-                <label className={classTitle} htmlFor='asset'>
-                  Asset
+            <div className='flex gap-4 w-full'>
+              {assetSymbol && fixedSymbolsArr.includes(assetSymbol) ? null : (
+                <div className={cn(classDiv, 'flex-1')}>
+                  <label className={classTitle} htmlFor='asset'>
+                    Asset
+                  </label>
+                  <input
+                    className={classInput}
+                    placeholder='Asset Symbol'
+                    {...register('asset', { required: "Asset can't be empty" })}
+                  />
+                  {errors.asset?.message && (
+                    <p className={classError}>{errors.asset.message}</p>
+                  )}
+                </div>
+              )}
+
+              <div className={cn(classDiv, 'flex-1')}>
+                <label className={classTitle} htmlFor='qty'>
+                  Quantity
                 </label>
                 <input
                   className={classInput}
-                  placeholder='Asset Symbol'
-                  {...register('asset', { required: "Asset can't be empty" })}
+                  placeholder='Quantity'
+                  {...register('qty', { required: "Quantity can't be empty" })}
                 />
-                {errors.asset?.message && (
-                  <p className={classError}>{errors.asset.message}</p>
+                {errors.qty?.message && (
+                  <p className={classError}>{errors.qty.message}</p>
                 )}
               </div>
-            )}
-
-            <div className={classDiv}>
-              <label className={classTitle} htmlFor='qty'>
-                Quantity
-              </label>
-              <input
-                className={classInput}
-                placeholder='Quantity'
-                {...register('qty', { required: "Quantity can't be empty" })}
-              />
-              {errors.qty?.message && (
-                <p className={classError}>{errors.qty.message}</p>
-              )}
             </div>
 
             <div className={classDiv}>

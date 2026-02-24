@@ -11,6 +11,7 @@ import { SheetClose } from '@/components/ui/sheet';
 import { useToast } from '@/components/ui/use-toast';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 import {
   getAccounts,
@@ -124,32 +125,34 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
         </div>
 
         <div className='flex flex-col'>
-          <div className={classDiv}>
-            <label className={classTitle} htmlFor='asset'>
-              Asset
-            </label>
-            <input
-              className={classInput}
-              placeholder='Asset Symbol'
-              {...register('asset', { required: "Asset can't be empty" })}
-            />
-            {errors.asset?.message && (
-              <p className={classError}>{errors.asset.message}</p>
-            )}
-          </div>
+          <div className='flex gap-4 w-full'>
+            <div className={cn(classDiv, 'flex-1')}>
+              <label className={classTitle} htmlFor='asset'>
+                Asset
+              </label>
+              <input
+                className={classInput}
+                placeholder='Asset Symbol'
+                {...register('asset', { required: "Asset can't be empty" })}
+              />
+              {errors.asset?.message && (
+                <p className={classError}>{errors.asset.message}</p>
+              )}
+            </div>
 
-          <div className={classDiv}>
-            <label className={classTitle} htmlFor='qty'>
-              Quantity
-            </label>
-            <input
-              className={classInput}
-              placeholder='Quantity'
-              {...register('qty', { required: "Quantity can't be empty" })}
-            />
-            {errors.qty?.message && (
-              <p className={classError}>{errors.qty.message}</p>
-            )}
+            <div className={cn(classDiv, 'flex-1')}>
+              <label className={classTitle} htmlFor='qty'>
+                Quantity
+              </label>
+              <input
+                className={classInput}
+                placeholder='Quantity'
+                {...register('qty', { required: "Quantity can't be empty" })}
+              />
+              {errors.qty?.message && (
+                <p className={classError}>{errors.qty.message}</p>
+              )}
+            </div>
           </div>
 
           <div className={classDiv}>
@@ -220,7 +223,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
                 {...register('tag')}
               />
               <Button
-                className='mt-2'
+                className='mt-2 h-9 border-2'
                 type='button'
                 variant='outline'
                 onClick={() => setValue('tag', '')}
