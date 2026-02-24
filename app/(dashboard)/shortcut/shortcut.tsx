@@ -28,7 +28,7 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
             image={'/dylan-severance.webp'}
             objectPosition={'50% 10%'}
             alt={'Superman looking something'}
-            title={'🤷🏻‍♂️ No shortcuts saved yet!'}
+            title={'No shortcuts saved yet!'}
             subtitle={
               'Start adding your favorite links and soon this space will be your go-to treasure chest of wisdom!'
             }
@@ -56,6 +56,10 @@ export const allCategories = [
   'Video',
   'Friend',
 ];
+
+export const categoryDisplayMap: Record<string, string> = {
+  Friend: 'For Friends',
+};
 
 export const allColors = [
   'Blue',

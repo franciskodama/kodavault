@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BellRing, Check, ChevronsUpDown, XIcon } from 'lucide-react';
+import { BellRing, Check, Ghost, ChevronsUpDown, XIcon } from 'lucide-react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -239,7 +239,8 @@ export function DataTable<TData, TValue>({
           image={'/superman-where.webp'}
           objectPosition={'50% 10%'}
           alt={'Looking for something'}
-          title={'Oops! Asset Not Found 👻'}
+          title={'Oops! Asset Not Found'}
+          icon={Ghost}
           subtitle={'Looks like this asset is hiding from us.'}
           buttonCopy={'Add it Now!'}
           formTitle={'Add a new Asset'}
@@ -547,37 +548,6 @@ export function DataTable<TData, TValue>({
               </div>
             </div>
           </div>
-
-          {stocksNoTotal?.length > 0 && !openNotification ? (
-            <>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <MotionButton
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      size='md'
-                      variant={'outline'}
-                      className='h-10 ml-4 border-2 border-slate-500 rounded-full'
-                      onClick={() => setOpenNotification(true)}
-                    >
-                      <BellRing className='h-4 w-4' />
-                    </MotionButton>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <div className='flex items-center'>
-                      <p className='text-primary ml-2'>
-                        You have 1 notification
-                      </p>
-                      <p className='text-xs ml-2 text-slate-300'>See details</p>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </>
-          ) : (
-            <div />
-          )}
         </div>
 
         <AnimatePresence>
@@ -662,6 +632,34 @@ export function DataTable<TData, TValue>({
               </Tooltip>
             </TooltipProvider>
           )}
+          {stocksNoTotal?.length > 0 && !openNotification && (
+            <div className='ml-auto pr-8'>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <MotionButton
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      size='md'
+                      variant={'outline'}
+                      className='h-10 border-2 border-slate-500 rounded-lg'
+                      onClick={() => setOpenNotification(true)}
+                    >
+                      <BellRing className='h-4 w-4' />
+                    </MotionButton>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <div className='flex items-center'>
+                      <p className='text-primary ml-2'>
+                        You have 1 notification
+                      </p>
+                      <p className='text-xs ml-2 text-slate-300'>See details</p>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          )}
         </div>
 
         {table.getRowModel().rows?.length ? (
@@ -722,7 +720,7 @@ export function DataTable<TData, TValue>({
           </Table>
         ) : (
           <div className='flex flex-col gap-2 w-full items-center py-24 text-base'>
-            <p className='text-5xl'>👻</p>
+            <Ghost size={48} strokeWidth={1.4} />
             <p className='text-2xl font-semibold mb-6'>Oops! Asset Not Found</p>
             <p>We couldn’t find any asset matching that name or symbol.</p>
             <p>

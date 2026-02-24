@@ -2,13 +2,16 @@
 
 import { useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Asset, Inputs } from '@/lib/types';
 import { updateAsset } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { SheetClose } from '@/components/ui/sheet';
 import { useToast } from '@/components/ui/use-toast';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 import {
   getAccounts,
@@ -44,6 +47,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
     handleSubmit,
     reset,
     setValue,
+    control,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
@@ -60,6 +64,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       purpose: asset?.purpose,
       category: asset?.category,
       tag: asset?.tag,
+      reviewed: asset?.reviewed,
     },
   });
 
@@ -120,32 +125,34 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
         </div>
 
         <div className='flex flex-col'>
-          <div className={classDiv}>
-            <label className={classTitle} htmlFor='asset'>
-              Asset
-            </label>
-            <input
-              className={classInput}
-              placeholder='Asset Symbol'
-              {...register('asset', { required: "Asset can't be empty" })}
-            />
-            {errors.asset?.message && (
-              <p className={classError}>{errors.asset.message}</p>
-            )}
-          </div>
+          <div className='flex gap-4 w-full'>
+            <div className={cn(classDiv, 'flex-1')}>
+              <label className={classTitle} htmlFor='asset'>
+                Asset
+              </label>
+              <input
+                className={classInput}
+                placeholder='Asset Symbol'
+                {...register('asset', { required: "Asset can't be empty" })}
+              />
+              {errors.asset?.message && (
+                <p className={classError}>{errors.asset.message}</p>
+              )}
+            </div>
 
-          <div className={classDiv}>
-            <label className={classTitle} htmlFor='qty'>
-              Quantity
-            </label>
-            <input
-              className={classInput}
-              placeholder='Quantity'
-              {...register('qty', { required: "Quantity can't be empty" })}
-            />
-            {errors.qty?.message && (
-              <p className={classError}>{errors.qty.message}</p>
-            )}
+            <div className={cn(classDiv, 'flex-1')}>
+              <label className={classTitle} htmlFor='qty'>
+                Quantity
+              </label>
+              <input
+                className={classInput}
+                placeholder='Quantity'
+                {...register('qty', { required: "Quantity can't be empty" })}
+              />
+              {errors.qty?.message && (
+                <p className={classError}>{errors.qty.message}</p>
+              )}
+            </div>
           </div>
 
           <div className={classDiv}>
@@ -216,7 +223,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
                 {...register('tag')}
               />
               <Button
-                className='mt-2'
+                className='mt-2 h-9 border-2'
                 type='button'
                 variant='outline'
                 onClick={() => setValue('tag', '')}
@@ -267,31 +274,23 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
             </div>
           )}
 
-          {/* 
-          We don't need this for now (until we don't pay for an API to get the data
-          Today we get in from Google Sheet - Google Finance formula)
-
-          {assetExchange[0] !== 'N/A' && (
-            <div className={classDiv}>
-              <h3 className={classTitle}>Exchange</h3>
-              <ul className={classUl}>
-                {assetExchange.map((exchangeOption) => (
-                  <li key={exchangeOption}>
-                    <input
-                      className='hidden peer'
-                      type='radio'
-                      value={exchangeOption}
-                      id={exchangeOption}
-                      {...register('exchange')}
-                    />
-                    <label className={classLabelRadio} htmlFor={exchangeOption}>
-                      <span>{exchangeOption}</span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )} */}
+          <div className='flex items-center gap-2 mt-4 p-2'>
+            <Controller
+              name='reviewed'
+              control={control}
+              render={({ field }) => (
+                <Checkbox
+                  id='reviewed'
+                  className='h-6 w-6 border-slate-300 transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              )}
+            />
+            <Label htmlFor='reviewed' className='font-bold'>
+              Mark as Reviewed
+            </Label>
+          </div>
 
           <Button className='mt-8' type='submit'>
             Update Asset

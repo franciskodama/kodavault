@@ -70,20 +70,30 @@ export default function CalendarPage() {
 
   return (
     <div className='flex flex-col gap-1 px-8 sm:p-0 min-h-[75vh]'>
-      <div className='flex flex-col sm:flex-row justify-between items-center mb-4'>
-        <div className='flex items-center gap-2'>
-          <span className='text-3xl'>📅</span>
-          <h1 className='text-xl font-bold ml-2 uppercase tracking-tighter'>
-            Economic Calendar
-          </h1>
+      <div className='flex flex-col sm:flex-row justify-between items-end mb-10 px-4 sm:px-0'>
+        <div className='flex flex-col items-center justify-center w-full mt-12'>
+          <div className='flex flex-col'>
+            <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
+              Market Hub
+            </p>
+            <h1 className='text-3xl font-bold text-slate-900 tracking-tight leading-none'>
+              Economic Calendar
+            </h1>
+            <div className='w-12 h-1.5 bg-[#22C55E] rounded-full mt-6 shadow-sm shadow-green-100' />
+          </div>
         </div>
 
-        <div className='flex items-center gap-4 mt-4 sm:mt-0'>
-          <div className='flex p-0.5 bg-white rounded-xl border shadow-sm'>
+        <div className='flex items-center justify-center gap-4 mt-12 mb-8'>
+          <div className='flex p-1 bg-slate-100/50 backdrop-blur-sm rounded-xl border border-slate-200/60 shadow-sm'>
             <Button
               variant={filter === 'high_impact' ? 'default' : 'ghost'}
               size='sm'
-              className='text-[10px] h-6 font-bold'
+              className={cn(
+                'text-[10px] h-8 px-4 font-bold tracking-wider transition-all duration-300 rounded-lg',
+                filter === 'high_impact'
+                  ? 'bg-slate-900 text-white shadow-md'
+                  : 'text-slate-500 hover:text-slate-900'
+              )}
               onClick={() => setFilter('high_impact')}
             >
               HIGH IMPACT
@@ -91,14 +101,19 @@ export default function CalendarPage() {
             <Button
               variant={filter === 'all' ? 'default' : 'ghost'}
               size='sm'
-              className='text-[10px] h-6 font-bold'
+              className={cn(
+                'text-[10px] h-8 px-4 font-bold tracking-wider transition-all duration-300 rounded-lg',
+                filter === 'all'
+                  ? 'bg-slate-900 text-white shadow-md'
+                  : 'text-slate-500 hover:text-slate-900'
+              )}
               onClick={() => setFilter('all')}
             >
               ALL RELEASES
             </Button>
           </div>
-          <p className='hidden sm:block text-[10px] text-slate-400 uppercase font-bold tracking-widest'>
-            FREE FEED (EST)
+          <p className='text-[10px] text-slate-400 uppercase font-bold tracking-[0.2em]'>
+            (EST)
           </p>
         </div>
       </div>
@@ -127,38 +142,36 @@ export default function CalendarPage() {
                   {dateWithDayFormatter(date)}
                 </CardTitle>
                 {isThisWeek(date) && (
-                  <span className='text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-xl font-bold'>
+                  <span className='text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-lg font-bold'>
                     THIS WEEK
                   </span>
                 )}
               </CardHeader>
-              <CardContent className='p-0'>
-                <table className='w-full text-left font-light'>
-                  <thead className='bg-slate-50/50 border-b'>
-                    <tr className='text-[9px] uppercase font-bold text-slate-400'>
-                      <th className='px-4 py-2 w-24'>Time</th>
-                      <th className='px-4 py-2'>Event</th>
-                      <th className='px-4 py-2 text-right'>Actual</th>
-                      <th className='px-4 py-2 text-right'>Forecast</th>
-                      <th className='px-4 py-2 text-right'>Previous</th>
-                    </tr>
-                  </thead>
-                  <tbody className='divide-y'>
+              <CardContent className='p-0 overflow-x-auto'>
+                <div className='min-w-[600px]'>
+                  <div className='grid grid-cols-[100px_1fr_90px_90px_90px] bg-slate-50/80 border-b text-[10px] uppercase font-bold text-slate-400 tracking-wider'>
+                    <div className='px-6 py-3'>Time</div>
+                    <div className='px-6 py-3'>Event</div>
+                    <div className='px-6 py-3 text-right'>Actual</div>
+                    <div className='px-6 py-3 text-right'>Forecast</div>
+                    <div className='px-6 py-3 text-right'>Previous</div>
+                  </div>
+                  <div className='divide-y divide-slate-100 flex flex-col'>
                     {groupedData[date].map((release, idx) => {
                       return (
-                        <tr
+                        <div
                           key={`${release.title}-${idx}`}
-                          className='hover:bg-slate-50/50 transition-colors'
+                          className='grid grid-cols-[100px_1fr_90px_90px_90px] hover:bg-slate-50/50 transition-colors items-center'
                         >
-                          <td className='px-4 py-2 text-[10px] font-bold text-slate-400 w-24'>
+                          <div className='px-6 py-4 text-[11px] font-bold text-slate-400 tracking-tight'>
                             {release.time || 'All Day'}
-                          </td>
-                          <td className='px-4 py-2 font-semibold text-xs'>
+                          </div>
+                          <div className='px-6 py-4 font-bold text-sm text-slate-800'>
                             {release.title}
-                          </td>
-                          <td
+                          </div>
+                          <div
                             className={cn(
-                              'px-4 py-2 text-right font-bold text-xs',
+                              'px-6 py-4 text-right font-bold text-sm',
                               release.actual && release.forecast
                                 ? parseFloat(release.actual) >=
                                   parseFloat(release.forecast)
@@ -168,18 +181,18 @@ export default function CalendarPage() {
                             )}
                           >
                             {release.actual || '-'}
-                          </td>
-                          <td className='px-4 py-2 text-right text-xs text-slate-500 font-medium'>
+                          </div>
+                          <div className='px-6 py-4 text-right text-sm text-slate-500 font-bold'>
                             {release.forecast || '-'}
-                          </td>
-                          <td className='px-4 py-2 text-right text-xs text-slate-500 font-medium'>
+                          </div>
+                          <div className='px-6 py-4 text-right text-sm text-slate-400/80 font-semibold'>
                             {release.previous || '-'}
-                          </td>
-                        </tr>
+                          </div>
+                        </div>
                       );
                     })}
-                  </tbody>
-                </table>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ))}

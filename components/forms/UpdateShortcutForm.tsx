@@ -12,6 +12,7 @@ import { SheetClose } from '@/components/ui/sheet';
 import { useToast } from '@/components/ui/use-toast';
 import {
   allCategories,
+  categoryDisplayMap,
   allColors,
   getColor,
 } from '@/app/(dashboard)/shortcut/shortcut';
@@ -42,13 +43,13 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
     },
   });
 
-  const classInput = 'border border-slate-200 h-10 p-2 rounded-xl w-full mt-2';
+  const classInput =
+    'border border-slate-200 h-10 p-2 rounded-xl w-full mt-2 text-sm';
   const classDiv = 'my-4';
   const classUl = 'grid grid-cols-3 gap-2';
   const classTitle = 'font-bold mb-2';
-  // const classError = 'text-red-500 font-bold my-2';
   const classLabelRadio =
-    'capitalize inline-flex items-center justify-center py-1 w-full h-[2.5em] border-2 rounded-xl cursor-pointer text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100';
+    'capitalize inline-flex items-center justify-center py-1 w-full h-[2.5em] border-2 rounded-xl cursor-pointer text-sm text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
     if (!uid) {
@@ -142,7 +143,9 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
                     {...register('category')}
                   />
                   <label className={classLabelRadio} htmlFor={categoriesKey}>
-                    <span>{categoriesKey}</span>
+                    <span>
+                      {categoryDisplayMap[categoriesKey] || categoriesKey}
+                    </span>
                   </label>
                 </li>
               ))}
@@ -161,7 +164,7 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
                     id={color}
                     {...register('color')}
                   />
-                  <div className='capitalize inline-flex items-center pl-4 py-1 w-full h-[2.5em] border-2 rounded-xl cursor-pointer text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100'>
+                  <div className='capitalize inline-flex items-center pl-4 py-1 w-full h-[2.5em] border-2 rounded-xl cursor-pointer text-sm text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100'>
                     <div
                       className={`${getColor(
                         color

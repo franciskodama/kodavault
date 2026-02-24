@@ -24,6 +24,7 @@ import { cn } from '@/lib/utils';
 import {
   allCategories,
   allColors,
+  categoryDisplayMap,
   getColor,
 } from '@/app/(dashboard)/shortcut/shortcut';
 import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
@@ -55,7 +56,7 @@ export function AddShortcutForm() {
   } = useForm<ShortcutType>({});
 
   const classLi = 'flex flex-col w-full sm:w-auto';
-  const classInput = 'border border-slate-200 h-10 p-2 rounded-xl';
+  const classInput = 'border border-slate-200 h-10 p-2 rounded-xl text-sm';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
     if (!uid) {
@@ -95,7 +96,7 @@ export function AddShortcutForm() {
   allCategories.map((category: string) => {
     const categoryObj = {
       value: category,
-      label: category,
+      label: categoryDisplayMap[category] || category,
     };
     categories.push(categoryObj);
   });
@@ -164,7 +165,7 @@ export function AddShortcutForm() {
                   className='w-full sm:w-[150px] justify-between'
                 >
                   {valueCategory ? (
-                    <span className='text-xs font-normal opacity-60 capitalize'>
+                    <span className='text-sm font-bold text-slate-700 capitalize'>
                       {
                         categories.find(
                           (category: comboOptions) =>
@@ -173,7 +174,7 @@ export function AddShortcutForm() {
                       }
                     </span>
                   ) : (
-                    <span className='text-xs font-normal opacity-60'>
+                    <span className='text-sm font-medium text-slate-400'>
                       Category
                     </span>
                   )}
@@ -203,7 +204,7 @@ export function AddShortcutForm() {
                                 : 'opacity-0'
                             )}
                           />
-                          <span className='text-xs capitalize'>
+                          <span className='text-sm font-medium capitalize'>
                             {category.label}
                           </span>
                         </CommandItem>
@@ -232,7 +233,7 @@ export function AddShortcutForm() {
                         } flex items-center justify-center w-4 h-4 rounded-full mr-2`}
                       />
 
-                      <span className='text-xs font-normal opacity-60 capitalize'>
+                      <span className='text-sm font-bold text-slate-700 capitalize'>
                         {
                           colors.find(
                             (color: comboOptions) => color.value === valueColor
@@ -241,7 +242,7 @@ export function AddShortcutForm() {
                       </span>
                     </>
                   ) : (
-                    <span className='text-xs text-slate-800 font-normal opacity-60'>
+                    <span className='text-sm font-medium text-slate-400'>
                       Color
                     </span>
                   )}
@@ -262,7 +263,7 @@ export function AddShortcutForm() {
                             );
                             setOpenColor(false);
                           }}
-                          className='flex w-full text-xs'
+                          className='flex w-full text-sm'
                         >
                           <div
                             className={`${getColor(

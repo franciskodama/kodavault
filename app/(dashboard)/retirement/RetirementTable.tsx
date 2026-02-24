@@ -160,54 +160,45 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
 
   return (
     <div className='w-full max-w-6xl mx-auto space-y-6'>
-      <div className='flex flex-col md:flex-row gap-4 justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-slate-100'>
-        <div className='flex items-center gap-4 flex-1 w-full'>
-          <div className='relative flex-1 md:max-w-96'>
-            <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400' />
-            <Input
-              placeholder='Search country...'
-              className='pl-10 h-10 bg-slate-50 border-none'
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
+      <div className='flex flex-col md:flex-row gap-1 justify-between items-center border border-slate-200 px-8 py-4 rounded-t-sm bg-white'>
+        <div className='flex flex-col sm:flex-row items-center gap-1 flex-1 w-full'>
+          <Input
+            placeholder='Search country...'
+            className='max-w-sm w-[20ch] h-10'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
 
           <button
             onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
             className={cn(
-              'h-10 px-4 rounded-lg flex items-center gap-2 font-semibold uppercase tracking-tighter transition-all text-xs border-2',
-              showFavoritesOnly
-                ? 'bg-yellow-50 border-yellow-200 text-yellow-600 shadow-inner'
-                : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'
+              'sm:ml-4 h-10 px-4 rounded-md flex items-center justify-between gap-2 text-sm font-normal text-slate-500 border border-slate-200 bg-white hover:bg-slate-50 transition-all w-[22ch]',
+              showFavoritesOnly &&
+                'border-yellow-200 bg-yellow-50/50 text-yellow-600'
             )}
           >
-            <Star
-              className={cn(
-                'w-4 h-4',
-                showFavoritesOnly ? 'fill-yellow-400 text-yellow-500' : ''
-              )}
-            />
-            Favorites ({favorites.length})
+            <div className='flex items-center gap-2'>
+              <Star
+                className={cn(
+                  'w-4 h-4',
+                  showFavoritesOnly
+                    ? 'fill-yellow-400 text-yellow-500'
+                    : 'text-slate-400 opacity-50'
+                )}
+              />
+              <span>Favorites</span>
+            </div>
+            <span className='text-[10px] font-bold opacity-60'>
+              ({favorites.length})
+            </span>
           </button>
-        </div>
 
-        <div className='flex items-center gap-4 w-full md:w-auto text-xs'>
-          <div className='bg-slate-50 px-4 py-2 rounded-lg border border-slate-100 flex items-center gap-3'>
-            <span className='font-bold text-slate-400 uppercase tracking-tighter'>
-              Current Vault:
-            </span>
-            <span className='font-semibold text-slate-900'>
-              {currencyFormatter(netWorthTotal)}
-            </span>
-          </div>
-
-          <div className='flex items-center gap-2 text-sm font-bold text-slate-500 uppercase tracking-tighter ml-4'>
-            <Filter className='w-4 h-4' />
-            Continent:
-          </div>
           <Select value={continentFilter} onValueChange={setContinentFilter}>
-            <SelectTrigger className='w-[200px] h-10 bg-slate-50 border-none font-bold uppercase tracking-tighter'>
-              <SelectValue placeholder='All Continents' />
+            <SelectTrigger className='sm:ml-4 w-[22ch] h-10 border border-slate-200 bg-white font-normal text-slate-500 justify-between capitalize text-sm'>
+              <div className='flex items-center gap-2'>
+                <Filter className='w-4 h-4 opacity-50' />
+                <SelectValue placeholder='Continent' />
+              </div>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value='all'>All Continents</SelectItem>
@@ -218,6 +209,17 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
               ))}
             </SelectContent>
           </Select>
+
+          {netWorthTotal > 0 && (
+            <div className='hidden lg:flex items-center h-10 font-normal ml-4 px-4 bg-accent rounded-xl text-left'>
+              <div className='flex items-center gap-2 font-semibold text-sm'>
+                <p className='text-[10px] uppercase tracking-widest text-slate-400'>
+                  Vault:
+                </p>
+                {currencyFormatter(netWorthTotal)}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -226,30 +228,30 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
           <Table>
             <TableHeader className='bg-slate-50'>
               <TableRow className='hover:bg-transparent border-b-2'>
-                <TableHead className='w-[60px] font-semibold uppercase tracking-tighter pl-6'>
+                <TableHead className='w-[60px] font-bold uppercase tracking-[0.2em] text-[10px] text-slate-400 pl-6'>
                   #
                 </TableHead>
                 <TableHead className='w-[50px] p-0'></TableHead>
                 <TableHead
-                  className='cursor-pointer font-semibold uppercase tracking-tighter text-slate-900 group whitespace-nowrap'
+                  className='cursor-pointer font-bold uppercase tracking-[0.2em] text-[10px] text-slate-500 group whitespace-nowrap'
                   onClick={() => handleSort('country')}
                 >
                   <div className='flex items-center gap-2'>
                     Country
-                    <ArrowUpDown className='w-4 h-4 transition-colors group-hover:text-accent' />
+                    <ArrowUpDown className='w-3 h-3 transition-colors group-hover:text-primary' />
                   </div>
                 </TableHead>
                 <TableHead
-                  className='cursor-pointer font-semibold uppercase tracking-tighter text-slate-900 group'
+                  className='cursor-pointer font-bold uppercase tracking-[0.2em] text-[10px] text-slate-500 group'
                   onClick={() => handleSort('continent')}
                 >
                   <div className='flex items-center gap-2'>
                     Continent
-                    <ArrowUpDown className='w-4 h-4 transition-colors group-hover:text-accent' />
+                    <ArrowUpDown className='w-3 h-3 transition-colors group-hover:text-primary' />
                   </div>
                 </TableHead>
                 <TableHead
-                  className='text-right cursor-pointer font-semibold uppercase tracking-tighter text-slate-900 group'
+                  className='text-right cursor-pointer font-bold uppercase tracking-[0.2em] text-[10px] text-slate-500 group'
                   onClick={() => handleSort('updatedCost')}
                 >
                   <div className='flex items-center justify-end gap-2'>
@@ -275,12 +277,12 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
                   </div>
                 </TableHead>
                 <TableHead
-                  className='text-right cursor-pointer font-semibold uppercase tracking-tighter text-slate-900 group pr-6'
+                  className='text-right cursor-pointer font-bold uppercase tracking-[0.2em] text-[10px] text-slate-500 group pr-6'
                   onClick={() => handleSort('protection')}
                 >
                   <div className='flex items-center justify-end gap-2'>
                     Protection Level
-                    <ArrowUpDown className='w-4 h-4 transition-colors group-hover:text-accent' />
+                    <ArrowUpDown className='w-3 h-3 transition-colors group-hover:text-primary' />
                   </div>
                 </TableHead>
               </TableRow>
@@ -299,7 +301,7 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
                       isFavorite && 'bg-yellow-50/20'
                     )}
                   >
-                    <TableCell className='font-bold text-slate-400 text-xs pl-6'>
+                    <TableCell className='font-bold text-slate-400 text-[11px] pl-6'>
                       {index + 1}
                     </TableCell>
                     <TableCell className='p-0'>
@@ -317,12 +319,12 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
                         />
                       </button>
                     </TableCell>
-                    <TableCell className='font-semibold text-sm uppercase whitespace-nowrap text-slate-800 border-r border-slate-50'>
-                      <div className='flex items-center gap-3'>
-                        <span className='text-3xl filter drop-shadow-sm select-none grayscale-[0.2] transition-all group-hover:grayscale-0'>
+                    <TableCell className='font-bold text-sm uppercase whitespace-nowrap text-slate-800 border-r border-slate-50'>
+                      <div className='flex items-center gap-4'>
+                        <span className='text-3xl filter drop-shadow-sm select-none transition-all group-hover:scale-110 duration-300'>
                           {item.flag}
                         </span>
-                        <span className='tracking-tighter'>{item.country}</span>
+                        <span className='tracking-tight'>{item.country}</span>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -342,7 +344,7 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
                       <div className='flex flex-col items-end'>
                         <span
                           className={cn(
-                            'text-sm font-semibold tracking-tighter',
+                            'text-sm font-bold tracking-tight',
                             item.updatedCost > 500000
                               ? 'text-red-500'
                               : item.updatedCost < 250000
@@ -352,7 +354,7 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
                         >
                           {currencyFormatter(item.updatedCost)}
                         </span>
-                        <span className='text-[9px] font-bold text-slate-400 uppercase tracking-tighter'>
+                        <span className='text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em]'>
                           (Was {currencyFormatter(item.cost)})
                         </span>
                       </div>
@@ -409,19 +411,19 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
       </div>
 
       <div className='bg-slate-50 border border-slate-100 rounded-xl p-6 mt-8'>
-        <h3 className='text-xs font-semibold uppercase tracking-widest text-[#bd554c] mb-3 flex items-center gap-2'>
-          <div className='w-4 h-[2px] bg-[#bd554c]' />
+        <h3 className='text-[10px] font-bold uppercase tracking-[0.2em] text-[#bd554c] mb-4 flex items-center gap-3'>
+          <div className='w-6 h-[2px] bg-[#bd554c] rounded-full' />
           Methodology & Inflation Update
         </h3>
-        <p className='text-[10px] leading-relaxed text-slate-500 font-bold uppercase tracking-tight text-justify'>
+        <p className='text-sm leading-relaxed text-slate-600 font-medium tracking-tight text-justify'>
           We calculated the cost for an American to comfortably retire in every
           country between the average age of retirement (61 years) and life
           expectancy (76.15 years) using Numbeo&apos;s cost of living data.
-          <span className='block mt-2 text-slate-600 italic'>
+          <span className='block mt-3 text-slate-500 italic text-xs'>
             Note: The original study was released in 2022. To provide accurate
             modern estimates, we have applied a cumulative US Inflation
             multiplier of
-            <span className='text-[#bd554c] font-semibold'>
+            <span className='text-[#bd554c] font-bold not-italic'>
               {' '}
               {((inflationMultiplier - 1) * 100).toFixed(1)}%{' '}
             </span>

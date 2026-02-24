@@ -233,19 +233,35 @@ export const ClearReviewedButton: React.FC = () => {
           Reviews ({reviewedAssets.length})
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className='rounded-2xl border border-slate-100 shadow-2xl max-w-[400px] p-8'>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This will remove all {reviewedAssets.length} review marks from your
-            assets. This action cannot be undone.
+          <div className='flex flex-col items-center justify-center mb-6'>
+            <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
+              Action Required
+            </p>
+            <AlertDialogTitle className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
+              Clear All Reviews?
+            </AlertDialogTitle>
+            <div className='w-8 h-1 bg-[#22C55E] rounded-full mt-4' />
+          </div>
+
+          <AlertDialogDescription className='text-sm text-center text-slate-500 font-medium mb-6 py-4'>
+            This will remove all{' '}
+            <span className='font-bold text-slate-700'>
+              {reviewedAssets.length}
+            </span>{' '}
+            review marks from your assets.
+            <br />
+            This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogFooter className='flex gap-3 sm:justify-center mt-6'>
+          <AlertDialogCancel className='rounded-lg flex-1 border-slate-200 text-slate-500 font-bold hover:bg-slate-50 transition-all'>
+            Cancel
+          </AlertDialogCancel>
           <AlertDialogAction
             onClick={clearAllReviewed}
-            className='bg-red-600 hover:bg-red-700'
+            className='rounded-lg flex-1 font-bold bg-red-500 hover:bg-red-600 transition-all shadow-md shadow-red-100'
           >
             Clear All
           </AlertDialogAction>
@@ -274,8 +290,8 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
       await refreshAssets();
       removeReviewedAsset(id);
       toast({
-        title: 'Asset gone! 💀',
-        description: `The Asset ${asset?.asset} has been successfully deleted from ${asset?.wallet}.`,
+        title: 'Asset removed',
+        description: `The asset ${asset?.asset} has been deleted from ${asset?.wallet}.`,
         variant: 'dark',
       });
     } catch (error) {
@@ -293,7 +309,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
       {asset && (
         <div className='flex items-center text-xl'>
           <Checkbox
-            className='w-[30px] h-[30px] border border-slate-300 rounded-md transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
+            className='h-8 w-8 border border-slate-200 transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
             checked={isAssetReviewed(asset.id)}
             onCheckedChange={(checked) =>
               handleReviewToggle(checked as boolean, asset.id)
@@ -317,69 +333,85 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
             <AlertDialogTrigger className='ml-4 h-8 w-8 border border-slate-200 bg-white rounded-xl hover:bg-slate-50 hover:border-red-200 text-slate-400 hover:text-red-500 transition-all flex items-center justify-center shadow-sm'>
               <Trash2 size={14} />
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className='rounded-2xl border border-slate-100 shadow-2xl max-w-[400px] p-8'>
               <AlertDialogHeader>
-                <AlertDialogTitle asChild className='text-center text-2xl my-4'>
-                  <div>
-                    Are you fucking sure?
-                    <br />
-                    <div className='w-[450px] mt-8 mx-auto'>
-                      <AspectRatio ratio={16 / 16} className='bg-white'>
-                        <Image
-                          src='/are-you-sure.gif'
-                          alt='Britney in doubt'
-                          fill
-                          className='object-cover rounded-full border-[8px] border-primary'
-                          objectPosition='center 25%'
-                        />
-                      </AspectRatio>
-                    </div>
-                  </div>
-                </AlertDialogTitle>
-                <AlertDialogDescription asChild>
-                  <div className='flex flex-col text-base text-center text-slate-600 mb-4 gap-4'>
-                    You are about to delete the Asset below:
-                    <div className='flex py-4 px-16 justify-between border-[6px] border-primary text-base text-primary'>
-                      <div className='flex flex-col'>
-                        <div className='text-sm'>Asset:</div>
-                        <div className='font-bold'>{asset.asset}</div>
-                      </div>
-                      <div className='flex flex-col'>
-                        <div className='text-sm'> Wallet:</div>
-                        <div className='font-bold'>{asset.wallet}</div>
-                      </div>
-                      <div className='flex flex-col'>
-                        <div className='text-sm'> Qty:</div>
-                        <div className='font-bold'>{asset.qty}</div>
-                      </div>
-                    </div>
-                    <span className='text-primary text-center my-4 font-bold text-base'>
-                      This is the point of no return. <br />
-                      Once done, there is no going back! 💣
+                <div className='flex flex-col items-center justify-center mb-6'>
+                  <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
+                    Action Required
+                  </p>
+                  <AlertDialogTitle className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
+                    Delete Asset?
+                  </AlertDialogTitle>
+                  <div className='w-8 h-1 bg-[#22C55E] rounded-full mt-4' />
+                </div>
+
+                <div className='w-48 h-48 mx-auto mb-6'>
+                  <AspectRatio ratio={1 / 1}>
+                    <Image
+                      src='/are-you-sure.gif'
+                      alt='Asset doubt'
+                      fill
+                      className='object-cover rounded-full border-2 border-slate-100 shadow-sm'
+                    />
+                  </AspectRatio>
+                </div>
+
+                <AlertDialogDescription className='text-sm text-center text-slate-500 font-medium mb-6 py-6'>
+                  You are about to permanently remove
+                  <br />
+                  this asset from your portfolio.
+                </AlertDialogDescription>
+
+                <div className='flex flex-col gap-3 p-4 bg-slate-50/50 border border-slate-100 rounded-xl'>
+                  <div className='flex flex-col'>
+                    <h3 className='text-[9px] uppercase font-bold text-slate-400 tracking-widest leading-none mb-2'>
+                      Asset
+                    </h3>
+                    <span className='font-bold text-slate-700 text-sm'>
+                      {asset.asset}
                     </span>
                   </div>
-                </AlertDialogDescription>
+                  <div className='flex justify-between'>
+                    <div className='flex flex-col'>
+                      <h3 className='text-[9px] uppercase font-bold text-slate-400 tracking-widest leading-none mb-2'>
+                        Wallet
+                      </h3>
+                      <span className='font-semibold text-slate-500 text-xs'>
+                        {asset.wallet}
+                      </span>
+                    </div>
+                    <div className='flex flex-col text-right'>
+                      <h3 className='text-[9px] uppercase font-bold text-slate-400 tracking-widest leading-none mb-2'>
+                        Quantity
+                      </h3>
+                      <span className='font-semibold text-slate-500 text-xs'>
+                        {asset.qty}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </AlertDialogHeader>
-              <AlertDialogFooter>
+              <AlertDialogFooter className='flex gap-3 sm:justify-center mt-6'>
                 <AlertDialogCancel
+                  className='rounded-lg flex-1 border-slate-200 text-slate-500 font-bold hover:bg-slate-50 transition-all'
                   onClick={() => {
                     toast({
-                      title: 'Operation Cancelled! ❌',
-                      description: `Phew! 😮‍💨 Crisis averted. You successfully cancelled the operation.`,
-                      variant: 'destructive',
+                      title: 'Operation Cancelled!',
+                      description: `Phew! Crisis averted.`,
                     });
                   }}
                 >
-                  Cancel
+                  Keep it
                 </AlertDialogCancel>
                 <AlertDialogAction
+                  className='rounded-lg flex-1 font-bold bg-red-500 hover:bg-red-600 transition-all shadow-md shadow-red-100'
                   onClick={() => {
                     if (asset) {
                       handleDeleteAsset(asset.id);
                     }
                   }}
                 >
-                  Continue
+                  Delete
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

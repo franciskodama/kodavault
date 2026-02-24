@@ -28,8 +28,21 @@ import { toast } from '@/components/ui/use-toast';
 import { UpdateShortcutForm } from '@/components/forms/UpdateShortcutForm';
 import { ShortcutType } from '@/lib/types';
 import { deleteShortcut } from '@/lib/actions';
-import { Pencil, Trash2 } from 'lucide-react';
-import { getColor } from './shortcut';
+import {
+  Pencil,
+  Trash2,
+  Compass,
+  Microscope,
+  Layers,
+  Anchor,
+  Building2,
+  GraduationCap,
+  Brain,
+  PlayCircle,
+  Users,
+  Link2,
+} from 'lucide-react';
+import { getColor, categoryDisplayMap } from './shortcut';
 
 type shortcutByCategory = {
   [key: string]: ShortcutType[];
@@ -53,26 +66,25 @@ export function ShortcutInteractions({
         {shortcutCategoriesKeys.length > 0 &&
           shortcutCategoriesKeys.map((key: string) => {
             const shortcutsCount = shortcutByCategory[key].length;
-            // Bento logic: Categories with many shortcuts span more columns
             const colSpan =
               shortcutsCount > 4 ? 'lg:col-span-3' : 'lg:col-span-2';
+            const CategoryIcon = getIcon(key);
 
             return (
               <div
                 key={key}
                 className={`${colSpan} flex flex-col bg-white/40 backdrop-blur-md border border-slate-200/60 rounded-2xl shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-500 overflow-hidden group`}
               >
-                {/* Card Header */}
                 <div className='p-5 border-b border-slate-100 bg-slate-50/30 flex items-center justify-between'>
-                  <div className='flex items-center gap-4'>
-                    <div className='text-2xl p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 group-hover:scale-110 transition-transform duration-500'>
-                      {getEmoji(key)}
+                  <div className='flex items-center gap-8'>
+                    <div className='group-hover:scale-110 transition-transform duration-500 text-slate-400'>
+                      <CategoryIcon size={28} strokeWidth={1.2} />
                     </div>
                     <div>
-                      <h3 className='text-lg font-bold text-slate-800 capitalize leading-tight tracking-tight'>
-                        {key}
+                      <h3 className='text-lg font-bold text-slate-900 leading-tight tracking-tight'>
+                        {categoryDisplayMap[key] || key}
                       </h3>
-                      <p className='text-[10px] text-slate-400 uppercase font-semibold tracking-[0.15em]'>
+                      <p className='text-xs text-slate-400 uppercase font-bold tracking-[0.1em] mt-0.5'>
                         {shortcutsCount}{' '}
                         {shortcutsCount === 1 ? 'Direct Link' : 'Direct Links'}
                       </p>
@@ -80,7 +92,6 @@ export function ShortcutInteractions({
                   </div>
                 </div>
 
-                {/* Shortcuts List */}
                 <div className='flex-1 p-4 flex flex-col gap-2'>
                   {shortcutByCategory[key].map((shortcut: ShortcutType) => (
                     <div
@@ -92,7 +103,7 @@ export function ShortcutInteractions({
                           <Link
                             href={shortcut.url}
                             target='_blank'
-                            className='text-sm font-bold text-slate-700 hover:text-primary transition-colors truncate'
+                            className='text-sm font-bold text-slate-800 hover:text-primary transition-colors truncate'
                           >
                             {shortcut.name}
                           </Link>
@@ -100,21 +111,20 @@ export function ShortcutInteractions({
                             <div
                               className={`${getColor(
                                 shortcut.color
-                              )} h-2 w-2 rounded-full ring-2 ring-white shadow-sm ring-offset-1`}
+                              )} h-3 w-3 rounded-full ring-2 ring-white shadow-sm ring-offset-2`}
                             />
                           )}
                         </div>
                         <div className='flex items-center gap-2'>
-                          <span className='text-[9px] px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded-md font-bold uppercase tracking-wider'>
+                          <span className='text-[10px] px-2 py-0.5 bg-slate-100 text-slate-500 rounded-md font-bold uppercase tracking-wider'>
                             {shortcut.from}
                           </span>
-                          <p className='text-xs text-slate-400 truncate max-w-[180px] italic font-medium'>
+                          <p className='text-sm text-slate-400 truncate max-w-[200px] italic font-medium'>
                             {shortcut.description}
                           </p>
                         </div>
                       </div>
 
-                      {/* Actions - Visible on Hover for a cleaner look */}
                       <div className='flex items-center gap-1.5 opacity-0 group-hover/item:opacity-100 transition-all transform translate-x-2 group-hover/item:translate-x-0 ml-2'>
                         <Sheet>
                           <SheetTrigger asChild>
@@ -122,7 +132,7 @@ export function ShortcutInteractions({
                               <Pencil size={14} />
                             </button>
                           </SheetTrigger>
-                          <SheetContent className='max-h-screen overflow-y-scroll'>
+                          <SheetContent className='max-h-screen overflow-y-auto'>
                             <SheetHeader>
                               <SheetTitle>Update Shortcut</SheetTitle>
                               <SheetDescription>
@@ -139,77 +149,80 @@ export function ShortcutInteractions({
                               <Trash2 size={14} />
                             </button>
                           </AlertDialogTrigger>
-                          <AlertDialogContent className='border-4 border-primary rounded-3xl'>
+                          <AlertDialogContent className='rounded-2xl border border-slate-100 shadow-2xl max-w-[400px] p-8'>
                             <AlertDialogHeader>
-                              <AlertDialogTitle className='text-center text-3xl font-semibold text-primary my-4 tracking-tighter uppercase'>
-                                Are you f... sure?
-                                <br />
-                                <div className='w-full max-w-[320px] mt-8 mx-auto'>
-                                  <AspectRatio
-                                    ratio={1 / 1}
-                                    className='bg-white'
-                                  >
-                                    <Image
-                                      src='/are-you-sure-michael.gif'
-                                      alt='Michael Scott crying'
-                                      fill
-                                      className='object-cover rounded-full border-[10px] border-primary shadow-2xl'
-                                      objectPosition='center 25%'
-                                    />
-                                  </AspectRatio>
-                                </div>
-                              </AlertDialogTitle>
-                              <AlertDialogDescription className='flex flex-col text-lg text-center text-slate-600 gap-4 font-medium'>
-                                You are about to delete the Shortcut below:
-                                <div className='flex mb-6 py-5 px-8 justify-between border-2 border-dashed border-primary/30 bg-primary/5 rounded-2xl text-primary text-left'>
-                                  <div className='flex flex-col w-1/2'>
-                                    <h3 className='text-[10px] uppercase font-semibold text-slate-400 tracking-widest'>
-                                      Shortcut
-                                    </h3>
-                                    <span className='font-semibold text-xl'>
-                                      {shortcut.name}
-                                    </span>
-                                  </div>
+                              <div className='flex flex-col items-center justify-center mb-6'>
+                                <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
+                                  Action Required
+                                </p>
+                                <AlertDialogTitle className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
+                                  Delete Shortcut?
+                                </AlertDialogTitle>
+                                <div className='w-8 h-1 bg-[#22C55E] rounded-full mt-4' />
+                              </div>
 
-                                  <div className='flex flex-col w-1/2'>
-                                    <h3 className='text-[10px] uppercase font-semibold text-slate-400 tracking-widest'>
-                                      Source
-                                    </h3>
-                                    <span className='font-bold text-lg'>
-                                      {shortcut.from}
-                                    </span>
-                                  </div>
-                                </div>
+                              <div className='w-48 h-48 mx-auto mb-6'>
+                                <AspectRatio ratio={1 / 1}>
+                                  <Image
+                                    src='/are-you-sure-michael.gif'
+                                    alt='Michael Scott'
+                                    fill
+                                    className='object-cover rounded-full border-2 border-slate-100 shadow-sm'
+                                  />
+                                </AspectRatio>
+                              </div>
+
+                              <AlertDialogDescription className='text-sm text-center text-slate-500 font-medium mb-6 py-6'>
+                                You are about to permanently remove
+                                <br />
+                                this shortcut from your collection.
                               </AlertDialogDescription>
+
+                              <div className='flex flex-col gap-3 p-4 bg-slate-50/50 border border-slate-100 rounded-xl'>
+                                <div className='flex flex-col'>
+                                  <h3 className='text-[9px] uppercase font-bold text-slate-400 tracking-widest leading-none mb-2'>
+                                    Shortcut Name
+                                  </h3>
+                                  <span className='font-bold text-slate-700 text-sm'>
+                                    {shortcut.name}
+                                  </span>
+                                </div>
+                                <div className='flex flex-col'>
+                                  <h3 className='text-[9px] uppercase font-bold text-slate-400 tracking-widest leading-none mb-2'>
+                                    Source
+                                  </h3>
+                                  <span className='font-semibold text-slate-500 text-xs'>
+                                    {shortcut.from}
+                                  </span>
+                                </div>
+                              </div>
                             </AlertDialogHeader>
 
-                            <AlertDialogFooter className='flex gap-4 sm:justify-center'>
+                            <AlertDialogFooter className='flex gap-3 sm:justify-center mt-6'>
                               <AlertDialogCancel
-                                className='rounded-xl px-10 border-2 font-bold'
+                                className='rounded-lg flex-1 border-slate-200 text-slate-500 font-bold hover:bg-slate-50 transition-all'
                                 onClick={() => {
                                   toast({
-                                    title: 'Operation Cancelled! ❌',
-                                    description: `Phew! 😮‍💨 Crisis averted.`,
-                                    variant: 'destructive',
+                                    title: 'Operation Cancelled!',
+                                    description: `Phew! Crisis averted.`,
                                   });
                                 }}
                               >
-                                Cancel
+                                Keep it
                               </AlertDialogCancel>
                               <AlertDialogAction
-                                className='rounded-xl px-10 font-bold bg-primary hover:bg-primary/90'
+                                className='rounded-lg flex-1 font-bold bg-red-500 hover:bg-red-600 transition-all shadow-md shadow-red-100'
                                 onClick={() => {
                                   if (shortcut) {
                                     handleDeleteShortcut(shortcut.id);
                                     toast({
-                                      title: 'Shortcut gone! 💀',
-                                      description: `The Shortcut ${shortcut.name} has been deleted!`,
-                                      variant: 'dark',
+                                      title: 'Shortcut removed',
+                                      description: `The shortcut has been deleted.`,
                                     });
                                   }
                                 }}
                               >
-                                Continue
+                                Delete
                               </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
@@ -226,39 +239,27 @@ export function ShortcutInteractions({
   );
 }
 
-const getEmoji = (key: string) => {
-  let emoji = '';
+const getIcon = (key: string) => {
   switch (key) {
     case 'Indicator':
-      emoji = '🧭';
-      break;
+      return Compass;
     case 'Analysis':
-      emoji = '🔬';
-      break;
+      return Microscope;
     case 'Miscellaneous':
-      emoji = '🧶';
-      break;
+      return Layers;
     case 'Platform':
-      emoji = '⚓';
-      break;
+      return Anchor;
     case 'Exchange':
-      emoji = '🏦';
-      break;
+      return Building2;
     case 'Course':
-      emoji = '🧑🏻‍🎓';
-      break;
+      return GraduationCap;
     case 'Knowledge':
-      emoji = '🧠';
-      break;
+      return Brain;
     case 'Video':
-      emoji = '📺';
-      break;
+      return PlayCircle;
     case 'Friend':
-      emoji = '🤷🏻‍♂️';
-      break;
+      return Users;
     default:
-      emoji = '🔗';
-      break;
+      return Link2;
   }
-  return emoji;
 };

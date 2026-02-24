@@ -31,20 +31,22 @@ export default function Assets({
   });
 
   return (
-    <div className='mx-auto'>
+    <div className='flex flex-col gap-1 px-8 sm:p-0'>
       {isLoading ? (
         <div className='flex justify-center items-center h-[70em]'>
           <Loading />
         </div>
       ) : (
-        <DataTable
-          columns={columns}
-          data={formatatedNumbersAssets}
-          typeFilterAsParam={typeFilterAsParam ? typeFilterAsParam : ''}
-          purposeFilterAsParam={
-            purposeFilterAsParam ? purposeFilterAsParam : ''
-          }
-        />
+        <>
+          <DataTable
+            columns={columns}
+            data={formatatedNumbersAssets}
+            typeFilterAsParam={typeFilterAsParam ? typeFilterAsParam : ''}
+            purposeFilterAsParam={
+              purposeFilterAsParam ? purposeFilterAsParam : ''
+            }
+          />
+        </>
       )}
     </div>
   );

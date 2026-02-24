@@ -41,7 +41,7 @@ export default function NoAssets() {
         <SheetTrigger className='border-2 border-slate-900 h-10 px-4 rounded-xl font-semibold my-4 text-sm hover:bg-slate-900 hover:text-white transition-all'>
           Add Your First Asset
         </SheetTrigger>
-        <SheetContent className='max-h-screen overflow-y-scroll'>
+        <SheetContent className='max-h-screen overflow-y-auto'>
           <SheetHeader>
             <SheetTitle>Add a new Asset</SheetTitle>
             <SheetDescription>

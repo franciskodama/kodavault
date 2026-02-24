@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Inputs } from '@/lib/types';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,9 @@ import { SheetClose } from '@/components/ui/sheet';
 import { useToast } from '@/components/ui/use-toast';
 import { addAsset } from '@/lib/actions';
 import { category_enum_6c7fcd47 } from '@prisma/client';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 import {
   altcoinsCategories,
@@ -52,6 +55,7 @@ export function AddAssetForm() {
     handleSubmit,
     reset,
     setValue,
+    control,
     formState: { errors },
   } = useForm<Inputs>({});
 
@@ -160,34 +164,36 @@ export function AddAssetForm() {
 
         {assetSubtype && (
           <div className='flex flex-col'>
-            {assetSymbol && fixedSymbolsArr.includes(assetSymbol) ? null : (
-              <div className={classDiv}>
-                <label className={classTitle} htmlFor='asset'>
-                  Asset
+            <div className='flex gap-4 w-full'>
+              {assetSymbol && fixedSymbolsArr.includes(assetSymbol) ? null : (
+                <div className={cn(classDiv, 'flex-1')}>
+                  <label className={classTitle} htmlFor='asset'>
+                    Asset
+                  </label>
+                  <input
+                    className={classInput}
+                    placeholder='Asset Symbol'
+                    {...register('asset', { required: "Asset can't be empty" })}
+                  />
+                  {errors.asset?.message && (
+                    <p className={classError}>{errors.asset.message}</p>
+                  )}
+                </div>
+              )}
+
+              <div className={cn(classDiv, 'flex-1')}>
+                <label className={classTitle} htmlFor='qty'>
+                  Quantity
                 </label>
                 <input
                   className={classInput}
-                  placeholder='Asset Symbol'
-                  {...register('asset', { required: "Asset can't be empty" })}
+                  placeholder='Quantity'
+                  {...register('qty', { required: "Quantity can't be empty" })}
                 />
-                {errors.asset?.message && (
-                  <p className={classError}>{errors.asset.message}</p>
+                {errors.qty?.message && (
+                  <p className={classError}>{errors.qty.message}</p>
                 )}
               </div>
-            )}
-
-            <div className={classDiv}>
-              <label className={classTitle} htmlFor='qty'>
-                Quantity
-              </label>
-              <input
-                className={classInput}
-                placeholder='Quantity'
-                {...register('qty', { required: "Quantity can't be empty" })}
-              />
-              {errors.qty?.message && (
-                <p className={classError}>{errors.qty.message}</p>
-              )}
             </div>
 
             <div className={classDiv}>
@@ -286,40 +292,6 @@ export function AddAssetForm() {
               </div>
             )}
 
-            {/* {cryptoWallets.includes(watch('wallet')) ? (
-              <div className={classDiv}>
-                <h3 className={classTitle}>Account</h3>
-                <ul className={classUl}>
-                  {assetAccount.map((accountOption) => (
-                    <li key={accountOption}>
-                      <input
-                        className='hidden peer'
-                        type='radio'
-                        value={accountOption}
-                        id={accountOption}
-                        {...register('account')}
-                      />
-                      <label
-                        className={classLabelRadio}
-                        htmlFor={accountOption}
-                      >
-                        <span>{accountOption}</span>
-                      </label>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
-              <div>
-                <input
-                  className='hidden peer'
-                  value={'-'}
-                  {...register('account')}
-                />
-              </div>
-            )} */}
-
-            {/* ------------------------- */}
             {assetCategory.length > 1 && (
               <div className={classDiv}>
                 <h3 className={classTitle}>Category</h3>
@@ -397,31 +369,23 @@ export function AddAssetForm() {
               </div>
             )}
 
-            {/* 
-          We don't need this for now (until we don't pay for an API to get the data
-          Today we get in from Google Sheet - Google Finance formula)
-          
-          {assetExchange.length > 1 && (
-            <div className={classDiv}>
-              <h3 className={classTitle}>Exchange</h3>
-              <ul className={classUl}>
-                {assetExchange.map((exchangeOption) => (
-                  <li key={exchangeOption}>
-                    <input
-                      className='hidden peer'
-                      type='radio'
-                      value={exchangeOption}
-                      id={exchangeOption}
-                      {...register('exchange')}
-                    />
-                    <label className={classLabelRadio} htmlFor={exchangeOption}>
-                      <span>{exchangeOption}</span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
+            <div className='flex items-center gap-2 mt-4 p-2'>
+              <Controller
+                name='reviewed'
+                control={control}
+                render={({ field }) => (
+                  <Checkbox
+                    id='reviewed'
+                    className='h-6 w-6 border-slate-300 transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                )}
+              />
+              <Label htmlFor='reviewed' className='font-bold'>
+                Mark as Reviewed
+              </Label>
             </div>
-          )} */}
 
             <Button className='mt-8' type='submit'>
               Add Asset
