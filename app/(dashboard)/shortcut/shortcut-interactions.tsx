@@ -28,7 +28,20 @@ import { toast } from '@/components/ui/use-toast';
 import { UpdateShortcutForm } from '@/components/forms/UpdateShortcutForm';
 import { ShortcutType } from '@/lib/types';
 import { deleteShortcut } from '@/lib/actions';
-import { Pencil, Trash2 } from 'lucide-react';
+import {
+  Pencil,
+  Trash2,
+  Compass,
+  Microscope,
+  Layers,
+  Anchor,
+  Building2,
+  GraduationCap,
+  Brain,
+  PlayCircle,
+  Users,
+  Link2,
+} from 'lucide-react';
 import { getColor } from './shortcut';
 
 type shortcutByCategory = {
@@ -53,20 +66,19 @@ export function ShortcutInteractions({
         {shortcutCategoriesKeys.length > 0 &&
           shortcutCategoriesKeys.map((key: string) => {
             const shortcutsCount = shortcutByCategory[key].length;
-            // Bento logic: Categories with many shortcuts span more columns
             const colSpan =
               shortcutsCount > 4 ? 'lg:col-span-3' : 'lg:col-span-2';
+            const CategoryIcon = getIcon(key);
 
             return (
               <div
                 key={key}
                 className={`${colSpan} flex flex-col bg-white/40 backdrop-blur-md border border-slate-200/60 rounded-2xl shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-500 overflow-hidden group`}
               >
-                {/* Card Header */}
                 <div className='p-5 border-b border-slate-100 bg-slate-50/30 flex items-center justify-between'>
-                  <div className='flex items-center gap-4'>
-                    <div className='text-2xl p-2.5 bg-white rounded-xl shadow-sm border border-slate-100 group-hover:scale-110 transition-transform duration-500'>
-                      {getEmoji(key)}
+                  <div className='flex items-center gap-8'>
+                    <div className='group-hover:scale-110 transition-transform duration-500 text-slate-400'>
+                      <CategoryIcon size={28} strokeWidth={1.2} />
                     </div>
                     <div>
                       <h3 className='text-lg font-bold text-slate-800 capitalize leading-tight tracking-tight'>
@@ -80,7 +92,6 @@ export function ShortcutInteractions({
                   </div>
                 </div>
 
-                {/* Shortcuts List */}
                 <div className='flex-1 p-4 flex flex-col gap-2'>
                   {shortcutByCategory[key].map((shortcut: ShortcutType) => (
                     <div
@@ -100,7 +111,7 @@ export function ShortcutInteractions({
                             <div
                               className={`${getColor(
                                 shortcut.color
-                              )} h-2 w-2 rounded-full ring-2 ring-white shadow-sm ring-offset-1`}
+                              )} h-3 w-3 rounded-full ring-2 ring-white shadow-sm ring-offset-2`}
                             />
                           )}
                         </div>
@@ -114,7 +125,6 @@ export function ShortcutInteractions({
                         </div>
                       </div>
 
-                      {/* Actions - Visible on Hover for a cleaner look */}
                       <div className='flex items-center gap-1.5 opacity-0 group-hover/item:opacity-100 transition-all transform translate-x-2 group-hover/item:translate-x-0 ml-2'>
                         <Sheet>
                           <SheetTrigger asChild>
@@ -141,8 +151,8 @@ export function ShortcutInteractions({
                           </AlertDialogTrigger>
                           <AlertDialogContent className='border-4 border-primary rounded-3xl'>
                             <AlertDialogHeader>
-                              <AlertDialogTitle className='text-center text-3xl font-semibold text-primary my-4 tracking-tighter uppercase'>
-                                Are you f... sure?
+                              <AlertDialogTitle className='text-center text-3xl font-semibold text-primary my-4 tracking-tighter'>
+                                Are you sure?
                                 <br />
                                 <div className='w-full max-w-[320px] mt-8 mx-auto'>
                                   <AspectRatio
@@ -188,8 +198,8 @@ export function ShortcutInteractions({
                                 className='rounded-xl px-10 border-2 font-bold'
                                 onClick={() => {
                                   toast({
-                                    title: 'Operation Cancelled! ❌',
-                                    description: `Phew! 😮‍💨 Crisis averted.`,
+                                    title: 'Operation Cancelled!',
+                                    description: `Phew! Crisis averted.`,
                                     variant: 'destructive',
                                   });
                                 }}
@@ -202,7 +212,7 @@ export function ShortcutInteractions({
                                   if (shortcut) {
                                     handleDeleteShortcut(shortcut.id);
                                     toast({
-                                      title: 'Shortcut gone! 💀',
+                                      title: 'Shortcut removed',
                                       description: `The Shortcut ${shortcut.name} has been deleted!`,
                                       variant: 'dark',
                                     });
@@ -226,39 +236,27 @@ export function ShortcutInteractions({
   );
 }
 
-const getEmoji = (key: string) => {
-  let emoji = '';
+const getIcon = (key: string) => {
   switch (key) {
     case 'Indicator':
-      emoji = '🧭';
-      break;
+      return Compass;
     case 'Analysis':
-      emoji = '🔬';
-      break;
+      return Microscope;
     case 'Miscellaneous':
-      emoji = '🧶';
-      break;
+      return Layers;
     case 'Platform':
-      emoji = '⚓';
-      break;
+      return Anchor;
     case 'Exchange':
-      emoji = '🏦';
-      break;
+      return Building2;
     case 'Course':
-      emoji = '🧑🏻‍🎓';
-      break;
+      return GraduationCap;
     case 'Knowledge':
-      emoji = '🧠';
-      break;
+      return Brain;
     case 'Video':
-      emoji = '📺';
-      break;
+      return PlayCircle;
     case 'Friend':
-      emoji = '🤷🏻‍♂️';
-      break;
+      return Users;
     default:
-      emoji = '🔗';
-      break;
+      return Link2;
   }
-  return emoji;
 };
