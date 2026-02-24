@@ -71,24 +71,29 @@ export default function CalendarPage() {
   return (
     <div className='flex flex-col gap-1 px-8 sm:p-0 min-h-[75vh]'>
       <div className='flex flex-col sm:flex-row justify-between items-end mb-10 px-4 sm:px-0'>
-        <div className='flex items-center gap-4 mt-8'>
-          <div className='w-1 h-10 bg-[#22C55E] rounded-lg' />
+        <div className='flex flex-col items-center justify-center w-full mt-12'>
           <div className='flex flex-col'>
-            <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 leading-none mb-1'>
+            <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
               Market Hub
             </p>
-            <h1 className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
+            <h1 className='text-3xl font-bold text-slate-900 tracking-tight leading-none'>
               Economic Calendar
             </h1>
+            <div className='w-12 h-1.5 bg-[#22C55E] rounded-full mt-6 shadow-sm shadow-green-100' />
           </div>
         </div>
 
-        <div className='flex items-center gap-4 mt-4 sm:mt-0'>
-          <div className='flex p-0.5 bg-white rounded-lg border shadow-sm'>
+        <div className='flex items-center justify-center gap-4 mt-12 mb-8'>
+          <div className='flex p-1 bg-slate-100/50 backdrop-blur-sm rounded-xl border border-slate-200/60 shadow-sm'>
             <Button
               variant={filter === 'high_impact' ? 'default' : 'ghost'}
               size='sm'
-              className='text-[10px] h-6 font-bold'
+              className={cn(
+                'text-[10px] h-8 px-4 font-bold tracking-wider transition-all duration-300 rounded-lg',
+                filter === 'high_impact'
+                  ? 'bg-slate-900 text-white shadow-md'
+                  : 'text-slate-500 hover:text-slate-900'
+              )}
               onClick={() => setFilter('high_impact')}
             >
               HIGH IMPACT
@@ -96,13 +101,18 @@ export default function CalendarPage() {
             <Button
               variant={filter === 'all' ? 'default' : 'ghost'}
               size='sm'
-              className='text-[10px] h-6 font-bold'
+              className={cn(
+                'text-[10px] h-8 px-4 font-bold tracking-wider transition-all duration-300 rounded-lg',
+                filter === 'all'
+                  ? 'bg-slate-900 text-white shadow-md'
+                  : 'text-slate-500 hover:text-slate-900'
+              )}
               onClick={() => setFilter('all')}
             >
               ALL RELEASES
             </Button>
           </div>
-          <p className='hidden sm:block text-[10px] text-slate-400 uppercase font-bold tracking-widest'>
+          <p className='text-[10px] text-slate-400 uppercase font-bold tracking-[0.2em]'>
             (EST)
           </p>
         </div>
@@ -139,29 +149,29 @@ export default function CalendarPage() {
               </CardHeader>
               <CardContent className='p-0 overflow-x-auto'>
                 <div className='min-w-[600px]'>
-                  <div className='grid grid-cols-[100px_1fr_80px_80px_80px] bg-slate-50/50 border-b text-[9px] uppercase font-bold text-slate-400'>
-                    <div className='px-4 py-2'>Time</div>
-                    <div className='px-4 py-2'>Event</div>
-                    <div className='px-4 py-2 text-right'>Actual</div>
-                    <div className='px-4 py-2 text-right'>Forecast</div>
-                    <div className='px-4 py-2 text-right'>Previous</div>
+                  <div className='grid grid-cols-[100px_1fr_90px_90px_90px] bg-slate-50/80 border-b text-[10px] uppercase font-bold text-slate-400 tracking-wider'>
+                    <div className='px-6 py-3'>Time</div>
+                    <div className='px-6 py-3'>Event</div>
+                    <div className='px-6 py-3 text-right'>Actual</div>
+                    <div className='px-6 py-3 text-right'>Forecast</div>
+                    <div className='px-6 py-3 text-right'>Previous</div>
                   </div>
-                  <div className='divide-y flex flex-col'>
+                  <div className='divide-y divide-slate-100 flex flex-col'>
                     {groupedData[date].map((release, idx) => {
                       return (
                         <div
                           key={`${release.title}-${idx}`}
-                          className='grid grid-cols-[100px_1fr_80px_80px_80px] hover:bg-slate-50/50 transition-colors items-center'
+                          className='grid grid-cols-[100px_1fr_90px_90px_90px] hover:bg-slate-50/50 transition-colors items-center'
                         >
-                          <div className='px-4 py-2 text-[10px] font-bold text-slate-400'>
+                          <div className='px-6 py-4 text-[11px] font-bold text-slate-400 tracking-tight'>
                             {release.time || 'All Day'}
                           </div>
-                          <div className='px-4 py-2 font-semibold text-xs'>
+                          <div className='px-6 py-4 font-bold text-sm text-slate-800'>
                             {release.title}
                           </div>
                           <div
                             className={cn(
-                              'px-4 py-2 text-right font-bold text-xs',
+                              'px-6 py-4 text-right font-bold text-sm',
                               release.actual && release.forecast
                                 ? parseFloat(release.actual) >=
                                   parseFloat(release.forecast)
@@ -172,10 +182,10 @@ export default function CalendarPage() {
                           >
                             {release.actual || '-'}
                           </div>
-                          <div className='px-4 py-2 text-right text-xs text-slate-500 font-medium'>
+                          <div className='px-6 py-4 text-right text-sm text-slate-500 font-bold'>
                             {release.forecast || '-'}
                           </div>
-                          <div className='px-4 py-2 text-right text-xs text-slate-500 font-medium'>
+                          <div className='px-6 py-4 text-right text-sm text-slate-400/80 font-semibold'>
                             {release.previous || '-'}
                           </div>
                         </div>

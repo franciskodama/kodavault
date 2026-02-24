@@ -54,17 +54,21 @@ export default function MessageInTable({
       </div>
       <div className='flex flex-col sm:w-[450px] mx-auto'>
         <div className='flex items-center gap-2'>
-          <p className='text-2xl font-semibold'>{title}</p>
-          {Icon && <Icon className='h-6 w-6' />}
+          <p className='text-xl font-bold text-slate-900 tracking-tight'>
+            {title}
+          </p>
+          {Icon && <Icon className='h-5 w-5 text-slate-400' />}
         </div>
-        <p className='text-base my-2'>{subtitle}</p>
+        <p className='text-sm text-slate-500 font-medium leading-relaxed my-3'>
+          {subtitle}
+        </p>
 
         {!hasNoButton && (
           <Sheet>
             <SheetTrigger className='border-2 border-slate-900 h-10 px-4 rounded-xl font-semibold my-4 text-sm hover:bg-slate-900 hover:text-white transition-all'>
               {buttonCopy}
             </SheetTrigger>
-            <SheetContent className='max-h-screen overflow-y-scroll'>
+            <SheetContent className='max-h-screen overflow-y-auto'>
               <SheetHeader>
                 <SheetTitle>{formTitle}</SheetTitle>
                 <SheetDescription>{formSubtitle}</SheetDescription>

@@ -26,7 +26,7 @@ export default async function ShortcutPage() {
           Personal Hub
         </p>
         <h1 className='text-3xl font-bold text-slate-900 tracking-tight leading-none'>
-          Treasure Chest
+          Quick Access
         </h1>
         <div className='w-12 h-1.5 bg-[#22C55E] rounded-full mt-6 shadow-sm shadow-green-100' />
       </div>

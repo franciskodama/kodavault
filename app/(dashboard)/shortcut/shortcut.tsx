@@ -54,8 +54,12 @@ export const allCategories = [
   'Miscellaneous',
   'Platform',
   'Video',
-  'For Friends',
+  'Friend',
 ];
+
+export const categoryDisplayMap: Record<string, string> = {
+  Friend: 'For Friends',
+};
 
 export const allColors = [
   'Blue',

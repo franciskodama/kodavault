@@ -78,7 +78,7 @@ export default function Footer() {
                 Terms of Service
               </p>
             </AlertDialogTrigger>
-            <AlertDialogContent className='w-[calc(100%-35px)] h-[calc(100%-10em)] max-h-screen overflow-y-scroll'>
+            <AlertDialogContent className='w-[calc(100%-35px)] h-[calc(100%-10em)] max-h-screen overflow-y-auto'>
               <AlertDialogHeader>
                 <AlertDialogTitle className='flex items-center gap-2'>
                   <HeartHandshake size={24} strokeWidth={1.8} />
@@ -251,7 +251,7 @@ export default function Footer() {
                 Privacy Policy
               </p>
             </AlertDialogTrigger>
-            <AlertDialogContent className='w-[calc(100%-35px)] h-[calc(100%-10em)] max-h-screen overflow-y-scroll'>
+            <AlertDialogContent className='w-[calc(100%-35px)] h-[calc(100%-10em)] max-h-screen overflow-y-auto'>
               <AlertDialogHeader>
                 <AlertDialogTitle className='flex items-center gap-2'>
                   <Shield size={24} strokeWidth={1.8} />
