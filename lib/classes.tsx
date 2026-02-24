@@ -5,7 +5,6 @@ export const tableHeaderClass =
 // ------- Form classes: Add Asset & Update Asset ------------
 export const classInput =
   'h-9 w-full rounded-xl border-2 border-slate-200 bg-white mt-2 p-2 text-sm text-slate-900 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-bold placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200';
-// 'border border-slate-200 h-11 p-2 rounded-xl w-full mt-2';
 export const classDiv = 'my-4';
 export const classUl = 'grid grid-cols-3 gap-2';
 export const classTitle = 'font-bold mb-2';
