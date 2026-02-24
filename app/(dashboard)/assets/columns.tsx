@@ -309,7 +309,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
       {asset && (
         <div className='flex items-center text-xl'>
           <Checkbox
-            className='w-[30px] h-[30px] border border-slate-300 rounded-md transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
+            className='h-8 w-8 border border-slate-200 transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
             checked={isAssetReviewed(asset.id)}
             onCheckedChange={(checked) =>
               handleReviewToggle(checked as boolean, asset.id)
