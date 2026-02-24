@@ -19,6 +19,7 @@ export async function addAsset(formData: Inputs) {
     category,
     purpose,
     tag,
+    reviewed,
   } = formData;
 
   try {
@@ -38,6 +39,7 @@ export async function addAsset(formData: Inputs) {
         category,
         purpose,
         tag: tag === '' ? null : tag,
+        reviewed: reviewed || false,
       },
     });
     return true;
@@ -62,6 +64,7 @@ export async function updateAsset(formData: Inputs) {
     purpose,
     category,
     tag,
+    reviewed,
   } = formData;
 
   try {
@@ -84,6 +87,7 @@ export async function updateAsset(formData: Inputs) {
         purpose,
         category,
         tag,
+        reviewed: reviewed || false,
       },
     });
     return true;

@@ -115,6 +115,7 @@ export type Inputs = {
   purpose: purpose_enum_ceee32b0 | null;
   category: category_enum_6c7fcd47 | null;
   tag?: string;
+  reviewed?: boolean;
 };
 
 export type CryptoGoals = {

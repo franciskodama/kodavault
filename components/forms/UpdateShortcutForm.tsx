@@ -48,7 +48,6 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
   const classDiv = 'my-4';
   const classUl = 'grid grid-cols-3 gap-2';
   const classTitle = 'font-bold mb-2';
-  // const classError = 'text-red-500 font-bold my-2';
   const classLabelRadio =
     'capitalize inline-flex items-center justify-center py-1 w-full h-[2.5em] border-2 rounded-xl cursor-pointer text-sm text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100';
 
