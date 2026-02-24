@@ -24,13 +24,11 @@ function Model({ url }: { url: string }) {
   return <primitive ref={modelRef} object={scene} scale={2.5} />;
 }
 
-// Preload the model
 useGLTF.preload('/video/dollar-sign.glb');
 
 export function Loading() {
   return (
     <div className='relative flex items-center justify-center w-full min-h-[450px] bg-transparent overflow-hidden'>
-      {/* Background radial glow */}
       <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-accent/10 rounded-full blur-[100px] pointer-events-none' />
 
       <div className='w-full h-[450px] relative z-10'>
@@ -50,15 +48,9 @@ export function Loading() {
             />
             <pointLight position={[-5, -5, -5]} intensity={0.5} />
 
-            <Float
-              speed={4} // Increased from 1.5
-              rotationIntensity={1.2} // Increased from 0.8
-              floatIntensity={0.8} // Increased from 0.5
-            >
-              <Center>
-                <Model url='/video/dollar-sign.glb' />
-              </Center>
-            </Float>
+            <Center>
+              <Model url='/video/dollar-sign.glb' />
+            </Center>
 
             <ContactShadows
               position={[0, -2.2, 0]}
