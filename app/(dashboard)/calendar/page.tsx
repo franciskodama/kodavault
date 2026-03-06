@@ -13,15 +13,13 @@ export default function CalendarPage() {
   const [data, setData] = useState<EconomicCalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'high_impact'>('high_impact');
+  const [period, setPeriod] = useState<'this_week' | 'next_week'>('this_week');
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const url =
-          filter === 'high_impact'
-            ? '/api/economic-calendar?filter=high_impact'
-            : '/api/economic-calendar';
+        const url = `/api/economic-calendar?filter=${filter}&period=${period}`;
         const response = await axios.get<EconomicCalendarResponse>(url);
         if (response.data && Array.isArray(response.data)) {
           setData(response.data);
@@ -40,7 +38,7 @@ export default function CalendarPage() {
     };
 
     fetchData();
-  }, [filter]);
+  }, [filter, period]);
 
   if (loading) return <Loading />;
 
@@ -84,7 +82,40 @@ export default function CalendarPage() {
           </div>
         </div>
 
-        <div className='flex items-center justify-center gap-4 mt-12 mb-8'>
+        <div className='flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 mb-8'>
+          {/* Period Filter */}
+          <div className='flex p-1 bg-slate-100/50 backdrop-blur-sm rounded-xl border border-slate-200/60 shadow-sm'>
+            <Button
+              variant={period === 'this_week' ? 'default' : 'ghost'}
+              size='sm'
+              className={cn(
+                'text-[10px] h-8 px-4 font-bold tracking-wider transition-all duration-300 rounded-lg',
+                period === 'this_week'
+                  ? 'bg-slate-900 text-white shadow-md'
+                  : 'text-slate-500 hover:text-slate-900'
+              )}
+              onClick={() => setPeriod('this_week')}
+            >
+              THIS WEEK
+            </Button>
+            <Button
+              variant={period === 'next_week' ? 'default' : 'ghost'}
+              size='sm'
+              className={cn(
+                'text-[10px] h-8 px-4 font-bold tracking-wider transition-all duration-300 rounded-lg',
+                period === 'next_week'
+                  ? 'bg-slate-900 text-white shadow-md'
+                  : 'text-slate-500 hover:text-slate-900'
+              )}
+              onClick={() => setPeriod('next_week')}
+            >
+              NEXT WEEK
+            </Button>
+          </div>
+
+          <div className='w-px h-6 bg-slate-200 hidden sm:block' />
+
+          {/* Impact Filter */}
           <div className='flex p-1 bg-slate-100/50 backdrop-blur-sm rounded-xl border border-slate-200/60 shadow-sm'>
             <Button
               variant={filter === 'high_impact' ? 'default' : 'ghost'}
@@ -122,7 +153,7 @@ export default function CalendarPage() {
       {data.length === 0 ? (
         <Card className='flex flex-col items-center justify-center py-20'>
           <p className='text-slate-400 font-medium italic'>
-            No high-impact releases found for the current period.
+            No releases found for the selected period.
           </p>
           {filter === 'high_impact' && (
             <Button
