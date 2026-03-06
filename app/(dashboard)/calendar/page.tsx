@@ -152,10 +152,9 @@ export default function CalendarPage() {
         </div>
       </div>
 
-      <div className='grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8 px-4 sm:px-0'>
+      <div className='grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 px-4 sm:px-0'>
         <div className='flex flex-col gap-6 order-2 lg:order-1'>
           <GlobalClock />
-
           <MarketPulse />
         </div>
 
@@ -184,7 +183,7 @@ export default function CalendarPage() {
                   className={cn(
                     'overflow-hidden transition-all duration-500 relative bg-white',
                     today &&
-                      'ring-2 ring-[#22C55E]/20 shadow-xl shadow-green-100/50 border-green-200 border-l-[6px] border-l-[#22C55E]'
+                      'ring-2 ring-[#22C55E]/20 shadow-xl shadow-green-100/50 border-green-200'
                   )}
                 >
                   <CardHeader

@@ -142,7 +142,6 @@ export function GlobalClock() {
 
   return (
     <Card className='bg-[#0F172A] border-slate-800 text-white overflow-hidden shadow-2xl relative'>
-      <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#22C55E] via-emerald-500 to-[#22C55E]' />
       <CardHeader className='pb-4 border-b border-white/5 bg-white/[0.02]'>
         <div className='flex items-center gap-3'>
           <div className='p-2 bg-slate-800/50 rounded-lg'>
