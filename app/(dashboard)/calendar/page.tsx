@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { EconomicCalendarEvent, EconomicCalendarResponse } from '@/lib/types';
 import { Loading } from '@/components/common/Loading';
-import { dateWithDayFormatter, isThisWeek, cn } from '@/lib/utils';
+import { Sparkles } from 'lucide-react';
+import { dateWithDayFormatter, isThisWeek, isToday, cn } from '@/lib/utils';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
@@ -135,67 +136,95 @@ export default function CalendarPage() {
         </Card>
       ) : (
         <div className='flex flex-col gap-4 pb-10'>
-          {sortedDates.map((date) => (
-            <Card key={date} className='overflow-hidden'>
-              <CardHeader className='bg-slate-50 py-2 px-4 border-b flex flex-row items-center justify-between space-y-0'>
-                <CardTitle className='text-[10px] uppercase font-bold flex items-center gap-2 tracking-wider text-slate-500'>
-                  {dateWithDayFormatter(date)}
-                </CardTitle>
-                {isThisWeek(date) && (
-                  <span className='text-[10px] bg-green-500 text-white px-2 py-0.5 rounded-lg font-bold'>
-                    THIS WEEK
-                  </span>
+          {sortedDates.map((date) => {
+            const today = isToday(date);
+            return (
+              <Card
+                key={date}
+                className={cn(
+                  'overflow-hidden transition-all duration-500 relative bg-white',
+                  today &&
+                    'ring-2 ring-[#22C55E]/20 shadow-xl shadow-green-100/50 border-green-200 border-l-[6px] border-l-[#22C55E]'
                 )}
-              </CardHeader>
-              <CardContent className='p-0 overflow-x-auto'>
-                <div className='min-w-[600px]'>
-                  <div className='grid grid-cols-[100px_1fr_90px_90px_90px] bg-slate-50/80 border-b text-[10px] uppercase font-bold text-slate-400 tracking-wider'>
-                    <div className='px-6 py-3'>Time</div>
-                    <div className='px-6 py-3'>Event</div>
-                    <div className='px-6 py-3 text-right'>Actual</div>
-                    <div className='px-6 py-3 text-right'>Forecast</div>
-                    <div className='px-6 py-3 text-right'>Previous</div>
+              >
+                <CardHeader
+                  className={cn(
+                    'bg-slate-50 py-2 px-4 border-b flex flex-row items-center justify-between space-y-0',
+                    today && 'bg-green-50 border-green-100'
+                  )}
+                >
+                  <CardTitle
+                    className={cn(
+                      'text-[10px] uppercase font-bold flex items-center gap-2 tracking-wider text-slate-500',
+                      today && 'text-green-700'
+                    )}
+                  >
+                    {dateWithDayFormatter(date)}
+                  </CardTitle>
+                  <div className='flex gap-2 items-center'>
+                    {today && (
+                      <span className='text-[10px] bg-[#22C55E] text-white px-2.5 py-1 rounded-lg font-bold tracking-wider shadow-sm flex items-center gap-1.5 animate-in fade-in zoom-in duration-500'>
+                        <Sparkles className='w-2.5 h-2.5 fill-white/20' />
+                        TODAY
+                      </span>
+                    )}
+                    {isThisWeek(date) && !today && (
+                      <span className='text-[10px] bg-slate-200 text-slate-500 px-2 py-0.5 rounded-lg font-bold uppercase tracking-tight'>
+                        THIS WEEK
+                      </span>
+                    )}
                   </div>
-                  <div className='divide-y divide-slate-100 flex flex-col'>
-                    {groupedData[date].map((release, idx) => {
-                      return (
-                        <div
-                          key={`${release.title}-${idx}`}
-                          className='grid grid-cols-[100px_1fr_90px_90px_90px] hover:bg-slate-50/50 transition-colors items-center'
-                        >
-                          <div className='px-6 py-4 text-[11px] font-bold text-slate-400 tracking-tight'>
-                            {release.time || 'All Day'}
-                          </div>
-                          <div className='px-6 py-4 font-bold text-sm text-slate-800'>
-                            {release.title}
-                          </div>
+                </CardHeader>
+                <CardContent className='p-0 overflow-x-auto'>
+                  <div className='min-w-[600px]'>
+                    <div className='grid grid-cols-[100px_1fr_90px_90px_90px] bg-slate-50/80 border-b text-[10px] uppercase font-bold text-slate-400 tracking-wider'>
+                      <div className='px-6 py-3'>Time</div>
+                      <div className='px-6 py-3'>Event</div>
+                      <div className='px-6 py-3 text-right'>Actual</div>
+                      <div className='px-6 py-3 text-right'>Forecast</div>
+                      <div className='px-6 py-3 text-right'>Previous</div>
+                    </div>
+                    <div className='divide-y divide-slate-100 flex flex-col'>
+                      {groupedData[date].map((release, idx) => {
+                        return (
                           <div
-                            className={cn(
-                              'px-6 py-4 text-right font-bold text-sm',
-                              release.actual && release.forecast
-                                ? parseFloat(release.actual) >=
-                                  parseFloat(release.forecast)
-                                  ? 'text-green-600'
-                                  : 'text-red-600'
-                                : 'text-slate-600'
-                            )}
+                            key={`${release.title}-${idx}`}
+                            className='grid grid-cols-[100px_1fr_90px_90px_90px] hover:bg-slate-50/50 transition-colors items-center'
                           >
-                            {release.actual || '-'}
+                            <div className='px-6 py-4 text-[11px] font-bold text-slate-400 tracking-tight'>
+                              {release.time || 'All Day'}
+                            </div>
+                            <div className='px-6 py-4 font-bold text-sm text-slate-800'>
+                              {release.title}
+                            </div>
+                            <div
+                              className={cn(
+                                'px-6 py-4 text-right font-bold text-sm',
+                                release.actual && release.forecast
+                                  ? parseFloat(release.actual) >=
+                                    parseFloat(release.forecast)
+                                    ? 'text-green-600'
+                                    : 'text-red-600'
+                                  : 'text-slate-600'
+                              )}
+                            >
+                              {release.actual || '-'}
+                            </div>
+                            <div className='px-6 py-4 text-right text-sm text-slate-500 font-bold'>
+                              {release.forecast || '-'}
+                            </div>
+                            <div className='px-6 py-4 text-right text-sm text-slate-400/80 font-semibold'>
+                              {release.previous || '-'}
+                            </div>
                           </div>
-                          <div className='px-6 py-4 text-right text-sm text-slate-500 font-bold'>
-                            {release.forecast || '-'}
-                          </div>
-                          <div className='px-6 py-4 text-right text-sm text-slate-400/80 font-semibold'>
-                            {release.previous || '-'}
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>

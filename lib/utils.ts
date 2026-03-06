@@ -171,3 +171,14 @@ export const isThisWeek = (dateStr: string) => {
 
   return date >= startOfWeek && date <= endOfWeek;
 };
+
+export const isToday = (dateStr: string) => {
+  const date = new Date(dateStr);
+  const today = new Date();
+
+  return (
+    date.getUTCFullYear() === today.getFullYear() &&
+    date.getUTCMonth() === today.getMonth() &&
+    date.getUTCDate() === today.getDate()
+  );
+};
