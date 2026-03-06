@@ -6,6 +6,7 @@ import { EconomicCalendarEvent, EconomicCalendarResponse } from '@/lib/types';
 import { Loading } from '@/components/common/Loading';
 import { Sparkles, Globe2 } from 'lucide-react';
 import { GlobalClock } from '@/components/dashboard/GlobalClock';
+import { MarketPulse } from '@/components/dashboard/MarketPulse';
 import { dateWithDayFormatter, isThisWeek, isToday, cn } from '@/lib/utils';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -155,18 +156,7 @@ export default function CalendarPage() {
         <div className='flex flex-col gap-6 order-2 lg:order-1'>
           <GlobalClock />
 
-          <Card className='hidden lg:flex flex-col gap-4 p-6 bg-slate-50 border-slate-200/50'>
-            <div className='flex items-center gap-2 mb-2'>
-              <Globe2 className='w-4 h-4 text-[#22C55E]' />
-              <p className='text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500'>
-                Global Outlook
-              </p>
-            </div>
-            <p className='text-xs text-slate-500 leading-relaxed font-medium'>
-              Monitor major stock exchange sessions and economic indicators
-              simultaneously to catch early market movements and volatility.
-            </p>
-          </Card>
+          <MarketPulse />
         </div>
 
         <div className='flex flex-col gap-4 pb-10 order-1 lg:order-2'>
