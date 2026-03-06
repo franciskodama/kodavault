@@ -149,7 +149,7 @@ export const includePriceToStockAssets = async (
 
           return {
             ...item,
-            price: Number(thisStock?.price ?? 0).toFixed(2),
+            price: Number(Number(thisStock?.price ?? 0).toFixed(2)),
             total: Number(
               (Number(thisStock?.price ?? 0) * item.qty).toFixed(2)
             ),
