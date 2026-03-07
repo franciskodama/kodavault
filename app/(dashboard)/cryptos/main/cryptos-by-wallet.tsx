@@ -124,15 +124,15 @@ export default function CryptoByWallet({
 
             return (
               <div key={walletKey} className='flex flex-col gap-3'>
-                <div className='flex items-center justify-between border-b border-slate-50 pb-2'>
-                  <h3 className='text-[10px] font-bold uppercase tracking-widest text-indigo-500'>
-                    {walletKey.includes('Crypto') ? 'Crypto' : walletKey}
-                  </h3>
+                <div className='flex items-center justify-between bg-slate-200/50 border-l-2 border-indigo-500 py-1.5 px-3 -mx-3 rounded-r-md mb-1'>
                   <div className='flex items-center gap-2'>
+                    <h3 className='text-[10px] font-black uppercase tracking-[0.15em] text-slate-700'>
+                      {walletKey.includes('Crypto') ? 'Crypto' : walletKey}
+                    </h3>
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <span className='text-[10px] font-bold text-slate-400 cursor-help'>
+                          <span className='text-[10px] font-bold text-slate-400 cursor-help opacity-60'>
                             ({walletAssets.length})
                           </span>
                         </TooltipTrigger>
@@ -141,7 +141,12 @@ export default function CryptoByWallet({
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
-                    <span className='text-[10px] font-bold text-slate-400'>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <span className='text-[9px] font-bold text-slate-400 uppercase tracking-tighter'>
+                      Subtotal
+                    </span>
+                    <span className='text-[11px] font-mono font-bold text-indigo-600'>
                       {numberFormatterNoDecimals.format(walletTotal)}
                     </span>
                   </div>
