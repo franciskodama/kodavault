@@ -5,13 +5,13 @@ import Providers from './providers';
 
 export default function InLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <Providers>
+    <Providers>
+      <div className='flex flex-col min-h-screen'>
         <Header />
-        {children}
+        <main className='flex-grow flex flex-col'>{children}</main>
         <Toaster />
         <Footer />
-      </Providers>
-    </>
+      </div>
+    </Providers>
   );
 }
