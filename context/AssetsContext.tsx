@@ -9,14 +9,19 @@ import {
   useCallback,
   useMemo,
 } from 'react';
-import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
-import { Asset, AssetsByType } from '@/lib/types';
+import {
+  fetchAssetsWithoutPrices,
+  fetchAssetsWithPrices,
+  fetchCurrencies,
+} from '@/lib/assets';
+import { Asset, AssetsByType, Currencies } from '@/lib/types';
 
 type AssetsContext = {
   isLoading: boolean;
   assets: Asset[];
   setAssets: React.Dispatch<React.SetStateAction<Asset[]>>;
   assetsByType: AssetsByType;
+  currencyRates: Currencies | null;
   refreshAssets: () => Promise<void>;
 };
 
@@ -25,6 +30,7 @@ export const AssetsContext = createContext<AssetsContext | null>(null);
 export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const [assets, setAssets] = useState<Asset[]>([]);
   const [assetsByType, setAssetsByType] = useState<AssetsByType>({});
+  const [currencyRates, setCurrencyRates] = useState<Currencies | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const { user } = useUser();
@@ -34,10 +40,16 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
     try {
       if (uid) {
         const unpricedAssets = await fetchAssetsWithoutPrices(uid);
-        const { assets: _assets, assetsByType: _assetsByType } =
-          await fetchAssetsWithPrices(unpricedAssets);
+        const [
+          { assets: _assets, assetsByType: _assetsByType },
+          _currencyRates,
+        ] = await Promise.all([
+          fetchAssetsWithPrices(unpricedAssets),
+          fetchCurrencies(),
+        ]);
         setAssets(_assets);
         setAssetsByType(_assetsByType);
+        setCurrencyRates(_currencyRates);
       }
     } catch (error) {
       console.error('Error loading assets:', error);
@@ -58,8 +70,15 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   }, [uid, refreshAssets]);
 
   const contextValue = useMemo(
-    () => ({ isLoading, assets, setAssets, assetsByType, refreshAssets }),
-    [isLoading, assets, assetsByType, refreshAssets]
+    () => ({
+      isLoading,
+      assets,
+      setAssets,
+      assetsByType,
+      currencyRates,
+      refreshAssets,
+    }),
+    [isLoading, assets, assetsByType, currencyRates, refreshAssets]
   );
 
   return (

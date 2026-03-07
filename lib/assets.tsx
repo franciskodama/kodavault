@@ -1,5 +1,7 @@
 'use server';
 
+import { fetchQuotesForCryptos, getCryptosData } from './crypto.server';
+import { getCurrencies } from './currency.server';
 import { getAssets } from './assets.server';
 import {
   includePriceToCashAssets,
@@ -8,6 +10,11 @@ import {
 } from './prices';
 import { UnpricedAsset } from './types';
 import { groupAssetsBySomething, includeNewKeyForCardTitle } from './utils';
+
+export const fetchCurrencies = async () => {
+  const currencyRates = await getCurrencies();
+  return currencyRates;
+};
 
 export const fetchAssetsWithoutPrices = async (userEmail: string) => {
   const assetData = await getAssets(userEmail);
