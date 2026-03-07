@@ -4,39 +4,37 @@ import { Asset } from '@/lib/types';
 import { getTotalByKey } from '@/lib/utils';
 import CryptoByWallet from './cryptos-by-wallet';
 import MessageInTable from '@/components/common/MessageInTable';
+import { Target, Tag, Layers, Coins } from 'lucide-react';
 
 export default function Main({ assets }: { assets: Asset[] }) {
   const totalByWallet = getTotalByKey(assets, 'wallet');
 
   return (
-    <div className='flex flex-col w-full gap-2'>
+    <div className='flex flex-col w-full gap-6'>
       {assets.length > 0 ? (
         <>
-          <div className='flex flex-col sm:flex-row gap-2 px-8 sm:px-0'>
-            <div className='sm:w-1/2 gap-2'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 sm:px-0'>
+            <div className='lg:col-span-2'>
               <CryptoByWallet assets={assets} totalByWallet={totalByWallet} />
             </div>
-            <div className='sm:w-1/5'>
-              <CardTotal
-                description={'Total value grouped by Coins'}
-                assets={assets}
-                customKey={'crypto'}
-                showQty={true}
-              />
-            </div>
-            <div className='sm:w-1/5'>
+            <CardTotal
+              Icon={Coins}
+              description={'Total value grouped by Coins'}
+              assets={assets}
+              customKey={'crypto'}
+              showQty={true}
+            />
+            <div className='flex flex-col gap-6'>
               <CardAssetsBy
                 assetType={'Cryptos'}
-                emoji={'🎯'}
+                Icon={Target}
                 description={'Assets by Purpose'}
                 assets={assets}
                 customKey={'purpose'}
               />
-            </div>
-            <div className='sm:w-1/5'>
               <CardAssetsBy
                 assetType={'Cryptos'}
-                emoji={'🏷️'}
+                Icon={Tag}
                 description={'Assets by Tag'}
                 assets={assets}
                 customKey={'tag'}
@@ -44,10 +42,10 @@ export default function Main({ assets }: { assets: Asset[] }) {
             </div>
           </div>
 
-          <div className='w-full'>
+          <div className='w-full px-4 sm:px-0'>
             <CardAssetsBy
               assetType={'Cryptos'}
-              emoji={'🗂️'}
+              Icon={Layers}
               description={'Assets by Category'}
               assets={assets}
               customKey={'category'}

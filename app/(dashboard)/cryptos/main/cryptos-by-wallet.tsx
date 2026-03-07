@@ -1,5 +1,4 @@
 import { v4 } from 'uuid';
-
 import {
   Tooltip,
   TooltipContent,
@@ -16,8 +15,9 @@ import {
 } from '@/components/ui/card';
 import { Asset, TotalByWallet } from '@/lib/types';
 import { numberFormatter, numberFormatterNoDecimals } from '@/lib/utils';
-
+import { PieChart, Landmark } from 'lucide-react';
 import Chart from 'react-google-charts';
+import { cn } from '@/lib/utils';
 
 export default function CryptoByWallet({
   assets,
@@ -37,26 +37,11 @@ export default function CryptoByWallet({
     return acc;
   }, {});
 
-  const sortAssetsByTotal = (objWithAssetsArrays: any) => {
-    let mainArrayWithSortedAssetsArray: any[] = [];
-    const keys: string[] = Object.keys(objWithAssetsArrays);
-
-    keys.forEach((key: string) => {
-      const sortedAssetsArray = objWithAssetsArrays[key].sort(
-        (a: Asset, b: Asset) => b!.total! - a!.total!
-      );
-      mainArrayWithSortedAssetsArray.push(sortedAssetsArray);
-    });
-    return mainArrayWithSortedAssetsArray;
-  };
-
-  const sortedAssets = sortAssetsByTotal(groupedByWallet);
-
-  const sortWalletsByLength = (groupedAssets: Asset[][]): Asset[][] => {
-    return groupedAssets.sort((a, b) => a.length - b.length);
-  };
-
-  const walletsSortedByLength = sortWalletsByLength(sortedAssets);
+  const sortedWallets = Object.keys(groupedByWallet).sort((a, b) => {
+    const totalA = totalByWallet.find((w) => w.value === a)?.total || 0;
+    const totalB = totalByWallet.find((w) => w.value === b)?.total || 0;
+    return totalB - totalA;
+  });
 
   let chartData = [];
   chartData.push(['Wallet', 'Share']);
@@ -68,194 +53,143 @@ export default function CryptoByWallet({
     is3D: true,
     sliceVisibilityThreshold: 0.02,
     legend: {
-      position: 'center',
+      position: 'bottom',
       alignment: 'center',
+      textStyle: { color: '#64748b', fontSize: 10 },
     },
-    slices: {
-      2: { offset: 0.25 },
-      3: { offset: 0.25 },
-      4: { offset: 0.25 },
-    },
-    pieStartAngle: -110,
-    animation: {
-      duration: 1000,
-      easing: 'out',
-    },
+    chartArea: { width: '90%', height: '80%' },
+    colors: [
+      '#6366f1',
+      '#8b5cf6',
+      '#a855f7',
+      '#d946ef',
+      '#ec4899',
+      '#f43f5e',
+      '#ef4444',
+      '#f97316',
+      '#f59e0b',
+      '#eab308',
+    ],
+    backgroundColor: 'transparent',
+    pieSliceTextStyle: { fontSize: 10 },
   };
 
   return (
-    <>
-      <Card className='flex-1 mb-2'>
-        <div className='flex flex-col justify-between h-full'>
-          <div className='flex flex-col'>
-            <CardHeader>
-              <CardTitle className='capitalize flex items-center justify-between'>
-                <span>Cryptos By Wallet</span>
-                <span className='text-3xl'>🍕</span>
-              </CardTitle>
-              <CardDescription className='text-xs'>
-                Total by Wallet
-              </CardDescription>
-            </CardHeader>
-            <CardContent className='flex flex-wrap gap-2 w-full'>
-              {totalByWallet
-                .sort(
-                  (a: TotalByWallet, b: TotalByWallet) => b!.total! - a!.total!
-                )
-                .map((item: TotalByWallet) => (
-                  <div
-                    key={item.value}
-                    className='border rounded-xl mb-2 p-2 grow'
-                  >
-                    <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-2'>
-                      {item.value.includes('Crypto') ? 'Crypto' : item.value}
-                    </h3>
-                    <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 p-2'>
-                      {numberFormatterNoDecimals.format(item.total)}
-                    </CardFooter>
-                  </div>
-                ))}
-              <div className='w-full'>
-                <Chart
-                  chartType='PieChart'
-                  data={chartData}
-                  options={options}
-                  width={'100%'}
-                  height={'300px'}
-                />
-              </div>
-            </CardContent>
+    <div className='flex flex-col gap-6'>
+      <Card className='border-none shadow-sm'>
+        <CardHeader className='pb-2'>
+          <CardTitle className='capitalize flex items-center justify-between'>
+            <span className='font-semibold tracking-tight text-slate-900'>
+              Portfolio Share
+            </span>
+            <PieChart size={24} className='text-slate-400' />
+          </CardTitle>
+          <CardDescription className='text-xs'>
+            Distribution by Wallet
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className='w-full'>
+            <Chart
+              chartType='PieChart'
+              data={chartData}
+              options={options}
+              width={'100%'}
+              height={'300px'}
+            />
           </div>
-        </div>
+        </CardContent>
       </Card>
 
-      <Card className='flex-1'>
-        <div className='flex flex-col justify-between h-full'>
-          <div className='flex flex-col'>
-            <CardHeader>
-              <CardTitle className='capitalize flex items-center justify-between'>
-                <span>Cryptos By Wallet</span>
-                <span className='text-3xl'>🏦</span>
-              </CardTitle>
-              <CardDescription className='text-xs'>
-                Coins by Exchanged
-              </CardDescription>
-            </CardHeader>
+      <Card className='border-none shadow-sm'>
+        <CardHeader className='pb-4'>
+          <CardTitle className='capitalize flex items-center justify-between'>
+            <span className='font-semibold tracking-tight text-slate-900'>
+              Assets By Wallet
+            </span>
+            <Landmark size={24} className='text-slate-400' />
+          </CardTitle>
+          <CardDescription className='text-xs text-slate-500'>
+            Detailed allocation per Exchange
+          </CardDescription>
+        </CardHeader>
 
-            <CardContent className='flex flex-wrap gap-2 w-full'>
-              {walletsSortedByLength.map((wallet: any) => {
-                return (
-                  <div
-                    key={wallet?.[0]?.wallet}
-                    className='border rounded-xl mb-2 p-2 grow'
-                  >
-                    <h3 className='uppercase font-bold text-md flex justify-between text-primary mt-2 mb-4'>
-                      {wallet?.[0]?.wallet}
-                    </h3>
-                    {wallet.map((item: any) => (
-                      <div key={v4()} className='flex justify-between'>
-                        <h3>{item.asset}</h3>
-                        <h3>{item.value}</h3>
-                        <div className='flex'>
-                          <p className='w-[8ch] text-right mr-4'>{`${numberFormatterNoDecimals.format(
-                            item.total
-                          )}`}</p>
-                          <p
-                            className={`text-white w-[8ch] px-1 m-1 text-center rounded-xl ${
-                              (item.total /
-                                totalByWallet[
-                                  totalByWallet.findIndex(
-                                    (item) => item.value === wallet?.[0]?.wallet
-                                  )
-                                ].total) *
-                                100 >
-                              50
-                                ? 'bg-red-500'
-                                : 'bg-green-500'
-                            }`}
-                          >
-                            {`${numberFormatter.format(
-                              (item.total /
-                                totalByWallet[
-                                  totalByWallet.findIndex(
-                                    (item) => item.value === wallet?.[0]?.wallet
-                                  )
-                                ].total) *
-                                100
-                            )}%`}
+        <CardContent className='flex flex-col gap-8'>
+          {sortedWallets.map((walletKey: string) => {
+            const walletAssets = (groupedByWallet[walletKey] as Asset[])
+              .filter((item): item is Exclude<Asset, undefined> => !!item)
+              .sort((a, b) => (b.total || 0) - (a.total || 0));
+            const walletTotal =
+              totalByWallet.find((w) => w.value === walletKey)?.total || 0;
+
+            return (
+              <div key={walletKey} className='flex flex-col gap-3'>
+                <div className='flex items-center justify-between border-b border-slate-50 pb-2'>
+                  <h3 className='text-[10px] font-bold uppercase tracking-widest text-indigo-500'>
+                    {walletKey.includes('Crypto') ? 'Crypto' : walletKey}
+                  </h3>
+                  <div className='flex items-center gap-2'>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className='text-[10px] font-bold text-slate-400 cursor-help'>
+                            ({walletAssets.length})
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{walletAssets.length} assets in this wallet</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <span className='text-[10px] font-bold text-slate-400'>
+                      {numberFormatterNoDecimals.format(walletTotal)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className='flex flex-col gap-2'>
+                  {walletAssets.map((item: any) => (
+                    <div
+                      key={v4()}
+                      className='flex justify-between items-center group/item transition-all'
+                    >
+                      <div className='flex flex-col'>
+                        <h4 className='text-sm font-medium text-slate-600 group-hover/item:text-slate-900 transition-colors'>
+                          {item.asset}
+                        </h4>
+                        {item.tag && (
+                          <p className='text-[9px] text-slate-400 font-bold uppercase'>
+                            {item.tag}
                           </p>
-                        </div>
+                        )}
                       </div>
-                    ))}
-                    <CardFooter className='flex justify-between text-xs text-slate-500 font-medium bg-slate-50 mt-2 p-2'>
-                      <h3>
-                        Subtotal
-                        {
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger>
-                                <span className='ml-1 text-xs font-thin'>
-                                  {`(${wallet.length})`}
-                                </span>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>Total of Items</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        }
-                      </h3>
-                      {numberFormatterNoDecimals.format(
-                        totalByWallet[
-                          totalByWallet.findIndex(
-                            (item) => item.value === wallet?.[0]?.wallet
-                          )
-                        ].total
-                      )}
-                    </CardFooter>
-                  </div>
-                );
-              })}
-            </CardContent>
-          </div>
-        </div>
+
+                      <div className='flex items-center gap-2'>
+                        <p className='text-sm font-medium text-slate-900 tracking-tight'>
+                          {numberFormatterNoDecimals.format(item.total)}
+                        </p>
+                        <p
+                          className={cn(
+                            'text-[10px] font-semibold w-[50px] py-1 text-center rounded-lg transition-all',
+                            (item.total / walletTotal) * 100 > 50
+                              ? 'bg-red-50 text-red-600'
+                              : 'bg-green-50 text-green-600'
+                          )}
+                        >
+                          {numberFormatter.format(
+                            (item.total / walletTotal) * 100
+                          )}
+                          %
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </CardContent>
       </Card>
-    </>
+    </div>
   );
 }
-
-const getColor = (name: string) => {
-  let color = '#FFFFFF';
-
-  switch (name) {
-    case 'Binance':
-      color = '#F3BA2F';
-      break;
-    case 'Bybit':
-      color = '#DDF906';
-      break;
-    case 'Gate.io':
-      color = 'rgb(239 68 68)';
-      break;
-    case 'Crypto':
-      color = '#0033A0';
-      break;
-    case 'Ledger':
-      color = 'hsl(222.2 47.4% 11.2%)';
-      break;
-    case 'Trezor':
-      color = 'rgb(34 197 94)';
-      break;
-    case 'BingX':
-      color = '#2D70B7';
-      break;
-    case 'Metamask':
-      color = '#F6851B';
-      break;
-    default:
-      color = '#fe00dc';
-      break;
-  }
-
-  return color;
-};
