@@ -151,7 +151,7 @@ export function GlobalClock() {
             <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 mb-0.5'>
               Live Status
             </p>
-            <CardTitle className='text-lg font-bold tracking-tight text-white'>
+            <CardTitle className='text-lg font-bold tracking-wide text-white'>
               GLOBAL CLOCK
             </CardTitle>
           </div>
@@ -194,11 +194,11 @@ export function GlobalClock() {
             <div className='flex flex-col items-end'>
               <div className='flex items-center gap-1.5 text-slate-400 group-hover:text-slate-200 transition-colors'>
                 <Clock className='w-3 h-3' />
-                <p className='text-[11px] font-bold font-mono tracking-tight'>
+                <p className='text-[11px] font-bold font-mono'>
                   {market.countdownText}
                 </p>
               </div>
-              <p className='text-[9px] text-slate-600 font-bold uppercase tracking-wider mt-0.5 group-hover:text-slate-500'>
+              <p className='text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-0.5 group-hover:text-slate-500'>
                 {market.fullName}
               </p>
             </div>

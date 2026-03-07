@@ -153,7 +153,7 @@ export default function CalendarPage() {
       </div>
 
       <div className='grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 px-4 sm:px-0'>
-        <div className='flex flex-col gap-6 order-2 lg:order-1'>
+        <div className='flex flex-col gap-4 order-2 lg:order-1'>
           <GlobalClock />
           <MarketPulse />
         </div>
