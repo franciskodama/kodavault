@@ -31,7 +31,8 @@ interface WavePoint {
 interface AnalysisData {
   waves: WavePoint[];
   interpretation: {
-    preferred_count_reasoning: string;
+    strategy_bullets?: string[];
+    preferred_count_reasoning?: string;
     rules_verified: string[];
     guidelines_observed: string;
     alternate_count?: string;
@@ -109,6 +110,7 @@ export function ElliottAIAnalyzer() {
     setImage(null);
     setResult(null);
     setError(null);
+    setAnalyzing(false);
   };
 
   return (
@@ -218,17 +220,27 @@ export function ElliottAIAnalyzer() {
                         <circle
                           cx={p.x}
                           cy={p.y}
-                          r='8'
+                          r='10'
+                          className='animate-pulse'
                           fill={p.label.match(/[1-5]/) ? '#10B981' : '#F43F5E'}
+                          stroke='white'
+                          strokeWidth='2'
                         />
                         <text
                           x={p.x}
-                          y={p.y - 20}
+                          y={p.y - 25}
                           textAnchor='middle'
                           fill='white'
-                          fontSize='36'
+                          fontSize='42'
                           fontWeight='black'
-                          className='drop-shadow-lg'
+                          className='drop-shadow-[0_0_10px_rgba(0,0,0,0.8)] filter select-none pointer-events-none'
+                          style={{
+                            paintOrder: 'stroke',
+                            stroke: 'black',
+                            strokeWidth: '4px',
+                            strokeLinecap: 'round',
+                            strokeLinejoin: 'round',
+                          }}
                         >
                           {p.label}
                         </text>
@@ -282,9 +294,34 @@ export function ElliottAIAnalyzer() {
                         Preferred Count Strategy
                       </h4>
                     </div>
-                    <p className='text-sm font-medium text-slate-300 leading-relaxed relative z-10'>
-                      {result.interpretation.preferred_count_reasoning}
-                    </p>
+                    <div className='flex flex-col gap-3 relative z-10'>
+                      {(() => {
+                        const bullets = result.interpretation.strategy_bullets;
+                        const reasoning =
+                          result.interpretation.preferred_count_reasoning;
+
+                        const displayBullets =
+                          bullets && bullets.length > 0
+                            ? bullets
+                            : reasoning
+                            ? [reasoning]
+                            : ['Analyzing wave patterns and market cycles...'];
+
+                        return displayBullets.map((bullet, idx) => (
+                          <div
+                            key={idx}
+                            className='flex gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] transition-colors group/bullet shadow-inner'
+                          >
+                            <div className='flex flex-col items-center pt-1.5 shrink-0'>
+                              <div className='w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)] group-hover/bullet:scale-125 transition-transform' />
+                            </div>
+                            <p className='text-sm font-medium text-slate-300 leading-relaxed'>
+                              {bullet}
+                            </p>
+                          </div>
+                        ));
+                      })()}
+                    </div>
                   </div>
 
                   {/* Rules & Guidelines Grid */}

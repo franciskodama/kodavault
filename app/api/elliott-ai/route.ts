@@ -14,55 +14,76 @@ export async function POST(req: NextRequest) {
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `
-  As a world-class Elliott Wave technician with expertise in deductive reasoning, analyze this chart image to determine the "preferred count." Apply the rules and guidelines from the Wave Principle rigorously to eliminate impossible scenarios and identify the most probable wave structure.
+  As an elite Elliott Wave technician, your mission is to map wave counts with architectural precision. Use the following triangulation logic and categorical rules:
 
-### 1. MOTIVE WAVE ANALYSIS (1-2-3-4-5)
-Strictly adhere to these Absolute Rules:
-- Wave 2 never moves beyond the start of Wave 1[cite: 17].
-- Wave 3 always moves beyond the end of Wave 1 and is never the shortest wave[cite: 18, 19].
-- Wave 4 never moves beyond the end of Wave 1[cite: 20].
-- Waves 1, 3, and 5 cannot all be extended simultaneously[cite: 21].
+  ### STEP 1: DEFINE THE GRID (0 to 1000)
+  - (0,0) = Top-Left pixel. (1000,1000) = Bottom-Right pixel.
+  - VISUAL MAP: Main chart body usually lives in Y=50 to Y=700. Indicators (Volume, RSI) live in Y=700 to Y=1000.
+  - X-AXIS: 0 is the left edge. 1000 is the right edge (after price labels).
 
-Apply these Guidelines for Precision:
-- Extension: Identify which wave (1, 3, or 5) is "stretched." Wave 3 is the most common extension; Wave 1 is the least[cite: 29, 32].
-- Slope: The center of Wave 3 should have the steepest slope[cite: 28].
-- Alternation: Wave 4 should be a different corrective pattern than Wave 2 (e.g., if Wave 2 is a zigzag, Wave 4 is likely a flat or triangle)[cite: 23, 24, 25].
-- Channeling: Wave 5 often ends near a parallel line drawn from Wave 3 based on the line connecting Waves 2 and 4[cite: 27].
+  ### STEP 2: TRIANGULATE COORDINATES
+  1. Find the Candle: Locate specific price bars.
+  2. Anchor to Wick: For peaks (1, 3, 5, A, C), dot the highest pixel of the upper wick. For troughs (2, 4, B), dot the lowest pixel of the lower wick.
+  3. Spatial Awareness: Place labels strictly in the Main Chart area (top 70%).
 
-### 2. CORRECTIVE WAVE ANALYSIS (A-B-C or W-X-Y)
-Identify the correction type:
-- Zigzag (5-3-5): Wave B never moves beyond the start of Wave A. Wave C usually ends beyond Wave A[cite: 72, 77].
-- Flat (3-3-5): Wave B retraces at least 90% of Wave A. Look for "Expanded Flats" where B > 100% of A and C ends beyond A[cite: 87, 91].
-- Triangles (3-3-3-3-3): Identify if it is Contracting, Barrier (B and D at the same level), or Expanding. Triangles occur only in Wave 4 or Wave B positions[cite: 93, 105, 109, 155].
-- Combinations: If a correction appears too small for the degree, look for a "Double Three" (W-X-Y)[cite: 121, 128].
+  ### STEP 3: LOGICAL HIERARCHY (CORE RULES & GUIDELINES)
 
-### 3. TECHNICAL INDICATORS & RATIOS
-- Fibonacci: Check if Wave 4 subdivides the impulse into Fibonacci proportions or if Waves 1 and 5 are equal in magnitude when Wave 3 extends[cite: 33, 37].
-- Retracements: In diagonals, Waves 2 and 4 usually retrace 0.66 to 0.81 of the preceding wave[cite: 55].
+  #### 1. MOTIVE WAVES (Dir: Larger Trend)
+  - IMPULSE RULES:
+    - Structure: Always 5 waves. Waves 1, 3, and 5 must be impulses; Wave 3 cannot be a diagonal.
+    - Wave 2: Never retraces more than 100% of Wave 1.
+    - Wave 3: Must move beyond Wave 1 and is NEVER the shortest wave.
+    - Wave 4: Never entering the price territory of Wave 1.
+    - Extensions: Typically only one subwave (1, 3, or 5) is extended.
+  - IMPULSE GUIDELINES:
+    - Alternation: Wave 4 usually differs in pattern from Wave 2.
+    - Slope: Wave 3 typically has the steepest slope.
+  - DIAGONALS (Overlap Allowed):
+    - Ending: Occur in W5 or C; all subwaves are zigzags.
+    - Leading: Occur in W1 or A.
+    - Rule: Wave 4 usually ends within Wave 1 territory.
 
-### OUTPUT REQUIREMENTS
-Return ONLY a RAW JSON object. Use (x,y) coordinates from 0-1000 where (0,0) is top-left. Align labels precisely with candle peaks/troughs.
+  #### 2. CORRECTIVE WAVES (Dir: Against Trend)
+  - ZIGZAGS (5-3-5): Wave B never exceeds start of Wave A. Wave C usually ends beyond A.
+  - FLATS (3-3-5): Subwave A is never a triangle. Wave B must retrace at least 90% of Wave A.
+    - Expanded: B > 105% of A, C ends beyond A.
+    - Running: B > 100% of A, C fails to exceed A.
+  - TRIANGLES (3-3-3-3-3): Mostly zigzags. Contracting, Barrier (B-D horizontal), or Expanding. Occur only in Wave 4 or B positions.
 
-{
-  "waves": [
-    { "label": "1", "x": 0-1000, "y": 0-1000, "type": "impulse" },
-    ...
-    { "label": "A", "x": 0-1000, "y": 0-1000, "type": "correction" }
-  ],
-  "interpretation": {
-    "preferred_count_reasoning": "Professional explanation using deductive reasoning to eliminate alternatives.",
-    "rules_verified": ["Wave 2 < 100% of W1", "W3 is not shortest", "No W4/W1 overlap"],
-    "guidelines_observed": "Notes on alternation, extensions, or Fibonacci relationships found.",
-    "alternate_count": "Brief mention of the second-best interpretation if the preferred count is violated."
+  ### STEP 4: DEDUCTIVE APPLICATION
+  - Objective Analysis: If a CORE RULE is violated, the count is objectively WRONG.
+  - Preferred Count: Interpretation satisfying the most rules/guidelines.
+  - Alternate Count: The "Plan B" if the preferred count is invalidated.
+
+  ### OUTPUT REQUIREMENTS
+  Return RAW JSON ONLY. Accuracy in 'strategy_bullets' and 'waves' is paramount.
+
+  {
+    "waves": [
+      { "label": "1", "x": numeric, "y": numeric, "type": "impulse" },
+      ...
+    ],
+    "interpretation": {
+      "strategy_bullets": [
+        "DETECTION: [Identify the asset and main boundary]",
+        "REASONING: [Explain how the rules from Step 3 were applied to eliminate alternatives]",
+        "OUTLOOK: [Summarize the current wave position and next expected move based on guidelines]"
+      ],
+      "rules_verified": ["Rule 1", "Rule 2", "Rule 3"],
+      "guidelines_observed": "Alternation, channeling, slope, or wave equality.",
+      "alternate_count": "Identify the critical level that invalidates this count."
+    }
   }
-}
     `;
+
+    const mimeType = image.split(';')[0].split(':')[1] || 'image/png';
+    const base64Data = image.split(',')[1];
 
     const imageParts = [
       {
         inlineData: {
-          data: image.split(',')[1],
-          mimeType: 'image/png',
+          data: base64Data,
+          mimeType: mimeType,
         },
       },
     ];
