@@ -173,7 +173,7 @@ export function AddShortcutForm() {
                 })}
               />
               <label className={classLabelRadio} htmlFor='add-custom'>
-                <span>Other</span>
+                <span>Other...</span>
               </label>
             </li>
           </ul>
@@ -204,11 +204,8 @@ export function AddShortcutForm() {
           )}
         </div>
 
-        <Button
-          className='mt-8 py-6 uppercase font-bold tracking-widest'
-          type='submit'
-        >
-          Add New Shortcut
+        <Button className='mt-8 py-6 font-bold tracking-wider' type='submit'>
+          Add Shortcut
         </Button>
 
         <SheetClose asChild>

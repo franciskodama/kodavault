@@ -274,7 +274,7 @@ export function DataTable<TData, TValue>({
                   variant='outline'
                   role='combobox'
                   aria-expanded={openWalletDropbox}
-                  className='sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
+                  className='border border-slate-200 sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
                 >
                   {valueWalletDropbox
                     ? wallets.find(
@@ -332,7 +332,7 @@ export function DataTable<TData, TValue>({
                   variant='outline'
                   role='combobox'
                   aria-expanded={openAccountDropbox}
-                  className='sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
+                  className='border border-slate-200 sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
                 >
                   {valueAccountDropbox
                     ? accounts.find(
@@ -390,7 +390,7 @@ export function DataTable<TData, TValue>({
                   variant='outline'
                   role='combobox'
                   aria-expanded={openCurrencyDropbox}
-                  className='sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
+                  className='border border-slate-200 sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
                 >
                   {valueCurrencyDropbox
                     ? currencies.find(
@@ -444,7 +444,7 @@ export function DataTable<TData, TValue>({
                   variant='outline'
                   role='combobox'
                   aria-expanded={openTypeDropbox}
-                  className='sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
+                  className='border border-slate-200 sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
                 >
                   {valueTypeDropbox
                     ? types.find((type) => type.value === valueTypeDropbox)

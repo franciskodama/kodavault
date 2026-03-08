@@ -175,7 +175,7 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
                   {...register('category')}
                 />
                 <label className={classLabelRadio} htmlFor='update-custom'>
-                  <span>Other</span>
+                  <span>Other...</span>
                 </label>
               </li>
             </ul>

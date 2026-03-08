@@ -12,6 +12,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { AddShortcutForm } from '@/components/forms/AddShortcutForm';
+import { Button } from '@/components/ui/button';
 
 export default async function ShortcutPage() {
   const user = await currentUser();
@@ -31,7 +32,7 @@ export default async function ShortcutPage() {
 
   return (
     <div className='flex flex-col w-full mx-auto pb-20 px-4 sm:px-8'>
-      <div className='flex items-end justify-between mt-12 mb-8'>
+      <div className='flex items-center justify-between mt-12 mb-8'>
         <div className='flex flex-col'>
           <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
             Personal Hub
@@ -44,10 +45,10 @@ export default async function ShortcutPage() {
 
         <Sheet>
           <SheetTrigger asChild>
-            <button className='flex items-center gap-2 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 shadow-lg shadow-slate-200'>
+            <Button className='gap-1' variant='outline'>
               <Plus size={16} />
               <span>Add Shortcut</span>
-            </button>
+            </Button>
           </SheetTrigger>
           <SheetContent className='max-h-screen overflow-y-auto'>
             <SheetHeader className='mb-8'>
