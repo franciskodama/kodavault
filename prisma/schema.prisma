@@ -94,7 +94,6 @@ model Shortcut {
   description String                  @default("I am for...")
   category    String?                 @default("Miscellaneous")
   from        String
-  color       color_enum_bd2ecc46?    @default(Gray)
 
   @@index([uid])
 }
@@ -147,15 +146,7 @@ enum priority_enum_593899f8 {
 }
 
 
-enum color_enum_bd2ecc46 {
-  Blue
-  Red
-  Green
-  Orange
-  Black
-  Gray
-  Pink
-}
+
 
 enum purpose_enum_ceee32b0 {
   Investment
