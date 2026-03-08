@@ -265,8 +265,9 @@ export default function Elliott() {
                       </h3>
                     </div>
                     <p className='text-sm text-slate-600 leading-relaxed italic border-l-2 border-slate-100 pl-4 py-2 mb-4'>
-                      "When you have eliminated the impossible, whatever
-                      remains... must be the truth." — Sherlock Holmes
+                      &ldquo;When you have eliminated the impossible, whatever
+                      remains... must be the truth.&rdquo; &mdash; Sherlock
+                      Holmes
                     </p>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-6'>
                       <div>
@@ -283,8 +284,8 @@ export default function Elliott() {
                           The Alternate Count
                         </h4>
                         <p className='text-xs text-slate-500'>
-                          The "Plan B" interpretation kept in reserve if the
-                          market violates a primary rule.
+                          The &ldquo;Plan B&rdquo; interpretation kept in
+                          reserve if the market violates a primary rule.
                         </p>
                       </div>
                     </div>
@@ -294,8 +295,9 @@ export default function Elliott() {
                       Rule of Objectivity
                     </h5>
                     <p className='text-[11px] text-slate-600 leading-relaxed uppercase font-medium'>
-                      Avoid "reading into" a chart what you want to see. If a
-                      rule is violated, the count is objectively wrong.
+                      Avoid &ldquo;reading into&rdquo; a chart what you want to
+                      see. If a rule is violated, the count is objectively
+                      wrong.
                     </p>
                   </div>
                 </div>

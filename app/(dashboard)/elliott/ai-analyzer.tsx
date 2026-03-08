@@ -20,6 +20,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 interface WavePoint {
   label: string;
@@ -182,10 +183,14 @@ export function ElliottAIAnalyzer() {
         ) : (
           <div className='flex flex-col gap-6'>
             <div className='relative rounded-2xl overflow-hidden border border-slate-800 group bg-black/40'>
-              <img
+              <Image
                 src={image}
                 alt='Chart to analyze'
+                width={1600}
+                height={900}
                 className='w-full h-auto block opacity-80'
+                unoptimized
+                priority
               />
 
               {/* Analysis Overlay */}
@@ -364,7 +369,7 @@ export function ElliottAIAnalyzer() {
                         Alternate Perspective
                       </h5>
                       <p className='text-xs font-medium text-amber-200/70 italic'>
-                        "{result.interpretation.alternate_count}"
+                        &ldquo;{result.interpretation.alternate_count}&rdquo;
                       </p>
                     </div>
                   )}
