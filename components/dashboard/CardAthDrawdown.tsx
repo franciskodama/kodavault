@@ -31,7 +31,12 @@ export const CardAthDrawdown = ({
   allCryptosData: AllCryptosData[] | undefined;
 }) => {
   const opportunities = useMemo(() => {
-    if (!allCryptosData || userAssets.length === 0) return [];
+    if (
+      !allCryptosData ||
+      !Array.isArray(allCryptosData) ||
+      userAssets.length === 0
+    )
+      return [];
 
     // 1. Map user assets to their market data
     const enriched = userAssets

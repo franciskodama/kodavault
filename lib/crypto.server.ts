@@ -78,9 +78,15 @@ export const getCryptosData = async () => {
     const response = await fetch(`${url}?${queryParams}`, options);
     const data = await response.json();
 
+    if (!Array.isArray(data)) {
+      console.error('Coingecko API did not return an array. Data:', data);
+      return [];
+    }
+
     return data;
   } catch (error) {
     console.error('Error fetching data:', error);
+    return [];
   }
 };
 
