@@ -71,20 +71,20 @@ export default function CalendarPage() {
 
   return (
     <div className='flex flex-col gap-1 px-8 sm:p-0 min-h-[75vh]'>
-      <div className='flex flex-col sm:flex-row justify-between items-end mb-10 px-4 sm:px-0'>
-        <div className='flex flex-col items-center justify-center w-full mt-12'>
+      <div className='flex flex-col sm:flex-row justify-between items-center mt-10 mb-10 px-4 sm:px-0'>
+        <div className='flex items-center gap-4'>
+          <div className='w-1 h-10 bg-[#22C55E] rounded-lg' />
           <div className='flex flex-col'>
-            <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
+            <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 leading-none mb-1'>
               Market Hub
             </p>
-            <h1 className='text-3xl font-bold text-slate-900 tracking-tight leading-none'>
+            <h1 className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
               Economic Calendar
             </h1>
-            <div className='w-12 h-1.5 bg-[#22C55E] rounded-full mt-6 shadow-sm shadow-green-100' />
           </div>
         </div>
 
-        <div className='flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 mb-8'>
+        <div className='flex flex-col sm:flex-row items-center justify-center gap-6 mb-8'>
           {/* Period Filter */}
           <div className='flex p-1 bg-slate-100/50 backdrop-blur-sm rounded-xl border border-slate-200/60 shadow-sm'>
             <Button

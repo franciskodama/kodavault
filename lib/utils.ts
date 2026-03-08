@@ -185,7 +185,7 @@ export const isToday = (dateStr: string) => {
 
 export const colors = [
   { name: 'Blue', code: '#1E90FF', foreground: '#FFFFFF' },
-  { name: 'Green', code: '#32CD32', foreground: '#FFFFFF' },
+  { name: 'Green', code: '#22C55E', foreground: '#FFFFFF' },
   { name: 'Red', code: '#FF4500', foreground: '#FFFFFF' },
   { name: 'Yellow', code: '#FFD700', foreground: '#000000' },
   { name: 'Purple', code: '#8A2BE2', foreground: '#FFFFFF' },

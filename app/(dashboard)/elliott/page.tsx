@@ -12,8 +12,8 @@ import { Brain, BookOpen, Lightbulb, Sparkles, RefreshCcw } from 'lucide-react';
 export default function Elliott() {
   return (
     <div className='flex flex-col w-full gap-2 px-8 sm:p-0'>
-      <div className='flex flex-col sm:flex-row justify-between items-end mb-10 px-4 sm:px-0'>
-        <div className='flex items-center gap-4 mt-8'>
+      <div className='flex flex-col sm:flex-row justify-between items-center mt-10 mb-10 px-4 sm:px-0'>
+        <div className='flex items-center gap-4'>
           <div className='w-1 h-10 bg-[#22C55E] rounded-lg' />
           <div className='flex flex-col'>
             <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 leading-none mb-1'>

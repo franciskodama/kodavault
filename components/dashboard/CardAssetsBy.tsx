@@ -89,7 +89,7 @@ export const CardAssetsBy = ({
 
               return (
                 <div key={key} className='flex flex-col gap-3'>
-                  <div className='flex items-center justify-between bg-slate-200/50 border-l-2 border-indigo-500 py-1.5 px-3 -mx-3 rounded-r-md mb-1'>
+                  <div className='flex items-center justify-between bg-slate-200/50 border-l-2 border-[#22C55E] py-1.5 px-3 -mx-3 rounded-r-md mb-1'>
                     <h3 className='text-[10px] font-black uppercase tracking-[0.15em] text-slate-700'>
                       {key}
                     </h3>
@@ -97,7 +97,7 @@ export const CardAssetsBy = ({
                       <span className='text-[9px] font-bold text-slate-400 uppercase tracking-tighter'>
                         Subtotal
                       </span>
-                      <span className='text-[11px] font-mono font-bold text-indigo-600'>
+                      <span className='text-[11px] font-mono font-bold text-[#22C55E]'>
                         {numberFormatterNoDecimals.format(groupTotal)}
                       </span>
                     </div>

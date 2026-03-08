@@ -32,15 +32,17 @@ export default async function ShortcutPage() {
 
   return (
     <div className='flex flex-col w-full mx-auto pb-20 px-4 sm:px-8'>
-      <div className='flex items-center justify-between mt-12 mb-8'>
-        <div className='flex flex-col'>
-          <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
-            Personal Hub
-          </p>
-          <h1 className='text-3xl font-bold text-slate-900 tracking-tight leading-none'>
-            Quick Access
-          </h1>
-          <div className='w-12 h-1.5 bg-[#22C55E] rounded-full mt-6 shadow-sm shadow-green-100' />
+      <div className='flex flex-col sm:flex-row justify-between items-center mt-10 px-4 sm:px-0'>
+        <div className='flex items-center gap-4'>
+          <div className='w-1 h-10 bg-[#22C55E] rounded-lg' />
+          <div className='flex flex-col'>
+            <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 leading-none mb-1'>
+              Personal Hub
+            </p>
+            <h1 className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
+              Quick Access
+            </h1>
+          </div>
         </div>
 
         <Sheet>
