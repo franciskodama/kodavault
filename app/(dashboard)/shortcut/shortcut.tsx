@@ -1,6 +1,5 @@
 import { ShortcutType } from '@/lib/types';
 import MessageInTable from '@/components/common/MessageInTable';
-import { AddShortcutForm } from '@/components/forms/AddShortcutForm';
 import { ShortcutInteractions } from './shortcut-interactions';
 
 export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
@@ -16,7 +15,6 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
 
   return (
     <>
-      <AddShortcutForm />
       {shortcuts.length > 0 ? (
         <ShortcutInteractions
           shortcutByCategory={shortcutByCategory}

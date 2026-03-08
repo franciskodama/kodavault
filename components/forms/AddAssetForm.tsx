@@ -17,7 +17,6 @@ import { cn } from '@/lib/utils';
 import {
   altcoinsCategories,
   categoryOptions,
-  cryptoWallets,
   fixedSymbolsArr,
   getAccounts,
   getCategories,

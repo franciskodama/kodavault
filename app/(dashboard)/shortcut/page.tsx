@@ -2,6 +2,16 @@ import { getShortcuts } from '@/lib/actions';
 import { Shortcut } from './shortcut';
 import { ShortcutType } from '@/lib/types';
 import { currentUser } from '@clerk/nextjs/server';
+import { Plus } from 'lucide-react';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { AddShortcutForm } from '@/components/forms/AddShortcutForm';
 
 export default async function ShortcutPage() {
   const user = await currentUser();
@@ -20,18 +30,40 @@ export default async function ShortcutPage() {
   }
 
   return (
-    <div className='flex flex-col w-full mx-auto pb-20 px-8'>
-      <div className='flex flex-col items-center justify-center mt-12 mb-12'>
-        <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
-          Personal Hub
-        </p>
-        <h1 className='text-3xl font-bold text-slate-900 tracking-tight leading-none'>
-          Quick Access
-        </h1>
-        <div className='w-12 h-1.5 bg-[#22C55E] rounded-full mt-6 shadow-sm shadow-green-100' />
+    <div className='flex flex-col w-full mx-auto pb-20 px-4 sm:px-8'>
+      <div className='flex items-end justify-between mt-12 mb-8'>
+        <div className='flex flex-col'>
+          <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
+            Personal Hub
+          </p>
+          <h1 className='text-3xl font-bold text-slate-900 tracking-tight leading-none'>
+            Quick Access
+          </h1>
+          <div className='w-12 h-1.5 bg-[#22C55E] rounded-full mt-6 shadow-sm shadow-green-100' />
+        </div>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <button className='flex items-center gap-2 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 shadow-lg shadow-slate-200'>
+              <Plus size={16} />
+              <span>Add Shortcut</span>
+            </button>
+          </SheetTrigger>
+          <SheetContent className='max-h-screen overflow-y-auto'>
+            <SheetHeader className='mb-8'>
+              <SheetTitle className='text-xl font-bold'>
+                Add New Shortcut
+              </SheetTitle>
+              <SheetDescription>
+                Create a new quick link for your personal dashboard collection.
+              </SheetDescription>
+            </SheetHeader>
+            <AddShortcutForm />
+          </SheetContent>
+        </Sheet>
       </div>
 
-      <div className='w-full px-8'>
+      <div className='w-full'>
         <Shortcut shortcuts={shortcuts} />
       </div>
     </div>
