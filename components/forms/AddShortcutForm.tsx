@@ -23,11 +23,9 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   allCategories,
-  allColors,
   categoryDisplayMap,
-  getColor,
 } from '@/app/(dashboard)/shortcut/shortcut';
-import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
+import { category_enum_f421eb4b } from '@prisma/client';
 import { classError } from '@/lib/classes';
 
 type comboOptions = {
@@ -43,9 +41,6 @@ export function AddShortcutForm() {
 
   const [openCategory, setOpenCategory] = useState(false);
   const [valueCategory, setValueCategory] = useState<string | null>(null);
-
-  const [openColor, setOpenColor] = useState(false);
-  const [valueColor, setValueColor] = useState<string | null>(null);
 
   const {
     register,
@@ -100,19 +95,6 @@ export function AddShortcutForm() {
     };
     categories.push(categoryObj);
   });
-
-  let colors: any = [];
-  allColors.map((color: string) => {
-    const colorObj = {
-      value: color,
-      label: color,
-    };
-    colors.push(colorObj);
-  });
-
-  useEffect(() => {
-    setValue('color', valueColor as color_enum_bd2ecc46 | null);
-  }, [valueColor, setValue]);
 
   useEffect(() => {
     setValue('category', valueCategory as category_enum_f421eb4b | null);
@@ -207,79 +189,6 @@ export function AddShortcutForm() {
                           <span className='text-sm font-medium capitalize'>
                             {category.label}
                           </span>
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </li>
-
-          <li className={classLi}>
-            <Popover open={openColor} onOpenChange={setOpenColor}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant='outline'
-                  role='combobox'
-                  aria-expanded={openColor}
-                  className='w-full sm:w-[150px] justify-between'
-                >
-                  {valueColor ? (
-                    <>
-                      <div
-                        className={`${
-                          valueColor && getColor(valueColor)
-                        } flex items-center justify-center w-4 h-4 rounded-full mr-2`}
-                      />
-
-                      <span className='text-sm font-bold text-slate-700 capitalize'>
-                        {
-                          colors.find(
-                            (color: comboOptions) => color.value === valueColor
-                          )?.label
-                        }
-                      </span>
-                    </>
-                  ) : (
-                    <span className='text-sm font-medium text-slate-400'>
-                      Color
-                    </span>
-                  )}
-                  <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className='p-0'>
-                <Command>
-                  <CommandList>
-                    <CommandGroup>
-                      {colors.map((color: comboOptions) => (
-                        <CommandItem
-                          key={color.value}
-                          value={color.value}
-                          onSelect={(currentValue) => {
-                            setValueColor(
-                              currentValue === valueColor ? '' : currentValue
-                            );
-                            setOpenColor(false);
-                          }}
-                          className='flex w-full text-sm'
-                        >
-                          <div
-                            className={`${getColor(
-                              color.value
-                            )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
-                          >
-                            <Check
-                              className={cn(
-                                'h-3 w-3 text-white',
-                                valueColor === color.value
-                                  ? 'opacity-100'
-                                  : 'opacity-0'
-                              )}
-                            />
-                          </div>
-                          {color.label}
                         </CommandItem>
                       ))}
                     </CommandGroup>

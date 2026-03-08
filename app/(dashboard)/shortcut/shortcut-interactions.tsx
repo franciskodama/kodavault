@@ -42,7 +42,7 @@ import {
   Users,
   Link2,
 } from 'lucide-react';
-import { getColor, categoryDisplayMap } from './shortcut';
+import { categoryDisplayMap } from './shortcut';
 
 type shortcutByCategory = {
   [key: string]: ShortcutType[];
@@ -107,13 +107,6 @@ export function ShortcutInteractions({
                           >
                             {shortcut.name}
                           </Link>
-                          {shortcut.color && (
-                            <div
-                              className={`${getColor(
-                                shortcut.color
-                              )} h-3 w-3 rounded-full ring-2 ring-white shadow-sm ring-offset-2`}
-                            />
-                          )}
                         </div>
                         <div className='flex items-center gap-2'>
                           <span className='text-[10px] px-2 py-0.5 bg-slate-100 text-slate-500 rounded-md font-bold uppercase tracking-wider'>

@@ -13,8 +13,6 @@ import { useToast } from '@/components/ui/use-toast';
 import {
   allCategories,
   categoryDisplayMap,
-  allColors,
-  getColor,
 } from '@/app/(dashboard)/shortcut/shortcut';
 import { classError } from '@/lib/classes';
 
@@ -39,7 +37,6 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
       description: shortcut?.description,
       category: shortcut?.category,
       from: shortcut?.from,
-      color: shortcut?.color,
     },
   });
 
@@ -147,33 +144,6 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
                       {categoryDisplayMap[categoriesKey] || categoriesKey}
                     </span>
                   </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className={classDiv}>
-            <h3 className={classTitle}>Color</h3>
-            <ul className={classUl}>
-              {allColors.map((color) => (
-                <li key={color}>
-                  <input
-                    className='hidden peer'
-                    type='radio'
-                    value={color}
-                    id={color}
-                    {...register('color')}
-                  />
-                  <div className='capitalize inline-flex items-center pl-4 py-1 w-full h-[2.5em] border-2 rounded-xl cursor-pointer text-sm text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100'>
-                    <div
-                      className={`${getColor(
-                        color
-                      )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
-                    />
-                    <label htmlFor={color}>
-                      <span>{color}</span>
-                    </label>
-                  </div>
                 </li>
               ))}
             </ul>

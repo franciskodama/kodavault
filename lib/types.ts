@@ -147,7 +147,6 @@ export type ShortcutType = {
   description: string;
   category: category_enum_f421eb4b | null;
   from: string;
-  color: color_enum_bd2ecc46 | null;
 };
 
 export type totalArrayProps = {
