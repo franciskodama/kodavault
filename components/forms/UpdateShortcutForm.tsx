@@ -35,10 +35,18 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
       name: shortcut?.name,
       url: shortcut?.url,
       description: shortcut?.description,
-      category: shortcut?.category,
+      category: allCategories.includes(shortcut?.category as string)
+        ? shortcut?.category
+        : 'Custom',
+      customCategory: allCategories.includes(shortcut?.category as string)
+        ? ''
+        : (shortcut?.category as string),
       from: shortcut?.from,
     },
   });
+
+  const watchCategory = watch('category');
+  const isCustom = watchCategory === 'Custom';
 
   const classInput =
     'border border-slate-200 h-10 p-2 rounded-xl w-full mt-2 text-sm';
@@ -53,7 +61,16 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
       return console.log('User not logged in 🤷🏻‍♂️');
     }
 
-    const result = await updateShortcut({ ...data, uid: uid });
+    const submissionData = {
+      ...data,
+      category:
+        data.category === 'Custom'
+          ? data.customCategory || 'Miscellaneous'
+          : data.category,
+      uid: uid,
+    };
+
+    const result = await updateShortcut(submissionData);
 
     if (result) {
       toast({
@@ -136,17 +153,50 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
                     className='hidden peer'
                     type='radio'
                     value={categoriesKey}
-                    id={categoriesKey}
+                    id={`update-${categoriesKey}`}
                     {...register('category')}
                   />
-                  <label className={classLabelRadio} htmlFor={categoriesKey}>
+                  <label
+                    className={classLabelRadio}
+                    htmlFor={`update-${categoriesKey}`}
+                  >
                     <span>
                       {categoryDisplayMap[categoriesKey] || categoriesKey}
                     </span>
                   </label>
                 </li>
               ))}
+              <li>
+                <input
+                  className='hidden peer'
+                  type='radio'
+                  value='Custom'
+                  id='update-custom'
+                  {...register('category')}
+                />
+                <label className={classLabelRadio} htmlFor='update-custom'>
+                  <span>Other</span>
+                </label>
+              </li>
             </ul>
+
+            {isCustom && (
+              <div className='mt-4 animate-in fade-in slide-in-from-top-2 duration-300'>
+                <label className={classTitle} htmlFor='customCategory'>
+                  Custom Category Name
+                </label>
+                <input
+                  id='customCategory'
+                  className={classInput}
+                  placeholder='Type your category name...'
+                  {...register('customCategory', {
+                    required: isCustom
+                      ? 'Please specify the category name'
+                      : false,
+                  })}
+                />
+              </div>
+            )}
           </div>
 
           <Button className='mt-8' type='submit'>

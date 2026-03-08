@@ -294,8 +294,6 @@ const getIcon = (key: string) => {
       return Brain;
     case 'Video':
       return PlayCircle;
-    case 'Friend':
-      return Users;
     default:
       return Link2;
   }

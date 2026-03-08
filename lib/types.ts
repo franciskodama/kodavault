@@ -145,8 +145,9 @@ export type ShortcutType = {
   uid: string;
   url: string;
   description: string;
-  category: category_enum_f421eb4b | null;
+  category: string | null;
   from: string;
+  customCategory?: string;
 };
 
 export type totalArrayProps = {

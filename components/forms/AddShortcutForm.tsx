@@ -25,8 +25,12 @@ export function AddShortcutForm() {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<ShortcutType>({});
+
+  const watchCategory = watch('category');
+  const isCustom = watchCategory === 'Custom';
 
   const classInput =
     'border border-slate-200 h-10 p-2 rounded-xl w-full mt-2 text-sm';
@@ -41,10 +45,16 @@ export function AddShortcutForm() {
       return console.log('User not logged in 🤷🏻‍♂️');
     }
 
-    const result = await addShortcut({
+    const submissionData = {
       ...data,
+      category:
+        data.category === 'Custom'
+          ? data.customCategory || 'Miscellaneous'
+          : data.category,
       uid: uid,
-    });
+    };
+
+    const result = await addShortcut(submissionData);
 
     if (result) {
       toast({
@@ -152,9 +162,45 @@ export function AddShortcutForm() {
                 </label>
               </li>
             ))}
+            <li>
+              <input
+                className='hidden peer'
+                type='radio'
+                value='Custom'
+                id='add-custom'
+                {...register('category', {
+                  required: 'Please select a category',
+                })}
+              />
+              <label className={classLabelRadio} htmlFor='add-custom'>
+                <span>Other</span>
+              </label>
+            </li>
           </ul>
+
+          {isCustom && (
+            <div className='mt-4 animate-in fade-in slide-in-from-top-2 duration-300'>
+              <label className={classTitle} htmlFor='customCategory'>
+                Custom Category Name
+              </label>
+              <input
+                id='customCategory'
+                className={classInput}
+                placeholder='Type your category name...'
+                {...register('customCategory', {
+                  required: isCustom
+                    ? 'Please specify the category name'
+                    : false,
+                })}
+              />
+            </div>
+          )}
+
           {errors.category?.message && (
             <p className={classError}>{errors.category.message}</p>
+          )}
+          {errors.customCategory?.message && (
+            <p className={classError}>{errors.customCategory.message}</p>
           )}
         </div>
 

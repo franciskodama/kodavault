@@ -52,9 +52,6 @@ export const allCategories = [
   'Miscellaneous',
   'Platform',
   'Video',
-  'Friend',
 ];
 
-export const categoryDisplayMap: Record<string, string> = {
-  Friend: 'For Friends',
-};
+export const categoryDisplayMap: Record<string, string> = {};
