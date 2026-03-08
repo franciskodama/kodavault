@@ -103,16 +103,10 @@ export function ShortcutInteractions({
                       <CategoryIcon size={20} strokeWidth={2} />
                     </div>
                     <div>
-                      <h3
-                        className='text-lg font-bold leading-tight tracking-tight'
-                        style={{ color: iconBg }}
-                      >
+                      <h3 className='text-lg font-bold leading-tight tracking-tight text-slate-900'>
                         {categoryDisplayMap[key] || key}
                       </h3>
-                      <p
-                        className='text-[10px] uppercase font-bold tracking-[0.1em] mt-0.5 opacity-60'
-                        style={{ color: iconBg }}
-                      >
+                      <p className='text-[10px] uppercase font-bold tracking-[0.1em] mt-0.5 text-slate-500'>
                         {shortcutsCount}{' '}
                         {shortcutsCount === 1 ? 'Link' : 'Links'}
                       </p>
