@@ -92,9 +92,8 @@ model Shortcut {
   url         String
   id          String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   description String                  @default("I am for...")
-  category    category_enum_f421eb4b? @default(Miscellaneous)
+  category    String?                 @default("Miscellaneous")
   from        String
-  color       color_enum_bd2ecc46?    @default(Gray)
 
   @@index([uid])
 }
@@ -146,27 +145,8 @@ enum priority_enum_593899f8 {
   Low
 }
 
-enum category_enum_f421eb4b {
-  Exchange
-  Knowledge
-  Course
-  Analysis
-  Indicator
-  Miscellaneous
-  Platform
-  Video
-  Friend
-}
 
-enum color_enum_bd2ecc46 {
-  Blue
-  Red
-  Green
-  Orange
-  Black
-  Gray
-  Pink
-}
+
 
 enum purpose_enum_ceee32b0 {
   Investment

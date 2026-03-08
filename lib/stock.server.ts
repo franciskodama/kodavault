@@ -18,11 +18,12 @@ export const fetchStockPricesFromSheets = async () => {
       .map((row) => {
         const commasRow = row.replace(/\s+/g, ',');
         const [symbol, price, currency] = commasRow.split(',');
+        const numericPrice = Number(price);
 
         return {
           symbol,
-          regularMarketPrice: Number(price),
-          currency: currency.slice(0, 3),
+          regularMarketPrice: isNaN(numericPrice) ? 0 : numericPrice,
+          currency: (currency || 'USD').slice(0, 3),
         };
       });
     return { body: data };

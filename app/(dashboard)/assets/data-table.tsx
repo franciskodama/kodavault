@@ -73,7 +73,7 @@ export function DataTable<TData, TValue>({
   typeFilterAsParam,
   purposeFilterAsParam,
 }: DataTableProps<TData, TValue>) {
-  const { assets, assetsByType, isLoading } = useAssetsContext();
+  const { assets, assetsByType, currencyRates, isLoading } = useAssetsContext();
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -274,7 +274,7 @@ export function DataTable<TData, TValue>({
                   variant='outline'
                   role='combobox'
                   aria-expanded={openWalletDropbox}
-                  className='sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
+                  className='border border-slate-200 sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
                 >
                   {valueWalletDropbox
                     ? wallets.find(
@@ -332,7 +332,7 @@ export function DataTable<TData, TValue>({
                   variant='outline'
                   role='combobox'
                   aria-expanded={openAccountDropbox}
-                  className='sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
+                  className='border border-slate-200 sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
                 >
                   {valueAccountDropbox
                     ? accounts.find(
@@ -390,7 +390,7 @@ export function DataTable<TData, TValue>({
                   variant='outline'
                   role='combobox'
                   aria-expanded={openCurrencyDropbox}
-                  className='sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
+                  className='border border-slate-200 sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
                 >
                   {valueCurrencyDropbox
                     ? currencies.find(
@@ -444,7 +444,7 @@ export function DataTable<TData, TValue>({
                   variant='outline'
                   role='combobox'
                   aria-expanded={openTypeDropbox}
-                  className='sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
+                  className='border border-slate-200 sm:ml-4 w-[20ch] justify-between font-normal text-slate-500'
                 >
                   {valueTypeDropbox
                     ? types.find((type) => type.value === valueTypeDropbox)
@@ -570,14 +570,26 @@ export function DataTable<TData, TValue>({
 
         <div className='flex items-center px-4 mt-0 mb-8'>
           {!areThereRepeatedAssets && filterIsActive ? (
-            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 bg-accent rounded-xl text-left'>
-              <>
-                <div className='flex items-center gap-2 font-semibold'>
-                  <p>Total Filtered:</p>
-                  {`$ `}
-                  {thousandFormatter(totalFilteredAssets)}
-                </div>
-              </>
+            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 bg-accent rounded-xl text-left gap-4'>
+              <div className='flex items-center gap-2 font-semibold'>
+                <p>Total Filtered:</p>
+                {`$ `}
+                {thousandFormatter(totalFilteredAssets)}
+              </div>
+
+              {valueWalletDropbox.toLowerCase() === 'wealthsimple' &&
+                currencyRates?.data?.CAD && (
+                  <div className='flex items-center gap-4'>
+                    <p className='text-slate-300'>|</p>
+                    <div className='flex items-center gap-2 font-semibold text-slate-500'>
+                      <p>Total CAD:</p>
+                      {`C$ `}
+                      {thousandFormatter(
+                        totalFilteredAssets * currencyRates.data.CAD
+                      )}
+                    </div>
+                  </div>
+                )}
             </div>
           ) : null}
 

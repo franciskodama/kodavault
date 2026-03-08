@@ -1,9 +1,4 @@
-import {
-  category_enum_6c7fcd47,
-  category_enum_f421eb4b,
-  color_enum_bd2ecc46,
-  purpose_enum_ceee32b0,
-} from '@prisma/client';
+import { category_enum_6c7fcd47, purpose_enum_ceee32b0 } from '@prisma/client';
 
 export type UnpricedAsset = {
   id: string;
@@ -145,9 +140,9 @@ export type ShortcutType = {
   uid: string;
   url: string;
   description: string;
-  category: category_enum_f421eb4b | null;
+  category: string | null;
   from: string;
-  color: color_enum_bd2ecc46 | null;
+  customCategory?: string;
 };
 
 export type totalArrayProps = {

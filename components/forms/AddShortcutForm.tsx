@@ -1,39 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useForm, SubmitHandler, Form } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { addShortcut } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { ShortcutType } from '@/lib/types';
 import { useToast } from '@/components/ui/use-toast';
-import {
-  Command,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { Check, ChevronsUpDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { SheetClose } from '@/components/ui/sheet';
 import {
   allCategories,
-  allColors,
   categoryDisplayMap,
-  getColor,
 } from '@/app/(dashboard)/shortcut/shortcut';
-import { category_enum_f421eb4b, color_enum_bd2ecc46 } from '@prisma/client';
 import { classError } from '@/lib/classes';
-
-type comboOptions = {
-  label: string;
-  value: string;
-};
 
 export function AddShortcutForm() {
   const [data, setData] = useState<ShortcutType>();
@@ -41,32 +21,40 @@ export function AddShortcutForm() {
   const { user } = useUser();
   const uid = user?.emailAddresses?.[0]?.emailAddress;
 
-  const [openCategory, setOpenCategory] = useState(false);
-  const [valueCategory, setValueCategory] = useState<string | null>(null);
-
-  const [openColor, setOpenColor] = useState(false);
-  const [valueColor, setValueColor] = useState<string | null>(null);
-
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
+    watch,
     formState: { errors },
   } = useForm<ShortcutType>({});
 
-  const classLi = 'flex flex-col w-full sm:w-auto';
-  const classInput = 'border border-slate-200 h-10 p-2 rounded-xl text-sm';
+  const watchCategory = watch('category');
+  const isCustom = watchCategory === 'Custom';
+
+  const classInput =
+    'border border-slate-200 h-10 p-2 rounded-xl w-full mt-2 text-sm';
+  const classDiv = 'my-4';
+  const classUl = 'grid grid-cols-3 gap-2';
+  const classTitle = 'font-bold mb-2 text-sm text-slate-700';
+  const classLabelRadio =
+    'capitalize inline-flex items-center justify-center py-1 w-full h-[2.5em] border-2 rounded-xl cursor-pointer text-xs text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100 transition-all duration-200';
 
   const processForm: SubmitHandler<ShortcutType> = async (data) => {
     if (!uid) {
       return console.log('User not logged in 🤷🏻‍♂️');
     }
 
-    const result = await addShortcut({
+    const submissionData = {
       ...data,
+      category:
+        data.category === 'Custom'
+          ? data.customCategory || 'Miscellaneous'
+          : data.category,
       uid: uid,
-    });
+    };
+
+    const result = await addShortcut(submissionData);
 
     if (result) {
       toast({
@@ -74,14 +62,12 @@ export function AddShortcutForm() {
         description: 'Your new shortcut is already available.',
         variant: 'success',
       });
-      console.log('Success');
     } else {
       toast({
-        title: '👻 Boho! Error occurred!',
+        title: 'Boho! Error occurred!',
         description: 'Your shortcut was NOT added.',
         variant: 'destructive',
       });
-      console.log('Error updating shortcut');
     }
 
     reset();
@@ -92,221 +78,142 @@ export function AddShortcutForm() {
     }, 2000);
   };
 
-  let categories: any = [];
-  allCategories.map((category: string) => {
-    const categoryObj = {
-      value: category,
-      label: categoryDisplayMap[category] || category,
-    };
-    categories.push(categoryObj);
-  });
-
-  let colors: any = [];
-  allColors.map((color: string) => {
-    const colorObj = {
-      value: color,
-      label: color,
-    };
-    colors.push(colorObj);
-  });
-
-  useEffect(() => {
-    setValue('color', valueColor as color_enum_bd2ecc46 | null);
-  }, [valueColor, setValue]);
-
-  useEffect(() => {
-    setValue('category', valueCategory as category_enum_f421eb4b | null);
-  }, [valueCategory, setValue]);
-
   return (
-    <>
-      <form onSubmit={handleSubmit(processForm)}>
-        <ul className='flex flex-col sm:flex-row items-start gap-2 w-full'>
-          <li className={classLi}>
-            <input
-              className={`${classInput} sm:w-[20ch]`}
-              placeholder='Title'
-              {...register('name', { required: "Title can't be empty" })}
-            />
-            {errors.name?.message && (
-              <p className={classError}>{errors.name.message}</p>
-            )}
-          </li>
+    <form onSubmit={handleSubmit(processForm)} className='pb-8'>
+      <div className='flex flex-col'>
+        <div className={classDiv}>
+          <label className={classTitle} htmlFor='name'>
+            Title
+          </label>
+          <input
+            id='name'
+            className={classInput}
+            placeholder='Shortcut Name'
+            {...register('name', { required: "Title can't be empty" })}
+          />
+          {errors.name?.message && (
+            <p className={classError}>{errors.name.message}</p>
+          )}
+        </div>
 
-          <li className={classLi}>
-            <input
-              className={`${classInput} sm:w-[20ch]`}
-              placeholder='From (ex.: Coinglass)'
-              {...register('from', { required: "From can't be empty" })}
-            />
-            {errors.from?.message && (
-              <p className={classError}>{errors.from.message}</p>
-            )}
-          </li>
+        <div className={classDiv}>
+          <label className={classTitle} htmlFor='from'>
+            From
+          </label>
+          <input
+            id='from'
+            className={classInput}
+            placeholder='Where is it from? (ex: YouTube)'
+            {...register('from', { required: "From can't be empty" })}
+          />
+          {errors.from?.message && (
+            <p className={classError}>{errors.from.message}</p>
+          )}
+        </div>
 
-          <li className={`${classLi} sm:basis-full`}>
-            <input
-              className={classInput}
-              placeholder='Url'
-              {...register('url', { required: "Url can't be empty" })}
-            />
-            {errors.url?.message && (
-              <p className={classError}>{errors.url.message}</p>
-            )}
-          </li>
+        <div className={classDiv}>
+          <label className={classTitle} htmlFor='url'>
+            URL
+          </label>
+          <input
+            id='url'
+            className={classInput}
+            placeholder='Link to the resource'
+            {...register('url', { required: "Url can't be empty" })}
+          />
+          {errors.url?.message && (
+            <p className={classError}>{errors.url.message}</p>
+          )}
+        </div>
 
-          <li className={classLi}>
-            <Popover open={openCategory} onOpenChange={setOpenCategory}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant='outline'
-                  role='combobox'
-                  aria-expanded={openCategory}
-                  className='w-full sm:w-[150px] justify-between'
-                >
-                  {valueCategory ? (
-                    <span className='text-sm font-bold text-slate-700 capitalize'>
-                      {
-                        categories.find(
-                          (category: comboOptions) =>
-                            category.value === valueCategory
-                        )?.label
-                      }
-                    </span>
-                  ) : (
-                    <span className='text-sm font-medium text-slate-400'>
-                      Category
-                    </span>
-                  )}
-                  <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className='p-0'>
-                <Command>
-                  <CommandList>
-                    <CommandGroup>
-                      {categories.map((category: comboOptions) => (
-                        <CommandItem
-                          key={category.value}
-                          value={category.value}
-                          onSelect={(currentValue) => {
-                            setValueCategory(
-                              currentValue === valueCategory ? '' : currentValue
-                            );
-                            setOpenCategory(false);
-                          }}
-                        >
-                          <Check
-                            className={cn(
-                              'mr-2 h-4 w-4',
-                              valueCategory === category.value
-                                ? 'opacity-100'
-                                : 'opacity-0'
-                            )}
-                          />
-                          <span className='text-sm font-medium capitalize'>
-                            {category.label}
-                          </span>
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </li>
+        <div className={classDiv}>
+          <label className={classTitle} htmlFor='description'>
+            Description
+          </label>
+          <input
+            id='description'
+            className={classInput}
+            placeholder='Short description of the shortcut'
+            {...register('description', {
+              required: "Description can't be empty",
+            })}
+          />
+          {errors.description?.message && (
+            <p className={classError}>{errors.description.message}</p>
+          )}
+        </div>
 
-          <li className={classLi}>
-            <Popover open={openColor} onOpenChange={setOpenColor}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant='outline'
-                  role='combobox'
-                  aria-expanded={openColor}
-                  className='w-full sm:w-[150px] justify-between'
-                >
-                  {valueColor ? (
-                    <>
-                      <div
-                        className={`${
-                          valueColor && getColor(valueColor)
-                        } flex items-center justify-center w-4 h-4 rounded-full mr-2`}
-                      />
+        <div className={classDiv}>
+          <h3 className={classTitle}>Category</h3>
+          <ul className={classUl}>
+            {allCategories.map((category) => (
+              <li key={category}>
+                <input
+                  className='hidden peer'
+                  type='radio'
+                  value={category}
+                  id={`add-${category}`}
+                  {...register('category', {
+                    required: 'Please select a category',
+                  })}
+                />
+                <label className={classLabelRadio} htmlFor={`add-${category}`}>
+                  <span>{categoryDisplayMap[category] || category}</span>
+                </label>
+              </li>
+            ))}
+            <li>
+              <input
+                className='hidden peer'
+                type='radio'
+                value='Custom'
+                id='add-custom'
+                {...register('category', {
+                  required: 'Please select a category',
+                })}
+              />
+              <label className={classLabelRadio} htmlFor='add-custom'>
+                <span>Other...</span>
+              </label>
+            </li>
+          </ul>
 
-                      <span className='text-sm font-bold text-slate-700 capitalize'>
-                        {
-                          colors.find(
-                            (color: comboOptions) => color.value === valueColor
-                          )?.label
-                        }
-                      </span>
-                    </>
-                  ) : (
-                    <span className='text-sm font-medium text-slate-400'>
-                      Color
-                    </span>
-                  )}
-                  <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className='p-0'>
-                <Command>
-                  <CommandList>
-                    <CommandGroup>
-                      {colors.map((color: comboOptions) => (
-                        <CommandItem
-                          key={color.value}
-                          value={color.value}
-                          onSelect={(currentValue) => {
-                            setValueColor(
-                              currentValue === valueColor ? '' : currentValue
-                            );
-                            setOpenColor(false);
-                          }}
-                          className='flex w-full text-sm'
-                        >
-                          <div
-                            className={`${getColor(
-                              color.value
-                            )} flex items-center justify-center w-4 h-4 rounded-full mr-2`}
-                          >
-                            <Check
-                              className={cn(
-                                'h-3 w-3 text-white',
-                                valueColor === color.value
-                                  ? 'opacity-100'
-                                  : 'opacity-0'
-                              )}
-                            />
-                          </div>
-                          {color.label}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </li>
+          {isCustom && (
+            <div className='mt-4 animate-in fade-in slide-in-from-top-2 duration-300'>
+              <label className={classTitle} htmlFor='customCategory'>
+                Custom Category Name
+              </label>
+              <input
+                id='customCategory'
+                className={classInput}
+                placeholder='Type your category name...'
+                {...register('customCategory', {
+                  required: isCustom
+                    ? 'Please specify the category name'
+                    : false,
+                })}
+              />
+            </div>
+          )}
 
-          <li className={`${classLi} w-full`}>
-            <input
-              className={classInput}
-              placeholder='Description'
-              {...register('description', {
-                required: "Description can't be empty",
-              })}
-            />
-            {errors.description?.message && (
-              <p className={classError}>{errors.description.message}</p>
-            )}
-          </li>
+          {errors.category?.message && (
+            <p className={classError}>{errors.category.message}</p>
+          )}
+          {errors.customCategory?.message && (
+            <p className={classError}>{errors.customCategory.message}</p>
+          )}
+        </div>
 
-          <li>
-            <Button variant='darkerOutline'>Add Shortcut</Button>
-          </li>
-        </ul>
-      </form>
-    </>
+        <Button className='mt-8 py-6 font-bold tracking-wider' type='submit'>
+          Add Shortcut
+        </Button>
+
+        <SheetClose asChild>
+          <Button className='my-4' variant='outline'>
+            Cancel
+          </Button>
+        </SheetClose>
+      </div>
+    </form>
   );
 }

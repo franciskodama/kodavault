@@ -1,6 +1,5 @@
 import { ShortcutType } from '@/lib/types';
 import MessageInTable from '@/components/common/MessageInTable';
-import { AddShortcutForm } from '@/components/forms/AddShortcutForm';
 import { ShortcutInteractions } from './shortcut-interactions';
 
 export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
@@ -16,7 +15,6 @@ export function Shortcut({ shortcuts }: { shortcuts: ShortcutType[] }) {
 
   return (
     <>
-      <AddShortcutForm />
       {shortcuts.length > 0 ? (
         <ShortcutInteractions
           shortcutByCategory={shortcutByCategory}
@@ -54,51 +52,6 @@ export const allCategories = [
   'Miscellaneous',
   'Platform',
   'Video',
-  'Friend',
 ];
 
-export const categoryDisplayMap: Record<string, string> = {
-  Friend: 'For Friends',
-};
-
-export const allColors = [
-  'Blue',
-  'Green',
-  'Red',
-  'Orange',
-  'Pink',
-  'Black',
-  'Gray',
-];
-
-export const getColor = (key: string) => {
-  let color = '';
-
-  switch (key) {
-    case 'Blue':
-      color = 'bg-blue-400';
-      break;
-    case 'Red':
-      color = 'bg-red-400';
-      break;
-    case 'Green':
-      color = 'bg-green-400';
-      break;
-    case 'Orange':
-      color = 'bg-orange-400';
-      break;
-    case 'Black':
-      color = 'bg-gray-900';
-      break;
-    case 'Gray':
-      color = 'bg-slate-300';
-      break;
-    case 'Pink':
-      color = 'bg-pink-400';
-      break;
-    default:
-      break;
-  }
-
-  return color;
-};
+export const categoryDisplayMap: Record<string, string> = {};

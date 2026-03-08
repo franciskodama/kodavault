@@ -31,6 +31,7 @@ import Transactions from './transactions/transactions';
 import { CardLongsAndShorts } from '@/components/dashboard/CardLongsAndShorts';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
+  ssr: false,
   loading: () => <div>Loading chart...</div>,
 });
 

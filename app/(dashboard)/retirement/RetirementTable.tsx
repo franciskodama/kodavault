@@ -159,7 +159,7 @@ export function RetirementTable({ netWorthTotal }: RetirementTableProps) {
   ]);
 
   return (
-    <div className='w-full max-w-6xl mx-auto space-y-6'>
+    <div className='w-full mx-auto space-y-6'>
       <div className='flex flex-col md:flex-row gap-1 justify-between items-center border border-slate-200 px-8 py-4 rounded-t-sm bg-white'>
         <div className='flex flex-col sm:flex-row items-center gap-1 flex-1 w-full'>
           <Input

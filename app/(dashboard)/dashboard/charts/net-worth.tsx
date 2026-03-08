@@ -178,7 +178,12 @@ export default function NetWorthChart({
       </CardHeader>
       <CardContent className='pl-0'>
         <div className='h-[350px] w-full'>
-          <ResponsiveContainer width='100%' height='100%'>
+          <ResponsiveContainer
+            width='100%'
+            height='100%'
+            minWidth={0}
+            minHeight={0}
+          >
             <LineChart
               data={chartData}
               margin={{

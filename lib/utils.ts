@@ -171,3 +171,28 @@ export const isThisWeek = (dateStr: string) => {
 
   return date >= startOfWeek && date <= endOfWeek;
 };
+
+export const isToday = (dateStr: string) => {
+  const date = new Date(dateStr);
+  const today = new Date();
+
+  return (
+    date.getUTCFullYear() === today.getFullYear() &&
+    date.getUTCMonth() === today.getMonth() &&
+    date.getUTCDate() === today.getDate()
+  );
+};
+
+export const colors = [
+  { name: 'Blue', code: '#1E90FF', foreground: '#FFFFFF' },
+  { name: 'Green', code: '#22C55E', foreground: '#FFFFFF' },
+  { name: 'Red', code: '#FF4500', foreground: '#FFFFFF' },
+  { name: 'Yellow', code: '#FFD700', foreground: '#000000' },
+  { name: 'Purple', code: '#8A2BE2', foreground: '#FFFFFF' },
+  { name: 'Orange', code: '#FFA500', foreground: '#000000' },
+  { name: 'Pink', code: '#FF69B4', foreground: '#000000' },
+  { name: 'Teal', code: '#20B2AA', foreground: '#FFFFFF' },
+  { name: 'Grey', code: '#808080', foreground: '#FFFFFF' },
+  { name: 'Brown', code: '#A52A2A', foreground: '#FFFFFF' },
+  { name: 'Black', code: '#000000', foreground: '#FFFFFF' },
+];

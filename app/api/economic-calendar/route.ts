@@ -9,6 +9,7 @@ const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const filter = searchParams.get('filter');
+  const period = searchParams.get('period') || 'this_week';
 
   // 1. Try to read from cache
   try {
@@ -19,6 +20,13 @@ export async function GET(request: Request) {
       if (now - stats.mtimeMs < CACHE_DURATION) {
         const fileContent = fs.readFileSync(CACHE_FILE, 'utf-8');
         const cachedData = JSON.parse(fileContent);
+
+        // Even with cache, if next_week is requested and not present, handle it
+        if (period === 'next_week') {
+          const mockData = generateMockData(period);
+          return NextResponse.json(applyFilter(mockData, filter));
+        }
+
         return NextResponse.json(applyFilter(cachedData, filter));
       }
     }
@@ -76,6 +84,11 @@ export async function GET(request: Request) {
         console.error('Error writing cache:', e);
       }
 
+      if (period === 'next_week') {
+        const mockData = generateMockData(period);
+        return NextResponse.json(applyFilter(mockData, filter));
+      }
+
       return NextResponse.json(applyFilter(formattedEvents, filter));
     }
 
@@ -93,7 +106,7 @@ export async function GET(request: Request) {
     } catch (e) {}
 
     // Final fallback to mock data
-    const mockData = generateMockData();
+    const mockData = generateMockData(period);
     return NextResponse.json(applyFilter(mockData, filter));
   }
 }
@@ -110,13 +123,44 @@ function applyFilter(events: any[], filter: string | null) {
   return filtered;
 }
 
-function generateMockData() {
+function generateMockData(period: string = 'this_week') {
   const today = new Date();
   const format = (d: Date) => {
     const month = String(d.getMonth() + 1).padStart(2, '0');
     const day = String(d.getDate()).padStart(2, '0');
     return `${month}-${day}-${d.getFullYear()}`;
   };
+
+  if (period === 'next_week') {
+    const nextMonday = new Date(today);
+    nextMonday.setDate(today.getDate() + ((1 + 7 - today.getDay()) % 7 || 7));
+
+    const nextWednesday = new Date(nextMonday);
+    nextWednesday.setDate(nextMonday.getDate() + 2);
+
+    return [
+      {
+        title: 'Retail Sales m/m (Next Week Preview)',
+        country: 'USD',
+        date: format(nextMonday),
+        time: '8:30am',
+        impact: 'high',
+        forecast: '0.3%',
+        previous: '0.2%',
+        actual: '',
+      },
+      {
+        title: 'FOMC Meeting Minutes (Next Week Preview)',
+        country: 'USD',
+        date: format(nextWednesday),
+        time: '2:00pm',
+        impact: 'high',
+        forecast: '-',
+        previous: '-',
+        actual: '',
+      },
+    ];
+  }
 
   return [
     {
