@@ -18,6 +18,14 @@ export async function getMonthlyBurn(uid: string) {
 
 export async function updateMonthlyBurn(uid: string, burnRate: number) {
   try {
+    // Check if user exists first to satisfy foreign key constraint if necessary,
+    // or just upsert the user record to be safe
+    await prisma.user.upsert({
+      where: { uid },
+      update: {},
+      create: { uid },
+    });
+
     await prisma.userSettings.upsert({
       where: { uid },
       update: { monthlyBurn: burnRate },
@@ -26,10 +34,17 @@ export async function updateMonthlyBurn(uid: string, burnRate: number) {
         monthlyBurn: burnRate,
       },
     });
+
     revalidatePath('/dashboard');
     return { success: true };
   } catch (error) {
     console.error('Error updating monthly burn:', error);
-    return { success: false, error };
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : 'Failed to save settings to database',
+    };
   }
 }

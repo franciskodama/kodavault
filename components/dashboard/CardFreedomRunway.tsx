@@ -38,20 +38,30 @@ export const CardFreedomRunway = ({
 
   const handleSave = async () => {
     setIsLoading(true);
-    const result = await updateMonthlyBurn(uid, monthlyBurn);
-    setIsLoading(false);
+    try {
+      const result = await updateMonthlyBurn(uid, monthlyBurn);
+      setIsLoading(false);
 
-    if (result.success) {
-      setIsEditing(false);
-      toast({
-        title: 'Settings Updated',
-        description: 'Your monthly burn rate has been saved.',
-      });
-    } else {
+      if (result.success) {
+        setIsEditing(false);
+        toast({
+          title: 'Settings Updated',
+          description: 'Your monthly burn rate has been saved.',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: result.error || 'Failed to save settings.',
+        });
+      }
+    } catch (err: any) {
+      setIsLoading(false);
+      console.error('Save error:', err);
       toast({
         variant: 'destructive',
-        title: 'Error',
-        description: 'Failed to save settings.',
+        title: 'Unexpected Error',
+        description: 'A communication error occurred. Please try again.',
       });
     }
   };
