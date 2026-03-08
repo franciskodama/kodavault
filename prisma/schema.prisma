@@ -146,17 +146,6 @@ enum priority_enum_593899f8 {
   Low
 }
 
-enum category_enum_f421eb4b {
-  Exchange
-  Knowledge
-  Course
-  Analysis
-  Indicator
-  Miscellaneous
-  Platform
-  Video
-  Friend
-}
 
 enum color_enum_bd2ecc46 {
   Blue

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cn, colors } from '@/lib/utils';
 
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import {
@@ -72,31 +73,48 @@ export function ShortcutInteractions({
 
   return (
     <div className='w-full mt-12 px-4 sm:px-0 pb-20'>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 auto-rows-min'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min'>
         {shortcutCategoriesKeys.length > 0 &&
           shortcutCategoriesKeys.map((key: string) => {
             const shortcutsCount = shortcutByCategory[key].length;
-            const colSpan =
-              shortcutsCount > 4 ? 'lg:col-span-3' : 'lg:col-span-2';
             const CategoryIcon = getIcon(key);
+            const { iconBg, iconText, border } = getCategoryColor(key);
 
             return (
               <div
                 key={key}
-                className={`${colSpan} flex flex-col bg-white/40 backdrop-blur-md border border-slate-200/60 rounded-2xl shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-500 overflow-hidden group`}
+                className={cn(
+                  'flex flex-col bg-white/40 backdrop-blur-md border rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden group',
+                  border
+                )}
               >
-                <div className='p-5 border-b border-slate-100 bg-slate-50/30 flex items-center justify-between'>
-                  <div className='flex items-center gap-8'>
-                    <div className='group-hover:scale-110 transition-transform duration-500 text-slate-400'>
-                      <CategoryIcon size={28} strokeWidth={1.2} />
+                <div
+                  className={cn(
+                    'p-5 border-b flex items-center justify-between',
+                    border
+                  )}
+                  style={{ backgroundColor: `${iconBg}10` }} // 10 is ~6% opacity in hex
+                >
+                  <div className='flex items-center gap-4'>
+                    <div
+                      className='p-2.5 rounded-xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-sm'
+                      style={{ backgroundColor: iconBg, color: iconText }}
+                    >
+                      <CategoryIcon size={20} strokeWidth={2} />
                     </div>
                     <div>
-                      <h3 className='text-lg font-bold text-slate-900 leading-tight tracking-tight'>
+                      <h3
+                        className='text-lg font-bold leading-tight tracking-tight'
+                        style={{ color: iconBg }}
+                      >
                         {categoryDisplayMap[key] || key}
                       </h3>
-                      <p className='text-xs text-slate-400 uppercase font-bold tracking-[0.1em] mt-0.5'>
+                      <p
+                        className='text-[10px] uppercase font-bold tracking-[0.1em] mt-0.5 opacity-60'
+                        style={{ color: iconBg }}
+                      >
                         {shortcutsCount}{' '}
-                        {shortcutsCount === 1 ? 'Direct Link' : 'Direct Links'}
+                        {shortcutsCount === 1 ? 'Link' : 'Links'}
                       </p>
                     </div>
                   </div>
@@ -275,6 +293,28 @@ export function ShortcutInteractions({
     </div>
   );
 }
+
+const getCategoryColor = (category: string) => {
+  const mapping: Record<string, string> = {
+    Indicator: 'Blue',
+    Analysis: 'Green',
+    Miscellaneous: 'Grey',
+    Platform: 'Purple',
+    Exchange: 'Orange',
+    Course: 'Teal',
+    Knowledge: 'Yellow',
+    Video: 'Red',
+  };
+
+  const colorName = mapping[category] || 'Teal';
+  const colorObj = colors.find((c) => c.name === colorName) || colors[7]; // Teal fallback
+
+  return {
+    iconBg: colorObj.code,
+    iconText: colorObj.foreground,
+    border: 'border-slate-100',
+  };
+};
 
 const getIcon = (key: string) => {
   switch (key) {
