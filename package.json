@@ -8,11 +8,14 @@
     "dev": "next dev --turbopack",
     "build": "next build && yarn prisma:generate",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:backup": "tsx scripts/backup-data.ts",
+    "db:restore": "tsx scripts/restore-user.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.9.6",
     "@clerk/themes": "^1.7.9",
+    "@google-cloud/storage": "^7.19.0",
     "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^3.3.2",
     "@neondatabase/serverless": "^1.0.2",
