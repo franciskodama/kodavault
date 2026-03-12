@@ -9,12 +9,14 @@ import * as path from 'path';
 import { encrypt } from './utils/encryption';
 import { uploadFile } from './utils/gcs';
 
-const connectionString = process.env.DATABASE_URL!;
-const backupSecret = process.env.BACKUP_SECRET!;
-const adapter = new PrismaNeon({ connectionString });
-const prisma = new PrismaClient({ adapter });
 
 async function main() {
+  const connectionString = process.env.DATABASE_URL!;
+  const backupSecret = process.env.BACKUP_SECRET!;
+  
+  // Initialize Prisma inside main to catch setup errors
+  const prisma = new PrismaClient();
+
   console.log('🚀 Starting Trezo Encrypted Cloud Backup...');
 
   if (!backupSecret) {
@@ -70,7 +72,11 @@ async function main() {
     console.error('❌ Backup failed:', error);
     process.exit(1);
   } finally {
-    await prisma.$disconnect();
+    // @ts-ignore
+    if (typeof prisma !== 'undefined') {
+      // @ts-ignore
+      await prisma.$disconnect();
+    }
   }
 }
 
