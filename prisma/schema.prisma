@@ -145,9 +145,6 @@ enum priority_enum_593899f8 {
   Low
 }
 
-
-
-
 enum purpose_enum_ceee32b0 {
   Investment
   Trade

@@ -1,0 +1,13 @@
+﻿id,created_at,uid,asset,projection,source,note
+2577d3a6-f336-4bf7-9cfc-13bf95f4c54e,2025-01-24T01:31:05.780Z,fk@fkodama.com,SOL,370,Vini,
+4c7985db-dc23-4ae9-b79f-8d8a97e89711,2025-01-24T01:31:34.139Z,fk@fkodama.com,LINK,40,Vini,
+48e45308-259b-434e-b646-dd41e74e5c78,2025-01-29T01:34:54.537Z,fk@fkodama.com,AAVE,500,Vini,
+35b09b3a-1936-4d32-a731-fc607a482c8a,2025-01-24T01:32:44.679Z,fk@fkodama.com,BTC,100000,Vin,
+75ede305-20d7-4554-bddd-ed5949e586d8,2025-01-29T02:53:32.545Z,fk@fkodama.com,PRIME,0,,
+2ae37d75-4a0c-4256-8019-3c24030da80c,2025-02-04T13:18:33.601Z,fk@fkodama.com,ADA,1.8,Vini,
+bb8fef89-9cb8-4cd2-87e7-631eade3469f,2025-02-04T13:20:43.513Z,fk@fkodama.com,VET,0.13,Vini,
+47a3ba61-60dc-49a8-968a-64541888f714,2025-02-04T13:21:34.886Z,fk@fkodama.com,HBAR,0.72,Vini,
+4573c34c-42f7-42f3-a567-bf929644d57c,2025-02-04T13:38:46.206Z,fk@fkodama.com,ONDO,2.63,Vini,
+af52a4bb-a881-40fe-a8bc-4004113f6d0f,2025-02-07T02:32:24.207Z,fk@fkodama.com,EGLD,0,,
+ca1a85c5-9d98-43d6-967d-a9c393894b06,2025-01-20T02:29:18.393Z,fk@fkodama.com,INJ,0,,
+8a52951d-10a2-4a58-a890-06854b32f7b2,2025-01-26T23:04:19.517Z,fk@fkodama.com,FHK,1000,Francinho,This is a test
