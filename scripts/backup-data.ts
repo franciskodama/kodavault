@@ -68,6 +68,7 @@ async function main() {
     console.log('✨ Backup process completed successfully!');
   } catch (error) {
     console.error('❌ Backup failed:', error);
+    process.exit(1);
   } finally {
     await prisma.$disconnect();
   }
