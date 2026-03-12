@@ -14,8 +14,11 @@ async function main() {
   const connectionString = process.env.DATABASE_URL!;
   const backupSecret = process.env.BACKUP_SECRET!;
   
-  // Initialize Prisma inside main to catch setup errors
-  const prisma = new PrismaClient();
+  // Initialize Prisma with the connection string explicitly
+  // @ts-ignore
+  const prisma = new PrismaClient({
+    datasourceUrl: connectionString,
+  });
 
   console.log('🚀 Starting Trezo Encrypted Cloud Backup...');
 
