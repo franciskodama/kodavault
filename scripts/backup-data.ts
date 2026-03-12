@@ -7,23 +7,27 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { encrypt } from './utils/encryption';
 import { uploadFile } from './utils/gcs';
-import { Pool } from '@neondatabase/serverless';
+
 
 
 async function main() {
-  const connectionString = process.env.DATABASE_URL!;
-  const backupSecret = process.env.BACKUP_SECRET!;
-  
-  const pool = new Pool({ connectionString });
-  const adapter = new PrismaNeon(pool);
-  const prisma = new PrismaClient({ adapter });
+  const connectionString = process.env.DATABASE_URL;
+  const backupSecret = process.env.BACKUP_SECRET;
 
-  console.log('🚀 Starting Trezo Encrypted Cloud Backup...');
+  if (!connectionString) {
+    console.error('❌ DATABASE_URL is not set in environment variables');
+    process.exit(1);
+  }
 
   if (!backupSecret) {
     console.error('❌ BACKUP_SECRET is not set in environment variables');
     process.exit(1);
   }
+  
+  const adapter = new PrismaNeon({ connectionString });
+  const prisma = new PrismaClient({ adapter });
+
+  console.log('🚀 Starting Trezo Encrypted Cloud Backup...');
 
   try {
     const data = {
