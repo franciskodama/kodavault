@@ -1,4 +1,3 @@
-// Load environment variables ASAP
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -8,17 +7,16 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { encrypt } from './utils/encryption';
 import { uploadFile } from './utils/gcs';
+import { Pool } from '@neondatabase/serverless';
 
 
 async function main() {
   const connectionString = process.env.DATABASE_URL!;
   const backupSecret = process.env.BACKUP_SECRET!;
   
-  // Initialize Prisma with the connection string explicitly
-  // @ts-ignore
-  const prisma = new PrismaClient({
-    datasourceUrl: connectionString,
-  });
+  const pool = new Pool({ connectionString });
+  const adapter = new PrismaNeon(pool);
+  const prisma = new PrismaClient({ adapter });
 
   console.log('🚀 Starting Trezo Encrypted Cloud Backup...');
 
