@@ -27,6 +27,7 @@ jobs:
       - name: Run Backup Script
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BACKUP_PASSWORD: ${{ secrets.BACKUP_PASSWORD }}
         run: npx tsx scripts/backup-data.ts
 
       - name: Commit and Push Backup
