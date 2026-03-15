@@ -140,7 +140,7 @@ export default function Heatmap() {
                       {m}
                     </th>
                   ))}
-                  <th className='py-3 px-2 font-bold text-slate-300 min-w-[70px]'>
+                  <th className='py-3 px-2 font-bold text-slate-100 min-w-[70px] border-l-2 border-slate-700/50'>
                     Total
                   </th>
                 </tr>
@@ -172,7 +172,7 @@ export default function Heatmap() {
                       })}
                       <td
                         className={cn(
-                          'py-2.5 px-1 font-bold border border-slate-900/10 transition-colors',
+                          'py-2.5 px-1 font-bold border-0 border-slate-800 border-l-[6px] border-l-slate-800 transition-colors',
                           getCellColor(yearData.total)
                         )}
                       >
@@ -191,7 +191,7 @@ export default function Heatmap() {
                     <td
                       key={i}
                       className={cn(
-                        'py-3 px-1 font-semibold border-t-2 border-slate-700/50 transition-colors text-slate-900',
+                        'py-3 px-1 font-semibold border-t-[5px] border-slate-800 transition-colors text-slate-900',
                         getCellColor(avg)
                       )}
                     >
@@ -200,7 +200,7 @@ export default function Heatmap() {
                   ))}
                   <td
                     className={cn(
-                      'py-3 px-1 font-bold border-t-2 border-slate-700/50 transition-colors text-slate-900',
+                      'py-3 px-1 font-bold border-t-[5px] border-l-[6px] border-l-slate-800 border-slate-800 transition-colors text-slate-900',
                       getCellColor(totalAverage)
                     )}
                   >
