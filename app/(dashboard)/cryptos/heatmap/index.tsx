@@ -141,7 +141,7 @@ export default function Heatmap() {
                     </th>
                   ))}
                   <th className='py-3 px-2 font-bold text-slate-100 min-w-[70px] border-l-2 border-slate-700/50'>
-                    Total
+                    Ø
                   </th>
                 </tr>
               </thead>

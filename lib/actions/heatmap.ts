@@ -31,8 +31,8 @@ export async function getMonthlyReturns(symbol: string = 'BTC-USD') {
       const year = Number(yearStr);
       returns[year] = {};
       
-      let yearlyProd = 1;
-      let hasData = false;
+      let yearlySum = 0;
+      let monthCount = 0;
       
       for (let month = 0; month < 12; month++) {
         const currentMonthPrice = monthlyPrices[year][month];
@@ -46,14 +46,14 @@ export async function getMonthlyReturns(symbol: string = 'BTC-USD') {
         if (currentMonthPrice && prevMonthPrice) {
           const ret = ((currentMonthPrice / prevMonthPrice) - 1) * 100;
           returns[year][month.toString()] = ret;
-          yearlyProd *= (currentMonthPrice / prevMonthPrice);
-          hasData = true;
+          yearlySum += ret;
+          monthCount++;
         } else {
           returns[year][month.toString()] = null;
         }
       }
-      if (hasData) {
-          returns[year]['total'] = (yearlyProd - 1) * 100;
+      if (monthCount > 0) {
+          returns[year]['total'] = yearlySum / monthCount;
       }
     }
     
