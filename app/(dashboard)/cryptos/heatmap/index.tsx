@@ -28,6 +28,13 @@ const MONTHS = [
   'Dec',
 ];
 
+const HALVING_MONTHS: Record<string, number> = {
+  '2012': 10, // November
+  '2016': 6, // July
+  '2020': 4, // May
+  '2024': 3, // April
+};
+
 export default function Heatmap() {
   const [data, setData] = useState<Record<string, any> | null>(null);
   const [loading, setLoading] = useState(true);
@@ -120,11 +127,16 @@ export default function Heatmap() {
             <span className='font-semibold tracking-tight text-slate-900'>
               BTC Monthly Returns Heatmap
             </span>
-            <CalendarDays size={24} className='text-slate-400' />
           </CardTitle>
-          <CardDescription className='text-xs text-slate-500'>
-            Historical percentage returns by month
-          </CardDescription>
+          <div className='flex items-center justify-between'>
+            <CardDescription className='text-xs text-slate-500'>
+              Historical percentage returns by month
+            </CardDescription>
+            <div className='flex items-center gap-2 text-xs text-slate-500 font-medium'>
+              <div className='w-6 h-3 border-[3px] border-[#1E90FF]'></div>
+              <span>Halving Month</span>
+            </div>
+          </div>
         </CardHeader>
 
         <CardContent>
@@ -158,12 +170,16 @@ export default function Heatmap() {
                       </td>
                       {MONTHS.map((_, i) => {
                         const val = yearData[i.toString()];
+                        const isHalving = HALVING_MONTHS[yearStr] === i;
                         return (
                           <td
                             key={i}
                             className={cn(
-                              'py-2.5 px-1 border border-slate-900/10 transition-colors',
-                              getCellColor(val)
+                              'py-2.5 px-1 transition-colors relative',
+                              getCellColor(val),
+                              isHalving
+                                ? 'ring-4 ring-[#1E90FF] ring-inset z-20 font-extrabold shadow-sm'
+                                : 'border border-slate-800'
                             )}
                           >
                             {formatPercent(val)}
