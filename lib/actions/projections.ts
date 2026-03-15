@@ -70,7 +70,7 @@ export const getProjections = async (uid: string) => {
         uid,
       },
     });
-    return projections;
+    return JSON.parse(JSON.stringify(projections));
   } catch (error) {
     console.error('Error fetching prjections:', error);
     return [];

@@ -11,9 +11,11 @@ export const getCryptoGoals = async (uid: string) => {
         uid,
       },
     });
-    return cryptoGoals;
+    // Convert Prisma objects to plain objects
+    return JSON.parse(JSON.stringify(cryptoGoals));
   } catch (error) {
-    return { error };
+    console.error('Error fetching crypto goals:', error);
+    return { error: 'Failed to fetch crypto goals' };
   }
 };
 

@@ -7,8 +7,8 @@ export const getAssets = async (uid: string) => {
         uid,
       },
     });
-    return assets;
+    return JSON.parse(JSON.stringify(assets));
   } catch (error) {
-    return { error };
+    return [];
   }
 };

@@ -12,9 +12,9 @@ export const getShortcuts = async (uid: string) => {
         uid,
       },
     });
-    return shortcuts;
+    return JSON.parse(JSON.stringify(shortcuts));
   } catch (error) {
-    return { error };
+    return { error: 'Failed to find shortcuts' };
   }
 };
 
