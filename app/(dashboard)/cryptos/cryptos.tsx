@@ -8,6 +8,7 @@ import AllocationGoals from './allocation-goals';
 import Ath from './ath';
 import Ranking from './ranking';
 import Projections from './projections';
+import Heatmap from './heatmap';
 import { Asset, CryptoWithAthAndProjections } from '@/lib/types';
 import {
   currencyFormatter,
@@ -161,6 +162,7 @@ export default function Cryptos({
                     <TabsTrigger value='ath'>ATH Estimation</TabsTrigger>
                     <TabsTrigger value='projections'>Projections</TabsTrigger>
                     <TabsTrigger value='ranking'>Ranking</TabsTrigger>
+                    <TabsTrigger value='heatmap'>Heatmap</TabsTrigger>
                   </TabsList>
 
                   <TabsContent value='main' className='flex gap-2 mt-4'>
@@ -193,6 +195,9 @@ export default function Cryptos({
                   </TabsContent>
                   <TabsContent value='ranking' className='mt-4'>
                     <Ranking allCryptosData={allCryptosData} />
+                  </TabsContent>
+                  <TabsContent value='heatmap' className='mt-4'>
+                    <Heatmap />
                   </TabsContent>
                 </Tabs>
               </div>

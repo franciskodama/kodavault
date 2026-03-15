@@ -63,8 +63,8 @@ export default function NavMenu() {
 
 const menuItems = [
   { label: 'Dashboard', href: '/dashboard', pathname: '/dashboard' },
-  { label: 'Cryptos', href: '/cryptos', pathname: '/cryptos' },
-  { label: 'Stocks', href: '/stocks', pathname: '/stocks' },
+  { label: 'Crypto', href: '/cryptos', pathname: '/cryptos' },
+  { label: 'Stock', href: '/stocks', pathname: '/stocks' },
   { label: 'Assets', href: '/assets', pathname: '/assets' },
   { label: 'Calendar', href: '/calendar', pathname: '/calendar' },
   { label: 'Elliott', href: '/elliott', pathname: '/elliott' },
