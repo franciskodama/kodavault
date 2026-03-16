@@ -1,29 +1,42 @@
 export const fetchStockPricesFromSheets = async () => {
   try {
-    const tsv = await fetch(
-      `https://docs.google.com/spreadsheets/d/e/2PACX-1vTNPEr-A9HW3VBIRr5xPBp7g00TtKXv7iwbBeO_m1eEWiYvK9t6b5JM4-styVPbaBClUbL3r2_FNl88/pub?output=tsv`,
-      {
-        method: 'GET',
-        headers: {
-          'Accept-Encoding': 'deflate',
-          'Cache-Control': 'no-cache',
-          Pragma: 'no-cache',
-          Expires: '0',
-        },
-      }
-    ).then((res) => res.text());
+    let url = process.env.SPREADSHEET_STOCK_PRICES_URL || '';
+    if (url.includes('/edit')) {
+      const urlObj = new URL(url);
+      const gid = urlObj.searchParams.get('gid');
+      url = url.split('/edit')[0] + '/export?format=tsv' + (gid ? `&gid=${gid}` : '');
+    } else if (url.includes('/pubhtml')) {
+      url = url.replace('/pubhtml', '/pub?output=tsv');
+    }
+
+    const tsv = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept-Encoding': 'deflate',
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        Expires: '0',
+      },
+    }).then((res) => res.text());
+    
     const data = tsv
       .split('\n')
       .slice(1)
+      .filter((row) => row.trim() !== '')
       .map((row) => {
-        const commasRow = row.replace(/\s+/g, ',');
-        const [symbol, price, currency] = commasRow.split(',');
-        const numericPrice = Number(price);
+        const isTsv = row.includes('\t');
+        const cols = isTsv ? row.split('\t') : row.split(',');
+        const symbol = cols[0] || '';
+        const price = cols[1] || '';
+        const currency = cols[2] || 'USD';
+        
+        const cleanPrice = price.replace(/,/g, '').trim();
+        const numericPrice = Number(cleanPrice);
 
         return {
-          symbol,
+          symbol: symbol.trim(),
           regularMarketPrice: isNaN(numericPrice) ? 0 : numericPrice,
-          currency: (currency || 'USD').slice(0, 3),
+          currency: (currency.trim() || 'USD').slice(0, 3),
         };
       });
     return { body: data };
@@ -98,31 +111,4 @@ export const fetchStockPricesFromSheets = async () => {
 //   } catch (error) {
 //     console.error(error);
 //   }
-// };
-
-// ============ HARDCODED ============================================================
-
-// export const fetchHardcodedStockPrices = async (symbols: string) => {
-//   return resultHardcoded;
-// };
-
-// const resultHardcoded: any = {
-//   body: [
-//     { symbol: 'PYPL34.SA', regularMarketPrice: 17.96, currency: 'BRL' },
-//     { symbol: 'CSU.TO', regularMarketPrice: 3841.98, currency: 'CAD' },
-//     { symbol: 'EU.V', regularMarketPrice: 5.66, currency: 'CAD' },
-//     { symbol: 'ATD.TO', regularMarketPrice: 80.14, currency: 'CAD' },
-//     { symbol: 'VFV.TO', regularMarketPrice: 130, currency: 'CAD' },
-//     { symbol: 'TSND.TO', regularMarketPrice: 2.0, currency: 'CAD' },
-//     { symbol: 'T.TO', regularMarketPrice: 22.76, currency: 'CAD' },
-//     { symbol: 'DOL.TO', regularMarketPrice: 127.12, currency: 'CAD' },
-//     { symbol: 'ATZ.TO', regularMarketPrice: 36.4, currency: 'CAD' },
-//     { symbol: 'IVVB11.SA', regularMarketPrice: 317.03, currency: 'BRL' },
-//     { symbol: 'GLXY.TO', regularMarketPrice: 16.25, currency: 'CAD' },
-//     { symbol: 'HOOD', regularMarketPrice: 22.18, currency: 'USD' },
-//     { symbol: 'KLBN11.SA', regularMarketPrice: 20, currency: 'BRL' },
-//     { symbol: 'VALE3.SA', regularMarketPrice: 60.41, currency: 'BRL' },
-//     { symbol: 'WEED.TO', regularMarketPrice: 9.63, currency: 'CAD' },
-//     { symbol: 'PETR4.SA', regularMarketPrice: 36.94, currency: 'BRL' },
-//   ],
 // };
