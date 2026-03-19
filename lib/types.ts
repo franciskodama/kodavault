@@ -153,8 +153,8 @@ export type AlertType = {
   price: number;
   exchange: string | null;
   note: string | null;
-  email: boolean;
-  whatsapp: boolean;
+  emailOptin: boolean;
+  whatsappOptin: boolean;
 };
 
 export type totalArrayProps = {

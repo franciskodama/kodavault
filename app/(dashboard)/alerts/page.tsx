@@ -1,5 +1,3 @@
-// import { getShortcuts } from '@/lib/actions';
-// import { ShortcutType } from '@/lib/types';
 import { currentUser } from '@clerk/nextjs/server';
 import { Plus } from 'lucide-react';
 import {
@@ -12,11 +10,13 @@ import {
 } from '@/components/ui/sheet';
 import { AddShortcutForm } from '@/components/forms/AddShortcutForm';
 import { Button } from '@/components/ui/button';
+import { getAlerts } from '@/lib/actions/alerts';
+import { AlertType } from '@/lib/types';
 
 export default async function AlertsPage() {
   const user = await currentUser();
   const uid = user && user.emailAddresses[0].emailAddress;
-  let alerts: AlertsType[] = [];
+  let alerts: AlertType[] = [];
 
   if (uid) {
     const result = await getAlerts(uid);

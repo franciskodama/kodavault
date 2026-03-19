@@ -3,7 +3,7 @@
 import { v4 } from 'uuid';
 import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
-import { ShortcutType } from '@/lib/types';
+import { AlertType, ShortcutType } from '@/lib/types';
 
 export const getAlerts = async (uid: string) => {
   try {
@@ -19,19 +19,21 @@ export const getAlerts = async (uid: string) => {
 };
 
 export async function addAlert(formData: AlertType) {
-  const { name, uid, url, description, category, from } = formData;
+  const { uid, asset, price, exchange, note, emailOptin, whatsappOptin } =
+    formData;
 
   try {
-    await prisma.shortcut.create({
+    await prisma.alert.create({
       data: {
         id: v4(),
-        created_at: new Date(),
-        name,
         uid,
-        url,
-        description,
-        category,
-        from,
+        created_at: new Date(),
+        asset,
+        price,
+        exchange,
+        note,
+        emailOptin,
+        whatsappOptin,
       },
     });
     return true;
@@ -41,18 +43,9 @@ export async function addAlert(formData: AlertType) {
   }
 }
 
-//   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-//   uid        String
-//   created_at DateTime @default(now()) @db.Timestamptz(6)
-//   asset      String
-//   price      Float    @default(0)
-//   exchange   String?
-//   note       String?
-//   email      Boolean  @default(true)
-//   whatsapp   Boolean  @default(true)
-
-export async function updateAlert(formData: ShortcutType) {
-  const { id, name, uid, url, description, category, from } = formData;
+export async function updateAlert(formData: AlertType) {
+  const { id, uid, asset, price, exchange, note, emailOptin, whatsappOptin } =
+    formData;
 
   try {
     await prisma.alert.update({
@@ -63,10 +56,12 @@ export async function updateAlert(formData: ShortcutType) {
         id,
         created_at: new Date(),
         uid,
-        url,
-        description,
-        category,
-        from,
+        asset,
+        price,
+        exchange,
+        note,
+        emailOptin,
+        whatsappOptin,
       },
     });
     return true;
