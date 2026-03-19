@@ -36,10 +36,10 @@ export default async function AlertsPage() {
           <div className='w-1 h-10 bg-[#22C55E] rounded-lg' />
           <div className='flex flex-col'>
             <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 leading-none mb-1'>
-              Personal Hub
+              Notification Hub
             </p>
             <h1 className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
-              Quick Access
+              Alerts by Emails and WhatsApp
             </h1>
           </div>
         </div>
@@ -48,16 +48,17 @@ export default async function AlertsPage() {
           <SheetTrigger asChild>
             <Button className='gap-1' variant='outline'>
               <Plus size={16} />
-              <span>Add Shortcut</span>
+              <span>Add Alert</span>
             </Button>
           </SheetTrigger>
           <SheetContent className='max-h-screen overflow-y-auto'>
             <SheetHeader className='mb-8'>
               <SheetTitle className='text-xl font-bold'>
-                Add New Shortcut
+                Add New Alert
               </SheetTitle>
               <SheetDescription>
-                Create a new quick link for your personal dashboard collection.
+                Create a new alert to notify you when a specific price is
+                reached.
               </SheetDescription>
             </SheetHeader>
             <AddShortcutForm />
@@ -65,9 +66,7 @@ export default async function AlertsPage() {
         </Sheet>
       </div>
 
-      <div className='w-full'>
-        <Shortcut shortcuts={shortcuts} />
-      </div>
+      <div className='w-full'>{/* <Shortcut shortcuts={shortcuts} /> */}</div>
     </div>
   );
 }
