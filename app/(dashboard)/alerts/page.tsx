@@ -12,6 +12,7 @@ import { AddShortcutForm } from '@/components/forms/AddShortcutForm';
 import { Button } from '@/components/ui/button';
 import { getAlerts } from '@/lib/actions/alerts';
 import { AlertType } from '@/lib/types';
+import { AddAlertForm } from '@/components/forms/AddAlertForm';
 
 export default async function AlertsPage() {
   const user = await currentUser();
@@ -61,7 +62,7 @@ export default async function AlertsPage() {
                 reached.
               </SheetDescription>
             </SheetHeader>
-            <AddShortcutForm />
+            <AddAlertForm />
           </SheetContent>
         </Sheet>
       </div>

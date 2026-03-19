@@ -145,7 +145,7 @@ model Alert {
   created_at DateTime @default(now()) @db.Timestamptz(6)
   asset      String
   price      Float    @default(0)
-  exchange   String?
+  type       String
   note       String?
   emailOptin Boolean  @default(true)
   whatsappOptin Boolean  @default(true)
