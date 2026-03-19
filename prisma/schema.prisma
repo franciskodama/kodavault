@@ -147,6 +147,8 @@ model Alert {
   price      Float    @default(0)
   exchange   String?
   note       String?
+  email      Boolean  @default(true)
+  whatsapp   Boolean  @default(true)
 
   @@unique([uid, asset], name: "uid_asset")
   @@index([uid])

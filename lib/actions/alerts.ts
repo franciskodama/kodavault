@@ -14,11 +14,11 @@ export const getAlerts = async (uid: string) => {
     });
     return JSON.parse(JSON.stringify(alerts));
   } catch (error) {
-    return { error: 'Failed to find shortcuts' };
+    return { error: 'Failed to find alerts' };
   }
 };
 
-export async function addAlert(formData: ShortcutType) {
+export async function addAlert(formData: AlertType) {
   const { name, uid, url, description, category, from } = formData;
 
   try {
@@ -41,18 +41,27 @@ export async function addAlert(formData: ShortcutType) {
   }
 }
 
-export async function updateShortcut(formData: ShortcutType) {
+//   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   uid        String
+//   created_at DateTime @default(now()) @db.Timestamptz(6)
+//   asset      String
+//   price      Float    @default(0)
+//   exchange   String?
+//   note       String?
+//   email      Boolean  @default(true)
+//   whatsapp   Boolean  @default(true)
+
+export async function updateAlert(formData: ShortcutType) {
   const { id, name, uid, url, description, category, from } = formData;
 
   try {
-    await prisma.shortcut.update({
+    await prisma.alert.update({
       where: {
         id,
       },
       data: {
         id,
         created_at: new Date(),
-        name,
         uid,
         url,
         description,
@@ -67,9 +76,9 @@ export async function updateShortcut(formData: ShortcutType) {
   }
 }
 
-export async function deleteShortcut(id: string) {
+export async function deleteAlert(id: string) {
   try {
-    await prisma.shortcut.delete({
+    await prisma.alert.delete({
       where: {
         id,
       },

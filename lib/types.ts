@@ -145,6 +145,18 @@ export type ShortcutType = {
   customCategory?: string;
 };
 
+export type AlertType = {
+  id: string;
+  uid: string;
+  created_at: Date;
+  asset: string;
+  price: number;
+  exchange: string | null;
+  note: string | null;
+  email: boolean;
+  whatsapp: boolean;
+};
+
 export type totalArrayProps = {
   currency: string;
   value: number;
