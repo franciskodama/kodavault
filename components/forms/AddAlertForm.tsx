@@ -37,6 +37,8 @@ export function AddAlertForm() {
   const classLabelRadio =
     'capitalize inline-flex items-center justify-center py-1 w-full h-[2.5em] border-2 rounded-xl cursor-pointer text-xs text-primary border-gray-200 peer-checked:font-bold peer-checked:border-slate-500 peer-checked:text-primary peer-checked:bg-accent hover:text-slate-600 hover:bg-gray-100 transition-all duration-200';
 
+  const typeOptions = ['Crypto', 'Stock'];
+
   const processForm: SubmitHandler<AlertType> = async (data) => {
     if (!uid) {
       return console.log('User not logged in 🤷🏻‍♂️');
@@ -44,25 +46,21 @@ export function AddAlertForm() {
 
     const submissionData = {
       ...data,
-      //   category:
-      //     data.category === 'Custom'
-      //       ? data.customCategory || 'Miscellaneous'
-      //       : data.category,
-      uid: uid,
+      uid,
     };
 
     const result = await addAlert(submissionData);
 
     if (result) {
       toast({
-        title: 'Shortcut added! 🎉',
+        title: 'Alert added! 🎉',
         description: 'Your new alert is already available.',
         variant: 'success',
       });
     } else {
       toast({
         title: 'Boho! Error occurred!',
-        description: 'Your alert was NOT added.',
+        description: 'Your Alert was NOT added.',
         variant: 'destructive',
       });
     }
@@ -78,6 +76,26 @@ export function AddAlertForm() {
   return (
     <form onSubmit={handleSubmit(processForm)} className='pb-8'>
       <div className='flex flex-col'>
+        <div className={classDiv}>
+          <h3 className={classTitle}>Type</h3>
+          <ul className={classUl}>
+            {typeOptions.map((type: string) => (
+              <li key={type}>
+                <input
+                  className='hidden peer'
+                  type='radio'
+                  value={type}
+                  id={type}
+                  {...register('type')}
+                />
+                <label className={classLabelRadio} htmlFor={type}>
+                  <span>{type}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div className={classDiv}>
           <label className={classTitle} htmlFor='asset'>
             Asset

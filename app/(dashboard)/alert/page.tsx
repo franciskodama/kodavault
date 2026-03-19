@@ -8,13 +8,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { AddShortcutForm } from '@/components/forms/AddShortcutForm';
 import { Button } from '@/components/ui/button';
 import { getAlerts } from '@/lib/actions/alerts';
 import { AlertType } from '@/lib/types';
 import { AddAlertForm } from '@/components/forms/AddAlertForm';
+import { Alert } from './alert';
 
-export default async function AlertsPage() {
+export default async function AlertPage() {
   const user = await currentUser();
   const uid = user && user.emailAddresses[0].emailAddress;
   let alerts: AlertType[] = [];
@@ -67,7 +67,9 @@ export default async function AlertsPage() {
         </Sheet>
       </div>
 
-      <div className='w-full'>{/* <Shortcut shortcuts={shortcuts} /> */}</div>
+      <div className='w-full'>
+        <Alert alerts={alerts} />
+      </div>
     </div>
   );
 }

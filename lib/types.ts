@@ -151,7 +151,7 @@ export type AlertType = {
   created_at: Date;
   asset: string;
   price: number;
-  exchange: string | null;
+  type: string;
   note: string | null;
   emailOptin: boolean;
   whatsappOptin: boolean;

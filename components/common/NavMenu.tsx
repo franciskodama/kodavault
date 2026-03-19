@@ -66,7 +66,7 @@ const menuItems = [
   { label: 'Crypto', href: '/cryptos', pathname: '/cryptos' },
   { label: 'Stock', href: '/stocks', pathname: '/stocks' },
   { label: 'Assets', href: '/assets', pathname: '/assets' },
-  { label: 'Alerts', href: '/alerts', pathname: '/alerts' },
+  { label: 'Alert', href: '/alert', pathname: '/alert' },
   { label: 'Calendar', href: '/calendar', pathname: '/calendar' },
   { label: 'Elliott', href: '/elliott', pathname: '/elliott' },
   { label: 'Shortcut', href: '/shortcut', pathname: '/shortcut' },

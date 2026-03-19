@@ -3,7 +3,7 @@
 import { v4 } from 'uuid';
 import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
-import { AlertType, ShortcutType } from '@/lib/types';
+import { AlertType } from '@/lib/types';
 
 export const getAlerts = async (uid: string) => {
   try {
@@ -19,8 +19,7 @@ export const getAlerts = async (uid: string) => {
 };
 
 export async function addAlert(formData: AlertType) {
-  const { uid, asset, price, exchange, note, emailOptin, whatsappOptin } =
-    formData;
+  const { uid, asset, price, type, note, emailOptin, whatsappOptin } = formData;
 
   try {
     await prisma.alert.create({
@@ -30,7 +29,7 @@ export async function addAlert(formData: AlertType) {
         created_at: new Date(),
         asset,
         price,
-        exchange,
+        type,
         note,
         emailOptin,
         whatsappOptin,
@@ -44,7 +43,7 @@ export async function addAlert(formData: AlertType) {
 }
 
 export async function updateAlert(formData: AlertType) {
-  const { id, uid, asset, price, exchange, note, emailOptin, whatsappOptin } =
+  const { id, uid, asset, price, type, note, emailOptin, whatsappOptin } =
     formData;
 
   try {
@@ -58,7 +57,7 @@ export async function updateAlert(formData: AlertType) {
         uid,
         asset,
         price,
-        exchange,
+        type,
         note,
         emailOptin,
         whatsappOptin,
