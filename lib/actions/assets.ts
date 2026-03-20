@@ -27,7 +27,7 @@ export async function addAsset(formData: Inputs) {
       data: {
         id: v4(),
         created_at: new Date(),
-        asset,
+        asset: asset.toUpperCase(),
         qty: Number(qty),
         wallet,
         type,

@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { getAlerts } from '@/lib/actions/alerts';
+import { getAlerts } from '@/lib/actions/alert';
 import { AlertType } from '@/lib/types';
 import { AddAlertForm } from '@/components/forms/AddAlertForm';
 import { Alert } from './alert';
@@ -32,7 +32,7 @@ export default async function AlertPage() {
 
   return (
     <div className='flex flex-col w-full mx-auto pb-20 px-4 sm:px-8'>
-      <div className='flex flex-col sm:flex-row justify-between items-center mt-10 px-4 sm:px-0'>
+      <div className='flex flex-col sm:flex-row justify-between items-center mt-10 mb-10 px-4 sm:px-0'>
         <div className='flex items-center gap-4'>
           <div className='w-1 h-10 bg-[#22C55E] rounded-lg' />
           <div className='flex flex-col'>

@@ -150,7 +150,7 @@ export type AlertType = {
   uid: string;
   created_at: Date;
   asset: string;
-  price: number;
+  price: number | string;
   type: string;
   note: string | null;
   emailOptin: boolean;

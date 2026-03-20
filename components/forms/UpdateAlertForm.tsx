@@ -9,12 +9,12 @@ import { AlertType } from '@/lib/types';
 import { useToast } from '@/components/ui/use-toast';
 import { SheetClose } from '@/components/ui/sheet';
 import { classError } from '@/lib/classes';
-import { addAlert } from '@/lib/actions/alert';
+import { updateAlert } from '@/lib/actions/alert';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Controller } from 'react-hook-form';
 
-export function AddAlertForm() {
+export function UpdateAlertForm({ alert }: { alert: AlertType }) {
   const [data, setData] = useState<AlertType>();
   const { toast } = useToast();
   const { user } = useUser();
@@ -27,7 +27,9 @@ export function AddAlertForm() {
     watch,
     control,
     formState: { errors },
-  } = useForm<AlertType>({});
+  } = useForm<AlertType>({
+    defaultValues: alert,
+  });
 
   const classInput =
     'border border-slate-200 h-10 p-2 rounded-xl w-full mt-2 text-sm';
@@ -46,21 +48,22 @@ export function AddAlertForm() {
 
     const submissionData = {
       ...formData,
+      id: alert.id,
       uid,
     };
 
-    const result = await addAlert(submissionData);
+    const result = await updateAlert(submissionData);
 
     if (result) {
       toast({
-        title: 'Alert added! 🎉',
-        description: 'Your new alert is already available.',
+        title: 'Alert updated! 🎉',
+        description: 'Your alert has been successfully updated.',
         variant: 'success',
       });
     } else {
       toast({
         title: 'Boho! Error occurred!',
-        description: 'Your Alert was NOT added.',
+        description: 'Your Alert was NOT updated.',
         variant: 'destructive',
       });
     }
@@ -85,10 +88,13 @@ export function AddAlertForm() {
                   className='hidden peer'
                   type='radio'
                   value={type}
-                  id={type}
+                  id={`update-${type}-${alert.id}`}
                   {...register('type')}
                 />
-                <label className={classLabelRadio} htmlFor={type}>
+                <label
+                  className={classLabelRadio}
+                  htmlFor={`update-${type}-${alert.id}`}
+                >
                   <span>{type}</span>
                 </label>
               </li>
@@ -97,11 +103,11 @@ export function AddAlertForm() {
         </div>
 
         <div className={classDiv}>
-          <label className={classTitle} htmlFor='asset'>
+          <label className={classTitle} htmlFor={`asset-${alert.id}`}>
             Asset
           </label>
           <input
-            id='asset'
+            id={`asset-${alert.id}`}
             className={classInput}
             placeholder='Asset'
             {...register('asset', { required: "Asset can't be empty" })}
@@ -112,11 +118,11 @@ export function AddAlertForm() {
         </div>
 
         <div className={classDiv}>
-          <label className={classTitle} htmlFor='price'>
+          <label className={classTitle} htmlFor={`price-${alert.id}`}>
             Price
           </label>
           <input
-            id='price'
+            id={`price-${alert.id}`}
             className={classInput}
             placeholder='When Asset reaches this Price'
             {...register('price', { required: "Price can't be empty" })}
@@ -127,11 +133,11 @@ export function AddAlertForm() {
         </div>
 
         <div className={classDiv}>
-          <label className={classTitle} htmlFor='note'>
+          <label className={classTitle} htmlFor={`note-${alert.id}`}>
             Note (optional)
           </label>
           <textarea
-            id='note'
+            id={`note-${alert.id}`}
             className={classInput}
             style={{ height: '100px' }}
             placeholder='Some notes...'
@@ -146,17 +152,16 @@ export function AddAlertForm() {
           <Controller
             name='emailOptin'
             control={control}
-            defaultValue={true}
             render={({ field }) => (
               <Checkbox
-                id='emailOptin'
+                id={`emailOptin-${alert.id}`}
                 className='h-6 w-6 border-slate-300 transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
                 checked={field.value}
                 onCheckedChange={field.onChange}
               />
             )}
           />
-          <Label htmlFor='emailOptin' className='font-bold'>
+          <Label htmlFor={`emailOptin-${alert.id}`} className='font-bold'>
             Email Notification
           </Label>
         </div>
@@ -165,23 +170,22 @@ export function AddAlertForm() {
           <Controller
             name='whatsappOptin'
             control={control}
-            defaultValue={true}
             render={({ field }) => (
               <Checkbox
-                id='whatsappOptin'
+                id={`whatsappOptin-${alert.id}`}
                 className='h-6 w-6 border-slate-300 transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
                 checked={field.value}
                 onCheckedChange={field.onChange}
               />
             )}
           />
-          <Label htmlFor='whatsappOptin' className='font-bold'>
+          <Label htmlFor={`whatsappOptin-${alert.id}`} className='font-bold'>
             Whatsapp Notification
           </Label>
         </div>
 
         <Button className='mt-8 py-6 font-bold tracking-wider' type='submit'>
-          Add Alert
+          Update Alert
         </Button>
 
         <SheetClose asChild>
