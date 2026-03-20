@@ -9,15 +9,18 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import { Asset, TotalByWallet } from '@/lib/types';
-import { numberFormatter, numberFormatterNoDecimals } from '@/lib/utils';
+import {
+  numberFormatter,
+  numberFormatterNoDecimals,
+  cn,
+  colors,
+} from '@/lib/utils';
 import { PieChart, Landmark } from 'lucide-react';
 import Chart from 'react-google-charts';
-import { cn } from '@/lib/utils';
 
 export default function CryptoByWallet({
   assets,
@@ -58,18 +61,7 @@ export default function CryptoByWallet({
       textStyle: { color: '#64748b', fontSize: 10 },
     },
     chartArea: { width: '90%', height: '80%' },
-    colors: [
-      '#6366f1',
-      '#8b5cf6',
-      '#a855f7',
-      '#d946ef',
-      '#ec4899',
-      '#f43f5e',
-      '#ef4444',
-      '#f97316',
-      '#f59e0b',
-      '#eab308',
-    ],
+    colors: colors.map((c) => c.code),
     backgroundColor: 'transparent',
     pieSliceTextStyle: { fontSize: 10 },
   };

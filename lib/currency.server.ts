@@ -2,29 +2,47 @@ import { Currency, Currencies } from './types';
 
 export const getCurrencies = async (): Promise<Currencies> => {
   try {
-    const csv = await fetch(
-      `https://docs.google.com/spreadsheets/d/e/2PACX-1vRXhHkYpkVB8nx8Ws7Q4h8g6q7MJg-rotoQemAfPdRWXhWHJWjivg7fcDw4m-9YxnQvPyxEkwpTKopW/pub?gid=0&single=true&output=csv`,
-      {
-        method: 'GET',
-        headers: {
-          'Accept-Encoding': 'deflate',
-          'Cache-Control': 'no-cache',
-          Pragma: 'no-cache',
-          Expires: '0',
-        },
-      }
-    ).then((res) => res.text());
+    let url = process.env.SPREADSHEET_CURRENCY_URL || '';
+    if (url.includes('/edit')) {
+      const urlObj = new URL(url);
+      const gid = urlObj.searchParams.get('gid');
+      url = url.split('/edit')[0] + '/export?format=csv' + (gid ? `&gid=${gid}` : '');
+    } else if (url.includes('/pubhtml')) {
+      url = url.replace('/pubhtml', '/pub?output=csv');
+    }
+
+    const csv = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept-Encoding': 'deflate',
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        Expires: '0',
+      },
+    }).then((res) => res.text());
+    
     const data = csv
       .split('\n')
       .slice(1)
+      .filter((row) => row.trim() !== '')
       .map((row) => {
-        const [coin, price] = row.split(',');
-        return { coin, price: Number(price) };
+        const isTsv = row.includes('\t');
+        const cols = isTsv ? row.split('\t') : row.split(',');
+        const coin = cols[0]?.trim() || '';
+        const priceStr = cols[1]?.trim() || '0';
+        
+        // Remove quotes or extra commas from numbers
+        const cleanPrice = priceStr.replace(/"/g, '').replace(/,/g, '');
+        const price = Number(cleanPrice);
+
+        return { coin, price: isNaN(price) ? 0 : price };
       });
 
     const result = data.reduce<Currency>((acc, { coin, price }) => {
-      const currencyCode = coin.slice(-3);
-      acc[currencyCode] = price;
+      if (coin) {
+        const currencyCode = coin.slice(-3);
+        acc[currencyCode] = price;
+      }
       return acc;
     }, {});
 

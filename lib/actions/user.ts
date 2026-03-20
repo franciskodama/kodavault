@@ -15,6 +15,6 @@ export const getUids = async () => {
 
     return uids;
   } catch (error) {
-    return { error };
+    return { error: 'Failed to fetch uids' };
   }
 };

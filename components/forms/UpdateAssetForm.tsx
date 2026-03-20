@@ -33,7 +33,13 @@ import {
   classUl,
 } from '@/lib/classes';
 
-export function UpdateAssetForm({ asset }: { asset: Asset }) {
+export function UpdateAssetForm({
+  asset,
+  isReviewed,
+}: {
+  asset: Asset;
+  isReviewed?: boolean;
+}) {
   const { refreshAssets } = useAssetsContext();
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
@@ -64,7 +70,7 @@ export function UpdateAssetForm({ asset }: { asset: Asset }) {
       purpose: asset?.purpose,
       category: asset?.category,
       tag: asset?.tag,
-      reviewed: asset?.reviewed,
+      reviewed: isReviewed || asset?.reviewed,
     },
   });
 

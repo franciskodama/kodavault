@@ -46,6 +46,7 @@ import {
   Link2,
   ExternalLink,
   Info,
+  Eye,
 } from 'lucide-react';
 import { categoryDisplayMap } from './shortcut';
 
@@ -145,7 +146,7 @@ export function ShortcutInteractions({
                                   : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'
                               }`}
                             >
-                              <Info size={14} />
+                              <Eye size={14} />
                             </button>
                           </div>
 

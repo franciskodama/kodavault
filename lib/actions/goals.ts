@@ -27,7 +27,7 @@ export const getGoal = async (uid: string) => {
         uid,
       },
     });
-    return goal;
+    return JSON.parse(JSON.stringify(goal));
   } catch (error) {
     console.error('Error fetching net worth evolution:', error);
     return [];

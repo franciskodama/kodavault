@@ -326,7 +326,10 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
                   Modify the details of your existing asset.
                 </SheetDescription>
               </SheetHeader>
-              <UpdateAssetForm asset={asset} />
+              <UpdateAssetForm
+                asset={asset}
+                isReviewed={isAssetReviewed(asset.id)}
+              />
             </SheetContent>
           </Sheet>
           <AlertDialog>

@@ -215,48 +215,6 @@ export function AddAssetForm() {
               </ul>
             </div>
 
-            {/* --- CONSOLIDATED ACCOUNT SECTION --- */}
-            {/* <div className={classDiv}>
-              {assetWallet.includes(watch('wallet')) ||
-              cryptoWallets.includes(watch('wallet')) ? (
-                <div>
-                  <h3 className={classTitle}>Account</h3>
-                  <ul className={classUl}>
-                    {assetAccount.map((accountOption) => (
-                      <li key={accountOption}>
-                        <input
-                          className='hidden peer'
-                          type='radio'
-                          value={accountOption}
-                          id={accountOption}
-                          {...register('account', {
-                            required: 'Please select an account',
-                          })}
-                        />
-                        <label
-                          className={classLabelRadio}
-                          htmlFor={accountOption}
-                        >
-                          <span>{accountOption}</span>
-                        </label>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : (
-                <div>
-                  <input
-                    className='hidden peer'
-                    value={'-'}
-                    {...register('account')}
-                  />
-                </div>
-              )}
-              {errors.account && (
-                <p className={classError}>{errors.account.message}</p>
-              )}
-            </div> */}
-
             {assetWallet.includes(watch('wallet')) ||
             watch('wallet') === 'Wealthsimple' ? (
               <div className={classDiv}>
