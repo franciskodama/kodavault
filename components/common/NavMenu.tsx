@@ -65,6 +65,7 @@ const menuItems = [
   { label: 'Dashboard', href: '/dashboard', pathname: '/dashboard' },
   { label: 'Crypto', href: '/cryptos', pathname: '/cryptos' },
   { label: 'Stock', href: '/stocks', pathname: '/stocks' },
+  { label: 'Radar', href: '/radar', pathname: '/radar' },
   { label: 'Assets', href: '/assets', pathname: '/assets' },
   { label: 'Alert', href: '/alert', pathname: '/alert' },
   { label: 'Calendar', href: '/calendar', pathname: '/calendar' },
