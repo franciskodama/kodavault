@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RadarCoin, fetchRadarData } from './actions';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,12 +22,18 @@ export default function RadarTable({ initialData }: { initialData: RadarCoin[] }
   const [data, setData] = useState<RadarCoin[]>(initialData);
   const [loading, setLoading] = useState(false);
   const [sortConfig, setSortConfig] = useState<SortConfig>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setLastUpdated(new Date());
+  }, []);
 
   const handleRefresh = async () => {
     setLoading(true);
     try {
       const newData = await fetchRadarData();
       setData(newData);
+      setLastUpdated(new Date());
     } catch (err) {
       console.error('Failed to fetch radar data', err);
     } finally {
@@ -80,10 +86,17 @@ export default function RadarTable({ initialData }: { initialData: RadarCoin[] }
         <p className='text-muted-foreground text-sm flex-1'>
           Showing Top {data.length} USDT Perpetual Contracts by 24h Volume
         </p>
-        <Button onClick={handleRefresh} disabled={loading} className='gap-2'>
-          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-          Refresh
-        </Button>
+        <div className='flex items-center gap-4'>
+          {lastUpdated && (
+            <p className='text-xs text-muted-foreground'>
+              Last updated: {lastUpdated.toLocaleString()}
+            </p>
+          )}
+          <Button onClick={handleRefresh} disabled={loading} className='gap-2'>
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+        </div>
       </div>
 
       <div className='rounded-md border'>
