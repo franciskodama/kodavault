@@ -92,11 +92,11 @@ export default function RadarTable({
 
   return (
     <div className='flex flex-col gap-4'>
-      <div className='flex justify-between items-center'>
+      <div className='flex justify-between items-end'>
         <p className='text-muted-foreground text-sm flex-1'>
           Showing Top {data.length} USDT Perpetual Contracts by 24h Volume
         </p>
-        <div className='flex items-center gap-8'>
+        <div className='flex items-end gap-8'>
           {lastUpdated && (
             <div className='flex flex-col items-end text-xs text-muted-foreground'>
               <p>Last updated:</p>
@@ -205,7 +205,7 @@ export default function RadarTable({
                   {formatFundingRate(coin.fundingRate)}
                 </TableCell>
                 <TableCell>
-                  <div className='flex items-center justify-end gap-3'>
+                  <div className='flex items-center justify-end gap-2'>
                     <a
                       href={`https://www.tradingview.com/chart/?symbol=BYBIT:${coin.symbol}.P`}
                       target='_blank'
@@ -213,16 +213,26 @@ export default function RadarTable({
                       title={`Open ${coin.symbol} on TradingView (Bybit)`}
                       className='opacity-70 hover:opacity-100 transition-opacity'
                     >
-                      <img src='/logo/tradingview.svg' onError={(e) => { e.currentTarget.src = 'https://www.tradingview.com/favicon.ico' }} alt='TradingView' className='w-5 h-5' />
+                      <img
+                        src='https://www.tradingview.com/favicon.ico'
+                        alt='TradingView'
+                        className='w-5 h-5 rounded-full'
+                      />
                     </a>
                     <a
-                      href={`https://coinalyze.net/${coin.symbol.replace('USDT', '').toLowerCase()}/usdt/binance/${coin.symbol.toLowerCase()}_perp/price-chart-live/`}
+                      href={`https://coinalyze.net/${
+                        coin.coingeckoId
+                      }/usdt/binance/${coin.symbol.toLowerCase()}_perp/price-chart-live/`}
                       target='_blank'
                       rel='noreferrer'
                       title={`Open ${coin.symbol} on Coinalyze`}
                       className='opacity-70 hover:opacity-100 transition-opacity'
                     >
-                      <img src='https://coinalyze.net/favicon.ico' alt='Coinalyze' className='w-5 h-5 rounded-full' />
+                      <img
+                        src='https://coinalyze.net/favicon.ico'
+                        alt='Coinalyze'
+                        className='w-5 h-5 rounded-full'
+                      />
                     </a>
                   </div>
                 </TableCell>

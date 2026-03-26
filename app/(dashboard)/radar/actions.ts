@@ -2,6 +2,7 @@
 
 export type RadarCoin = {
   symbol: string;
+  coingeckoId: string;
   price: number;
   priceChg1h: number; // Ticker only gives 24h change, but for 1h we need klines. Let's just give 24h for now or try to fetch 1h price.
   volume: number;
@@ -15,6 +16,39 @@ export type RadarCoin = {
 
 export async function fetchRadarData(): Promise<RadarCoin[]> {
   try {
+    // Fetch CoinGecko List for Coinalyze URL mapping
+    let cgMap = new Map<string, string>();
+    try {
+      // 1. Use markets API ordered by market cap to prioritize dominant coins (e.g. BTC -> bitcoin, TAO -> bittensor)
+      const [cgRes1, cgRes2] = await Promise.all([
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1', { cache: 'force-cache' }),
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=2', { cache: 'force-cache' })
+      ]);
+      if (cgRes1.ok && cgRes2.ok) {
+        const [cgList1, cgList2] = await Promise.all([cgRes1.json(), cgRes2.json()]);
+        const cgList = [...(Array.isArray(cgList1) ? cgList1 : []), ...(Array.isArray(cgList2) ? cgList2 : [])];
+        
+        cgList.forEach((c: any) => {
+          const sym = c.symbol.toLowerCase();
+          if (!cgMap.has(sym)) cgMap.set(sym, c.id);
+        });
+      }
+
+      // 2. Backfill with the complete list for smaller/obscure coins (only assigning if the ticker wasn't already mapped)
+      const cgResAll = await fetch('https://api.coingecko.com/api/v3/coins/list', { cache: 'force-cache' });
+      if (cgResAll.ok) {
+        const cgListAll = await cgResAll.json();
+        if (Array.isArray(cgListAll)) {
+          cgListAll.forEach((c: any) => {
+            const sym = c.symbol.toLowerCase();
+            if (!cgMap.has(sym)) cgMap.set(sym, c.id);
+          });
+        }
+      }
+    } catch {
+      console.warn("Could not fetch CoinGecko mapping");
+    }
+
     // 1. Fetch 24h Ticker to get top 150 coins by volume
     const tickerRes = await fetch('https://fapi.binance.com/fapi/v1/ticker/24hr', { cache: 'no-store' });
     const tickers = await tickerRes.json();
@@ -77,6 +111,7 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
           
           return {
             symbol,
+            coingeckoId: cgMap.get(symbol.replace('USDT', '').toLowerCase()) || symbol.replace('USDT', '').toLowerCase(),
             price: parseFloat(ticker.lastPrice),
             priceChg1h: parseFloat(ticker.priceChangePercent), // Using 24h for now since 1h requires klines
             volume: parseFloat(ticker.volume),
