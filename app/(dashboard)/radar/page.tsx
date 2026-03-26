@@ -6,6 +6,8 @@ export const metadata = {
   description: 'Advanced data visualization and analysis tool',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function RadarPage() {
   const initialData = await fetchRadarData();
 
