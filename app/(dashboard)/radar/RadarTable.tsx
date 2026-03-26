@@ -12,7 +12,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { ArrowUpDown, RefreshCw } from 'lucide-react';
-import { div } from 'three/src/nodes/math/OperatorNode.js';
 
 type SortConfig = {
   key: keyof RadarCoin;
@@ -169,6 +168,7 @@ export default function RadarTable({
               >
                 Funding Rate <ArrowUpDown className='inline w-3 h-3 ml-1' />
               </TableHead>
+              <TableHead className='w-[80px]'></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -204,11 +204,33 @@ export default function RadarTable({
                 <TableCell className='text-right'>
                   {formatFundingRate(coin.fundingRate)}
                 </TableCell>
+                <TableCell>
+                  <div className='flex items-center justify-end gap-3'>
+                    <a
+                      href={`https://www.tradingview.com/chart/?symbol=BYBIT:${coin.symbol}.P`}
+                      target='_blank'
+                      rel='noreferrer'
+                      title={`Open ${coin.symbol} on TradingView (Bybit)`}
+                      className='opacity-70 hover:opacity-100 transition-opacity'
+                    >
+                      <img src='/logo/tradingview.svg' onError={(e) => { e.currentTarget.src = 'https://www.tradingview.com/favicon.ico' }} alt='TradingView' className='w-5 h-5' />
+                    </a>
+                    <a
+                      href={`https://coinalyze.net/${coin.symbol.replace('USDT', '').toLowerCase()}/usdt/binance/${coin.symbol.toLowerCase()}_perp/price-chart-live/`}
+                      target='_blank'
+                      rel='noreferrer'
+                      title={`Open ${coin.symbol} on Coinalyze`}
+                      className='opacity-70 hover:opacity-100 transition-opacity'
+                    >
+                      <img src='https://coinalyze.net/favicon.ico' alt='Coinalyze' className='w-5 h-5 rounded-full' />
+                    </a>
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
             {sortedData.length === 0 && (
               <TableRow>
-                <TableCell colSpan={9} className='text-center py-6'>
+                <TableCell colSpan={10} className='text-center py-6'>
                   No data available. Click Refresh to fetch.
                 </TableCell>
               </TableRow>
