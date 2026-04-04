@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 import { AuthProvider } from './providers';
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from '@/components/ui/toaster';
 
 export default function RootLayout({
   children,
@@ -27,7 +27,7 @@ export default function RootLayout({
       <html lang='en' className={outfit.className}>
         <body className='bg-[#FAFAFB] text-sm text-slate-600'>
           <div className='max-w-[1400px] mx-auto'>{children}</div>
-          <Toaster position="top-right" richColors />
+          <Toaster />
         </body>
       </html>
     </AuthProvider>

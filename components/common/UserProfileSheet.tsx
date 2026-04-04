@@ -15,12 +15,15 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { LogOut, User, Check, Loader2, Edit2 } from 'lucide-react';
+import { LogOut, Check, Loader2 } from 'lucide-react';
 import { updateUserName } from '@/lib/actions/user';
-import { toast } from 'sonner';
+import { useToast } from '@/components/ui/use-toast';
+import { classInput } from '@/lib/classes';
+import { cn } from '@/lib/utils';
 
 export default function UserProfileSheet() {
   const { data: session, update } = useSession();
+  const { toast } = useToast();
   const [isUpdating, setIsUpdating] = useState(false);
   const [newName, setNewName] = useState(session?.user?.name || '');
   const [isOpen, setIsOpen] = useState(false);
@@ -42,12 +45,24 @@ export default function UserProfileSheet() {
             name: newName,
           },
         });
-        toast.success('Name updated successfully!');
+        toast({
+          title: 'Name updated! 🎉',
+          description: 'Your new display name is now active.',
+          variant: 'success',
+        });
       } else {
-        toast.error(result.error || 'Failed to update name');
+        toast({
+          title: 'Update failed',
+          description: result.error || 'Failed to update name',
+          variant: 'destructive',
+        });
       }
     } catch (error) {
-      toast.error('An unexpected error occurred');
+      toast({
+        title: 'Error',
+        description: 'An unexpected error occurred',
+        variant: 'destructive',
+      });
     } finally {
       setIsUpdating(false);
     }
@@ -59,11 +74,11 @@ export default function UserProfileSheet() {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Avatar className='cursor-pointer hover:opacity-80 transition-opacity border-2 border-slate-100 w-9 h-9'>
-            <AvatarImage
-              src={session?.user?.image || (session?.user as any)?.picture || ''}
-              alt={session?.user?.name || 'User'}
-            />
+        <Avatar className='cursor-pointer hover:opacity-80 transition-opacity border-2 border-slate-100 w-12 h-12'>
+          <AvatarImage
+            src={session?.user?.image || (session?.user as any)?.picture || ''}
+            alt={session?.user?.name || 'User'}
+          />
           <AvatarFallback className='bg-slate-200 text-slate-700 font-bold uppercase text-xs'>
             {userInitial}
           </AvatarFallback>
@@ -73,7 +88,6 @@ export default function UserProfileSheet() {
       <SheetContent className='sm:max-w-md bg-white'>
         <SheetHeader className='mb-8'>
           <SheetTitle className='text-2xl font-bold flex items-center gap-3'>
-            <User className='w-6 h-6 text-slate-800' />
             Your Profile
           </SheetTitle>
           <SheetDescription>
@@ -81,10 +95,12 @@ export default function UserProfileSheet() {
           </SheetDescription>
         </SheetHeader>
 
-        <div className='flex flex-col items-center gap-6 py-8 border-y border-slate-100'>
-          <Avatar className='w-24 h-24 border-4 border-slate-50 shadow-lg'>
+        <div className='flex flex-col items-center gap-6 py-8'>
+          <Avatar className='w-32 h-32 border-4 border-slate-50 shadow-lg'>
             <AvatarImage
-              src={session?.user?.image || (session?.user as any)?.picture || ''}
+              src={
+                session?.user?.image || (session?.user as any)?.picture || ''
+              }
               alt={session?.user?.name || 'User'}
             />
             <AvatarFallback className='bg-slate-100 text-slate-800 text-3xl font-bold uppercase'>
@@ -106,7 +122,7 @@ export default function UserProfileSheet() {
               htmlFor='name'
               className='text-slate-700 font-semibold text-sm'
             >
-              DisplayName / Personal Name
+              Display Name
             </Label>
             <div className='relative group'>
               <Input
@@ -114,7 +130,7 @@ export default function UserProfileSheet() {
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 placeholder='What should we call you?'
-                className='pr-12 py-6 border-slate-200 rounded-xl focus:ring-slate-400 hover:border-slate-300 transition-all font-medium'
+                className={cn(classInput, 'pr-12')}
               />
               <Button
                 size='sm'
@@ -136,7 +152,7 @@ export default function UserProfileSheet() {
                 )}
               </Button>
             </div>
-            <p className='text-[11px] text-slate-400 pl-1 italic'>
+            <p className='text-[14px] text-slate-400 pl-1'>
               This is how you'll be greeted throughout the application.
             </p>
           </div>
