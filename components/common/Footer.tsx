@@ -16,7 +16,7 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import { HeartHandshake, PocketKnife, Shield, Terminal, X } from 'lucide-react';
 import { AlertDialogCancel } from '@radix-ui/react-alert-dialog';
-import { menuItems } from './NavMenu';
+import { mainItems, toolItems } from './NavMenu';
 
 export default function Footer() {
   const { data: session } = useSession();
@@ -47,7 +47,7 @@ export default function Footer() {
               </h4>
             </div>
             <div className='flex flex-wrap content-start leading-6 gap-1'>
-              {menuItems.map((item) => (
+              {[...mainItems, ...toolItems].map((item: any) => (
                 <Link key={item.label} href={item.href}>
                   <p className='text-white text-left w-[20ch] underline-offset-4 hover:underline'>
                     {item.label}
