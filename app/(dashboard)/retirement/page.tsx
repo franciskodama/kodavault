@@ -1,10 +1,11 @@
-import { currentUser } from '@clerk/nextjs/server';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import { RetirementTable } from '@/app/(dashboard)/retirement/RetirementTable';
 import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
 
 export default async function Retirement() {
-  const user = await currentUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const session = await getServerSession(authOptions);
+  const uid = session?.user?.email;
 
   const unpricedAssets = await fetchAssetsWithoutPrices(uid ? uid : '');
   const { assets } = await fetchAssetsWithPrices(unpricedAssets);

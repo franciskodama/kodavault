@@ -13,7 +13,6 @@
 //   numberFormatter,
 // } from '@/lib/utils';
 // import { Asset } from '@/lib/types';
-// import { useUser } from '@clerk/nextjs';
 // import { useEffect, useState } from 'react';
 // import { getCryptoGoals } from '@/lib/actions';
 

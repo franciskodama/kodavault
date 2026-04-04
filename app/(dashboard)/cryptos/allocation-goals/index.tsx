@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { v4 } from 'uuid';
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 
 import {
   Card,
@@ -47,20 +47,20 @@ export default function AllocationGoals({
 }) {
   const [cryptoGoals, setCryptoGoals] = useState<CryptoGoals[]>([]);
   const [totalByCoin, setTotalByCoin] = useState<TotalByCoin[]>([]);
-  const { user } = useUser();
+  const { data: session } = useSession();
   let uid: string | undefined = '';
   let sumGoals: number = 0;
-
-  if (user) {
-    uid = user.emailAddresses[0].emailAddress;
+  
+  if (session) {
+    uid = session.user?.email || "";
   }
 
   useEffect(() => {
     const fetchCryptoGoals = async () => {
-      if (user) {
+      if (session?.user?.email) {
         try {
           const fetchedGoals = await getCryptoGoals(
-            user.emailAddresses[0].emailAddress
+            session.user.email
           );
           if ('error' in fetchedGoals) {
             console.error('Error fetching crypto goals:', fetchedGoals.error);
@@ -74,7 +74,7 @@ export default function AllocationGoals({
       }
     };
     fetchCryptoGoals();
-  }, [user]);
+  }, [session]);
 
   useEffect(() => {
     if (assets) {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Asset, Inputs } from '@/lib/types';
@@ -43,8 +43,8 @@ export function UpdateAssetForm({
   const { refreshAssets } = useAssetsContext();
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
-  const { user } = useUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const { data: session } = useSession();
+  const uid = session?.user?.email;
   const closeRef = useRef<HTMLButtonElement>(null);
 
   const {

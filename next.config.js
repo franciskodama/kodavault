@@ -16,6 +16,22 @@ const nextConfig = {
             protocol: "https",
             hostname: "coin-images.coingecko.com",
           },
+          {
+            protocol: "https",
+            hostname: "www.gstatic.com",
+          },
+          {
+            protocol: "https",
+            hostname: "img.clerk.com",
+          },
+          {
+            protocol: "https",
+            hostname: "images.clerk.dev",
+          },
+          {
+            protocol: "https",
+            hostname: "avatars.githubusercontent.com",
+          },
         ],
       },
 }

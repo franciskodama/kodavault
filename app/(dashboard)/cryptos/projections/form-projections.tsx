@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { CryptoProjection, CryptoWithAthAndProjections } from '@/lib/types';
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -20,8 +20,8 @@ export const FormProjections = ({
 }) => {
   const { refreshAssets } = useAssetsContext();
   const { toast } = useToast();
-  const { user } = useUser();
-  const uid = user?.emailAddresses[0]?.emailAddress;
+  const { data: session } = useSession();
+  const uid = session?.user?.email;
 
   const {
     register,

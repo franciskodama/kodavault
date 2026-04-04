@@ -1,4 +1,5 @@
-import { currentUser } from '@clerk/nextjs/server';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 
 import { fetchAssetsWithoutPrices, fetchAssetsWithPrices } from '@/lib/assets';
 import { getGoal, getKeyAssets, getNetWorthEvolution } from '@/lib/actions';
@@ -12,9 +13,14 @@ import { KeyAsset } from '@prisma/client';
 import { KeyAssetsPriced } from '@/lib/types';
 
 export default async function DashboardPage() {
-  const user = await currentUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
-  const userName = user?.firstName;
+  const session = await getServerSession(authOptions);
+  
+  if (!session) {
+    return null;
+  }
+
+  const uid = session.user?.email || "";
+  const userName = session.user?.name || session.user?.email?.split('@')[0] || "User";
 
   // USD + CAD + BRL
   const currencyRates = await getCurrencies();

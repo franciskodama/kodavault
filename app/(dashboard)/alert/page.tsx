@@ -1,4 +1,5 @@
-import { currentUser } from '@clerk/nextjs/server';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import { Plus } from 'lucide-react';
 import {
   Sheet,
@@ -15,8 +16,8 @@ import { AddAlertForm } from '@/components/forms/AddAlertForm';
 import { Alert } from './alert';
 
 export default async function AlertPage() {
-  const user = await currentUser();
-  const uid = user && user.emailAddresses[0].emailAddress;
+  const session = await getServerSession(authOptions);
+  const uid = session?.user?.email;
   let alerts: AlertType[] = [];
 
   if (uid) {

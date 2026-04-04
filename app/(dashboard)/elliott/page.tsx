@@ -7,7 +7,15 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import HtmlTable from './table-html';
 import { ElliottAIAnalyzer } from './ai-analyzer';
-import { Brain, BookOpen, Lightbulb, Sparkles, RefreshCcw } from 'lucide-react';
+import {
+  Brain,
+  BookOpen,
+  Lightbulb,
+  Sparkles,
+  RefreshCcw,
+  Puzzle,
+  PuzzleIcon,
+} from 'lucide-react';
 
 export default function Elliott() {
   return (
@@ -35,6 +43,15 @@ export default function Elliott() {
             <Brain className='w-4 h-4' />
             <span className='font-bold uppercase tracking-wider text-[10px]'>
               Elliott AI Vision
+            </span>
+          </TabsTrigger>
+          <TabsTrigger
+            value='pieces'
+            className='flex items-center gap-2 px-6 py-2 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all'
+          >
+            <PuzzleIcon className='w-4 h-4' />
+            <span className='font-bold uppercase tracking-wider text-[10px]'>
+              Elliott by Pieces
             </span>
           </TabsTrigger>
           <TabsTrigger

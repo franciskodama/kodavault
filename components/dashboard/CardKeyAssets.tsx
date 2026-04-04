@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PackagePlusIcon, PencilIcon, Trash2Icon, Key } from 'lucide-react';
 import { v4 } from 'uuid';
@@ -123,8 +123,8 @@ export function DialogEditKeyAssets({
   keyAssetsState: KeyAssetsPriced[];
   setKeyAssetsState: (data: KeyAssetsPriced[]) => void;
 }) {
-  const { user } = useUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const { data: session } = useSession();
+  const uid = session?.user?.email ?? '';
   const { assets } = useAssetsContext();
 
   const {

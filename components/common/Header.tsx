@@ -1,15 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { UserButton, useUser } from '@clerk/nextjs';
-
+import { useSession, signOut } from 'next-auth/react';
 import NavMenu from './NavMenu';
 import Link from 'next/link';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Button } from '@/components/ui/button';
 
 export default function Header() {
-  const { user } = useUser();
-  const greeting = getGreeting(user?.firstName ? user.firstName : '');
+  const { data: session } = useSession();
+  const userName = session?.user?.name?.split(' ')[0] || session?.user?.email?.split('@')[0];
+  const greeting = getGreeting(userName ? userName : '');
 
   return (
     <div className='flex justify-between m-4 p-4'>
@@ -24,13 +24,26 @@ export default function Header() {
       </Link>
       <div className='flex items-center'>
         <NavMenu />
-        {user?.firstName ? (
+        {userName ? (
           <h4 className='ml-12 mr-4 font-semibold text-sm'>
             {greeting}
             <span className='ml-2 text-xl'>{getEmoji(greeting)}</span>
           </h4>
         ) : null}
-        <UserButton />
+        {session ? (
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => signOut({ callbackUrl: '/sign-in' })}
+            className="text-xs font-semibold"
+          >
+            Sign Out
+          </Button>
+        ) : (
+          <Link href="/sign-in">
+            <Button variant="outline" size="sm">Sign In</Button>
+          </Link>
+        )}
       </div>
     </div>
   );

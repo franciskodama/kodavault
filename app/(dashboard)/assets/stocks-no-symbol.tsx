@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 import { Bomb, MessageCircle, X } from 'lucide-react';
 
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -14,7 +14,8 @@ export default function StocksNoSymbol({
   stocksNoTotal: Asset[];
   setOpenNotification: (value: boolean) => void;
 }) {
-  const firstName = useUser().user?.firstName;
+  const { data: session } = useSession();
+  const firstName = session?.user?.name?.split(' ')[0] || session?.user?.email?.split('@')[0];
   const symbols = stocksNoTotal.map((stock: Asset) => stock?.asset);
 
   const handleClickMessageButton = () => {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { ShortcutType } from '@/lib/types';
@@ -19,8 +19,8 @@ import { classError } from '@/lib/classes';
 export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
   const [data, setData] = useState<ShortcutType>();
   const { toast } = useToast();
-  const { user } = useUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const { data: session } = useSession();
+  const uid = session?.user?.email;
 
   const {
     register,
