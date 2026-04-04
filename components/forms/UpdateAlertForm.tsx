@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
@@ -17,8 +17,8 @@ import { Controller } from 'react-hook-form';
 export function UpdateAlertForm({ alert }: { alert: AlertType }) {
   const [data, setData] = useState<AlertType>();
   const { toast } = useToast();
-  const { user } = useUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const { data: session } = useSession();
+  const uid = session?.user?.email;
 
   const {
     register,
@@ -49,7 +49,7 @@ export function UpdateAlertForm({ alert }: { alert: AlertType }) {
     const submissionData = {
       ...formData,
       id: alert.id,
-      uid,
+      uid: uid || '',
     };
 
     const result = await updateAlert(submissionData);

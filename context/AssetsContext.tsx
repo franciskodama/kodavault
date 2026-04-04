@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 import {
   createContext,
   useContext,
@@ -33,8 +33,8 @@ export function AssetsProvider({ children }: { children: React.ReactNode }) {
   const [currencyRates, setCurrencyRates] = useState<Currencies | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { user } = useUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const { data: session } = useSession();
+  const uid = session?.user?.email;
 
   const refreshAssets = useCallback(async () => {
     try {

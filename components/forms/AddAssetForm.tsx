@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Inputs } from '@/lib/types';
@@ -44,8 +44,8 @@ export function AddAssetForm() {
   const { refreshAssets } = useAssetsContext();
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
-  const { user } = useUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const { data: session } = useSession();
+  const uid = session?.user?.email;
   const closeRef = useRef<HTMLButtonElement>(null);
 
   const {
@@ -113,7 +113,7 @@ export function AddAssetForm() {
 
     const result = await addAsset({
       ...formData,
-      uid: uid,
+      uid: uid || '',
       type: assetType ? assetType : '',
       tag: formData.tag?.trim() === '' ? 'No Tag' : formData.tag,
     });

@@ -1,6 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
-
+import { useSession } from 'next-auth/react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,17 +16,11 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import { HeartHandshake, PocketKnife, Shield, Terminal, X } from 'lucide-react';
 import { AlertDialogCancel } from '@radix-ui/react-alert-dialog';
-
-const menuItems = [
-  { label: 'Dashboard', href: '/dashboard' },
-  { label: 'Cryptos', href: '/cryptos' },
-  { label: 'Stocks', href: '/stocks' },
-  { label: 'Assets', href: '/assets' },
-  { label: 'Shortcuts', href: '/shortcut' },
-  { label: 'Goals', href: '/goals' },
-];
+import { mainItems, toolItems } from './NavMenu';
 
 export default function Footer() {
+  const { data: session } = useSession();
+
   return (
     <Card className='px-4 py-4 bg-slate-600 text-white text-sm w-full'>
       <CardContent className='flex flex-col sm:flex-row gap-12 items-start justify-between p-4'>
@@ -37,28 +33,30 @@ export default function Footer() {
           </div>
           <p className='pr-4 max-w-80 text-sm font-light'>
             This app was originally created to simplify my life, achieve more,
-            and practice my skills as a software developer. Now, it’s here to
-            help you do the same. One feature at a time. Enjoy!
+            and practice my skills as a technical product manager and software
+            developer. Now, it’s here to help you do the same. One feature at a
+            time. Enjoy!
           </p>
         </div>
-
-        <div className='flex flex-col w-full sm:w-2/5 gap-2'>
-          <div className='flex items-center gap-2 mb-2'>
-            <PocketKnife size={18} color='#ecc94b' />
-            <h4 className='font-semibold text-yellow-500 uppercase'>
-              Features
-            </h4>
+        {session && (
+          <div className='flex flex-col w-full sm:w-2/5 gap-2'>
+            <div className='flex items-center gap-2 mb-2'>
+              <PocketKnife size={18} color='#ecc94b' />
+              <h4 className='font-semibold text-yellow-500 uppercase'>
+                Features
+              </h4>
+            </div>
+            <div className='flex flex-wrap content-start leading-6 gap-1'>
+              {[...mainItems, ...toolItems].map((item: any) => (
+                <Link key={item.label} href={item.href}>
+                  <p className='text-white text-left w-[20ch] underline-offset-4 hover:underline'>
+                    {item.label}
+                  </p>
+                </Link>
+              ))}
+            </div>
           </div>
-          <div className='flex flex-wrap content-start leading-6 gap-1'>
-            {menuItems.map((item) => (
-              <Link key={item.label} href={item.href}>
-                <p className='text-white text-left w-[20ch] underline-offset-4 hover:underline'>
-                  {item.label}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
+        )}
 
         <div className='flex justify-end sm:w-1/5'>
           <Image

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useSession } from 'next-auth/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { addShortcut } from '@/lib/actions';
@@ -18,8 +18,8 @@ import { classError } from '@/lib/classes';
 export function AddShortcutForm() {
   const [data, setData] = useState<ShortcutType>();
   const { toast } = useToast();
-  const { user } = useUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const { data: session } = useSession();
+  const uid = session?.user?.email;
 
   const {
     register,
@@ -51,7 +51,7 @@ export function AddShortcutForm() {
         data.category === 'Custom'
           ? data.customCategory || 'Miscellaneous'
           : data.category,
-      uid: uid,
+      uid: uid || '',
     };
 
     const result = await addShortcut(submissionData);

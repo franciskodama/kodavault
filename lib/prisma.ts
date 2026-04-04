@@ -2,17 +2,15 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaNeon } from '@prisma/adapter-neon';
 
 const connectionString = process.env.DATABASE_URL as string;
-
 const adapter = new PrismaNeon({ connectionString });
 
-declare global {
-  var prisma: PrismaClient | undefined;
-}
-
-const prisma = global.prisma || new PrismaClient({ adapter });
+/**
+ * Singleton pattern for PrismaClient to avoid multiple instances in development.
+ */
+const prismaClient = (globalThis as any).prisma || new PrismaClient({ adapter });
 
 if (process.env.NODE_ENV !== 'production') {
-  global.prisma = prisma;
+  (globalThis as any).prisma = prismaClient;
 }
 
-export default prisma;
+export default prismaClient as PrismaClient;

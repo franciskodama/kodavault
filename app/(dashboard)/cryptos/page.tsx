@@ -1,11 +1,12 @@
 import Cryptos, { AllCryptosData } from './cryptos';
 import { getCryptosData } from '@/lib/crypto.server';
 import { getProjections } from '@/lib/actions';
-import { currentUser } from '@clerk/nextjs/server';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 
 export default async function CryptosPage() {
-  const user = await currentUser();
-  const uid = user?.emailAddresses?.[0]?.emailAddress;
+  const session = await getServerSession(authOptions);
+  const uid = session?.user?.email;
 
   const cryptosData = (await getCryptosData()) || [];
   const projectionsData = await getProjections(uid ? uid : '');

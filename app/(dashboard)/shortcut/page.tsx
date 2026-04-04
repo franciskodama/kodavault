@@ -1,7 +1,8 @@
 import { getShortcuts } from '@/lib/actions';
 import { Shortcut } from './shortcut';
 import { ShortcutType } from '@/lib/types';
-import { currentUser } from '@clerk/nextjs/server';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import { Plus } from 'lucide-react';
 import {
   Sheet,
@@ -15,8 +16,8 @@ import { AddShortcutForm } from '@/components/forms/AddShortcutForm';
 import { Button } from '@/components/ui/button';
 
 export default async function ShortcutPage() {
-  const user = await currentUser();
-  const uid = user && user.emailAddresses[0].emailAddress;
+  const session = await getServerSession(authOptions);
+  const uid = session?.user?.email;
   let shortcuts: ShortcutType[] = [];
 
   if (uid) {
