@@ -57,7 +57,7 @@ export function UpdateAssetForm({
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
-      uid: uid,
+      uid: uid || '',
       id: asset?.id,
       subtype: asset?.subtype,
       asset: asset?.asset,
@@ -85,7 +85,7 @@ export function UpdateAssetForm({
       return console.log('User not logged in');
     }
 
-    const result = await updateAsset({ ...data, uid: uid });
+    const result = await updateAsset({ ...data, uid: uid || '' });
 
     if (result) {
       toast({

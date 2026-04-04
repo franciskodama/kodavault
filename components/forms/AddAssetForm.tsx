@@ -113,7 +113,7 @@ export function AddAssetForm() {
 
     const result = await addAsset({
       ...formData,
-      uid: uid,
+      uid: uid || '',
       type: assetType ? assetType : '',
       tag: formData.tag?.trim() === '' ? 'No Tag' : formData.tag,
     });
