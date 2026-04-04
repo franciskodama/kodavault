@@ -2,14 +2,17 @@
 
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 import NavMenu from './NavMenu';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export default function Header() {
   const { data: session } = useSession();
+  const pathname = usePathname();
   const userName = session?.user?.name?.split(' ')[0] || session?.user?.email?.split('@')[0];
   const greeting = getGreeting(userName ? userName : '');
+  const isSignInPage = pathname?.startsWith('/sign-in');
 
   return (
     <div className='flex justify-between m-4 p-4'>
@@ -23,7 +26,7 @@ export default function Header() {
         />
       </Link>
       <div className='flex items-center'>
-        <NavMenu />
+        {session && <NavMenu />}
         {userName ? (
           <h4 className='ml-12 mr-4 font-semibold text-sm'>
             {greeting}
@@ -40,9 +43,11 @@ export default function Header() {
             Sign Out
           </Button>
         ) : (
-          <Link href="/sign-in">
-            <Button variant="outline" size="sm">Sign In</Button>
-          </Link>
+          !isSignInPage && (
+            <Link href="/sign-in">
+              <Button variant="outline" size="sm">Sign In</Button>
+            </Link>
+          )
         )}
       </div>
     </div>
