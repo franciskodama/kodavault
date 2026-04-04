@@ -18,3 +18,19 @@ export const getUids = async () => {
     return { error: 'Failed to fetch uids' };
   }
 };
+
+export const updateUserName = async (userId: string | number, newName: string) => {
+  try {
+    const id = typeof userId === 'string' ? parseInt(userId) : userId;
+    
+    await prisma.user.update({
+      where: { id },
+      data: { firstName: newName },
+    });
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Error updating user name:', error);
+    return { error: 'Failed to update user name' };
+  }
+};

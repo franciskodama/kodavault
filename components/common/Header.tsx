@@ -1,9 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import NavMenu from './NavMenu';
+import UserProfileSheet from './UserProfileSheet';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -25,23 +26,16 @@ export default function Header() {
           priority
         />
       </Link>
-      <div className='flex items-center'>
+      <div className='flex items-center gap-4'>
         {session && <NavMenu />}
         {userName ? (
-          <h4 className='ml-12 mr-4 font-semibold text-sm'>
-            {greeting}
-            <span className='ml-2 text-xl'>{getEmoji(greeting)}</span>
-          </h4>
-        ) : null}
-        {session ? (
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => signOut({ callbackUrl: '/sign-in' })}
-            className="text-xs font-semibold"
-          >
-            Sign Out
-          </Button>
+          <div className='flex items-center gap-4'>
+            <h4 className='ml-12 font-semibold text-sm'>
+              {greeting}
+              <span className='ml-2 text-xl'>{getEmoji(greeting)}</span>
+            </h4>
+            <UserProfileSheet />
+          </div>
         ) : (
           !isSignInPage && (
             <Link href="/sign-in">

@@ -19,17 +19,22 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user, profile }: any) {
       if (user) {
         token.id = user.id;
-        token.uid = user.uid; // Mapping your master key
+        token.uid = (user as any).uid;
+        token.image = user.image || (profile as any)?.picture || (profile as any)?.avatar_url;
+        // Prioritize the custom database field 'firstName' over the OAuth name
+        token.name = (user as any).firstName || user.name || (profile as any)?.name;
       }
       return token;
     },
     async session({ session, token }: any) {
       if (session.user) {
-        session.user.id = token.id;
-        session.user.uid = token.uid;
+        (session.user as any).id = token.id;
+        (session.user as any).uid = token.uid;
+        (session.user as any).image = token.image;
+        (session.user as any).name = token.name;
       }
       return session;
     },
