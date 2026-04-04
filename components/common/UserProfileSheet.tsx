@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
 import {
   Sheet,
@@ -74,16 +75,21 @@ export default function UserProfileSheet() {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Avatar className='cursor-pointer hover:opacity-80 transition-opacity border-2 border-slate-100 w-12 h-12'>
-          <AvatarImage
-            src={session?.user?.image || (session?.user as any)?.picture || ''}
-            alt={session?.user?.name || 'User'}
-            referrerPolicy='no-referrer'
-          />
-          <AvatarFallback className='bg-slate-200 text-slate-700 font-bold uppercase text-xs'>
-            {userInitial}
-          </AvatarFallback>
-        </Avatar>
+        <div className='relative w-12 h-12 flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity border-2 border-slate-100 rounded-full overflow-hidden bg-slate-200'>
+          {(session?.user?.image || (session?.user as any)?.picture) ? (
+            <Image
+              src={(session?.user?.image || (session?.user as any)?.picture) as string}
+              alt={session?.user?.name || 'User'}
+              fill
+              className='object-cover'
+              referrerPolicy='no-referrer'
+            />
+          ) : (
+            <div className='w-full h-full flex items-center justify-center bg-slate-200 text-slate-700 font-bold uppercase text-xs'>
+              {userInitial}
+            </div>
+          )}
+        </div>
       </SheetTrigger>
 
       <SheetContent className='sm:max-w-md bg-white'>
@@ -97,17 +103,21 @@ export default function UserProfileSheet() {
         </SheetHeader>
 
         <div className='flex flex-col items-center gap-6 py-8'>
-          <Avatar className='w-32 h-32 border-4 border-slate-50 shadow-lg'>
-            <AvatarImage
-              src={
-                session?.user?.image || (session?.user as any)?.picture || ''
-              }
-              alt={session?.user?.name || 'User'}
-            />
-            <AvatarFallback className='bg-slate-100 text-slate-800 text-3xl font-bold uppercase'>
-              {userInitial}
-            </AvatarFallback>
-          </Avatar>
+          <div className='relative w-32 h-32 border-4 border-slate-50 shadow-lg rounded-full overflow-hidden bg-slate-100'>
+            {(session?.user?.image || (session?.user as any)?.picture) ? (
+              <Image
+                src={(session?.user?.image || (session?.user as any)?.picture) as string}
+                alt={session?.user?.name || 'User'}
+                fill
+                className='object-cover'
+                referrerPolicy='no-referrer'
+              />
+            ) : (
+              <div className='w-full h-full flex items-center justify-center bg-slate-100 text-slate-800 text-3xl font-bold uppercase'>
+                {userInitial}
+              </div>
+            )}
+          </div>
 
           <div className='text-center'>
             <h3 className='font-bold text-xl text-slate-900'>
@@ -161,8 +171,8 @@ export default function UserProfileSheet() {
 
         <SheetFooter className='absolute bottom-10 left-0 right-0 px-6 sm:justify-start'>
           <Button
-            variant='ghost'
-            className='w-full justify-start gap-4 text-red-500 hover:bg-red-50 hover:text-red-700 py-6 font-semibold transition-all rounded-xl'
+            variant='destructive'
+            className='w-full justify-center gap-4 py-6 font-semibold transition-all rounded-xl'
             onClick={() => signOut({ callbackUrl: '/sign-in' })}
           >
             <LogOut className='w-5 h-5' />
