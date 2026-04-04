@@ -164,7 +164,7 @@ export default function UserProfileSheet() {
               </Button>
             </div>
             <p className='text-[14px] text-slate-400 pl-1'>
-              This is how you'll be greeted throughout the application.
+              This is how you&apos;ll be greeted throughout the application.
             </p>
           </div>
         </div>
