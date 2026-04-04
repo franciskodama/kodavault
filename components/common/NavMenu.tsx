@@ -61,7 +61,7 @@ export default function NavMenu() {
   );
 }
 
-const menuItems = [
+export const menuItems = [
   { label: 'Dashboard', href: '/dashboard', pathname: '/dashboard' },
   { label: 'Crypto', href: '/cryptos', pathname: '/cryptos' },
   { label: 'Stock', href: '/stocks', pathname: '/stocks' },
