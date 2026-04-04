@@ -11,7 +11,8 @@ import { Button } from '@/components/ui/button';
 export default function Header() {
   const { data: session } = useSession();
   const pathname = usePathname();
-  const userName = session?.user?.name?.split(' ')[0] || session?.user?.email?.split('@')[0];
+  const userName =
+    session?.user?.name?.split(' ')[0] || session?.user?.email?.split('@')[0];
   const greeting = getGreeting(userName ? userName : '');
   const isSignInPage = pathname?.startsWith('/sign-in');
 
@@ -30,7 +31,7 @@ export default function Header() {
         {session && <NavMenu />}
         {userName ? (
           <div className='flex items-center gap-4'>
-            <h4 className='ml-12 font-semibold text-sm'>
+            <h4 className='ml-12 mr-4 font-semibold text-sm'>
               {greeting}
               <span className='ml-2 text-xl'>{getEmoji(greeting)}</span>
             </h4>
@@ -38,8 +39,10 @@ export default function Header() {
           </div>
         ) : (
           !isSignInPage && (
-            <Link href="/sign-in">
-              <Button variant="outline" size="sm">Sign In</Button>
+            <Link href='/sign-in'>
+              <Button variant='outline' size='sm'>
+                Sign In
+              </Button>
             </Link>
           )
         )}

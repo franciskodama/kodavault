@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { AddAssetForm } from '@/components/forms/AddAssetForm';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, ChartLine, Target, Zap } from 'lucide-react';
+import { ChevronDown, ChartLine, ExternalLink, Goal } from 'lucide-react';
 
 type MenuItem = {
   label: string;
@@ -115,6 +115,11 @@ export const mainItems = [
 
 export const toolItems = [
   { label: 'Elliott', href: '/elliott', pathname: '/elliott', icon: ChartLine },
-  { label: 'Shortcut', href: '/shortcut', pathname: '/shortcut', icon: Zap },
-  { label: 'Goal', href: '/retirement', pathname: '/retirement', icon: Target },
+  {
+    label: 'Shortcut',
+    href: '/shortcut',
+    pathname: '/shortcut',
+    icon: ExternalLink,
+  },
+  { label: 'Goal', href: '/retirement', pathname: '/retirement', icon: Goal },
 ];

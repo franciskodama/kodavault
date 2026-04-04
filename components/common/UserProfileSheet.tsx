@@ -78,6 +78,7 @@ export default function UserProfileSheet() {
           <AvatarImage
             src={session?.user?.image || (session?.user as any)?.picture || ''}
             alt={session?.user?.name || 'User'}
+            referrerPolicy='no-referrer'
           />
           <AvatarFallback className='bg-slate-200 text-slate-700 font-bold uppercase text-xs'>
             {userInitial}
