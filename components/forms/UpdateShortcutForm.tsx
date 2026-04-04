@@ -30,7 +30,7 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
     formState: { errors },
   } = useForm<ShortcutType>({
     defaultValues: {
-      uid: uid,
+      uid: uid || '',
       id: shortcut?.id,
       name: shortcut?.name,
       url: shortcut?.url,
@@ -67,7 +67,7 @@ export function UpdateShortcutForm({ shortcut }: { shortcut: ShortcutType }) {
         data.category === 'Custom'
           ? data.customCategory || 'Miscellaneous'
           : data.category,
-      uid: uid,
+      uid: uid || '',
     };
 
     const result = await updateShortcut(submissionData);

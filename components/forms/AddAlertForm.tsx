@@ -46,7 +46,7 @@ export function AddAlertForm() {
 
     const submissionData = {
       ...formData,
-      uid,
+      uid: uid || '',
     };
 
     const result = await addAlert(submissionData);

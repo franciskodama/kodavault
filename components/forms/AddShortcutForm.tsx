@@ -51,7 +51,7 @@ export function AddShortcutForm() {
         data.category === 'Custom'
           ? data.customCategory || 'Miscellaneous'
           : data.category,
-      uid: uid,
+      uid: uid || '',
     };
 
     const result = await addShortcut(submissionData);

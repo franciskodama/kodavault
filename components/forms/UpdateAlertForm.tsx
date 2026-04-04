@@ -49,7 +49,7 @@ export function UpdateAlertForm({ alert }: { alert: AlertType }) {
     const submissionData = {
       ...formData,
       id: alert.id,
-      uid,
+      uid: uid || '',
     };
 
     const result = await updateAlert(submissionData);
