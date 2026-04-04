@@ -19,7 +19,15 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, profile }: any) {
+    async jwt({ token, user, profile, trigger, session }: any) {
+      // If an update was triggered from the client, refresh the token data immediately
+      if (trigger === "update" && session?.user?.name) {
+        token.name = session.user.name;
+      } else if (trigger === "update" && session?.name) {
+        // Fallback for direct { name: '...' } updates
+        token.name = session.name;
+      }
+
       if (user) {
         token.id = user.id;
         token.uid = (user as any).uid;
