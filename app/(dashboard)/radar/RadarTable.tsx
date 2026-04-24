@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { RadarCoin, fetchRadarData } from './actions';
+import { RadarCoin, fetchRadarData } from '@/lib/actions/radar';
 import { Button } from '@/components/ui/button';
 import {
   Table,

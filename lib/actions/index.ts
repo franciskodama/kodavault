@@ -6,3 +6,4 @@ export * from './goals';
 export * from './projections';
 export * from './key-assets';
 export * from './user';
+export * from './radar';
