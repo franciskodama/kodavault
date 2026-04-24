@@ -41,6 +41,8 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+  passwordResetToken   String?   @unique
+  passwordResetExpires DateTime?
   uid           String?   @unique
   createdAt     DateTime  @default(now()) @db.Timestamptz(6)
   updatedAt     DateTime? @default(now()) @db.Timestamptz(6)

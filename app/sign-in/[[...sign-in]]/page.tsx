@@ -1,20 +1,21 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { toast } from 'sonner';
+import { signIn } from 'next-auth/react';
+import { useToast } from '@/components/ui/use-toast';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Image from 'next/image';
-import Header from '@/components/common/Header';
-import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
+import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 
 export default function SignInPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleCredentialsSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,12 +30,20 @@ export default function SignInPage() {
       });
 
       if (result?.error) {
-        toast.error(result.error);
+        toast({
+          title: 'Error',
+          description: result.error,
+          variant: 'destructive',
+        });
       } else {
         window.location.href = '/dashboard';
       }
     } catch (err) {
-      toast.error('Something went wrong');
+      toast({
+        title: 'Error',
+        description: 'Something went wrong',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
     }
@@ -91,6 +100,14 @@ export default function SignInPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     className='rounded-xl border-slate-200'
                   />
+                </div>
+                <div className='flex justify-end'>
+                  <Link 
+                    href='/forgot-password' 
+                    className='text-xs text-slate-500 hover:text-slate-900 transition-colors font-medium'
+                  >
+                    Forgot Password?
+                  </Link>
                 </div>
                 <Button
                   type='submit'

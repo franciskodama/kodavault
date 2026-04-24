@@ -24,8 +24,12 @@ export const authOptions: NextAuthOptions = {
           where: { email: credentials.email }
         });
 
-        if (!user || !user.password) {
-          throw new Error("User not found or password not set");
+        if (!user) {
+          throw new Error("No account found with this email");
+        }
+
+        if (!user.password) {
+          throw new Error("This account uses social login (Google/GitHub). Please sign in using your provider.");
         }
 
         const isPasswordValid = await bcrypt.compare(credentials.password, user.password);

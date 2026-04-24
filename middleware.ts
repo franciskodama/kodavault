@@ -10,6 +10,8 @@ export default withAuth({
         "/",
         "/sign-in",
         "/sign-up",
+        "/forgot-password",
+        "/reset-password",
         "/api/cron-networth-evolution",
         "/api/economic-calendar",
         "/api/auth", // NextAuth routes must be public
