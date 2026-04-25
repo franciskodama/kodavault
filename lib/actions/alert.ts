@@ -6,10 +6,9 @@ import prisma from '@/lib/prisma';
 import { AlertType } from '@/lib/types';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function sendAlertEmail(alert: any, currentPrice: number) {
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const user = await prisma.user.findUnique({
       where: { id: alert.uid }
     });
