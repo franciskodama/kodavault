@@ -29,28 +29,27 @@ export async function GET(req: Request) {
       return NextResponse.json({ message: 'No active alerts to check' });
     }
 
-    // 2. Fetch current prices
+    // 2. Fetch current prices (Switching to CoinCap to avoid Binance region blocks)
     let allPrices;
     try {
-      const priceRes = await fetch('https://api.binance.com/api/v3/ticker/price', {
-        next: { revalidate: 0 } // Ensure fresh data
+      const priceRes = await fetch('https://api.coincap.io/v2/assets?limit=500', {
+        next: { revalidate: 0 }
       });
-      if (!priceRes.ok) throw new Error(`Binance returned ${priceRes.status}`);
-      allPrices = await priceRes.json();
+      if (!priceRes.ok) throw new Error(`CoinCap returned ${priceRes.status}`);
+      const json = await priceRes.json();
+      allPrices = json.data;
     } catch (fetchError: any) {
       throw new Error(`Price fetch error: ${fetchError.message}`);
     }
     
     if (!Array.isArray(allPrices)) {
-      throw new Error('Invalid data format from Binance');
+      throw new Error('Invalid data format from CoinCap');
     }
 
     const priceMap = new Map();
     allPrices.forEach((p: any) => {
-      if (p.symbol.endsWith('USDT')) {
-        const symbol = p.symbol.replace('USDT', '');
-        priceMap.set(symbol, parseFloat(p.price));
-      }
+      // CoinCap returns symbol (e.g., BTC) and priceUsd
+      priceMap.set(p.symbol.toUpperCase(), parseFloat(p.priceUsd));
     });
 
     const results = [];
