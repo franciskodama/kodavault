@@ -58,9 +58,15 @@ export const requestPasswordReset = async (email: string) => {
     });
 
     return { success: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error requesting password reset:', error);
-    return { error: 'Failed to process request' };
+    
+    // Check if it's a Resend error
+    if (error?.name === 'ResendError' || error?.message?.includes('Resend')) {
+      return { error: 'Email service error. Please ensure your Resend API key is valid and the recipient is allowed.' };
+    }
+
+    return { error: error?.message || 'Failed to process request' };
   }
 };
 
