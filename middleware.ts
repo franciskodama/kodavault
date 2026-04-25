@@ -13,6 +13,7 @@ export default withAuth({
         "/forgot-password",
         "/reset-password",
         "/api/cron-networth-evolution",
+        "/api/cron-alerts",
         "/api/economic-calendar",
         "/api/auth", // NextAuth routes must be public
       ];

@@ -192,6 +192,7 @@ model Alert {
   emailOptin    Boolean  @default(true)
   whatsappOptin Boolean  @default(true)
   type          String
+  triggered     Boolean  @default(false)
 
   @@unique([uid, asset], name: "uid_asset")
   @@index([uid])
