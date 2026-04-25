@@ -72,6 +72,7 @@ export default function SignInPage() {
             <div className='flex flex-col items-center bg-white p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-100 w-full'>
               <h1 className='text-3xl font-bold mb-2 text-slate-900 tracking-tight'>
                 Welcome back!
+                <span className='ml-4 text-4xl'>👋</span>
               </h1>
               <p className='text-slate-500 mb-8 text-center text-sm'>
                 Sign in to your personal dashboard to track your assets.
@@ -175,7 +176,7 @@ export default function SignInPage() {
               </div>
 
               <div className='mt-8 text-sm text-slate-500'>
-                Don't have an account?{' '}
+                Don&apos;t have an account?{' '}
                 <Link
                   href='/sign-up'
                   className='text-slate-900 font-semibold hover:underline'
