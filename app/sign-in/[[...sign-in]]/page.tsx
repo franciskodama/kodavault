@@ -52,17 +52,18 @@ export default function SignInPage() {
   return (
     <main className='flex flex-col min-h-screen'>
       <Header />
-      <div className='flex-1 flex w-full items-center justify-center py-12'>
-        <div className='flex flex-col lg:flex-row items-center justify-center gap-12 max-w-6xl w-full px-4'>
-          <div className='hidden lg:flex flex-1 justify-center max-w-[600px]'>
-            <Image
-              src='/money-pool.gif'
-              width={600}
-              height={500}
-              alt='Money Pool'
-              priority={true}
-              className='rounded-3xl object-cover shadow-2xl'
-            />
+      <div className='flex-1 flex w-full items-center justify-center pb-8'>
+        <div className='flex flex-col lg:flex-row items-stretch justify-center gap-12 max-w-6xl w-full px-4'>
+          <div className='hidden lg:flex flex-1 max-w-[600px]'>
+            <div className='relative w-full h-full min-h-[500px]'>
+              <Image
+                src='/money-pool.gif'
+                alt='Money Pool'
+                fill
+                priority={true}
+                className='rounded-3xl object-cover shadow-2xl'
+              />
+            </div>
           </div>
           <div className='flex-1 flex justify-center w-full max-w-[450px]'>
             <div className='flex flex-col items-center bg-white p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-100 w-full'>
@@ -78,7 +79,6 @@ export default function SignInPage() {
                 className='flex flex-col gap-4 w-full mb-8'
               >
                 <div className='flex flex-col gap-2'>
-                  <Label htmlFor='email'>Email</Label>
                   <Input
                     id='email'
                     type='email'
@@ -90,7 +90,6 @@ export default function SignInPage() {
                   />
                 </div>
                 <div className='flex flex-col gap-2'>
-                  <Label htmlFor='password'>Password</Label>
                   <Input
                     id='password'
                     type='password'
@@ -101,9 +100,9 @@ export default function SignInPage() {
                     className='rounded-xl border-slate-200'
                   />
                 </div>
-                <div className='flex justify-end'>
-                  <Link 
-                    href='/forgot-password' 
+                <div className='flex justify-center'>
+                  <Link
+                    href='/forgot-password'
                     className='text-xs text-slate-500 hover:text-slate-900 transition-colors font-medium'
                   >
                     Forgot Password?
@@ -123,8 +122,8 @@ export default function SignInPage() {
                   <span className='w-full border-t border-slate-100'></span>
                 </div>
                 <div className='relative flex justify-center text-xs uppercase'>
-                  <span className='bg-white px-4 text-slate-400 font-medium'>
-                    Or continue with
+                  <span className='bg-white py-4 px-4 text-slate-400 font-medium'>
+                    Or
                   </span>
                 </div>
               </div>
