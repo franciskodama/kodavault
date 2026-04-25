@@ -13,32 +13,40 @@ export async function GET(req: Request) {
 
   try {
     // 1. Fetch all active alerts that haven't been triggered yet
-    const activeAlerts = await prisma.alert.findMany({
-      where: {
-        triggered: false,
-        emailOptin: true,
-      }
-    });
+    let activeAlerts;
+    try {
+      activeAlerts = await prisma.alert.findMany({
+        where: {
+          triggered: false,
+          emailOptin: true,
+        }
+      });
+    } catch (dbError: any) {
+      throw new Error(`Database error: ${dbError.message}`);
+    }
 
     if (activeAlerts.length === 0) {
       return NextResponse.json({ message: 'No active alerts to check' });
     }
 
-    // 2. Group alerts by asset to minimize API calls
-    const assets = Array.from(new Set(activeAlerts.map(a => a.asset.toUpperCase())));
-    
-    // 3. Fetch current prices (Using Binance for Cryptos as a primary example)
-    // For a real app, you'd handle Stocks vs Cryptos differently.
-    const priceRes = await fetch('https://api.binance.com/api/v3/ticker/price');
-    const allPrices = await priceRes.json();
+    // 2. Fetch current prices
+    let allPrices;
+    try {
+      const priceRes = await fetch('https://api.binance.com/api/v3/ticker/price', {
+        next: { revalidate: 0 } // Ensure fresh data
+      });
+      if (!priceRes.ok) throw new Error(`Binance returned ${priceRes.status}`);
+      allPrices = await priceRes.json();
+    } catch (fetchError: any) {
+      throw new Error(`Price fetch error: ${fetchError.message}`);
+    }
     
     if (!Array.isArray(allPrices)) {
-      throw new Error('Failed to fetch prices from Binance');
+      throw new Error('Invalid data format from Binance');
     }
 
     const priceMap = new Map();
     allPrices.forEach((p: any) => {
-      // Binance uses SYMBOLUSDT (e.g., BTCUSDT)
       if (p.symbol.endsWith('USDT')) {
         const symbol = p.symbol.replace('USDT', '');
         priceMap.set(symbol, parseFloat(p.price));
@@ -47,7 +55,7 @@ export async function GET(req: Request) {
 
     const results = [];
 
-    // 4. Check each alert
+    // 3. Check each alert
     for (const alert of activeAlerts) {
       const currentPrice = priceMap.get(alert.asset.toUpperCase());
       
@@ -61,13 +69,21 @@ export async function GET(req: Request) {
       }
 
       if (isTriggered) {
-        const sent = await sendAlertEmail(alert, currentPrice);
-        results.push({
-          asset: alert.asset,
-          target: alert.price,
-          current: currentPrice,
-          sent
-        });
+        try {
+          const sent = await sendAlertEmail(alert, currentPrice);
+          results.push({
+            asset: alert.asset,
+            target: alert.price,
+            current: currentPrice,
+            sent: sent || false
+          });
+        } catch (emailError: any) {
+          console.error(`Email error for ${alert.asset}:`, emailError);
+          results.push({
+            asset: alert.asset,
+            error: emailError.message
+          });
+        }
       }
     }
 
@@ -78,7 +94,10 @@ export async function GET(req: Request) {
     });
 
   } catch (error: any) {
-    console.error('Cron Alerts Error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Cron Alerts Critical Error:', error);
+    return NextResponse.json({ 
+      error: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined 
+    }, { status: 500 });
   }
 }
