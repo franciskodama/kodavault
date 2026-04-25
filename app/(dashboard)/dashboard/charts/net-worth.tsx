@@ -92,7 +92,7 @@ export default function NetWorthChart({
             Net Worth Evolution
           </CardTitle>
         </CardHeader>
-        <CardContent className='w-full p-8 border-2 flex'>
+        <CardContent className='w-full p-8 flex'>
           <div className='flex justify-center items-center w-1/2'>
             <div className='flex flex-col w-2/3 gap-4 p-4'>
               <BarChartHorizontalIcon size={24} />

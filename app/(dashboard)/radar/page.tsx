@@ -1,5 +1,5 @@
 import RadarTable from './RadarTable';
-import { fetchRadarData } from './actions';
+import { fetchRadarData } from '@/lib/actions/radar';
 
 export const metadata = {
   title: 'Radar | Trezo',

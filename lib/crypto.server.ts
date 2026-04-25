@@ -76,16 +76,22 @@ export const getCryptosData = async () => {
 
   try {
     const response = await fetch(`${url}?${queryParams}`, options);
+
+    if (!response.ok) {
+      console.warn(`Coingecko API returned ${response.status}: ${response.statusText}`);
+      return [];
+    }
+
     const data = await response.json();
 
     if (!Array.isArray(data)) {
-      console.error('Coingecko API did not return an array. Data:', data);
+      console.warn('Coingecko API did not return an array. Data:', data);
       return [];
     }
 
     return data;
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching data from Coingecko:', error);
     return [];
   }
 };
@@ -106,12 +112,20 @@ export const getGlobalData = async () => {
       },
     };
 
-    const response = fetch(
+    const response = await fetch(
       `https://api.coingecko.com/api/v3/global`,
       options
-    ).then((res) => res.json());
-    return response;
+    );
+
+    if (!response.ok) {
+      console.warn(`Coingecko Global API returned ${response.status}: ${response.statusText}`);
+      return null;
+    }
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching global data from Coingecko:', error);
+    return null;
   }
 };
