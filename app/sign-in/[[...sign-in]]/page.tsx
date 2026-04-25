@@ -53,8 +53,22 @@ export default function SignInPage() {
     <main className='flex flex-col min-h-screen'>
       <Header />
       <div className='flex-1 flex w-full items-center justify-center pb-8'>
-        <div className='flex flex-col lg:flex-row items-stretch justify-start gap-12 max-w-[1400px] w-full px-4'>
-          <div className='flex-1 flex justify-start w-full max-w-[450px]'>
+        <div className='flex flex-col lg:flex-row items-stretch justify-between gap-12 max-w-[1400px] w-full px-4'>
+          <div className='hidden lg:flex flex-1 overflow-hidden rounded-3xl shadow-2xl'>
+            <div className='grid grid-cols-6 gap-1 w-full h-full p-1 bg-slate-50'>
+              {Array.from({ length: 30 }).map((_, i) => (
+                <div key={i} className='relative aspect-square'>
+                  <Image
+                    src={`/welcome/welcome-${(i % 45) + 1}.webp`}
+                    alt={`Welcome ${i + 1}`}
+                    fill
+                    className='object-cover rounded-md'
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className='flex-1 flex justify-end w-full max-w-[450px]'>
             <div className='flex flex-col items-center bg-white p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-100 w-full'>
               <h1 className='text-3xl font-bold mb-2 text-slate-900 tracking-tight'>
                 Welcome back!
@@ -173,20 +187,6 @@ export default function SignInPage() {
               <p className='mt-8 text-[10px] text-slate-400 font-bold uppercase tracking-widest'>
                 Secure authentication
               </p>
-            </div>
-          </div>
-          <div className='hidden lg:flex flex-1 overflow-hidden rounded-3xl shadow-2xl'>
-            <div className='grid grid-cols-4 gap-1 w-full h-full p-1 bg-slate-50'>
-              {Array.from({ length: 20 }).map((_, i) => (
-                <div key={i} className='relative aspect-square'>
-                  <Image
-                    src={`/welcome/welcome-${(i % 45) + 1}.webp`}
-                    alt={`Welcome ${i + 1}`}
-                    fill
-                    className='object-cover rounded-md'
-                  />
-                </div>
-              ))}
             </div>
           </div>
         </div>
