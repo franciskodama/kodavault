@@ -8,9 +8,12 @@ import { Resend } from 'resend';
 
 export async function sendAlertEmail(alert: any, currentPrice: number) {
   try {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not defined');
+    }
     const resend = new Resend(process.env.RESEND_API_KEY);
     const user = await prisma.user.findUnique({
-      where: { id: alert.uid }
+      where: { uid: alert.uid }
     });
 
     if (!user || !user.email) return;
