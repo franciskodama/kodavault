@@ -17,7 +17,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 });
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-2.0-flash',
+      generationConfig: {
+        responseMimeType: 'application/json',
+      },
+    });
 
     const prompt = `
   As an elite Elliott Wave technician, your mission is to map wave counts with architectural precision. Use the following triangulation logic and categorical rules:
@@ -85,42 +90,17 @@ export async function POST(req: NextRequest) {
     const mimeType = image.split(';')[0].split(':')[1] || 'image/png';
     const base64Data = image.split(',')[1];
 
-    // Bypassing the SDK to force v1 stable endpoint
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-    const payload = {
-      contents: [
-        {
-          parts: [
-            { text: prompt },
-            {
-              inlineData: {
-                mimeType: mimeType,
-                data: base64Data,
-              },
-            },
-          ],
+    const result = await model.generateContent([
+      prompt,
+      {
+        inlineData: {
+          mimeType: mimeType,
+          data: base64Data,
         },
-      ],
-      generation_config: {
-        response_mime_type: 'application/json',
       },
-    };
+    ]);
 
-    const apiResponse = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-
-    if (!apiResponse.ok) {
-      const errorData = await apiResponse.json();
-      console.error('Gemini API Fetch Error:', JSON.stringify(errorData, null, 2));
-      throw new Error(errorData.error?.message || `API error: ${apiResponse.status}`);
-    }
-
-    const resultData = await apiResponse.json();
-    const text = resultData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const text = result.response.text();
 
     // Clean text in case Gemini adds markdown code blocks
     const cleanJson = text.replace(/```json|```/g, '').trim();
