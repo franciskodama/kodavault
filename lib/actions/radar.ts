@@ -15,6 +15,14 @@ export type RadarCoin = {
 };
 
 export async function fetchRadarData(): Promise<RadarCoin[]> {
+  const BINANCE_MIRRORS = [
+    'https://fapi.binance.com',
+    'https://fapi1.binance.com',
+    'https://fapi2.binance.com',
+    'https://fapi3.binance.com',
+    'https://fapi.binance.me',
+  ];
+
   try {
     console.log('Starting fetchRadarData...');
     // Fetch CoinGecko List for Coinalyze URL mapping
@@ -57,27 +65,35 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
       console.warn("Could not fetch CoinGecko mapping:", cgErr);
     }
 
-    // 1. Fetch 24h Ticker to get top coins by volume
-    console.log('Fetching Binance tickers...');
+    // 1. Fetch 24h Ticker to get top coins by volume - Try mirrors
+    console.log('Fetching Binance tickers with mirror fallback...');
     let tickers: any[] = [];
-    try {
-      const tickerRes = await fetch('https://fapi.binance.com/fapi/v1/ticker/24hr', { cache: 'no-store' });
-      
-      if (!tickerRes.ok) {
-        const errorText = await tickerRes.text();
-        console.error(`Binance Ticker API error: ${tickerRes.status} - ${errorText}`);
-        // Return empty instead of throwing to avoid 500
-        return [];
-      }
+    let successfulMirror = BINANCE_MIRRORS[0];
+    let mirrorFound = false;
 
-      tickers = await tickerRes.json();
-    } catch (err: any) {
-      console.error('Failed to fetch Binance tickers:', err);
-      return [];
+    for (const mirror of BINANCE_MIRRORS) {
+      try {
+        console.log(`Trying Binance mirror: ${mirror}`);
+        const tickerRes = await fetch(`${mirror}/fapi/v1/ticker/24hr`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
+        
+        if (tickerRes.ok) {
+          tickers = await tickerRes.json();
+          if (Array.isArray(tickers)) {
+            successfulMirror = mirror;
+            mirrorFound = true;
+            console.log(`Successfully fetched tickers from ${mirror}`);
+            break;
+          }
+        } else {
+          console.warn(`Mirror ${mirror} returned status ${tickerRes.status}`);
+        }
+      } catch (err) {
+        console.warn(`Mirror ${mirror} failed:`, err);
+      }
     }
 
-    if (!Array.isArray(tickers)) {
-      console.error('Binance tickers is not an array:', tickers);
+    if (!mirrorFound || tickers.length === 0) {
+      console.error('All Binance mirrors failed to provide tickers.');
       return [];
     }
 
@@ -91,11 +107,11 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
     console.log(`Found ${validTickers.length} valid tickers`);
     const symbols = validTickers.map((t: any) => t.symbol);
 
-    // 2. Fetch Funding Rates
+    // 2. Fetch Funding Rates (using successful mirror)
     console.log('Fetching Binance premium index...');
     const premiumMap = new Map();
     try {
-      const premiumRes = await fetch('https://fapi.binance.com/fapi/v1/premiumIndex', { cache: 'no-store' });
+      const premiumRes = await fetch(`${successfulMirror}/fapi/v1/premiumIndex`, { cache: 'no-store' });
       if (premiumRes.ok) {
         const premiumData = await premiumRes.json();
         if (Array.isArray(premiumData)) {
@@ -111,8 +127,8 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
       return isNaN(parsed) ? 0 : parsed;
     };
 
-    // 3. Fetch 1h Open Interest and Long Short Ratio
-    const chunkSize = 10; // Very small chunks
+    // 3. Fetch 1h Open Interest and Long Short Ratio (using successful mirror)
+    const chunkSize = 10;
     const finalData: RadarCoin[] = [];
 
     console.log(`Fetching detailed data for ${symbols.length} symbols in chunks...`);
@@ -121,10 +137,9 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
       
       const chunkPromises = chunk.map(async (symbol) => {
         try {
-          // Add a small timeout-like behavior or just catch individual failures
           const [oiRes, lsrRes] = await Promise.all([
-            fetch(`https://fapi.binance.com/futures/data/openInterestHist?symbol=${symbol}&period=1h&limit=2`, { cache: 'no-store', signal: AbortSignal.timeout(5000) }).catch(() => ({ ok: false })),
-            fetch(`https://fapi.binance.com/futures/data/globalLongShortAccountRatio?symbol=${symbol}&period=1h&limit=2`, { cache: 'no-store', signal: AbortSignal.timeout(5000) }).catch(() => ({ ok: false }))
+            fetch(`${successfulMirror}/futures/data/openInterestHist?symbol=${symbol}&period=1h&limit=2`, { cache: 'no-store', signal: AbortSignal.timeout(4000) }).catch(() => ({ ok: false })),
+            fetch(`${successfulMirror}/futures/data/globalLongShortAccountRatio?symbol=${symbol}&period=1h&limit=2`, { cache: 'no-store', signal: AbortSignal.timeout(4000) }).catch(() => ({ ok: false }))
           ]);
 
           const oiData = (oiRes as any).ok ? await (oiRes as any).json() : null;
