@@ -1,4 +1,3 @@
-'use server';
 
 export type RadarCoin = {
   symbol: string;
@@ -200,12 +199,7 @@ export async function getRadarData(): Promise<RadarCoin[]> {
     console.log(`fetchRadarData completed successfully with ${finalData.length} items`);
     return finalData;
   } catch (error: any) {
-    console.error('CRITICAL ERROR in fetchRadarData:', error);
+    console.error('CRITICAL ERROR in getRadarData:', error);
     return [];
   }
-}
-
-export async function fetchRadarData(): Promise<RadarCoin[]> {
-  'use server';
-  return getRadarData();
 }

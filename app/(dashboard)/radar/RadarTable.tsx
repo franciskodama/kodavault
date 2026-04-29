@@ -2,7 +2,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { RadarCoin, fetchRadarData } from '@/lib/actions/radar';
+import { RadarCoin } from '@/lib/actions/radar';
+import { fetchRadarDataAction } from '@/lib/actions/radar-actions';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -38,7 +39,7 @@ export default function RadarTable({
     setLoading(true);
     try {
       console.log('Refreshing radar data...');
-      const newData = await fetchRadarData();
+      const newData = await fetchRadarDataAction();
       console.log('Refresh complete. New data count:', newData?.length);
       setData(newData || []);
       setLastUpdated(new Date());
