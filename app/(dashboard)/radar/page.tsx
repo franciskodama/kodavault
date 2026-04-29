@@ -9,7 +9,14 @@ export const metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function RadarPage() {
-  const initialData = await fetchRadarData();
+  let initialData: any[] = [];
+  try {
+    initialData = await fetchRadarData();
+  } catch (error) {
+    console.error('RadarPage fetch error:', error);
+    // We'll pass an empty array and let the table handle the "No data" state
+    // but the error is already logged for debugging.
+  }
 
   return (
     <div className='flex flex-col gap-1 px-8 sm:p-0'>
