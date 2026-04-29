@@ -59,42 +59,51 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
 
     // 1. Fetch 24h Ticker to get top coins by volume
     console.log('Fetching Binance tickers...');
-    const tickerRes = await fetch('https://fapi.binance.com/fapi/v1/ticker/24hr', { cache: 'no-store' });
-    
-    if (!tickerRes.ok) {
-      const errorText = await tickerRes.text();
-      console.error(`Binance Ticker API error: ${tickerRes.status} - ${errorText}`);
-      throw new Error(`Binance Ticker API failed with status ${tickerRes.status}`);
-    }
+    let tickers: any[] = [];
+    try {
+      const tickerRes = await fetch('https://fapi.binance.com/fapi/v1/ticker/24hr', { cache: 'no-store' });
+      
+      if (!tickerRes.ok) {
+        const errorText = await tickerRes.text();
+        console.error(`Binance Ticker API error: ${tickerRes.status} - ${errorText}`);
+        // Return empty instead of throwing to avoid 500
+        return [];
+      }
 
-    const tickers = await tickerRes.json();
+      tickers = await tickerRes.json();
+    } catch (err: any) {
+      console.error('Failed to fetch Binance tickers:', err);
+      return [];
+    }
 
     if (!Array.isArray(tickers)) {
       console.error('Binance tickers is not an array:', tickers);
-      throw new Error('Failed to fetch tickers: Invalid response format');
+      return [];
     }
 
     // Filter USDT perpetuals and sort by quoteVolume desc
-    // Reducing to 50 for production stability testing
+    // Reducing to 30 for maximum stability
     const validTickers = tickers
       .filter((t: any) => t.symbol.endsWith('USDT') && !t.symbol.includes('_'))
       .sort((a: any, b: any) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume))
-      .slice(0, 70); 
+      .slice(0, 30); 
 
     console.log(`Found ${validTickers.length} valid tickers`);
     const symbols = validTickers.map((t: any) => t.symbol);
 
     // 2. Fetch Funding Rates
     console.log('Fetching Binance premium index...');
-    const premiumRes = await fetch('https://fapi.binance.com/fapi/v1/premiumIndex', { cache: 'no-store' });
     const premiumMap = new Map();
-    if (premiumRes.ok) {
-      const premiumData = await premiumRes.json();
-      if (Array.isArray(premiumData)) {
-        premiumData.forEach((p: any) => premiumMap.set(p.symbol, parseFloat(p.lastFundingRate)));
+    try {
+      const premiumRes = await fetch('https://fapi.binance.com/fapi/v1/premiumIndex', { cache: 'no-store' });
+      if (premiumRes.ok) {
+        const premiumData = await premiumRes.json();
+        if (Array.isArray(premiumData)) {
+          premiumData.forEach((p: any) => premiumMap.set(p.symbol, parseFloat(p.lastFundingRate)));
+        }
       }
-    } else {
-      console.warn(`Binance premium index fetch failed: ${premiumRes.status}`);
+    } catch (err) {
+      console.warn('Funding rates fetch failed (non-critical):', err);
     }
 
     const safeParse = (val: any) => {
@@ -103,23 +112,23 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
     };
 
     // 3. Fetch 1h Open Interest and Long Short Ratio
-    const chunkSize = 20; // Smaller chunks
+    const chunkSize = 10; // Very small chunks
     const finalData: RadarCoin[] = [];
 
     console.log(`Fetching detailed data for ${symbols.length} symbols in chunks...`);
     for (let i = 0; i < symbols.length; i += chunkSize) {
       const chunk = symbols.slice(i, i + chunkSize);
-      console.log(`Processing chunk ${i / chunkSize + 1} (${chunk.length} symbols)`);
       
       const chunkPromises = chunk.map(async (symbol) => {
         try {
+          // Add a small timeout-like behavior or just catch individual failures
           const [oiRes, lsrRes] = await Promise.all([
-            fetch(`https://fapi.binance.com/futures/data/openInterestHist?symbol=${symbol}&period=1h&limit=2`, { cache: 'no-store' }),
-            fetch(`https://fapi.binance.com/futures/data/globalLongShortAccountRatio?symbol=${symbol}&period=1h&limit=2`, { cache: 'no-store' })
+            fetch(`https://fapi.binance.com/futures/data/openInterestHist?symbol=${symbol}&period=1h&limit=2`, { cache: 'no-store', signal: AbortSignal.timeout(5000) }).catch(() => ({ ok: false })),
+            fetch(`https://fapi.binance.com/futures/data/globalLongShortAccountRatio?symbol=${symbol}&period=1h&limit=2`, { cache: 'no-store', signal: AbortSignal.timeout(5000) }).catch(() => ({ ok: false }))
           ]);
 
-          const oiData = oiRes.ok ? await oiRes.json() : null;
-          const lsrData = lsrRes.ok ? await lsrRes.json() : null;
+          const oiData = (oiRes as any).ok ? await (oiRes as any).json() : null;
+          const lsrData = (lsrRes as any).ok ? await (lsrRes as any).json() : null;
 
           let oi = 0, oiChg1h = 0, lsr = 0, lsrChg1h = 0;
 
@@ -169,7 +178,7 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
       
       // Delay between chunks
       if (i + chunkSize < symbols.length) {
-        await new Promise(r => setTimeout(r, 100));
+        await new Promise(r => setTimeout(r, 150));
       }
     }
 
@@ -177,10 +186,7 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
     return finalData;
   } catch (error: any) {
     console.error('CRITICAL ERROR in fetchRadarData:', error);
-    // Return an empty array or partial data instead of throwing to avoid crashing the page
-    // Actually, throwing might be better for Next.js to show the error state if we want to debug,
-    // but in production we might want to return what we have.
-    // Let's throw a more descriptive error.
-    throw new Error(`Failed to fetch radar data: ${error.message || 'Unknown error'}`);
+    // Return empty array instead of throwing to prevent 500 error page
+    return [];
   }
 }
