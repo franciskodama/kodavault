@@ -97,6 +97,11 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
       console.warn(`Binance premium index fetch failed: ${premiumRes.status}`);
     }
 
+    const safeParse = (val: any) => {
+      const parsed = parseFloat(val);
+      return isNaN(parsed) ? 0 : parsed;
+    };
+
     // 3. Fetch 1h Open Interest and Long Short Ratio
     const chunkSize = 20; // Smaller chunks
     const finalData: RadarCoin[] = [];
@@ -119,21 +124,21 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
           let oi = 0, oiChg1h = 0, lsr = 0, lsrChg1h = 0;
 
           if (Array.isArray(oiData) && oiData.length >= 2) {
-            const oldOi = parseFloat(oiData[0].sumOpenInterestValue);
-            const currentOi = parseFloat(oiData[1].sumOpenInterestValue);
+            const oldOi = safeParse(oiData[0].sumOpenInterestValue);
+            const currentOi = safeParse(oiData[1].sumOpenInterestValue);
             oi = currentOi;
             oiChg1h = oldOi > 0 ? ((currentOi - oldOi) / oldOi) * 100 : 0;
           } else if (Array.isArray(oiData) && oiData.length === 1) {
-            oi = parseFloat(oiData[0].sumOpenInterestValue);
+            oi = safeParse(oiData[0].sumOpenInterestValue);
           }
 
           if (Array.isArray(lsrData) && lsrData.length >= 2) {
-            const oldLsr = parseFloat(lsrData[0].longShortRatio);
-            const currentLsr = parseFloat(lsrData[1].longShortRatio);
+            const oldLsr = safeParse(lsrData[0].longShortRatio);
+            const currentLsr = safeParse(lsrData[1].longShortRatio);
             lsr = currentLsr;
             lsrChg1h = oldLsr > 0 ? ((currentLsr - oldLsr) / oldLsr) * 100 : 0;
           } else if (Array.isArray(lsrData) && lsrData.length === 1) {
-            lsr = parseFloat(lsrData[0].longShortRatio);
+            lsr = safeParse(lsrData[0].longShortRatio);
           }
 
           const ticker = validTickers.find((t: any) => t.symbol === symbol);
@@ -141,15 +146,15 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
           return {
             symbol,
             coingeckoId: cgMap.get(symbol.replace('USDT', '').toLowerCase()) || symbol.replace('USDT', '').toLowerCase(),
-            price: parseFloat(ticker.lastPrice),
-            priceChg1h: parseFloat(ticker.priceChangePercent), 
-            volume: parseFloat(ticker.volume),
-            quoteVolume: parseFloat(ticker.quoteVolume),
+            price: safeParse(ticker.lastPrice),
+            priceChg1h: safeParse(ticker.priceChangePercent), 
+            volume: safeParse(ticker.volume),
+            quoteVolume: safeParse(ticker.quoteVolume),
             fundingRate: premiumMap.get(symbol) || 0,
             openInterest: oi,
-            openInterestChg1h: oiChg1h,
+            openInterestChg1h: isNaN(oiChg1h) ? 0 : oiChg1h,
             longShortRatio: lsr,
-            longShortRatioChg1h: lsrChg1h,
+            longShortRatioChg1h: isNaN(lsrChg1h) ? 0 : lsrChg1h,
           };
         } catch (err) {
           console.error(`Error fetching individual data for ${symbol}:`, err);
