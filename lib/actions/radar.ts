@@ -26,13 +26,19 @@ export async function getRadarData(): Promise<RadarCoin[]> {
 
   try {
     console.log('Starting fetchRadarData...');
+    const cgKey = process.env.NEXT_PUBLIC_COINGECKO_KEY;
+    const cgHeaders: Record<string, string> = {};
+    if (cgKey) {
+      cgHeaders['x-cg-pro-api-key'] = cgKey;
+    }
+    
     // Fetch CoinGecko List for Coinalyze URL mapping
     let cgMap = new Map<string, string>();
     try {
       console.log('Fetching CoinGecko markets...');
       const [cgRes1, cgRes2] = await Promise.all([
-        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1', { next: { revalidate: 3600 } }),
-        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=2', { next: { revalidate: 3600 } })
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1', { headers: cgHeaders, next: { revalidate: 3600 } }),
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=2', { headers: cgHeaders, next: { revalidate: 3600 } })
       ]);
       
       if (cgRes1.ok && cgRes2.ok) {
@@ -44,12 +50,10 @@ export async function getRadarData(): Promise<RadarCoin[]> {
           if (!cgMap.has(sym)) cgMap.set(sym, c.id);
         });
         console.log(`Mapped ${cgMap.size} symbols from CoinGecko markets`);
-      } else {
-        console.warn(`CoinGecko markets fetch failed: ${cgRes1.status} ${cgRes2.status}`);
       }
 
       console.log('Fetching CoinGecko complete list...');
-      const cgResAll = await fetch('https://api.coingecko.com/api/v3/coins/list', { next: { revalidate: 86400 } });
+      const cgResAll = await fetch('https://api.coingecko.com/api/v3/coins/list', { headers: cgHeaders, next: { revalidate: 86400 } });
       if (cgResAll.ok) {
         const cgListAll = await cgResAll.json();
         if (Array.isArray(cgListAll)) {
@@ -57,10 +61,7 @@ export async function getRadarData(): Promise<RadarCoin[]> {
             const sym = c.symbol.toLowerCase();
             if (!cgMap.has(sym)) cgMap.set(sym, c.id);
           });
-          console.log(`Mapped total ${cgMap.size} symbols from CoinGecko`);
         }
-      } else {
-        console.warn(`CoinGecko list fetch failed: ${cgResAll.status}`);
       }
     } catch (cgErr) {
       console.warn("Could not fetch CoinGecko mapping:", cgErr);
@@ -94,7 +95,30 @@ export async function getRadarData(): Promise<RadarCoin[]> {
     }
 
     if (!mirrorFound || tickers.length === 0) {
-      console.error('All Binance mirrors failed to provide tickers.');
+      console.warn('All Binance mirrors failed. Falling back to CoinGecko for basic market data...');
+      try {
+        const cgFallbackRes = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=volume_desc&per_page=30&page=1', { headers: cgHeaders, next: { revalidate: 300 } });
+        if (cgFallbackRes.ok) {
+          const cgData = await cgFallbackRes.json();
+          if (Array.isArray(cgData)) {
+            return cgData.map((c: any) => ({
+              symbol: c.symbol.toUpperCase(),
+              coingeckoId: c.id,
+              price: c.current_price || 0,
+              priceChg1h: c.price_change_percentage_24h || 0,
+              volume: c.total_volume || 0,
+              quoteVolume: c.total_volume || 0,
+              fundingRate: 0,
+              openInterest: 0,
+              openInterestChg1h: 0,
+              longShortRatio: 0,
+              longShortRatioChg1h: 0,
+            }));
+          }
+        }
+      } catch (fallbackErr) {
+        console.error('CoinGecko fallback also failed:', fallbackErr);
+      }
       return [];
     }
 
