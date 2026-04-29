@@ -12,8 +12,10 @@ export type RadarCoin = {
   longShortRatio: number;
   longShortRatioChg1h: number;
 };
+import { unstable_noStore as noStore } from 'next/cache';
 
 export async function getRadarData(): Promise<RadarCoin[]> {
+  noStore();
   const BINANCE_MIRRORS = [
     'https://fapi.binance.com',
     'https://fapi1.binance.com',
