@@ -30,14 +30,17 @@ export default function RadarTable({
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
+    console.log('RadarTable mounted. initialData count:', initialData?.length);
     setLastUpdated(new Date());
-  }, []);
+  }, [initialData]);
 
   const handleRefresh = async () => {
     setLoading(true);
     try {
+      console.log('Refreshing radar data...');
       const newData = await fetchRadarData();
-      setData(newData);
+      console.log('Refresh complete. New data count:', newData?.length);
+      setData(newData || []);
       setLastUpdated(new Date());
     } catch (err) {
       console.error('Failed to fetch radar data', err);

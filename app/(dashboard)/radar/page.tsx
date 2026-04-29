@@ -1,5 +1,5 @@
 import RadarTable from './RadarTable';
-import { fetchRadarData } from '@/lib/actions/radar';
+import { getRadarData } from '@/lib/actions/radar';
 
 export const metadata = {
   title: 'Radar | Trezo',
@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 export default async function RadarPage() {
   let initialData: any[] = [];
   try {
-    initialData = await fetchRadarData();
+    initialData = await getRadarData();
   } catch (error) {
     console.error('RadarPage fetch error:', error);
     // We'll pass an empty array and let the table handle the "No data" state

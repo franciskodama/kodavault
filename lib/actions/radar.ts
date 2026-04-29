@@ -14,7 +14,7 @@ export type RadarCoin = {
   longShortRatioChg1h: number;
 };
 
-export async function fetchRadarData(): Promise<RadarCoin[]> {
+export async function getRadarData(): Promise<RadarCoin[]> {
   const BINANCE_MIRRORS = [
     'https://fapi.binance.com',
     'https://fapi1.binance.com',
@@ -201,7 +201,11 @@ export async function fetchRadarData(): Promise<RadarCoin[]> {
     return finalData;
   } catch (error: any) {
     console.error('CRITICAL ERROR in fetchRadarData:', error);
-    // Return empty array instead of throwing to prevent 500 error page
     return [];
   }
+}
+
+export async function fetchRadarData(): Promise<RadarCoin[]> {
+  'use server';
+  return getRadarData();
 }
