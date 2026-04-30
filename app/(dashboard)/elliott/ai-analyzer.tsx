@@ -193,67 +193,7 @@ export function ElliottAIAnalyzer() {
                 priority
               />
 
-              {/* Analysis Overlay */}
-              <AnimatePresence>
-                {result && (
-                  <svg
-                    viewBox='0 0 1000 1000'
-                    className='absolute top-0 left-0 w-full h-full pointer-events-none drop-shadow-2xl'
-                    preserveAspectRatio='none'
-                  >
-                    {/* Connecting lines */}
-                    <motion.path
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: 1, opacity: 0.6 }}
-                      transition={{ duration: 1, ease: 'easeInOut' }}
-                      d={`M ${result.waves
-                        .map((w) => `${w.x} ${w.y}`)
-                        .join(' L ')}`}
-                      fill='none'
-                      stroke='white'
-                      strokeWidth='2'
-                    />
-
-                    {/* Points and Labels */}
-                    {result.waves.map((p, i) => (
-                      <motion.g
-                        key={i}
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.1 * i }}
-                      >
-                        <circle
-                          cx={p.x}
-                          cy={p.y}
-                          r='10'
-                          className='animate-pulse'
-                          fill={p.label.match(/[1-5]/) ? '#10B981' : '#F43F5E'}
-                          stroke='white'
-                          strokeWidth='2'
-                        />
-                        <text
-                          x={p.x}
-                          y={p.y - 25}
-                          textAnchor='middle'
-                          fill='white'
-                          fontSize='42'
-                          fontWeight='black'
-                          className='drop-shadow-[0_0_10px_rgba(0,0,0,0.8)] filter select-none pointer-events-none'
-                          style={{
-                            paintOrder: 'stroke',
-                            stroke: 'black',
-                            strokeWidth: '4px',
-                            strokeLinecap: 'round',
-                            strokeLinejoin: 'round',
-                          }}
-                        >
-                          {p.label}
-                        </text>
-                      </motion.g>
-                    ))}
-                  </svg>
-                )}
-              </AnimatePresence>
+              {/* Analysis Overlay - Removed for text-only analysis */}
 
               {analyzing && (
                 <div className='absolute inset-0 bg-indigo-900/40 backdrop-blur-sm flex flex-col items-center justify-center'>
