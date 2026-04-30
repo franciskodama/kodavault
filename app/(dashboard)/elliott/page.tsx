@@ -5,7 +5,6 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import HtmlTable from './table-html';
 import { ElliottAIAnalyzer } from './ai-analyzer';
 import {
   Brain,
@@ -45,7 +44,7 @@ export default function Elliott() {
               Elliott AI Vision
             </span>
           </TabsTrigger>
-          <TabsTrigger
+          {/* <TabsTrigger
             value='pieces'
             className='flex items-center gap-2 px-6 py-2 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all'
           >
@@ -53,7 +52,7 @@ export default function Elliott() {
             <span className='font-bold uppercase tracking-wider text-[10px]'>
               Elliott by Pieces
             </span>
-          </TabsTrigger>
+          </TabsTrigger> */}
           <TabsTrigger
             value='rules'
             className='flex items-center gap-2 px-6 py-2 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all'
@@ -373,7 +372,6 @@ export default function Elliott() {
                         </li>
                       </ul>
                     </div>
-                    <HtmlTable />
                   </CardContent>
                 </div>
               </div>
