@@ -235,7 +235,7 @@ export function ElliottAIAnalyzer() {
                     </div>
                     <div className='flex items-center gap-2 mb-3'>
                       <CheckCircle2 className='w-4 h-4 text-emerald-400' />
-                      <h4 className='text-[10px] font-black uppercase tracking-[0.2em] text-slate-400'>
+                      <h4 className='text-md font-bold uppercase tracking-[0.2em] text-slate-400'>
                         Preferred Count Strategy
                       </h4>
                     </div>
@@ -260,7 +260,7 @@ export function ElliottAIAnalyzer() {
                             <div className='flex flex-col items-center pt-1.5 shrink-0'>
                               <div className='w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)] group-hover/bullet:scale-125 transition-transform' />
                             </div>
-                            <p className='text-sm font-medium text-slate-300 leading-relaxed'>
+                            <p className='text-sm text-slate-300 leading-relaxed'>
                               {bullet}
                             </p>
                           </div>
@@ -272,7 +272,7 @@ export function ElliottAIAnalyzer() {
                   {/* Rules & Guidelines Grid */}
                   <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                     <div className='bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-5'>
-                      <h5 className='text-[9px] font-black uppercase tracking-widest text-emerald-400 mb-3'>
+                      <h5 className='text-md font-bold uppercase tracking-widest text-emerald-400 mb-3'>
                         Rules Verified
                       </h5>
                       <div className='flex flex-wrap gap-2'>
@@ -280,10 +280,9 @@ export function ElliottAIAnalyzer() {
                           (rule, idx) => (
                             <div
                               key={idx}
-                              className='flex items-center gap-1.5 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20'
+                              className='flex bg-emerald-500/10 px-4 py-2 rounded-md border border-emerald-500/20'
                             >
-                              <CheckCircle2 className='w-3 h-3 text-emerald-400' />
-                              <span className='text-[10px] font-bold text-emerald-300 uppercase'>
+                              <span className='text-sm text-emerald-300 leading-relaxed'>
                                 {rule}
                               </span>
                             </div>
@@ -293,10 +292,10 @@ export function ElliottAIAnalyzer() {
                     </div>
 
                     <div className='bg-indigo-500/5 border border-indigo-500/10 rounded-xl p-5'>
-                      <h5 className='text-[9px] font-black uppercase tracking-widest text-indigo-400 mb-3'>
+                      <h5 className='text-md font-bold uppercase tracking-widest text-indigo-400 mb-3'>
                         Key Guidelines
                       </h5>
-                      <p className='text-xs font-medium text-slate-400 leading-relaxed'>
+                      <p className='text-sm text-slate-400 leading-relaxed'>
                         {result.interpretation.guidelines_observed}
                       </p>
                     </div>
@@ -305,11 +304,11 @@ export function ElliottAIAnalyzer() {
                   {/* Alternate Count */}
                   {result.interpretation.alternate_count && (
                     <div className='bg-amber-500/5 border border-amber-500/10 rounded-xl p-4'>
-                      <h5 className='text-[9px] font-black uppercase tracking-widest text-amber-400 mb-2'>
+                      <h5 className='text-sm uppercase tracking-widest text-amber-400 mb-2'>
                         Alternate Perspective
                       </h5>
-                      <p className='text-xs font-medium text-amber-200/70 italic'>
-                        &ldquo;{result.interpretation.alternate_count}&rdquo;
+                      <p className='text-sm text-amber-200/70'>
+                        {result.interpretation.alternate_count}
                       </p>
                     </div>
                   )}
