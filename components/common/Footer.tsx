@@ -46,14 +46,24 @@ export default function Footer() {
                 Features
               </h4>
             </div>
-            <div className='flex flex-wrap content-start leading-6 gap-1'>
-              {[...mainItems, ...toolItems].map((item: any) => (
-                <Link key={item.label} href={item.href}>
-                  <p className='text-white text-left w-[20ch] underline-offset-4 hover:underline'>
-                    {item.label}
-                  </p>
-                </Link>
-              ))}
+            <div className='flex flex-col md:flex-row gap-6'>
+              <div className='relative w-full md:w-32 aspect-video rounded-lg overflow-hidden border border-white/10 shadow-lg group shrink-0'>
+                <Image
+                  src='/og-tags/prj-trezo.webp'
+                  alt='Trezo.App Features'
+                  fill
+                  className='object-cover group-hover:scale-110 transition-transform duration-700'
+                />
+              </div>
+              <div className='flex flex-wrap content-start leading-6 gap-x-4 gap-y-1'>
+                {[...mainItems, ...toolItems].map((item: any) => (
+                  <Link key={item.label} href={item.href}>
+                    <p className='text-white text-left w-[15ch] underline-offset-4 hover:underline opacity-80 hover:opacity-100 transition-opacity'>
+                      {item.label}
+                    </p>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         )}
