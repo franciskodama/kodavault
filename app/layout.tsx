@@ -12,6 +12,16 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  openGraph: {
+    images: [
+      {
+        url: 'https://www.trezo.app/og-tags/prj-trezo.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Trezo.App',
+      },
+    ],
+  },
 };
 
 import { AuthProvider } from './providers';
