@@ -18,26 +18,16 @@ export async function POST(req: NextRequest) {
     }
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-pro',
       generationConfig: {
         responseMimeType: 'application/json',
       },
     });
 
     const prompt = `
-  As an elite Elliott Wave technician, your mission is to map wave counts with architectural precision. Use the following triangulation logic and categorical rules:
+  As an elite Elliott Wave technician, your mission is to map wave counts with architectural precision. Use the following categorical rules:
 
-  ### STEP 1: DEFINE THE GRID (0 to 1000)
-  - (0,0) = Top-Left pixel. (1000,1000) = Bottom-Right pixel.
-  - VISUAL MAP: Main chart body usually lives in Y=50 to Y=700. Indicators (Volume, RSI) live in Y=700 to Y=1000.
-  - X-AXIS: 0 is the left edge. 1000 is the right edge (after price labels).
-
-  ### STEP 2: TRIANGULATE COORDINATES
-  1. Find the Candle: Locate specific price bars.
-  2. Anchor to Wick: For peaks (1, 3, 5, A, C), dot the highest pixel of the upper wick. For troughs (2, 4, B), dot the lowest pixel of the lower wick.
-  3. Spatial Awareness: Place labels strictly in the Main Chart area (top 70%).
-
-  ### STEP 3: LOGICAL HIERARCHY (CORE RULES & GUIDELINES)
+  ### STEP 1: LOGICAL HIERARCHY (CORE RULES & GUIDELINES)
 
   #### 1. MOTIVE WAVES (Dir: Larger Trend)
   - IMPULSE RULES:
@@ -61,23 +51,19 @@ export async function POST(req: NextRequest) {
     - Running: B > 100% of A, C fails to exceed A.
   - TRIANGLES (3-3-3-3-3): Mostly zigzags. Contracting, Barrier (B-D horizontal), or Expanding. Occur only in Wave 4 or B positions.
 
-  ### STEP 4: DEDUCTIVE APPLICATION
+  ### STEP 2: DEDUCTIVE APPLICATION
   - Objective Analysis: If a CORE RULE is violated, the count is objectively WRONG.
   - Preferred Count: Interpretation satisfying the most rules/guidelines.
   - Alternate Count: The "Plan B" if the preferred count is invalidated.
 
   ### OUTPUT REQUIREMENTS
-  Return RAW JSON ONLY. Accuracy in 'strategy_bullets' and 'waves' is paramount.
+  Return RAW JSON ONLY. Accuracy in 'strategy_bullets' is paramount. Do not include coordinates or attempt to draw the wave on the chart.
 
   {
-    "waves": [
-      { "label": "1", "x": numeric, "y": numeric, "type": "impulse" },
-      ...
-    ],
     "interpretation": {
       "strategy_bullets": [
         "DETECTION: [Identify the asset and main boundary]",
-        "REASONING: [Explain how the rules from Step 3 were applied to eliminate alternatives]",
+        "REASONING: [Explain how the rules from Step 1 were applied to eliminate alternatives]",
         "OUTLOOK: [Summarize the current wave position and next expected move based on guidelines]"
       ],
       "rules_verified": ["Rule 1", "Rule 2", "Rule 3"],
