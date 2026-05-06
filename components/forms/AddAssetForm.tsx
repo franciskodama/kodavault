@@ -90,6 +90,13 @@ export function AddAssetForm() {
       ) {
         setValue('asset', '');
       }
+      if (assetSubtype === 'Stock-USD') {
+        setValue('currency', 'USD');
+      }
+
+      if (assetSubtype === 'Stock-CAD') {
+        setValue('currency', 'CAD');
+      }
     }
   }, [assetSubtype, setValue]);
 
