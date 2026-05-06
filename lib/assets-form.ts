@@ -450,49 +450,30 @@ export const getCurrencies = (subtype: string) => {
 
 export const cryptoWallets = ['Ledger', 'Trezor', 'Metamask'];
 
-export const assetAccount = ['TFSA', 'FHSA', 'Checking', 'Savings'];
-
-// export const cryptoAccounts = [
-//   'Solana',
-//   'Cardano',
-//   'Tron',
-//   'Near',
-//   'Polkadot',
-//   'Stacks',
-//   'Dogecoin',
-//   'Ethereum',
-//   'ICP',
-//   'Filecoin',
-//   'Astar',
-//   'Ton',
-//   'Binance BSC',
-//   'Bitcoin/Segwit',
-//   'Polygon',
-// ];
+export const assetAccount = ['TFSA', 'FHSA'];
 
 export const getAccounts = (subtype: string) => {
   switch (subtype) {
     case 'BTC':
-      return ['Bitcoin/Segwit'];
+      return ['-'];
     case 'ETH':
-      // return cryptoAccounts.sort();
-      return ['N/A'];
+      return ['-'];
     case 'Altcoin':
-      return ['N/A'];
+      return ['-'];
     case 'Stock-USD':
       return ['TFSA', 'FHSA'];
     case 'Stock-CAD':
       return ['TFSA', 'FHSA'];
     case 'Stock-BRL':
-      return ['Investment'];
+      return ['-'];
     case 'Cash-USD':
-      return ['Checking', 'Investment'];
+      return ['TFSA', 'FHSA'];
     case 'Cash-CAD':
-      return ['Checking', 'TFSA', 'FHSA'];
+      return ['TFSA', 'FHSA'];
     case 'Cash-BRL':
-      return ['Checking'];
+      return ['-'];
     default:
-      return ['Checking', 'Investment', 'TFSA', 'FHSA'];
+      return ['TFSA', 'FHSA'];
   }
 };
 

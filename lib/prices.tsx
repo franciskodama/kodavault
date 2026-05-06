@@ -130,7 +130,7 @@ export const includePriceToStockAssets = async (
     if (result.body && currencyRates && currencyRates.data) {
       const onlySymbolAndPriceArray = result.body.map((item: any) => {
         return {
-          asset: item.symbol.split('.')[0],
+          asset: item.symbol,
           price:
             item.regularMarketPrice /
             (item.currency === 'CAD'
@@ -144,7 +144,8 @@ export const includePriceToStockAssets = async (
       const stockAssetsWithPrices: Asset[] = stockAssetsArray.map(
         (item: any) => {
           const thisStock = onlySymbolAndPriceArray.find(
-            (el: any) => el.asset === item.asset
+            (el: any) =>
+              el.asset === item.asset || el.asset.split('.')[0] === item.asset
           );
 
           return {
