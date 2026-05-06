@@ -436,7 +436,7 @@ export const getCurrencies = (subtype: string) => {
     case 'Stock-CAD':
       return ['CAD', 'USD'];
     case 'Stock-BRL':
-      return ['BRL'];
+      return ['CAD', 'USD', 'BRL'];
     case 'Cash-USD':
       return ['USD'];
     case 'Cash-CAD':

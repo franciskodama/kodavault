@@ -97,6 +97,10 @@ export function AddAssetForm() {
       if (assetSubtype === 'Stock-CAD') {
         setValue('currency', 'CAD');
       }
+
+      if (assetSubtype === 'Stock-BRL') {
+        setValue('currency', 'BRL');
+      }
     }
   }, [assetSubtype, setValue]);
 
