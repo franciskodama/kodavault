@@ -258,27 +258,32 @@ export function UpdateAssetForm({
             </ul>
           </div>
 
-          {assetAccount[0] !== 'Investment' && assetAccount[0] !== 'cc' && (
-            <div className={classDiv}>
-              <h3 className={classTitle}>Account</h3>
-              <ul className={classUl}>
-                {assetAccount.map((accountOption) => (
-                  <li key={accountOption}>
-                    <input
-                      className='hidden peer'
-                      type='radio'
-                      value={accountOption}
-                      id={accountOption}
-                      {...register('account')}
-                    />
-                    <label className={classLabelRadio} htmlFor={accountOption}>
-                      <span>{accountOption}</span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {assetAccount[0] !== 'Investment' &&
+            assetAccount[0] !== 'cc' &&
+            assetAccount[0] !== '-' && (
+              <div className={classDiv}>
+                <h3 className={classTitle}>Account</h3>
+                <ul className={classUl}>
+                  {assetAccount.map((accountOption) => (
+                    <li key={accountOption}>
+                      <input
+                        className='hidden peer'
+                        type='radio'
+                        value={accountOption}
+                        id={accountOption}
+                        {...register('account')}
+                      />
+                      <label
+                        className={classLabelRadio}
+                        htmlFor={accountOption}
+                      >
+                        <span>{accountOption}</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
           <div className='flex items-center gap-2 mt-4 p-2'>
             <Controller

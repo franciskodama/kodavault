@@ -1,26 +1,37 @@
 export const fetchStockPricesFromSheets = async () => {
   try {
     let url = process.env.SPREADSHEET_STOCK_PRICES_URL || '';
+    if (!url) return { body: [] };
+
     if (url.includes('/edit')) {
       const urlObj = new URL(url);
       const gid = urlObj.searchParams.get('gid');
-      url = url.split('/edit')[0] + '/export?format=tsv' + (gid ? `&gid=${gid}` : '');
+      url =
+        url.split('/edit')[0] +
+        '/export?format=tsv' +
+        (gid ? `&gid=${gid}` : '');
     } else if (url.includes('/pubhtml')) {
       url = url.replace('/pubhtml', '/pub?output=tsv');
     }
 
-    const tsv = await fetch(url, {
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'Accept-Encoding': 'deflate',
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',
         Expires: '0',
       },
-    }).then((res) => res.text());
-    
+    });
+
+    if (!response.ok) {
+      console.error('Failed to fetch spreadsheet:', response.statusText);
+      return { body: [] };
+    }
+
+    const tsv = await response.text();
+
     const data = tsv
-      .split('\n')
+      .split(/\r?\n/)
       .slice(1)
       .filter((row) => row.trim() !== '')
       .map((row) => {
@@ -29,18 +40,19 @@ export const fetchStockPricesFromSheets = async () => {
         const symbol = cols[0] || '';
         const price = cols[1] || '';
         const currency = cols[2] || 'USD';
-        
-        const cleanPrice = price.replace(/,/g, '').trim();
-        const numericPrice = Number(cleanPrice);
+
+        // Remove non-numeric characters except for dots and minus signs
+        const numericPrice = parseFloat(price.replace(/[^0-9.-]/g, ''));
 
         return {
           symbol: symbol.trim(),
           regularMarketPrice: isNaN(numericPrice) ? 0 : numericPrice,
-          currency: (currency.trim() || 'USD').slice(0, 3),
+          currency: (currency.trim() || 'USD').toUpperCase().slice(0, 3),
         };
       });
     return { body: data };
   } catch (error) {
+    console.error('Error in fetchStockPricesFromSheets:', error);
     return { error };
   }
 };

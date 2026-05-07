@@ -70,7 +70,7 @@ export function AddAssetForm() {
 
   useEffect(() => {
     setValue('type', assetType ? assetType : '');
-    setValue('purpose', 'Investment');
+    setValue('purpose', 'Swing Trade');
   }, [assetType, setValue]);
 
   useEffect(() => {
@@ -90,6 +90,21 @@ export function AddAssetForm() {
       ) {
         setValue('asset', '');
       }
+      if (assetSubtype === 'Stock-USD') {
+        setValue('currency', 'USD');
+      }
+
+      if (assetSubtype === 'Stock-CAD') {
+        setValue('currency', 'CAD');
+      }
+
+      if (assetSubtype === 'Stock-BRL') {
+        setValue('currency', 'BRL');
+      }
+
+      if (assetSubtype === 'Stablecoins') {
+        setValue('currency', 'USD');
+      }
     }
   }, [assetSubtype, setValue]);
 
@@ -98,6 +113,12 @@ export function AddAssetForm() {
       setValue('currency', assetCurrency[0]);
     }
   }, [assetCurrency, setValue]);
+
+  useEffect(() => {
+    if (assetAccount.length === 1) {
+      setValue('account', assetAccount[0]);
+    }
+  }, [assetAccount, setValue]);
 
   useEffect(() => {
     if (altcoinsCategories.find((coin) => coin.symbol === symbolTyped)) {
@@ -215,8 +236,9 @@ export function AddAssetForm() {
               </ul>
             </div>
 
-            {assetWallet.includes(watch('wallet')) ||
-            watch('wallet') === 'Wealthsimple' ? (
+            {(assetWallet.includes(watch('wallet')) ||
+              watch('wallet') === 'Wealthsimple') &&
+            assetAccount[0] !== '-' ? (
               <div className={classDiv}>
                 <h3 className={classTitle}>Account</h3>
                 <ul className={classUl}>
