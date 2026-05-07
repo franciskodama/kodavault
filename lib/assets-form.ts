@@ -13,7 +13,12 @@ export const subtypeOptions = [
   'Stock-BRL',
 ];
 
-export const purposeOptions = ['Trade', 'Investment'];
+export const purposeOptions = [
+  'Swing Trade',
+  'Position Trade',
+  'Long-term Hold',
+];
+
 export const categoryOptions = [
   'AI',
   'Meme',
@@ -139,29 +144,17 @@ export const getWallets = (subtype: string) => {
         'Metamask',
       ];
     case 'Stock-USD':
-      return ['Wealthsimple', 'ClearXP'];
+      return ['Wealthsimple', 'Questrade', 'ClearXP'];
     case 'Stock-CAD':
       return ['Wealthsimple', 'Questrade'];
     case 'Stock-BRL':
       return ['ClearXP', 'XP'];
     case 'Cash-USD':
-      return [
-        'Binance',
-        'Bybit',
-        'Gate.io',
-        'BingX',
-        'Bitget',
-        'BloFin',
-        'Mexc',
-        'Crypto',
-        'Ledger',
-        'Trezor',
-        'Metamask',
-      ];
+      return ['Wealthsimple', 'Questrade'];
     case 'Cash-CAD':
       return ['Tangerine', 'Scotiabank', 'Wealthsimple', 'Neo'];
     case 'Cash-BRL':
-      return ['Binance', 'Bybit', 'Nubank', 'Inter', 'Itaú', 'ClearXP'];
+      return ['Nubank', 'Inter', 'Itaú', 'ClearXP', 'Binance', 'Bybit'];
     default:
       return [
         'Binance',
@@ -177,6 +170,9 @@ export const getWallets = (subtype: string) => {
         'Trezor',
         'Tangerine',
         'Metamask',
+        'Wealthsimple',
+        'Questrade',
+        'ClearXP',
       ];
   }
 };

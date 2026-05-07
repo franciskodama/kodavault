@@ -70,7 +70,7 @@ export function AddAssetForm() {
 
   useEffect(() => {
     setValue('type', assetType ? assetType : '');
-    setValue('purpose', 'Investment');
+    setValue('purpose', 'Swing Trade');
   }, [assetType, setValue]);
 
   useEffect(() => {
