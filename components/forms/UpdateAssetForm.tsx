@@ -258,7 +258,9 @@ export function UpdateAssetForm({
             </ul>
           </div>
 
-          {assetAccount[0] !== 'Investment' && assetAccount[0] !== 'cc' && (
+          {assetAccount[0] !== 'Investment' &&
+            assetAccount[0] !== 'cc' &&
+            assetAccount[0] !== '-' && (
             <div className={classDiv}>
               <h3 className={classTitle}>Account</h3>
               <ul className={classUl}>
