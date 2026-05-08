@@ -121,6 +121,12 @@ export function AddAssetForm() {
   }, [assetAccount, setValue]);
 
   useEffect(() => {
+    if (assetCategory.length === 1) {
+      setValue('category', assetCategory[0] as category_enum_6c7fcd47);
+    }
+  }, [assetCategory, setValue]);
+
+  useEffect(() => {
     if (altcoinsCategories.find((coin) => coin.symbol === symbolTyped)) {
       const relatedCategory = getCategoryBySymbol(symbolTyped);
       setValue('category', relatedCategory as category_enum_6c7fcd47);
@@ -129,6 +135,11 @@ export function AddAssetForm() {
 
   const processForm: SubmitHandler<Inputs> = async (formData) => {
     if (!uid) {
+      toast({
+        title: 'Authentication Error',
+        description: 'You must be logged in to add an asset.',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -139,7 +150,7 @@ export function AddAssetForm() {
       tag: formData.tag?.trim() === '' ? 'No Tag' : formData.tag,
     });
 
-    if (result) {
+    if (result.success) {
       toast({
         title: 'Asset added! 🎉',
         description: 'Your new asset is already available.',
@@ -147,16 +158,15 @@ export function AddAssetForm() {
       });
       await refreshAssets();
       closeRef.current?.click();
+      reset();
+      setData(formData);
     } else {
       toast({
-        title: '👻 Boho! Error occurred!',
-        description: 'Your asset was NOT added.',
+        title: 'Ghost error! 👻',
+        description: result.error || 'Your asset was NOT added.',
         variant: 'destructive',
       });
     }
-
-    reset();
-    setData(formData);
   };
 
   return (
@@ -172,7 +182,7 @@ export function AddAssetForm() {
                   type='radio'
                   value={subtypeOption}
                   id={subtypeOption}
-                  {...register('subtype')}
+                  {...register('subtype', { required: 'Please select a type' })}
                 />
                 <label className={classLabelRadio} htmlFor={subtypeOption}>
                   <span>{subtypeOption}</span>
@@ -180,6 +190,9 @@ export function AddAssetForm() {
               </li>
             ))}
           </ul>
+          {errors.subtype?.message && (
+            <p className={classError}>{errors.subtype.message}</p>
+          )}
         </div>
 
         {assetSubtype && (
@@ -208,7 +221,13 @@ export function AddAssetForm() {
                 <input
                   className={classInput}
                   placeholder='Quantity'
-                  {...register('qty', { required: "Quantity can't be empty" })}
+                  {...register('qty', {
+                    required: "Quantity can't be empty",
+                    pattern: {
+                      value: /^[0-9]+([.,][0-9]+)?$/,
+                      message: 'Please enter a valid number',
+                    },
+                  })}
                 />
                 {errors.qty?.message && (
                   <p className={classError}>{errors.qty.message}</p>
@@ -226,7 +245,9 @@ export function AddAssetForm() {
                       type='radio'
                       value={walletOption}
                       id={walletOption}
-                      {...register('wallet')}
+                      {...register('wallet', {
+                        required: 'Please select a wallet',
+                      })}
                     />
                     <label className={classLabelRadio} htmlFor={walletOption}>
                       <span>{walletOption}</span>
@@ -234,6 +255,9 @@ export function AddAssetForm() {
                   </li>
                 ))}
               </ul>
+              {errors.wallet?.message && (
+                <p className={classError}>{errors.wallet.message}</p>
+              )}
             </div>
 
             {(assetWallet.includes(watch('wallet')) ||
@@ -249,7 +273,9 @@ export function AddAssetForm() {
                         type='radio'
                         value={accountOption}
                         id={accountOption}
-                        {...register('account')}
+                        {...register('account', {
+                          required: 'Please select an account',
+                        })}
                       />
                       <label
                         className={classLabelRadio}
@@ -260,6 +286,9 @@ export function AddAssetForm() {
                     </li>
                   ))}
                 </ul>
+                {errors.account?.message && (
+                  <p className={classError}>{errors.account.message}</p>
+                )}
               </div>
             ) : (
               <div>
@@ -280,7 +309,9 @@ export function AddAssetForm() {
                       <CustomRadioWithTooltip
                         value={categoryOption}
                         id={categoryOption}
-                        register={register('category')}
+                        register={register('category', {
+                          required: 'Please select a category',
+                        })}
                         tooltipContent={
                           getCategoryTooltip(categoryOption) || ''
                         }
@@ -289,6 +320,9 @@ export function AddAssetForm() {
                     </li>
                   ))}
                 </ul>
+                {errors.category?.message && (
+                  <p className={classError}>{errors.category.message}</p>
+                )}
               </div>
             )}
 
@@ -302,7 +336,9 @@ export function AddAssetForm() {
                       type='radio'
                       value={purposeOption}
                       id={purposeOption}
-                      {...register('purpose')}
+                      {...register('purpose', {
+                        required: 'Please select a purpose',
+                      })}
                     />
                     <label className={classLabelRadio} htmlFor={purposeOption}>
                       <span>{purposeOption}</span>
@@ -310,6 +346,9 @@ export function AddAssetForm() {
                   </li>
                 ))}
               </ul>
+              {errors.purpose?.message && (
+                <p className={classError}>{errors.purpose.message}</p>
+              )}
             </div>
 
             <div className={classDiv}>
@@ -334,7 +373,9 @@ export function AddAssetForm() {
                         type='radio'
                         value={currencyOption}
                         id={currencyOption}
-                        {...register('currency')}
+                        {...register('currency', {
+                          required: 'Please select a currency',
+                        })}
                       />
                       <label
                         className={classLabelRadio}
@@ -345,6 +386,9 @@ export function AddAssetForm() {
                     </li>
                   ))}
                 </ul>
+                {errors.currency?.message && (
+                  <p className={classError}>{errors.currency.message}</p>
+                )}
               </div>
             )}
 

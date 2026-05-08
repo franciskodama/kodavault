@@ -5,6 +5,14 @@ import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { Inputs } from '@/lib/types';
 
+const purposeMapping: Record<string, any> = {
+  'Swing Trade': 'SwingTrade',
+  'Position Trade': 'PositionTrade',
+  'Long-term Hold': 'LongTermHold',
+  'Trade': 'Trade',
+  'Investment': 'Investment',
+};
+
 export async function addAsset(formData: Inputs) {
   const {
     asset,
@@ -23,12 +31,23 @@ export async function addAsset(formData: Inputs) {
   } = formData;
 
   try {
+    const quantity = Number(qty.toString().replace(',', '.'));
+    if (isNaN(quantity)) {
+      return {
+        success: false,
+        error: 'Invalid quantity format. Please use numbers.',
+      };
+    }
+
+    const mappedPurpose = purposeMapping[purpose] || purpose;
+    const finalCategory = category || 'Unknown';
+
     await prisma.asset.create({
       data: {
         id: v4(),
         created_at: new Date(),
         asset: asset.toUpperCase(),
-        qty: Number(qty),
+        qty: quantity,
         wallet,
         type,
         uid,
@@ -36,16 +55,20 @@ export async function addAsset(formData: Inputs) {
         currency,
         account,
         exchange,
-        category,
-        purpose,
+        category: finalCategory,
+        purpose: mappedPurpose,
         tag: tag === '' ? null : tag,
         reviewed: reviewed || false,
       },
     });
-    return true;
-  } catch (error) {
+    return { success: true };
+  } catch (error: any) {
     console.error(error);
-    return false;
+    return {
+      success: false,
+      error:
+        error.message || 'An unexpected error occurred while adding the asset.',
+    };
   }
 }
 
@@ -68,6 +91,17 @@ export async function updateAsset(formData: Inputs) {
   } = formData;
 
   try {
+    const quantity = Number(qty.toString().replace(',', '.'));
+    if (isNaN(quantity)) {
+      return {
+        success: false,
+        error: 'Invalid quantity format. Please use numbers.',
+      };
+    }
+
+    const mappedPurpose = purposeMapping[purpose] || purpose;
+    const finalCategory = category || 'Unknown';
+
     await prisma.asset.update({
       where: {
         id,
@@ -76,7 +110,7 @@ export async function updateAsset(formData: Inputs) {
         id,
         created_at: new Date(),
         asset,
-        qty: Number(qty),
+        qty: quantity,
         wallet,
         type,
         uid,
@@ -84,16 +118,21 @@ export async function updateAsset(formData: Inputs) {
         currency,
         account,
         exchange,
-        purpose,
-        category,
+        purpose: mappedPurpose,
+        category: finalCategory,
         tag,
         reviewed: reviewed || false,
       },
     });
-    return true;
-  } catch (error) {
+    return { success: true };
+  } catch (error: any) {
     console.error(error);
-    return false;
+    return {
+      success: false,
+      error:
+        error.message ||
+        'An unexpected error occurred while updating the asset.',
+    };
   }
 }
 
