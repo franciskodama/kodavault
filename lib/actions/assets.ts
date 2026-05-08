@@ -39,7 +39,7 @@ export async function addAsset(formData: Inputs) {
       };
     }
 
-    const mappedPurpose = purposeMapping[purpose] || purpose;
+    const mappedPurpose = (purpose && purposeMapping[purpose]) || purpose;
     const finalCategory = category || 'Unknown';
 
     await prisma.asset.create({
@@ -99,7 +99,7 @@ export async function updateAsset(formData: Inputs) {
       };
     }
 
-    const mappedPurpose = purposeMapping[purpose] || purpose;
+    const mappedPurpose = (purpose && purposeMapping[purpose]) || purpose;
     const finalCategory = category || 'Unknown';
 
     await prisma.asset.update({
