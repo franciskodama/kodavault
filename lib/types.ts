@@ -19,6 +19,7 @@ export type UnpricedAsset = {
   category?: category_enum_6c7fcd47;
   tag?: string;
   reviewed?: boolean;
+  image?: string;
 };
 
 export type Asset =

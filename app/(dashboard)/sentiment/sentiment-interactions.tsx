@@ -205,6 +205,7 @@ export function SentimentInteractions({
                                 src='/are-you-sure-michael.gif'
                                 alt='Michael Scott'
                                 fill
+                                unoptimized
                                 className='object-cover rounded-full border-2 border-slate-100 shadow-sm'
                               />
                             </AspectRatio>
