@@ -33,11 +33,7 @@ export function OpenFavsButton({
   };
 
   return (
-    <Button
-      onClick={handleOpenFavs}
-      variant='outline'
-      className='gap-2 border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700'
-    >
+    <Button onClick={handleOpenFavs} variant='outline' className='gap-2'>
       <ExternalLink size={16} />
       <span>Launch Favorites</span>
     </Button>
