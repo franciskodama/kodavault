@@ -46,6 +46,7 @@ export default function MessageInTable({
             alt={alt}
             className='object-cover rounded-2xl border border-slate-100'
             priority
+            unoptimized
             fill
             sizes='(max-width: 500px) 100vw'
             style={{ objectPosition: objectPosition }}

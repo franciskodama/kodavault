@@ -14,3 +14,5 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export default prismaClient as PrismaClient;
+
+// Updated to pick up new models

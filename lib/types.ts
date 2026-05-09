@@ -19,6 +19,7 @@ export type UnpricedAsset = {
   category?: category_enum_6c7fcd47;
   tag?: string;
   reviewed?: boolean;
+  image?: string;
 };
 
 export type Asset =
@@ -225,3 +226,15 @@ export type EconomicCalendarEvent = {
 };
 
 export type EconomicCalendarResponse = EconomicCalendarEvent[];
+
+export type SentimentType = {
+  id: string;
+  uid: string;
+  created_at: Date;
+  asset: string;
+  pair: string;
+  isFavorite: boolean;
+  url: string;
+  exchange: string;
+  image?: string;
+};

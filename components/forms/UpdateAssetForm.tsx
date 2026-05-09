@@ -82,12 +82,17 @@ export function UpdateAssetForm({
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
     if (!uid) {
-      return console.log('User not logged in');
+      toast({
+        title: 'Authentication Error',
+        description: 'You must be logged in to update an asset.',
+        variant: 'destructive',
+      });
+      return;
     }
 
     const result = await updateAsset({ ...data, uid: uid || '' });
 
-    if (result) {
+    if (result.success) {
       toast({
         title: 'Asset Updated! 🎉',
         description: 'Your Asset is already updated.',
@@ -95,16 +100,15 @@ export function UpdateAssetForm({
       });
       await refreshAssets();
       closeRef.current?.click();
+      setData(data);
+      reset();
     } else {
       toast({
-        title: '🚨 Uh oh! Something went wrong!',
-        description: 'Your Asset was NOT Updated.',
+        title: 'Ghost error! 👻',
+        description: result.error || 'Your Asset was NOT Updated.',
         variant: 'destructive',
       });
     }
-
-    setData(data);
-    reset();
   };
 
   return (
@@ -120,7 +124,7 @@ export function UpdateAssetForm({
                   type='radio'
                   value={subtypeOption}
                   id={subtypeOption}
-                  {...register('subtype')}
+                  {...register('subtype', { required: 'Please select a type' })}
                 />
                 <label className={classLabelRadio} htmlFor={subtypeOption}>
                   <span>{subtypeOption}</span>
@@ -128,6 +132,9 @@ export function UpdateAssetForm({
               </li>
             ))}
           </ul>
+          {errors.subtype?.message && (
+            <p className={classError}>{errors.subtype.message}</p>
+          )}
         </div>
 
         <div className='flex flex-col'>
@@ -153,7 +160,13 @@ export function UpdateAssetForm({
               <input
                 className={classInput}
                 placeholder='Quantity'
-                {...register('qty', { required: "Quantity can't be empty" })}
+                {...register('qty', {
+                  required: "Quantity can't be empty",
+                  pattern: {
+                    value: /^[0-9]+([.,][0-9]+)?$/,
+                    message: 'Please enter a valid number',
+                  },
+                })}
               />
               {errors.qty?.message && (
                 <p className={classError}>{errors.qty.message}</p>
@@ -171,7 +184,9 @@ export function UpdateAssetForm({
                     type='radio'
                     value={walletOption}
                     id={walletOption}
-                    {...register('wallet')}
+                    {...register('wallet', {
+                      required: 'Please select a wallet',
+                    })}
                   />
                   <label className={classLabelRadio} htmlFor={walletOption}>
                     <span>{walletOption}</span>
@@ -179,6 +194,9 @@ export function UpdateAssetForm({
                 </li>
               ))}
             </ul>
+            {errors.wallet?.message && (
+              <p className={classError}>{errors.wallet.message}</p>
+            )}
           </div>
 
           <div className={classDiv}>
@@ -189,13 +207,18 @@ export function UpdateAssetForm({
                   <CustomRadioWithTooltip
                     value={categoryOption}
                     id={categoryOption}
-                    register={register('category')}
+                    register={register('category', {
+                      required: 'Please select a category',
+                    })}
                     tooltipContent={getCategoryTooltip(categoryOption) || ''}
                     labelClassName={classLabelRadio}
                   />
                 </li>
               ))}
             </ul>
+            {errors.category?.message && (
+              <p className={classError}>{errors.category.message}</p>
+            )}
           </div>
 
           <div className={classDiv}>
@@ -208,7 +231,9 @@ export function UpdateAssetForm({
                     type='radio'
                     value={purposeOption}
                     id={purposeOption}
-                    {...register('purpose')}
+                    {...register('purpose', {
+                      required: 'Please select a purpose',
+                    })}
                   />
                   <label className={classLabelRadio} htmlFor={purposeOption}>
                     <span>{purposeOption}</span>
@@ -216,6 +241,9 @@ export function UpdateAssetForm({
                 </li>
               ))}
             </ul>
+            {errors.purpose?.message && (
+              <p className={classError}>{errors.purpose.message}</p>
+            )}
           </div>
 
           <div className={classDiv}>
@@ -248,7 +276,9 @@ export function UpdateAssetForm({
                     type='radio'
                     value={currencyOption}
                     id={currencyOption}
-                    {...register('currency')}
+                    {...register('currency', {
+                      required: 'Please select a currency',
+                    })}
                   />
                   <label className={classLabelRadio} htmlFor={currencyOption}>
                     <span>{currencyOption}</span>
@@ -256,6 +286,9 @@ export function UpdateAssetForm({
                 </li>
               ))}
             </ul>
+            {errors.currency?.message && (
+              <p className={classError}>{errors.currency.message}</p>
+            )}
           </div>
 
           {assetAccount[0] !== 'Investment' &&
@@ -271,7 +304,9 @@ export function UpdateAssetForm({
                         type='radio'
                         value={accountOption}
                         id={accountOption}
-                        {...register('account')}
+                        {...register('account', {
+                          required: 'Please select an account',
+                        })}
                       />
                       <label
                         className={classLabelRadio}
@@ -282,6 +317,9 @@ export function UpdateAssetForm({
                     </li>
                   ))}
                 </ul>
+                {errors.account?.message && (
+                  <p className={classError}>{errors.account.message}</p>
+                )}
               </div>
             )}
 

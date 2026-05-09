@@ -91,8 +91,9 @@ export function DataTable<TData, TValue>({
   const [valueTypeDropbox, setValueTypeDropbox] = useState('');
 
   const [filterPurpose, setFilterPurpose] = useState<string[]>([
-    'Trade',
-    'Investment',
+    'SwingTrade',
+    'PositionTrade',
+    'LongTermHold',
   ]);
 
   const [openNotification, setOpenNotification] = useState(false);
@@ -196,7 +197,7 @@ export function DataTable<TData, TValue>({
     setValueAccountDropbox('');
     setValueCurrencyDropbox('');
     setValueTypeDropbox('');
-    setFilterPurpose(['Trade', 'Investment']);
+    setFilterPurpose(['SwingTrade', 'PositionTrade', 'LongTermHold']);
     setColumnFilters([]);
     table.resetGlobalFilter();
   };
@@ -230,7 +231,7 @@ export function DataTable<TData, TValue>({
     !!valueAccountDropbox ||
     !!valueCurrencyDropbox ||
     !!valueTypeDropbox ||
-    filterPurpose.length !== 2;
+    filterPurpose.length !== 3;
 
   if (data.length < 1)
     return (
@@ -501,54 +502,79 @@ export function DataTable<TData, TValue>({
               className='max-w-sm w-[20ch] sm:ml-4'
             />
 
-            <div className='flex flex-col  sm:ml-4'>
+            <div className='flex flex-col sm:ml-4'>
               <div className='flex items-center gap-2'>
                 <Checkbox
-                  id='trade'
+                  id='swing-trade'
                   className='border-slate-300'
-                  checked={filterPurpose.includes('Trade')}
+                  checked={filterPurpose.includes('SwingTrade')}
                   onCheckedChange={(checked) => {
                     if (checked) {
-                      setFilterPurpose([...filterPurpose, 'Trade']);
+                      setFilterPurpose([...filterPurpose, 'SwingTrade']);
                     } else {
                       setFilterPurpose(
-                        filterPurpose.filter((p) => p !== 'Trade')
+                        filterPurpose.filter((p) => p !== 'SwingTrade')
                       );
                     }
                   }}
                 />
                 <Label
-                  htmlFor='trade'
+                  htmlFor='swing-trade'
                   className='text-[10px] uppercase font-bold text-slate-400 tracking-widest cursor-pointer'
                 >
-                  Trade
+                  Swing
                 </Label>
               </div>
+
               <div className='flex items-center gap-2'>
                 <Checkbox
-                  id='investment'
+                  id='position-trade'
                   className='border-slate-300'
-                  checked={filterPurpose.includes('Investment')}
+                  checked={filterPurpose.includes('PositionTrade')}
                   onCheckedChange={(checked) => {
                     if (checked) {
-                      setFilterPurpose([...filterPurpose, 'Investment']);
+                      setFilterPurpose([...filterPurpose, 'PositionTrade']);
                     } else {
                       setFilterPurpose(
-                        filterPurpose.filter((p) => p !== 'Investment')
+                        filterPurpose.filter((p) => p !== 'PositionTrade')
                       );
                     }
                   }}
                 />
                 <Label
-                  htmlFor='investment'
+                  htmlFor='position-trade'
                   className='text-[10px] uppercase font-bold text-slate-400 tracking-widest cursor-pointer'
                 >
-                  Investment
+                  Position
                 </Label>
+              </div>
+
+              <div className='flex items-center gap-2'>
+                <Checkbox
+                  id='long-term-hold'
+                  className='border-slate-300'
+                  checked={filterPurpose.includes('LongTermHold')}
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      setFilterPurpose([...filterPurpose, 'LongTermHold']);
+                    } else {
+                      setFilterPurpose(
+                        filterPurpose.filter((p) => p !== 'LongTermHold')
+                      );
+                    }
+                  }}
+                />
+                <Label
+                  htmlFor='long-term-hold'
+                  className='text-[10px] uppercase font-bold text-slate-400 tracking-widest cursor-pointer'
+                >
+                  Long-term
+                </Label>
+              </div>
+
               </div>
             </div>
           </div>
-        </div>
 
         <AnimatePresence>
           {openNotification ? (

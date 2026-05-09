@@ -235,3 +235,16 @@ enum category_enum_6c7fcd47 {
   SupplyChain
   RWA
 }
+
+model Sentiment {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  uid        String
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  asset      String
+  pair       String   @default("")
+  isFavorite Boolean  @default(false)
+  url        String
+  exchange   String
+
+  @@index([uid])
+}
