@@ -17,24 +17,79 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import { toast } from '@/components/ui/use-toast';
 import { SentimentType } from '@/lib/types';
-import { deleteSentiment } from '@/lib/actions';
+import { useState, useMemo } from 'react';
+import { deleteSentiment, toggleFavoriteSentiment } from '@/lib/actions';
+import { UpdateSentimentForm } from '@/components/forms/UpdateSentimentForm';
 import {
   Trash2,
   ExternalLink,
   BarChart3,
-  TrendingUp,
+  Pencil,
+  Star,
 } from 'lucide-react';
 
 export function SentimentInteractions({
-  sentiments,
+  sentiments: initialSentiments,
 }: {
   sentiments: SentimentType[];
 }) {
+  const [localSentiments, setLocalSentiments] = useState(initialSentiments);
+
+  const sortedSentiments = useMemo(() => {
+    return [...localSentiments].sort((a, b) => {
+      if (a.isFavorite === b.isFavorite) {
+        return a.asset.localeCompare(b.asset);
+      }
+      return a.isFavorite ? -1 : 1;
+    });
+  }, [localSentiments]);
+
   const handleDeleteSentiment = async (id: string) => {
-    await deleteSentiment(id);
-    window.location.reload();
+    // Optimistic update
+    setLocalSentiments((prev) => prev.filter((s) => s.id !== id));
+    
+    const result = await deleteSentiment(id);
+    if (!result) {
+      // Revert if failed
+      setLocalSentiments(initialSentiments);
+      toast({
+        title: 'Error',
+        description: 'Failed to delete sentiment',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleToggleFavorite = async (id: string, currentStatus: boolean) => {
+    const newStatus = !currentStatus;
+    
+    // Optimistic update
+    setLocalSentiments((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, isFavorite: newStatus } : s))
+    );
+
+    const result = await toggleFavoriteSentiment(id, newStatus);
+    if (!result) {
+      // Revert if failed
+      setLocalSentiments((prev) =>
+        prev.map((s) => (s.id === id ? { ...s, isFavorite: currentStatus } : s))
+      );
+      toast({
+        title: 'Error',
+        description: 'Failed to update favorite status',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -52,13 +107,14 @@ export function SentimentInteractions({
               </tr>
             </thead>
             <tbody>
-              {sentiments.map((sentiment, index) => (
+              {sortedSentiments.map((sentiment, index) => (
                 <motion.tr
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
                   key={sentiment.id}
-                  className='group border-b border-slate-50 hover:bg-white/60 transition-colors'
+                  onClick={() => window.open(sentiment.url, '_blank')}
+                  className='group border-b border-slate-50 hover:bg-accent cursor-pointer transition-colors'
                 >
                   <td className='py-2 px-5'>
                     <div className='flex items-center gap-3'>
@@ -81,22 +137,51 @@ export function SentimentInteractions({
                     <span className='font-semibold text-slate-700 text-sm'>{sentiment.pair}</span>
                   </td>
                   <td className='py-2 px-5'>
-                    <span className='inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase tracking-wider'>
+                    <span className='inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/80 border border-slate-100 text-slate-500 uppercase tracking-wider'>
                       {sentiment.exchange}
                     </span>
                   </td>
                   <td className='py-2 px-5'>
-                    <Link
-                      href={sentiment.url}
-                      target='_blank'
-                      className='inline-flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors group/link'
-                    >
+                    <div className='inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 group-hover:text-indigo-600 transition-colors'>
                       <span className='truncate max-w-[250px]'>{sentiment.url}</span>
-                      <ExternalLink size={12} className='shrink-0 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform' />
-                    </Link>
+                      <ExternalLink size={12} className='shrink-0 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
+                    </div>
                   </td>
-                  <td className='py-2 px-5 text-right'>
-                    <AlertDialog>
+                  <td className='py-2 px-5 text-right' onClick={(e) => e.stopPropagation()}>
+                    <div className='flex items-center justify-end gap-2'>
+                      <button
+                        onClick={() => handleToggleFavorite(sentiment.id, sentiment.isFavorite)}
+                        className={cn(
+                          'p-2 rounded-xl transition-all duration-200',
+                          sentiment.isFavorite
+                            ? 'bg-yellow-50 text-yellow-500 shadow-sm'
+                            : 'hover:bg-slate-50 text-slate-300 hover:text-yellow-500'
+                        )}
+                      >
+                        <Star
+                          size={16}
+                          className={cn(sentiment.isFavorite && 'fill-yellow-500')}
+                        />
+                      </button>
+
+                      <Sheet>
+                        <SheetTrigger asChild>
+                          <button className='p-2 hover:bg-indigo-50 rounded-xl text-slate-400 hover:text-indigo-600 transition-all duration-200'>
+                            <Pencil size={16} />
+                          </button>
+                        </SheetTrigger>
+                        <SheetContent className='max-h-screen overflow-y-auto'>
+                          <SheetHeader>
+                            <SheetTitle>Update Sentiment</SheetTitle>
+                            <SheetDescription>
+                              Modify the details for {sentiment.asset} indicator.
+                            </SheetDescription>
+                          </SheetHeader>
+                          <UpdateSentimentForm sentiment={sentiment} />
+                        </SheetContent>
+                      </Sheet>
+
+                      <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <button className='p-2 hover:bg-red-50 rounded-xl text-slate-400 hover:text-red-500 transition-all duration-200'>
                           <Trash2 size={16} />
@@ -153,8 +238,9 @@ export function SentimentInteractions({
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
-                  </td>
-                </motion.tr>
+                  </div>
+                </td>
+              </motion.tr>
               ))}
             </tbody>
           </table>

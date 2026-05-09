@@ -242,6 +242,7 @@ model Sentiment {
   created_at DateTime @default(now()) @db.Timestamptz(6)
   asset      String
   pair       String   @default("")
+  isFavorite Boolean  @default(false)
   url        String
   exchange   String
 

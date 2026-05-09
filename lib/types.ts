@@ -232,6 +232,7 @@ export type SentimentType = {
   created_at: Date;
   asset: string;
   pair: string;
+  isFavorite: boolean;
   url: string;
   exchange: string;
   image?: string;

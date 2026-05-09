@@ -13,9 +13,10 @@ export const getSentiments = async (uid: string) => {
         where: {
           uid,
         },
-        orderBy: {
-          asset: 'asc',
-        },
+        orderBy: [
+          { isFavorite: 'desc' },
+          { asset: 'asc' },
+        ],
       }),
       getCryptosData(),
     ]);
@@ -33,7 +34,8 @@ export const getSentiments = async (uid: string) => {
 
     return JSON.parse(JSON.stringify(sentimentsWithImages));
   } catch (error) {
-    return { error: 'Failed to find sentiments' };
+    console.error('Error fetching sentiments:', error);
+    return { error: 'Failed to find sentiments', details: error };
   }
 };
 
@@ -50,6 +52,48 @@ export async function addSentiment(formData: Omit<SentimentType, 'id' | 'created
         uid,
         url,
         exchange,
+      },
+    });
+    revalidatePath('/sentiment');
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+export async function updateSentiment(formData: SentimentType) {
+  const { id, asset, pair, uid, url, exchange } = formData;
+
+  try {
+    await prisma.sentiment.update({
+      where: {
+        id,
+      },
+      data: {
+        asset,
+        pair,
+        uid,
+        url,
+        exchange,
+      },
+    });
+    revalidatePath('/sentiment');
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+export async function toggleFavoriteSentiment(id: string, isFavorite: boolean) {
+  try {
+    await prisma.sentiment.update({
+      where: {
+        id,
+      },
+      data: {
+        isFavorite,
       },
     });
     revalidatePath('/sentiment');

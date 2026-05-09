@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/sheet';
 import { AddSentimentForm } from '@/components/forms/AddSentimentForm';
 import { Button } from '@/components/ui/button';
+import { OpenFavsButton } from '@/components/common/OpenFavsButton';
 
 export default async function SentimentPage() {
   const session = await getServerSession(authOptions);
@@ -46,25 +47,29 @@ export default async function SentimentPage() {
           </div>
         </div>
 
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button className='gap-2' variant='outline'>
-              <Plus size={16} />
-              <span>Add Sentiment Link</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent className='max-h-screen overflow-y-auto'>
-            <SheetHeader className='mb-8'>
-              <SheetTitle className='text-xl font-bold'>
-                Add New Sentiment Link
-              </SheetTitle>
-              <SheetDescription>
-                Add a Coinalyze URL to track market sentiment for your favorite coins.
-              </SheetDescription>
-            </SheetHeader>
-            <AddSentimentForm />
-          </SheetContent>
-        </Sheet>
+        <div className='flex items-center gap-3 mt-6 sm:mt-0'>
+          <OpenFavsButton sentiments={sentiments} />
+
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button className='gap-2' variant='outline'>
+                <Plus size={16} />
+                <span>Add Sentiment Link</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent className='max-h-screen overflow-y-auto'>
+              <SheetHeader className='mb-8'>
+                <SheetTitle className='text-xl font-bold'>
+                  Add New Sentiment Link
+                </SheetTitle>
+                <SheetDescription>
+                  Add a Coinalyze URL to track market sentiment for your favorite coins.
+                </SheetDescription>
+              </SheetHeader>
+              <AddSentimentForm />
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
 
       <div className='w-full'>
