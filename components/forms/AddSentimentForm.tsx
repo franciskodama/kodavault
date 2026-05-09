@@ -33,8 +33,22 @@ export function AddSentimentForm() {
       return console.log('User not logged in 🤷🏻‍♂️');
     }
 
+    // Extract exchange from URL
+    // https://coinalyze.net/solana/usdt/binance/solusdt_perp/price-chart-live/
+    let extractedExchange = 'Unknown';
+    try {
+      const urlSegments = data.url.split('/');
+      // The exchange is usually the 6th segment (index 5)
+      if (urlSegments.length > 5) {
+        extractedExchange = urlSegments[5].charAt(0).toUpperCase() + urlSegments[5].slice(1);
+      }
+    } catch (e) {
+      console.error('Failed to extract exchange from URL', e);
+    }
+
     const submissionData = {
       ...data,
+      exchange: extractedExchange,
       uid: uid || '',
     };
 
@@ -43,7 +57,7 @@ export function AddSentimentForm() {
     if (result) {
       toast({
         title: 'Sentiment added! 🎉',
-        description: 'Your new sentiment indicator is already available.',
+        description: `New sentiment for ${data.asset} on ${extractedExchange} added.`,
         variant: 'success',
       });
     } else {
@@ -80,21 +94,6 @@ export function AddSentimentForm() {
         </div>
 
         <div className={classDiv}>
-          <label className={classTitle} htmlFor='exchange'>
-            Exchange
-          </label>
-          <input
-            id='exchange'
-            className={classInput}
-            placeholder='ex: Binance'
-            {...register('exchange', { required: "Exchange can't be empty" })}
-          />
-          {errors.exchange?.message && (
-            <p className={classError}>{errors.exchange.message}</p>
-          )}
-        </div>
-
-        <div className={classDiv}>
           <label className={classTitle} htmlFor='url'>
             Coinalyze URL
           </label>
@@ -102,7 +101,13 @@ export function AddSentimentForm() {
             id='url'
             className={classInput}
             placeholder='https://coinalyze.net/...'
-            {...register('url', { required: "URL can't be empty" })}
+            {...register('url', { 
+              required: "URL can't be empty",
+              pattern: {
+                value: /coinalyze\.net/i,
+                message: "Must be a valid Coinalyze URL"
+              }
+            })}
           />
           {errors.url?.message && (
             <p className={classError}>{errors.url.message}</p>
