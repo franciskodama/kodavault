@@ -109,6 +109,7 @@ export const mainItems = [
   { label: 'Stock', href: '/stocks', pathname: '/stocks' },
   { label: 'Radar', href: '/radar', pathname: '/radar' },
   { label: 'Assets', href: '/assets', pathname: '/assets' },
+  { label: 'Sentiment', href: '/sentiment', pathname: '/sentiment' },
   { label: 'Alert', href: '/alert', pathname: '/alert' },
   { label: 'Calendar', href: '/calendar', pathname: '/calendar' },
 ];

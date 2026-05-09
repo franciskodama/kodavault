@@ -1,0 +1,124 @@
+'use client';
+
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+import { addSentiment } from '@/lib/actions';
+import { Button } from '@/components/ui/button';
+import { SentimentType } from '@/lib/types';
+import { useToast } from '@/components/ui/use-toast';
+import { SheetClose } from '@/components/ui/sheet';
+import { classError } from '@/lib/classes';
+
+export function AddSentimentForm() {
+  const { toast } = useToast();
+  const { data: session } = useSession();
+  const uid = session?.user?.email;
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Omit<SentimentType, 'id' | 'created_at'>>({});
+
+  const classInput =
+    'border border-slate-200 h-10 p-2 rounded-xl w-full mt-2 text-sm';
+  const classDiv = 'my-4';
+  const classTitle = 'font-bold mb-2 text-sm text-slate-700';
+
+  const processForm: SubmitHandler<Omit<SentimentType, 'id' | 'created_at'>> = async (data) => {
+    if (!uid) {
+      return console.log('User not logged in 🤷🏻‍♂️');
+    }
+
+    const submissionData = {
+      ...data,
+      uid: uid || '',
+    };
+
+    const result = await addSentiment(submissionData);
+
+    if (result) {
+      toast({
+        title: 'Sentiment added! 🎉',
+        description: 'Your new sentiment indicator is already available.',
+        variant: 'success',
+      });
+    } else {
+      toast({
+        title: 'Boho! Error occurred!',
+        description: 'Your sentiment indicator was NOT added.',
+        variant: 'destructive',
+      });
+    }
+
+    reset();
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(processForm)} className='pb-8'>
+      <div className='flex flex-col'>
+        <div className={classDiv}>
+          <label className={classTitle} htmlFor='asset'>
+            Coin Symbol
+          </label>
+          <input
+            id='asset'
+            className={classInput}
+            placeholder='ex: SOL'
+            {...register('asset', { required: "Symbol can't be empty" })}
+          />
+          {errors.asset?.message && (
+            <p className={classError}>{errors.asset.message}</p>
+          )}
+        </div>
+
+        <div className={classDiv}>
+          <label className={classTitle} htmlFor='exchange'>
+            Exchange
+          </label>
+          <input
+            id='exchange'
+            className={classInput}
+            placeholder='ex: Binance'
+            {...register('exchange', { required: "Exchange can't be empty" })}
+          />
+          {errors.exchange?.message && (
+            <p className={classError}>{errors.exchange.message}</p>
+          )}
+        </div>
+
+        <div className={classDiv}>
+          <label className={classTitle} htmlFor='url'>
+            Coinalyze URL
+          </label>
+          <input
+            id='url'
+            className={classInput}
+            placeholder='https://coinalyze.net/...'
+            {...register('url', { required: "URL can't be empty" })}
+          />
+          {errors.url?.message && (
+            <p className={classError}>{errors.url.message}</p>
+          )}
+        </div>
+
+        <Button className='mt-8 py-6 font-bold tracking-wider' type='submit'>
+          Add Sentiment Link
+        </Button>
+
+        <SheetClose asChild>
+          <Button className='my-4' variant='outline'>
+            Cancel
+          </Button>
+        </SheetClose>
+      </div>
+    </form>
+  );
+}

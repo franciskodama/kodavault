@@ -225,3 +225,12 @@ export type EconomicCalendarEvent = {
 };
 
 export type EconomicCalendarResponse = EconomicCalendarEvent[];
+
+export type SentimentType = {
+  id: string;
+  uid: string;
+  created_at: Date;
+  asset: string;
+  url: string;
+  exchange: string;
+};
