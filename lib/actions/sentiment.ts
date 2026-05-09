@@ -38,7 +38,7 @@ export const getSentiments = async (uid: string) => {
 };
 
 export async function addSentiment(formData: Omit<SentimentType, 'id' | 'created_at'>) {
-  const { asset, uid, url, exchange } = formData;
+  const { asset, pair, uid, url, exchange } = formData;
 
   try {
     await prisma.sentiment.create({
@@ -46,6 +46,7 @@ export async function addSentiment(formData: Omit<SentimentType, 'id' | 'created
         id: v4(),
         created_at: new Date(),
         asset,
+        pair,
         uid,
         url,
         exchange,

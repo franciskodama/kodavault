@@ -44,10 +44,11 @@ export function SentimentInteractions({
           <table className='w-full text-left border-collapse'>
             <thead>
               <tr className='border-b border-slate-100 bg-slate-50/50'>
-                <th className='p-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Coin</th>
-                <th className='p-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Exchange</th>
-                <th className='p-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Indicator Link</th>
-                <th className='p-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400 text-right'>Actions</th>
+                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Coin</th>
+                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Pair</th>
+                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Exchange</th>
+                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Indicator Link</th>
+                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400 text-right'>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -59,39 +60,42 @@ export function SentimentInteractions({
                   key={sentiment.id}
                   className='group border-b border-slate-50 hover:bg-white/60 transition-colors'
                 >
-                  <td className='p-5'>
+                  <td className='py-2 px-5'>
                     <div className='flex items-center gap-3'>
-                      <div className='relative w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 border border-slate-100 shadow-sm group-hover:scale-110 transition-transform overflow-hidden'>
+                      <div className='relative w-8 h-8 flex items-center justify-center rounded-lg bg-slate-50 border border-slate-100 shadow-sm group-hover:scale-110 transition-transform overflow-hidden'>
                         {sentiment.image ? (
                           <Image
                             src={sentiment.image}
                             alt={sentiment.asset}
                             fill
-                            className='object-contain p-1.5'
+                            className='object-contain p-1'
                           />
                         ) : (
-                          <BarChart3 size={18} className='text-indigo-600' />
+                          <BarChart3 size={14} className='text-indigo-600' />
                         )}
                       </div>
-                      <span className='font-bold text-slate-900'>{sentiment.asset}</span>
+                      <span className='font-bold text-slate-900 text-sm'>{sentiment.asset}</span>
                     </div>
                   </td>
-                  <td className='p-5'>
-                    <span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600'>
+                  <td className='py-2 px-5'>
+                    <span className='font-semibold text-slate-700 text-sm'>{sentiment.pair}</span>
+                  </td>
+                  <td className='py-2 px-5'>
+                    <span className='inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase tracking-wider'>
                       {sentiment.exchange}
                     </span>
                   </td>
-                  <td className='p-5'>
+                  <td className='py-2 px-5'>
                     <Link
                       href={sentiment.url}
                       target='_blank'
-                      className='inline-flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors group/link'
+                      className='inline-flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors group/link'
                     >
-                      <span className='truncate max-w-[300px]'>{sentiment.url}</span>
-                      <ExternalLink size={14} className='shrink-0 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform' />
+                      <span className='truncate max-w-[250px]'>{sentiment.url}</span>
+                      <ExternalLink size={12} className='shrink-0 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform' />
                     </Link>
                   </td>
-                  <td className='p-5 text-right'>
+                  <td className='py-2 px-5 text-right'>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <button className='p-2 hover:bg-red-50 rounded-xl text-slate-400 hover:text-red-500 transition-all duration-200'>

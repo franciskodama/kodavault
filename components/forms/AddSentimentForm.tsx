@@ -33,22 +33,28 @@ export function AddSentimentForm() {
       return console.log('User not logged in 🤷🏻‍♂️');
     }
 
-    // Extract exchange from URL
+    // Extract exchange and pair from URL
     // https://coinalyze.net/solana/usdt/binance/solusdt_perp/price-chart-live/
     let extractedExchange = 'Unknown';
+    let extractedPair = 'Unknown';
     try {
       const urlSegments = data.url.split('/');
+      // The pair is usually the 5th segment (index 4)
+      if (urlSegments.length > 4) {
+        extractedPair = urlSegments[4].toUpperCase();
+      }
       // The exchange is usually the 6th segment (index 5)
       if (urlSegments.length > 5) {
         extractedExchange = urlSegments[5].charAt(0).toUpperCase() + urlSegments[5].slice(1);
       }
     } catch (e) {
-      console.error('Failed to extract exchange from URL', e);
+      console.error('Failed to extract data from URL', e);
     }
 
     const submissionData = {
       ...data,
       exchange: extractedExchange,
+      pair: extractedPair,
       uid: uid || '',
     };
 

@@ -231,6 +231,7 @@ export type SentimentType = {
   uid: string;
   created_at: Date;
   asset: string;
+  pair: string;
   url: string;
   exchange: string;
   image?: string;
