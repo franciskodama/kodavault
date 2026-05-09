@@ -233,4 +233,5 @@ export type SentimentType = {
   asset: string;
   url: string;
   exchange: string;
+  image?: string;
 };

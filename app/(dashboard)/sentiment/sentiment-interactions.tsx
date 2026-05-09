@@ -61,8 +61,17 @@ export function SentimentInteractions({
                 >
                   <td className='p-5'>
                     <div className='flex items-center gap-3'>
-                      <div className='p-2 rounded-xl bg-indigo-50 text-indigo-600 shadow-sm group-hover:scale-110 transition-transform'>
-                        <BarChart3 size={18} />
+                      <div className='relative w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 border border-slate-100 shadow-sm group-hover:scale-110 transition-transform overflow-hidden'>
+                        {sentiment.image ? (
+                          <Image
+                            src={sentiment.image}
+                            alt={sentiment.asset}
+                            fill
+                            className='object-contain p-1.5'
+                          />
+                        ) : (
+                          <BarChart3 size={18} className='text-indigo-600' />
+                        )}
                       </div>
                       <span className='font-bold text-slate-900'>{sentiment.asset}</span>
                     </div>

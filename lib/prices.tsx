@@ -1,6 +1,6 @@
 'use server';
 
-import { fetchQuotesForCryptos } from './crypto.server';
+import { fetchQuotesForCryptos, getCryptosData } from './crypto.server';
 import { getCurrencies } from './currency.server';
 import { fetchStockPricesFromSheets } from './stock.server';
 import { Asset, Currencies, UnpricedAsset } from './types';
@@ -28,6 +28,7 @@ export const includePriceToCryptoAssets = async (
   );
 
   const quotes = await fetchQuotesForCryptos(symbols);
+  const cryptosData = await getCryptosData();
 
   const quoteLookup: { [symbol: string]: any } = {};
   for (const symbol in quotes.data) {
@@ -35,6 +36,17 @@ export const includePriceToCryptoAssets = async (
       quoteLookup[symbol] = quotes.data[symbol][0];
     }
   }
+
+  const imageLookup: { [symbol: string]: string } = {};
+  cryptoAssetsArray.forEach((item: UnpricedAsset) => {
+    const symbol = item.asset?.toString().toUpperCase();
+    const matchedCrypto = cryptosData.find(
+      (crypto: any) => crypto.symbol?.toString().toUpperCase() === symbol
+    );
+    if (matchedCrypto?.image) {
+      imageLookup[symbol] = matchedCrypto.image;
+    }
+  });
 
   const transformedAssets = cryptoAssetsArray.map((item: UnpricedAsset) => {
     const foundAsset = quoteLookup[item.asset] || null;
@@ -66,6 +78,10 @@ export const includePriceToCryptoAssets = async (
       qty: item.qty,
       price: formattedPrice,
       total: formattedTotal,
+      image:
+        imageLookup[item.asset?.toString().toUpperCase() || ''] ||
+        item.image ||
+        '',
     };
   });
 
