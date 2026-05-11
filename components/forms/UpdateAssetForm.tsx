@@ -222,7 +222,10 @@ export function UpdateAssetForm({
           </div>
 
           <div className={classDiv}>
-            <h3 className={classTitle}>Purpose</h3>
+            <h3 className={classTitle}>
+              Purpose{' '}
+              <span className='text-xs font-normal opacity-50'>(optional)</span>
+            </h3>
             <ul className={classUl}>
               {purposeOptions.map((purposeOption) => (
                 <li key={purposeOption}>
@@ -231,9 +234,7 @@ export function UpdateAssetForm({
                     type='radio'
                     value={purposeOption}
                     id={purposeOption}
-                    {...register('purpose', {
-                      required: 'Please select a purpose',
-                    })}
+                    {...register('purpose')}
                   />
                   <label className={classLabelRadio} htmlFor={purposeOption}>
                     <span>{purposeOption}</span>
