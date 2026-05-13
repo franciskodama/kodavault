@@ -40,7 +40,7 @@ import { Button } from '@/components/ui/button';
 import { Asset } from '@/lib/types';
 import { tableHeaderClass } from '@/lib/classes';
 import { useAssetsContext } from '@/context/AssetsContext';
-import { deleteAsset } from '@/lib/actions';
+import { deleteAsset, updateReviewedAsset } from '@/lib/actions';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -276,12 +276,13 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
   const { addReviewedAsset, removeReviewedAsset, isAssetReviewed } =
     useReviewedAssets();
 
-  const handleReviewToggle = (checked: boolean, assetId: string) => {
+  const handleReviewToggle = async (checked: boolean, assetId: string) => {
     if (checked) {
       addReviewedAsset(assetId);
     } else {
       removeReviewedAsset(assetId);
     }
+    await updateReviewedAsset(assetId, checked);
   };
 
   const handleDeleteAsset = async (id: string) => {

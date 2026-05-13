@@ -39,9 +39,11 @@ import {
   classTitle,
   classUl,
 } from '@/lib/classes';
+import { useReviewedAssets } from '@/app/(dashboard)/assets/reviewed-context';
 
 export function AddAssetForm() {
   const { refreshAssets } = useAssetsContext();
+  const { addReviewedAsset } = useReviewedAssets();
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
   const { data: session } = useSession();
@@ -70,7 +72,6 @@ export function AddAssetForm() {
 
   useEffect(() => {
     setValue('type', assetType ? assetType : '');
-    setValue('purpose', 'Swing Trade');
   }, [assetType, setValue]);
 
   useEffect(() => {
@@ -158,6 +159,9 @@ export function AddAssetForm() {
       });
       await refreshAssets();
       closeRef.current?.click();
+      if (formData.reviewed && result.id) {
+        addReviewedAsset(result.id);
+      }
       reset();
       setData(formData);
     } else {
@@ -327,7 +331,10 @@ export function AddAssetForm() {
             )}
 
             <div className={classDiv}>
-              <h3 className={classTitle}>Purpose</h3>
+              <h3 className={classTitle}>
+                Purpose{' '}
+                <span className='text-xs font-normal opacity-50'>(optional)</span>
+              </h3>
               <ul className={classUl}>
                 {purposeOptions.map((purposeOption) => (
                   <li key={purposeOption}>
@@ -336,9 +343,7 @@ export function AddAssetForm() {
                       type='radio'
                       value={purposeOption}
                       id={purposeOption}
-                      {...register('purpose', {
-                        required: 'Please select a purpose',
-                      })}
+                      {...register('purpose')}
                     />
                     <label className={classLabelRadio} htmlFor={purposeOption}>
                       <span>{purposeOption}</span>

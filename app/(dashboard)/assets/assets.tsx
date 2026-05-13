@@ -5,6 +5,8 @@ import { columns } from './columns';
 import { DataTable } from './data-table';
 import { thousandAndDecimalFormatter, thousandFormatter } from '@/lib/utils';
 import { useAssetsContext } from '@/context/AssetsContext';
+import { useReviewedAssets } from './reviewed-context';
+import { useEffect } from 'react';
 
 export default function Assets({
   typeFilterAsParam,
@@ -14,6 +16,17 @@ export default function Assets({
   purposeFilterAsParam: string;
 }) {
   const { assets, isLoading } = useAssetsContext();
+  const { addReviewedAsset } = useReviewedAssets();
+
+  useEffect(() => {
+    if (!isLoading && assets.length > 0) {
+      assets.forEach((asset) => {
+        if (asset?.reviewed && asset.id) {
+          addReviewedAsset(asset.id);
+        }
+      });
+    }
+  }, [assets, isLoading, addReviewedAsset]);
   const compareByWallet = (a: any, b: any) => {
     if (a.wallet < b.wallet) return -1;
     if (a.wallet > b.wallet) return 1;

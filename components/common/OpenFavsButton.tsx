@@ -2,7 +2,7 @@
 
 import { SentimentType } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Star } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 
 export function OpenFavsButton({
@@ -33,8 +33,12 @@ export function OpenFavsButton({
   };
 
   return (
-    <Button onClick={handleOpenFavs} variant='outline' className='gap-2'>
-      <ExternalLink size={16} />
+    <Button
+      onClick={handleOpenFavs}
+      variant='outline'
+      className='gap-2 bg-yellow-50'
+    >
+      <Star size={16} className='text-yellow-500 fill-yellow-500' />
       <span>Launch Favorites</span>
     </Button>
   );
