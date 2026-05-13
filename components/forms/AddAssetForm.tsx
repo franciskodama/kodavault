@@ -39,9 +39,11 @@ import {
   classTitle,
   classUl,
 } from '@/lib/classes';
+import { useReviewedAssets } from '@/app/(dashboard)/assets/reviewed-context';
 
 export function AddAssetForm() {
   const { refreshAssets } = useAssetsContext();
+  const { addReviewedAsset } = useReviewedAssets();
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
   const { data: session } = useSession();
@@ -157,6 +159,9 @@ export function AddAssetForm() {
       });
       await refreshAssets();
       closeRef.current?.click();
+      if (formData.reviewed && result.id) {
+        addReviewedAsset(result.id);
+      }
       reset();
       setData(formData);
     } else {

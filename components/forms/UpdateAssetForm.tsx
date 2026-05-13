@@ -32,6 +32,7 @@ import {
   classTitle,
   classUl,
 } from '@/lib/classes';
+import { useReviewedAssets } from '@/app/(dashboard)/assets/reviewed-context';
 
 export function UpdateAssetForm({
   asset,
@@ -41,6 +42,7 @@ export function UpdateAssetForm({
   isReviewed?: boolean;
 }) {
   const { refreshAssets } = useAssetsContext();
+  const { addReviewedAsset, removeReviewedAsset } = useReviewedAssets();
   const [data, setData] = useState<Inputs>();
   const { toast } = useToast();
   const { data: session } = useSession();
@@ -100,6 +102,11 @@ export function UpdateAssetForm({
       });
       await refreshAssets();
       closeRef.current?.click();
+      if (data.reviewed && data.id) {
+        addReviewedAsset(data.id);
+      } else if (data.id) {
+        removeReviewedAsset(data.id);
+      }
       setData(data);
       reset();
     } else {

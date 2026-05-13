@@ -42,9 +42,10 @@ export async function addAsset(formData: Inputs) {
     const mappedPurpose = (purpose && purposeMapping[purpose]) || purpose || null;
     const finalCategory = category || 'Unknown';
 
+    const assetId = v4();
     await prisma.asset.create({
       data: {
-        id: v4(),
+        id: assetId,
         created_at: new Date(),
         asset: asset.toUpperCase(),
         qty: quantity,
@@ -61,7 +62,8 @@ export async function addAsset(formData: Inputs) {
         reviewed: reviewed || false,
       },
     });
-    return { success: true };
+    revalidatePath('/assets');
+    return { success: true, id: assetId };
   } catch (error: any) {
     console.error(error);
     return {
@@ -124,6 +126,7 @@ export async function updateAsset(formData: Inputs) {
         reviewed: reviewed || false,
       },
     });
+    revalidatePath('/assets');
     return { success: true };
   } catch (error: any) {
     console.error(error);
@@ -162,6 +165,7 @@ export async function updateReviewedAsset(id: string, reviewed: boolean) {
       },
       select: { id: true },
     });
+    revalidatePath('/assets');
     return true;
   } catch (error) {
     console.error('Failed to update asset review status:', error);
