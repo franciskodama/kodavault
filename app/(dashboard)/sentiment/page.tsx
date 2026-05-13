@@ -34,44 +34,6 @@ export default async function SentimentPage() {
 
   return (
     <div className='flex flex-col w-full mx-auto pb-20 px-4 sm:px-8'>
-      <div className='flex flex-col sm:flex-row justify-between items-center mt-10 px-4 sm:px-0'>
-        <div className='flex items-center gap-4'>
-          <div className='w-1 h-10 bg-[#22C55E] rounded-lg' />
-          <div className='flex flex-col'>
-            <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 leading-none mb-1'>
-              Market Analysis
-            </p>
-            <h1 className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
-              Coin Sentiment
-            </h1>
-          </div>
-        </div>
-
-        <div className='flex items-center gap-3 mt-6 sm:mt-0'>
-          <OpenFavsButton sentiments={sentiments} />
-
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button className='gap-2' variant='outline'>
-                <Plus size={16} />
-                <span>Add Sentiment Link</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent className='max-h-screen overflow-y-auto'>
-              <SheetHeader className='mb-8'>
-                <SheetTitle className='text-xl font-bold'>
-                  Add New Sentiment Link
-                </SheetTitle>
-                <SheetDescription>
-                  Add a Coinalyze URL to track market sentiment for your favorite coins.
-                </SheetDescription>
-              </SheetHeader>
-              <AddSentimentForm />
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-
       <div className='w-full'>
         <Sentiment sentiments={sentiments} />
       </div>

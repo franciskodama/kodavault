@@ -234,6 +234,7 @@ export type SentimentType = {
   asset: string;
   pair: string;
   isFavorite: boolean;
+  isInPlay: boolean;
   url: string;
   exchange: string;
   image?: string;

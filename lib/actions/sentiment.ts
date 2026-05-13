@@ -15,6 +15,7 @@ export const getSentiments = async (uid: string) => {
         },
         orderBy: [
           { isFavorite: 'desc' },
+          { isInPlay: 'desc' },
           { asset: 'asc' },
         ],
       }),
@@ -94,6 +95,23 @@ export async function toggleFavoriteSentiment(id: string, isFavorite: boolean) {
       },
       data: {
         isFavorite,
+      },
+    });
+    revalidatePath('/sentiment');
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function toggleInPlaySentiment(id: string, isInPlay: boolean) {
+  try {
+    await prisma.sentiment.update({
+      where: {
+        id,
+      },
+      data: {
+        isInPlay,
       },
     });
     revalidatePath('/sentiment');

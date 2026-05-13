@@ -28,14 +28,25 @@ import {
 import { toast } from '@/components/ui/use-toast';
 import { SentimentType } from '@/lib/types';
 import { useState, useMemo } from 'react';
-import { deleteSentiment, toggleFavoriteSentiment } from '@/lib/actions';
+import {
+  deleteSentiment,
+  toggleFavoriteSentiment,
+  toggleInPlaySentiment,
+} from '@/lib/actions';
 import { UpdateSentimentForm } from '@/components/forms/UpdateSentimentForm';
+import { AddSentimentForm } from '@/components/forms/AddSentimentForm';
+import { OpenFavsButton } from '@/components/common/OpenFavsButton';
+import { OpenInPlayButton } from '@/components/common/OpenInPlayButton';
+import { Button } from '@/components/ui/button';
 import {
   Trash2,
   ExternalLink,
   BarChart3,
   Pencil,
   Star,
+  Zap,
+  Rocket,
+  Plus,
 } from 'lucide-react';
 
 export function SentimentInteractions({
@@ -47,17 +58,21 @@ export function SentimentInteractions({
 
   const sortedSentiments = useMemo(() => {
     return [...localSentiments].sort((a, b) => {
-      if (a.isFavorite === b.isFavorite) {
-        return a.asset.localeCompare(b.asset);
+      // Prioritize favorites first, then in-play, then alphabetical
+      if (a.isFavorite !== b.isFavorite) {
+        return a.isFavorite ? -1 : 1;
       }
-      return a.isFavorite ? -1 : 1;
+      if (a.isInPlay !== b.isInPlay) {
+        return a.isInPlay ? -1 : 1;
+      }
+      return a.asset.localeCompare(b.asset);
     });
   }, [localSentiments]);
 
   const handleDeleteSentiment = async (id: string) => {
     // Optimistic update
     setLocalSentiments((prev) => prev.filter((s) => s.id !== id));
-    
+
     const result = await deleteSentiment(id);
     if (!result) {
       // Revert if failed
@@ -72,7 +87,7 @@ export function SentimentInteractions({
 
   const handleToggleFavorite = async (id: string, currentStatus: boolean) => {
     const newStatus = !currentStatus;
-    
+
     // Optimistic update
     setLocalSentiments((prev) =>
       prev.map((s) => (s.id === id ? { ...s, isFavorite: newStatus } : s))
@@ -92,18 +107,90 @@ export function SentimentInteractions({
     }
   };
 
+  const handleToggleInPlay = async (id: string, currentStatus: boolean) => {
+    const newStatus = !currentStatus;
+
+    // Optimistic update
+    setLocalSentiments((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, isInPlay: newStatus } : s))
+    );
+
+    const result = await toggleInPlaySentiment(id, newStatus);
+    if (!result) {
+      // Revert if failed
+      setLocalSentiments((prev) =>
+        prev.map((s) => (s.id === id ? { ...s, isInPlay: currentStatus } : s))
+      );
+      toast({
+        title: 'Error',
+        description: 'Failed to update In-Play status',
+        variant: 'destructive',
+      });
+    }
+  };
+
   return (
-    <div className='w-full mt-12 px-4 sm:px-0 pb-20'>
+    <div className='w-full mt-10 px-4 sm:px-0 pb-20'>
+      <div className='flex flex-col sm:flex-row justify-between items-center mb-8 gap-6'>
+        <div className='flex items-center gap-4'>
+          <div className='w-1 h-10 bg-[#22C55E] rounded-lg' />
+          <div className='flex flex-col'>
+            <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 leading-none mb-1'>
+              Market Analysis
+            </p>
+            <h1 className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
+              Coin Sentiment
+            </h1>
+          </div>
+        </div>
+
+        <div className='flex flex-wrap items-center justify-center sm:justify-end gap-3'>
+          <OpenInPlayButton sentiments={localSentiments} />
+          <OpenFavsButton sentiments={localSentiments} />
+
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button className='gap-2' variant='outline'>
+                <Plus size={16} />
+                <span>Add Sentiment Link</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent className='max-h-screen overflow-y-auto'>
+              <SheetHeader className='mb-8'>
+                <SheetTitle className='text-xl font-bold'>
+                  Add New Sentiment Link
+                </SheetTitle>
+                <SheetDescription>
+                  Add a Coinalyze URL to track market sentiment for your
+                  favorite coins.
+                </SheetDescription>
+              </SheetHeader>
+              <AddSentimentForm />
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
+
       <div className='bg-white/40 backdrop-blur-md border border-slate-100 rounded-2xl shadow-sm overflow-hidden'>
         <div className='overflow-x-auto'>
           <table className='w-full text-left border-collapse'>
             <thead>
               <tr className='border-b border-slate-100 bg-slate-50/50'>
-                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Coin</th>
-                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Pair</th>
-                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Exchange</th>
-                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>Indicator Link</th>
-                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400 text-right'>Actions</th>
+                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>
+                  Coin
+                </th>
+                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>
+                  Pair
+                </th>
+                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>
+                  Exchange
+                </th>
+                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400'>
+                  Indicator Link
+                </th>
+                <th className='py-3 px-5 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-400 text-right'>
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -130,11 +217,15 @@ export function SentimentInteractions({
                           <BarChart3 size={14} className='text-indigo-600' />
                         )}
                       </div>
-                      <span className='font-bold text-slate-900 text-sm'>{sentiment.asset}</span>
+                      <span className='font-bold text-slate-900 text-sm'>
+                        {sentiment.asset}
+                      </span>
                     </div>
                   </td>
                   <td className='py-2 px-5'>
-                    <span className='font-semibold text-slate-700 text-sm'>{sentiment.pair}</span>
+                    <span className='font-semibold text-slate-700 text-sm'>
+                      {sentiment.pair}
+                    </span>
                   </td>
                   <td className='py-2 px-5'>
                     <span className='inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/80 border border-slate-100 text-slate-500 uppercase tracking-wider'>
@@ -143,14 +234,49 @@ export function SentimentInteractions({
                   </td>
                   <td className='py-2 px-5'>
                     <div className='inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 group-hover:text-indigo-600 transition-colors'>
-                      <span className='truncate max-w-[250px]'>{sentiment.url}</span>
-                      <ExternalLink size={12} className='shrink-0 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
+                      <span className='truncate max-w-[250px]'>
+                        {sentiment.url}
+                      </span>
+                      <ExternalLink
+                        size={12}
+                        className='shrink-0 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                      />
                     </div>
                   </td>
-                  <td className='py-2 px-5 text-right' onClick={(e) => e.stopPropagation()}>
+                  <td
+                    className='py-2 px-5 text-right'
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <div className='flex items-center justify-end gap-2'>
                       <button
-                        onClick={() => handleToggleFavorite(sentiment.id, sentiment.isFavorite)}
+                        onClick={() =>
+                          handleToggleInPlay(sentiment.id, sentiment.isInPlay)
+                        }
+                        title={
+                          sentiment.isInPlay
+                            ? 'Remove from In-Play'
+                            : 'Mark as In-Play'
+                        }
+                        className={cn(
+                          'p-2 rounded-xl transition-all duration-200',
+                          sentiment.isInPlay
+                            ? 'bg-slate-100 text-slate-800 shadow-sm'
+                            : 'hover:bg-slate-100 text-slate-300 hover:text-slate-800'
+                        )}
+                      >
+                        <Zap
+                          size={16}
+                          className={cn(sentiment.isInPlay && 'fill-slate-800')}
+                        />
+                      </button>
+
+                      <button
+                        onClick={() =>
+                          handleToggleFavorite(
+                            sentiment.id,
+                            sentiment.isFavorite
+                          )
+                        }
                         className={cn(
                           'p-2 rounded-xl transition-all duration-200',
                           sentiment.isFavorite
@@ -160,7 +286,9 @@ export function SentimentInteractions({
                       >
                         <Star
                           size={16}
-                          className={cn(sentiment.isFavorite && 'fill-yellow-500')}
+                          className={cn(
+                            sentiment.isFavorite && 'fill-yellow-500'
+                          )}
                         />
                       </button>
 
@@ -174,7 +302,8 @@ export function SentimentInteractions({
                           <SheetHeader>
                             <SheetTitle>Update Sentiment</SheetTitle>
                             <SheetDescription>
-                              Modify the details for {sentiment.asset} indicator.
+                              Modify the details for {sentiment.asset}{' '}
+                              indicator.
                             </SheetDescription>
                           </SheetHeader>
                           <UpdateSentimentForm sentiment={sentiment} />
@@ -182,66 +311,64 @@ export function SentimentInteractions({
                       </Sheet>
 
                       <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <button className='p-2 hover:bg-red-50 rounded-xl text-slate-400 hover:text-red-500 transition-all duration-200'>
-                          <Trash2 size={16} />
-                        </button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className='rounded-2xl border border-slate-100 shadow-2xl max-w-[400px] p-8'>
-                        <AlertDialogHeader>
-                          <div className='flex flex-col items-center justify-center mb-6'>
-                            <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
-                              Action Required
-                            </p>
-                            <AlertDialogTitle className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
-                              Remove Sentiment?
-                            </AlertDialogTitle>
-                            <div className='w-8 h-1 bg-red-500 rounded-full mt-4' />
-                          </div>
+                        <AlertDialogTrigger asChild>
+                          <button className='p-2 hover:bg-red-50 rounded-xl text-slate-400 hover:text-red-500 transition-all duration-200'>
+                            <Trash2 size={16} />
+                          </button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent className='rounded-2xl border border-slate-100 shadow-2xl max-w-[400px] p-8'>
+                          <AlertDialogHeader>
+                            <div className='flex flex-col items-center justify-center mb-6'>
+                              <p className='text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 leading-none mb-3'>
+                                Action Required
+                              </p>
+                              <AlertDialogTitle className='text-xl font-bold text-slate-900 tracking-tight leading-none'>
+                                Remove Sentiment?
+                              </AlertDialogTitle>
+                              <div className='w-8 h-1 bg-red-500 rounded-full mt-4' />
+                            </div>
 
-                          <div className='w-48 h-48 mx-auto mb-6'>
-                            <AspectRatio ratio={1 / 1}>
-                              <Image
-                                src='/are-you-sure-michael.gif'
-                                alt='Michael Scott'
-                                fill
-                                unoptimized
-                                className='object-cover rounded-full border-2 border-slate-100 shadow-sm'
-                              />
-                            </AspectRatio>
-                          </div>
+                            <div className='w-48 h-48 mx-auto mb-6'>
+                              <AspectRatio ratio={1 / 1}>
+                                <Image
+                                  src='/are-you-sure-michael.gif'
+                                  alt='Michael Scott'
+                                  fill
+                                  unoptimized
+                                  className='object-cover rounded-full border-2 border-slate-100 shadow-sm'
+                                />
+                              </AspectRatio>
+                            </div>
 
-                          <AlertDialogDescription className='text-sm text-center text-slate-500 font-medium mb-6 py-6'>
-                            You are about to remove this sentiment
-                            <br />
-                            indicator for {sentiment.asset}.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
+                            <AlertDialogDescription className='text-sm text-center text-slate-500 font-medium mb-6 py-6'>
+                              You are about to remove this sentiment
+                              <br />
+                              indicator for {sentiment.asset}.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
 
-                        <AlertDialogFooter className='flex gap-3 sm:justify-center mt-6'>
-                          <AlertDialogCancel
-                            className='rounded-lg flex-1 border-slate-200 text-slate-500 font-bold hover:bg-slate-50 transition-all'
-                          >
-                            Keep it
-                          </AlertDialogCancel>
-                          <AlertDialogAction
-                            className='rounded-lg flex-1 font-bold bg-red-500 hover:bg-red-600 transition-all shadow-md shadow-red-100'
-                            onClick={() => {
-                              handleDeleteSentiment(sentiment.id);
-                              toast({
-                                title: 'Sentiment removed',
-                                description: `The link has been deleted.`,
-                              });
-                            }}
-                          >
-                            Delete
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </div>
-                </td>
-              </motion.tr>
+                          <AlertDialogFooter className='flex gap-3 sm:justify-center mt-6'>
+                            <AlertDialogCancel className='rounded-lg flex-1 border-slate-200 text-slate-500 font-bold hover:bg-slate-50 transition-all'>
+                              Keep it
+                            </AlertDialogCancel>
+                            <AlertDialogAction
+                              className='rounded-lg flex-1 font-bold bg-red-500 hover:bg-red-600 transition-all shadow-md shadow-red-100'
+                              onClick={() => {
+                                handleDeleteSentiment(sentiment.id);
+                                toast({
+                                  title: 'Sentiment removed',
+                                  description: `The link has been deleted.`,
+                                });
+                              }}
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </td>
+                </motion.tr>
               ))}
             </tbody>
           </table>

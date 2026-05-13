@@ -243,6 +243,7 @@ model Sentiment {
   asset      String
   pair       String   @default("")
   isFavorite Boolean  @default(false)
+  isInPlay   Boolean  @default(false)
   url        String
   exchange   String
 
