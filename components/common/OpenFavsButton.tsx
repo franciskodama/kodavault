@@ -27,8 +27,24 @@ export function OpenFavsButton({
       description: `Opening ${favorites.length} links in new tabs...`,
     });
 
-    favorites.forEach((s) => {
-      window.open(s.url, '_blank');
+    favorites.forEach((s, index) => {
+      // Small delay between opens can sometimes help bypass strict blockers
+      setTimeout(() => {
+        const win = window.open(s.url, '_blank');
+
+        // If we detect the window wasn't opened, it's likely a pop-up blocker
+        if (!win || win.closed || typeof win.closed === 'undefined') {
+          if (index === 0) {
+            // Only show once
+            toast({
+              title: 'Pop-ups Blocked',
+              description:
+                'Please allow pop-ups for this site to open all trading tabs.',
+              variant: 'destructive',
+            });
+          }
+        }
+      }, index * 150);
     });
   };
 
