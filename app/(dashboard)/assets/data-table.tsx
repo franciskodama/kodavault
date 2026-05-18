@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BellRing, Check, Ghost, ChevronsUpDown, XIcon } from 'lucide-react';
+import { BellRing, Check, Ghost, ChevronsUpDown, XIcon, Download } from 'lucide-react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -670,8 +670,37 @@ export function DataTable<TData, TValue>({
               </Tooltip>
             </TooltipProvider>
           )}
-          {stocksNoTotal?.length > 0 && !openNotification && (
-            <div className='ml-auto pr-8'>
+          <div className='ml-auto pr-8 flex items-center gap-4'>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant='outline'
+                    className='h-10 border-2 border-slate-500 rounded-lg flex items-center gap-2 px-3'
+                    onClick={() => {
+                      const json = JSON.stringify(assets, null, 2);
+                      const blob = new Blob([json], { type: 'application/json' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'trezo-assets.json';
+                      document.body.appendChild(a);
+                      a.click();
+                      document.body.removeChild(a);
+                      URL.revokeObjectURL(url);
+                    }}
+                  >
+                    <Download className='h-4 w-4' />
+                    <span>Export</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Export assets to JSON</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            {stocksNoTotal?.length > 0 && !openNotification && (
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -680,7 +709,7 @@ export function DataTable<TData, TValue>({
                       whileTap={{ scale: 0.9 }}
                       size='md'
                       variant={'outline'}
-                      className='h-10 border-2 border-slate-500 rounded-lg'
+                      className='h-10 border-2 border-slate-500 rounded-lg px-3'
                       onClick={() => setOpenNotification(true)}
                     >
                       <BellRing className='h-4 w-4' />
@@ -696,8 +725,8 @@ export function DataTable<TData, TValue>({
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {table.getRowModel().rows?.length ? (
