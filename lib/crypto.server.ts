@@ -98,30 +98,34 @@ export const getCryptosData = async () => {
 
 export const getGlobalData = async () => {
   try {
-    const apiKeyCoinGecko = process.env.NEXT_PUBLIC_COINGECKO_KEY;
+    const apiKey = process.env.NEXT_PUBLIC_COINCAP_KEY;
+
+    if (!apiKey) {
+      throw new Error('CoinMarketCap API key is missing');
+    }
 
     const options: RequestInit = {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        'x-cg-pro-api-key': apiKeyCoinGecko ? apiKeyCoinGecko : '',
+        'X-CMC_PRO_API_KEY': apiKey,
       },
     };
 
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/global`,
+      `https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest`,
       options
     );
 
     if (!response.ok) {
-      console.warn(`Coingecko Global API returned ${response.status}: ${response.statusText}`);
+      console.warn(`CoinMarketCap Global API returned ${response.status}: ${response.statusText}`);
       return null;
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error fetching global data from Coingecko:', error);
+    console.error('Error fetching global data from CoinMarketCap:', error);
     return null;
   }
 };

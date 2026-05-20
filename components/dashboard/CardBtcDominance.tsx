@@ -2,8 +2,8 @@ import React from 'react';
 import { Bitcoin, PieChart } from 'lucide-react';
 
 export function CardBtcDominance({ globalData }: { globalData: any }) {
-  // Extract BTC Dominance from Coingecko global data
-  const btcDominance = globalData?.data?.market_cap_percentage?.btc || 0;
+  // Extract BTC Dominance from CoinMarketCap global data
+  const btcDominance = globalData?.data?.btc_dominance || 0;
   
   return (
     <div className='bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden p-6'>
