@@ -100,15 +100,11 @@ export const getGlobalData = async () => {
   try {
     const apiKeyCoinGecko = process.env.NEXT_PUBLIC_COINGECKO_KEY;
 
-    if (!apiKeyCoinGecko) {
-      throw new Error('API key is missing');
-    }
-
     const options: RequestInit = {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        'x-cg-pro-api-key': apiKeyCoinGecko,
+        'x-cg-pro-api-key': apiKeyCoinGecko ? apiKeyCoinGecko : '',
       },
     };
 
