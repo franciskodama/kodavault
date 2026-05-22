@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import Assets from './assets';
-import { ReviewedAssetsProvider } from './reviewed-context';
 
 type PageProps = {
   searchParams: Promise<{ type?: string; purpose?: string }>;
@@ -14,14 +13,12 @@ export default async function AssetsPage(props: PageProps) {
   return (
     <div className='mx-auto bg-white'>
       <Suspense fallback={<SkeletonAssets />}>
-        <ReviewedAssetsProvider>
-          <Assets
-            typeFilterAsParam={typeFilterAsParam ? typeFilterAsParam : ''}
-            purposeFilterAsParam={
-              purposeFilterAsParam ? purposeFilterAsParam : ''
-            }
-          />
-        </ReviewedAssetsProvider>
+        <Assets
+          typeFilterAsParam={typeFilterAsParam ? typeFilterAsParam : ''}
+          purposeFilterAsParam={
+            purposeFilterAsParam ? purposeFilterAsParam : ''
+          }
+        />
       </Suspense>
     </div>
   );

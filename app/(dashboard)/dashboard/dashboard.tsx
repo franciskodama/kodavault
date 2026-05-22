@@ -29,6 +29,7 @@ import { CardProgressGoal } from '@/components/dashboard/CardProgressGoal';
 import CardTag from '@/components/dashboard/CardTag';
 import Transactions from './transactions/transactions';
 import { CardLongsAndShorts } from '@/components/dashboard/CardLongsAndShorts';
+import { CardBtcDominance } from '@/components/dashboard/CardBtcDominance';
 
 const NetWorthChart = dynamic(() => import('./charts/net-worth'), {
   ssr: false,
@@ -48,6 +49,7 @@ export default function Dashboard({
   keyAssetsPriced,
   allCryptos,
   monthlyBurn,
+  globalData,
 }: {
   usdBrl: number;
   currencyRates: Currencies;
@@ -61,6 +63,7 @@ export default function Dashboard({
   keyAssetsPriced: KeyAssetsPriced[];
   monthlyBurn: number;
   allCryptos: any;
+  globalData: any;
 }) {
   const netWorthTotal =
     assets.reduce((sum, item) => sum + (item?.total || 0), 0) || 0;
@@ -133,34 +136,11 @@ export default function Dashboard({
 
               {/* News */}
               <CardFredEvents />
+              <CardBtcDominance globalData={globalData} />
               <CardAthDrawdown
                 userAssets={assets}
                 allCryptosData={allCryptos}
               />
-              {/* <Transactions /> */}
-              {/* {uid === process.env.NEXT_PUBLIC_HER_UID && (
-                <div className='rounded-2xl border border-slate-100 bg-white shadow-sm overflow-hidden group'>
-                  <div className='p-6'>
-                    <div className='flex justify-between items-start'>
-                      <div>
-                        <h3 className='font-semibold text-xl text-slate-900 tracking-tight'>
-                          Millionaire of the Year
-                        </h3>
-                        <p className='text-xs text-slate-400 font-bold uppercase tracking-widest mt-1'>
-                          Swimming in Money! 💰
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <Image
-                    src='/mari.png'
-                    alt='Special Recognition'
-                    width={300}
-                    height={100}
-                    className='w-full object-cover group-hover:scale-110 transition-transform duration-700'
-                  />
-                </div>
-              )} */}
             </div>
           </div>
 

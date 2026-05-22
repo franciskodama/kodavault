@@ -8,7 +8,7 @@ import { getCurrencies } from '@/lib/currency.server';
 import { Loading } from '@/components/common/Loading';
 import Dashboard from './dashboard';
 
-import { fetchQuotesForCryptos, getCryptosData } from '@/lib/crypto.server';
+import { fetchQuotesForCryptos, getCryptosData, getGlobalData } from '@/lib/crypto.server';
 import { KeyAsset } from '@prisma/client';
 import { KeyAssetsPriced } from '@/lib/types';
 
@@ -32,6 +32,7 @@ export default async function DashboardPage() {
   const fechedBtcPrice = await fetchQuotesForCryptos('BTC');
   const btcPrice = fechedBtcPrice.data.BTC[0].quote.USD.price;
   const allCryptos = await getCryptosData();
+  const globalData = await getGlobalData();
 
   const netWorthChartData = await getNetWorthEvolution(uid ? uid : '');
   const goal = await getGoal(uid ? uid : '');
@@ -68,6 +69,7 @@ export default async function DashboardPage() {
             keyAssetsPriced={keyAssetsPriced}
             allCryptos={allCryptos}
             monthlyBurn={monthlyBurn}
+            globalData={globalData}
           />
         )
       ) : (
