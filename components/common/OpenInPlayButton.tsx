@@ -28,24 +28,20 @@ export function OpenInPlayButton({
     });
 
     inPlayAssets.forEach((s, index) => {
-      // Small delay between opens can sometimes help bypass strict blockers
-      // and also ensures tabs are opened in a consistent order
-      setTimeout(() => {
-        const win = window.open(s.url, '_blank');
+      const win = window.open(s.url, '_blank', 'noopener,noreferrer');
 
-        // If we detect the window wasn't opened, it's likely a pop-up blocker
-        if (!win || win.closed || typeof win.closed === 'undefined') {
-          if (index === 0) {
-            // Only show once
-            toast({
-              title: 'Pop-ups Blocked',
-              description:
-                'Please allow pop-ups for this site to open all trading tabs.',
-              variant: 'destructive',
-            });
-          }
+      // If we detect the window wasn't opened, it's likely a pop-up blocker
+      if (!win || win.closed || typeof win.closed === 'undefined') {
+        if (index === 0) {
+          // Only show once
+          toast({
+            title: 'Pop-ups Blocked',
+            description:
+              'Please allow pop-ups for this site to open all trading tabs.',
+            variant: 'destructive',
+          });
         }
-      }, index * 150);
+      }
     });
   };
 
