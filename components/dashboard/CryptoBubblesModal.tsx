@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import {
   Search,
-  Volume2,
+  BarChart3,
   Landmark,
   CheckCircle2,
   TrendingUp,
@@ -146,7 +146,7 @@ export default function CryptoBubblesModal({
                 }
               `}
             >
-              <Volume2 size={14} />
+              <BarChart3 size={14} />
               Volume
             </Button>
             <Button
