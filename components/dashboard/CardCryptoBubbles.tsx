@@ -10,7 +10,7 @@ import {
   CardFooter,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useBubblePhysics } from '@/lib/hooks/useBubblePhysics';
 import { Asset } from '@/lib/types';
 import CryptoBubblesModal from './CryptoBubblesModal';
@@ -198,6 +198,10 @@ export default function CardCryptoBubbles({
       </Card>
 
       <DialogContent className='max-w-[95vw] w-[1000px] h-[85vh] p-0 overflow-hidden bg-slate-900 border-slate-800 text-white rounded-2xl'>
+        <DialogTitle className='sr-only'>Market Bubbles</DialogTitle>
+        <DialogDescription className='sr-only'>
+          Interactive bubble visualization of top cryptocurrency assets by 24h volume.
+        </DialogDescription>
         <CryptoBubblesModal
           allCryptos={allCryptos}
           userOwnedSymbols={userOwnedSymbols}
