@@ -284,14 +284,16 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
   const { addReviewedAsset, removeReviewedAsset, isAssetReviewed } =
     useReviewedAssets();
 
-  const handleReviewToggle = async (checked: boolean, assetId: string) => {
+  const handleReviewToggle = (checked: boolean, assetId: string) => {
     if (checked) {
       addReviewedAsset(assetId);
     } else {
       removeReviewedAsset(assetId);
     }
-    await updateReviewedAsset(assetId, checked);
-    await refreshAssets();
+    // Update DB and refresh context in the background (optimistic UI)
+    updateReviewedAsset(assetId, checked).then(() => {
+      refreshAssets();
+    });
   };
 
   const handleDeleteAsset = async (id: string) => {

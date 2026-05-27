@@ -21,7 +21,7 @@ export default function Assets({
   useEffect(() => {
     if (!isLoading && assets.length > 0) {
       assets.forEach((asset) => {
-        if (asset.id) {
+        if (asset && asset.id) {
           if (asset.reviewed) {
             addReviewedAsset(asset.id);
           } else {
