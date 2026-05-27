@@ -53,24 +53,24 @@ export const ReviewedAssetsProvider = ({
     }
   }, [reviewedAssets]);
 
-  const addReviewedAsset = (assetId: string) => {
+  const addReviewedAsset = React.useCallback((assetId: string) => {
     setReviewedAssets((prev) => {
       if (!prev.includes(assetId)) {
         return [...prev, assetId];
       }
       return prev;
     });
-  };
+  }, []);
 
-  const removeReviewedAsset = (assetId: string) => {
+  const removeReviewedAsset = React.useCallback((assetId: string) => {
     setReviewedAssets((prev) => prev.filter((id) => id !== assetId));
-  };
+  }, []);
 
-  const isAssetReviewed = (assetId: string) => {
+  const isAssetReviewed = React.useCallback((assetId: string) => {
     return reviewedAssets.includes(assetId);
-  };
+  }, [reviewedAssets]);
 
-  const clearAllReviewed = () => {
+  const clearAllReviewed = React.useCallback(() => {
     setReviewedAssets([]);
     localStorage.removeItem('reviewed-assets');
     toast({
@@ -78,7 +78,7 @@ export const ReviewedAssetsProvider = ({
       description: 'All review marks have been cleared.',
       variant: 'dark',
     });
-  };
+  }, []);
 
   return (
     <ReviewedAssetsContext.Provider

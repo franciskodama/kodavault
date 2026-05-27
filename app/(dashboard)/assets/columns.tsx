@@ -291,6 +291,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
       removeReviewedAsset(assetId);
     }
     await updateReviewedAsset(assetId, checked);
+    await refreshAssets();
   };
 
   const handleDeleteAsset = async (id: string) => {
