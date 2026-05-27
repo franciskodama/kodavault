@@ -19,7 +19,7 @@ import Welcome from './welcome';
 import NotificationsPanel from './notifications/notifications-panel';
 import { CardTotal } from '@/components/dashboard/CardTotal';
 import { CardTotalAllCurrency } from '@/components/dashboard/CardAllCurrencies';
-import { CardCryptosForTrading } from '@/components/dashboard/CardCryptosForTrading';
+import CardCryptoBubbles from '@/components/dashboard/CardCryptoBubbles';
 import { CardKeyAssets } from '@/components/dashboard/CardKeyAssets';
 import { CardAllocationByCurrency } from '@/components/dashboard/CardAllocationByCurrency';
 import { CardAthDrawdown } from '@/components/dashboard/CardAthDrawdown';
@@ -113,7 +113,7 @@ export default function Dashboard({
               <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                 <CardKeyAssets keyAssetsPriced={keyAssetsPriced} />
                 <CardTag />
-                <CardCryptosForTrading assets={assets} />
+                <CardCryptoBubbles allCryptos={allCryptos} userAssets={assets} />
               </div>
             </div>
 

@@ -184,7 +184,15 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
+      const val = row.getValue(id);
+      if (!val) {
+        return (
+          value.includes('SwingTrade') &&
+          value.includes('PositionTrade') &&
+          value.includes('LongTermHold')
+        );
+      }
+      return value.includes(val);
     },
   },
   {
@@ -276,13 +284,16 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
   const { addReviewedAsset, removeReviewedAsset, isAssetReviewed } =
     useReviewedAssets();
 
-  const handleReviewToggle = async (checked: boolean, assetId: string) => {
+  const handleReviewToggle = (checked: boolean, assetId: string) => {
     if (checked) {
       addReviewedAsset(assetId);
     } else {
       removeReviewedAsset(assetId);
     }
-    await updateReviewedAsset(assetId, checked);
+    // Update DB and refresh context in the background (optimistic UI)
+    updateReviewedAsset(assetId, checked).then(() => {
+      refreshAssets();
+    });
   };
 
   const handleDeleteAsset = async (id: string) => {

@@ -16,17 +16,21 @@ export default function Assets({
   purposeFilterAsParam: string;
 }) {
   const { assets, isLoading } = useAssetsContext();
-  const { addReviewedAsset } = useReviewedAssets();
+  const { addReviewedAsset, removeReviewedAsset } = useReviewedAssets();
 
   useEffect(() => {
     if (!isLoading && assets.length > 0) {
       assets.forEach((asset) => {
-        if (asset?.reviewed && asset.id) {
-          addReviewedAsset(asset.id);
+        if (asset && asset.id) {
+          if (asset.reviewed) {
+            addReviewedAsset(asset.id);
+          } else {
+            removeReviewedAsset(asset.id);
+          }
         }
       });
     }
-  }, [assets, isLoading, addReviewedAsset]);
+  }, [assets, isLoading, addReviewedAsset, removeReviewedAsset]);
   const compareByWallet = (a: any, b: any) => {
     if (a.wallet < b.wallet) return -1;
     if (a.wallet > b.wallet) return 1;
