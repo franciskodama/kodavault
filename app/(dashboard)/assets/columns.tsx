@@ -184,7 +184,15 @@ export const columns: ColumnDef<Asset>[] = [
       );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
+      const val = row.getValue(id);
+      if (!val) {
+        return (
+          value.includes('SwingTrade') &&
+          value.includes('PositionTrade') &&
+          value.includes('LongTermHold')
+        );
+      }
+      return value.includes(val);
     },
   },
   {
