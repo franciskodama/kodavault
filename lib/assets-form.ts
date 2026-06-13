@@ -1,4 +1,4 @@
-export const fixedSymbolsArr = ['BTC', 'ETH', 'USDT', 'CAD', 'BRL'];
+export const fixedSymbolsArr = ['BTC', 'ETH', 'USDT', 'USDC', 'CAD', 'BRL'];
 
 export const subtypeOptions = [
   'BTC',
@@ -518,5 +518,6 @@ export const altcoinsCategories = [
   { symbol: 'CHZ', category: 'Sports' },
 
   { symbol: 'USDT', category: 'Stablecoins' },
+  { symbol: 'USDC', category: 'Stablecoins' },
   { symbol: 'VET', category: 'SupplyChain' },
 ];
