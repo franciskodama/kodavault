@@ -76,7 +76,7 @@ export function AddAssetForm() {
 
   useEffect(() => {
     if (assetSymbol) {
-      if (['BTC', 'ETH', 'USDT', 'CAD', 'BRL'].includes(assetSymbol)) {
+      if (['BTC', 'ETH', 'USDT', 'USDC', 'CAD', 'BRL'].includes(assetSymbol)) {
         setValue('asset', assetSymbol);
       }
     }
