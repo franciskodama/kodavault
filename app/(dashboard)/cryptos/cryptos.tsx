@@ -156,13 +156,13 @@ export default function Cryptos({
                 <Tabs defaultValue='main' className='w-full'>
                   <TabsList className='px-4 ml-4 sm:px-0'>
                     <TabsTrigger value='main'>Main</TabsTrigger>
+                    <TabsTrigger value='heatmap'>Heatmap</TabsTrigger>
                     <TabsTrigger value='allocation-goals'>
                       Allocation Goals
                     </TabsTrigger>
                     <TabsTrigger value='ath'>ATH Estimation</TabsTrigger>
                     <TabsTrigger value='projections'>Projections</TabsTrigger>
                     <TabsTrigger value='ranking'>Ranking</TabsTrigger>
-                    <TabsTrigger value='heatmap'>Heatmap</TabsTrigger>
                   </TabsList>
 
                   <TabsContent value='main' className='flex gap-2 mt-4'>
@@ -177,6 +177,10 @@ export default function Cryptos({
                       assets={assetsByType.Crypto}
                       allCryptosData={allCryptosData}
                     />
+                  </TabsContent>
+
+                  <TabsContent value='heatmap' className='mt-4'>
+                    <Heatmap />
                   </TabsContent>
 
                   <TabsContent value='ath' className='mt-4'>
@@ -195,9 +199,6 @@ export default function Cryptos({
                   </TabsContent>
                   <TabsContent value='ranking' className='mt-4'>
                     <Ranking allCryptosData={allCryptosData} />
-                  </TabsContent>
-                  <TabsContent value='heatmap' className='mt-4'>
-                    <Heatmap />
                   </TabsContent>
                 </Tabs>
               </div>
