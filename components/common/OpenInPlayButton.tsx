@@ -40,7 +40,9 @@ export function OpenInPlayButton({
         update({
           id,
           title: 'Launching In-Play',
-          description: `Opening ${assetName} (${i + 1}/${inPlayAssets.length})...`,
+          description: `Opening ${assetName} (${i + 1}/${
+            inPlayAssets.length
+          })...`,
         });
 
         const win = window.open(s.url, '_blank', 'noopener,noreferrer');
@@ -58,9 +60,9 @@ export function OpenInPlayButton({
           }
         }
 
-        // Delay next opening by 1.5 seconds if there are more tabs remaining
+        // Delay next opening by 1 second if there are more tabs remaining
         if (i < inPlayAssets.length - 1) {
-          await new Promise((resolve) => setTimeout(resolve, 1500));
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
 

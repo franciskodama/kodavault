@@ -58,9 +58,9 @@ export function OpenFavsButton({
           }
         }
 
-        // Delay next opening by 1.5 seconds if there are more tabs remaining
+        // Delay next opening by 1 second if there are more tabs remaining
         if (i < favorites.length - 1) {
-          await new Promise((resolve) => setTimeout(resolve, 1500));
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
 
