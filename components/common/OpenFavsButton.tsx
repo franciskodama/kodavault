@@ -27,7 +27,7 @@ export function OpenFavsButton({
 
     setIsLaunching(true);
 
-    const { update } = toast({
+    const { id, update } = toast({
       title: 'Opening Favorites',
       description: `Preparing to open ${favorites.length} tabs...`,
     });
@@ -38,6 +38,7 @@ export function OpenFavsButton({
         const assetName = s.asset ? s.asset.toUpperCase() : 'Coin';
 
         update({
+          id,
           title: 'Opening Favorites',
           description: `Opening ${assetName} (${i + 1}/${favorites.length})...`,
         });
@@ -64,6 +65,7 @@ export function OpenFavsButton({
       }
 
       update({
+        id,
         title: 'Success',
         description: `All ${favorites.length} tabs opened successfully.`,
       });

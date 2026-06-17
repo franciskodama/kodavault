@@ -27,7 +27,7 @@ export function OpenInPlayButton({
 
     setIsLaunching(true);
 
-    const { update } = toast({
+    const { id, update } = toast({
       title: 'Launching In-Play',
       description: `Preparing to open ${inPlayAssets.length} trading tabs...`,
     });
@@ -38,6 +38,7 @@ export function OpenInPlayButton({
         const assetName = s.asset ? s.asset.toUpperCase() : 'Coin';
 
         update({
+          id,
           title: 'Launching In-Play',
           description: `Opening ${assetName} (${i + 1}/${inPlayAssets.length})...`,
         });
@@ -64,6 +65,7 @@ export function OpenInPlayButton({
       }
 
       update({
+        id,
         title: 'Success',
         description: `All ${inPlayAssets.length} tabs opened successfully.`,
       });
