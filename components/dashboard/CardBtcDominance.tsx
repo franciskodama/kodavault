@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { Bitcoin, PieChart } from 'lucide-react';
 
@@ -16,8 +17,23 @@ export function CardBtcDominance({ globalData }: { globalData: any }) {
             Market Cap Share
           </p>
         </div>
-        <div className='p-2 bg-orange-50 rounded-xl'>
-          <Bitcoin size={20} className='text-orange-500' />
+        <div className='flex items-center gap-2'>
+          <a
+            href='https://www.tradingview.com/chart/D7re5L3E/'
+            target='_blank'
+            rel='noreferrer'
+            title='Open BTC Dominance chart on TradingView'
+            className='p-2 bg-slate-50 hover:bg-slate-100 border border-slate-100 rounded-xl transition-all duration-200 opacity-70 hover:opacity-100'
+          >
+            <img
+              src='https://www.tradingview.com/favicon.ico'
+              alt='TradingView'
+              className='w-5 h-5 rounded-full'
+            />
+          </a>
+          <div className='p-2 bg-orange-50 rounded-xl'>
+            <Bitcoin size={20} className='text-orange-500' />
+          </div>
         </div>
       </div>
 
