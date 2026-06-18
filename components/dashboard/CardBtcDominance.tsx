@@ -29,7 +29,7 @@ export function CardBtcDominance({ globalData }: { globalData: any }) {
               className='w-5 h-5 rounded-full'
             />
           </a>
-          <div className='p-2 bg-orange-50 rounded-xl'>
+          <div className='p-2'>
             <Bitcoin size={20} className='text-orange-500' />
           </div>
         </div>
