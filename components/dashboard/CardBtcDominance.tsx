@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import { Bitcoin, PieChart } from 'lucide-react';
+import { Bitcoin } from 'lucide-react';
 
 export function CardBtcDominance({ globalData }: { globalData: any }) {
   // Extract BTC Dominance from CoinMarketCap global data
   const btcDominance = globalData?.data?.btc_dominance || 0;
-  
+
   return (
     <div className='bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden p-6'>
       <div className='flex justify-between items-start mb-6'>
@@ -13,13 +13,11 @@ export function CardBtcDominance({ globalData }: { globalData: any }) {
           <h3 className='text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-1'>
             BTC Dominance
           </h3>
-          <p className='text-xs text-slate-500 font-medium'>
-            Market Cap Share
-          </p>
+          <p className='text-xs text-slate-500 font-medium'>Market Cap Share</p>
         </div>
         <div className='flex items-center gap-2'>
           <a
-            href='https://www.tradingview.com/chart/D7re5L3E/'
+            href='https://www.tradingview.com/chart/?symbol=CRYPTOCAP:BTC.D'
             target='_blank'
             rel='noreferrer'
             title='Open BTC Dominance chart on TradingView'
@@ -53,8 +51,8 @@ export function CardBtcDominance({ globalData }: { globalData: any }) {
           <span>Altcoins</span>
         </div>
         <div className='h-3 w-full bg-slate-100 rounded-full overflow-hidden flex'>
-          <div 
-            className='h-full bg-orange-400 rounded-full' 
+          <div
+            className='h-full bg-orange-400 rounded-full'
             style={{ width: `${btcDominance}%` }}
           />
         </div>
