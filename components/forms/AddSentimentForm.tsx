@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { addSentiment } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,8 @@ import { SentimentType } from '@/lib/types';
 import { useToast } from '@/components/ui/use-toast';
 import { SheetClose } from '@/components/ui/sheet';
 import { classError } from '@/lib/classes';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 
 export function AddSentimentForm() {
   const { toast } = useToast();
@@ -20,8 +22,14 @@ export function AddSentimentForm() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
-  } = useForm<Omit<SentimentType, 'id' | 'created_at'>>({});
+  } = useForm<Omit<SentimentType, 'id' | 'created_at'>>({
+    defaultValues: {
+      isFavorite: false,
+      isInPlay: false,
+    }
+  });
 
   const classInput =
     'border border-slate-200 h-10 p-2 rounded-xl w-full mt-2 text-sm';
@@ -118,6 +126,42 @@ export function AddSentimentForm() {
           {errors.url?.message && (
             <p className={classError}>{errors.url.message}</p>
           )}
+        </div>
+
+        <div className='flex items-center gap-2 mt-4 p-2'>
+          <Controller
+            name='isFavorite'
+            control={control}
+            render={({ field }) => (
+              <Checkbox
+                id='isFavorite'
+                className='h-6 w-6 border-slate-300 transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+            )}
+          />
+          <Label htmlFor='isFavorite' className='font-bold text-sm text-slate-700 cursor-pointer'>
+            Launch Favorite
+          </Label>
+        </div>
+
+        <div className='flex items-center gap-2 mt-2 p-2'>
+          <Controller
+            name='isInPlay'
+            control={control}
+            render={({ field }) => (
+              <Checkbox
+                id='isInPlay'
+                className='h-6 w-6 border-slate-300 transition-all data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900'
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+            )}
+          />
+          <Label htmlFor='isInPlay' className='font-bold text-sm text-slate-700 cursor-pointer'>
+            Launch In-Play
+          </Label>
         </div>
 
         <Button className='mt-8 py-6 font-bold tracking-wider' type='submit'>

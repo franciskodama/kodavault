@@ -41,7 +41,7 @@ export const getSentiments = async (uid: string) => {
 };
 
 export async function addSentiment(formData: Omit<SentimentType, 'id' | 'created_at'>) {
-  const { asset, pair, uid, url, exchange } = formData;
+  const { asset, pair, uid, url, exchange, isFavorite, isInPlay } = formData;
 
   try {
     await prisma.sentiment.create({
@@ -53,6 +53,8 @@ export async function addSentiment(formData: Omit<SentimentType, 'id' | 'created
         uid,
         url,
         exchange,
+        isFavorite: isFavorite ?? false,
+        isInPlay: isInPlay ?? false,
       },
     });
     revalidatePath('/sentiment');
