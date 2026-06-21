@@ -132,7 +132,7 @@ export default function CryptoBubblesModal({
           <h2 className='text-lg font-bold tracking-tight text-white'>
             Crypto Market Bubbles
           </h2>
-          <span className='text-[10px] uppercase font-bold tracking-wider text-slate-500 px-2 py-0.5 rounded-full bg-slate-800'>
+          <span className='text-[10px] w-[100px] text-center uppercase font-bold tracking-wider text-slate-500 px-2 py-0.5 mx-4 rounded-lg bg-slate-800'>
             Top 60 Active
           </span>
         </div>
