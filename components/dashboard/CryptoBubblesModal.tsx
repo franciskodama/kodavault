@@ -126,7 +126,7 @@ export default function CryptoBubblesModal({
   return (
     <div className='flex flex-col h-full bg-slate-950 text-slate-100'>
       {/* Modal Header Controls */}
-      <div className='flex flex-col md:flex-row items-center justify-between gap-4 p-6 border-b border-slate-800 bg-slate-900/60 backdrop-blur'>
+      <div className='flex flex-col md:flex-row items-center justify-between gap-8 p-6 border-b border-slate-800 bg-slate-900/60 backdrop-blur'>
         <div className='flex items-center gap-3'>
           <div className='w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping' />
           <h2 className='text-lg font-bold tracking-tight text-white'>
