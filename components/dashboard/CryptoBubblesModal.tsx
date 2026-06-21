@@ -10,11 +10,18 @@ import {
   TrendingDown,
   RefreshCw,
   X,
+  Info,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useBubblePhysics } from '@/lib/hooks/useBubblePhysics';
 import { currencyFormatter, numberFormatterNoDecimals } from '@/lib/utils';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface CryptoBubblesModalProps {
   allCryptos: any[];
@@ -119,13 +126,13 @@ export default function CryptoBubblesModal({
   return (
     <div className='flex flex-col h-full bg-slate-950 text-slate-100'>
       {/* Modal Header Controls */}
-      <div className='flex flex-col md:flex-row items-center justify-between gap-4 p-6 border-b border-slate-800 bg-slate-900/60 backdrop-blur'>
+      <div className='flex flex-col md:flex-row items-center justify-between gap-8 p-6 border-b border-slate-800 bg-slate-900/60 backdrop-blur'>
         <div className='flex items-center gap-3'>
           <div className='w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping' />
-          <h2 className='text-lg font-bold tracking-tight text-white flex items-center gap-2'>
+          <h2 className='text-lg font-bold tracking-tight text-white'>
             Crypto Market Bubbles
           </h2>
-          <span className='text-[10px] uppercase font-bold tracking-wider text-slate-500 px-2 py-0.5 rounded-full bg-slate-800'>
+          <span className='text-[10px] w-[100px] text-center uppercase font-bold tracking-wider text-slate-500 px-2 py-0.5 mx-4 rounded-lg bg-slate-800'>
             Top 60 Active
           </span>
         </div>
@@ -188,7 +195,30 @@ export default function CryptoBubblesModal({
               )
             )}
           </div>
-
+          {/* Info Icon */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type='button'
+                  className='text-slate-500 hover:text-slate-300 transition-colors p-1 rounded-full hover:bg-slate-800 cursor-help'
+                  aria-label='Performance calculation details'
+                >
+                  <Info size={14} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent className='bg-slate-900 border border-slate-800 text-slate-200 p-3 max-w-[280px] rounded-xl shadow-xl z-[100]'>
+                <p className='text-xs leading-relaxed'>
+                  <strong className='text-white block mb-1'>
+                    Rolling 24h Performance
+                  </strong>
+                  Unlike TradingView&apos;s daily candles which reset at 00:00
+                  UTC, bubble percentage changes reflect a rolling 24-hour
+                  window updated in real time.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           {/* Search bar */}
           <div className='relative w-full sm:w-[220px]'>
             <Search className='absolute left-3 top-2.5 h-4 w-4 text-slate-500' />
