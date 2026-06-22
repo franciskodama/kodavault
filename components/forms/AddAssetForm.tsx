@@ -40,6 +40,7 @@ import {
   classUl,
 } from '@/lib/classes';
 import { useReviewedAssets } from '@/app/(dashboard)/assets/reviewed-context';
+import { playAddAssetSound } from '@/lib/sound';
 
 export function AddAssetForm() {
   const { refreshAssets } = useAssetsContext();
@@ -152,6 +153,7 @@ export function AddAssetForm() {
     });
 
     if (result.success) {
+      playAddAssetSound();
       toast({
         title: 'Asset added! 🎉',
         description: 'Your new asset is already available.',

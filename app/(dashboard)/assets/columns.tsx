@@ -41,6 +41,7 @@ import { Asset } from '@/lib/types';
 import { tableHeaderClass } from '@/lib/classes';
 import { useAssetsContext } from '@/context/AssetsContext';
 import { deleteAsset, updateReviewedAsset } from '@/lib/actions';
+import { playDeleteAssetSound } from '@/lib/sound';
 
 export const columns: ColumnDef<Asset>[] = [
   {
@@ -301,6 +302,7 @@ const AssetActionsCell: FC<{ asset: Asset }> = ({ asset }) => {
       await deleteAsset(id);
       await refreshAssets();
       removeReviewedAsset(id);
+      playDeleteAssetSound();
       toast({
         title: 'Asset removed',
         description: `The asset ${asset?.asset} has been deleted from ${asset?.wallet}.`,
