@@ -2,7 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BellRing, Check, Ghost, ChevronsUpDown, XIcon, Download } from 'lucide-react';
+import {
+  BellRing,
+  Check,
+  Ghost,
+  ChevronsUpDown,
+  XIcon,
+  Download,
+} from 'lucide-react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -571,10 +578,9 @@ export function DataTable<TData, TValue>({
                   Long-term
                 </Label>
               </div>
-
-              </div>
             </div>
           </div>
+        </div>
 
         <AnimatePresence>
           {openNotification ? (
@@ -679,7 +685,9 @@ export function DataTable<TData, TValue>({
                     className='h-10 border-2 border-slate-500 rounded-lg flex items-center gap-2 px-3'
                     onClick={() => {
                       const json = JSON.stringify(assets, null, 2);
-                      const blob = new Blob([json], { type: 'application/json' });
+                      const blob = new Blob([json], {
+                        type: 'application/json',
+                      });
                       const url = URL.createObjectURL(blob);
                       const a = document.createElement('a');
                       a.href = url;
@@ -797,7 +805,7 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      <div className='flex justify-center items-center gap-12 text-xs font-light text-white bg-slate-600 rounded-b-sm p-3 border'>
+      <div className='flex justify-center items-center gap-12 p-3 mb-2 text-xs font-light text-white bg-slate-600 rounded-b-sm border'>
         <p>
           Cryptos
           <span className='font-semibold text-sm'>
