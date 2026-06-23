@@ -82,6 +82,11 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const { assets, assetsByType, currencyRates, isLoading } = useAssetsContext();
 
+  const totalNetWorth = assets.reduce((sum: number, asset: Asset) => {
+    if (!asset) return sum;
+    return sum + (asset.total ?? 0);
+  }, 0);
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -601,9 +606,34 @@ export function DataTable<TData, TValue>({
         </AnimatePresence>
 
         <div className='flex items-center px-4 mt-0 mb-8'>
+          {/* Always display Total Net Worth */}
+          <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 bg-slate-100 text-slate-800 rounded-xl text-left gap-4 border border-slate-200/60'>
+            <div className='flex items-center gap-2 font-semibold'>
+              <p className='text-slate-500'>Total Net Worth:</p>
+              <span className='font-bold text-slate-900'>
+                {`$ `}
+                {thousandFormatter(totalNetWorth)}
+              </span>
+            </div>
+
+            {valueWalletDropbox.toLowerCase() === 'wealthsimple' &&
+              currencyRates?.data?.CAD && (
+                <div className='flex items-center gap-4'>
+                  <p className='text-slate-300'>|</p>
+                  <div className='flex items-center gap-2 font-semibold text-slate-500'>
+                    <p>Total CAD:</p>
+                    {`C$ `}
+                    {thousandFormatter(
+                      totalNetWorth * currencyRates.data.CAD
+                    )}
+                  </div>
+                </div>
+              )}
+          </div>
+
           {!areThereRepeatedAssets && filterIsActive ? (
-            <div className='hidden sm:flex items-center h-10 font-normal ml-4 px-4 bg-accent rounded-xl text-left gap-4'>
-              <div className='flex items-center gap-2 font-semibold'>
+            <div className='hidden sm:flex items-center h-10 font-normal ml-2 px-4 bg-accent text-accent-foreground rounded-xl text-left gap-4'>
+              <div className='flex items-center gap-2 font-bold'>
                 <p>Total Filtered:</p>
                 {`$ `}
                 {thousandFormatter(totalFilteredAssets)}
@@ -612,8 +642,8 @@ export function DataTable<TData, TValue>({
               {valueWalletDropbox.toLowerCase() === 'wealthsimple' &&
                 currencyRates?.data?.CAD && (
                   <div className='flex items-center gap-4'>
-                    <p className='text-slate-300'>|</p>
-                    <div className='flex items-center gap-2 font-semibold text-slate-500'>
+                    <p className='text-slate-700/30'>|</p>
+                    <div className='flex items-center gap-2 font-semibold text-slate-700'>
                       <p>Total CAD:</p>
                       {`C$ `}
                       {thousandFormatter(
@@ -626,25 +656,25 @@ export function DataTable<TData, TValue>({
           ) : null}
 
           {areThereRepeatedAssets && (
-            <div className='flex items-center h-10 font-bold ml-4 px-4 bg-accent rounded-xl text-left'>
+            <div className='flex items-center h-10 font-bold ml-2 px-4 bg-accent text-accent-foreground rounded-xl text-left'>
               <div className='flex items-center w-full'>
-                <p className='w-[6ch]'>Asset:</p>
+                <p className='w-[6ch] text-slate-700 font-medium'>Asset:</p>
                 {getRepeatedAssetTotal(
                   (table.getColumn('asset')?.getFilterValue() as string) ?? ''
                 ).assetName.toUpperCase()}
               </div>
-              <p className='mx-6'>|</p>
+              <p className='mx-4 text-slate-700/30'>|</p>
               <div className='flex items-center w-full'>
-                <p className='w-[9ch]'>Total Qty:</p>
+                <p className='w-[9ch] text-slate-700 font-medium'>Total Qty:</p>
                 {thousandAndDecimalFormatter(
                   getRepeatedAssetTotal(
                     (table.getColumn('asset')?.getFilterValue() as string) ?? ''
                   ).totalQty
                 )}
               </div>
-              <p className='mx-6'>|</p>
+              <p className='mx-4 text-slate-700/30'>|</p>
               <div className='flex items-center w-full'>
-                <p className='w-[6ch]'>Total:</p>
+                <p className='w-[6ch] text-slate-700 font-medium'>Total:</p>
                 {thousandAndDecimalFormatter(
                   getRepeatedAssetTotal(
                     (table.getColumn('asset')?.getFilterValue() as string) ?? ''
