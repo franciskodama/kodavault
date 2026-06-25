@@ -34,8 +34,8 @@ export function playAddAssetSound() {
 
   // Setup gain envelope to prevent clicking and provide smooth fade-out
   gainNode.gain.setValueAtTime(0, now);
-  gainNode.gain.linearRampToValueAtTime(0.12, now + 0.04);
-  gainNode.gain.setValueAtTime(0.12, now + 0.12);
+  gainNode.gain.linearRampToValueAtTime(0.3, now + 0.04);
+  gainNode.gain.setValueAtTime(0.3, now + 0.12);
   gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
 
   // Setup filter to warm up the sound
@@ -80,7 +80,7 @@ export function playDeleteAssetSound() {
 
   // Setup gain envelope for decay
   gainNode.gain.setValueAtTime(0, now);
-  gainNode.gain.linearRampToValueAtTime(0.1, now + 0.05);
+  gainNode.gain.linearRampToValueAtTime(0.25, now + 0.05);
   gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
 
   // Lowpass filter to keep it deep and warm
@@ -128,8 +128,8 @@ export function playUpdateAssetSound() {
 
   // Setup gain envelope: very snappy attack and short decay
   gainNode.gain.setValueAtTime(0, now);
-  gainNode.gain.linearRampToValueAtTime(0.08, now + 0.02);
-  gainNode.gain.setValueAtTime(0.08, now + 0.12);
+  gainNode.gain.linearRampToValueAtTime(0.25, now + 0.02);
+  gainNode.gain.setValueAtTime(0.25, now + 0.12);
   gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
 
   // Setup filter to warm up the sound
