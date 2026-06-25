@@ -7,7 +7,10 @@ import React, {
   useState,
   ReactNode,
 } from 'react';
+import { useSession } from 'next-auth/react';
 import { toast } from '@/components/ui/use-toast';
+import { useAssetsContext } from '@/context/AssetsContext';
+import { clearAllReviewedAssets } from '@/lib/actions';
 
 interface ReviewedAssetsContextType {
   reviewedAssets: string[];
@@ -27,6 +30,9 @@ export const ReviewedAssetsProvider = ({
   children: ReactNode;
 }) => {
   const [reviewedAssets, setReviewedAssets] = useState<string[]>([]);
+  const { data: session } = useSession();
+  const uid = session?.user?.email;
+  const { setAssets, refreshAssets } = useAssetsContext();
 
   useEffect(() => {
     try {
@@ -70,15 +76,39 @@ export const ReviewedAssetsProvider = ({
     return reviewedAssets.includes(assetId);
   }, [reviewedAssets]);
 
-  const clearAllReviewed = React.useCallback(() => {
+  const clearAllReviewed = React.useCallback(async () => {
+    if (!uid) {
+      toast({
+        title: 'Error clearing reviews',
+        description: 'You must be logged in to clear reviews.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setReviewedAssets([]);
     localStorage.removeItem('reviewed-assets');
-    toast({
-      title: 'Reviews Cleared! 🧹',
-      description: 'All review marks have been cleared.',
-      variant: 'dark',
-    });
-  }, []);
+    setAssets((prevAssets) =>
+      prevAssets.map((asset) => ({ ...asset, reviewed: false }))
+    );
+
+    const success = await clearAllReviewedAssets(uid);
+    if (success) {
+      await refreshAssets();
+      toast({
+        title: 'Reviews Cleared! 🧹',
+        description: 'All review marks have been cleared.',
+        variant: 'dark',
+      });
+    } else {
+      await refreshAssets();
+      toast({
+        title: 'Error clearing reviews',
+        description: 'Something went wrong while clearing reviews in the database.',
+        variant: 'destructive',
+      });
+    }
+  }, [uid, setAssets, refreshAssets]);
 
   return (
     <ReviewedAssetsContext.Provider
