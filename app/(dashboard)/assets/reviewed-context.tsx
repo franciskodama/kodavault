@@ -89,7 +89,7 @@ export const ReviewedAssetsProvider = ({
     setReviewedAssets([]);
     localStorage.removeItem('reviewed-assets');
     setAssets((prevAssets) =>
-      prevAssets.map((asset) => ({ ...asset, reviewed: false }))
+      prevAssets.map((asset) => (asset ? { ...asset, reviewed: false } : asset))
     );
 
     const success = await clearAllReviewedAssets(uid);
