@@ -33,6 +33,8 @@ import {
   classUl,
 } from '@/lib/classes';
 import { useReviewedAssets } from '@/app/(dashboard)/assets/reviewed-context';
+import { playUpdateAssetSound } from '@/lib/sound';
+
 
 export function UpdateAssetForm({
   asset,
@@ -95,6 +97,7 @@ export function UpdateAssetForm({
     const result = await updateAsset({ ...data, uid: uid || '' });
 
     if (result.success) {
+      playUpdateAssetSound();
       toast({
         title: 'Asset Updated! 🎉',
         description: 'Your Asset is already updated.',
