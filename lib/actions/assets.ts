@@ -172,3 +172,27 @@ export async function updateReviewedAsset(id: string, reviewed: boolean) {
     return false;
   }
 }
+
+export async function clearAllReviewedAssets(uid: string) {
+  if (!uid) {
+    console.error('Failed to clear reviews: uid is required');
+    return false;
+  }
+  try {
+    await prisma.asset.updateMany({
+      where: {
+        uid,
+        reviewed: true,
+      },
+      data: {
+        reviewed: false,
+      },
+    });
+    revalidatePath('/assets');
+    return true;
+  } catch (error) {
+    console.error('Failed to clear all reviewed assets:', error);
+    return false;
+  }
+}
+
