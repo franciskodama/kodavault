@@ -56,7 +56,7 @@ export default function MessageInTable({
           />
         </AspectRatio>
       </div>
-      <div className='flex flex-col sm:w-[450px] mx-auto'>
+      <div className='flex flex-col sm:w-[450px] mx-auto px-2 sm:px-8'>
         <div className='flex items-center gap-2'>
           <p className='text-xl font-bold text-slate-900 tracking-tight'>
             {title}
