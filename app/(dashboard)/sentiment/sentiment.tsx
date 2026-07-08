@@ -1,6 +1,7 @@
 import { SentimentType } from '@/lib/types';
 import MessageInTable from '@/components/common/MessageInTable';
 import { SentimentInteractions } from './sentiment-interactions';
+import { AddSentimentForm } from '@/components/forms/AddSentimentForm';
 
 export function Sentiment({ sentiments }: { sentiments: SentimentType[] }) {
   return (
@@ -17,12 +18,13 @@ export function Sentiment({ sentiments }: { sentiments: SentimentType[] }) {
             subtitle={
               'Start adding your favorite Coinalyze sentiment links to stay ahead of the market!'
             }
-            buttonCopy={''}
-            hasNoButton={true}
+            buttonCopy={'Add Sentiment Link'}
+            hasNoButton={false}
             formTitle={'Add a new Sentiment'}
             formSubtitle={
               'Add a Coinalyze URL to track market sentiment for your favorite coins.'
             }
+            form={<AddSentimentForm />}
           />
         </div>
       )}

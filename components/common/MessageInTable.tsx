@@ -11,6 +11,7 @@ import {
 import { AddAssetForm } from '@/components/forms/AddAssetForm';
 
 import { LucideIcon } from 'lucide-react';
+import { ReactNode } from 'react';
 
 export type MessageInTableProps = {
   image: string;
@@ -23,6 +24,7 @@ export type MessageInTableProps = {
   hasNoButton?: boolean;
   formTitle: string;
   formSubtitle: string;
+  form?: ReactNode;
 };
 
 export default function MessageInTable({
@@ -36,6 +38,7 @@ export default function MessageInTable({
   hasNoButton,
   formTitle,
   formSubtitle,
+  form,
 }: MessageInTableProps) {
   return (
     <div className='flex flex-col sm:flex-row items-center justify-around px-8 sm:px-0'>
@@ -74,7 +77,7 @@ export default function MessageInTable({
                 <SheetTitle>{formTitle}</SheetTitle>
                 <SheetDescription>{formSubtitle}</SheetDescription>
               </SheetHeader>
-              <AddAssetForm />
+              {form || <AddAssetForm />}
             </SheetContent>
           </Sheet>
         )}
