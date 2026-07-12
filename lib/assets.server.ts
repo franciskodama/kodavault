@@ -6,6 +6,9 @@ export const getAssets = async (uid: string) => {
       where: {
         uid,
       },
+      orderBy: {
+        created_at: 'asc',
+      },
     });
     return JSON.parse(JSON.stringify(assets));
   } catch (error) {
