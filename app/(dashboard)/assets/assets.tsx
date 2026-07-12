@@ -34,6 +34,10 @@ export default function Assets({
   const compareByWallet = (a: any, b: any) => {
     if (a.wallet < b.wallet) return -1;
     if (a.wallet > b.wallet) return 1;
+    if (a.asset < b.asset) return -1;
+    if (a.asset > b.asset) return 1;
+    if (a.id < b.id) return -1;
+    if (a.id > b.id) return 1;
     return 0;
   };
 
